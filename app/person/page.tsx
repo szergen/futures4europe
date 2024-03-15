@@ -1,14 +1,16 @@
 import { getWixClient } from '@app/hooks/useWixClientServer';
 import { formatDate } from '@app/utils/date-formatter';
-import { WixMediaImage } from '@app/components/Image/WixMediaImage';
+import { WixMediaImage } from '@app/shared-components/Image/WixMediaImage';
 import testIds from '@app/utils/test-ids';
-export default async function News() {
+export default async function PersonMain() {
   const wixClient = await getWixClient();
   const { items } = await wixClient.items
     .queryDataItems({
-      dataCollectionId: 'News',
+      dataCollectionId: 'StoriesFrom2050',
     })
     .find();
+
+  console.log('debug1->items', items[0]);
 
   return (
     <div className="relative">
@@ -36,7 +38,7 @@ export default async function News() {
           className="grid grid-cols-1 sm:grid-cols-3 gap-7 grid-flow-row mt-10"
           data-testid={testIds.NEWS_PAGE.NEWS_LIST}
         >
-          {items!.map((item) => (
+          {items?.map((item) => (
             <div
               key={item._id}
               className="relative border"
@@ -50,9 +52,9 @@ export default async function News() {
                   disableZoom={true}
                 />
                 <span className="bg-blue-site text-white px-6 py-2 absolute bottom-[-20px]">
-                  {formatDate(
+                  {/* {formatDate(
                     new Date(item.data!.date?.$date ?? item.data!.date)
-                  )}
+                  )} */}
                 </span>
               </div>
               <div className="bg-white relative mt-10 px-8 pb-10">

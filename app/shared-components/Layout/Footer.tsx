@@ -1,5 +1,5 @@
 import './footer.css';
-import { Logo } from '@app/components/Logo/Logo';
+import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
 
 const Footer = () => (

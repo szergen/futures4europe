@@ -1,5 +1,5 @@
 import { WixMediaImage } from '@app/shared-components/Image/WixMediaImage';
-export default async function AboutPage() {
+export default async function LoginPage() {
   return (
     <div className="relative">
       <div className="w-full h-[400px] relative">
