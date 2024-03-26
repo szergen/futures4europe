@@ -15,6 +15,8 @@ export type TagContainerProps = {
   thumbnailAlt?: string;
   tagCounter?: number;
   tagTrend?: number;
+  href?: string;
+  onClick?: () => void;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -26,13 +28,19 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   tagTrend,
   thumbnail,
   thumbnailAlt,
+  onClick,
+  href,
 }) => {
   const showThumbnail = thumbnail || tagCategory === 'person';
 
   return (
     <>
       {showThumbnail && (
-        <TagThumbnail thumbnail={thumbnail} thumbnailAlt={thumbnailAlt} />
+        <TagThumbnail
+          thumbnail={thumbnail || undefined}
+          thumbnailAlt={thumbnailAlt}
+          tagCategory={tagCategory}
+        />
       )}
       {/* Tag Body */}
       <span
@@ -44,8 +52,8 @@ export const TagContainer: React.FC<TagContainerProps> = ({
         )}
         contentEditable={editable ? 'true' : undefined}
       >
-        {tagText}
-        <TagCloseButton />
+        {href ? <strong>{tagText}</strong> : tagText}
+        {editable && <TagCloseButton onClick={onClick || undefined} />}
         {/* Tag Counter and Trend */}
         {tagCounter && (
           <TagCounter tagCounter={tagCounter} tagTrend={tagTrend} />

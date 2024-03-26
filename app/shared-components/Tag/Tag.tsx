@@ -30,14 +30,35 @@ export const Tag: React.FC<TagProps> = ({
   thumbnailAlt,
   enableLabel,
 }) => {
+  const [isShown, setIsShown] = React.useState(true);
+
+  const onClick = () => {
+    setIsShown(false);
+  };
+
   return (
     <>
       {enableLabel && tagCategory && (
         <span className={style.tagLabel}>{TagCategories?.[tagCategory]}: </span>
       )}
-      <div className={classNames('m-1', style.tagContainer)}>
-        {href ? (
-          <Link href={href} className={style.tagLink}>
+      {isShown && (
+        <div className={classNames('m-1', style.tagContainer)}>
+          {href ? (
+            <Link href={href} className={style.tagLink}>
+              <TagContainer
+                tagText={tagText}
+                editable={editable}
+                className={className}
+                tagCategory={tagCategory}
+                tagCounter={tagCounter}
+                tagTrend={tagTrend}
+                thumbnail={thumbnail}
+                thumbnailAlt={thumbnailAlt}
+                onClick={onClick}
+                href={href}
+              />
+            </Link>
+          ) : (
             <TagContainer
               tagText={tagText}
               editable={editable}
@@ -47,21 +68,11 @@ export const Tag: React.FC<TagProps> = ({
               tagTrend={tagTrend}
               thumbnail={thumbnail}
               thumbnailAlt={thumbnailAlt}
+              onClick={onClick}
             />
-          </Link>
-        ) : (
-          <TagContainer
-            tagText={tagText}
-            editable={editable}
-            className={className}
-            tagCategory={tagCategory}
-            tagCounter={tagCounter}
-            tagTrend={tagTrend}
-            thumbnail={thumbnail}
-            thumbnailAlt={thumbnailAlt}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

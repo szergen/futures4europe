@@ -1,3 +1,8 @@
+.tagLabel {
+  display: inline-block;
+  position: relative;
+  left: +30px;
+}
 .tagContainer {
   display: inline-block;
   font-family: Oswald, sans-serif;

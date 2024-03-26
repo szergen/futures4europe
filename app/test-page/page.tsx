@@ -7,8 +7,12 @@ import Label from '@app/shared-components/Label/Label';
 import style from './Testpage.module.css';
 import Button from '@app/shared-components/Button/Button';
 import Tooltip from '@app/shared-components/Tooltip/Tooltip';
+import Tooltip2 from '@app/shared-components/Tooltip2/Tooltip2';
 import Icons from '@app/shared-components/Icons/Icons';
 import Tag from '@app/shared-components/Tag/Tag';
+import { TagCategories } from '@app/shared-components/Tag/Tag.utils';
+import PopoverComponent from '@app/shared-components/Popover/PopoverComponent';
+import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 
 export default function TestPage() {
   console.log('TestPage');
@@ -57,9 +61,37 @@ export default function TestPage() {
         This is another button with overridden styles from the page
       </Button>
       <br />
+      <br />
       {/* Tooltip examples */}
       <Tooltip tooltipText="Velit eu nostrud elit elit cupidatat sit magna ad nostrud officia." />
       <Tooltip text="info" tooltipText="Velit eu nostrud elit " />
+      {/* Tooltip2 examples */}
+      <br />
+      <br />
+      <Tooltip2
+        tooltipText="Velit eu nostrud elit elit cupidatat sit magna ad nostrud officia."
+        placement="bottom"
+        classNameFoContainer="mx-4"
+      />
+      <Tooltip2
+        text="info"
+        tooltipText="Velit eu nostrud elit elit cupidatat sit magna ad nostrud officia."
+        classNameFoContainer="!bg-blue-site"
+        placement="top"
+      />
+      <Tooltip2
+        text="info"
+        tooltipText="Velit eu nostrud elit elit cupidatat sit magna ad nostrud officia."
+        placement="right"
+        classNameFoContainer="mx-4"
+      />
+      <Tooltip2
+        text="info"
+        tooltipText="Velit eu nostrud"
+        placement="left"
+        classNameFoContainer="mx-4"
+      />
+      <br />
       <br />
       <Icons className="w-6 h-6 text-red-500">
         <svg
@@ -84,11 +116,20 @@ export default function TestPage() {
         tagText="This is a tag with overridden styles from tailwindcss"
         className="!bg-pink-100"
       />
-      <Tag tagText="This is another tag with overridden styles from the page" />
-      <Tag tagText="This is a tag with forced thumbnail" emptyThumbnail />
+      <Tag
+        tagText="This is another tag with overridden styles from the page"
+        className={style.buttonStyle}
+      />
+      <br />
+      <br />
+      <Tag
+        tagText="This is a tag with forced thumbnail"
+        tagCategory={TagCategories.person}
+      />
       <Tag
         tagText="This is a tag with thumbnail"
         thumbnail="https://picsum.photos/id/1011/40/40"
+        className="!bg-pink-100"
       />
       <Tag
         tagText="This is a tag with thumbnail"
@@ -96,12 +137,61 @@ export default function TestPage() {
         tagCounter={5}
         tagTrend={-2}
       />
+      <br />
+      <br />
+      <Tag
+        tagText="This is a tag with thumbnail"
+        tagCounter={15}
+        tagTrend={2}
+        tagCategory={TagCategories.person}
+      />
       <Tag
         tagText="This is a tag with thumbnail"
         thumbnail="https://picsum.photos/id/550/40/40"
-        tagCounter={100}
-        tagTrend={-2}
+        tagCounter={15}
+        tagTrend={2}
+        tagCategory={TagCategories.person}
+        enableLabel
       />
+      <Tag
+        tagText="This is a tag with thumbnail"
+        thumbnail="https://picsum.photos/id/550/40/40"
+        tagCounter={15}
+        tagTrend={2}
+        tagCategory={TagCategories.person}
+        editable
+      />
+      <br />
+      <br />
+      <Tag
+        tagText="This is a default tag with link"
+        href="https://google.com"
+      />
+      <Tag
+        tagText="This is a tag with link and thumbnail"
+        href="https://google.com"
+        thumbnail="https://picsum.photos/id/650/40/40"
+      />
+      <br />
+      <br />
+      {/* PopOver Examples */}
+      <PopoverComponent
+        trigger="hover"
+        popoverTitle="Popover Title"
+        popoverContent="This is the content of the popover"
+      >
+        <button>
+          <Tag
+            tagText="This is a tag with a hover popover"
+            href="https://google.com"
+            thumbnail="https://picsum.photos/id/650/40/40"
+          />
+        </button>
+      </PopoverComponent>
+      <br />
+      <br />
+      {/* TagPicker Examples */}
+      <TagPicker />
     </div>
   );
 }

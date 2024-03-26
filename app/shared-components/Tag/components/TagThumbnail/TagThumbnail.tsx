@@ -15,14 +15,14 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
   thumbnailAlt,
   tagCategory,
 }) =>
-  !thumbnail && tagCategory === 'person' ? (
+  !thumbnail && tagCategory === TagCategories.person ? (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="white"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
+      strokeWidth={1}
       stroke="currentColor"
-      className="w-10 h-10 inline-block relative -right-7"
+      className="w-10 h-10 inline-block relative -right-7 z-10"
     >
       <path
         strokeLinecap="round"
@@ -34,7 +34,7 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
     <Image
       alt={thumbnailAlt || 'Avatar Image'}
       className={classNames(
-        'inline-block mr-1 relative -right-7',
+        'inline-block mr-1 relative -right-7 z-10',
         style.tagPicture
       )}
       src={thumbnail || 'https://picsum.photos/id/177/40/40'}
