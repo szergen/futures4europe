@@ -4,6 +4,7 @@ import React from 'react';
 import style from './Tag.module.css';
 import { TagCategories } from './Tag.utils';
 import TagContainer from './components/TagContainer/TagContainer';
+import PopoverComponent from '../PopoverComponent/PopoverComponent';
 
 export type TagProps = {
   tagText: string;
@@ -36,6 +37,42 @@ export const Tag: React.FC<TagProps> = ({
     setIsShown(false);
   };
 
+  const showContainer = (tagText: string) => {
+    return tagText.length > 25 ? (
+      <PopoverComponent
+        trigger="hover"
+        popoverContent={tagText}
+        popoverImage={thumbnail}
+      >
+        <div>
+          <TagContainer
+            tagText={tagText}
+            editable={editable}
+            className={className}
+            tagCategory={tagCategory}
+            tagCounter={tagCounter}
+            tagTrend={tagTrend}
+            thumbnail={thumbnail}
+            thumbnailAlt={thumbnailAlt}
+            onClick={onClick}
+          />
+        </div>
+      </PopoverComponent>
+    ) : (
+      <TagContainer
+        tagText={tagText}
+        editable={editable}
+        className={className}
+        tagCategory={tagCategory}
+        tagCounter={tagCounter}
+        tagTrend={tagTrend}
+        thumbnail={thumbnail}
+        thumbnailAlt={thumbnailAlt}
+        onClick={onClick}
+      />
+    );
+  };
+
   return (
     <>
       {enableLabel && tagCategory && (
@@ -44,6 +81,12 @@ export const Tag: React.FC<TagProps> = ({
       {isShown && (
         <div className={classNames('m-1', style.tagContainer)}>
           {href ? (
+            // <PopoverComponent
+            //   trigger="hover"
+            //   // popoverTitle={tagCategory}
+            //   popoverContent={tagText}
+            //   popoverImage={thumbnail}
+            // >
             <Link href={href} className={style.tagLink}>
               <TagContainer
                 tagText={tagText}
@@ -59,6 +102,7 @@ export const Tag: React.FC<TagProps> = ({
               />
             </Link>
           ) : (
+            // </PopoverComponent>
             <TagContainer
               tagText={tagText}
               editable={editable}

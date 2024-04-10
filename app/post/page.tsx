@@ -1,6 +1,6 @@
 import { getWixClient } from '@app/hooks/useWixClientServer';
 import { formatDate } from '@app/utils/date-formatter';
-import { WixMediaImage } from '@app/shared-components/Image/WixMediaImage';
+import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import testIds from '@app/utils/test-ids';
 export default async function PostMain() {
   const wixClient = await getWixClient();

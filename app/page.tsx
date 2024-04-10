@@ -1,5 +1,5 @@
 import { CarouselClient } from '@app/shared-components/Carousel/Carousel';
-import { WixMediaImage } from '@app/shared-components/Image/WixMediaImage';
+import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import testIds from '@app/utils/test-ids';
 
 export default function Home() {

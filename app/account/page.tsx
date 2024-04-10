@@ -1,4 +1,4 @@
-import { WixMediaImage } from '@app/shared-components/Image/WixMediaImage';
+import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 export default async function AccountMain() {
   return (
     <div className="relative">

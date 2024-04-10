@@ -10,7 +10,8 @@ const nextConfig = {
     dirs: ['app'],
   },
   images: {
-    domains: ['static.wixstatic.com', 'picsum.photos'],
+    dangerouslyAllowSVG: true,
+    domains: ['static.wixstatic.com', 'picsum.photos', 'placehold.co'],
     formats: ['image/webp'],
   },
 };

@@ -2,7 +2,7 @@ import { Tooltip } from 'flowbite-react';
 import React from 'react';
 import classNames from 'classnames';
 
-type Tooltip2Props = {
+export type Tooltip2Props = {
   text?: string;
   tooltipText: string;
   classNameFoContainer?: string;

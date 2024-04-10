@@ -10,6 +10,17 @@ function getImageUrlForMedia(media: string, width: number, height: number) {
   }
 }
 
+export type WixMediaImageProps = {
+  media: string;
+  height?: number;
+  width?: number;
+  alt?: string;
+  className?: string;
+  sizes?: string;
+  objectFit?: 'cover' | 'contain';
+  disableZoom?: boolean;
+};
+
 export function WixMediaImage({
   media,
   height = 320,
@@ -19,16 +30,7 @@ export function WixMediaImage({
   sizes = '10vw',
   objectFit,
   disableZoom = false,
-}: {
-  media?: string;
-  alt?: string;
-  width?: number;
-  height?: number;
-  sizes?: string;
-  className?: string;
-  disableZoom?: boolean;
-  objectFit?: 'cover' | 'contain';
-}) {
+}: WixMediaImageProps) {
   const imageUrl = media
     ? getImageUrlForMedia(media || '', width, height)
     : PLACEHOLDER_IMAGE;
@@ -40,8 +42,8 @@ export function WixMediaImage({
   };
 
   return (
-    <div className={`flex items-center justify-center h-full`}>
-      <div className="overflow-hidden relative group w-full h-full">
+    <div className={`flex items-center `}>
+      <div className="overflow-hidden relative group">
         <Image
           {...styleProps}
           src={imageUrl}
@@ -54,3 +56,4 @@ export function WixMediaImage({
     </div>
   );
 }
+export default WixMediaImage;

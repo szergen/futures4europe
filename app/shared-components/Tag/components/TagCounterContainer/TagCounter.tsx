@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import style from '../../Tag.module.css';
+import Tooltip3 from '@app/shared-components/Tooltip3/Tooltip3';
 
 export type TagCounterProps = {
   tagCounter?: number;
@@ -14,20 +15,25 @@ export const TagCounter: React.FC<TagCounterProps> = ({
   return (
     <span className={classNames(style.tagCounterBody)}>
       {tagCounter && (
-        <span className={classNames('text-gray-500', style.tagCounter)}>
-          {tagCounter}
-        </span>
+        <Tooltip3
+          trigger="hover"
+          popoverContent={`This Tag has been referenced ${tagCounter} times`}
+        >
+          <span className={classNames('text-gray-500 ', style.tagCounter)}>
+            {tagCounter}
+          </span>
+        </Tooltip3>
       )}
       {tagTrend && (
-        <span
-          className={classNames(
-            tagTrend > 0 ? 'text-green-500' : 'text-red-500',
-            style.tagTrend
-          )}
+        <Tooltip3
+          trigger="hover"
+          popoverContent={`Trending +${tagTrend} references in the last month`}
         >
-          {tagTrend > 0 ? '+' : ''}
-          {tagTrend}
-        </span>
+          <span className={classNames('text-green-500', style.tagTrend)}>
+            {tagTrend > 0 ? '+' : ''}
+            {tagTrend}
+          </span>
+        </Tooltip3>
       )}
     </span>
   );

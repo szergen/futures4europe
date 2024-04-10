@@ -27,6 +27,17 @@
     line-height: 10px;
     padding: 7px;
   }
+  .tagBody {
+    display: inline-flex;
+  }
+
+  .tagText {
+    display: inline-block;
+    text-wrap: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   .tagTrend {
     height: 24px;
@@ -34,6 +45,7 @@
     font-weight: 700;
     line-height: 10px;
     padding: 7px;
+    
   }
 
   .tagCloseButton {

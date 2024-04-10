@@ -1,15 +1,13 @@
 import React from 'react';
 import { StoryFn, Meta } from '@storybook/react';
-import Tooltip, { TooltipProps } from './Tooltip2';
+import Tooltip2, { Tooltip2Props } from './Tooltip2';
 
 export default {
-  title: 'Tooltip',
-  component: Tooltip,
+  title: 'Tooltip2',
+  component: Tooltip2,
 } as Meta;
 
-const Template: StoryFn<TooltipProps> = (args) => (
-  <Tooltip classNameForButton="mt-10" {...args} />
-);
+const Template: StoryFn<Tooltip2Props> = (args) => <Tooltip2 {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

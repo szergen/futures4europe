@@ -1,7 +1,7 @@
 'use client';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
-import { WixMediaImage } from '@app/shared-components/Image/WixMediaImage';
+import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import Typography from '@app/shared-components/Typography/Typography';
 import Label from '@app/shared-components/Label/Label';
 import style from './Testpage.module.css';
@@ -11,8 +11,14 @@ import Tooltip2 from '@app/shared-components/Tooltip2/Tooltip2';
 import Icons from '@app/shared-components/Icons/Icons';
 import Tag from '@app/shared-components/Tag/Tag';
 import { TagCategories } from '@app/shared-components/Tag/Tag.utils';
-import PopoverComponent from '@app/shared-components/Popover/PopoverComponent';
+import PopoverComponent from '@app/shared-components/PopoverComponent/PopoverComponent';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import { RelationTagPicker } from '@app/shared-components/RelationTagPicker/RelationTagPicker';
+import DatePicker from '@app/shared-components/DatePickerComponent/DatePickerComponent';
+import Tooltip3 from '@app/shared-components/Tooltip3/Tooltip3';
+import RTEComponent from '@app/shared-components/RTEComponent/RTEComponent';
+import ModalComponent from '@app/shared-components/ModalComponent/ModalComponent';
+// import DatePicker from 'react-datepicker';
 
 export default function TestPage() {
   console.log('TestPage');
@@ -91,6 +97,22 @@ export default function TestPage() {
         placement="left"
         classNameFoContainer="mx-4"
       />
+      <Tooltip3 trigger="hover" popoverContent="This is a hover text">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5 inline-block"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+          />
+        </svg>
+      </Tooltip3>
       <br />
       <br />
       <Icons className="w-6 h-6 text-red-500">
@@ -135,14 +157,14 @@ export default function TestPage() {
         tagText="This is a tag with thumbnail"
         thumbnail="https://picsum.photos/id/550/40/40"
         tagCounter={5}
-        tagTrend={-2}
+        tagTrend={2}
       />
       <br />
       <br />
       <Tag
         tagText="This is a tag with thumbnail"
         tagCounter={15}
-        tagTrend={2}
+        tagTrend={5}
         tagCategory={TagCategories.person}
       />
       <Tag
@@ -166,6 +188,8 @@ export default function TestPage() {
       <Tag
         tagText="This is a default tag with link"
         href="https://google.com"
+        tagCounter={15}
+        tagTrend={2}
       />
       <Tag
         tagText="This is a tag with link and thumbnail"
@@ -174,24 +198,29 @@ export default function TestPage() {
       />
       <br />
       <br />
-      {/* PopOver Examples */}
-      <PopoverComponent
-        trigger="hover"
-        popoverTitle="Popover Title"
-        popoverContent="This is the content of the popover"
-      >
-        <button>
-          <Tag
-            tagText="This is a tag with a hover popover"
-            href="https://google.com"
-            thumbnail="https://picsum.photos/id/650/40/40"
-          />
-        </button>
-      </PopoverComponent>
+      {/* Date Picker */}
+      <DatePicker date={new Date('2023-2-1')} className="w-64" />
       <br />
       <br />
       {/* TagPicker Examples */}
-      <TagPicker />
+      <span>Single Select</span>
+      <TagPicker className="w-1/2" />
+      <br />
+      <br />
+      <span>Multi Select</span>
+      <TagPicker className="w-1/2" isMulti />
+      <br />
+      <br />
+      <span>Relation Tag Picker</span>
+      <RelationTagPicker />
+      <br />
+      <br />
+      <RTEComponent />
+      <br />
+      <br />
+      <ModalComponent buttonText="Open Modal" headerTitle="Modal Header">
+        <p>Modal Content</p>
+      </ModalComponent>
     </div>
   );
 }
