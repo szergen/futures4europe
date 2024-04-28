@@ -199,7 +199,7 @@ export default function TestPage() {
       <br />
       <br />
       {/* Date Picker */}
-      <DatePicker date={new Date('2023-2-1')} className="w-64" />
+      <DatePicker date={new Date('2023-2-1')} className="w-max" />
       <br />
       <br />
       {/* TagPicker Examples */}

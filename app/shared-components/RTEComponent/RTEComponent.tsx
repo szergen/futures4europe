@@ -19,6 +19,27 @@ export const RTEComponent = () => {
       wrapperClassName="wrapperClassName"
       editorClassName="editorClassName"
       onEditorStateChange={setEditorState}
+      toolbar={{
+        options: [
+          'inline',
+          // 'blockType',
+          // 'fontSize',
+          // 'fontFamily',
+          'list',
+          'textAlign',
+          // 'colorPicker',
+          // 'link',
+          // 'embedded',
+          // 'emoji',
+          // 'image',
+          // 'remove',
+          // 'history',
+        ],
+        // inline: { inDropdown: true },
+        // list: { inDropdown: true },
+        // textAlign: { inDropdown: true },
+        history: { inDropdown: true },
+      }}
     />
   );
 };
