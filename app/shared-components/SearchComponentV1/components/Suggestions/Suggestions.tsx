@@ -1,49 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export const TagTypes = ['domain', 'org', 'project tag', 'organisation tag'];
-export const PageTypes = [
-  'project result',
-  'post',
-  'event',
-  'project',
-  'person',
+export const FieldTypes = [
+  'activity-domain',
+  'author',
+  'people',
+  'participant',
+  'speaker',
+  'coordinator',
 ];
 
 export type SuggestionsProps = {
-  tags: any;
-  setClickedSuggestions: React.Dispatch<React.SetStateAction<string>>;
+  fieldSuggestions: any;
+  tagSuggestions: any;
+  pageSuggestions: any;
+  handleClickedSuggestion: (e: any) => void;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
-  tags,
-  setClickedSuggestions,
+  fieldSuggestions,
+  tagSuggestions,
+  pageSuggestions,
+  handleClickedSuggestion,
 }) => {
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    console.log('Clicked on tag:', e.target.innerText);
-    setClickedSuggestions(e.target.innerText);
-  };
+  useEffect(() => {
+    console.log('fieldSuggestions', fieldSuggestions);
+    console.log('tagSuggestions', tagSuggestions);
+    console.log('pageSuggestions', pageSuggestions);
+  }, [fieldSuggestions, tagSuggestions, pageSuggestions]);
 
   return (
     <div className="style.suggestions w-1/2 border-dashed border-2">
       <div className="border" />
+      <div className="style.fieldSuggestions">
+        <span className="text-purple-700">Field Suggestions:</span>
+        <ul className="style.tags">
+          {fieldSuggestions?.map(
+            (fieldSuggestion: any, index: number) =>
+              index < 10 &&
+              FieldTypes.includes(fieldSuggestion.field) && (
+                <li key={index}>
+                  <span
+                    dangerouslySetInnerHTML={{ __html: fieldSuggestion.field }}
+                    onMouseDown={handleClickedSuggestion}
+                  ></span>
+                  :
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: fieldSuggestion.tagName,
+                    }}
+                  ></span>
+                </li>
+              )
+          )}
+        </ul>
+      </div>
       <div className="style.tagSuggestions">
         <span className="text-purple-700">Tag Suggestions:</span>
         <ul className="style.tags">
-          {tags?.map(
-            (tag: any, index: number) =>
-              index < 10 &&
-              TagTypes.find(
-                (tagType) =>
-                  tagType ===
-                  tag.type?.replace('<strong>', '').replace('</strong>', '')
-              ) && (
+          {tagSuggestions?.map(
+            (tagSuggestion: any, index: number) =>
+              index < 10 && (
                 <li key={index}>
                   <span
-                    dangerouslySetInnerHTML={{ __html: tag.type }}
-                    onMouseDown={handleClick}
+                    dangerouslySetInnerHTML={{ __html: tagSuggestion.tagType }}
+                    onMouseDown={handleClickedSuggestion}
                   ></span>
-                  :<span dangerouslySetInnerHTML={{ __html: tag.name }}></span>
+                  :
+                  <span
+                    dangerouslySetInnerHTML={{ __html: tagSuggestion.name }}
+                  ></span>
                 </li>
               )
           )}
@@ -53,20 +78,20 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       <div className="style.pageSuggestions">
         <span className="text-pink-700">Quick Results(Page Suggestions:)</span>
         <ul className="style.pages">
-          {tags?.map(
-            (tag: any, index: number) =>
-              index < 10 &&
-              PageTypes.find(
-                (pageType) =>
-                  pageType ===
-                  tag.type?.replace('<strong>', '').replace('</strong>', '')
-              ) && (
+          {pageSuggestions?.map(
+            (pageSuggestion: any, index: number) =>
+              index < 10 && (
                 <li key={index}>
                   <span
-                    dangerouslySetInnerHTML={{ __html: tag.type }}
-                    onMouseDown={handleClick}
+                    dangerouslySetInnerHTML={{
+                      __html: pageSuggestion.pageType,
+                    }}
+                    onMouseDown={handleClickedSuggestion}
                   ></span>
-                  :<span dangerouslySetInnerHTML={{ __html: tag.name }}></span>
+                  :
+                  <span
+                    dangerouslySetInnerHTML={{ __html: pageSuggestion.title }}
+                  ></span>
                 </li>
               )
           )}

@@ -2,6 +2,13 @@ export const mockedSearch = [
   {
     type: 'project',
     name: 'ANTICIPINNOV: Anticipation and monitoring of emerging technologies and disruptive innovation',
+    tagLine:
+      'Anticipation and monitoring of emerging technologies and disruptive innovation',
+    tags: ['ANTICIPINNOV', 'Green Technology', 'Innovation', 'Technology'],
+    fields: ['Green Technology', 'Innovation', 'Technology'],
+    author: 'Carsten Claus',
+    participant: ['Carsten Claus', 'Dominik Hajduk', 'Florian Roth'],
+    people: ['Albert Bravo-Biosca', 'Cristiano Cagnin'],
   },
   {
     type: 'project',

@@ -3,65 +3,132 @@ import TagInput from './components/TagInput/TagInput';
 import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
 import Results from './components/Results/Results';
-import { mockedSearch } from './mockedSearch';
-
-const initialTags = [
-  { type: 'person', name: 'John Doe' },
-  { type: 'person', name: 'Jane Smith' },
-  { type: 'domain', name: 'Agriculture' },
-  { type: 'domain', name: 'Technology' },
-  { type: 'domain', name: 'Education' },
-  { type: 'person', name: 'Alice Johnson' },
-  { type: 'person', name: 'Bob Williams' },
-  { type: 'domain', name: 'Healthcare' },
-  { type: 'domain', name: 'Finance' },
-  { type: 'domain', name: 'Art' },
-  { type: 'org', name: 'Company A' },
-  { type: 'org', name: 'Company B' },
-  { type: 'org', name: 'Company C' },
-  { type: 'project', name: 'Project A' },
-  { type: 'project', name: 'Project B' },
-  { type: 'project result', name: 'Project Result A' },
-  { type: 'project result', name: 'Project Result B' },
-  { type: 'post', name: 'Post A' },
-  { type: 'post', name: 'Post B' },
-  { type: 'post', name: 'Post C' },
-  { type: 'event', name: 'Event A' },
-  { type: 'post', name: 'Event B' },
-  ...mockedSearch,
-];
+import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
+import { updateFilteredDataBasedOnClickedSuggestion } from './SearchComponentV1.utils';
 
 const SearchComponentV1 = () => {
-  const tags = initialTags;
-  const [filteredTags, setFilteredTags] = useState([]);
-  const [showHelp, setShowHelp] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [results, setResults] = useState([]);
-  const [clickedSuggestions, setClickedSuggestions] = useState('');
+  // SearchContext
+  const { searchState, setSearchState } = useSearch();
+  const {
+    initalData,
+    filteredData,
+    fieldSuggestions,
+    tagSuggestions,
+    pageSuggestions,
+    results,
+    showHelp,
+    showSuggestions,
+    showResults,
+    searchedItems,
+  } = searchState;
+
+  // Other logic
+  const handleClickedSuggestion = (e: any) => {
+    e.preventDefault();
+    console.log('Clicked on tag:', e.target.parentNode.innerText);
+    setSearchState((prevState) => ({
+      ...prevState,
+      clickedSuggestion: e?.target?.parentNode.innerText,
+      searchedItems: [...searchedItems, e?.target?.parentNode.innerText],
+    }));
+  };
+
+  const handleRemoveSearchedItem = (event: any) => {
+    const target = event.currentTarget;
+    const siblingSpan = target.previousSibling;
+
+    if (
+      siblingSpan &&
+      siblingSpan.nodeType === Node.ELEMENT_NODE &&
+      siblingSpan.tagName === 'SPAN'
+    ) {
+      const siblingSpanText = siblingSpan.textContent;
+      console.log('siblingSpanText', siblingSpanText);
+      const filteredSearchItems = searchedItems.filter(
+        (item) => item !== siblingSpanText
+      );
+      //Filter the data based on the remaining search items
+      let updatedFilteredData = {
+        tags: [],
+        pages: [],
+        assignments: [],
+      };
+
+      if (filteredSearchItems.length !== 0) {
+        filteredSearchItems.forEach((item) => {
+          const {
+            matchedPages,
+            matchedTagsBasedOnPages,
+            matchedAssignmentsBasedOnPages,
+          } = updateFilteredDataBasedOnClickedSuggestion(item, initalData);
+          updatedFilteredData = {
+            pages: [...updatedFilteredData.pages, ...matchedPages] as any,
+            tags: [
+              ...updatedFilteredData.tags,
+              ...matchedTagsBasedOnPages,
+            ] as any,
+            assignments: [
+              ...updatedFilteredData.assignments,
+              ...matchedAssignmentsBasedOnPages,
+            ] as any,
+          };
+        });
+      } else {
+        updatedFilteredData = initalData;
+      }
+
+      console.log('updatedFilteredData', updatedFilteredData);
+
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: filteredSearchItems,
+        filteredData: updatedFilteredData,
+      }));
+    }
+  };
 
   useEffect(() => {
-    console.log('Filtered Tags', filteredTags);
-  }, [filteredTags]);
+    console.log('searchedItems', searchedItems);
+  }, [searchedItems]);
 
   return (
-    <div>
-      <TagInput
-        tags={tags}
-        // onAddTag={addTag}
-        setShowSuggestions={setShowSuggestions}
-        setShowHelp={setShowHelp}
-        setFilteredTags={setFilteredTags}
-        setShowResults={setShowResults}
-        setResults={setResults}
-        clickedSuggestions={clickedSuggestions}
-      />
+    <div className="w-full">
+      <div className="style.searchBox flex">
+        <ul className="style.searchedItems flex">
+          {searchedItems?.map((item, index) => (
+            <li key={index} className="flex border shadow rounded-lg mx-1">
+              <span className="" key={index}>
+                {item}
+              </span>
+              <span onClick={handleRemoveSearchedItem}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <TagInput initialData={initalData} filteredData={filteredData} />
+      </div>
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown />}
       {showSuggestions && (
         <Suggestions
-          tags={filteredTags}
-          setClickedSuggestions={setClickedSuggestions}
+          fieldSuggestions={fieldSuggestions}
+          tagSuggestions={tagSuggestions}
+          pageSuggestions={pageSuggestions}
+          handleClickedSuggestion={handleClickedSuggestion}
         />
       )}
       {/* Results */}
