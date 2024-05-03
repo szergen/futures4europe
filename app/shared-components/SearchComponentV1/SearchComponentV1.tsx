@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import TagInput from './components/TagInput/TagInput';
 import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
@@ -25,11 +25,33 @@ const SearchComponentV1 = () => {
   // Other logic
   const handleClickedSuggestion = (e: any) => {
     e.preventDefault();
-    console.log('Clicked on tag:', e.target.parentNode.innerText);
+    console.log(
+      'Clicked on tag of clickedSuggestion:',
+      e.target.parentNode.innerText
+    );
     setSearchState((prevState) => ({
       ...prevState,
       clickedSuggestion: e?.target?.parentNode.innerText,
       searchedItems: [...searchedItems, e?.target?.parentNode.innerText],
+    }));
+  };
+
+  const handleTagSuggestion = (e: any) => {
+    e.preventDefault();
+    console.log('Clicked on tag:', e.target.innerText);
+    setSearchState((prevState) => ({
+      ...prevState,
+      clickedTag: e?.target?.innerText,
+    }));
+  };
+
+  // Other logic
+  const handleFieldSelection = (e: any) => {
+    e.preventDefault();
+    console.log('Clicked on field:', e.target.innerText);
+    setSearchState((prevState) => ({
+      ...prevState,
+      clickedField: e?.target?.innerText,
     }));
   };
 
@@ -122,13 +144,14 @@ const SearchComponentV1 = () => {
         <TagInput initialData={initalData} filteredData={filteredData} />
       </div>
       {/* Help and Suggestions*/}
-      {showHelp && <HelpDropdown />}
+      {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
       {showSuggestions && (
         <Suggestions
           fieldSuggestions={fieldSuggestions}
           tagSuggestions={tagSuggestions}
           pageSuggestions={pageSuggestions}
           handleClickedSuggestion={handleClickedSuggestion}
+          handleTagSuggestion={handleTagSuggestion}
         />
       )}
       {/* Results */}

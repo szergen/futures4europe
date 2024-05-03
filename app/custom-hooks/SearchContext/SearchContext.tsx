@@ -205,6 +205,8 @@ export interface SearchState {
   showResults: boolean;
   results: any[];
   clickedSuggestion: string;
+  clickedField: string;
+  clickedTag: string;
   searchedItems: any[];
 }
 
@@ -220,6 +222,8 @@ const initialState: SearchState = {
   showSuggestions: false,
   showResults: false,
   clickedSuggestion: '',
+  clickedField: '',
+  clickedTag: '',
   searchedItems: [],
 };
 

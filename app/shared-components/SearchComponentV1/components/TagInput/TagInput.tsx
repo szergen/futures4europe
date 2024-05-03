@@ -1,146 +1,16 @@
-import React, { ReactEventHandler, useEffect, useState } from 'react';
+import React, { ReactEventHandler, use, useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
 import { useSearch } from '../../../../custom-hooks/SearchContext/SearchContext';
-import { updateFilteredDataBasedOnClickedSuggestion } from '../../SearchComponentV1.utils';
-
-export type InitialData = {
-  pages: {
-    pageId: number;
-    title: string;
-    pageType: string;
-    pictures: string;
-    subtitle: string;
-    description: string;
-    external_links: string;
-    files: null;
-  }[];
-  tags: {
-    tagId: number;
-    tagType: string;
-    name: string;
-    tagLine: string;
-    popularity: number;
-    trend: string;
-    picture: string;
-    pageLink: string;
-  }[];
-  assignments: {
-    pageId: number;
-    tagId: number;
-    field: string;
-    tagName: string;
-  }[];
-};
+import {
+  InitialData,
+  updateFilteredDataBasedOnClickedSuggestion,
+  highlightedResults,
+} from '../../SearchComponentV1.utils';
 
 export type TagInputProps = {
   initialData: InitialData;
   filteredData: InitialData;
 };
-
-// Map the results to include the highlighted text
-const highlightedResults = (results: Array<any>) =>
-  results.map((result) => {
-    let highlightedField = result.item.field;
-    let highlightedTagName = result.item.tagName;
-
-    let highlightedTagType = result.item.tagType;
-    let highlightedName = result.item.name;
-
-    let highlightedPageType = result.item.pageType;
-    let highlightedTitle = result.item.title;
-
-    // Loop over the matches
-    for (const match of result.matches || []) {
-      // Check if the match is in the 'name' key
-      if (match.key === 'name') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedName =
-            highlightedName.slice(0, start) +
-            '<strong>' +
-            highlightedName.slice(start, end + 1) +
-            '</strong>' +
-            highlightedName.slice(end + 1);
-        }
-      }
-      if (match.key === 'tagName') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedTagName =
-            highlightedTagName.slice(0, start) +
-            '<strong>' +
-            highlightedTagName.slice(start, end + 1) +
-            '</strong>' +
-            highlightedTagName.slice(end + 1);
-        }
-      }
-      if (match.key === 'field') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedField =
-            highlightedField.slice(0, start) +
-            '<strong>' +
-            highlightedField.slice(start, end + 1) +
-            '</strong>' +
-            highlightedField.slice(end + 1);
-        }
-      }
-      if (match.key === 'pageType') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedPageType =
-            highlightedPageType.slice(0, start) +
-            '<strong>' +
-            highlightedPageType.slice(start, end + 1) +
-            '</strong>' +
-            highlightedPageType.slice(end + 1);
-        }
-      }
-      if (match.key === 'title') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedTitle =
-            highlightedTitle.slice(0, start) +
-            '<strong>' +
-            highlightedTitle.slice(start, end + 1) +
-            '</strong>' +
-            highlightedTitle.slice(end + 1);
-        }
-      }
-      if (match.key === 'tagType') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedTagType =
-            highlightedTagType.slice(0, start) +
-            '<strong>' +
-            highlightedTagType.slice(start, end + 1) +
-            '</strong>' +
-            highlightedTagType.slice(end + 1);
-        }
-      }
-    }
-
-    return {
-      name: highlightedName,
-      tagName: highlightedTagName,
-      field: highlightedField,
-      pageType: highlightedPageType,
-      title: highlightedTitle,
-      tagType: highlightedTagType,
-    };
-  });
 
 const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const [input, setInput] = useState('');
@@ -149,7 +19,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const [resultsToShow, setResultsToShow] = useState([] as any[]);
   // Subscribe to the SearchContext
   const { searchState, setSearchState } = useSearch();
-  const { clickedSuggestion } = searchState;
+  const { clickedSuggestion, clickedField, clickedTag } = searchState;
 
   // Fuzzy search initialization
   const fusePagesOptions = {
@@ -366,6 +236,75 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       setInput('');
     }
   }, [clickedSuggestion]);
+
+  useEffect(() => {
+    if (clickedField) {
+      const filteredAssignments = filteredData.assignments.filter(
+        (item) => item.field === clickedField
+      );
+
+      console.log('debug1->filteredAssignments:', filteredAssignments);
+
+      const filteredPages = filteredData.pages.filter((page) =>
+        filteredAssignments.some(
+          (assignment) => assignment.pageId === page.pageId
+        )
+      );
+
+      const filteredTags = filteredData.tags.filter((tag) =>
+        filteredAssignments.some((assignment) => assignment.tagId === tag.tagId)
+      );
+
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: true,
+        showHelp: false,
+        showResults: false,
+        searchedItems: [...searchState.searchedItems, `${clickedField}:`],
+        filteredData: {
+          pages: filteredPages,
+          tags: filteredTags,
+          assignments: filteredAssignments,
+        },
+      }));
+      setInput('');
+    } else {
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: false,
+        showHelp: true,
+        showResults: false,
+      }));
+    }
+  }, [clickedField]);
+
+  useEffect(() => {
+    if (clickedTag && clickedField) {
+      const composedTag = `${clickedField}:${clickedTag}`;
+      console.log('debug1->composedTag:', composedTag);
+
+      // console.log('debug1->searchedItemsNewArray:', searchedItemsNewArray);
+      const {
+        matchedPages,
+        matchedTagsBasedOnPages,
+        matchedAssignmentsBasedOnPages,
+      } = updateFilteredDataBasedOnClickedSuggestion(composedTag, filteredData);
+
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: true,
+        showHelp: false,
+        showResults: false,
+        searchedItems: [...searchState.searchedItems.slice(0, -1), composedTag],
+        filteredData: {
+          pages: matchedPages,
+          tags: matchedTagsBasedOnPages,
+          assignments: matchedAssignmentsBasedOnPages,
+        },
+      }));
+      setInput('');
+    }
+  }, [clickedTag]);
 
   return (
     <div className="style.tagInput min-w-max">

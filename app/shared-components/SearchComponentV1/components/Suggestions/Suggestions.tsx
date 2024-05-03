@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
-
-export const FieldTypes = [
-  'activity-domain',
-  'author',
-  'people',
-  'participant',
-  'speaker',
-  'coordinator',
-];
+import { FieldTypes } from '../../SearchComponentV1.utils';
 
 export type SuggestionsProps = {
   fieldSuggestions: any;
   tagSuggestions: any;
   pageSuggestions: any;
   handleClickedSuggestion: (e: any) => void;
+  handleTagSuggestion: (e: any) => void;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
@@ -21,6 +14,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   tagSuggestions,
   pageSuggestions,
   handleClickedSuggestion,
+  handleTagSuggestion,
 }) => {
   useEffect(() => {
     console.log('fieldSuggestions', fieldSuggestions);
@@ -48,6 +42,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     dangerouslySetInnerHTML={{
                       __html: fieldSuggestion.tagName,
                     }}
+                    onMouseDown={handleTagSuggestion}
                   ></span>
                 </li>
               )
@@ -68,6 +63,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   :
                   <span
                     dangerouslySetInnerHTML={{ __html: tagSuggestion.name }}
+                    onMouseDown={handleTagSuggestion}
                   ></span>
                 </li>
               )
@@ -91,6 +87,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   :
                   <span
                     dangerouslySetInnerHTML={{ __html: pageSuggestion.title }}
+                    onMouseDown={handleTagSuggestion}
                   ></span>
                 </li>
               )
