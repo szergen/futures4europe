@@ -4,7 +4,11 @@ import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
 import Results from './components/Results/Results';
 import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
-import { updateFilteredDataBasedOnClickedSuggestion } from './SearchComponentV1.utils';
+import {
+  InitialData,
+  updateFilteredDataBasedOnClickedSuggestion,
+  updateFilteredDataBasedOnClickedTag,
+} from './SearchComponentV1.utils';
 
 const SearchComponentV1 = () => {
   // SearchContext
@@ -58,6 +62,7 @@ const SearchComponentV1 = () => {
   const handleRemoveSearchedItem = (event: any) => {
     const target = event.currentTarget;
     const siblingSpan = target.previousSibling;
+    console.log('siblingSpan', siblingSpan);
 
     if (
       siblingSpan &&
@@ -78,20 +83,42 @@ const SearchComponentV1 = () => {
 
       if (filteredSearchItems.length !== 0) {
         filteredSearchItems.forEach((item) => {
-          const {
-            matchedPages,
-            matchedTagsBasedOnPages,
-            matchedAssignmentsBasedOnPages,
-          } = updateFilteredDataBasedOnClickedSuggestion(item, initalData);
+          let matchedData = {
+            pages: [] as InitialData['pages'],
+            tags: [] as InitialData['tags'],
+            assignments: [] as InitialData['assignments'],
+          };
+
+          if (item.includes(':')) {
+            const {
+              matchedPages,
+              matchedTagsBasedOnPages,
+              matchedAssignmentsBasedOnPages,
+            } = updateFilteredDataBasedOnClickedSuggestion(item, initalData);
+            matchedData = {
+              pages: matchedPages as InitialData['pages'],
+              tags: matchedTagsBasedOnPages,
+              assignments: matchedAssignmentsBasedOnPages,
+            };
+          } else {
+            const {
+              matchedPages,
+              matchedTagsBasedOnPages,
+              matchedAssignmentsBasedOnPages,
+            } = updateFilteredDataBasedOnClickedTag(item, initalData);
+            matchedData = {
+              pages: matchedPages as InitialData['pages'],
+              tags: matchedTagsBasedOnPages,
+              assignments: matchedAssignmentsBasedOnPages,
+            };
+          }
+
           updatedFilteredData = {
-            pages: [...updatedFilteredData.pages, ...matchedPages] as any,
-            tags: [
-              ...updatedFilteredData.tags,
-              ...matchedTagsBasedOnPages,
-            ] as any,
+            pages: [...updatedFilteredData.pages, ...matchedData.pages] as any,
+            tags: [...updatedFilteredData.tags, ...matchedData.tags] as any,
             assignments: [
               ...updatedFilteredData.assignments,
-              ...matchedAssignmentsBasedOnPages,
+              ...matchedData.assignments,
             ] as any,
           };
         });
@@ -152,6 +179,7 @@ const SearchComponentV1 = () => {
           pageSuggestions={pageSuggestions}
           handleClickedSuggestion={handleClickedSuggestion}
           handleTagSuggestion={handleTagSuggestion}
+          handleFieldSelection={handleFieldSelection}
         />
       )}
       {/* Results */}

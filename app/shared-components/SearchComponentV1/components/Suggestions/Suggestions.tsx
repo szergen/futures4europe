@@ -7,6 +7,7 @@ export type SuggestionsProps = {
   pageSuggestions: any;
   handleClickedSuggestion: (e: any) => void;
   handleTagSuggestion: (e: any) => void;
+  handleFieldSelection: (e: any) => void;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
@@ -15,6 +16,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   pageSuggestions,
   handleClickedSuggestion,
   handleTagSuggestion,
+  handleFieldSelection,
 }) => {
   useEffect(() => {
     console.log('fieldSuggestions', fieldSuggestions);
@@ -22,27 +24,29 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     console.log('pageSuggestions', pageSuggestions);
   }, [fieldSuggestions, tagSuggestions, pageSuggestions]);
 
+  const uniqueAssignments = fieldSuggestions.filter(
+    (assignment: any, index: any, self: any) =>
+      index === self.findIndex((t: any) => t.field === assignment.field)
+  );
+
   return (
     <div className="style.suggestions w-1/2 border-dashed border-2">
       <div className="border" />
       <div className="style.fieldSuggestions">
         <span className="text-purple-700">Field Suggestions:</span>
         <ul className="style.tags">
-          {fieldSuggestions?.map(
+          {uniqueAssignments?.map(
             (fieldSuggestion: any, index: number) =>
               index < 10 &&
-              FieldTypes.includes(fieldSuggestion.field) && (
+              FieldTypes.includes(
+                fieldSuggestion.field
+                  .replace('<strong>', '')
+                  .replace('</strong>', '')
+              ) && (
                 <li key={index}>
                   <span
                     dangerouslySetInnerHTML={{ __html: fieldSuggestion.field }}
-                    onMouseDown={handleClickedSuggestion}
-                  ></span>
-                  :
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: fieldSuggestion.tagName,
-                    }}
-                    onMouseDown={handleTagSuggestion}
+                    onMouseDown={handleFieldSelection}
                   ></span>
                 </li>
               )

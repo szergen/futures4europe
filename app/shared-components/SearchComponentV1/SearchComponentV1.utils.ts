@@ -185,3 +185,34 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
     matchedAssignmentsBasedOnPages: [],
   };
 };
+
+export const updateFilteredDataBasedOnClickedTag = (
+  clickedTag: string,
+  filteredData: InitialData
+) => {
+  const matchedPages = filteredData.assignments
+    .filter((assignment) => assignment.tagName === clickedTag)
+    .map((assignment) => {
+      const matchingPage = filteredData.pages.find(
+        (page) => page.pageId === assignment.pageId
+      );
+      return matchingPage ? matchingPage : assignment;
+    });
+
+  const matchedAssignmentsBasedOnPages = filteredData.assignments.filter(
+    (assignment) =>
+      matchedPages.some((page) => page.pageId === assignment.pageId)
+  );
+
+  const matchedTagsBasedOnPages = filteredData.tags.filter((tag) =>
+    matchedAssignmentsBasedOnPages.some(
+      (assignment) => assignment.tagId === tag.tagId
+    )
+  );
+
+  return {
+    matchedPages: matchedPages,
+    matchedTagsBasedOnPages: matchedTagsBasedOnPages,
+    matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
+  };
+};

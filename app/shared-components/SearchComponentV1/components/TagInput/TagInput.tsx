@@ -5,6 +5,7 @@ import {
   InitialData,
   updateFilteredDataBasedOnClickedSuggestion,
   highlightedResults,
+  updateFilteredDataBasedOnClickedTag,
 } from '../../SearchComponentV1.utils';
 
 export type TagInputProps = {
@@ -32,7 +33,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const fusePages = new Fuse(filteredData.pages, fusePagesOptions);
 
   const fuseFieldSuggestionsOptions = {
-    keys: ['tagName'],
+    keys: ['field'],
     threshold: 0.2,
     minMatchCharLength: 2,
     includeMatches: true,
@@ -252,7 +253,10 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       );
 
       const filteredTags = filteredData.tags.filter((tag) =>
-        filteredAssignments.some((assignment) => assignment.tagId === tag.tagId)
+        filteredAssignments.some(
+          (assignment) =>
+            assignment.tagId === tag.tagId && assignment.field === clickedField
+        )
       );
 
       setSearchState((prevState) => ({
@@ -295,7 +299,43 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         showSuggestions: true,
         showHelp: false,
         showResults: false,
+        clickedField: '',
+        clickedTag: '',
         searchedItems: [...searchState.searchedItems.slice(0, -1), composedTag],
+        filteredData: {
+          pages: matchedPages,
+          tags: matchedTagsBasedOnPages,
+          assignments: matchedAssignmentsBasedOnPages,
+        },
+      }));
+      setInput('');
+    } else if (clickedTag && !clickedField) {
+      // const filteredAssignments = filteredData.assignments.filter(
+      //   (item) => item.tagName === clickedTag
+      // );
+
+      // const filteredPages = filteredData.pages.filter((page) =>
+      //   filteredAssignments.some(
+      //     (assignment) => assignment.pageId === page.pageId
+      //   )
+      // );
+
+      // const filteredTags = filteredData.tags.filter((tag) =>
+      //   filteredAssignments.some((assignment) => assignment.tagId === tag.tagId)
+      // );
+      const {
+        matchedPages,
+        matchedTagsBasedOnPages,
+        matchedAssignmentsBasedOnPages,
+      } = updateFilteredDataBasedOnClickedTag(clickedTag, filteredData);
+
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: true,
+        showHelp: false,
+        showResults: false,
+        clickedTag: '',
+        searchedItems: [...searchState.searchedItems, clickedTag],
         filteredData: {
           pages: matchedPages,
           tags: matchedTagsBasedOnPages,
