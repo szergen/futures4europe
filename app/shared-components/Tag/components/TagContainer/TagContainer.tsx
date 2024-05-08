@@ -44,7 +44,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
         />
       )}
       {/* Tag Body */}
-      {tagText.length > 25 ? (
+      {tagText.length > 10 ? (
         <span
           className={classNames(
             //   'relative px-5 py-2 rounded-3xl shadow-md text-ellipsis max-w-64 overflow-hidden inline-block text-nowrap', // wrapping

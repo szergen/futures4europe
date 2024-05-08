@@ -252,6 +252,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         )
       );
 
+      // TODO: Remove assignemnets from filtering
       const filteredTags = filteredData.tags.filter((tag) =>
         filteredAssignments.some(
           (assignment) =>
@@ -310,19 +311,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       }));
       setInput('');
     } else if (clickedTag && !clickedField) {
-      // const filteredAssignments = filteredData.assignments.filter(
-      //   (item) => item.tagName === clickedTag
-      // );
-
-      // const filteredPages = filteredData.pages.filter((page) =>
-      //   filteredAssignments.some(
-      //     (assignment) => assignment.pageId === page.pageId
-      //   )
-      // );
-
-      // const filteredTags = filteredData.tags.filter((tag) =>
-      //   filteredAssignments.some((assignment) => assignment.tagId === tag.tagId)
-      // );
       const {
         matchedPages,
         matchedTagsBasedOnPages,

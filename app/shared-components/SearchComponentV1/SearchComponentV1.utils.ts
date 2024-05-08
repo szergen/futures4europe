@@ -90,19 +90,19 @@ export const highlightedResults = (results: Array<any>) =>
             highlightedField.slice(end + 1);
         }
       }
-      if (match.key === 'pageType') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedPageType =
-            highlightedPageType.slice(0, start) +
-            '<strong>' +
-            highlightedPageType.slice(start, end + 1) +
-            '</strong>' +
-            highlightedPageType.slice(end + 1);
-        }
-      }
+      // if (match.key === 'pageType') {
+      //   // Loop over the matched indices in reverse order
+      //   for (let i = match.indices.length - 1; i >= 0; i--) {
+      //     const [start, end] = match.indices[i];
+      //     // Insert the highlight tags around the matched text
+      //     highlightedPageType =
+      //       highlightedPageType.slice(0, start) +
+      //       '<strong>' +
+      //       highlightedPageType.slice(start, end + 1) +
+      //       '</strong>' +
+      //       highlightedPageType.slice(end + 1);
+      //   }
+      // }
       if (match.key === 'title') {
         // Loop over the matched indices in reverse order
         for (let i = match.indices.length - 1; i >= 0; i--) {
@@ -135,9 +135,15 @@ export const highlightedResults = (results: Array<any>) =>
       name: highlightedName,
       tagName: highlightedTagName,
       field: highlightedField,
-      pageType: highlightedPageType,
+      pageType: result.item.pageType,
       title: highlightedTitle,
       tagType: highlightedTagType,
+      picture: result.item.picture,
+      pageLink: result.item.pageLink,
+      popularity: result.item.popularity,
+      tagLine: result.item.tagLine,
+      pictures: result.item.pictures,
+      description: result.item.description,
     };
   });
 

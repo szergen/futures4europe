@@ -21,12 +21,7 @@ const Results = ({ results }: { results: any[] }) => {
         <ul className="style.pages">
           {results?.map((resultItem: any, index: number) => (
             <li key={index}>
-              <span>
-                {resultItem.pageType
-                  ?.replace('<strong>', '')
-                  ?.replace('</strong>', '')}
-              </span>
-              :
+              <span>{resultItem.pageType}</span>:
               <span>
                 {resultItem.title
                   ?.replace('<strong>', '')

@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
+import Image from 'next/image';
+
 import { FieldTypes } from '../../SearchComponentV1.utils';
+import classNames from 'classnames';
 
 export type SuggestionsProps = {
   fieldSuggestions: any;
@@ -43,10 +46,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   .replace('<strong>', '')
                   .replace('</strong>', '')
               ) && (
-                <li key={index}>
+                <li key={index} className="flex items-center">
+                  <span className="w-20">field:</span>
                   <span
                     dangerouslySetInnerHTML={{ __html: fieldSuggestion.field }}
                     onMouseDown={handleFieldSelection}
+                    className="ml-4"
                   ></span>
                 </li>
               )
@@ -59,16 +64,39 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           {tagSuggestions?.map(
             (tagSuggestion: any, index: number) =>
               index < 10 && (
-                <li key={index}>
+                <li key={index} className="flex items-center mb-2">
                   <span
-                    dangerouslySetInnerHTML={{ __html: tagSuggestion.tagType }}
-                    onMouseDown={handleClickedSuggestion}
+                    dangerouslySetInnerHTML={{
+                      __html: tagSuggestion.tagType + ': ',
+                    }}
+                    className="w-20"
+                    // onMouseDown={handleClickedSuggestion}
                   ></span>
-                  :
-                  <span
-                    dangerouslySetInnerHTML={{ __html: tagSuggestion.name }}
-                    onMouseDown={handleTagSuggestion}
-                  ></span>
+                  <div className="flex">
+                    <Image
+                      alt={'Tag Image'}
+                      className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
+                      src={
+                        tagSuggestion.picture ||
+                        'https://placehold.co/600x400?text=placeholder'
+                      }
+                      width={40}
+                      height={40}
+                    />
+                    <div className="flex flex-wrap items-center">
+                      <span
+                        dangerouslySetInnerHTML={{ __html: tagSuggestion.name }}
+                        onMouseDown={handleTagSuggestion}
+                      ></span>
+                      <span
+                        after={tagSuggestion.popularity}
+                        className="after:content-[attr(after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
+                      ></span>
+                      <span className="w-full text-12">
+                        {tagSuggestion.tagLine}
+                      </span>
+                    </div>
+                  </div>
                 </li>
               )
           )}
@@ -81,18 +109,37 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           {pageSuggestions?.map(
             (pageSuggestion: any, index: number) =>
               index < 10 && (
-                <li key={index}>
+                <li key={index} className="flex items-center mb-2">
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: pageSuggestion.pageType,
+                      __html: pageSuggestion.pageType + ': ',
                     }}
-                    onMouseDown={handleClickedSuggestion}
+                    className="w-20"
+                    // onMouseDown={handleClickedSuggestion}
                   ></span>
-                  :
-                  <span
-                    dangerouslySetInnerHTML={{ __html: pageSuggestion.title }}
-                    onMouseDown={handleTagSuggestion}
-                  ></span>
+                  <div className="flex">
+                    <Image
+                      alt={'Tag Image'}
+                      className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
+                      src={
+                        pageSuggestion.pictures ||
+                        'https://placehold.co/600x400?text=placeholder'
+                      }
+                      width={40}
+                      height={40}
+                    />
+                    <div className="flex flex-wrap items-center">
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: pageSuggestion.title,
+                        }}
+                        onMouseDown={handleTagSuggestion}
+                      ></span>
+                      <span className="w-full text-12">
+                        {pageSuggestion.description}
+                      </span>
+                    </div>
+                  </div>
                 </li>
               )
           )}

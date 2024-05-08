@@ -19,12 +19,17 @@ export const TagCounter: React.FC<TagCounterProps> = ({
           trigger="hover"
           popoverContent={`This Tag has been referenced ${tagCounter} times`}
         >
-          <span className={classNames('text-gray-500 ', style.tagCounter)}>
-            {tagCounter}
-          </span>
+          <span
+            after={tagCounter}
+            className={classNames(
+              'text-gray-500 ',
+              'after:content-[attr(after)]',
+              style.tagCounter
+            )}
+          />
         </Tooltip3>
       )}
-      {tagTrend && (
+      {/* {tagTrend && (
         <Tooltip3
           trigger="hover"
           popoverContent={`Trending +${tagTrend} references in the last month`}
@@ -34,7 +39,7 @@ export const TagCounter: React.FC<TagCounterProps> = ({
             {tagTrend}
           </span>
         </Tooltip3>
-      )}
+      )} */}
     </span>
   );
 };
