@@ -10,7 +10,7 @@ export default async function PostMain() {
     })
     .find();
 
-  console.log('debug1->items', items[0]);
+  // console.log('debug1->items', items[0]);
 
   return (
     <div className="relative">

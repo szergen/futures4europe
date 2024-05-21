@@ -10,12 +10,15 @@ import {
   updateFilteredDataBasedOnClickedTag,
 } from './SearchComponentV1.utils';
 import SearchedItems from './components/SearchedItems/SearchedItems';
+import Fuse from 'fuse.js';
+import { init } from 'next/dist/compiled/webpack/webpack';
+// import { init } from 'next/dist/compiled/webpack/webpack';
 
 const SearchComponentV1 = () => {
   // SearchContext
   const { searchState, setSearchState } = useSearch();
   const {
-    initalData,
+    initialData,
     filteredData,
     fieldSuggestions,
     tagSuggestions,
@@ -25,21 +28,22 @@ const SearchComponentV1 = () => {
     showSuggestions,
     showResults,
     searchedItems,
+    clickedField,
   } = searchState;
 
-  // Other logic
-  const handleClickedSuggestion = (e: any) => {
-    e.preventDefault();
-    console.log(
-      'Clicked on tag of clickedSuggestion:',
-      e.target.parentNode.innerText
-    );
-    setSearchState((prevState) => ({
-      ...prevState,
-      clickedSuggestion: e?.target?.parentNode.innerText,
-      searchedItems: [...searchedItems, e?.target?.parentNode.innerText],
-    }));
-  };
+  // Searched Items - Selection Handlers
+  // const handleClickedSuggestion = (e: any) => {
+  //   e.preventDefault();
+  //   console.log(
+  //     'Clicked on tag of clickedSuggestion:',
+  //     e.target.parentNode.innerText
+  //   );
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     clickedSuggestion: e?.target?.parentNode.innerText,
+  //     searchedItems: [...searchedItems, e?.target?.parentNode.innerText],
+  //   }));
+  // };
 
   const handleTagSuggestion = (e: any) => {
     e.preventDefault();
@@ -50,7 +54,6 @@ const SearchComponentV1 = () => {
     }));
   };
 
-  // Other logic
   const handleFieldSelection = (e: any) => {
     e.preventDefault();
     console.log('Clicked on field:', e.target.innerText);
@@ -59,6 +62,7 @@ const SearchComponentV1 = () => {
       clickedField: e?.target?.innerText,
     }));
   };
+  // Searched Items - Remove items
 
   const handleRemoveSearchedItem = (event: any) => {
     const target = event.currentTarget;
@@ -72,15 +76,17 @@ const SearchComponentV1 = () => {
     ) {
       const siblingSpanText = siblingSpan.textContent;
       console.log('siblingSpanText', siblingSpanText);
+
       const filteredSearchItems = searchedItems.filter(
-        (item) => item !== siblingSpanText
+        (item) => item.searchItem !== siblingSpanText
       );
       console.log('filteredSearchItems--', filteredSearchItems);
+
       //Filter the data based on the remaining search items
       let updatedFilteredData = {
-        tags: [],
-        pages: [],
-        assignments: [],
+        tags: initialData.tags,
+        pages: initialData.pages,
+        assignments: initialData.assignments,
       };
 
       if (filteredSearchItems.length !== 0) {
@@ -91,41 +97,57 @@ const SearchComponentV1 = () => {
             assignments: [] as InitialData['assignments'],
           };
 
-          if (item.includes(':')) {
+          if (item.searchItemType === 'field-tag') {
             const {
               matchedPages,
               matchedTagsBasedOnPages,
               matchedAssignmentsBasedOnPages,
-            } = updateFilteredDataBasedOnClickedSuggestion(item, initalData);
+            } = updateFilteredDataBasedOnClickedSuggestion(
+              item.searchItem,
+              filteredSearchItems.length > 1 ? updatedFilteredData : initialData
+            );
             matchedData = {
               pages: matchedPages as InitialData['pages'],
               tags: matchedTagsBasedOnPages,
               assignments: matchedAssignmentsBasedOnPages,
             };
-          } else {
+          } else if (item.searchItemType === 'tag') {
             const {
               matchedPages,
-              matchedTagsBasedOnPages,
-              matchedAssignmentsBasedOnPages,
-            } = updateFilteredDataBasedOnClickedTag(item, initalData);
+              // matchedTagsBasedOnPages,
+              // matchedAssignmentsBasedOnPages,
+            } = updateFilteredDataBasedOnClickedTag(
+              item.searchItem,
+              filteredSearchItems.length > 1 ? updatedFilteredData : initialData
+            );
             matchedData = {
               pages: matchedPages as InitialData['pages'],
-              tags: matchedTagsBasedOnPages,
-              assignments: matchedAssignmentsBasedOnPages,
+              tags: initialData.tags,
+              assignments: initialData.assignments,
             };
+          } else if (item.searchItemType === 'text') {
+            const fusePagesOptions = {
+              keys: ['title', 'subttile', 'description'],
+              threshold: 0.4,
+              minMatchCharLength: 2,
+              includeMatches: true,
+              findAllMatches: true,
+            };
+            const fusePages = new Fuse(
+              updatedFilteredData.pages,
+              fusePagesOptions
+            );
+            const matchedPages = fusePages.search(item.searchItem);
+            console.log('debug3->matchedPages', matchedPages);
+            matchedData.pages = matchedPages.map(
+              (page) => page.item
+            ) as InitialData['pages'];
           }
 
-          updatedFilteredData = {
-            pages: [...updatedFilteredData.pages, ...matchedData.pages] as any,
-            tags: [...updatedFilteredData.tags, ...matchedData.tags] as any,
-            assignments: [
-              ...updatedFilteredData.assignments,
-              ...matchedData.assignments,
-            ] as any,
-          };
+          updatedFilteredData.pages = matchedData.pages;
         });
       } else {
-        updatedFilteredData = initalData;
+        updatedFilteredData.pages = initialData.pages;
       }
 
       console.log('updatedFilteredData', updatedFilteredData);
@@ -133,7 +155,12 @@ const SearchComponentV1 = () => {
       setSearchState((prevState) => ({
         ...prevState,
         searchedItems: filteredSearchItems,
-        filteredData: updatedFilteredData,
+        filteredData: {
+          tags: updatedFilteredData.tags,
+          pages: updatedFilteredData.pages,
+          assignments: updatedFilteredData.assignments,
+        },
+        // results: updatedFilteredData.pages,
       }));
     }
   };
@@ -141,6 +168,13 @@ const SearchComponentV1 = () => {
   useEffect(() => {
     console.log('searchedItems', searchedItems);
   }, [searchedItems]);
+
+  useEffect(() => {
+    setSearchState((prevState) => ({
+      ...prevState,
+      pageSuggestions: results,
+    }));
+  }, [results]);
 
   return (
     <div className="w-full">
@@ -150,7 +184,7 @@ const SearchComponentV1 = () => {
           handleRemoveSearchedItem={handleRemoveSearchedItem}
           tags={filteredData.tags}
         />
-        <TagInput initialData={initalData} filteredData={filteredData} />
+        <TagInput initialData={initialData} filteredData={filteredData} />
       </div>
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
@@ -159,9 +193,10 @@ const SearchComponentV1 = () => {
           fieldSuggestions={fieldSuggestions}
           tagSuggestions={tagSuggestions}
           pageSuggestions={pageSuggestions}
-          handleClickedSuggestion={handleClickedSuggestion}
+          // handleClickedSuggestion={handleClickedSuggestion}
           handleTagSuggestion={handleTagSuggestion}
           handleFieldSelection={handleFieldSelection}
+          clickedField={clickedField}
         />
       )}
       {/* Results */}

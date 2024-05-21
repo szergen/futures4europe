@@ -7,6 +7,18 @@ export const FieldTypes = [
   'coordinator',
 ];
 
+export type Tags = {
+  tagId: number;
+  tagType: string;
+  name: string;
+  tagLine: string;
+  popularity: number;
+  trend: string;
+  picture: string;
+  pageLink: string;
+  filter?: string;
+}[];
+
 export type InitialData = {
   pages: {
     pageId: number;
@@ -18,16 +30,7 @@ export type InitialData = {
     external_links: string;
     files: null;
   }[];
-  tags: {
-    tagId: number;
-    tagType: string;
-    name: string;
-    tagLine: string;
-    popularity: number;
-    trend: string;
-    picture: string;
-    pageLink: string;
-  }[];
+  tags: Tags;
   assignments: {
     pageId: number;
     tagId: number;
@@ -37,97 +40,44 @@ export type InitialData = {
 };
 
 // Map the results to include the highlighted text
-export const highlightedResults = (results: Array<any>) =>
-  results.map((result) => {
+export const highlightedResults = (results: Array<any>) => {
+  const highlight = (text: string, indices: number[][]) => {
+    for (let i = indices.length - 1; i >= 0; i--) {
+      const [start, end] = indices[i];
+      text =
+        text.slice(0, start) +
+        '<span class="bg-amber-300">' +
+        text.slice(start, end + 1) +
+        '</span>' +
+        text.slice(end + 1);
+    }
+    return text;
+  };
+
+  return results.map((result) => {
     let highlightedField = result.item.field;
     let highlightedTagName = result.item.tagName;
-
     let highlightedTagType = result.item.tagType;
     let highlightedName = result.item.name;
-
-    let highlightedPageType = result.item.pageType;
     let highlightedTitle = result.item.title;
 
-    // Loop over the matches
     for (const match of result.matches || []) {
-      // Check if the match is in the 'name' key
-      if (match.key === 'name') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedName =
-            highlightedName.slice(0, start) +
-            '<strong>' +
-            highlightedName.slice(start, end + 1) +
-            '</strong>' +
-            highlightedName.slice(end + 1);
-        }
-      }
-      if (match.key === 'tagName') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedTagName =
-            highlightedTagName.slice(0, start) +
-            '<strong>' +
-            highlightedTagName.slice(start, end + 1) +
-            '</strong>' +
-            highlightedTagName.slice(end + 1);
-        }
-      }
-      if (match.key === 'field') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedField =
-            highlightedField.slice(0, start) +
-            '<strong>' +
-            highlightedField.slice(start, end + 1) +
-            '</strong>' +
-            highlightedField.slice(end + 1);
-        }
-      }
-      // if (match.key === 'pageType') {
-      //   // Loop over the matched indices in reverse order
-      //   for (let i = match.indices.length - 1; i >= 0; i--) {
-      //     const [start, end] = match.indices[i];
-      //     // Insert the highlight tags around the matched text
-      //     highlightedPageType =
-      //       highlightedPageType.slice(0, start) +
-      //       '<strong>' +
-      //       highlightedPageType.slice(start, end + 1) +
-      //       '</strong>' +
-      //       highlightedPageType.slice(end + 1);
-      //   }
-      // }
-      if (match.key === 'title') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedTitle =
-            highlightedTitle.slice(0, start) +
-            '<strong>' +
-            highlightedTitle.slice(start, end + 1) +
-            '</strong>' +
-            highlightedTitle.slice(end + 1);
-        }
-      }
-      if (match.key === 'tagType') {
-        // Loop over the matched indices in reverse order
-        for (let i = match.indices.length - 1; i >= 0; i--) {
-          const [start, end] = match.indices[i];
-          // Insert the highlight tags around the matched text
-          highlightedTagType =
-            highlightedTagType.slice(0, start) +
-            '<strong>' +
-            highlightedTagType.slice(start, end + 1) +
-            '</strong>' +
-            highlightedTagType.slice(end + 1);
-        }
+      switch (match.key) {
+        case 'name':
+          highlightedName = highlight(highlightedName, match.indices);
+          break;
+        case 'tagName':
+          highlightedTagName = highlight(highlightedTagName, match.indices);
+          break;
+        case 'field':
+          highlightedField = highlight(highlightedField, match.indices);
+          break;
+        case 'title':
+          highlightedTitle = highlight(highlightedTitle, match.indices);
+          break;
+        case 'tagType':
+          highlightedTagType = highlight(highlightedTagType, match.indices);
+          break;
       }
     }
 
@@ -144,8 +94,10 @@ export const highlightedResults = (results: Array<any>) =>
       tagLine: result.item.tagLine,
       pictures: result.item.pictures,
       description: result.item.description,
+      subtitle: result.item.subtitle,
     };
   });
+};
 
 export const updateFilteredDataBasedOnClickedSuggestion = (
   clickedSuggestion: string,
@@ -196,29 +148,47 @@ export const updateFilteredDataBasedOnClickedTag = (
   clickedTag: string,
   filteredData: InitialData
 ) => {
-  const matchedPages = filteredData.assignments
+  // const matchedPages = filteredData.assignments
+  //   .filter((assignment) => assignment.tagName === clickedTag)
+  //   .map((assignment) => {
+  //     const matchingPage = filteredData.pages.find(
+  //       (page) => page.pageId === assignment.pageId
+  //     );
+  //     return matchingPage || assignment;
+  //   });
+  const matchingTagIds = filteredData.assignments
     .filter((assignment) => assignment.tagName === clickedTag)
-    .map((assignment) => {
-      const matchingPage = filteredData.pages.find(
-        (page) => page.pageId === assignment.pageId
-      );
-      return matchingPage ? matchingPage : assignment;
-    });
+    .map((assignment) => assignment.pageId);
 
-  const matchedAssignmentsBasedOnPages = filteredData.assignments.filter(
-    (assignment) =>
-      matchedPages.some((page) => page.pageId === assignment.pageId)
+  console.log('debug3->matchingTagIds', matchingTagIds);
+
+  const matchedPages = filteredData.pages.filter((page) =>
+    matchingTagIds.includes(page.pageId)
   );
 
-  const matchedTagsBasedOnPages = filteredData.tags.filter((tag) =>
-    matchedAssignmentsBasedOnPages.some(
-      (assignment) => assignment.tagId === tag.tagId
-    )
-  );
+  // const matchedAssignmentsBasedOnPages = filteredData.assignments.filter(
+  //   (assignment) =>
+  //     matchedPages.some((page) => page.pageId === assignment.pageId)
+  // );
+
+  // const matchedTagsBasedOnPages = filteredData.tags.filter((tag) =>
+  //   matchedAssignmentsBasedOnPages.some(
+  //     (assignment) => assignment.tagId === tag.tagId
+  //   )
+  // );
 
   return {
     matchedPages: matchedPages,
-    matchedTagsBasedOnPages: matchedTagsBasedOnPages,
-    matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
+    // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
+    // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
   };
 };
+
+export const uniqueResults = (results: Array<any>) =>
+  results.filter(
+    (result, index, self) =>
+      index === self.findIndex((t) => t.item.pageId === result.item.pageId)
+  );
+
+export const extractFilterBy = (tags: Tags, clickedField: string) =>
+  tags?.find((tag) => tag.name === clickedField)?.filter;

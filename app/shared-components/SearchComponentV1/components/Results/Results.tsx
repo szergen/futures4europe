@@ -1,3 +1,4 @@
+import MiniPage from '@app/shared-components/MiniPage/MiniPage';
 import React from 'react';
 
 // export const PageTypes = [
@@ -9,25 +10,16 @@ import React from 'react';
 // ];
 
 const Results = ({ results }: { results: any[] }) => {
-  console.log('results', results);
+  console.log('Results component -> results', results);
   return (
-    <div className="style.suggestions w-1/2 border-4">
-      <div className="border-4" />
-      <div className="border-4" />
+    <div className="style.suggestions w-1/2 ">
       <div className="style.pageSuggestions">
-        <span className="text-pink-700">
+        <span className="text-pink-700 mt-6">
           <strong>Results:</strong>
         </span>
         <ul className="style.pages">
           {results?.map((resultItem: any, index: number) => (
-            <li key={index}>
-              <span>{resultItem.pageType}</span>:
-              <span>
-                {resultItem.title
-                  ?.replace('<strong>', '')
-                  ?.replace('</strong>', '')}
-              </span>
-            </li>
+            <MiniPage pageItem={resultItem} key={resultItem.title} />
           ))}
         </ul>
       </div>

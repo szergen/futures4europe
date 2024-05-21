@@ -2,7 +2,10 @@ import Tag from '@app/shared-components/Tag/Tag';
 import React from 'react';
 
 export type SearchedItemProps = {
-  item: string;
+  item: {
+    searchItem: string;
+    searchItemType: 'text' | 'tag' | 'field-tag';
+  };
   index: number;
   handleRemoveSearchedItem: (e: any) => void;
   tags: any[];
@@ -14,9 +17,13 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   handleRemoveSearchedItem,
   tags,
 }) => {
-  const itemIncludesField = item.includes(':') && item.split(':').length === 2;
-  const tagName = itemIncludesField ? item.split(':')[1] : item;
+  const itemIncludesField =
+    item.searchItem.includes(':') && item.searchItem.split(':').length === 2;
+  const tagName = itemIncludesField
+    ? item.searchItem.split(':')[1]
+    : item.searchItem;
   const tagData = tags.find((tag) => tag.name === tagName);
+  console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
 
   return (
     <li key={index} className="flex mx-1 items-center">
@@ -24,7 +31,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       {itemIncludesField && tagData && (
         <span className="flex items-center">
           <span className="" key={index}>
-            {item.split(':')[0]}
+            {item.searchItem.split(':')[0]}
           </span>
           :
           <span className="" key={index}>
@@ -58,11 +65,13 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
           className="after:content-[attr(after)] before:content-[attr(before)] flex"
           key={index}
         >
-          {item}
+          {item.searchItem}
         </span>
       )}
       {/* Simple Text */}
-      {!tagData && itemIncludesField && <span key={index}>{item}</span>}
+      {!tagData && itemIncludesField && (
+        <span key={index}>{item.searchItem}</span>
+      )}
       {/* Remove Item */}
       <span onClick={handleRemoveSearchedItem}>
         <svg

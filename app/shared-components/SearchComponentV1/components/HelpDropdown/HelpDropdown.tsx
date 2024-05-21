@@ -1,13 +1,15 @@
+import classNames from 'classnames';
 import React from 'react';
+import style from './HelpDropdown.module.css';
 
 const FieldSuggestionTypes = [
   {
-    type: 'activity-domain',
+    type: 'activity',
     description: '[name] - to filter by domain',
   },
   {
     type: 'author',
-    description: '[name] - to filter by domain',
+    description: '[name] - to filter by author',
   },
   {
     type: 'people',
@@ -35,7 +37,12 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
   handleFieldSelection,
 }) => {
   return (
-    <div className="style.help-dropdown w-1/2 border-dashed border-2">
+    <div
+      className={classNames(
+        'w-1/2 border-dashed border-2',
+        style.helpDropdownContainer
+      )}
+    >
       Select:
       <br />
       {FieldSuggestionTypes.map((field, index) => (

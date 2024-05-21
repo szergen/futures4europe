@@ -7,6 +7,54 @@ import { mockedTags } from './mockedTags';
 // Mocked Data
 const mockedInitialData = {
   tags: [
+    // Field Tags
+    { tagType: 'field', name: 'author', filter: 'person' },
+    { tagType: 'field', name: 'people', filter: 'person' },
+    { tagType: 'field', name: 'participant', filter: 'person' },
+    { tagType: 'field', name: 'speaker', filter: 'person' },
+    { tagType: 'field', name: 'coordinator', filter: 'person' },
+    { tagType: 'field', name: 'activity', filter: 'domain' },
+    // Sort Tags
+    { tagType: 'sort', name: 'by begin date' }, // project card doar!
+    { tagType: 'sort', name: 'by end date' }, // project card doar!
+    { tagType: 'sort', name: 'by publication date' }, // project result doar!
+    { tagType: 'sort', name: 'by established date' }, // organisation card doar!
+    { tagType: 'sort', name: 'by date' }, // event doar!
+    // Page Type Tags
+    { tagId: 252525, tagType: 'page type', name: 'card', popularity: 184 },
+    {
+      tagId: 252525,
+      tagType: 'page type',
+      name: 'organisation card',
+      popularity: 58,
+    },
+    {
+      tagId: 252526,
+      tagType: 'page type',
+      name: 'person card',
+      popularity: 91,
+    },
+    {
+      tagId: 252527,
+      tagType: 'page type',
+      name: 'project card',
+      popularity: 35,
+    },
+    { tagId: 252528, tagType: 'page type', name: 'post', popularity: 253 },
+    {
+      tagId: 252529,
+      tagType: 'page type',
+      name: 'project result',
+      popularity: 126,
+    },
+    { tagId: 252530, tagType: 'page type', name: 'event', popularity: 46 },
+    {
+      tagId: 252531,
+      tagType: 'page type',
+      name: 'foresight method',
+      popularity: 8,
+    },
+    // Rest of Tags
     {
       tagId: 2525,
       tagType: 'person',
@@ -16,26 +64,6 @@ const mockedInitialData = {
       trend: 'Rising',
       picture: 'https://picsum.photos/id/101/140/140',
       pageLink: 'https://google.com',
-    },
-    {
-      tagId: 3535,
-      tagType: 'pageType',
-      name: 'person card',
-      // tagLine: 'Researcher at Aarhus Universitet',
-      popularity: 87,
-      trend: 'Rising',
-      // picture: 'https://picsum.photos/id/101/140/140',
-      // pageLink: 'https://google.com',
-    },
-    {
-      tagId: 3535,
-      tagType: 'pageType',
-      name: 'card',
-      // tagLine: 'Researcher at Aarhus Universitet',
-      popularity: 87,
-      trend: 'Rising',
-      // picture: 'https://picsum.photos/id/101/140/140',
-      // pageLink: 'https://google.com',
     },
     {
       tagId: 2626,
@@ -93,14 +121,14 @@ const mockedInitialData = {
     {
       pageId: 125,
       title: 'Agripina Popescu',
-      subtitle: null,
+      subtitle: 'Agripina Popescu is a researcher at Aarhus Universitet',
       description: 'Agripina Popescu is a researcher at Aarhus Universitet',
       external_links: 'Horizon Scanning',
       logo: null,
       pageType: ['person card', 'card'],
       pictures: 'https://picsum.photos/id/101/140/200',
       files: null,
-      domain: [],
+      // domain: [],
     },
     {
       pageId: 126,
@@ -110,7 +138,7 @@ const mockedInitialData = {
         'Dorel Industries is a research and innovation foresight community',
       external_links: 'Mutual Learning Exercise, Futures literacy',
       logo: 'https://static.wixstatic.com/media/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,enc_auto/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png',
-      pageType: 'organisation',
+      pageType: ['organisation card', 'card'],
       pictures: 'https://picsum.photos/id/102/300/200',
       files: null,
     },
@@ -118,10 +146,10 @@ const mockedInitialData = {
       pageId: 127,
       title: 'Project X',
       subtitle: 'The Research and Innovation foresight community',
-      description: null,
+      description: 'The Research and Innovation foresight community',
       external_links: 'Mutual Learning Exercise, Futures literacy',
       logo: 'https://static.wixstatic.com/media/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,enc_auto/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png',
-      pageType: 'project',
+      pageType: ['project card', 'card'],
       pictures: 'https://picsum.photos/id/103/300/200',
       files: null,
     },
@@ -132,7 +160,7 @@ const mockedInitialData = {
       description: null,
       external_links: 'Mutual Learning Exercise, Futures literacy',
       logo: 'https://static.wixstatic.com/media/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,enc_auto/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png',
-      pageType: 'project result',
+      pageType: ['project result', 'post'],
       pictures: 'https://picsum.photos/id/201/300/200',
       files: null,
     },
@@ -172,7 +200,7 @@ const mockedInitialData = {
     {
       pageId: 127,
       tagId: 2828,
-      field: 'activity-domain',
+      field: 'activity',
       tagName: 'Agriculture',
     },
     {
@@ -184,7 +212,7 @@ const mockedInitialData = {
     {
       pageId: 125,
       tagId: 2828,
-      field: 'activity-domain',
+      field: 'activity',
       tagName: 'Agriculture',
     },
     {
@@ -197,7 +225,7 @@ const mockedInitialData = {
     {
       pageId: 125,
       tagId: 3030,
-      field: 'activity-domain',
+      field: 'activity',
       tagName: 'Green Energy',
     },
     ...mockedAssignments,
@@ -205,7 +233,7 @@ const mockedInitialData = {
 };
 
 export interface SearchState {
-  initalData: any;
+  initialData: any;
   filteredData: any;
   fieldSuggestions: any[];
   tagSuggestions: any[];
@@ -218,11 +246,14 @@ export interface SearchState {
   clickedSuggestion: string;
   clickedField: string;
   clickedTag: string;
-  searchedItems: any[];
+  searchedItems: {
+    searchItem: string;
+    searchItemType: 'text' | 'tag' | 'field-tag';
+  }[];
 }
 
 const initialState: SearchState = {
-  initalData: mockedInitialData,
+  initialData: mockedInitialData,
   fieldSuggestions: [],
   tagSuggestions: [],
   pageSuggestions: [],

@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-
-import { FieldTypes } from '../../SearchComponentV1.utils';
 import classNames from 'classnames';
+
+import style from './Suggestions.module.css';
+import { FieldTypes } from '../../SearchComponentV1.utils';
+import Link from 'next/link';
 
 export type SuggestionsProps = {
   fieldSuggestions: any;
   tagSuggestions: any;
   pageSuggestions: any;
-  handleClickedSuggestion: (e: any) => void;
+  // handleClickedSuggestion: (e: any) => void;
   handleTagSuggestion: (e: any) => void;
   handleFieldSelection: (e: any) => void;
+  clickedField: string;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
   fieldSuggestions,
   tagSuggestions,
   pageSuggestions,
-  handleClickedSuggestion,
+  // handleClickedSuggestion,
   handleTagSuggestion,
   handleFieldSelection,
+  clickedField,
 }) => {
   useEffect(() => {
     console.log('fieldSuggestions', fieldSuggestions);
@@ -33,31 +37,33 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   );
 
   return (
-    <div className="style.suggestions w-1/2 border-dashed border-2">
+    <div
+      className={classNames(
+        'w-1/2 border-dashed border-2',
+        style.suggestionsContainer
+      )}
+    >
       <div className="border" />
-      <div className="style.fieldSuggestions">
-        <span className="text-purple-700">Field Suggestions:</span>
-        <ul className="style.tags">
-          {uniqueAssignments?.map(
-            (fieldSuggestion: any, index: number) =>
-              index < 10 &&
-              FieldTypes.includes(
-                fieldSuggestion.field
-                  .replace('<strong>', '')
-                  .replace('</strong>', '')
-              ) && (
-                <li key={index} className="flex items-center">
-                  <span className="w-20">field:</span>
-                  <span
-                    dangerouslySetInnerHTML={{ __html: fieldSuggestion.field }}
-                    onMouseDown={handleFieldSelection}
-                    className="ml-4"
-                  ></span>
-                </li>
-              )
-          )}
-        </ul>
-      </div>
+      {!clickedField && (
+        <div className="style.fieldSuggestions">
+          <span className="text-purple-700">Field Suggestions:</span>
+          <ul className="style.tags">
+            {uniqueAssignments?.map(
+              (fieldSuggestion: any, index: number) =>
+                index < 10 && (
+                  <li key={index} className={classNames('flex items-center')}>
+                    <span className="w-20">field:</span>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
+                      onMouseDown={handleFieldSelection}
+                      className="ml-4"
+                    ></span>
+                  </li>
+                )
+            )}
+          </ul>
+        </div>
+      )}
       <div className="style.tagSuggestions">
         <span className="text-purple-700">Tag Suggestions:</span>
         <ul className="style.tags">
@@ -87,6 +93,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       <span
                         dangerouslySetInnerHTML={{ __html: tagSuggestion.name }}
                         onMouseDown={handleTagSuggestion}
+                        className={classNames(
+                          tagSuggestion.pageLink && 'font-bold'
+                        )}
                       ></span>
                       <span
                         after={tagSuggestion.popularity}
@@ -128,17 +137,19 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       width={40}
                       height={40}
                     />
-                    <div className="flex flex-wrap items-center">
+                    <Link
+                      className="flex flex-wrap items-center"
+                      href={pageSuggestion.pageLink || 'https://google.com'}
+                    >
                       <span
                         dangerouslySetInnerHTML={{
                           __html: pageSuggestion.title,
                         }}
-                        onMouseDown={handleTagSuggestion}
                       ></span>
                       <span className="w-full text-12">
                         {pageSuggestion.description}
                       </span>
-                    </div>
+                    </Link>
                   </div>
                 </li>
               )
