@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 
@@ -14,6 +14,8 @@ export type SuggestionsProps = {
   handleTagSuggestion: (e: any) => void;
   handleFieldSelection: (e: any) => void;
   clickedField: string;
+  handleSelectedSuggestion: (selectedSuggestionTag: any) => void;
+  selectedSuggestionIndex: number;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
@@ -24,17 +26,35 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   handleTagSuggestion,
   handleFieldSelection,
   clickedField,
+  handleSelectedSuggestion,
+  selectedSuggestionIndex,
 }) => {
-  useEffect(() => {
-    console.log('fieldSuggestions', fieldSuggestions);
-    console.log('tagSuggestions', tagSuggestions);
-    console.log('pageSuggestions', pageSuggestions);
-  }, [fieldSuggestions, tagSuggestions, pageSuggestions]);
-
-  const uniqueAssignments = fieldSuggestions.filter(
+  const uniqueFields = fieldSuggestions.filter(
     (assignment: any, index: any, self: any) =>
       index === self.findIndex((t: any) => t.field === assignment.field)
   );
+
+  const resolvePageType = (pageSuggestion: { [key: string]: string }) =>
+    Array.isArray(pageSuggestion?.pageType)
+      ? pageSuggestion?.pageType?.filter(
+          (pageTypeItem: string) =>
+            pageTypeItem !== 'card' && pageTypeItem !== 'post'
+        ) || 'post'
+      : pageSuggestion?.pageType;
+
+  // useEffect(() => {
+  //   console.log('debug4->highlightedIndex->', highlightedIndex);
+  //   console.log('debug4->selectedTag->', selectedTag);
+  // }, [highlightedIndex, selectedTag]);
+  useEffect(() => {
+    handleSelectedSuggestion(
+      tagSuggestions?.[selectedSuggestionIndex]?.name.replace(/<[^>]*>?/gm, '')
+    );
+    console.log(
+      'SUGGESTIONS -> debug4->selectedSuggestionIndex->',
+      selectedSuggestionIndex
+    );
+  }, [selectedSuggestionIndex]);
 
   return (
     <div
@@ -48,7 +68,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         <div className="style.fieldSuggestions">
           <span className="text-purple-700">Field Suggestions:</span>
           <ul className="style.tags">
-            {uniqueAssignments?.map(
+            {uniqueFields?.map(
               (fieldSuggestion: any, index: number) =>
                 index < 10 && (
                   <li key={index} className={classNames('flex items-center')}>
@@ -70,14 +90,19 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           {tagSuggestions?.map(
             (tagSuggestion: any, index: number) =>
               index < 10 && (
-                <li key={index} className="flex items-center mb-2">
+                <li
+                  key={index}
+                  className={classNames(
+                    'flex items-center mb-2',
+                    index === selectedSuggestionIndex && 'bg-blue-200'
+                  )}
+                >
                   <span
-                    dangerouslySetInnerHTML={{
-                      __html: tagSuggestion.tagType + ': ',
-                    }}
                     className="w-20"
                     // onMouseDown={handleClickedSuggestion}
-                  ></span>
+                  >
+                    {tagSuggestion.tagType}:
+                  </span>
                   <div className="flex">
                     <Image
                       alt={'Tag Image'}
@@ -119,13 +144,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
             (pageSuggestion: any, index: number) =>
               index < 10 && (
                 <li key={index} className="flex items-center mb-2">
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: pageSuggestion.pageType + ': ',
-                    }}
-                    className="w-20"
-                    // onMouseDown={handleClickedSuggestion}
-                  ></span>
+                  <span className="w-20">
+                    {resolvePageType(pageSuggestion)}:
+                  </span>
                   <div className="flex">
                     <Image
                       alt={'Tag Image'}

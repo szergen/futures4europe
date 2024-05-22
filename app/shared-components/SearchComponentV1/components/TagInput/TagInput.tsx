@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
 import { useSearch } from '../../../../custom-hooks/SearchContext/SearchContext';
 import {
@@ -8,8 +8,9 @@ import {
   updateFilteredDataBasedOnClickedTag,
   uniqueResults,
   extractFilterBy,
+  removeSearchedItem,
 } from '../../SearchComponentV1.utils';
-import { init } from 'next/dist/compiled/webpack/webpack';
+// import { init } from 'next/dist/compiled/webpack/webpack';
 
 export type TagInputProps = {
   initialData: InitialData;
@@ -25,6 +26,10 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // Subscribe to the SearchContext
   const { searchState, setSearchState } = useSearch();
   const { clickedSuggestion, clickedField, clickedTag } = searchState;
+
+  // KeyEvents for the input
+  // const [selectedTag, setSelectedTag] = useState(null);
+  // const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   // Fuzzy search initialization
   const fusePagesOptions = {
@@ -85,27 +90,89 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   };
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter' && tagWasFocused) {
+    if (event.key === 'ArrowDown') {
+      // setHighlightedIndex((prevIndex) =>
+      //   Math.min(prevIndex + 1, filteredData.tags.length - 1)
+      // );
       setSearchState((prevState) => ({
         ...prevState,
-        showSuggestions: false,
-        showHelp: false,
-        showResults: true,
-        results: resultsToShow,
-        searchedItems: input
-          ? [
-              ...searchState.searchedItems,
-              { searchItem: input, searchItemType: 'text' },
-            ]
-          : [...searchState.searchedItems],
-        filteredData: {
-          pages: resultsToShow,
-          tags: initialData.tags,
-          assignments: initialData.assignments,
-        },
+        selectedSuggestionIndex: Math.min(
+          prevState.selectedSuggestionIndex + 1,
+          9
+        ),
       }));
-      // input[input.length - 1] !== '"' && setInput(input + '"');
-      setInput('');
+    } else if (event.key === 'ArrowUp') {
+      // setHighlightedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+      setSearchState((prevState) => ({
+        ...prevState,
+        selectedSuggestionIndex: Math.max(
+          prevState.selectedSuggestionIndex - 1,
+          0
+        ),
+      }));
+    } else if (event.key === 'Enter' && tagWasFocused) {
+      if (searchState.selectedSuggestionIndex < 0) {
+        setSearchState((prevState) => ({
+          ...prevState,
+          showSuggestions: false,
+          showHelp: false,
+          showResults: true,
+          results: resultsToShow,
+          searchedItems: input
+            ? [
+                ...searchState.searchedItems,
+                { searchItem: input, searchItemType: 'text' },
+              ]
+            : [...searchState.searchedItems],
+          filteredData: {
+            pages: resultsToShow,
+            tags: initialData.tags,
+            assignments: initialData.assignments,
+          },
+          selectedSuggestionIndex: -1,
+          selectedSuggestionTag: '',
+        }));
+        // input[input.length - 1] !== '"' && setInput(input + '"');
+        setInput('');
+      } else {
+        setSearchState((prevState) => ({
+          ...prevState,
+          showSuggestions: false,
+          showHelp: true,
+          // showResults: true,
+          clickedTag: searchState.selectedSuggestionTag,
+          selectedSuggestionIndex: -1,
+          selectedSuggestionTag: '',
+        }));
+        setInput('');
+      }
+    } else if (event.key === 'Escape') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        selectedSuggestionIndex: -1,
+        selectedSuggestionTag: '',
+      }));
+    } else if (
+      (event.key === 'Delete' || event.key === 'Backspace') &&
+      searchState.searchedItems.length > 0 &&
+      !input
+    ) {
+      if (searchState.selectedSearchedItemIndex === -1) {
+        setSearchState((prevState) => ({
+          ...prevState,
+          selectedSearchedItemIndex: 0,
+        }));
+      } else {
+        setSearchState((prevState) => ({
+          ...prevState,
+          selectedSearchedItemIndex: -1,
+          searchedItems: searchState.searchedItems.slice(0, -1),
+          filteredData: removeSearchedItem(
+            initialData,
+            searchState.searchedItems.slice(0, -1)
+          ),
+        }));
+      }
     }
   };
 
@@ -115,23 +182,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     if (input) {
       // Hide help dropdown and show suggestions
       const searchInput = input;
-      // setSearchState((prevState) => ({
-      //   ...prevState,
-      //   showSuggestions: true,
-      //   showHelp: false,
-      // }));
       setTagWasFocused(true);
 
       const results = fusePages.search(searchInput);
       const fieldsSuggestions = fuseFieldSuggestions.search(searchInput);
       const tagsSuggestions = fuseTagSuggestions.search(searchInput);
-
-      // const matchedFields = fieldsSuggestions.map((fieldSuggestion) => {
-      //   const matchingPage = filteredData.pages.find(
-      //     (page) => page.pageId === fieldSuggestion.item.pageId
-      //   );
-      //   return matchingPage ? { item: matchingPage } : fieldSuggestion;
-      // });
 
       const mergedResults =
         searchState.searchedItems.length > 0
@@ -142,18 +197,13 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
               // ...tagsSuggestions,
             ]
           : [...results];
-      console.log('debug2->mergedResults:', mergedResults);
-      console.log('debug2->filteredData:', filteredData);
+      // console.log('debug2->mergedResults:', mergedResults);
+      // console.log('debug2->filteredData:', filteredData);
       if (clickedField) {
         setFilterByField(extractFilterBy(initialData.tags, clickedField) || '');
 
-        console.log('filterByField:', filterByField);
+        // console.log('filterByField:', filterByField);
       }
-
-      // const uniqueResults = mergedResults.filter(
-      //   (result, index, self) =>
-      //     index === self.findIndex((t) => t.item.pageId === result.item.pageId)
-      // );
 
       // console.log('uniqueResults:', uniqueResults);
 
@@ -185,7 +235,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         //   assignments: initialData.assignments,
         // },
       }));
-      console.log('Fuzzy search results:', results);
+      // console.log('Fuzzy search results:', results);
       // }
     } else {
       tagWasFocused &&
@@ -299,7 +349,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         // matchedAssignmentsBasedOnPages,
       } = updateFilteredDataBasedOnClickedTag(clickedTag, filteredData);
 
-      console.log('debug1->matchedPages:', matchedPages);
+      // console.log('debug1->matchedPages:', matchedPages);
 
       setSearchState((prevState) => ({
         ...prevState,
@@ -342,6 +392,17 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       )
     );
   }, [searchState.searchedItems]);
+
+  useEffect(() => {
+    console.log(
+      'TAG INPUT -> debug4->selectedSuggestionIndex->',
+      searchState.selectedSuggestionIndex
+    );
+    console.log(
+      'TAG INPUT -> debug4->selectedSuggestionTag->',
+      searchState.selectedSuggestionTag
+    );
+  }, [searchState.selectedSuggestionIndex]);
 
   return (
     <div className="style.tagInput min-w-max">

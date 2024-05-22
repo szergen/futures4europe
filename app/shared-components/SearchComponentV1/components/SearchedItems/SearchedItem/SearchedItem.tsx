@@ -1,4 +1,5 @@
 import Tag from '@app/shared-components/Tag/Tag';
+import classNames from 'classnames';
 import React from 'react';
 
 export type SearchedItemProps = {
@@ -9,6 +10,7 @@ export type SearchedItemProps = {
   index: number;
   handleRemoveSearchedItem: (e: any) => void;
   tags: any[];
+  isSelected: boolean;
 };
 
 const SearchedItem: React.FC<SearchedItemProps> = ({
@@ -16,6 +18,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   index,
   handleRemoveSearchedItem,
   tags,
+  isSelected,
 }) => {
   const itemIncludesField =
     item.searchItem.includes(':') && item.searchItem.split(':').length === 2;
@@ -26,7 +29,13 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
 
   return (
-    <li key={index} className="flex mx-1 items-center">
+    <li
+      key={index}
+      className={classNames(
+        'flex mx-1 items-center',
+        isSelected && 'bg-blue-200'
+      )}
+    >
       {/* Field with Tag */}
       {itemIncludesField && tagData && (
         <span className="flex items-center">

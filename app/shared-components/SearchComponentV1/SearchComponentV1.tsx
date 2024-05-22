@@ -5,13 +5,10 @@ import Suggestions from './components/Suggestions/Suggestions';
 import Results from './components/Results/Results';
 import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
 import {
-  InitialData,
-  updateFilteredDataBasedOnClickedSuggestion,
+  removeSearchedItem,
   updateFilteredDataBasedOnClickedTag,
 } from './SearchComponentV1.utils';
 import SearchedItems from './components/SearchedItems/SearchedItems';
-import Fuse from 'fuse.js';
-import { init } from 'next/dist/compiled/webpack/webpack';
 // import { init } from 'next/dist/compiled/webpack/webpack';
 
 const SearchComponentV1 = () => {
@@ -29,6 +26,8 @@ const SearchComponentV1 = () => {
     showResults,
     searchedItems,
     clickedField,
+    selectedSuggestionIndex,
+    selectedSearchedItemIndex,
   } = searchState;
 
   // Searched Items - Selection Handlers
@@ -44,6 +43,22 @@ const SearchComponentV1 = () => {
   //     searchedItems: [...searchedItems, e?.target?.parentNode.innerText],
   //   }));
   // };
+
+  const handleSelectedSuggestion = (selectedSuggestionTag: any) => {
+    const {
+      matchedPages,
+      // matchedTagsBasedOnPages,
+      // matchedAssignmentsBasedOnPages,
+    } = updateFilteredDataBasedOnClickedTag(
+      selectedSuggestionTag,
+      filteredData
+    );
+    setSearchState((prevState) => ({
+      ...prevState,
+      selectedSuggestionTag: selectedSuggestionTag,
+      pageSuggestions: matchedPages,
+    }));
+  };
 
   const handleTagSuggestion = (e: any) => {
     e.preventDefault();
@@ -82,84 +97,10 @@ const SearchComponentV1 = () => {
       );
       console.log('filteredSearchItems--', filteredSearchItems);
 
-      //Filter the data based on the remaining search items
-      let updatedFilteredData = {
-        tags: initialData.tags,
-        pages: initialData.pages,
-        assignments: initialData.assignments,
-      };
-
-      if (filteredSearchItems.length !== 0) {
-        filteredSearchItems.forEach((item) => {
-          let matchedData = {
-            pages: [] as InitialData['pages'],
-            tags: [] as InitialData['tags'],
-            assignments: [] as InitialData['assignments'],
-          };
-
-          if (item.searchItemType === 'field-tag') {
-            const {
-              matchedPages,
-              matchedTagsBasedOnPages,
-              matchedAssignmentsBasedOnPages,
-            } = updateFilteredDataBasedOnClickedSuggestion(
-              item.searchItem,
-              filteredSearchItems.length > 1 ? updatedFilteredData : initialData
-            );
-            matchedData = {
-              pages: matchedPages as InitialData['pages'],
-              tags: matchedTagsBasedOnPages,
-              assignments: matchedAssignmentsBasedOnPages,
-            };
-          } else if (item.searchItemType === 'tag') {
-            const {
-              matchedPages,
-              // matchedTagsBasedOnPages,
-              // matchedAssignmentsBasedOnPages,
-            } = updateFilteredDataBasedOnClickedTag(
-              item.searchItem,
-              filteredSearchItems.length > 1 ? updatedFilteredData : initialData
-            );
-            matchedData = {
-              pages: matchedPages as InitialData['pages'],
-              tags: initialData.tags,
-              assignments: initialData.assignments,
-            };
-          } else if (item.searchItemType === 'text') {
-            const fusePagesOptions = {
-              keys: ['title', 'subttile', 'description'],
-              threshold: 0.4,
-              minMatchCharLength: 2,
-              includeMatches: true,
-              findAllMatches: true,
-            };
-            const fusePages = new Fuse(
-              updatedFilteredData.pages,
-              fusePagesOptions
-            );
-            const matchedPages = fusePages.search(item.searchItem);
-            console.log('debug3->matchedPages', matchedPages);
-            matchedData.pages = matchedPages.map(
-              (page) => page.item
-            ) as InitialData['pages'];
-          }
-
-          updatedFilteredData.pages = matchedData.pages;
-        });
-      } else {
-        updatedFilteredData.pages = initialData.pages;
-      }
-
-      console.log('updatedFilteredData', updatedFilteredData);
-
       setSearchState((prevState) => ({
         ...prevState,
         searchedItems: filteredSearchItems,
-        filteredData: {
-          tags: updatedFilteredData.tags,
-          pages: updatedFilteredData.pages,
-          assignments: updatedFilteredData.assignments,
-        },
+        filteredData: removeSearchedItem(initialData, filteredSearchItems),
         // results: updatedFilteredData.pages,
       }));
     }
@@ -183,6 +124,7 @@ const SearchComponentV1 = () => {
           searchedItems={searchedItems}
           handleRemoveSearchedItem={handleRemoveSearchedItem}
           tags={filteredData.tags}
+          selectedSearchedItemIndex={selectedSearchedItemIndex}
         />
         <TagInput initialData={initialData} filteredData={filteredData} />
       </div>
@@ -197,6 +139,8 @@ const SearchComponentV1 = () => {
           handleTagSuggestion={handleTagSuggestion}
           handleFieldSelection={handleFieldSelection}
           clickedField={clickedField}
+          handleSelectedSuggestion={handleSelectedSuggestion}
+          selectedSuggestionIndex={selectedSuggestionIndex}
         />
       )}
       {/* Results */}

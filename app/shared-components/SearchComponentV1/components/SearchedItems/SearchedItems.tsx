@@ -5,12 +5,14 @@ export type SearchedItemsProps = {
   searchedItems: any[];
   handleRemoveSearchedItem: (e: any) => void;
   tags: any[];
+  selectedSearchedItemIndex: number;
 };
 
 const SearchedItems: React.FC<SearchedItemsProps> = ({
   searchedItems,
   handleRemoveSearchedItem,
   tags,
+  selectedSearchedItemIndex,
 }) => {
   return (
     <ul className="style.searchedItems flex">
@@ -21,6 +23,10 @@ const SearchedItems: React.FC<SearchedItemsProps> = ({
           index={index}
           handleRemoveSearchedItem={handleRemoveSearchedItem}
           tags={tags}
+          isSelected={
+            selectedSearchedItemIndex === 0 &&
+            index === searchedItems.length - 1
+          }
         />
       ))}
     </ul>

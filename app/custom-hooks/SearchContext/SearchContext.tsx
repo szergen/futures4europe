@@ -2,7 +2,8 @@ import React, { createContext, useState, useContext } from 'react';
 // import { mockedSearch } from './mockedSearch';
 import { mockedAssignments } from './mockedAssignments';
 import { mockedPages } from './mockedPages';
-import { mockedTags } from './mockedTags';
+// import { mockedTags } from './mockedTags';
+import { mockedTags } from './SearchContext.utils';
 
 // Mocked Data
 const mockedInitialData = {
@@ -21,7 +22,7 @@ const mockedInitialData = {
     { tagType: 'sort', name: 'by established date' }, // organisation card doar!
     { tagType: 'sort', name: 'by date' }, // event doar!
     // Page Type Tags
-    { tagId: 252525, tagType: 'page type', name: 'card', popularity: 184 },
+    { tagId: 252524, tagType: 'page type', name: 'card', popularity: 184 },
     {
       tagId: 252525,
       tagType: 'page type',
@@ -154,7 +155,7 @@ const mockedInitialData = {
       files: null,
     },
     {
-      pageId: 129,
+      pageId: 128,
       title: 'Project Result X',
       subtitle: 'The Research and Innovation foresight community',
       description: null,
@@ -169,18 +170,54 @@ const mockedInitialData = {
   assignments: [
     {
       pageId: 125,
-      tagId: 2525,
+      tagId: 252526,
       field: 'pageType',
       tagName: 'person card',
     },
     {
       pageId: 125,
-      tagId: 2525,
+      tagId: 252524,
       field: 'pageType',
       tagName: 'card',
     },
     {
       pageId: 126,
+      tagId: 252525,
+      field: 'pageType',
+      tagName: 'organisation card',
+    },
+    {
+      pageId: 126,
+      tagId: 252524,
+      field: 'pageType',
+      tagName: 'card',
+    },
+    {
+      pageId: 127,
+      tagId: 252529,
+      field: 'pageType',
+      tagName: 'project card',
+    },
+    {
+      pageId: 127,
+      tagId: 252524,
+      field: 'pageType',
+      tagName: 'card',
+    },
+    {
+      pageId: 128,
+      tagId: 252529,
+      field: 'pageType',
+      tagName: 'project result',
+    },
+    {
+      pageId: 128,
+      tagId: 252524,
+      field: 'pageType',
+      tagName: 'post',
+    },
+    {
+      pageId: 128,
       tagId: 2626,
       field: 'pageType',
       tagName: 'Dorel Industries',
@@ -220,7 +257,6 @@ const mockedInitialData = {
       tagId: 3030,
       field: 'domain',
       tagName: 'Green Energy',
-      tagLine: 'Green Energy',
     },
     {
       pageId: 125,
@@ -250,6 +286,9 @@ export interface SearchState {
     searchItem: string;
     searchItemType: 'text' | 'tag' | 'field-tag';
   }[];
+  selectedSuggestionIndex: number;
+  selectedSuggestionTag: string;
+  selectedSearchedItemIndex: number;
 }
 
 const initialState: SearchState = {
@@ -267,6 +306,9 @@ const initialState: SearchState = {
   clickedField: '',
   clickedTag: '',
   searchedItems: [],
+  selectedSuggestionIndex: -1,
+  selectedSuggestionTag: '',
+  selectedSearchedItemIndex: -1,
 };
 
 export type SearchProviderProps = {

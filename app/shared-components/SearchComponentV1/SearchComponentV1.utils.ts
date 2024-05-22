@@ -1,3 +1,5 @@
+import Fuse from 'fuse.js';
+
 export const FieldTypes = [
   'activity-domain',
   'author',
@@ -192,3 +194,76 @@ export const uniqueResults = (results: Array<any>) =>
 
 export const extractFilterBy = (tags: Tags, clickedField: string) =>
   tags?.find((tag) => tag.name === clickedField)?.filter;
+
+export const removeSearchedItem = (
+  initialData: InitialData,
+  filteredSearchItems: {
+    searchItem: string;
+    searchItemType: 'text' | 'tag' | 'field-tag';
+  }[]
+) => {
+  let updatedFilteredData = {
+    tags: initialData.tags,
+    pages: initialData.pages,
+    assignments: initialData.assignments,
+  };
+
+  if (filteredSearchItems.length !== 0) {
+    filteredSearchItems.forEach((item) => {
+      let matchedData = {
+        pages: [] as InitialData['pages'],
+        tags: [] as InitialData['tags'],
+        assignments: [] as InitialData['assignments'],
+      };
+
+      if (item.searchItemType === 'field-tag') {
+        const {
+          matchedPages,
+          matchedTagsBasedOnPages,
+          matchedAssignmentsBasedOnPages,
+        } = updateFilteredDataBasedOnClickedSuggestion(
+          item.searchItem,
+          filteredSearchItems.length > 1 ? updatedFilteredData : initialData
+        );
+        matchedData = {
+          pages: matchedPages as InitialData['pages'],
+          tags: matchedTagsBasedOnPages,
+          assignments: matchedAssignmentsBasedOnPages,
+        };
+      } else if (item.searchItemType === 'tag') {
+        const {
+          matchedPages,
+          // matchedTagsBasedOnPages,
+          // matchedAssignmentsBasedOnPages,
+        } = updateFilteredDataBasedOnClickedTag(
+          item.searchItem,
+          filteredSearchItems.length > 1 ? updatedFilteredData : initialData
+        );
+        matchedData = {
+          pages: matchedPages as InitialData['pages'],
+          tags: initialData.tags,
+          assignments: initialData.assignments,
+        };
+      } else if (item.searchItemType === 'text') {
+        const fusePagesOptions = {
+          keys: ['title', 'subttile', 'description'],
+          threshold: 0.4,
+          minMatchCharLength: 2,
+          includeMatches: true,
+          findAllMatches: true,
+        };
+        const fusePages = new Fuse(updatedFilteredData.pages, fusePagesOptions);
+        const matchedPages = fusePages.search(item.searchItem);
+        console.log('debug3->matchedPages', matchedPages);
+        matchedData.pages = matchedPages.map(
+          (page) => page.item
+        ) as InitialData['pages'];
+      }
+
+      updatedFilteredData.pages = matchedData.pages;
+    });
+  } else {
+    updatedFilteredData.pages = initialData.pages;
+  }
+  return updatedFilteredData;
+};
