@@ -53,6 +53,26 @@ export const fieldIncludePageTypes = {
   activity: ['person card', 'organisation card'],
 };
 
+export const sortTags = [
+  {
+    tagType: 'sort',
+    name: 'by begin date',
+    sortAvailableFor: 'project card',
+  }, // project card doar!
+  { tagType: 'sort', name: 'by end date', sortAvailableFor: 'project card' }, // project card doar!
+  {
+    tagType: 'sort',
+    name: 'by publication date',
+    sortAvailableFor: 'project result',
+  }, // project result doar!
+  {
+    tagType: 'sort',
+    name: 'by established date',
+    sortAvailableFor: 'organization card',
+  }, // organisation card doar!
+  { tagType: 'sort', name: 'by date', sortAvailableFor: 'event' }, // event doar!
+];
+
 export const mockedTags = [
   {
     tagId: 111111,

@@ -6,10 +6,10 @@ import Results from './components/Results/Results';
 import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
 import {
   removeSearchedItem,
+  sortResultBySortTags,
   updateFilteredDataBasedOnClickedTag,
 } from './SearchComponentV1.utils';
 import SearchedItems from './components/SearchedItems/SearchedItems';
-// import { init } from 'next/dist/compiled/webpack/webpack';
 
 const SearchComponentV1 = () => {
   // SearchContext
@@ -28,6 +28,10 @@ const SearchComponentV1 = () => {
     clickedField,
     selectedSuggestionIndex,
     selectedSearchedItemIndex,
+    activeSelection,
+    inputText,
+    sortTags,
+    selectedSortTag,
   } = searchState;
 
   // Searched Items - Selection Handlers
@@ -44,20 +48,45 @@ const SearchComponentV1 = () => {
   //   }));
   // };
 
-  const handleSelectedSuggestion = (selectedSuggestionTag: any) => {
-    const {
-      matchedPages,
-      // matchedTagsBasedOnPages,
-      // matchedAssignmentsBasedOnPages,
-    } = updateFilteredDataBasedOnClickedTag(
-      selectedSuggestionTag,
-      filteredData
-    );
+  const handleSelectedSortTag = (e: any) => {
+    e.preventDefault();
+    console.log('Clicked on sortTag:', e.target.innerText);
     setSearchState((prevState) => ({
       ...prevState,
-      selectedSuggestionTag: selectedSuggestionTag,
-      pageSuggestions: matchedPages,
+      selectedSortTag: e?.target?.innerText,
+      showHelp: false,
+      showSuggestions: false,
+      results: sortResultBySortTags(results, e?.target?.innerText),
     }));
+  };
+
+  const handleSelectedSuggestion = (
+    selectedSuggestionTag: any,
+    selectedSuggestionType: 'tag' | 'field' | 'field-tag'
+  ) => {
+    if (selectedSuggestionType === 'tag') {
+      const {
+        matchedPages,
+        // matchedTagsBasedOnPages,
+        // matchedAssignmentsBasedOnPages,
+      } = updateFilteredDataBasedOnClickedTag(
+        selectedSuggestionTag,
+        filteredData
+      );
+      setSearchState((prevState) => ({
+        ...prevState,
+        selectedSuggestionTag: selectedSuggestionTag,
+        pageSuggestions: matchedPages,
+        activeSelection: 'tag',
+      }));
+    } else if (selectedSuggestionType === 'field') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        // clickedField: selectedSuggestionTag,
+        selectedSuggestionTag: selectedSuggestionTag,
+        activeSelection: 'field',
+      }));
+    }
   };
 
   const handleTagSuggestion = (e: any) => {
@@ -100,7 +129,11 @@ const SearchComponentV1 = () => {
       setSearchState((prevState) => ({
         ...prevState,
         searchedItems: filteredSearchItems,
-        filteredData: removeSearchedItem(initialData, filteredSearchItems),
+        filteredData: removeSearchedItem(
+          initialData,
+          filteredSearchItems,
+          inputText
+        ),
         // results: updatedFilteredData.pages,
       }));
     }
@@ -127,6 +160,7 @@ const SearchComponentV1 = () => {
           selectedSearchedItemIndex={selectedSearchedItemIndex}
         />
         <TagInput initialData={initialData} filteredData={filteredData} />
+        {selectedSortTag && <div>Sorted By: {selectedSortTag}</div>}
       </div>
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
@@ -141,10 +175,20 @@ const SearchComponentV1 = () => {
           clickedField={clickedField}
           handleSelectedSuggestion={handleSelectedSuggestion}
           selectedSuggestionIndex={selectedSuggestionIndex}
+          activeSelection={activeSelection}
+          searchedItems={searchedItems}
+          sortTags={sortTags}
+          handleSelectedSortTag={handleSelectedSortTag}
         />
       )}
       {/* Results */}
-      {showResults && <Results results={results} />}
+      {showResults && (
+        <Results
+          results={results}
+          searchedItems={searchedItems}
+          assignments={initialData.assignments}
+        />
+      )}
     </div>
   );
 };

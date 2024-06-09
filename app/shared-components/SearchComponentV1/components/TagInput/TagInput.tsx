@@ -10,7 +10,6 @@ import {
   extractFilterBy,
   removeSearchedItem,
 } from '../../SearchComponentV1.utils';
-// import { init } from 'next/dist/compiled/webpack/webpack';
 
 export type TagInputProps = {
   initialData: InitialData;
@@ -33,20 +32,28 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
 
   // Fuzzy search initialization
   const fusePagesOptions = {
-    keys: ['title', 'subttile', 'description'],
-    threshold: 0.4,
-    minMatchCharLength: 2,
+    keys: ['title', 'description'],
+    threshold: 0.1,
+    minMatchCharLength: Math.min(
+      ...input.split(' ').map((word) => word.length)
+    ),
     includeMatches: true,
-    findAllMatches: true,
+    ignoreLocation: true,
+    // findAllMatches: true,
+    useExtendedSearch: true,
   };
   const fusePages = new Fuse(filteredData.pages, fusePagesOptions);
 
   const fuseFieldSuggestionsOptions = {
     keys: ['name'],
-    threshold: 0.6,
-    minMatchCharLength: 2,
+    threshold: 0.1,
+    minMatchCharLength: Math.min(
+      ...input.split(' ').map((word) => word.length)
+    ),
     includeMatches: true,
     // findAllMatches: true,
+    ignoreLocation: true,
+    useExtendedSearch: true,
   };
 
   const fuseFieldSuggestions = new Fuse(
@@ -55,10 +62,15 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   );
 
   const fuseTagSuggestionsOptions = {
-    keys: ['name'],
-    threshold: 0.6,
-    minMatchCharLength: 2,
+    keys: ['name', 'tagLine'],
+    threshold: 0,
+    minMatchCharLength: Math.min(
+      ...input.split(' ').map((word) => word.length)
+    ),
     includeMatches: true,
+    ignoreLocation: true,
+    //
+    useExtendedSearch: true,
     // findAllMatches: true,
   };
 
@@ -96,10 +108,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       // );
       setSearchState((prevState) => ({
         ...prevState,
-        selectedSuggestionIndex: Math.min(
-          prevState.selectedSuggestionIndex + 1,
-          9
-        ),
+        // selectedSuggestionIndex: Math.min(
+        //   prevState.selectedSuggestionIndex + 1,
+        //   9
+        // ),
+        selectedSuggestionIndex: prevState.selectedSuggestionIndex + 1,
       }));
     } else if (event.key === 'ArrowUp') {
       // setHighlightedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
@@ -117,7 +130,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           showSuggestions: false,
           showHelp: false,
           showResults: true,
-          results: resultsToShow,
+          results: searchState.searchedItems.length ? resultsToShow : [],
           searchedItems: input
             ? [
                 ...searchState.searchedItems,
@@ -130,7 +143,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             assignments: initialData.assignments,
           },
           selectedSuggestionIndex: -1,
-          selectedSuggestionTag: '',
+          // selectedSuggestionTag: '',
         }));
         // input[input.length - 1] !== '"' && setInput(input + '"');
         setInput('');
@@ -140,9 +153,18 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           showSuggestions: false,
           showHelp: true,
           // showResults: true,
-          clickedTag: searchState.selectedSuggestionTag,
+          clickedTag:
+            searchState.activeSelection === 'tag'
+              ? searchState.selectedSuggestionTag
+              : '',
           selectedSuggestionIndex: -1,
           selectedSuggestionTag: '',
+          clickedField:
+            searchState.activeSelection === 'field'
+              ? searchState.selectedSuggestionTag
+              : prevState.clickedField,
+
+          activeSelection: 'tag',
         }));
         setInput('');
       }
@@ -169,7 +191,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           searchedItems: searchState.searchedItems.slice(0, -1),
           filteredData: removeSearchedItem(
             initialData,
-            searchState.searchedItems.slice(0, -1)
+            searchState.searchedItems.slice(0, -1),
+            input
           ),
         }));
       }
@@ -187,6 +210,23 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const results = fusePages.search(searchInput);
       const fieldsSuggestions = fuseFieldSuggestions.search(searchInput);
       const tagsSuggestions = fuseTagSuggestions.search(searchInput);
+      // const trimmedTagSuggestons = tagsSuggestions?.map((tag) => {
+      //   return {
+      //     ...tag,
+      //     matches: [
+      //       {
+      //         indices: tag?.matches?.[0]?.indices?.filter(
+      //           (indice) =>
+      //             indice?.[1] - indice?.[0] > input.length - 2 ||
+      //             indice?.[1] - indice?.[0] > input.split(' ').length - 1
+      //         ),
+      //         key: tag?.matches?.[0]?.key,
+      //       },
+      //     ],
+      //   };
+      // });
+      console.log('debug6->tagsSuggestions->', tagsSuggestions);
+      // console.log('debug6->trimmedTagSuggestons->', trimmedTagSuggestons);
 
       const mergedResults =
         searchState.searchedItems.length > 0
@@ -216,17 +256,20 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         fieldSuggestions: highlightedResults(fieldsSuggestions),
         tagSuggestions: filterByField
           ? highlightedResults(
-              tagsSuggestions.filter(
+              tagsSuggestions?.filter(
                 (tag) =>
                   tag?.item.tagType !== 'field' &&
                   tag?.item.tagType !== 'sort' &&
                   tag?.item.tagType === filterByField
               )
             )
-          : highlightedResults(tagsSuggestions),
-        pageSuggestions: uniqueResults(mergedResults).map(
-          (result) => result.item
-        ),
+          : highlightedResults(tagsSuggestions)?.sort(
+              (a, b) => b?.popularity - a?.popularity
+            ),
+        // pageSuggestions: uniqueResults(mergedResults).map(
+        //   (result) => result.item
+        // ),
+        pageSuggestions: highlightedResults(mergedResults),
         showSuggestions: true,
         showHelp: false,
         // filteredData: {
@@ -234,6 +277,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         //   tags: initialData.tags,
         //   assignments: initialData.assignments,
         // },
+        inputText: input,
       }));
       // console.log('Fuzzy search results:', results);
       // }
@@ -288,6 +332,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             tag.tagType === filterByField
         ),
         pageSuggestions: filteredPages,
+        inputText: '',
       }));
       setInput('');
     } else {
@@ -335,6 +380,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
         ),
         pageSuggestions: matchedPages,
+        inputText: '',
       }));
       setInput('');
       setResultsToShow(
@@ -374,6 +420,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
         ),
         pageSuggestions: matchedPages,
+        inputText: '',
       }));
       setInput('');
       setFilterByField('');

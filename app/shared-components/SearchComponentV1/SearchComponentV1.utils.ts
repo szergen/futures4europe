@@ -62,7 +62,10 @@ export const highlightedResults = (results: Array<any>) => {
     let highlightedTagType = result.item.tagType;
     let highlightedName = result.item.name;
     let highlightedTitle = result.item.title;
+    let highlightedTagLine = result.item.tagLine;
+    let highlightedDescription = result.item.description;
 
+    // if (result.matches.length > 0) {
     for (const match of result.matches || []) {
       switch (match.key) {
         case 'name':
@@ -80,8 +83,18 @@ export const highlightedResults = (results: Array<any>) => {
         case 'tagType':
           highlightedTagType = highlight(highlightedTagType, match.indices);
           break;
+        case 'tagLine':
+          highlightedTagLine = highlight(highlightedTagLine, match.indices);
+          break;
+        case 'description':
+          highlightedDescription = highlight(
+            highlightedDescription,
+            match.indices
+          );
+          break;
       }
     }
+    // }
 
     return {
       name: highlightedName,
@@ -93,9 +106,9 @@ export const highlightedResults = (results: Array<any>) => {
       picture: result.item.picture,
       pageLink: result.item.pageLink,
       popularity: result.item.popularity,
-      tagLine: result.item.tagLine,
+      tagLine: highlightedTagLine,
       pictures: result.item.pictures,
-      description: result.item.description,
+      description: highlightedDescription,
       subtitle: result.item.subtitle,
     };
   });
@@ -200,7 +213,8 @@ export const removeSearchedItem = (
   filteredSearchItems: {
     searchItem: string;
     searchItemType: 'text' | 'tag' | 'field-tag';
-  }[]
+  }[],
+  inputText: string
 ) => {
   let updatedFilteredData = {
     tags: initialData.tags,
@@ -247,10 +261,13 @@ export const removeSearchedItem = (
       } else if (item.searchItemType === 'text') {
         const fusePagesOptions = {
           keys: ['title', 'subttile', 'description'],
-          threshold: 0.4,
-          minMatchCharLength: 2,
+          threshold: 0.1,
+          minMatchCharLength: Math.min(
+            ...inputText?.split(' ')?.map((word) => word.length)
+          ),
           includeMatches: true,
-          findAllMatches: true,
+          ignoreLocation: true,
+          useExtendedSearch: true,
         };
         const fusePages = new Fuse(updatedFilteredData.pages, fusePagesOptions);
         const matchedPages = fusePages.search(item.searchItem);
@@ -266,4 +283,34 @@ export const removeSearchedItem = (
     updatedFilteredData.pages = initialData.pages;
   }
   return updatedFilteredData;
+};
+
+export const sortResultBySortTags = (
+  results: InitialData['pages'],
+  selectedSortTag: string
+) => {
+  switch (selectedSortTag) {
+    case 'by begin date':
+      return results.sort(
+        (a, b) => new Date(a?.beginDate) - new Date(b?.beginDate)
+      );
+    case 'by end date':
+      return results.sort(
+        (a, b) => new Date(a?.endDate) - new Date(b?.endDate)
+      );
+    case 'by publication date':
+      return results.sort(
+        (a, b) => new Date(a?.publicationDate) - new Date(b?.publicationDate)
+      );
+    case 'by established date':
+      return results.sort(
+        (a, b) => new Date(a?.establishedDate) - new Date(b?.establishedDate)
+      );
+    case 'by date':
+      return results.sort(
+        (a, b) => new Date(a?.eventDate) - new Date(b?.eventDate)
+      );
+    default:
+      return results;
+  }
 };

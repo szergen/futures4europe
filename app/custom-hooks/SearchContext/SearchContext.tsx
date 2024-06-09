@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 import { mockedAssignments } from './mockedAssignments';
 import { mockedPages } from './mockedPages';
 // import { mockedTags } from './mockedTags';
-import { mockedTags } from './SearchContext.utils';
+import { mockedTags, sortTags } from './SearchContext.utils';
 
 // Mocked Data
 const mockedInitialData = {
@@ -16,11 +16,6 @@ const mockedInitialData = {
     { tagType: 'field', name: 'coordinator', filter: 'person' },
     { tagType: 'field', name: 'activity', filter: 'domain' },
     // Sort Tags
-    { tagType: 'sort', name: 'by begin date' }, // project card doar!
-    { tagType: 'sort', name: 'by end date' }, // project card doar!
-    { tagType: 'sort', name: 'by publication date' }, // project result doar!
-    { tagType: 'sort', name: 'by established date' }, // organisation card doar!
-    { tagType: 'sort', name: 'by date' }, // event doar!
     // Page Type Tags
     { tagId: 252524, tagType: 'page type', name: 'card', popularity: 184 },
     {
@@ -142,6 +137,7 @@ const mockedInitialData = {
       pageType: ['organisation card', 'card'],
       pictures: 'https://picsum.photos/id/102/300/200',
       files: null,
+      establishedDate: '2000-01-01',
     },
     {
       pageId: 127,
@@ -153,6 +149,22 @@ const mockedInitialData = {
       pageType: ['project card', 'card'],
       pictures: 'https://picsum.photos/id/103/300/200',
       files: null,
+      beginDate: '2021-01-01',
+      endDate: '2023-12-31',
+      activity: ['Agriculture', 'Green Energy'],
+    },
+    {
+      pageId: 172,
+      title: 'NEWer but shorter Project X',
+      subtitle: 'The Research and Innovation foresight community',
+      description: 'The Research and Innovation foresight community',
+      external_links: 'Mutual Learning Exercise, Futures literacy',
+      logo: 'https://static.wixstatic.com/media/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,enc_auto/85700c_052535d1ee184b389d8aaa13cde8598e~mv2.png',
+      pageType: ['project card', 'card'],
+      pictures: 'https://picsum.photos/id/103/300/200',
+      files: null,
+      beginDate: '2022-01-01',
+      endDate: '2022-12-31',
     },
     {
       pageId: 128,
@@ -164,6 +176,7 @@ const mockedInitialData = {
       pageType: ['project result', 'post'],
       pictures: 'https://picsum.photos/id/201/300/200',
       files: null,
+      publicationDate: '2022-12-31',
     },
     ...mockedPages,
   ],
@@ -200,6 +213,18 @@ const mockedInitialData = {
     },
     {
       pageId: 127,
+      tagId: 252524,
+      field: 'pageType',
+      tagName: 'card',
+    },
+    {
+      pageId: 172,
+      tagId: 252529,
+      field: 'pageType',
+      tagName: 'project card',
+    },
+    {
+      pageId: 172,
       tagId: 252524,
       field: 'pageType',
       tagName: 'card',
@@ -289,6 +314,11 @@ export interface SearchState {
   selectedSuggestionIndex: number;
   selectedSuggestionTag: string;
   selectedSearchedItemIndex: number;
+  activeSelection: 'field' | 'tag' | 'field-tag' | '';
+  sortBy: 'relevance' | 'byBeginDate' | 'byEstablishedDate';
+  inputText: string;
+  sortTags: typeof sortTags;
+  selectedSortTag: string;
 }
 
 const initialState: SearchState = {
@@ -309,6 +339,11 @@ const initialState: SearchState = {
   selectedSuggestionIndex: -1,
   selectedSuggestionTag: '',
   selectedSearchedItemIndex: -1,
+  activeSelection: '',
+  sortBy: 'relevance',
+  inputText: '',
+  sortTags: sortTags,
+  selectedSortTag: '',
 };
 
 export type SearchProviderProps = {
