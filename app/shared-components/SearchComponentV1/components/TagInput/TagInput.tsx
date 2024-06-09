@@ -26,10 +26,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const { searchState, setSearchState } = useSearch();
   const { clickedSuggestion, clickedField, clickedTag } = searchState;
 
-  // KeyEvents for the input
-  // const [selectedTag, setSelectedTag] = useState(null);
-  // const [highlightedIndex, setHighlightedIndex] = useState(-1);
-
   // Fuzzy search initialization
   const fusePagesOptions = {
     keys: ['title', 'description'],
@@ -84,8 +80,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const handleOnBlur = () => {
     setSearchState((prevState) => ({
       ...prevState,
-      // showSuggestions: !!input || !!clickedField || !!clickedTag,
-      // showHelp: !input && !clickedField && !clickedTag,
       showSuggestions: false,
       showHelp: false,
     }));
@@ -98,7 +92,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       showHelp: !input && !clickedField && !clickedTag,
     }));
     setTagWasFocused(true);
-    // setInput('');
   };
 
   const handleKeyDown = (event: any) => {
@@ -108,10 +101,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       // );
       setSearchState((prevState) => ({
         ...prevState,
-        // selectedSuggestionIndex: Math.min(
-        //   prevState.selectedSuggestionIndex + 1,
-        //   9
-        // ),
         selectedSuggestionIndex: prevState.selectedSuggestionIndex + 1,
       }));
     } else if (event.key === 'ArrowUp') {
@@ -210,47 +199,14 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const results = fusePages.search(searchInput);
       const fieldsSuggestions = fuseFieldSuggestions.search(searchInput);
       const tagsSuggestions = fuseTagSuggestions.search(searchInput);
-      // const trimmedTagSuggestons = tagsSuggestions?.map((tag) => {
-      //   return {
-      //     ...tag,
-      //     matches: [
-      //       {
-      //         indices: tag?.matches?.[0]?.indices?.filter(
-      //           (indice) =>
-      //             indice?.[1] - indice?.[0] > input.length - 2 ||
-      //             indice?.[1] - indice?.[0] > input.split(' ').length - 1
-      //         ),
-      //         key: tag?.matches?.[0]?.key,
-      //       },
-      //     ],
-      //   };
-      // });
       console.log('debug6->tagsSuggestions->', tagsSuggestions);
-      // console.log('debug6->trimmedTagSuggestons->', trimmedTagSuggestons);
 
-      const mergedResults =
-        searchState.searchedItems.length > 0
-          ? [
-              ...results,
-              // ...matchedFields,
-              // ...fieldsSuggestions,
-              // ...tagsSuggestions,
-            ]
-          : [...results];
-      // console.log('debug2->mergedResults:', mergedResults);
-      // console.log('debug2->filteredData:', filteredData);
       if (clickedField) {
         setFilterByField(extractFilterBy(initialData.tags, clickedField) || '');
-
-        // console.log('filterByField:', filterByField);
       }
 
-      // console.log('uniqueResults:', uniqueResults);
+      setResultsToShow(uniqueResults(results)?.map((result) => result?.item));
 
-      setResultsToShow(
-        uniqueResults(mergedResults)?.map((result) => result?.item)
-      );
-      // const highlightedData = highlightedResults(results);
       setSearchState((prevState) => ({
         ...prevState,
         fieldSuggestions: highlightedResults(fieldsSuggestions),
@@ -266,21 +222,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           : highlightedResults(tagsSuggestions)?.sort(
               (a, b) => b?.popularity - a?.popularity
             ),
-        // pageSuggestions: uniqueResults(mergedResults).map(
-        //   (result) => result.item
-        // ),
-        pageSuggestions: highlightedResults(mergedResults),
+        pageSuggestions: highlightedResults(results),
         showSuggestions: true,
         showHelp: false,
-        // filteredData: {
-        //   pages: uniqueResults(mergedResults).map((result) => result.item),
-        //   tags: initialData.tags,
-        //   assignments: initialData.assignments,
-        // },
         inputText: input,
       }));
-      // console.log('Fuzzy search results:', results);
-      // }
     } else {
       tagWasFocused &&
         setSearchState((prevState) => ({
@@ -297,8 +243,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const filteredAssignments = filteredData.assignments.filter(
         (item) => item.field === clickedField
       );
-
-      // console.log('debug1->filteredAssignments:', filteredAssignments);
 
       const filteredPages = filteredData.pages.filter((page) =>
         filteredAssignments.some(
@@ -347,9 +291,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   useEffect(() => {
     if (clickedTag && clickedField) {
       const composedTag = `${clickedField}:${clickedTag}`;
-      // console.log('debug1->composedTag:', composedTag);
-
-      // console.log('debug1->searchedItemsNewArray:', searchedItemsNewArray);
       const {
         matchedPages,
         matchedTagsBasedOnPages,
@@ -389,13 +330,10 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         )
       );
     } else if (clickedTag && !clickedField) {
-      const {
-        matchedPages,
-        // matchedTagsBasedOnPages,
-        // matchedAssignmentsBasedOnPages,
-      } = updateFilteredDataBasedOnClickedTag(clickedTag, filteredData);
-
-      // console.log('debug1->matchedPages:', matchedPages);
+      const { matchedPages } = updateFilteredDataBasedOnClickedTag(
+        clickedTag,
+        filteredData
+      );
 
       setSearchState((prevState) => ({
         ...prevState,

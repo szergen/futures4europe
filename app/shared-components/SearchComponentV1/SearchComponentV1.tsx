@@ -34,20 +34,6 @@ const SearchComponentV1 = () => {
     selectedSortTag,
   } = searchState;
 
-  // Searched Items - Selection Handlers
-  // const handleClickedSuggestion = (e: any) => {
-  //   e.preventDefault();
-  //   console.log(
-  //     'Clicked on tag of clickedSuggestion:',
-  //     e.target.parentNode.innerText
-  //   );
-  //   setSearchState((prevState) => ({
-  //     ...prevState,
-  //     clickedSuggestion: e?.target?.parentNode.innerText,
-  //     searchedItems: [...searchedItems, e?.target?.parentNode.innerText],
-  //   }));
-  // };
-
   const handleSelectedSortTag = (e: any) => {
     e.preventDefault();
     console.log('Clicked on sortTag:', e.target.innerText);
@@ -65,11 +51,7 @@ const SearchComponentV1 = () => {
     selectedSuggestionType: 'tag' | 'field' | 'field-tag'
   ) => {
     if (selectedSuggestionType === 'tag') {
-      const {
-        matchedPages,
-        // matchedTagsBasedOnPages,
-        // matchedAssignmentsBasedOnPages,
-      } = updateFilteredDataBasedOnClickedTag(
+      const { matchedPages } = updateFilteredDataBasedOnClickedTag(
         selectedSuggestionTag,
         filteredData
       );
