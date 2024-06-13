@@ -55,6 +55,7 @@ const SearchComponentV1 = () => {
         selectedSuggestionTag,
         filteredData
       );
+      console.log('matchedPages', matchedPages);
       setSearchState((prevState) => ({
         ...prevState,
         selectedSuggestionTag: selectedSuggestionTag,
@@ -128,7 +129,7 @@ const SearchComponentV1 = () => {
   useEffect(() => {
     setSearchState((prevState) => ({
       ...prevState,
-      pageSuggestions: results,
+      pageSuggestions: results.map((page) => ({ item: page })),
     }));
   }, [results]);
 
@@ -161,6 +162,7 @@ const SearchComponentV1 = () => {
           searchedItems={searchedItems}
           sortTags={sortTags}
           handleSelectedSortTag={handleSelectedSortTag}
+          inputText={inputText}
         />
       )}
       {/* Results */}

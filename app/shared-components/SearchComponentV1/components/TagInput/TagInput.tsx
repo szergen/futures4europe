@@ -9,6 +9,8 @@ import {
   uniqueResults,
   extractFilterBy,
   removeSearchedItem,
+  wordByWordSearch,
+  highlightMatches,
 } from '../../SearchComponentV1.utils';
 
 export type TagInputProps = {
@@ -27,55 +29,55 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const { clickedSuggestion, clickedField, clickedTag } = searchState;
 
   // Fuzzy search initialization
-  const fusePagesOptions = {
-    keys: ['title', 'description'],
-    threshold: 0.1,
-    minMatchCharLength: Math.min(
-      ...input.split(' ').map((word) => word.length)
-    ),
-    includeMatches: true,
-    ignoreLocation: true,
-    // findAllMatches: true,
-    useExtendedSearch: true,
-  };
-  const fusePages = new Fuse(filteredData.pages, fusePagesOptions);
+  // const fusePagesOptions = {
+  //   keys: ['title', 'description'],
+  //   threshold: 0.1,
+  //   minMatchCharLength: Math.min(
+  //     ...input.split(' ').map((word) => word.length)
+  //   ),
+  //   includeMatches: true,
+  //   ignoreLocation: true,
+  //   // findAllMatches: true,
+  //   useExtendedSearch: true,
+  // };
+  // const fusePages = new Fuse(filteredData.pages, fusePagesOptions);
 
-  const fuseFieldSuggestionsOptions = {
-    keys: ['name'],
-    threshold: 0.1,
-    minMatchCharLength: Math.min(
-      ...input.split(' ').map((word) => word.length)
-    ),
-    includeMatches: true,
-    // findAllMatches: true,
-    ignoreLocation: true,
-    useExtendedSearch: true,
-  };
+  // const fuseFieldSuggestionsOptions = {
+  //   keys: ['name'],
+  //   threshold: 0.1,
+  //   minMatchCharLength: Math.min(
+  //     ...input.split(' ').map((word) => word.length)
+  //   ),
+  //   includeMatches: true,
+  //   // findAllMatches: true,
+  //   ignoreLocation: true,
+  //   useExtendedSearch: true,
+  // };
 
-  const fuseFieldSuggestions = new Fuse(
-    filteredData.tags.filter((tag) => tag.tagType === 'field'),
-    fuseFieldSuggestionsOptions
-  );
+  // const fuseFieldSuggestions = new Fuse(
+  //   filteredData.tags.filter((tag) => tag.tagType === 'field'),
+  //   fuseFieldSuggestionsOptions
+  // );
 
-  const fuseTagSuggestionsOptions = {
-    keys: ['name', 'tagLine'],
-    threshold: 0,
-    minMatchCharLength: Math.min(
-      ...input.split(' ').map((word) => word.length)
-    ),
-    includeMatches: true,
-    ignoreLocation: true,
-    //
-    useExtendedSearch: true,
-    // findAllMatches: true,
-  };
+  // const fuseTagSuggestionsOptions = {
+  //   keys: ['name', 'tagLine'],
+  //   threshold: 0,
+  //   minMatchCharLength: Math.min(
+  //     ...input.split(' ').map((word) => word.length)
+  //   ),
+  //   includeMatches: true,
+  //   ignoreLocation: true,
+  //   //
+  //   useExtendedSearch: true,
+  //   // findAllMatches: true,
+  // };
 
-  const fuseTagSuggestions = new Fuse(
-    filteredData.tags.filter(
-      (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
-    ),
-    fuseTagSuggestionsOptions
-  );
+  // const fuseTagSuggestions = new Fuse(
+  //   filteredData.tags.filter(
+  //     (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
+  //   ),
+  //   fuseTagSuggestionsOptions
+  // );
 
   const handleOnBlur = () => {
     setSearchState((prevState) => ({
@@ -196,37 +198,85 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const searchInput = input;
       setTagWasFocused(true);
 
-      const results = fusePages.search(searchInput);
-      const fieldsSuggestions = fuseFieldSuggestions.search(searchInput);
-      const tagsSuggestions = fuseTagSuggestions.search(searchInput);
-      console.log('debug6->tagsSuggestions->', tagsSuggestions);
+      // Word by word search
+      const pageSuggestions = wordByWordSearch(input, filteredData.pages, [
+        'title',
+        'subtitle',
+        'description',
+      ]);
+
+      const fieldSuggestions = wordByWordSearch(
+        input,
+        filteredData.tags.filter((tag) => tag.tagType === 'field'),
+        ['name', 'tagLine']
+      );
+
+      const tagSuggestions = wordByWordSearch(
+        input,
+        filteredData.tags.filter(
+          (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
+        ),
+        ['name', 'tagLine']
+      );
+
+      // Initialize Fuzzy Search
+      // const results = fusePages.search(searchInput);
+      // const fieldsSuggestions = fuseFieldSuggestions.search(searchInput);
+      // const tagsSuggestions = fuseTagSuggestions.search(searchInput);
+      // setResultsToShow(uniqueResults(results)?.map((result) => result?.item));
+      // console.log('debug6->tagsSuggestions->', tagsSuggestions);
 
       if (clickedField) {
         setFilterByField(extractFilterBy(initialData.tags, clickedField) || '');
       }
+      // Update results local state with unique results
+      setResultsToShow(
+        uniqueResults(pageSuggestions)?.map((result) => result?.item)
+      );
 
-      setResultsToShow(uniqueResults(results)?.map((result) => result?.item));
+      console.log('debug2->tagSuggestions', tagSuggestions);
+      console.log('debug2->pageSuggestions', pageSuggestions);
 
       setSearchState((prevState) => ({
         ...prevState,
-        fieldSuggestions: highlightedResults(fieldsSuggestions),
+        fieldSuggestions: fieldSuggestions,
         tagSuggestions: filterByField
-          ? highlightedResults(
-              tagsSuggestions?.filter(
-                (tag) =>
-                  tag?.item.tagType !== 'field' &&
-                  tag?.item.tagType !== 'sort' &&
-                  tag?.item.tagType === filterByField
-              )
+          ? tagSuggestions?.filter(
+              (tag) =>
+                tag?.item.tagType !== 'field' &&
+                tag?.item.tagType !== 'sort' &&
+                tag?.item.tagType === filterByField
             )
-          : highlightedResults(tagsSuggestions)?.sort(
-              (a, b) => b?.popularity - a?.popularity
+          : tagSuggestions?.sort(
+              (a, b) => b?.item?.popularity - a?.item?.popularity
             ),
-        pageSuggestions: highlightedResults(results),
+        pageSuggestions: pageSuggestions,
         showSuggestions: true,
         showHelp: false,
         inputText: input,
       }));
+
+      // Fuzzy set state
+      // setSearchState((prevState) => ({
+      //   ...prevState,
+      //   fieldSuggestions: highlightedResults(fieldsSuggestions),
+      //   tagSuggestions: filterByField
+      //     ? highlightedResults(
+      //         tagsSuggestions?.filter(
+      //           (tag) =>
+      //             tag?.item.tagType !== 'field' &&
+      //             tag?.item.tagType !== 'sort' &&
+      //             tag?.item.tagType === filterByField
+      //         )
+      //       )
+      //     : highlightedResults(tagsSuggestions)?.sort(
+      //         (a, b) => b?.popularity - a?.popularity
+      //       ),
+      //   pageSuggestions: highlightedResults(results),
+      //   showSuggestions: true,
+      //   showHelp: false,
+      //   inputText: input,
+      // }));
     } else {
       tagWasFocused &&
         setSearchState((prevState) => ({
@@ -293,8 +343,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const composedTag = `${clickedField}:${clickedTag}`;
       const {
         matchedPages,
-        matchedTagsBasedOnPages,
-        matchedAssignmentsBasedOnPages,
+        // matchedTagsBasedOnPages,
+        // matchedAssignmentsBasedOnPages,
       } = updateFilteredDataBasedOnClickedSuggestion(composedTag, filteredData);
 
       setSearchState((prevState) => ({
@@ -337,6 +387,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
 
       setSearchState((prevState) => ({
         ...prevState,
+        showHelp: true,
+        showSuggestions: false,
         clickedTag: '',
         searchedItems: [
           ...searchState.searchedItems,
@@ -347,7 +399,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         ],
         // results: matchedPages,
         filteredData: {
-          pages: matchedPages,
+          pages: matchedPages.map((page) => page.item),
           tags: initialData.tags,
           assignments: initialData.assignments,
         },
@@ -363,9 +415,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       setInput('');
       setFilterByField('');
       setResultsToShow(
-        uniqueResults(matchedPages.map((page) => ({ item: page }))).map(
-          (result) => result.item
-        )
+        uniqueResults(matchedPages).map((result) => result.item)
       );
     }
   }, [clickedTag]);

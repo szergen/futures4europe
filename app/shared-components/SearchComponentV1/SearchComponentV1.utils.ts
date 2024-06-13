@@ -31,6 +31,11 @@ export type InitialData = {
     description: string;
     external_links: string;
     files: null;
+    beginDate?: string;
+    endDate?: string;
+    publicationDate?: string;
+    establishedDate?: string;
+    eventDate?: string;
   }[];
   tags: Tags;
   assignments: {
@@ -41,77 +46,111 @@ export type InitialData = {
   }[];
 };
 
-// Map the results to include the highlighted text
-export const highlightedResults = (results: Array<any>) => {
-  const highlight = (text: string, indices: number[][]) => {
-    for (let i = indices.length - 1; i >= 0; i--) {
-      const [start, end] = indices[i];
-      text =
-        text.slice(0, start) +
-        '<span class="bg-amber-300">' +
-        text.slice(start, end + 1) +
-        '</span>' +
-        text.slice(end + 1);
-    }
-    return text;
-  };
+// Map the results to include the highlighted text with Fuzzy Search
+// export const highlightedResults = (results: Array<any>) => {
+//   const highlight = (text: string, indices: number[][]) => {
+//     for (let i = indices.length - 1; i >= 0; i--) {
+//       const [start, end] = indices[i];
+//       text =
+//         text.slice(0, start) +
+//         '<span class="bg-amber-300">' +
+//         text.slice(start, end + 1) +
+//         '</span>' +
+//         text.slice(end + 1);
+//     }
+//     return text;
+//   };
 
-  return results.map((result) => {
-    let highlightedField = result.item.field;
-    let highlightedTagName = result.item.tagName;
-    let highlightedTagType = result.item.tagType;
-    let highlightedName = result.item.name;
-    let highlightedTitle = result.item.title;
-    let highlightedTagLine = result.item.tagLine;
-    let highlightedDescription = result.item.description;
+//   return results.map((result) => {
+//     let highlightedField = result.item.field;
+//     let highlightedTagName = result.item.tagName;
+//     let highlightedTagType = result.item.tagType;
+//     let highlightedName = result.item.name;
+//     let highlightedTitle = result.item.title;
+//     let highlightedTagLine = result.item.tagLine;
+//     let highlightedDescription = result.item.description;
 
-    // if (result.matches.length > 0) {
-    for (const match of result.matches || []) {
-      switch (match.key) {
-        case 'name':
-          highlightedName = highlight(highlightedName, match.indices);
-          break;
-        case 'tagName':
-          highlightedTagName = highlight(highlightedTagName, match.indices);
-          break;
-        case 'field':
-          highlightedField = highlight(highlightedField, match.indices);
-          break;
-        case 'title':
-          highlightedTitle = highlight(highlightedTitle, match.indices);
-          break;
-        case 'tagType':
-          highlightedTagType = highlight(highlightedTagType, match.indices);
-          break;
-        case 'tagLine':
-          highlightedTagLine = highlight(highlightedTagLine, match.indices);
-          break;
-        case 'description':
-          highlightedDescription = highlight(
-            highlightedDescription,
-            match.indices
-          );
-          break;
+//     // if (result.matches.length > 0) {
+//     for (const match of result.matches || []) {
+//       switch (match.key) {
+//         case 'name':
+//           highlightedName = highlight(highlightedName, match.indices);
+//           break;
+//         case 'tagName':
+//           highlightedTagName = highlight(highlightedTagName, match.indices);
+//           break;
+//         case 'field':
+//           highlightedField = highlight(highlightedField, match.indices);
+//           break;
+//         case 'title':
+//           highlightedTitle = highlight(highlightedTitle, match.indices);
+//           break;
+//         case 'tagType':
+//           highlightedTagType = highlight(highlightedTagType, match.indices);
+//           break;
+//         case 'tagLine':
+//           highlightedTagLine = highlight(highlightedTagLine, match.indices);
+//           break;
+//         case 'description':
+//           highlightedDescription = highlight(
+//             highlightedDescription,
+//             match.indices
+//           );
+//           break;
+//       }
+//     }
+//     // }
+
+//     return {
+//       name: highlightedName,
+//       tagName: highlightedTagName,
+//       field: highlightedField,
+//       pageType: result.item.pageType,
+//       title: highlightedTitle,
+//       tagType: highlightedTagType,
+//       picture: result.item.picture,
+//       pageLink: result.item.pageLink,
+//       popularity: result.item.popularity,
+//       tagLine: highlightedTagLine,
+//       pictures: result.item.pictures,
+//       description: highlightedDescription,
+//       subtitle: result.item.subtitle,
+//     };
+//   });
+// };
+
+// Map the results to include the highlighted text with word by word search
+export const highlightMatches = (text: string, matches: any[]) => {
+  let highlightedText = text;
+  let offset = 0;
+
+  if (highlightedText) {
+    matches?.forEach((match) => {
+      if (
+        match &&
+        match?.indices !== null &&
+        match?.value?.toLowerCase() ===
+          highlightedText?.toLowerCase().replace(/<mark>|<\/mark>/g, '')
+      ) {
+        console.log('debug7->match', match);
+        const start = match?.indices[0] + offset;
+        const end = match?.indices[1] + offset + 1;
+        // console.log('debug2->start', start);
+        // console.log('debug2->end', end);
+        // console.log('debug2->highlightedText before', highlightedText);
+        highlightedText =
+          highlightedText.slice(0, start) +
+          '<mark>' +
+          highlightedText.slice(start, end) +
+          '</mark>' +
+          highlightedText.slice(end);
+        console.log('debug7->highlightedText after', highlightedText);
+        offset = offset + '<mark></mark>'.length; // Length of '<mark></mark>'
       }
-    }
-    // }
+    });
+  }
 
-    return {
-      name: highlightedName,
-      tagName: highlightedTagName,
-      field: highlightedField,
-      pageType: result.item.pageType,
-      title: highlightedTitle,
-      tagType: highlightedTagType,
-      picture: result.item.picture,
-      pageLink: result.item.pageLink,
-      popularity: result.item.popularity,
-      tagLine: highlightedTagLine,
-      pictures: result.item.pictures,
-      description: highlightedDescription,
-      subtitle: result.item.subtitle,
-    };
-  });
+  return highlightedText;
 };
 
 export const updateFilteredDataBasedOnClickedSuggestion = (
@@ -193,7 +232,7 @@ export const updateFilteredDataBasedOnClickedTag = (
   // );
 
   return {
-    matchedPages: matchedPages,
+    matchedPages: matchedPages.map((page) => ({ item: page })),
     // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
     // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
   };
@@ -254,7 +293,7 @@ export const removeSearchedItem = (
           filteredSearchItems.length > 1 ? updatedFilteredData : initialData
         );
         matchedData = {
-          pages: matchedPages as InitialData['pages'],
+          pages: matchedPages.map((page) => page.item) as InitialData['pages'],
           tags: initialData.tags,
           assignments: initialData.assignments,
         };
@@ -313,4 +352,59 @@ export const sortResultBySortTags = (
     default:
       return results;
   }
+};
+
+export const wordByWordSearch = (
+  input: string,
+  data: any[],
+  keys: string[]
+) => {
+  if (!input || !data || !keys) return [];
+
+  const words = input.split(' ');
+  console.log('debug3->words Length', words.length);
+
+  return data
+    .map((item) => {
+      if (!item) return null;
+
+      const matches = keys
+        .flatMap((key) => {
+          if (!item.hasOwnProperty(key)) return null;
+
+          return words
+            .map((word) => {
+              const lowerCasedItemKey = item[key]?.toLowerCase();
+              const lowerCasedWord = word.toLowerCase();
+              let start = lowerCasedItemKey?.indexOf(lowerCasedWord);
+
+              if (start === -1 || !item[key]) return null;
+
+              return {
+                indices: [start, start + lowerCasedWord.length - 1],
+                key,
+                value: item[key],
+              };
+            })
+            .filter(Boolean); // Filter out null values here
+        })
+        .filter(Boolean);
+
+      if (matches.length === 0 || (!matches[0] && !matches[1])) return null;
+      if (words.length > 1) {
+        let occurencesOfSameKey = 0;
+        matches.forEach((match) => {
+          if (match?.key === matches[0]?.key) {
+            occurencesOfSameKey++;
+          }
+        });
+        if (occurencesOfSameKey !== words.length) return null;
+      }
+
+      return {
+        item,
+        matches,
+      };
+    })
+    .filter(Boolean); // Filter out null values here
 };

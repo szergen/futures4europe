@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import style from './Suggestions.module.css';
 import Link from 'next/link';
+import { highlightMatches } from '../../SearchComponentV1.utils';
 
 export type SuggestionsProps = {
   fieldSuggestions: any;
@@ -21,6 +22,7 @@ export type SuggestionsProps = {
   searchedItems: any[];
   sortTags: any[];
   handleSelectedSortTag: (e: any) => void;
+  inputText: string;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
@@ -36,6 +38,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   searchedItems,
   sortTags,
   handleSelectedSortTag,
+  inputText,
 }) => {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   // const [areSortTagsVisible, setAreSortTagsVisible] = useState(false);
@@ -49,12 +52,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   );
 
   const resolvePageType = (pageSuggestion: { [key: string]: string }) =>
-    Array.isArray(pageSuggestion?.pageType)
-      ? pageSuggestion?.pageType?.filter(
+    Array.isArray(pageSuggestion?.item?.pageType)
+      ? pageSuggestion?.item?.pageType?.filter(
           (pageTypeItem: string) =>
             pageTypeItem !== 'card' && pageTypeItem !== 'post'
         ) || 'post'
-      : pageSuggestion?.pageType;
+      : pageSuggestion?.item?.pageType;
 
   // Sort by tags logic
   useEffect(() => {
@@ -82,17 +85,18 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       selectedSuggestionIndex < fieldSuggestions.length
     ) {
       handleSelectedSuggestion(
-        fieldSuggestions?.[selectedSuggestionIndex]?.name.replace(
-          /<[^>]*>?/gm,
-          ''
-        ),
+        fieldSuggestions?.[selectedSuggestionIndex]?.item?.name,
+        // .replace(
+        //   /<[^>]*>?/gm,
+        //   ''
+        // ),
         'field'
       );
     } else {
       handleSelectedSuggestion(
-        tagSuggestions?.[
-          selectedSuggestionIndex - fieldSuggestions.length
-        ]?.name.replace(/<[^>]*>?/gm, ''),
+        tagSuggestions?.[selectedSuggestionIndex - fieldSuggestions.length]
+          ?.item?.name,
+        // .replace(/<[^>]*>?/gm, '')
         'tag'
       );
     }
@@ -103,6 +107,10 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       selectedSuggestionIndex
     );
   }, [selectedSuggestionIndex, clickedField]);
+
+  useEffect(() => {
+    console.log('debug1->tagSuggestions', tagSuggestions);
+  }, [tagSuggestions]);
 
   return (
     <div
@@ -119,7 +127,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
               <li key={index} className="flex items-center">
                 <span className="w-20">tag:</span>
                 <span
-                  dangerouslySetInnerHTML={{ __html: sortTag.name }}
+                  dangerouslySetInnerHTML={{ __html: sortTag?.name }}
                   onMouseDown={handleSelectedSortTag}
                   className="ml-4"
                 ></span>
@@ -148,7 +156,13 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   >
                     <span className="w-20">field:</span>
                     <span
-                      dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
+                      // dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
+                      dangerouslySetInnerHTML={{
+                        __html: highlightMatches(
+                          fieldSuggestion?.item?.name,
+                          fieldSuggestion?.matches
+                        ),
+                      }}
                       onMouseDown={handleFieldSelection}
                       className="ml-4"
                     ></span>
@@ -173,7 +187,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   : index;
               return (
                 <li
-                  key={tagSuggestion.name}
+                  key={tagSuggestion.item?.name}
                   className={classNames(
                     'flex items-center mb-2',
                     actualIndex === highlightedIndex && 'bg-blue-100',
@@ -188,14 +202,14 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     className="w-20"
                     // onMouseDown={handleClickedSuggestion}
                   >
-                    {tagSuggestion.tagType}:
+                    {tagSuggestion.item?.tagType}:
                   </span>
                   <div className="flex">
                     <Image
                       alt={'Tag Image'}
                       className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
                       src={
-                        tagSuggestion.picture ||
+                        tagSuggestion.item?.picture ||
                         'https://placehold.co/600x400?text=placeholder'
                       }
                       width={40}
@@ -203,26 +217,38 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     />
                     <div className="flex flex-wrap items-center">
                       <span
+                        // dangerouslySetInnerHTML={{
+                        //   __html: tagSuggestion.name,
+                        // }}
                         dangerouslySetInnerHTML={{
-                          __html: tagSuggestion.name,
+                          __html: highlightMatches(
+                            tagSuggestion?.item?.name,
+                            tagSuggestion?.matches
+                          ),
                         }}
                         onMouseDown={handleTagSuggestion}
                         className={classNames(
-                          tagSuggestion.pageLink && 'font-bold'
+                          tagSuggestion.item?.pageLink && 'font-bold'
                         )}
-                      ></span>
+                      />
                       <span
-                        data-after={tagSuggestion.popularity}
+                        data-after={tagSuggestion.item?.popularity}
                         className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
                       ></span>
                       <span
                         className="w-full text-12"
                         dangerouslySetInnerHTML={{
-                          __html: tagSuggestion.tagLine,
+                          __html: highlightMatches(
+                            tagSuggestion?.item?.tagLine,
+                            tagSuggestion?.matches
+                          ),
                         }}
-                      >
-                        {/* {tagSuggestion.tagLine} */}
-                      </span>
+                        // dangerouslySetInnerHTML={{
+                        //   __html: tagSuggestion.tagLine,
+                        // }}
+                      />
+                      {/* {tagSuggestion.tagLine} */}
+                      {/* </span> */}
                     </div>
                   </div>
                 </li>
@@ -246,7 +272,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       alt={'Tag Image'}
                       className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
                       src={
-                        pageSuggestion.pictures ||
+                        pageSuggestion.item?.pictures ||
                         'https://placehold.co/600x400?text=placeholder'
                       }
                       width={40}
@@ -254,17 +280,31 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     />
                     <Link
                       className="flex flex-wrap items-center"
-                      href={pageSuggestion.pageLink || 'https://google.com'}
+                      href={
+                        pageSuggestion.item?.pageLink || 'https://google.com'
+                      }
                     >
                       <span
+                        // dangerouslySetInnerHTML={{
+                        //   __html: pageSuggestion.title,
+                        // }}
                         dangerouslySetInnerHTML={{
-                          __html: pageSuggestion.title,
+                          __html: highlightMatches(
+                            pageSuggestion?.item?.title,
+                            pageSuggestion?.matches
+                          ),
                         }}
                       ></span>
                       <span
                         className="w-full text-12"
+                        // dangerouslySetInnerHTML={{
+                        //   __html: pageSuggestion.description,
+                        // }}
                         dangerouslySetInnerHTML={{
-                          __html: pageSuggestion.description,
+                          __html: highlightMatches(
+                            pageSuggestion?.item?.description,
+                            pageSuggestion?.matches
+                          ),
                         }}
                       >
                         {/* {pageSuggestion.description} */}
