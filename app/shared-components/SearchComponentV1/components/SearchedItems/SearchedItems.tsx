@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchedItem from './SearchedItem/SearchedItem';
 
 export type SearchedItemsProps = {
@@ -6,6 +6,7 @@ export type SearchedItemsProps = {
   handleRemoveSearchedItem: (e: any) => void;
   tags: any[];
   selectedSearchedItemIndex: number;
+  selectedSortTag: string;
 };
 
 const SearchedItems: React.FC<SearchedItemsProps> = ({
@@ -13,7 +14,12 @@ const SearchedItems: React.FC<SearchedItemsProps> = ({
   handleRemoveSearchedItem,
   tags,
   selectedSearchedItemIndex,
+  selectedSortTag,
 }) => {
+  useEffect(() => {
+    console.log('searchedItems', searchedItems);
+  }, [selectedSortTag]);
+
   return (
     <ul className="style.searchedItems flex">
       {searchedItems?.map((item, index) => (

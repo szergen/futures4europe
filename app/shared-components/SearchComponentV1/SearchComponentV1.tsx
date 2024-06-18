@@ -42,7 +42,14 @@ const SearchComponentV1 = () => {
       selectedSortTag: e?.target?.innerText,
       showHelp: false,
       showSuggestions: false,
-      results: sortResultBySortTags(results, e?.target?.innerText),
+      searchedItems: [
+        ...prevState.searchedItems,
+        { searchItem: e.target.innerText, searchItemType: 'sortby' },
+      ],
+      filteredData: {
+        ...prevState.filteredData,
+        pages: sortResultBySortTags(results, e.target.innerText),
+      },
     }));
   };
 
@@ -122,6 +129,33 @@ const SearchComponentV1 = () => {
     }
   };
 
+  const handleArrouwUp = () => {
+    setSearchState((prevState) => ({
+      ...prevState,
+      selectedSuggestionIndex: Math.max(
+        prevState.selectedSuggestionIndex - 1,
+        0
+      ),
+    }));
+  };
+
+  const handleArrowDown = () => {
+    setSearchState((prevState) => ({
+      ...prevState,
+      selectedSuggestionIndex: Math.min(
+        prevState.selectedSuggestionIndex + 1,
+        filteredData.tags.length - 1
+      ),
+    }));
+  };
+  const handleScrollForSuggestions = (e: any) => {
+    if (e.deltaY < 0) {
+      handleArrouwUp();
+    } else {
+      handleArrowDown();
+    }
+  };
+
   useEffect(() => {
     console.log('searchedItems', searchedItems);
   }, [searchedItems]);
@@ -141,9 +175,10 @@ const SearchComponentV1 = () => {
           handleRemoveSearchedItem={handleRemoveSearchedItem}
           tags={filteredData.tags}
           selectedSearchedItemIndex={selectedSearchedItemIndex}
+          selectedSortTag={selectedSortTag}
         />
         <TagInput initialData={initialData} filteredData={filteredData} />
-        {selectedSortTag && <div>Sorted By: {selectedSortTag}</div>}
+        {/* {selectedSortTag && <div>Sorted By: {selectedSortTag}</div>} */}
       </div>
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
@@ -163,6 +198,7 @@ const SearchComponentV1 = () => {
           sortTags={sortTags}
           handleSelectedSortTag={handleSelectedSortTag}
           inputText={inputText}
+          handleScrollForSuggestions={handleScrollForSuggestions}
         />
       )}
       {/* Results */}

@@ -23,6 +23,7 @@ export type SuggestionsProps = {
   sortTags: any[];
   handleSelectedSortTag: (e: any) => void;
   inputText: string;
+  handleScrollForSuggestions: (e: any) => void;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
@@ -39,13 +40,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   sortTags,
   handleSelectedSortTag,
   inputText,
+  handleScrollForSuggestions,
 }) => {
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [highlightedIndexWithType, setHighlightedIndexWithType] = useState({
     index: -1,
     type: '',
   });
-  // const [areSortTagsVisible, setAreSortTagsVisible] = useState(false);
   const [availableSortTags, setAvailableSortTags] = useState(
     [] as (typeof sortTags)[]
   );
@@ -59,7 +59,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     Array.isArray(pageSuggestion?.item?.pageType)
       ? pageSuggestion?.item?.pageType?.filter(
           (pageTypeItem: string) =>
-            pageTypeItem !== 'card' && pageTypeItem !== 'post'
+            pageTypeItem !== 'info' && pageTypeItem !== 'post'
         ) || 'post'
       : pageSuggestion?.item?.pageType;
 
@@ -90,31 +90,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     ) {
       handleSelectedSuggestion(
         fieldSuggestions?.[selectedSuggestionIndex]?.item?.name,
-        // .replace(
-        //   /<[^>]*>?/gm,
-        //   ''
-        // ),
         'field'
       );
     } else {
       handleSelectedSuggestion(
         tagSuggestions?.[selectedSuggestionIndex - fieldSuggestions.length]
           ?.item?.name,
-        // .replace(/<[^>]*>?/gm, '')
         'tag'
       );
     }
     // Switch between field and tag suggestions indexes
-
-    console.log(
-      'SUGGESTIONS -> debug4->selectedSuggestionIndex->',
-      selectedSuggestionIndex
-    );
   }, [selectedSuggestionIndex, clickedField]);
-
-  useEffect(() => {
-    console.log('debug1->tagSuggestions', tagSuggestions);
-  }, [tagSuggestions]);
 
   return (
     <div
@@ -122,6 +108,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         'w-1/2 border-dashed border-2',
         style.suggestionsContainer
       )}
+      onWheel={handleScrollForSuggestions}
     >
       {availableSortTags.length > 0 && (
         <div className="border">
@@ -287,6 +274,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   onMouseOver={() =>
                     setHighlightedIndexWithType({ index, type: 'page' })
                   }
+                  // Prevent exiting the input field on click
+                  onMouseDown={(e) => e.preventDefault()}
                 >
                   <span className="w-20">
                     {resolvePageType(pageSuggestion)}:

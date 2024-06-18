@@ -251,7 +251,7 @@ export const removeSearchedItem = (
   initialData: InitialData,
   filteredSearchItems: {
     searchItem: string;
-    searchItemType: 'text' | 'tag' | 'field-tag';
+    searchItemType: 'text' | 'tag' | 'field-tag' | 'sortby';
   }[],
   inputText: string
 ) => {
@@ -314,6 +314,11 @@ export const removeSearchedItem = (
         matchedData.pages = matchedPages.map(
           (page) => page.item
         ) as InitialData['pages'];
+      } else if (item.searchItemType === 'sortby') {
+        matchedData.pages = sortResultBySortTags(
+          updatedFilteredData.pages,
+          item.searchItem
+        );
       }
 
       updatedFilteredData.pages = matchedData.pages;

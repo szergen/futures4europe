@@ -1,8 +1,8 @@
 export const allPagetypes = [
-  'card',
-  'person card',
-  'organisation card',
-  'project card',
+  'info',
+  'person info',
+  'organisation info',
+  'project info',
   'post',
   'project result',
   'event',
@@ -11,32 +11,32 @@ export const allPagetypes = [
 
 export const fieldExcludePageTypes = {
   // field: [list of excluded pagetypes]
-  author: ['card', 'person card', 'organisation card', 'project card', 'event'],
-  people: ['person card', 'project card', 'project result', 'event'],
+  author: ['info', 'person info', 'organisation info', 'project info', 'event'],
+  people: ['person info', 'project info', 'project result', 'event'],
   participant: [
-    'person card',
-    'organisation card',
+    'person info',
+    'organisation info',
     'project result',
     'foresight method',
   ], // add new post tags as necessary
   speaker: [
-    'card',
-    'person card',
-    'organisation card',
-    'project card',
+    'info',
+    'person info',
+    'organisation info',
+    'project info',
     'project result',
     'foresight method',
   ], // add new post tags as necessary
   coordinator: [
-    'person card',
-    'organisation card',
+    'person info',
+    'organisation info',
     'post',
     'project result',
     'event',
     'foresight method',
   ], // add new post tags as necessary
   activity: [
-    'project card',
+    'project info',
     'post',
     'project result',
     'event',
@@ -46,20 +46,20 @@ export const fieldExcludePageTypes = {
 export const fieldIncludePageTypes = {
   // field: [list of included pagetypes]
   author: ['project result', 'foresight method'], // add new post tags as necessary
-  people: ['organisation card', 'foresight method'], // add new post tags as necessary
-  participant: ['project card', 'event'],
+  people: ['organisation info', 'foresight method'], // add new post tags as necessary
+  participant: ['project info', 'event'],
   speaker: ['event'],
-  coordinator: ['project card'],
-  activity: ['person card', 'organisation card'],
+  coordinator: ['project info'],
+  activity: ['person info', 'organisation info'],
 };
 
 export const sortTags = [
   {
     tagType: 'sort',
     name: 'by begin date',
-    sortAvailableFor: 'project card',
-  }, // project card doar!
-  { tagType: 'sort', name: 'by end date', sortAvailableFor: 'project card' }, // project card doar!
+    sortAvailableFor: 'project info',
+  }, // project info doar!
+  { tagType: 'sort', name: 'by end date', sortAvailableFor: 'project info' }, // project info doar!
   {
     tagType: 'sort',
     name: 'by publication date',
@@ -68,8 +68,8 @@ export const sortTags = [
   {
     tagType: 'sort',
     name: 'by established date',
-    sortAvailableFor: 'organization card',
-  }, // organisation card doar!
+    sortAvailableFor: 'organization info',
+  }, // organisation info doar!
   { tagType: 'sort', name: 'by date', sortAvailableFor: 'event' }, // event doar!
 ];
 
@@ -197,7 +197,12 @@ export const mockedTags = [
   { tagType: 'domain', name: 'organic farming', popularity: 20 },
   { tagType: 'domain', name: 'political participation', popularity: 46 },
   { tagType: 'domain', name: 'progressive education', popularity: 30 },
-  { tagType: 'domain', name: 'regenerative economy', popularity: 21 },
+  {
+    tagType: 'domain',
+    name: 'regenerative economy',
+    popularity: 21,
+    tagId: 1111,
+  },
   { tagType: 'domain', name: 'religion', popularity: 71 },
   {
     tagType: 'domain',
@@ -694,6 +699,7 @@ export const mockedTags = [
     tagType: 'foresight method',
     name: 'policy stress-testing',
     popularity: 26,
+    tagId: 2222,
   },
   { tagType: 'foresight method', name: 'scenario exercises', popularity: 45 },
   { tagType: 'foresight method', name: 'scenarios', popularity: 36 },

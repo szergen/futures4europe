@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Fuse from 'fuse.js';
 import { useSearch } from '../../../../custom-hooks/SearchContext/SearchContext';
 import {
   InitialData,
   updateFilteredDataBasedOnClickedSuggestion,
-  highlightedResults,
+  // highlightedResults,
   updateFilteredDataBasedOnClickedTag,
   uniqueResults,
   extractFilterBy,
   removeSearchedItem,
   wordByWordSearch,
-  highlightMatches,
+  // highlightMatches,
 } from '../../SearchComponentV1.utils';
 
 export type TagInputProps = {
@@ -28,56 +27,25 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const { searchState, setSearchState } = useSearch();
   const { clickedSuggestion, clickedField, clickedTag } = searchState;
 
-  // Fuzzy search initialization
-  // const fusePagesOptions = {
-  //   keys: ['title', 'description'],
-  //   threshold: 0.1,
-  //   minMatchCharLength: Math.min(
-  //     ...input.split(' ').map((word) => word.length)
-  //   ),
-  //   includeMatches: true,
-  //   ignoreLocation: true,
-  //   // findAllMatches: true,
-  //   useExtendedSearch: true,
-  // };
-  // const fusePages = new Fuse(filteredData.pages, fusePagesOptions);
+  const handleArrouwUp = () => {
+    setSearchState((prevState) => ({
+      ...prevState,
+      selectedSuggestionIndex: Math.max(
+        prevState.selectedSuggestionIndex - 1,
+        0
+      ),
+    }));
+  };
 
-  // const fuseFieldSuggestionsOptions = {
-  //   keys: ['name'],
-  //   threshold: 0.1,
-  //   minMatchCharLength: Math.min(
-  //     ...input.split(' ').map((word) => word.length)
-  //   ),
-  //   includeMatches: true,
-  //   // findAllMatches: true,
-  //   ignoreLocation: true,
-  //   useExtendedSearch: true,
-  // };
-
-  // const fuseFieldSuggestions = new Fuse(
-  //   filteredData.tags.filter((tag) => tag.tagType === 'field'),
-  //   fuseFieldSuggestionsOptions
-  // );
-
-  // const fuseTagSuggestionsOptions = {
-  //   keys: ['name', 'tagLine'],
-  //   threshold: 0,
-  //   minMatchCharLength: Math.min(
-  //     ...input.split(' ').map((word) => word.length)
-  //   ),
-  //   includeMatches: true,
-  //   ignoreLocation: true,
-  //   //
-  //   useExtendedSearch: true,
-  //   // findAllMatches: true,
-  // };
-
-  // const fuseTagSuggestions = new Fuse(
-  //   filteredData.tags.filter(
-  //     (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
-  //   ),
-  //   fuseTagSuggestionsOptions
-  // );
+  const handleArrowDown = () => {
+    setSearchState((prevState) => ({
+      ...prevState,
+      selectedSuggestionIndex: Math.min(
+        prevState.selectedSuggestionIndex + 1,
+        filteredData.tags.length - 1
+      ),
+    }));
+  };
 
   const handleOnBlur = () => {
     setSearchState((prevState) => ({
@@ -98,22 +66,9 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
 
   const handleKeyDown = (event: any) => {
     if (event.key === 'ArrowDown') {
-      // setHighlightedIndex((prevIndex) =>
-      //   Math.min(prevIndex + 1, filteredData.tags.length - 1)
-      // );
-      setSearchState((prevState) => ({
-        ...prevState,
-        selectedSuggestionIndex: prevState.selectedSuggestionIndex + 1,
-      }));
+      handleArrowDown();
     } else if (event.key === 'ArrowUp') {
-      // setHighlightedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      setSearchState((prevState) => ({
-        ...prevState,
-        selectedSuggestionIndex: Math.max(
-          prevState.selectedSuggestionIndex - 1,
-          0
-        ),
-      }));
+      handleArrouwUp();
     } else if (event.key === 'Enter' && tagWasFocused) {
       if (searchState.selectedSuggestionIndex < 0) {
         setSearchState((prevState) => ({
@@ -190,6 +145,62 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     }
   };
 
+  // SearchButton handler function the same as Enter key
+  const handleSearchButton = () => {
+    if (searchState.selectedSuggestionIndex < 0) {
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: false,
+        showHelp: false,
+        showResults: true,
+        results: searchState.searchedItems.length ? resultsToShow : [],
+        searchedItems: input
+          ? [
+              ...searchState.searchedItems,
+              { searchItem: input, searchItemType: 'text' },
+            ]
+          : [...searchState.searchedItems],
+        filteredData: {
+          pages: resultsToShow,
+          tags: initialData.tags,
+          assignments: initialData.assignments,
+        },
+        selectedSuggestionIndex: -1,
+        // selectedSuggestionTag: '',
+      }));
+      // input[input.length - 1] !== '"' && setInput(input + '"');
+      setInput('');
+    } else {
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: false,
+        showHelp: true,
+        // showResults: true,
+        clickedTag:
+          searchState.activeSelection === 'tag'
+            ? searchState.selectedSuggestionTag
+            : '',
+        selectedSuggestionIndex: -1,
+        selectedSuggestionTag: '',
+        clickedField:
+          searchState.activeSelection === 'field'
+            ? searchState.selectedSuggestionTag
+            : prevState.clickedField,
+
+        activeSelection: 'tag',
+      }));
+      setInput('');
+    }
+  };
+
+  const handleScrollForSuggestions = (e: any) => {
+    if (e.deltaY < 0) {
+      handleArrouwUp();
+    } else {
+      handleArrowDown();
+    }
+  };
+
   // Input effect
   useEffect(() => {
     console.log('Input:', input);
@@ -218,13 +229,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         ),
         ['name', 'tagLine']
       );
-
-      // Initialize Fuzzy Search
-      // const results = fusePages.search(searchInput);
-      // const fieldsSuggestions = fuseFieldSuggestions.search(searchInput);
-      // const tagsSuggestions = fuseTagSuggestions.search(searchInput);
-      // setResultsToShow(uniqueResults(results)?.map((result) => result?.item));
-      // console.log('debug6->tagsSuggestions->', tagsSuggestions);
 
       if (clickedField) {
         setFilterByField(extractFilterBy(initialData.tags, clickedField) || '');
@@ -255,28 +259,6 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         showHelp: false,
         inputText: input,
       }));
-
-      // Fuzzy set state
-      // setSearchState((prevState) => ({
-      //   ...prevState,
-      //   fieldSuggestions: highlightedResults(fieldsSuggestions),
-      //   tagSuggestions: filterByField
-      //     ? highlightedResults(
-      //         tagsSuggestions?.filter(
-      //           (tag) =>
-      //             tag?.item.tagType !== 'field' &&
-      //             tag?.item.tagType !== 'sort' &&
-      //             tag?.item.tagType === filterByField
-      //         )
-      //       )
-      //     : highlightedResults(tagsSuggestions)?.sort(
-      //         (a, b) => b?.popularity - a?.popularity
-      //       ),
-      //   pageSuggestions: highlightedResults(results),
-      //   showSuggestions: true,
-      //   showHelp: false,
-      //   inputText: input,
-      // }));
     } else {
       tagWasFocused &&
         setSearchState((prevState) => ({
@@ -421,6 +403,18 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   }, [clickedTag]);
 
   useEffect(() => {
+    // setResultsToShow(
+    //   uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
+    //     (result) => result.item
+    //   )
+    // );
+    console.log('debug9->filteredData', filteredData.pages);
+    console.log(
+      'debug9->unique',
+      uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
+        (result) => result.item
+      )
+    );
     setResultsToShow(
       uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
         (result) => result.item
@@ -449,6 +443,22 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
       />
+      <button onMouseDown={handleSearchButton}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          />
+        </svg>
+      </button>
     </div>
   );
 };
