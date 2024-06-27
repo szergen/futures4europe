@@ -1,0 +1,10 @@
+.suggestionsContainer {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  width: 100%;
+  background-color: lightcyan;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 1;
+}

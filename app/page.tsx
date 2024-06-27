@@ -1,5 +1,5 @@
-import { CarouselClient } from '@app/components/Carousel/Carousel';
-import { WixMediaImage } from '@app/components/Image/WixMediaImage';
+import { CarouselClient } from '@app/shared-components/Carousel/Carousel';
+import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import testIds from '@app/utils/test-ids';
 
 export default function Home() {
@@ -14,10 +14,11 @@ export default function Home() {
           />
         </video>
         <div className="absolute top-[40px] right-[30px] sm:top-2/4 sm:left-2/4 text-white sm:translate-y-[-50%] sm:translate-x-[-50%] font-site">
-          <h2 className="sm:text-4xl mb-4">FREE & ACCESSIBLE</h2>
-          <h1 className="sm:text-[90px] sm:leading-[90px]">
-            EDUCATION FOR ALL
-          </h1>
+          <h2 className="sm:text-2xl mb-4">
+            This platform seeks to collect, host, and distribute foresight
+            activities in and about Europe.
+          </h2>
+          <h1 className="sm:text-[90px] sm:leading-[90px]">Futures4Europe</h1>
         </div>
         <div className="flex flex-col sm:flex-row relative items-center bg-white mt-[-10px] sm:mt-[-55px] mx-auto max-w-xs sm:max-w-4xl border-t-4 border-blue-site font-site">
           <h3 className="flex-1 sm:text-3xl py-4 px-8 text-center sm:text-left">

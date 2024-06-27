@@ -1,5 +1,5 @@
-import { WixMediaImage } from '@app/components/Image/WixMediaImage';
-export default async function Page() {
+import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
+export default async function ContactPage() {
   return (
     <div className="relative">
       <div className="w-full h-[400px] relative">
