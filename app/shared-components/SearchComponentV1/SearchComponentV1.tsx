@@ -20,6 +20,7 @@ const SearchComponentV1 = () => {
     fieldSuggestions,
     tagSuggestions,
     pageSuggestions,
+    sortTagsSuggestions,
     results,
     showHelp,
     showSuggestions,
@@ -46,16 +47,20 @@ const SearchComponentV1 = () => {
         ...prevState.searchedItems,
         { searchItem: e.target.innerText, searchItemType: 'sortby' },
       ],
-      filteredData: {
-        ...prevState.filteredData,
-        pages: sortResultBySortTags(results, e.target.innerText),
-      },
+      // filteredData: {
+      //   ...prevState.filteredData,
+      //   pages: sortResultBySortTags(results, e.target.innerText),
+      // },
+      // pageSuggestions: sortResultBySortTags(results, e.target.innerText).map(
+      //   (page) => ({ item: page })
+      // ),
+      // results: sortResultBySortTags(results, e.target.innerText),
     }));
   };
 
   const handleSelectedSuggestion = (
     selectedSuggestionTag: any,
-    selectedSuggestionType: 'tag' | 'field' | 'field-tag'
+    selectedSuggestionType: 'tag' | 'field' | 'field-tag' | 'sortby'
   ) => {
     if (selectedSuggestionType === 'tag') {
       const { matchedPages } = updateFilteredDataBasedOnClickedTag(
@@ -75,6 +80,12 @@ const SearchComponentV1 = () => {
         // clickedField: selectedSuggestionTag,
         selectedSuggestionTag: selectedSuggestionTag,
         activeSelection: 'field',
+      }));
+    } else if (selectedSuggestionType === 'sortby') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        selectedSuggestionTag: selectedSuggestionTag,
+        activeSelection: 'sortby',
       }));
     }
   };
@@ -101,7 +112,7 @@ const SearchComponentV1 = () => {
   const handleRemoveSearchedItem = (event: any) => {
     const target = event.currentTarget;
     const siblingSpan = target.previousSibling;
-    console.log('siblingSpan', siblingSpan);
+    // console.log('siblingSpan', siblingSpan);
 
     if (
       siblingSpan &&
@@ -109,12 +120,17 @@ const SearchComponentV1 = () => {
       siblingSpan.tagName === 'SPAN'
     ) {
       const siblingSpanText = siblingSpan.textContent;
-      console.log('siblingSpanText', siblingSpanText);
+      // console.log('siblingSpanText', siblingSpanText);
 
       const filteredSearchItems = searchedItems.filter(
         (item) => item.searchItem !== siblingSpanText
       );
-      console.log('filteredSearchItems--', filteredSearchItems);
+
+      const removedSearchItem = searchedItems.find(
+        (item) => item.searchItem === siblingSpanText
+      );
+      // console.log('filteredSearchItems--', filteredSearchItems);
+      // console.log('removedSearchItem--', removedSearchItem);
 
       setSearchState((prevState) => ({
         ...prevState,
@@ -124,6 +140,8 @@ const SearchComponentV1 = () => {
           filteredSearchItems,
           inputText
         ),
+        selectedSortTag:
+          removedSearchItem?.searchItemType === 'sortby' ? '' : selectedSortTag,
         // results: updatedFilteredData.pages,
       }));
     }
@@ -168,7 +186,7 @@ const SearchComponentV1 = () => {
   }, [results]);
 
   return (
-    <div className="w-full">
+    <div>
       <div className="style.searchBox flex">
         <SearchedItems
           searchedItems={searchedItems}
@@ -187,6 +205,7 @@ const SearchComponentV1 = () => {
           fieldSuggestions={fieldSuggestions}
           tagSuggestions={tagSuggestions}
           pageSuggestions={pageSuggestions}
+          sortTagsSuggestions={sortTagsSuggestions}
           // handleClickedSuggestion={handleClickedSuggestion}
           handleTagSuggestion={handleTagSuggestion}
           handleFieldSelection={handleFieldSelection}
@@ -195,9 +214,9 @@ const SearchComponentV1 = () => {
           selectedSuggestionIndex={selectedSuggestionIndex}
           activeSelection={activeSelection}
           searchedItems={searchedItems}
-          sortTags={sortTags}
+          // sortTags={sortTags}
           handleSelectedSortTag={handleSelectedSortTag}
-          inputText={inputText}
+          // inputText={inputText}
           handleScrollForSuggestions={handleScrollForSuggestions}
         />
       )}

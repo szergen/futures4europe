@@ -38,6 +38,11 @@ export type InitialData = {
     eventDate?: string;
   }[];
   tags: Tags;
+  sortTags: {
+    tagType: string;
+    name: string;
+    sortAvailableFor: string;
+  }[];
   assignments: {
     pageId: number;
     tagId: number;
@@ -46,6 +51,35 @@ export type InitialData = {
   }[];
 };
 
+export const sortResultBySortTags = (
+  results: InitialData['pages'],
+  selectedSortTag: string
+) => {
+  switch (selectedSortTag) {
+    case 'by begin date':
+      return results.sort(
+        (a, b) => new Date(a?.beginDate) - new Date(b?.beginDate)
+      );
+    case 'by end date':
+      return results.sort(
+        (a, b) => new Date(a?.endDate) - new Date(b?.endDate)
+      );
+    case 'by publication date':
+      return results.sort(
+        (a, b) => new Date(a?.publicationDate) - new Date(b?.publicationDate)
+      );
+    case 'by established date':
+      return results.sort(
+        (a, b) => new Date(a?.establishedDate) - new Date(b?.establishedDate)
+      );
+    case 'by date':
+      return results.sort(
+        (a, b) => new Date(a?.eventDate) - new Date(b?.eventDate)
+      );
+    default:
+      return results;
+  }
+};
 // Map the results to include the highlighted text with Fuzzy Search
 // export const highlightedResults = (results: Array<any>) => {
 //   const highlight = (text: string, indices: number[][]) => {
@@ -123,6 +157,7 @@ export type InitialData = {
 export const highlightMatches = (text: string, matches: any[]) => {
   let highlightedText = text;
   let offset = 0;
+  if (matches?.length === 0) return highlightedText;
 
   if (highlightedText) {
     matches?.forEach((match) => {
@@ -132,7 +167,7 @@ export const highlightMatches = (text: string, matches: any[]) => {
         match?.value?.toLowerCase() ===
           highlightedText?.toLowerCase().replace(/<mark>|<\/mark>/g, '')
       ) {
-        console.log('debug7->match', match);
+        // console.log('debug7->match', match);
         const start = match?.indices[0] + offset;
         const end = match?.indices[1] + offset + 1;
         // console.log('debug2->start', start);
@@ -144,8 +179,8 @@ export const highlightMatches = (text: string, matches: any[]) => {
           highlightedText.slice(start, end) +
           '</mark>' +
           highlightedText.slice(end);
-        console.log('debug7->highlightedText after', highlightedText);
-        offset = offset + '<mark></mark>'.length; // Length of '<mark></mark>'
+        // console.log('debug7->highlightedText after', highlightedText);
+        // offset = offset + '<mark></mark>'.length; // Length of '<mark></mark>'
       }
     });
   }
@@ -214,22 +249,12 @@ export const updateFilteredDataBasedOnClickedTag = (
     .filter((assignment) => assignment.tagName === clickedTag)
     .map((assignment) => assignment.pageId);
 
-  console.log('debug3->matchingTagIds', matchingTagIds);
+  // console.log('debug3->matchingTagIds', matchingTagIds);
 
   const matchedPages = filteredData.pages.filter((page) =>
     matchingTagIds.includes(page.pageId)
   );
-
-  // const matchedAssignmentsBasedOnPages = filteredData.assignments.filter(
-  //   (assignment) =>
-  //     matchedPages.some((page) => page.pageId === assignment.pageId)
-  // );
-
-  // const matchedTagsBasedOnPages = filteredData.tags.filter((tag) =>
-  //   matchedAssignmentsBasedOnPages.some(
-  //     (assignment) => assignment.tagId === tag.tagId
-  //   )
-  // );
+  // .sort((a, b) => a.id - b.id);
 
   return {
     matchedPages: matchedPages.map((page) => ({ item: page })),
@@ -276,7 +301,7 @@ export const removeSearchedItem = (
           matchedAssignmentsBasedOnPages,
         } = updateFilteredDataBasedOnClickedSuggestion(
           item.searchItem,
-          filteredSearchItems.length > 1 ? updatedFilteredData : initialData
+          filteredSearchItems?.length > 1 ? updatedFilteredData : initialData
         );
         matchedData = {
           pages: matchedPages as InitialData['pages'],
@@ -290,7 +315,7 @@ export const removeSearchedItem = (
           // matchedAssignmentsBasedOnPages,
         } = updateFilteredDataBasedOnClickedTag(
           item.searchItem,
-          filteredSearchItems.length > 1 ? updatedFilteredData : initialData
+          filteredSearchItems?.length > 1 ? updatedFilteredData : initialData
         );
         matchedData = {
           pages: matchedPages.map((page) => page.item) as InitialData['pages'],
@@ -310,7 +335,7 @@ export const removeSearchedItem = (
         };
         const fusePages = new Fuse(updatedFilteredData.pages, fusePagesOptions);
         const matchedPages = fusePages.search(item.searchItem);
-        console.log('debug3->matchedPages', matchedPages);
+        // console.log('debug3->matchedPages', matchedPages);
         matchedData.pages = matchedPages.map(
           (page) => page.item
         ) as InitialData['pages'];
@@ -329,36 +354,6 @@ export const removeSearchedItem = (
   return updatedFilteredData;
 };
 
-export const sortResultBySortTags = (
-  results: InitialData['pages'],
-  selectedSortTag: string
-) => {
-  switch (selectedSortTag) {
-    case 'by begin date':
-      return results.sort(
-        (a, b) => new Date(a?.beginDate) - new Date(b?.beginDate)
-      );
-    case 'by end date':
-      return results.sort(
-        (a, b) => new Date(a?.endDate) - new Date(b?.endDate)
-      );
-    case 'by publication date':
-      return results.sort(
-        (a, b) => new Date(a?.publicationDate) - new Date(b?.publicationDate)
-      );
-    case 'by established date':
-      return results.sort(
-        (a, b) => new Date(a?.establishedDate) - new Date(b?.establishedDate)
-      );
-    case 'by date':
-      return results.sort(
-        (a, b) => new Date(a?.eventDate) - new Date(b?.eventDate)
-      );
-    default:
-      return results;
-  }
-};
-
 export const wordByWordSearch = (
   input: string,
   data: any[],
@@ -367,7 +362,7 @@ export const wordByWordSearch = (
   if (!input || !data || !keys) return [];
 
   const words = input.split(' ');
-  console.log('debug3->words Length', words.length);
+  // console.log('debug3->words Length', words.length);
 
   return data
     .map((item) => {

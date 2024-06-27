@@ -7,9 +7,10 @@ import Link from 'next/link';
 import { highlightMatches } from '../../SearchComponentV1.utils';
 
 export type SuggestionsProps = {
-  fieldSuggestions: any;
-  tagSuggestions: any;
-  pageSuggestions: any;
+  fieldSuggestions: any[];
+  tagSuggestions: any[];
+  pageSuggestions: any[];
+  sortTagsSuggestions: any[];
   handleTagSuggestion: (e: any) => void;
   handleFieldSelection: (e: any) => void;
   clickedField: string;
@@ -18,11 +19,11 @@ export type SuggestionsProps = {
     selectedSuggestionType: 'tag' | 'field' | 'field-tag'
   ) => void;
   selectedSuggestionIndex: number;
-  activeSelection: 'field' | 'tag' | 'field-tag' | '';
+  activeSelection: 'field' | 'tag' | 'field-tag' | 'sortby';
   searchedItems: any[];
-  sortTags: any[];
+  // sortTags: any[];
   handleSelectedSortTag: (e: any) => void;
-  inputText: string;
+  // inputText: string;
   handleScrollForSuggestions: (e: any) => void;
 };
 
@@ -37,18 +38,29 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   selectedSuggestionIndex,
   activeSelection,
   searchedItems,
-  sortTags,
+  // sortTags,
   handleSelectedSortTag,
-  inputText,
+  // inputText,
   handleScrollForSuggestions,
+  sortTagsSuggestions,
 }) => {
   const [highlightedIndexWithType, setHighlightedIndexWithType] = useState({
     index: -1,
     type: '',
   });
-  const [availableSortTags, setAvailableSortTags] = useState(
-    [] as (typeof sortTags)[]
-  );
+  const [availableSortTags, setAvailableSortTags] = useState([]);
+  const [suggestedIndex, setSuggestedIndex] = useState({
+    type: '',
+    index: selectedSuggestionIndex,
+  });
+
+  const allSugestionsArray = [
+    // ...availableSortTags,
+    // ...fieldSuggestions,
+    ...tagSuggestions,
+  ];
+  // console.log('debug1->allSugestionsArray', allSugestionsArray);
+  // console.log('debug1->pageSuggestions', pageSuggestions);
 
   const uniqueFields = fieldSuggestions.filter(
     (assignment: any, index: any, self: any) =>
@@ -69,33 +81,59 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       searchedItems.forEach((searchedItem: any) => {
         if (searchedItem.searchItemType === 'tag') {
           setAvailableSortTags(
-            sortTags?.filter(
-              (tag) => tag?.sortAvailableFor === searchedItem?.searchItem
+            sortTagsSuggestions?.filter(
+              (tag: {
+                item: { sortAvailableFor: string; name: string };
+                matches: any;
+              }) => tag?.item?.sortAvailableFor === searchedItem?.searchItem
             ) || []
           );
         }
       });
     }
-  }, [searchedItems, sortTags]);
+  }, [searchedItems, sortTagsSuggestions]);
 
-  useEffect(() => {
-    console.log('availableSortTags', availableSortTags);
-  }, [availableSortTags]);
+  // useEffect(() => {
+  //   console.log('debug1->availableSortTags', availableSortTags);
+  //   console.log(
+  //     'debug1->sortTagsSuggestions from Suggestions',
+  //     sortTagsSuggestions
+  //   );
+  // }, [availableSortTags]);
 
   useEffect(() => {
     if (
+      availableSortTags.length > 0 &&
+      !clickedField &&
+      selectedSuggestionIndex < availableSortTags.length
+    ) {
+      handleSelectedSuggestion(
+        availableSortTags?.[selectedSuggestionIndex]?.item?.name,
+        'sortby'
+      );
+    } else if (
       fieldSuggestions.length > 0 &&
       !clickedField &&
-      selectedSuggestionIndex < fieldSuggestions.length
+      selectedSuggestionIndex <
+        fieldSuggestions.length - availableSortTags.length
+      // highlightedIndexWithType.type === 'field'
     ) {
       handleSelectedSuggestion(
         fieldSuggestions?.[selectedSuggestionIndex]?.item?.name,
         'field'
       );
+    } else if (clickedField) {
+      handleSelectedSuggestion(
+        tagSuggestions?.[selectedSuggestionIndex]?.item?.name,
+        'tag'
+      );
     } else {
       handleSelectedSuggestion(
-        tagSuggestions?.[selectedSuggestionIndex - fieldSuggestions.length]
-          ?.item?.name,
+        tagSuggestions?.[
+          selectedSuggestionIndex -
+            fieldSuggestions.length -
+            availableSortTags.length
+        ]?.item?.name,
         'tag'
       );
     }
@@ -110,15 +148,30 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       )}
       onWheel={handleScrollForSuggestions}
     >
+      {/* Sort Tags */}
       {availableSortTags.length > 0 && (
         <div className="border">
           Sort by:
           <ul className="style.tags">
             {availableSortTags?.map((sortTag: any, index: number) => (
-              <li key={index} className="flex items-center">
+              <li
+                key={index}
+                className={classNames(
+                  'flex items-center',
+                  index === selectedSuggestionIndex &&
+                    activeSelection === 'sortby' &&
+                    'bg-blue-200'
+                )}
+              >
                 <span className="w-20">tag:</span>
                 <span
-                  dangerouslySetInnerHTML={{ __html: sortTag?.name }}
+                  // dangerouslySetInnerHTML={{ __html: sortTag?.item.name }}
+                  dangerouslySetInnerHTML={{
+                    __html: highlightMatches(
+                      sortTag?.item?.name,
+                      sortTag?.matches
+                    ),
+                  }}
                   onMouseDown={handleSelectedSortTag}
                   className="ml-4"
                 ></span>
@@ -127,6 +180,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           </ul>
         </div>
       )}
+      {/* Field Tags */}
       <div className="border" />
       {!clickedField && (
         <div className="style.fieldSuggestions">
@@ -142,7 +196,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       index === highlightedIndexWithType.index &&
                         highlightedIndexWithType.type === 'field' &&
                         'bg-blue-100',
-                      index === selectedSuggestionIndex &&
+                      index ===
+                        selectedSuggestionIndex - availableSortTags.length &&
                         activeSelection === 'field' &&
                         'bg-blue-200'
                     )}
@@ -168,6 +223,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           </ul>
         </div>
       )}
+      {/* Tags */}
       <div className="style.tagSuggestions">
         <span className="text-purple-700">Tag Suggestions:</span>
         <ul className="style.tags">
@@ -190,7 +246,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       highlightedIndexWithType.type === 'tag' &&
                       'bg-blue-100',
                     actualIndex ===
-                      selectedSuggestionIndex - fieldSuggestions.length &&
+                      selectedSuggestionIndex -
+                        fieldSuggestions.length -
+                        availableSortTags.length &&
                       activeSelection === 'tag' &&
                       'bg-blue-200'
                   )}
@@ -221,10 +279,11 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         //   __html: tagSuggestion.name,
                         // }}
                         dangerouslySetInnerHTML={{
-                          __html: highlightMatches(
-                            tagSuggestion?.item?.name,
-                            tagSuggestion?.matches
-                          ),
+                          __html:
+                            highlightMatches(
+                              tagSuggestion?.item?.name,
+                              tagSuggestion?.matches
+                            ) || tagSuggestion?.item?.name,
                         }}
                         onMouseDown={handleTagSuggestion}
                         className={classNames(
@@ -256,6 +315,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
             })}
         </ul>
       </div>
+      {/* Pages */}
       <div className="border" />
       <div className="style.pageSuggestions">
         <span className="text-pink-700">Quick Results(Page Suggestions:)</span>

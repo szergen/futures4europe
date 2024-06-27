@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useSearch } from '../../../../custom-hooks/SearchContext/SearchContext';
 import {
   InitialData,
   updateFilteredDataBasedOnClickedSuggestion,
-  // highlightedResults,
   updateFilteredDataBasedOnClickedTag,
   uniqueResults,
   extractFilterBy,
   removeSearchedItem,
   wordByWordSearch,
-  // highlightMatches,
+  sortResultBySortTags,
 } from '../../SearchComponentV1.utils';
+import style from './TagInput.module.css';
+import classNames from 'classnames';
+// import SearchedItems from '../SearchedItems/SearchedItems';
 
 export type TagInputProps = {
   initialData: InitialData;
@@ -25,7 +27,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const [resultsToShow, setResultsToShow] = useState([] as any[]);
   // Subscribe to the SearchContext
   const { searchState, setSearchState } = useSearch();
-  const { clickedSuggestion, clickedField, clickedTag } = searchState;
+  const { clickedField, clickedTag } = searchState;
 
   const handleArrouwUp = () => {
     setSearchState((prevState) => ({
@@ -71,12 +73,26 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       handleArrouwUp();
     } else if (event.key === 'Enter' && tagWasFocused) {
       if (searchState.selectedSuggestionIndex < 0) {
+        const resultsBasedOnSortTag = searchState.selectedSortTag
+          ? sortResultBySortTags(resultsToShow, searchState.selectedSortTag)
+          : resultsToShow;
+        console.log(
+          'resultsBasedOnSortTag -> resultsBasedOnSortTag',
+          resultsBasedOnSortTag
+        );
+        console.log(
+          'resultsBasedOnSortTag -> searchState.selectedSortTag',
+          searchState.selectedSortTag
+        );
+
         setSearchState((prevState) => ({
           ...prevState,
           showSuggestions: false,
           showHelp: false,
           showResults: true,
-          results: searchState.searchedItems.length ? resultsToShow : [],
+          results: searchState.searchedItems.length
+            ? resultsBasedOnSortTag
+            : [],
           searchedItems: input
             ? [
                 ...searchState.searchedItems,
@@ -87,6 +103,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             pages: resultsToShow,
             tags: initialData.tags,
             assignments: initialData.assignments,
+            sortTags: initialData.sortTags,
           },
           selectedSuggestionIndex: -1,
           // selectedSuggestionTag: '',
@@ -109,12 +126,26 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             searchState.activeSelection === 'field'
               ? searchState.selectedSuggestionTag
               : prevState.clickedField,
-
-          activeSelection: 'tag',
+          searchedItems:
+            searchState.activeSelection === 'sortby'
+              ? [
+                  ...searchState.searchedItems,
+                  {
+                    searchItem: searchState.selectedSuggestionTag,
+                    searchItemType: 'sortby',
+                  },
+                ]
+              : prevState.searchedItems,
+          selectedSortTag:
+            searchState.activeSelection === 'sortby'
+              ? searchState.selectedSuggestionTag
+              : '',
+          // activeSelection: 'tag',
         }));
         setInput('');
       }
     } else if (event.key === 'Escape') {
+      event.preventDefault();
       setSearchState((prevState) => ({
         ...prevState,
         selectedSuggestionIndex: -1,
@@ -131,15 +162,22 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           selectedSearchedItemIndex: 0,
         }));
       } else {
+        const { searchedItems, selectedSortTag: initialSelectedSortTag } =
+          searchState;
+        const isLastItemSortBy =
+          searchedItems[searchedItems.length - 1]?.searchItemType === 'sortby';
+        const updatedSearchedItems = searchedItems.slice(0, -1);
+
         setSearchState((prevState) => ({
           ...prevState,
           selectedSearchedItemIndex: -1,
-          searchedItems: searchState.searchedItems.slice(0, -1),
+          searchedItems: updatedSearchedItems,
           filteredData: removeSearchedItem(
             initialData,
-            searchState.searchedItems.slice(0, -1),
+            updatedSearchedItems,
             input
           ),
+          selectedSortTag: isLastItemSortBy ? '' : initialSelectedSortTag,
         }));
       }
     }
@@ -164,6 +202,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           pages: resultsToShow,
           tags: initialData.tags,
           assignments: initialData.assignments,
+          sortTags: initialData.sortTags,
         },
         selectedSuggestionIndex: -1,
         // selectedSuggestionTag: '',
@@ -180,7 +219,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           searchState.activeSelection === 'tag'
             ? searchState.selectedSuggestionTag
             : '',
-        selectedSuggestionIndex: -1,
+        selectedSuggestionIndex: 0,
         selectedSuggestionTag: '',
         clickedField:
           searchState.activeSelection === 'field'
@@ -193,36 +232,29 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     }
   };
 
-  const handleScrollForSuggestions = (e: any) => {
-    if (e.deltaY < 0) {
-      handleArrouwUp();
-    } else {
-      handleArrowDown();
-    }
-  };
-
   // Input effect
   useEffect(() => {
     console.log('Input:', input);
     if (input) {
       // Hide help dropdown and show suggestions
       const searchInput = input;
+      let sortTagsSuggestionsSearch: any[] = [];
       setTagWasFocused(true);
 
       // Word by word search
-      const pageSuggestions = wordByWordSearch(input, filteredData.pages, [
-        'title',
-        'subtitle',
-        'description',
-      ]);
+      const pageSuggestionsSearch = wordByWordSearch(
+        input,
+        filteredData.pages,
+        ['title', 'subtitle', 'description']
+      );
 
-      const fieldSuggestions = wordByWordSearch(
+      const fieldSuggestionsSearch = wordByWordSearch(
         input,
         filteredData.tags.filter((tag) => tag.tagType === 'field'),
         ['name', 'tagLine']
       );
 
-      const tagSuggestions = wordByWordSearch(
+      const tagSuggestionsSearch = wordByWordSearch(
         input,
         filteredData.tags.filter(
           (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
@@ -230,31 +262,44 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         ['name', 'tagLine']
       );
 
+      // if (searchState.searchedItems.length) {
+      sortTagsSuggestionsSearch = wordByWordSearch(
+        input,
+        filteredData.sortTags,
+        ['name']
+      );
+      console.log(
+        'debug1->sortTagsSuggestionsSearch',
+        sortTagsSuggestionsSearch
+      );
+      // }
+
       if (clickedField) {
         setFilterByField(extractFilterBy(initialData.tags, clickedField) || '');
       }
       // Update results local state with unique results
       setResultsToShow(
-        uniqueResults(pageSuggestions)?.map((result) => result?.item)
+        uniqueResults(pageSuggestionsSearch)?.map((result) => result?.item)
       );
 
-      console.log('debug2->tagSuggestions', tagSuggestions);
-      console.log('debug2->pageSuggestions', pageSuggestions);
+      console.log('debug2->tagSuggestions', tagSuggestionsSearch);
+      console.log('debug2->pageSuggestions', pageSuggestionsSearch);
 
       setSearchState((prevState) => ({
         ...prevState,
-        fieldSuggestions: fieldSuggestions,
+        fieldSuggestions: fieldSuggestionsSearch,
         tagSuggestions: filterByField
-          ? tagSuggestions?.filter(
+          ? tagSuggestionsSearch?.filter(
               (tag) =>
                 tag?.item.tagType !== 'field' &&
                 tag?.item.tagType !== 'sort' &&
                 tag?.item.tagType === filterByField
             )
-          : tagSuggestions?.sort(
+          : tagSuggestionsSearch?.sort(
               (a, b) => b?.item?.popularity - a?.item?.popularity
             ),
-        pageSuggestions: pageSuggestions,
+        pageSuggestions: pageSuggestionsSearch,
+        sortTagsSuggestions: sortTagsSuggestionsSearch,
         showSuggestions: true,
         showHelp: false,
         inputText: input,
@@ -282,6 +327,22 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         )
       );
 
+      const tagSuggestionsSearch = wordByWordSearch(
+        ' ',
+        filteredData.tags.filter(
+          (tag) =>
+            tag.tagType !== 'field' &&
+            tag.tagType !== 'sort' &&
+            tag.tagType === extractFilterBy(initialData.tags, clickedField)
+        ),
+        ['name', 'tagLine']
+      ).sort((a, b) => b?.item?.popularity - a?.item?.popularity);
+      console.log(
+        'debug100->tagSuggestionsSearch',
+        tagSuggestionsSearch,
+        extractFilterBy(initialData.tags, clickedField)
+      );
+
       setSearchState((prevState) => ({
         ...prevState,
         showSuggestions: true,
@@ -297,18 +358,19 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           pages: filteredPages,
           tags: initialData.tags,
           assignments: filteredAssignments,
+          sortTags: initialData.sortTags,
         },
-        fieldSuggestions: initialData.tags.filter(
-          (tag) => tag.tagType === 'field'
-        ),
-        tagSuggestions: initialData.tags.filter(
-          (tag) =>
-            tag.tagType !== 'field' &&
-            tag.tagType !== 'sort' &&
-            tag.tagType === filterByField
-        ),
+        fieldSuggestions: [],
+        // fieldSuggestions: initialData.tags.filter(
+        //   (tag) => tag.tagType === 'field'
+        // ),
+        tagSuggestions: tagSuggestionsSearch,
         pageSuggestions: filteredPages,
+        // sortTagsSuggestions: initialData.sortTags,
+        sortTagsSuggestions: [],
         inputText: '',
+        selectedSuggestionIndex: 0,
+        activeSelection: 'tag',
       }));
       setInput('');
     } else {
@@ -345,6 +407,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           pages: matchedPages,
           tags: initialData.tags,
           assignments: initialData.assignments,
+          sortTags: initialData.sortTags,
         },
         fieldSuggestions: initialData.tags.filter(
           (tag) => tag.tagType === 'field'
@@ -353,6 +416,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
         ),
         pageSuggestions: matchedPages,
+        sortTagsSuggestions: initialData.sortTags,
         inputText: '',
       }));
       setInput('');
@@ -384,6 +448,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           pages: matchedPages.map((page) => page.item),
           tags: initialData.tags,
           assignments: initialData.assignments,
+          sortTags: initialData.sortTags,
         },
         fieldSuggestions: initialData.tags.filter(
           (tag) => tag.tagType === 'field'
@@ -392,6 +457,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
         ),
         pageSuggestions: matchedPages,
+        sortTagsSuggestions: initialData.sortTags,
         inputText: '',
       }));
       setInput('');
@@ -402,6 +468,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     }
   }, [clickedTag]);
 
+  // searchState.searchedItems effect
   useEffect(() => {
     // setResultsToShow(
     //   uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
@@ -420,21 +487,24 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         (result) => result.item
       )
     );
+    if (searchState.selectedSortTag) {
+      setInput('');
+    }
   }, [searchState.searchedItems]);
 
-  useEffect(() => {
-    console.log(
-      'TAG INPUT -> debug4->selectedSuggestionIndex->',
-      searchState.selectedSuggestionIndex
-    );
-    console.log(
-      'TAG INPUT -> debug4->selectedSuggestionTag->',
-      searchState.selectedSuggestionTag
-    );
-  }, [searchState.selectedSuggestionIndex]);
+  // useEffect(() => {
+  //   console.log(
+  //     'TAG INPUT -> debug4->selectedSuggestionIndex->',
+  //     searchState.selectedSuggestionIndex
+  //   );
+  //   console.log(
+  //     'TAG INPUT -> debug4->selectedSuggestionTag->',
+  //     searchState.selectedSuggestionTag
+  //   );
+  // }, [searchState.selectedSuggestionIndex]);
 
   return (
-    <div className="style.tagInput min-w-max">
+    <div className={classNames(style.inputContainer)}>
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -448,7 +518,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          strokeWidth={2}
           stroke="currentColor"
           className="w-6 h-6"
         >

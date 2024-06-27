@@ -115,6 +115,7 @@ const mockedInitialData = {
   ],
   pages: [
     {
+      id: 1,
       pageId: 111,
       title: 'Eva Pericolini',
       subtitle: 'Eva Pericolini is a researcher at University of Perugia',
@@ -127,6 +128,7 @@ const mockedInitialData = {
       // domain: [],
     },
     {
+      id: 2,
       pageId: 125,
       title: 'Agripina Popescu',
       subtitle: 'Agripina Popescu is a researcher at Aarhus Universitet',
@@ -139,6 +141,7 @@ const mockedInitialData = {
       // domain: [],
     },
     {
+      id: 3,
       pageId: 126,
       title: 'Dorel Industries',
       subtitle: 'The Research and Innovation foresight community',
@@ -152,6 +155,7 @@ const mockedInitialData = {
       establishedDate: '2000-01-01',
     },
     {
+      id: 4,
       pageId: 127,
       title: 'Project X',
       subtitle: 'The Research and Innovation foresight community',
@@ -166,6 +170,7 @@ const mockedInitialData = {
       activity: ['Agriculture', 'Green Energy'],
     },
     {
+      id: 5,
       pageId: 172,
       title: 'NEWer but shorter Project X',
       subtitle: 'The Research and Innovation foresight community',
@@ -179,6 +184,7 @@ const mockedInitialData = {
       endDate: '2022-12-31',
     },
     {
+      id: 6,
       pageId: 128,
       title: 'Project Result X',
       subtitle: 'The Research and Innovation foresight community',
@@ -191,6 +197,7 @@ const mockedInitialData = {
       publicationDate: '2023-12-31',
     },
     {
+      id: 7,
       pageId: 129,
       title: 'Project Result Y',
       subtitle: 'The Research and Innovation foresight community',
@@ -204,6 +211,7 @@ const mockedInitialData = {
       publicationDate: '2022-12-31',
     },
     {
+      id: 8,
       pageId: 130,
       title: 'UEFISCDI',
       subtitle: 'The Research and Innovation foresight community',
@@ -216,6 +224,7 @@ const mockedInitialData = {
       establishedDate: '2001-01-01',
     },
     {
+      id: 9,
       pageId: 131,
       title: 'Project Z LLM',
       subtitle: 'large language models project',
@@ -408,6 +417,7 @@ const mockedInitialData = {
     },
     ...mockedAssignments,
   ],
+  sortTags: sortTags,
 };
 
 export interface SearchState {
@@ -416,6 +426,7 @@ export interface SearchState {
   fieldSuggestions: any[];
   tagSuggestions: any[];
   pageSuggestions: any[];
+  sortTagsSuggestions: any[];
   // highlightedData: any[];
   showHelp: boolean;
   showSuggestions: boolean;
@@ -426,12 +437,12 @@ export interface SearchState {
   clickedTag: string;
   searchedItems: {
     searchItem: string;
-    searchItemType: 'text' | 'tag' | 'field-tag' | 'sortby';
+    searchItemType: 'text' | 'tag' | 'field-tag' | 'sortby' | '';
   }[];
   selectedSuggestionIndex: number;
   selectedSuggestionTag: string;
   selectedSearchedItemIndex: number;
-  activeSelection: 'field' | 'tag' | 'field-tag' | '';
+  activeSelection: 'field' | 'tag' | 'field-tag' | '' | 'sortby';
   sortBy: 'relevance' | 'byBeginDate' | 'byEstablishedDate';
   inputText: string;
   sortTags: typeof sortTags;
@@ -453,7 +464,7 @@ const initialState: SearchState = {
   clickedField: '',
   clickedTag: '',
   searchedItems: [],
-  selectedSuggestionIndex: -1,
+  selectedSuggestionIndex: 0,
   selectedSuggestionTag: '',
   selectedSearchedItemIndex: -1,
   activeSelection: '',
@@ -461,6 +472,7 @@ const initialState: SearchState = {
   inputText: '',
   sortTags: sortTags,
   selectedSortTag: '',
+  sortTagsSuggestions: [],
 };
 
 export type SearchProviderProps = {

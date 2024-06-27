@@ -5,7 +5,7 @@ import React from 'react';
 export type SearchedItemProps = {
   item: {
     searchItem: string;
-    searchItemType: 'text' | 'tag' | 'field-tag';
+    searchItemType: 'text' | 'tag' | 'field-tag' | 'sortby';
   };
   index: number;
   handleRemoveSearchedItem: (e: any) => void;
@@ -27,6 +27,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
     : item.searchItem;
   const tagData = tags.find((tag) => tag.name === tagName);
   console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
+  console.log('debug3->', { item });
 
   return (
     <li
@@ -37,7 +38,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       )}
     >
       {/* Field with Tag */}
-      {itemIncludesField && tagData && (
+      {item.searchItemType === 'field-tag' && (
         <span className="flex items-center">
           <span className="" key={index}>
             {item.searchItem.split(':')[0]}
@@ -56,7 +57,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
         </span>
       )}
       {/* Tag */}
-      {!itemIncludesField && tagData && (
+      {item.searchItemType === 'tag' && (
         <span className="" key={index}>
           <Tag
             tagText={tagData.name}
@@ -67,19 +68,40 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
         </span>
       )}
       {/* Field without Tag */}
-      {!tagData && !itemIncludesField && (
+      {item.searchItemType !== 'tag' &&
+        item.searchItemType !== 'sortby' &&
+        item.searchItemType !== 'field-tag' &&
+        item.searchItemType !== 'text' && (
+          <span
+            after={'"'}
+            before={'"'}
+            className="after:content-[attr(after)] before:content-[attr(before)] flex"
+            key={index}
+          >
+            {item.searchItem}
+          </span>
+        )}
+      {/* Simple Text */}
+      {item.searchItemType === 'text' && (
         <span
           after={'"'}
           before={'"'}
-          className="after:content-[attr(after)] before:content-[attr(before)] flex"
           key={index}
+          className="after:content-[attr(after)] before:content-[attr(before)] flex"
         >
           {item.searchItem}
         </span>
       )}
-      {/* Simple Text */}
-      {!tagData && itemIncludesField && (
-        <span key={index}>{item.searchItem}</span>
+      {/* Sort Tag */}
+      {item.searchItemType === 'sortby' && (
+        <span className="" key={index}>
+          <Tag
+            tagText={item.searchItem}
+            // tagCounter={tagData.popularity}
+            // href={tagData.pageLink}
+            // thumbnail={tagData.picture}
+          />
+        </span>
       )}
       {/* Remove Item */}
       <span onClick={handleRemoveSearchedItem}>

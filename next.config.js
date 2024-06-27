@@ -11,7 +11,12 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: ['static.wixstatic.com', 'picsum.photos', 'placehold.co'],
+    domains: [
+      'static.wixstatic.com',
+      'picsum.photos',
+      'placehold.co',
+      'randomuser.me',
+    ],
     formats: ['image/webp'],
   },
 };
