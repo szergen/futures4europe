@@ -7,17 +7,19 @@ import { FloatingLabel } from 'flowbite-react';
 
 export type LinkComponentProps = {
   href: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
+  description?: string;
 };
 
 const LinkComponent: React.FC<LinkComponentProps> = ({
   href,
   children,
   className,
+  description,
 }) => {
   const [linkState, setLinkState] = useState({
-    description: 'This is an example of description link',
+    description: description,
     link: 'https://google.com',
   });
   const [isDescriptionEdit, setIsDescriptionEdit] = useState(true);

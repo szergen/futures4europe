@@ -1,8 +1,13 @@
-export default async function ProjectPage({ params }: any) {
+'use client';
+import classNames from 'classnames';
+import React from 'react';
+import ProjectPageComponent from '@app/page-components/ProjectPageComponent/ProjectPageComponent';
+
+export default function PostPage({ params }: any) {
+  console.log('Post Page Params', params.slug);
   return (
-    <>
-      <div className="relative">test PROJECT page name:</div>
-      <div>{params?.slug}</div>
-    </>
+    <div className={classNames('w-full')}>
+      <ProjectPageComponent />
+    </div>
   );
 }

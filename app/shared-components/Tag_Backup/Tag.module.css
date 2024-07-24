@@ -8,43 +8,27 @@
   font-family: Oswald, sans-serif;
 
   .tagPicture {
-    padding: 0.15em;
-    border-radius: 0.45em;
-    position: relative;
-    left: -0.2em;
+    border-radius: 50%;
   }
 
   .tagCounterBody {
     display: flex;
-    right: -10px;
+    left: calc(100% - 20px);
     position: absolute;
-    top: -15px;
+    top: -10px;
   }
 
   .tagCounter {
-    background-color: white;
+    background-color: lightgray;
     border-radius: 10px;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 500;
     height: 24px;
     line-height: 10px;
-    padding: 4px;
+    padding: 7px;
   }
   .tagBody {
     display: inline-flex;
-    align-items: center;
-    border: 3px solid #d9d9d9;
-    transition: border 0.3s;
-    border-radius: 0.24em;
-    padding: 0.3em 0.4em;
-    cursor: pointer;
-    height: 38px;
-    margin-right: 0.5em;
-    position: relative;
-  }
-
-  .tagBody:hover {
-    border: 3px solid #a1d4e4;
   }
 
   .tagText {
@@ -53,7 +37,6 @@
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
   }
 
   .tagTrend {
@@ -62,6 +45,7 @@
     font-weight: 700;
     line-height: 10px;
     padding: 7px;
+    
   }
 
   .tagCloseButton {

@@ -33,10 +33,13 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
   ) : (
     <Image
       alt={thumbnailAlt || 'Avatar Image'}
-      className={classNames('inline-block z-10', style.tagPicture)}
+      className={classNames(
+        'inline-block mr-1 relative -right-7 z-10',
+        style.tagPicture
+      )}
       src={thumbnail || 'https://picsum.photos/id/177/40/40'}
-      width={30}
-      height={30}
+      width={40}
+      height={40}
     />
   );
 

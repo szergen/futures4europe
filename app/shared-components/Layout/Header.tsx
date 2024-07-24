@@ -4,6 +4,10 @@ import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
 import SearchComponentV1 from '../SearchComponentV1/SearchComponentV1';
 import { SearchProvider } from '../../custom-hooks/SearchContext/SearchContext';
+import style from './Header.module.css';
+import Link from 'next/link';
+import classNames from 'classnames';
+import Image from 'next/image';
 
 const Header = () => (
   <>
@@ -11,19 +15,42 @@ const Header = () => (
       className="w-full my-6 px-2 sm:px-8"
       data-testid={testIds.LAYOUT.HEADER}
     >
-      <div className="flex justify-around sm:px-6 sm:px-14 h-header sm:items-center sm:gap-4 sm:gap-8">
+      <div
+        className={classNames(
+          'flex justify-between sm:px-6 sm:px-14 h-header sm:items-center sm:gap-4 sm:gap-8',
+          style.headerContainer
+        )}
+      >
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6"
+        >
+          <Logo />
+        </Link>
+        {/* Search */}
         <div>
           <SearchProvider>
             <SearchComponentV1 />
           </SearchProvider>
         </div>
+        {/* Account */}
+        <div>
+          <Link
+            href="/account"
+            className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden"
+          >
+            <Image
+              width={60}
+              height={60}
+              src="https://picsum.photos/id/195/60/60"
+              alt="User Avatar"
+              className="w-full h-full object-cover"
+            />
+          </Link>
+        </div>
         {/* <h2 className="flex-1"> */}
-        <a
-          href="/"
-          className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6"
-        >
-          <Logo />
-        </a>
+
         {/* </h2> */}
         {/* <div>
           <NavBar />

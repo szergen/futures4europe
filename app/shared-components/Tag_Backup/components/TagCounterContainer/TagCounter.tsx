@@ -29,6 +29,17 @@ export const TagCounter: React.FC<TagCounterProps> = ({
           />
         </Tooltip3>
       )}
+      {/* {tagTrend && (
+        <Tooltip3
+          trigger="hover"
+          popoverContent={`Trending +${tagTrend} references in the last month`}
+        >
+          <span className={classNames('text-green-500', style.tagTrend)}>
+            {tagTrend > 0 ? '+' : ''}
+            {tagTrend}
+          </span>
+        </Tooltip3>
+      )} */}
     </span>
   );
 };
