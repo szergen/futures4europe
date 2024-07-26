@@ -16,25 +16,42 @@
     display: flex;
     margin-top: 2em;
 
-    .imageAndSocialColumn {
+    .imageAndButtons {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-right: 2em;
+      flex-shrink: 0;
+
+      .projectResultImage {
+        outline: lightGray solid 1px;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+      }
+      .projectResultImage:hover {
+        cursor: pointer;
+        box-shadow: rgb(75, 145, 243) 0px 0px 5px;
+      }
     }
-    .socialIcons {
-      width: 90%;
+    .downloadAndViews {
+      width: 100%;
       display: flex;
       margin-top: 0.5em;
       justify-content: center;
-
-      svg {
-        margin-left: 10px;
-      }
     }
     .detailsColumn {
       display: flex;
       flex-direction: column;
+    }
+
+    .recommandations {
+      border-top: 1px solid #d9d9d9;
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+      margin-top: 0.5em;
+      padding-top: 0.5em;
+      width: 100%;
     }
   }
 

@@ -1,12 +1,13 @@
 .buttonComponent {
-  background-color: #4caf50;
+  background-color: rgba(1, 153, 255, 1);
   border: none;
-  color: darkblue;
-  padding: 15px 32px;
+  color: white;
+  padding: 0.5em 1em;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 8px;
 }

@@ -1,13 +1,13 @@
 'use client';
 import classNames from 'classnames';
 import React from 'react';
-import ProjectResultPageComponent from '@app/page-components/ProjectResultPageComponent/ProjectResultPageComponent';
+import EventPageComponent from '@app/page-components/EventPageComponent/EventPageComponent';
 
 export default function PostPage({ params }: any) {
   console.log('Post Page Params', params.slug);
   return (
     <div className={classNames('w-full')}>
-      <ProjectResultPageComponent pageTitle={params.slug} />
+      <EventPageComponent pageTitle={params.slug} />
     </div>
   );
 }
