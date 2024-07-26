@@ -1,0 +1,64 @@
+.postContainer {
+  margin: 0 auto;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+
+  .postImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+  }
+
+  .recommandations {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin-top: 0.5em;
+  }
+
+  .foresight,
+  .domains,
+  .author {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    flex-wrap: wrap;
+  }
+  .foresightTitle {
+    font-weight: bold;
+    padding: 12px;
+    background: linear-gradient(90deg, #8fd4da 0%, #8fd4da 5%, #ffffff 90%);
+  }
+
+  .domainTitle {
+    font-weight: bold;
+    padding: 12px;
+    background: linear-gradient(90deg, #bd8fda 0%, #bd8fda 5%, #ffffff 90%);
+  }
+  .authorTitle {
+    font-weight: bold;
+    padding: 12px;
+    border-bottom: 1px solid #d9d9d9;
+    background: linear-gradient(90deg, #8fda8f 0%, #8fda8f 5%, #8fda8f 90%);
+  }
+  .postContent {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+  }
+  .externalLinks {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    margin-top: 1em;
+  }
+  .externalLinksTitle {
+    font-weight: bold;
+    padding: 12px;
+    background: linear-gradient(90deg, #8fda8f 0%, #8fda8f 5%, #8fda8f 90%);
+  }
+}

@@ -9,6 +9,7 @@ import PopoverComponent from '@app/shared-components/PopoverComponent/PopoverCom
 
 export type TagContainerProps = {
   tagText: string;
+  editable?: boolean;
   className?: string;
   tagCategory?: TagCategories;
   thumbnail?: string;
@@ -16,25 +17,43 @@ export type TagContainerProps = {
   tagCounter?: number;
   tagTrend?: number;
   href?: string;
+  onClick?: () => void;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
   tagText,
+  editable,
   className,
   tagCategory,
   tagCounter,
   tagTrend,
   thumbnail,
   thumbnailAlt,
+  onClick,
   href,
 }) => {
   const showThumbnail = thumbnail || tagCategory === 'person';
 
   return (
     <>
+      {showThumbnail && (
+        <TagThumbnail
+          thumbnail={thumbnail || undefined}
+          thumbnailAlt={thumbnailAlt}
+          tagCategory={tagCategory}
+        />
+      )}
       {/* Tag Body */}
       {tagText.length > 10 ? (
-        <span className={classNames('', style.tagBody, className)}>
+        <span
+          className={classNames(
+            //   'relative px-5 py-2 rounded-3xl shadow-md text-ellipsis max-w-64 overflow-hidden inline-block text-nowrap', // wrapping
+            'relative px-5 py-2 rounded-3xl shadow-md text-ellipsis',
+            style.tagBody,
+            showThumbnail && 'pl-9',
+            className
+          )}
+        >
           <PopoverComponent
             trigger="hover"
             popoverContent={tagText}
@@ -43,20 +62,12 @@ export const TagContainer: React.FC<TagContainerProps> = ({
             <div className="inline-flex">
               {href ? (
                 <span className={style.tagText}>
-                  <strong>
-                    {showThumbnail && (
-                      <TagThumbnail
-                        thumbnail={thumbnail || undefined}
-                        thumbnailAlt={thumbnailAlt}
-                        tagCategory={tagCategory}
-                      />
-                    )}
-                    {tagText}
-                  </strong>
+                  <strong>{tagText}</strong>
                 </span>
               ) : (
                 <span className={style.tagText}>{tagText}</span>
               )}
+              {editable && <TagCloseButton onClick={onClick || undefined} />}
             </div>
           </PopoverComponent>
           {/* Tag Counter and Trend */}
@@ -65,7 +76,15 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           )}
         </span>
       ) : (
-        <span className={classNames(style.tagBody, className)}>
+        <span
+          className={classNames(
+            //   'relative px-5 py-2 rounded-3xl shadow-md text-ellipsis max-w-64 overflow-hidden inline-block text-nowrap', // wrapping
+            'relative px-5 py-2 rounded-3xl shadow-md text-ellipsis',
+            style.tagBody,
+            showThumbnail && 'pl-9',
+            className
+          )}
+        >
           {href ? (
             <span className={style.tagText}>
               <strong>{tagText}</strong>
@@ -73,6 +92,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           ) : (
             <span className={style.tagText}>{tagText}</span>
           )}
+          {editable && <TagCloseButton onClick={onClick || undefined} />}
           {/* Tag Counter and Trend */}
           {tagCounter && (
             <TagCounter tagCounter={tagCounter} tagTrend={tagTrend} />

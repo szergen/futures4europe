@@ -16,6 +16,7 @@ const nextConfig = {
       'picsum.photos',
       'placehold.co',
       'randomuser.me',
+      'framerusercontent.com',
     ],
     formats: ['image/webp'],
   },

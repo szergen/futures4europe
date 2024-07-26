@@ -1,0 +1,23 @@
+.postItem {
+  margin: 0.5em 0;
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+.postImage {
+  flex-shrink: 0;
+  height: 180px;
+  width: 180px;
+}
+
+.postContent {
+  margin-left: 2em;
+  display: flex;
+  flex-direction: column;
+}
+.postRecommandations {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  margin-top: 0.5em;
+}

@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import style from './MiniPage.module.css';
 import Image from 'next/image';
-import exp from 'constants';
 
 export type MiniPageProps = {
   pageItem: {

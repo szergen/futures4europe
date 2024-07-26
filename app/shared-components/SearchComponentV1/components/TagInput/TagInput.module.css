@@ -1,12 +1,12 @@
 .inputContainer {
   input {
-    width: 300px;
+    width: 400px;
     height: 40px;
     transition: width 0.2s;
     /* set a shaddow and a border */
     box-shadow: 0 0 0 1px #d9d9d9;
   }
   input:focus {
-    width: 500px;
+    width: 700px;
   }
 }
