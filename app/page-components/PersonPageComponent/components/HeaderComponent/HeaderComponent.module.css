@@ -1,0 +1,21 @@
+.personHeader {
+  display: flex;
+  margin-top: 2em;
+
+  .imageAndSocialColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2em;
+  }
+  .socialIcons {
+    width: 90%;
+    display: flex;
+    margin-top: 0.5em;
+    justify-content: space-around;
+  }
+  .detailsColumn {
+    display: flex;
+    flex-direction: column;
+  }
+}

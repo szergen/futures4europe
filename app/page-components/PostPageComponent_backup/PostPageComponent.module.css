@@ -1,64 +1,85 @@
 .postContainer {
   margin: 0 auto;
-  max-width: 1440px;
+  max-width: 960px;
   display: flex;
   flex-direction: column;
   margin-top: 1em;
 
-  .postImage {
+  .preHeader {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-top: 1em;
   }
 
+  .postHeader {
+    width: 100%;
+    display: flex;
+    margin-top: 2em;
+
+    .imageAndAuthor {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 2em;
+      width: 280px;
+    }
+    .author {
+      width: 100%;
+      display: flex;
+      margin-top: 0.5em;
+      align-items: center;
+    }
+    .detailsColumn {
+      flex-grow: 1;
+      width: auto;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   .recommandations {
+    border-top: 1px solid #d9d9d9;
     display: flex;
     /* justify-content: center; */
     align-items: center;
     margin-top: 0.5em;
+    padding-top: 0.5em;
+    width: 100%;
   }
 
   .foresight,
   .domains,
-  .author {
+  .projects,
+  .posts,
+  .projectResults,
+  .events,
+  .affiliations {
     display: flex;
     align-items: center;
     margin-top: 1em;
     flex-wrap: wrap;
-  }
-  .foresightTitle {
-    font-weight: bold;
-    padding: 12px;
-    background: linear-gradient(90deg, #8fd4da 0%, #8fd4da 5%, #ffffff 90%);
+    margin-bottom: 1em;
   }
 
-  .domainTitle {
+  .foresightTitle,
+  .domainTitle,
+  .projectsTitle,
+  .affiliationsTitle {
     font-weight: bold;
-    padding: 12px;
-    background: linear-gradient(90deg, #bd8fda 0%, #bd8fda 5%, #ffffff 90%);
-  }
-  .authorTitle {
-    font-weight: bold;
-    padding: 12px;
     border-bottom: 1px solid #d9d9d9;
-    background: linear-gradient(90deg, #8fda8f 0%, #8fda8f 5%, #8fda8f 90%);
+    padding-bottom: 12px;
+    margin-bottom: 1em;
   }
+
   .postContent {
-    margin-top: 2em;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     /* align-items: center; */
   }
-  .externalLinks {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    margin-top: 1em;
-  }
-  .externalLinksTitle {
-    font-weight: bold;
-    padding: 12px;
-    background: linear-gradient(90deg, #8fda8f 0%, #8fda8f 5%, #8fda8f 90%);
+  .domains {
+    margin-bottom: 2em;
   }
 }

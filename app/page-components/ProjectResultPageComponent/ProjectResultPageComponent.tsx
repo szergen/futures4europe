@@ -129,7 +129,6 @@ function ProjectResultPageComponent({ pageTitle }: any) {
             className={classNames('rounded-full', style.projectResultImage)}
             alt="User Avatar - Eva Pericolini"
           />
-          {/* Social Icons */}
           <div className={style.downloadAndViews}>
             <Button>
               Download result (512kb){' '}
