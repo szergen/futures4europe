@@ -1,77 +1,413 @@
 'use client';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import style from './PostPageComponent.module.css';
 import Tag from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
+import MiniPageProjectResults from '@app/shared-components/MiniPageProjectResults/MiniPageProjectResults';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
+import MiniPageEvents from '@app/shared-components/MiniPageEvents/MiniPageEvents';
 import LinkComponent from '@app/shared-components/LinkComponent/LinkComponent';
 
-function PostPageComponent({ params }: any) {
+function PostPageComponent({ pageTitle }: any) {
+  const posts = [
+    {
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/193/30/30',
+        ],
+      },
+    },
+    {
+      title: 'With Big Tech comes Big (Ethical) Responsibility',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/191/180/180',
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation ',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 5,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+          'https://picsum.photos/id/195/30/30',
+          'https://picsum.photos/id/196/30/30',
+        ],
+      },
+    },
+    {
+      title:
+        'Prevention and treatment of autoimmune diseases with plant virus nanoparticles',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/194/180/180',
+      text: 'Paulo Carvalho has been working in the field of futures',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/199/180/180',
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+  ];
+
+  const projectResults = [
+    {
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      title: 'Project Title',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/201/180/180',
+      project: {
+        tagText: 'Project Tag',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/127/500/500',
+      },
+      text: 'Project description goes here',
+      tags: [
+        { tagText: 'Tag 1', tagCounter: 253 },
+        { tagText: 'Tag 2', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+  ];
+  const events = [
+    {
+      role: 'Speaker',
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      role: 'Participant',
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      role: 'Speaker',
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      role: 'Speaker',
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+    {
+      role: 'Speaker',
+      title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+      date: '12.02.2022',
+      image: 'https://picsum.photos/id/193/180/180',
+      project: {
+        tagText: 'ORION',
+        tagCounter: 253,
+        thumbnail: 'https://picsum.photos/id/125/500/500',
+      },
+      text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
+      tags: [
+        { tagText: 'Emerging technologies', tagCounter: 253 },
+        { tagText: 'EU&RI policy', tagCounter: 153 },
+      ],
+      recommendations: {
+        number: 3,
+        images: [
+          'https://picsum.photos/id/192/30/30',
+          'https://picsum.photos/id/190/30/30',
+          'https://picsum.photos/id/191/30/30',
+        ],
+      },
+    },
+  ];
+
+  const [displayCountPosts, setDisplayCountPosts] = useState(3);
+  const [displayCountProjectResults, setDisplayCountProjectResults] =
+    useState(3);
+  const [displayCountEvents, setDisplayCountEvents] = useState(3);
+
+  const showMorePosts = () => {
+    setDisplayCountPosts(posts.length);
+  };
+  const showFewerPosts = () => {
+    setDisplayCountPosts(3);
+  };
+  const showMoreProjectResults = () => {
+    setDisplayCountProjectResults(projectResults.length);
+  };
+  const showFewerProjectResults = () => {
+    setDisplayCountProjectResults(3);
+  };
+  const showMoreEvents = () => {
+    setDisplayCountEvents(events.length);
+  };
+  const showFewerEvents = () => {
+    setDisplayCountEvents(3);
+  };
   return (
     <div className={classNames(style.postContainer)}>
       {/* Page Type Tag */}
-      <div className={classNames('py-3')}>
-        <Tag tagText="post" tagCounter={253} />
+      <div className={classNames('py-3', style.preHeader)}>
+        <Tag tagText="Post" tagCounter={123} />
+        {/* Timestamp */}
+        <section className="post-meta">
+          <Typography tag="p" className="text-sm text-gray-400">
+            Edited 22h ago
+          </Typography>
+          {/* Additional meta content */}
+        </section>
       </div>
-      {/* Views */}
-      <div className={classNames('py-1')}>
-        <Typography tag="p" className="text-sm text-gray-800">
-          2153 views
-        </Typography>
+      {/* Post Header */}
+      <div className={classNames(style.postHeader)}>
+        <div className={style.imageAndAuthor}>
+          <Image
+            src="https://picsum.photos/id/155/280/280"
+            width={280}
+            height={280}
+            className={classNames('rounded-xl')}
+            alt="User Avatar - Eva Pericolini"
+          />
+          {/* Social Icons */}
+          <div className={style.author}>
+            <span className="me-2.5 text-gray-400">Author: </span>
+            <Tag
+              tagText="Eva Pericolini"
+              href="/person/Eva_Pericolini"
+              thumbnail="https://picsum.photos/id/155/147/147"
+            />
+          </div>
+          {/* Views */}
+          <Typography
+            data-after="2153"
+            tag="p"
+            className="text-sm text-gray-800 mb-2 after:content-[attr(data-after)]]"
+          >
+            2153 views
+          </Typography>
+        </div>
+        <div className={style.detailsColumn}>
+          {/* Post Info Name */}
+          <Typography tag="h1" className=" text-gray-800">
+            {pageTitle.replace(/_/g, ' ')}
+            {/* Post Popularity */}
+            <span
+              data-after="320"
+              className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
+            ></span>
+          </Typography>
+          {/* Post Country */}
+          <Tag tagText="Italy" tagCounter={253} className="mt-5" />
+          {/* Recommandations */}
+          <div className={classNames(style.recommandations)}>
+            {posts[0].recommendations?.images.map((image, index) => (
+              <Image
+                src={image}
+                key={`${index} - ${image}`}
+                width={17}
+                height={17}
+                className={classNames('rounded-full')}
+                alt={`Recommended by Person Image ${image}`}
+              />
+            ))}
+            <Typography tag="p" className="text-xs text-gray-400 px-4">
+              Recommended by {posts[0].recommendations?.number ?? 0}{' '}
+              {posts[0].recommendations?.number &&
+              posts[0].recommendations.number < 1
+                ? 'person'
+                : 'persons'}
+            </Typography>
+          </div>
+        </div>
       </div>
-      {/* Title */}
-      <header className="post-header">
-        {/* <h1>{params?.slug}</h1> */}
-        <h1>
-          Portugal’s path forward: Key insights from recent foresight
-          publications
-        </h1>
-      </header>
-      {/* Timestamp */}
-      <section className="post-meta">
-        <Typography tag="p" className="text-sm text-gray-400">
-          Edited 22h ago
-        </Typography>
-        {/* Additional meta content */}
-      </section>
-      {/* Image */}
-      <div className={classNames(style.postImage)}>
-        <Image
-          src="https://picsum.photos/id/195/900/500"
-          width={900}
-          height={500}
-          className={classNames('rounded-md')}
-          alt="Portugal’s path forward: Key insights from recent foresight publications"
-        />
-      </div>
-      {/* Reccomandations */}
-      <div className={classNames(style.recommandations)}>
-        <Image
-          src="https://picsum.photos/id/192/30/30"
-          width={30}
-          height={30}
-          className={classNames('rounded-full')}
-          alt="Portugal’s path forward: Key insights from recent foresight publications"
-        />
-        <Image
-          src="https://picsum.photos/id/190/30/30"
-          width={30}
-          height={30}
-          className={classNames('rounded-full')}
-          alt="Portugal’s path forward: Key insights from recent foresight publications"
-        />
-        <Image
-          src="https://picsum.photos/id/191/30/30"
-          width={30}
-          height={30}
-          className={classNames('rounded-full')}
-          alt="Portugal’s path forward: Key insights from recent foresight publications"
-        />
-        <Typography tag="p" className="text-sm text-gray-400 px-4">
-          Recommended by 3 people
-        </Typography>
-      </div>
+
       {/* Foresight Methods */}
       <section className={classNames(style.foresight)}>
         <Typography
@@ -96,7 +432,7 @@ function PostPageComponent({ params }: any) {
       <section className={classNames(style.domains)}>
         <Typography
           tag="h2"
-          className={classNames('text-gray-800 w-full my-4', style.domainTitle)}
+          className={classNames('text-gray-800 w-full', style.domainTitle)}
         >
           Domains
         </Typography>
@@ -106,39 +442,13 @@ function PostPageComponent({ params }: any) {
         <Tag tagText="Innate Immunity" tagCounter={55} />
         <Tag tagText="Cell Culture" tagCounter={45} />
         <Tag tagText="T Cells" tagCounter={23} />
+        <Tag tagText="Biology" tagCounter={253} />
+        <Tag tagText="Infectious Diseases" tagCounter={153} />
+        <Tag tagText="Imune Response" tagCounter={73} />
+        <Tag tagText="Innate Immunity" tagCounter={55} />
       </section>
-      {/* Author */}
-      <section className={classNames(style.author)}>
-        <Typography
-          tag="h2"
-          className={classNames('text-gray-800 w-full my-4', style.authorTitle)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-5 h-5 inline"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-            />
-          </svg>
-          <span>Author</span>
-        </Typography>
-        <Tag
-          tagText="Anton Plimon"
-          tagCounter={153}
-          href="https://google.com"
-          thumbnail="https://picsum.photos/id/125/500/500"
-          thumbnailAlt="Anton Plimon"
-        />
-      </section>
-      {/* Content */}
-      <main className={classNames('', style.postContent)}>
+      {/* Post Content */}
+      <main className={style.postContent}>
         <p>
           The following recently published and upcoming reports and books shed
           light on future-oriented insights with a special focus on Portugal.
@@ -148,6 +458,13 @@ function PostPageComponent({ params }: any) {
           readers can gain a comprehensive understanding of the challenges and
           opportunities that Portugal may face in the coming years. <br />
           <br />
+          <Image
+            src="https://picsum.photos/id/155/600/400"
+            width={600}
+            height={400}
+            className={classNames('rounded-md block mx-auto')}
+            alt="Post Image"
+          />
           <br />
           (Portuguese version only) This book was published by Orient Foundation
           (co-edited by the Institute for Prospective Studies) and launched in
@@ -167,6 +484,14 @@ function PostPageComponent({ params }: any) {
           Public Administration (PlanAPP), as part of the activities carried out
           by the Multisectoral Foresight Team of the Portuguese Network of
           Public Administration Planning and Foresight Services (RePLAN). <br />
+          <br />
+          <Image
+            src="https://picsum.photos/id/154/600/400"
+            width={600}
+            height={400}
+            className={classNames('rounded-md block mx-auto')}
+            alt="Post Image"
+          />
           <br />
           This brochure is a brief introduction to the 2050 Megatrends Report
           for Portugal, to be published by the end of 2024. Both publications
@@ -208,7 +533,6 @@ function PostPageComponent({ params }: any) {
           Portugal” by the end of this year.
         </p>
       </main>
-      {/* External Links */}
       <section className={classNames(style.externalLinks)}>
         <Typography
           tag="h2"
@@ -234,13 +558,6 @@ function PostPageComponent({ params }: any) {
           description=" NEXT conference overview"
         />
       </section>
-      <aside className="post-sidebar">
-        {/* Sidebar content or links can go here */}
-      </aside>
-      <footer className="post-footer">
-        {/* <p>Posted on [Post Date]</p> */}
-        {/* Additional footer content */}
-      </footer>
     </div>
   );
 }

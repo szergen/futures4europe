@@ -1,0 +1,32 @@
+.fileContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  flex-direction: column;
+  margin-left: 2em;
+}
+.fileContainer:first-child {
+  margin-left: 0;
+}
+.filesTitle {
+  font-weight: bold;
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 12px;
+  margin-bottom: 1em;
+}
+.filePreviewImage {
+  outline: lightGray solid 1px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filePreviewImage:hover {
+  cursor: pointer;
+  box-shadow: rgb(75, 145, 243) 0px 0px 5px;
+}
+
+.downloadButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
