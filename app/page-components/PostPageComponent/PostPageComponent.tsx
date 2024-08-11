@@ -20,41 +20,21 @@ import {
 
 export type PostPageComponentProps = {
   pageTitle: string;
-  post?: {
-    title: string;
-    pageType: 'Post' | 'Project Result' | 'Event';
-    subtitle: string;
-    countryTag: {
-      tagText: string;
-      tagCounter: number;
-    };
-    recommendations: {
-      number: number;
-      images: string[];
-    };
-    views: number;
-    author: {
-      name: string;
-      thumbnail: string;
-      href: string;
-    };
-    foresightMethods: Array<TagProps>;
-    domains: Array<TagProps>;
-    links: Array<{
-      href: string;
-      description: string;
-    }>;
-  };
+  post: any;
 };
 
 function PostPageComponent({ pageTitle, post }: any) {
-  post = post || mockPost(pageTitle);
-
+  post = { ...mockPost(pageTitle), ...post };
+  console.log('Post Page', post);
+  post.pageType = post.data.postType;
   return (
     <div className={classNames(style.postContainer)}>
       {/* Page Type Tag */}
-      <div className={classNames('py-3', style.preHeader)}>
-        <Tag tagText="Post" tagCounter={123} />
+      <div className={classNames('py-3 justify-start', style.preHeader)}>
+        <div>
+          <Tag tagText="Post" tagCounter={123} />
+          <Tag tagText={post.pageType} tagCounter={123} />
+        </div>
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">

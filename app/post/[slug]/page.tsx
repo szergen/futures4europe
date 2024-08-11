@@ -27,7 +27,7 @@ export default async function PostPage({ params }: any) {
 
   return (
     <div className={classNames('w-full')}>
-      <PostPageComponent pageTitle={params.slug} />
+      <PostPageComponent pageTitle={params.slug} post={postItem} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 const mockPost = (pageTitle: string) => {
   return {
     title: pageTitle,
-    pageType: 'Project Result',
+    pageType: 'Event',
     postType: ['Editorial', 'Event'],
     eventDate: {
       start: '2021-10-10',
