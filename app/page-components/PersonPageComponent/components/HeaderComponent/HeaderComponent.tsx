@@ -7,6 +7,7 @@ import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 export type HeaderComponentProps = {
   post: {
     title: string;
+    tagLine: string;
     image: string;
     personPopularity: number;
     pageType: 'Post' | 'Event' | 'Project Result';
@@ -20,7 +21,7 @@ export type HeaderComponentProps = {
       images: string[];
     };
     views: number;
-    domains: Array<TagProps>;
+    personRoles: Array<TagProps>;
   };
 };
 
@@ -129,13 +130,13 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
           ></span>
         </Typography>
         {/* Person Tagline */}
-        {/* <Typography tag="h3" className="text-gray-800 italic">
-          Sail away from the safe harbor - Catch the trade winds in your sails
-        </Typography> */}
+        <Typography tag="h3" className="text-gray-800 italic">
+          {post.tagLine}
+        </Typography>
         {/* Person domains */}
         <div className={style.domains}>
-          {post.domains.slice(0, 3).map((domain) => (
-            <Tag key={domain.tagText} {...domain} />
+          {post.personRoles.slice(0, 3).map((personRole) => (
+            <Tag key={personRole.tagText} {...personRole} />
           ))}
         </div>
         {/* Person Country */}

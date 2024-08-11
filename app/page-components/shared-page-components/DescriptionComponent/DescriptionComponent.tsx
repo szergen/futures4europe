@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import classNames from 'classnames';
 
-export type PersonDescriptionComponentProps = {
+export type DescriptionComponentProps = {
   description: string;
 };
 
-const PersonDescriptionComponent: React.FC<PersonDescriptionComponentProps> = ({
+const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
   description,
 }) => {
   return (
@@ -15,4 +15,4 @@ const PersonDescriptionComponent: React.FC<PersonDescriptionComponentProps> = ({
   );
 };
 
-export default PersonDescriptionComponent;
+export default DescriptionComponent;
