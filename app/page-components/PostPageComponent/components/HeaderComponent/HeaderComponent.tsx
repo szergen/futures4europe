@@ -132,6 +132,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
           {post.views} views
         </Typography>
       </div>
+      <Button className="h-9">Recommend</Button>
     </div>
   );
 };

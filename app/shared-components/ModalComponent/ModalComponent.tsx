@@ -18,7 +18,7 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
 
   return (
     <>
-      <Button onClick={() => setOpenModal(true)}>{buttonText}</Button>
+      {/* <Button onClick={() => setOpenModal(true)}>{buttonText}</Button> */}
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
         {headerTitle && <Modal.Header>{headerTitle}</Modal.Header>}
         <Modal.Body>
