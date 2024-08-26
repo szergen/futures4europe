@@ -47,7 +47,7 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
       <br />
       {FieldSuggestionTypes.map((field, index) => (
         <>
-          <span key={index} onMouseDown={handleFieldSelection}>
+          <span key={`${field.description}`} onMouseDown={handleFieldSelection}>
             {field.type}
           </span>
           : <span>{field.description}</span>, <br />

@@ -17,6 +17,11 @@ import {
   events,
   posts,
 } from '../../mocks/pagesMocks';
+import {
+  getCollection,
+  getCollectionItem,
+  updateDataItem,
+} from '@app/wixUtils/client-side';
 
 export type PostPageComponentProps = {
   pageTitle: string;
@@ -26,9 +31,25 @@ export type PostPageComponentProps = {
 function PostPageComponent({ pageTitle, post }: any) {
   post = { ...mockPost(pageTitle), ...post };
   console.log('Post Page', post);
-  post.pageType = post.data.postType;
+  post.pageType = post?.data?.postType;
+  post.subtitle = post?.data?.subtitle;
+  // Update Subtitle
+  const updateSubtitle = async () => {
+    console.log('Update Subtitle', post.dataCollectionId, post._id);
+    // const updatedItem = await updateDataItem(post.dataCollectionId, post._id, {
+    //   _id: post._id,
+    //   subtitle: 'This is a new subtitle',
+    // });
+    // const collection = await getCollection('PostPages');
+    // console.log('Updated Item', updatedItem);
+    const collection = await getCollection('PostPages');
+    console.log('Collection', collection);
+  };
+
   return (
     <div className={classNames(style.postContainer)}>
+      {/* Test Update */}
+      <button onClick={updateSubtitle}> Update Subtitle</button>
       {/* Page Type Tag */}
       <div className={classNames('py-3 justify-start', style.preHeader)}>
         <div>
@@ -38,7 +59,7 @@ function PostPageComponent({ pageTitle, post }: any) {
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited 22h ago
+            Edited {new Date(post.data._updatedDate['$date']).toLocaleString()}
           </Typography>
         </section>
       </div>
@@ -56,8 +77,8 @@ function PostPageComponent({ pageTitle, post }: any) {
         />
       )}
       {/* Post Content */}
-      <ContentComponent />
-
+      <ContentComponent content={post.data.postContentRIch} />
+      {/* <div>{post.data.postContent}</div> */}
       {/* EVENT SPECIFIC*/}
       {post.pageType === 'Event' && (
         <>
@@ -80,7 +101,9 @@ function PostPageComponent({ pageTitle, post }: any) {
       )}
 
       {/* Post People */}
-      <TagListComponent tagList={post.people} tagListTitle="People" />
+      {post.pageType !== 'Event' && (
+        <TagListComponent tagList={post.people} tagListTitle="People" />
+      )}
 
       {/* Foresight Methods */}
       <TagListComponent

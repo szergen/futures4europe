@@ -25,7 +25,7 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.ico" />
       </head>
       <body className=" bg-white">
-        {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
+        {process.env.WIX_CLIENT_ID ? (
           <>
             <Header />
             <main className="bg-white min-h-[600px]">{children}</main>
@@ -36,7 +36,7 @@ export default function RootLayout({
         ) : (
           <div className="bg-white min-h-[600px] max-w-5xl mx-auto p-5">
             Page not available. Please add an environment variable called
-            NEXT_PUBLIC_WIX_CLIENT_ID, containing the client ID, to your
+            WIX_CLIENT_ID, containing the client ID, to your
             deployment provider.
           </div>
         )}
