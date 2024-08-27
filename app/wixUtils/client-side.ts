@@ -65,4 +65,28 @@ const getCollection = async (collectionName: string) => {
   }
 };
 
-export { updateDataItem, getCollectionItem, getCollection };
+const bulkInsertItems = async (
+  collectionName: string,
+  dataItems: Record<string, any>[]
+) => {
+  try {
+    const response = await fetch('/api/bulkInsertItems', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName, dataItems }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to insert bulk data items');
+    }
+
+    const updatedItems = await response.json();
+    return updatedItems;
+  } catch (error) {
+    console.error('Error inserting bulk items', error);
+  }
+};
+
+export { updateDataItem, getCollectionItem, getCollection, bulkInsertItems };

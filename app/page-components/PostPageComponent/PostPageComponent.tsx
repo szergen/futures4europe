@@ -21,7 +21,9 @@ import {
   getCollection,
   getCollectionItem,
   updateDataItem,
+  bulkInsertItems,
 } from '@app/wixUtils/client-side';
+import { mockedTags } from '../../custom-hooks/SearchContext/SearchContext.utils';
 
 export type PostPageComponentProps = {
   pageTitle: string;
@@ -33,6 +35,7 @@ function PostPageComponent({ pageTitle, post }: any) {
   console.log('Post Page', post);
   post.pageType = post?.data?.postType;
   post.subtitle = post?.data?.subtitle;
+  // console.log('mockedTags', mockedTags);
   // Update Subtitle
   const updateSubtitle = async () => {
     console.log('Update Subtitle', post.dataCollectionId, post._id);
@@ -41,9 +44,51 @@ function PostPageComponent({ pageTitle, post }: any) {
     //   subtitle: 'This is a new subtitle',
     // });
     // const collection = await getCollection('PostPages');
-    // console.log('Updated Item', updatedItem);
-    const collection = await getCollection('PostPages');
-    console.log('Collection', collection);
+    // console.log('Updated Item', collection);
+    // Get Collection
+    // const collection = await getCollection('PostPages');
+    // console.log('Collection', collection);
+    // Bulk Insert
+    const pageTypeTags = [
+      { tagId: 252524, tagType: 'page type', name: 'info', popularity: 184 },
+      {
+        tagId: 252525,
+        tagType: 'page type',
+        name: 'organisation info',
+        popularity: 58,
+      },
+      {
+        tagId: 252526,
+        tagType: 'page type',
+        name: 'person info',
+        popularity: 91,
+      },
+      {
+        tagId: 252527,
+        tagType: 'page type',
+        name: 'project info',
+        popularity: 35,
+      },
+      { tagId: 252528, tagType: 'page type', name: 'post', popularity: 253 },
+      {
+        tagId: 252529,
+        tagType: 'page type',
+        name: 'project result',
+        popularity: 126,
+      },
+      { tagId: 252530, tagType: 'page type', name: 'event', popularity: 46 },
+      {
+        tagId: 252531,
+        tagType: 'page type',
+        name: 'foresight method',
+        popularity: 8,
+      },
+    ];
+    const bulkInsert = await bulkInsertItems(
+      'Tags',
+      pageTypeTags.map((tag: any) => ({ data: tag }))
+    );
+    console.log('Bulk Insert', bulkInsert);
   };
 
   return (

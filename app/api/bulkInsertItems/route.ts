@@ -3,7 +3,7 @@ import { getWixClientServer } from '@app/hooks/useWixClientServer';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName, dataItems } = await req.json();
-  console.log('itemId->', dataItems);
+  console.log('dataItems->', dataItems);
 
   try {
     const wixClientServer = await getWixClientServer();
@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
     });
     return NextResponse.json(insertedItems, { status: 200 });
   } catch (error) {
-    console.error('Error inserting dataItems', error);
+    console.error('Error inserting bulk dataItems', error);
     return NextResponse.json(
       { message: 'Internal server error' },
       { status: 500 }
