@@ -19,23 +19,36 @@ import {
 } from '@app/mocks/pagesMocks';
 
 function PersonPageComponent({ pageTitle, person }: any) {
-  person = person || mockPerson(pageTitle);
+  // person = person || mockPerson(pageTitle);
+  person = { ...mockPerson(pageTitle), ...person };
+
+  person = {
+    ...person,
+    pageType: person?.data?.pageTypes[0],
+    updatedDate: person?.data?._updatedDate,
+    personTag: person?.data?.person[0],
+    activity: person?.data?.activity,
+    countryTag: person?.data?.countryTag[0],
+    description: person?.data?.description,
+    methods: person?.data?.methods,
+    domains: person?.data?.domains,
+  };
 
   return (
     <div className={classNames(style.personContainer)}>
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag tagText="Person Info" tagCounter={123} />
+        <Tag {...person.pageType} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited 22h ago
+            Edited {new Date(person.updatedDate['$date']).toLocaleString()}
           </Typography>
           {/* Additional meta content */}
         </section>
       </div>
       {/* Person Header */}
-      <HeaderComponent post={person} />
+      <HeaderComponent person={person} />
       {/* Person Description */}
       <PersonDescriptionComponent description={person.description} />
 
@@ -44,7 +57,7 @@ function PersonPageComponent({ pageTitle, person }: any) {
 
       {/* Foresight Methods */}
       <TagListComponent
-        tagList={person.foreSightMethods}
+        tagList={person.methods}
         tagListTitle="Foresight Methods"
       />
       {/* Domains */}

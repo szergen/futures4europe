@@ -3,48 +3,48 @@ import React from 'react';
 import style from '../../Tag.module.css';
 import { TagCategories } from '../../Tag.utils';
 import TagThumbnail from '../TagThumbnail/TagThumbnail';
-import TagCounter from '../TagCounterContainer/TagCounter';
+import popularity from '../TagCounterContainer/popularity';
 import TagCloseButton from '../TagCloseButton/TagCloseButton';
 import PopoverComponent from '@app/shared-components/PopoverComponent/PopoverComponent';
 
 export type TagContainerProps = {
-  tagText: string;
+  name: string;
   editable?: boolean;
   className?: string;
   tagCategory?: TagCategories;
-  thumbnail?: string;
-  thumbnailAlt?: string;
-  tagCounter?: number;
+  picture?: string;
+  pictureAlt?: string;
+  popularity?: number;
   tagTrend?: number;
   href?: string;
   onClick?: () => void;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
-  tagText,
+  name,
   editable,
   className,
   tagCategory,
-  tagCounter,
+  popularity,
   tagTrend,
-  thumbnail,
-  thumbnailAlt,
+  picture,
+  pictureAlt,
   onClick,
   href,
 }) => {
-  const showThumbnail = thumbnail || tagCategory === 'person';
+  const showThumbnail = picture || tagCategory === 'person';
 
   return (
     <>
       {showThumbnail && (
         <TagThumbnail
-          thumbnail={thumbnail || undefined}
-          thumbnailAlt={thumbnailAlt}
+          picture={picture || undefined}
+          pictureAlt={pictureAlt}
           tagCategory={tagCategory}
         />
       )}
       {/* Tag Body */}
-      {tagText.length > 10 ? (
+      {name.length > 10 ? (
         <span
           className={classNames(
             //   'relative px-5 py-2 rounded-3xl shadow-md text-ellipsis max-w-64 overflow-hidden inline-block text-nowrap', // wrapping
@@ -56,23 +56,23 @@ export const TagContainer: React.FC<TagContainerProps> = ({
         >
           <PopoverComponent
             trigger="hover"
-            popoverContent={tagText}
-            popoverImage={thumbnail}
+            popoverContent={name}
+            popoverImage={picture}
           >
             <div className="inline-flex">
               {href ? (
-                <span className={style.tagText}>
-                  <strong>{tagText}</strong>
+                <span className={style.name}>
+                  <strong>{name}</strong>
                 </span>
               ) : (
-                <span className={style.tagText}>{tagText}</span>
+                <span className={style.name}>{name}</span>
               )}
               {editable && <TagCloseButton onClick={onClick || undefined} />}
             </div>
           </PopoverComponent>
           {/* Tag Counter and Trend */}
-          {tagCounter && (
-            <TagCounter tagCounter={tagCounter} tagTrend={tagTrend} />
+          {popularity && (
+            <popularity popularity={popularity} tagTrend={tagTrend} />
           )}
         </span>
       ) : (
@@ -86,16 +86,16 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           )}
         >
           {href ? (
-            <span className={style.tagText}>
-              <strong>{tagText}</strong>
+            <span className={style.name}>
+              <strong>{name}</strong>
             </span>
           ) : (
-            <span className={style.tagText}>{tagText}</span>
+            <span className={style.name}>{name}</span>
           )}
           {editable && <TagCloseButton onClick={onClick || undefined} />}
           {/* Tag Counter and Trend */}
-          {tagCounter && (
-            <TagCounter tagCounter={tagCounter} tagTrend={tagTrend} />
+          {popularity && (
+            <popularity popularity={popularity} tagTrend={tagTrend} />
           )}
         </span>
       )}

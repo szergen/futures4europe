@@ -25,7 +25,7 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
     <div className={classNames(style.personContainer)}>
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag tagText="Organisation info" tagCounter={123} />
+        <Tag name="Organisation info" popularity={123} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">

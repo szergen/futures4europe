@@ -19,7 +19,7 @@ import {
 } from '../../mocks/pagesMocks';
 import {
   getCollection,
-  getCollectionItem,
+  getCollectionItemByTitle,
   updateDataItem,
   bulkInsertItems,
 } from '@app/wixUtils/client-side';
@@ -32,11 +32,56 @@ export type PostPageComponentProps = {
 
 function PostPageComponent({ pageTitle, post }: any) {
   post = { ...mockPost(pageTitle), ...post };
-  console.log('Post Page', post);
-  post.pageType = post?.data?.postType;
-  post.subtitle = post?.data?.subtitle;
+
+  post = {
+    ...post,
+    pageType: post?.data?.postType,
+    subtitle: post?.data?.subtitle,
+    updatedDate: post?.data?._updatedDate,
+    countryTag: post?.data?.countryTag[0],
+    recommendations: {
+      number: post?.data?.recomendations,
+    },
+    authors: post?.data?.author,
+    contentText: [
+      post?.data?.postContentRIch1,
+      post?.data?.postContentRIch2,
+      post?.data?.postContentRIch3,
+      post?.data?.postContentRIch4,
+      post?.data?.postContentRIch5,
+      post?.data?.postContentRIch6,
+      post?.data?.postContentRIch7,
+      post?.data?.postContentRIch8,
+      post?.data?.postContentRIch9,
+      post?.data?.postContentRIch10,
+    ],
+    contentImages: [
+      post?.data?.postImage1,
+      post?.data?.postImage2,
+      post?.data?.postImage3,
+      post?.data?.postImage4,
+      post?.data?.postImage5,
+      post?.data?.postImage6,
+      post?.data?.postImage7,
+      post?.data?.postImage8,
+      post?.data?.postImage9,
+      post?.data?.postImage10,
+    ],
+    projectAuthors: post?.data?.projectResultAuthor,
+    people: post?.data?.people,
+    foreSightMethods: post?.data?.methods,
+    domains: post?.data?.domains,
+    project: post?.data?.projects,
+    organisation: post?.data?.organisations,
+    eventSpeakers: post?.data?.speakers,
+    eventRegistration: post?.data?.eventRegistration,
+    eventDate: {
+      start: post?.data?.eventStartDate?.['$date'],
+      end: post?.data?.eventEndDate?.['$date'],
+    },
+  };
   // console.log('mockedTags', mockedTags);
-  // Update Subtitle
+  // Client calls
   const updateSubtitle = async () => {
     console.log('Update Subtitle', post.dataCollectionId, post._id);
     // const updatedItem = await updateDataItem(post.dataCollectionId, post._id, {
@@ -49,46 +94,46 @@ function PostPageComponent({ pageTitle, post }: any) {
     // const collection = await getCollection('PostPages');
     // console.log('Collection', collection);
     // Bulk Insert
-    const pageTypeTags = [
-      { tagId: 252524, tagType: 'page type', name: 'info', popularity: 184 },
-      {
-        tagId: 252525,
-        tagType: 'page type',
-        name: 'organisation info',
-        popularity: 58,
-      },
-      {
-        tagId: 252526,
-        tagType: 'page type',
-        name: 'person info',
-        popularity: 91,
-      },
-      {
-        tagId: 252527,
-        tagType: 'page type',
-        name: 'project info',
-        popularity: 35,
-      },
-      { tagId: 252528, tagType: 'page type', name: 'post', popularity: 253 },
-      {
-        tagId: 252529,
-        tagType: 'page type',
-        name: 'project result',
-        popularity: 126,
-      },
-      { tagId: 252530, tagType: 'page type', name: 'event', popularity: 46 },
-      {
-        tagId: 252531,
-        tagType: 'page type',
-        name: 'foresight method',
-        popularity: 8,
-      },
-    ];
-    const bulkInsert = await bulkInsertItems(
-      'Tags',
-      pageTypeTags.map((tag: any) => ({ data: tag }))
-    );
-    console.log('Bulk Insert', bulkInsert);
+    // const pageTypeTags = [
+    //   { tagId: 252524, tagType: 'page type', name: 'info', popularity: 184 },
+    //   {
+    //     tagId: 252525,
+    //     tagType: 'page type',
+    //     name: 'organisation info',
+    //     popularity: 58,
+    //   },
+    //   {
+    //     tagId: 252526,
+    //     tagType: 'page type',
+    //     name: 'person info',
+    //     popularity: 91,
+    //   },
+    //   {
+    //     tagId: 252527,
+    //     tagType: 'page type',
+    //     name: 'project info',
+    //     popularity: 35,
+    //   },
+    //   { tagId: 252528, tagType: 'page type', name: 'post', popularity: 253 },
+    //   {
+    //     tagId: 252529,
+    //     tagType: 'page type',
+    //     name: 'project result',
+    //     popularity: 126,
+    //   },
+    //   { tagId: 252530, tagType: 'page type', name: 'event', popularity: 46 },
+    //   {
+    //     tagId: 252531,
+    //     tagType: 'page type',
+    //     name: 'foresight method',
+    //     popularity: 8,
+    //   },
+    // ];
+    // const bulkInsert = await bulkInsertItems(
+    //   'Tags',
+    //   pageTypeTags.map((tag: any) => ({ data: tag }))
+    // );
+    // console.log('Bulk Insert', bulkInsert);
   };
 
   return (
@@ -98,13 +143,13 @@ function PostPageComponent({ pageTitle, post }: any) {
       {/* Page Type Tag */}
       <div className={classNames('py-3 justify-start', style.preHeader)}>
         <div>
-          <Tag tagText="Post" tagCounter={123} />
-          <Tag tagText={post.pageType} tagCounter={123} />
+          <Tag name="Post" popularity={123} />
+          <Tag name={post.pageType} popularity={123} />
         </div>
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited {new Date(post.data._updatedDate['$date']).toLocaleString()}
+            Edited {new Date(post.updatedDate['$date']).toLocaleString()}
           </Typography>
         </section>
       </div>
@@ -122,33 +167,28 @@ function PostPageComponent({ pageTitle, post }: any) {
         />
       )}
       {/* Post Content */}
-      <ContentComponent content={post.data.postContentRIch} />
+      <ContentComponent
+        contentText={post.contentText}
+        contentImages={post.contentImages}
+      />
       {/* <div>{post.data.postContent}</div> */}
       {/* EVENT SPECIFIC*/}
       {post.pageType === 'Event' && (
         <>
-          {/* Event Host Organisations */}
-          <TagListComponent
-            tagList={post.eventHostOrganisations}
-            tagListTitle="Host Organisations"
-          />
           {/* Speakers */}
           <TagListComponent
             tagList={post.eventSpeakers}
             tagListTitle="Speakers"
           />
-          {/* Participants */}
-          <TagListComponent
-            tagList={post.participants}
-            tagListTitle="Participants"
-          />
         </>
       )}
 
       {/* Post People */}
-      {post.pageType !== 'Event' && (
-        <TagListComponent tagList={post.people} tagListTitle="People" />
-      )}
+
+      <TagListComponent
+        tagList={post.people}
+        tagListTitle={post.pageType !== 'Event' ? 'People' : 'Participants'}
+      />
 
       {/* Foresight Methods */}
       <TagListComponent
@@ -160,14 +200,15 @@ function PostPageComponent({ pageTitle, post }: any) {
       <TagListComponent tagList={post.domains} tagListTitle="Domains" />
 
       {/* Project */}
-      <TagListComponent tagList={[post.project]} tagListTitle="Project" />
+      <TagListComponent tagList={post.project} tagListTitle="Project" />
       {/* Organisation */}
-      {post.pageType !== 'Event' && (
-        <TagListComponent
-          tagList={[post.organisation]}
-          tagListTitle="Organisation"
-        />
-      )}
+
+      <TagListComponent
+        tagList={post.organisation}
+        tagListTitle={
+          post.pageType !== 'Event' ? 'Organisation' : 'Host Organisations'
+        }
+      />
       {/* Internal Links */}
       <MiniPagesListComponent
         posts={posts}

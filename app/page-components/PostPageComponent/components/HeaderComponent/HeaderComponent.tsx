@@ -19,8 +19,8 @@ export type HeaderComponentProps = {
     registrationLink: string;
     subtitle: string;
     countryTag: {
-      tagText: string;
-      tagCounter: number;
+      name: string;
+      popularity: number;
     };
     recommendations: {
       number: number;
@@ -72,7 +72,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
             className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
           ></span>
         </Typography>
-        {/* Post Tagline */}
+        {/* Post Subtitle */}
         <Typography tag="h3" className="text-gray-800 italic">
           {post.subtitle}
         </Typography>
@@ -84,7 +84,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
           </Typography>
         )}
         {/* Registration Link */}
-        {post.pageType === 'Event' && (
+        {post.pageType === 'Event' && post?.eventRegistration && (
           <>
             <Divider className="mt-2" />
             <Typography
@@ -92,21 +92,25 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
               className="text-primary-500 text-xs mt-2 text-gray-500"
             >
               Register Link:
-              <Link href="https://google.com" className="ml-2">
-                https://futures-garden-human-perception-identity.eventbrite.de
+              <Link
+                href={post?.eventRegistration}
+                target="_blank"
+                className="ml-2"
+              >
+                {post?.eventRegistration}
               </Link>
             </Typography>
           </>
         )}
         {/* Post Country */}
         <Tag
-          tagText={post.countryTag.tagText}
-          tagCounter={post.countryTag.tagCounter}
+          name={post.countryTag.name}
+          popularity={post.countryTag.popularity}
           className="mt-1"
         />
         {/* Recommandations */}
         <div className={classNames(style.recommandations)}>
-          {post?.recommendations?.images?.map((image, index) => (
+          {/* {post?.recommendations?.images?.map((image, index) => (
             <Image
               src={image}
               key={`${index} - ${image}`}
@@ -115,8 +119,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
               className={classNames('rounded-full')}
               alt={`Recommended by Person Image ${image}`}
             />
-          ))}
-          <Typography tag="p" className="text-xs text-gray-400 px-4">
+          ))} */}
+          <Typography tag="p" className="text-xs text-gray-400">
             Recommended by {post.recommendations?.number ?? 0}{' '}
             {post.recommendations?.number && post.recommendations.number < 1
               ? 'person'

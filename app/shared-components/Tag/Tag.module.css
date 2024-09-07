@@ -21,7 +21,7 @@
     top: -15px;
   }
 
-  .tagCounter {
+  .popularity {
     background-color: white;
     border-radius: 10px;
     font-size: 10px;
@@ -47,7 +47,7 @@
     border: 3px solid #a1d4e4;
   }
 
-  .tagText {
+  .name {
     display: inline-block;
     text-wrap: nowrap;
     max-width: 200px;

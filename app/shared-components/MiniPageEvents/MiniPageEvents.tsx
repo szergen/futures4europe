@@ -79,7 +79,7 @@ export const MiniPageEvents: React.FC<MiniPageEventsProps> = ({
         {/* Event Tags */}
         <div className={classNames(style.eventTags)}>
           {tags?.map((tag) => (
-            <Tag key={tag.tagText} {...tag} />
+            <Tag key={tag.name} {...tag} />
           ))}
         </div>
         {/* Event recommendations */}

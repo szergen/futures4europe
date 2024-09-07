@@ -1,7 +1,8 @@
 import { createClient, OAuthStrategy, ApiKeyStrategy } from '@wix/sdk';
+import { members } from '@wix/members';
 import { items } from '@wix/data';
 
-export const getWixClient = async () => {
+export const getWixClientData = async () => {
   const { WIX_CLIENT_ID } = process.env;
 
   if (!WIX_CLIENT_ID) {
@@ -19,7 +20,22 @@ export const getWixClient = async () => {
   return wixClient;
 };
 
-export const getWixClientServer = async () => {
+export const getWixClientMember = async () => {
+  const { WIX_CLIENT_ID } = process.env;
+
+  if (!WIX_CLIENT_ID) {
+    throw new Error('Missing required environment variable: WIX_CLIENT_ID');
+  }
+
+  const wixClient = createClient({
+    modules: { members },
+    auth: OAuthStrategy({ clientId: WIX_CLIENT_ID }),
+  });
+
+  return wixClient;
+};
+
+export const getWixClientServerData = async () => {
   const { WIX_API_KEY, WIX_SITE_ID, WIX_ACCOUNT_ID } = process.env;
 
   // if (!WIX_API_KEY || !WIX_SITE_ID) {

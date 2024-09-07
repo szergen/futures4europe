@@ -23,9 +23,12 @@ const updateDataItem = async (
   }
 };
 
-const getCollectionItem = async (collectionName: string, itemId: string) => {
+const getCollectionItemByTitle = async (
+  collectionName: string,
+  itemId: string
+) => {
   try {
-    const response = await fetch('/api/getCollectionItem', {
+    const response = await fetch('/api/getCollectionItemByTitle', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,4 +92,9 @@ const bulkInsertItems = async (
   }
 };
 
-export { updateDataItem, getCollectionItem, getCollection, bulkInsertItems };
+export {
+  updateDataItem,
+  getCollectionItemByTitle,
+  getCollection,
+  bulkInsertItems,
+};

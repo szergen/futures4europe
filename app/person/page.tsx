@@ -1,9 +1,9 @@
-import { getWixClient } from '@app/hooks/useWixClientServer';
+import { getWixClientData } from '@app/hooks/useWixClientServer';
 import { formatDate } from '@app/utils/date-formatter';
 import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import testIds from '@app/utils/test-ids';
 export default async function PersonMain() {
-  const wixClient = await getWixClient();
+  const wixClient = await getWixClientData();
   const { items } = await wixClient.items
     .queryDataItems({
       dataCollectionId: 'StoriesFrom2050',

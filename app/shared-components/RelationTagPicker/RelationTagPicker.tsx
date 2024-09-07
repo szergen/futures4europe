@@ -26,7 +26,7 @@ export const RelationTagPicker: React.FC<RelationTagPickerProps> = ({
 
   const renderedTags = relationState
     .slice(0, 2)
-    .map((tag) => <Tag key={tag} tagText={tag} />);
+    .map((tag) => <Tag key={tag} name={tag} />);
 
   return (
     <div
@@ -51,8 +51,8 @@ export const RelationTagPicker: React.FC<RelationTagPickerProps> = ({
           </>
         ) : (
           <>
-            <Tag tagText={personState} />
-            <Tag tagText={roleState} />
+            <Tag name={personState} />
+            <Tag name={roleState} />
           </>
         )}
       </div>

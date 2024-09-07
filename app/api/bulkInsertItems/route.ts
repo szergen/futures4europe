@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClientServer } from '@app/hooks/useWixClientServer';
+import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName, dataItems } = await req.json();
   console.log('dataItems->', dataItems);
 
   try {
-    const wixClientServer = await getWixClientServer();
+    const wixClientServer = await getWixClientServerData();
     const insertedItems = await wixClientServer.items.bulkInsertDataItems({
       dataCollectionId: collectionName,
       dataItems: dataItems,

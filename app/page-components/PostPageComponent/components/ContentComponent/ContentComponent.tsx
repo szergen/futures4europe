@@ -2,21 +2,49 @@ import Image from 'next/image';
 import style from './ContentComponent.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
+import WixMediaImage from '@app/shared-components/WixMediaImage/WixMediaImage';
 import Tag from '@app/shared-components/Tag/Tag';
 
 export type ContentComponentProps = {
-  content?: string;
+  contentText: string[];
+  contentImages: string[];
 };
 
-const ContentComponent: React.FC<ContentComponentProps> = ({ content }) => {
+const ContentComponent: React.FC<ContentComponentProps> = ({
+  contentText,
+  contentImages,
+}) => {
+  console.log('contentText', contentText);
+  const arrayToIterate =
+    contentText?.length > contentImages?.length ? contentText : contentImages;
   return (
     <main className={style.postContent}>
-      {content ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: content,
-          }}
-        ></div>
+      {arrayToIterate?.length ? (
+        arrayToIterate.map(
+          (item, index) =>
+            item && (
+              <section key={`contentItem-${index}`} className="w-full">
+                {contentText?.[index] && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: contentText?.[index],
+                    }}
+                    className="py-4"
+                  ></div>
+                )}
+                {contentImages?.[index] && (
+                  <WixMediaImage
+                    media={contentImages[index]}
+                    // disableZoom
+                    height={400}
+                    width={600}
+                    className={classNames('rounded-md block mx-auto')}
+                    alt="Post Image"
+                  />
+                )}
+              </section>
+            )
+        )
       ) : (
         <p>
           The following recently published and upcoming reports and books shed

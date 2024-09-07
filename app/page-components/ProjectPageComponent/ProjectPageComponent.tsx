@@ -20,7 +20,7 @@ function ProjectPageComponent({ pageTitle, project }: any) {
     <div className={classNames(style.personContainer)}>
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag tagText="Project Info" tagCounter={125} />
+        <Tag name="Project Info" popularity={125} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">

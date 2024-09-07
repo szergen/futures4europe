@@ -38,7 +38,7 @@ const PopoverComponent: React.FC<PopoverProps> = ({
             src={
               popoverImage || 'https://placehold.co/600x400?text=placeholder'
             }
-            alt={popoverImageAlt || 'Image Thumbnail'}
+            alt={popoverImageAlt || 'Image picture'}
             width={100}
             height={100}
           />

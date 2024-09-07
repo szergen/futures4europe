@@ -1,16 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClient } from '@app/hooks/useWixClientServer';
+import { getWixClientData } from '@app/hooks/useWixClientServer';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName, itemId } = await req.json();
 
   try {
-    const wixClient = await getWixClient();
+    const wixClient = await getWixClientData();
     const itemToBeFound = itemId.replace(/_/g, ' ');
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
-        includeReferencedItems: ['countryTag'],
+        referencedItemOptions: [
+          { fieldName: 'countryTag' },
+          { fieldName: 'methods' },
+          { fieldName: 'domains' },
+          { fieldName: 'people' },
+          { fieldName: 'projects' },
+          { fieldName: 'organisations' },
+          { fieldName: 'projectResultAuthor' },
+          { fieldName: 'speakers' },
+          { fieldName: 'pageTypes' },
+          { fieldName: 'author' },
+          { fieldName: 'person' },
+          { fieldName: 'Project' },
+          { fieldName: 'organisation' },
+          { fieldName: 'activity' },
+          { fieldName: 'personProjectCoordonation' },
+          { fieldName: 'personOrganisation' },
+          { fieldName: 'personOrganisation' },
+          { fieldName: 'InfoPages_projectCoordinator' },
+          { fieldName: 'InfoPages_personOrganisation' },
+        ],
       })
       .eq('title', itemToBeFound)
       .find();
@@ -29,7 +49,7 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = () => {
   return NextResponse.json(
-    { message: 'Method not allowed for GetCollectionItem' },
+    { message: 'Method not allowed for getCollectionItemByTitle' },
     { status: 405 }
   );
 };

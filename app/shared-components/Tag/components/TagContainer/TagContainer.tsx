@@ -8,74 +8,101 @@ import TagCloseButton from '../TagCloseButton/TagCloseButton';
 import PopoverComponent from '@app/shared-components/PopoverComponent/PopoverComponent';
 
 export type TagContainerProps = {
-  tagText: string;
+  name: string;
   className?: string;
   tagCategory?: TagCategories;
-  thumbnail?: string;
-  thumbnailAlt?: string;
-  tagCounter?: number;
+  picture?: string;
+  pictureAlt?: string;
+  popularity?: number;
   tagTrend?: number;
   href?: string;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
-  tagText,
+  name,
   className,
   tagCategory,
-  tagCounter,
+  popularity,
   tagTrend,
-  thumbnail,
-  thumbnailAlt,
+  picture,
+  pictureAlt,
   href,
 }) => {
-  const showThumbnail = thumbnail || tagCategory === 'person';
+  const showThumbnail = picture || tagCategory === 'person';
 
   return (
     <>
       {/* Tag Body */}
-      {tagText.length > 10 ? (
+      {name.length > 10 ? (
         <span className={classNames('', style.tagBody, className)}>
           <PopoverComponent
             trigger="hover"
-            popoverContent={tagText}
-            popoverImage={thumbnail}
+            popoverContent={name}
+            popoverImage={picture}
           >
             <div className="inline-flex">
               {href ? (
-                <span className={style.tagText}>
+                <span className={style.name}>
                   <strong>
                     {showThumbnail && (
                       <TagThumbnail
-                        thumbnail={thumbnail || undefined}
-                        thumbnailAlt={thumbnailAlt}
+                        picture={picture || undefined}
+                        pictureAlt={pictureAlt}
                         tagCategory={tagCategory}
                       />
                     )}
-                    {tagText}
+                    {name}
                   </strong>
                 </span>
               ) : (
-                <span className={style.tagText}>{tagText}</span>
+                <span className={style.name}>
+                  {showThumbnail && (
+                    <TagThumbnail
+                      picture={picture || undefined}
+                      pictureAlt={pictureAlt}
+                      tagCategory={tagCategory}
+                    />
+                  )}
+                  {name}
+                </span>
               )}
             </div>
           </PopoverComponent>
           {/* Tag Counter and Trend */}
-          {tagCounter && (
-            <TagCounter tagCounter={tagCounter} tagTrend={tagTrend} />
+          {popularity && (
+            <TagCounter popularity={popularity} tagTrend={tagTrend} />
           )}
         </span>
       ) : (
         <span className={classNames(style.tagBody, className)}>
           {href ? (
-            <span className={style.tagText}>
-              <strong>{tagText}</strong>
+            <span className={style.name}>
+              <strong>
+                {showThumbnail && (
+                  <TagThumbnail
+                    picture={picture || undefined}
+                    pictureAlt={pictureAlt}
+                    tagCategory={tagCategory}
+                  />
+                )}
+                {name}
+              </strong>
             </span>
           ) : (
-            <span className={style.tagText}>{tagText}</span>
+            <span className={style.name}>
+              {showThumbnail && (
+                <TagThumbnail
+                  picture={picture || undefined}
+                  pictureAlt={pictureAlt}
+                  tagCategory={tagCategory}
+                />
+              )}
+              {name}
+            </span>
           )}
           {/* Tag Counter and Trend */}
-          {tagCounter && (
-            <TagCounter tagCounter={tagCounter} tagTrend={tagTrend} />
+          {popularity && (
+            <TagCounter popularity={popularity} tagTrend={tagTrend} />
           )}
         </span>
       )}

@@ -19,8 +19,8 @@ export type HeaderComponentProps = {
     pageType: 'Post' | 'Event' | 'Project Result';
     description: string;
     countryTag: {
-      tagText: string;
-      tagCounter: number;
+      name: string;
+      popularity: number;
     };
     recommendations: {
       number: number;
@@ -112,12 +112,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ project }) => {
 
         {/* EU funded */}
         {project.euFunded && (
-          <Tag tagText="EU Funded" tagCounter={253} className="mb-1" />
+          <Tag name="EU Funded" popularity={253} className="mb-1" />
         )}
         {/* Person domains */}
         {/* <div className={style.domains}>
           {project.domains.slice(0, 3).map((domain) => (
-            <Tag key={domain.tagText} {...domain} />
+            <Tag key={domain.name} {...domain} />
           ))}
         </div> */}
         {/* Person Country */}
