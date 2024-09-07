@@ -32,6 +32,16 @@ function PersonPageComponent({ pageTitle, person }: any) {
     description: person?.data?.description,
     methods: person?.data?.methods,
     domains: person?.data?.domains,
+    currentAfiliations: person?.data?.personOrganisationRoles?.map(
+      (item: any) => {
+        return {
+          ...person?.data?.personOrganisation?.find(
+            (org: any) => org.organisation[0].name === item.organisation
+          )?.organisation[0],
+          arole: item.role,
+        };
+      }
+    ),
   };
 
   return (

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientData } from '@app/hooks/useWixClientServer';
+import { referencedItemOptions } from '@app/wixUtils/server-side';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName, itemId } = await req.json();
@@ -10,27 +11,7 @@ export const POST = async (req: NextRequest) => {
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
-        referencedItemOptions: [
-          { fieldName: 'countryTag' },
-          { fieldName: 'methods' },
-          { fieldName: 'domains' },
-          { fieldName: 'people' },
-          { fieldName: 'projects' },
-          { fieldName: 'organisations' },
-          { fieldName: 'projectResultAuthor' },
-          { fieldName: 'speakers' },
-          { fieldName: 'pageTypes' },
-          { fieldName: 'author' },
-          { fieldName: 'person' },
-          { fieldName: 'Project' },
-          { fieldName: 'organisation' },
-          { fieldName: 'activity' },
-          { fieldName: 'personProjectCoordonation' },
-          { fieldName: 'personOrganisation' },
-          { fieldName: 'personOrganisation' },
-          { fieldName: 'InfoPages_projectCoordinator' },
-          { fieldName: 'InfoPages_personOrganisation' },
-        ],
+        referencedItemOptions: referencedItemOptions,
       })
       .eq('title', itemToBeFound)
       .find();

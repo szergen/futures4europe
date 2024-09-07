@@ -4,6 +4,37 @@ import {
   getWixClientServerData,
 } from '@app/hooks/useWixClientServer';
 
+const referencedItemOptions = [
+  { fieldName: 'countryTag' },
+  { fieldName: 'methods' },
+  { fieldName: 'domains' },
+  { fieldName: 'people' },
+  { fieldName: 'projects' },
+  { fieldName: 'organisations' },
+  { fieldName: 'projectResultAuthor' },
+  { fieldName: 'speakers' },
+  { fieldName: 'pageTypes' },
+  { fieldName: 'author' },
+  { fieldName: 'person' },
+  { fieldName: 'Project' },
+  { fieldName: 'organisation' },
+  { fieldName: 'activity' },
+  { fieldName: 'personProjectCoordonation' },
+  { fieldName: 'personOrganisation' },
+  { fieldName: 'personOrganisation' },
+  { fieldName: 'InfoPages_projectCoordinator' },
+  { fieldName: 'InfoPages_personOrganisation' },
+  { fieldName: 'projectFunded' },
+  { fieldName: 'projectCoordinator' },
+  { fieldName: 'projectParticipantTeam' },
+  { fieldName: 'projectOrganisation' },
+  { fieldName: 'organisation' },
+  { fieldName: 'organisationProject' },
+  { fieldName: 'organisationPeople' },
+  { fieldName: 'organisationHasMember' },
+  { fieldName: 'organisationMemberOf' },
+];
+
 const getCollection = async (collectionName: string) => {
   try {
     const wixClient = await getWixClientData();
@@ -30,27 +61,7 @@ const getCollectionItemByTitle = async (
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
-        referencedItemOptions: [
-          { fieldName: 'countryTag' },
-          { fieldName: 'methods' },
-          { fieldName: 'domains' },
-          { fieldName: 'people' },
-          { fieldName: 'projects' },
-          { fieldName: 'organisations' },
-          { fieldName: 'projectResultAuthor' },
-          { fieldName: 'speakers' },
-          { fieldName: 'pageTypes' },
-          { fieldName: 'author' },
-          { fieldName: 'person' },
-          { fieldName: 'Project' },
-          { fieldName: 'organisation' },
-          { fieldName: 'activity' },
-          { fieldName: 'personProjectCoordonation' },
-          { fieldName: 'personOrganisation' },
-          { fieldName: 'personOrganisation' },
-          { fieldName: 'InfoPages_projectCoordinator' },
-          { fieldName: 'InfoPages_personOrganisation' },
-        ],
+        referencedItemOptions: referencedItemOptions,
       })
       .eq('title', itemToBeFound)
       .find();
@@ -84,27 +95,7 @@ const getAllReferencedItemsByTitle = async (
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
-        referencedItemOptions: [
-          { fieldName: 'countryTag' },
-          { fieldName: 'methods' },
-          { fieldName: 'domains' },
-          { fieldName: 'people' },
-          { fieldName: 'projects' },
-          { fieldName: 'organisations' },
-          { fieldName: 'projectResultAuthor' },
-          { fieldName: 'speakers' },
-          { fieldName: 'pageTypes' },
-          { fieldName: 'author' },
-          { fieldName: 'person' },
-          { fieldName: 'Project' },
-          { fieldName: 'organisation' },
-          { fieldName: 'activity' },
-          { fieldName: 'personProjectCoordonation' },
-          { fieldName: 'personOrganisation' },
-          { fieldName: 'personOrganisation' },
-          { fieldName: 'InfoPages_projectCoordinator' },
-          { fieldName: 'InfoPages_personOrganisation' },
-        ],
+        referencedItemOptions: referencedItemOptions,
       })
       .in('title', referencedTitles)
       .find();
@@ -179,4 +170,5 @@ export {
   composeReferencedItemTitlesForInfoPages,
   getAllReferencedItemsByTitle,
   composePageWithReferencedItems,
+  referencedItemOptions,
 };

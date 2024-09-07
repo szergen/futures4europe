@@ -3,6 +3,7 @@ import React from 'react';
 import style from '../../Tag.module.css';
 import { TagCategories } from '../../Tag.utils';
 import Image from 'next/image';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type TagThumbnailProps = {
   picture?: string;
@@ -34,7 +35,12 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
     <Image
       alt={pictureAlt || 'Avatar Image'}
       className={classNames('inline-block z-10', style.tagPicture)}
-      src={picture || 'https://picsum.photos/id/177/40/40'}
+      src={getImageUrlForMedia(
+        picture ||
+          'https://placehold.co/147x147?text=Profile Image',
+        147,
+        147
+      )}
       width={30}
       height={30}
     />
