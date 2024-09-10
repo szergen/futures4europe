@@ -21,7 +21,7 @@ export default async function OrganisationPage({ params }: any) {
 
   // Grab specific Project by slug
   const infoPageItem = await getCollectionItemByTitle('InfoPages', params.slug);
-  console.log('infoPageItem Data', infoPageItem?.data);
+  // console.log('infoPageItem Data', infoPageItem?.data);
   const referencedTitles = composeReferencedItemTitlesForInfoPages(
     referencedKeys,
     infoPageItem?.data || {}
@@ -38,7 +38,7 @@ export default async function OrganisationPage({ params }: any) {
     infoPageWithReferencedItems
   );
 
-  console.log('newPage', newPage);
+  // console.log('newPage', newPage);
   return (
     <div className={classNames('w-full')}>
       <OrganisationPageComponent
