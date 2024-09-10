@@ -7,28 +7,28 @@ import TagContainer from './components/TagContainer/TagContainer';
 import PopoverComponent from '../PopoverComponent/PopoverComponent';
 
 export type TagProps = {
-  tagText: string;
+  name: string;
   editable?: boolean;
   className?: string;
   tagCategory?: TagCategories;
   href?: string;
-  thumbnail?: string;
-  thumbnailAlt?: string;
-  tagCounter?: number;
+  picture?: string;
+  pictureAlt?: string;
+  popularity?: number;
   tagTrend?: number;
   enableLabel?: boolean;
 };
 
 export const Tag: React.FC<TagProps> = ({
-  tagText,
+  name,
   editable,
   className,
   tagCategory,
   href,
-  tagCounter,
+  popularity,
   tagTrend,
-  thumbnail,
-  thumbnailAlt,
+  picture,
+  pictureAlt,
   enableLabel,
 }) => {
   // const [isShown, setIsShown] = React.useState(true);
@@ -46,28 +46,28 @@ export const Tag: React.FC<TagProps> = ({
         {href ? (
           <Link href={href} className={style.tagLink}>
             <TagContainer
-              tagText={tagText}
+              name={name}
               editable={editable}
               className={className}
               tagCategory={tagCategory}
-              tagCounter={tagCounter}
+              popularity={popularity}
               tagTrend={tagTrend}
-              thumbnail={thumbnail}
-              thumbnailAlt={thumbnailAlt}
+              picture={picture}
+              pictureAlt={pictureAlt}
               // onClick={onClick}
               href={href}
             />
           </Link>
         ) : (
           <TagContainer
-            tagText={tagText}
+            name={name}
             editable={editable}
             className={className}
             tagCategory={tagCategory}
-            tagCounter={tagCounter}
+            popularity={popularity}
             tagTrend={tagTrend}
-            thumbnail={thumbnail}
-            thumbnailAlt={thumbnailAlt}
+            picture={picture}
+            pictureAlt={pictureAlt}
             // onClick={onClick}
           />
         )}

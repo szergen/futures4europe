@@ -1155,10 +1155,10 @@
   resolved "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.22.15", "@babel/runtime@^7.23.2", "@babel/runtime@^7.23.9", "@babel/runtime@^7.24.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
-  version "7.24.1"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.24.1.tgz"
-  integrity sha512-+BIznRzyqBf+2wCTxcKE3wDjfGeCoVE61KSHGpkzqrLi8qxqFwBeUFyId2cxkTmm55fzDGnm0+yCxaxygrLUnQ==
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.22.15", "@babel/runtime@^7.23.2", "@babel/runtime@^7.24.0", "@babel/runtime@^7.25.6", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+  version "7.25.6"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.25.6.tgz"
+  integrity sha512-VBj9MYyDb9tuLq7yzqjgzt6Q+IBQLrGZfdjOekyEirZPHxXWoTSGUTMrpsfi58Up73d13NfYLv8HT9vmznjzhQ==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -1842,6 +1842,13 @@
   integrity sha512-9ZrPIU4MGf6et1m1ov3zKf+q9+deetI51zprKB1D/z3NOb+rUxxtEl3mCjW5wTGh6VhRdwPueh1oRzi6ezkA8A==
   dependencies:
     "@types/mdx" "^2.0.0"
+
+"@mongodb-js/saslprep@^1.1.5":
+  version "1.1.9"
+  resolved "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.1.9.tgz"
+  integrity sha512-tVkljjeEaAhCqTzajSdgbQ6gE6f3oneVwa3iXR6csiEwXXOFsiC6Uh9iAjAhXPtqa/XMDHWjjeNH/77m/Yq2dw==
+  dependencies:
+    sparse-bitfield "^3.0.3"
 
 "@ndelangen/get-tarball@^3.0.7":
   version "3.0.9"
@@ -3501,6 +3508,18 @@
   resolved "https://registry.npmjs.org/@types/uuid/-/uuid-9.0.8.tgz"
   integrity sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==
 
+"@types/webidl-conversions@*":
+  version "7.0.3"
+  resolved "https://registry.npmjs.org/@types/webidl-conversions/-/webidl-conversions-7.0.3.tgz"
+  integrity sha512-CiJJvcRtIgzadHCYXw7dqEnMNRjhGZlYK05Mj9OyktqV8uVT8fD2BFOB7S1uwBE3Kj2Z+4UyPmFw/Ixgw/LAlA==
+
+"@types/whatwg-url@^11.0.2":
+  version "11.0.5"
+  resolved "https://registry.npmjs.org/@types/whatwg-url/-/whatwg-url-11.0.5.tgz"
+  integrity sha512-coYR071JRaHa+xoEvvYqvnIHaVqaYrLPbsufM9BF63HkwI5Lgmy2QR8Q5K/lYDYo5AK82wOvSOS0UsLTpTG7uQ==
+  dependencies:
+    "@types/webidl-conversions" "*"
+
 "@types/ws@^8.5.5":
   version "8.5.10"
   resolved "https://registry.npmjs.org/@types/ws/-/ws-8.5.10.tgz"
@@ -3838,14 +3857,66 @@
     "@webassemblyjs/ast" "1.12.1"
     "@xtuc/long" "4.2.2"
 
-"@wix/data@^1.0.47":
-  version "1.0.72"
-  resolved "https://registry.npmjs.org/@wix/data/-/data-1.0.72.tgz"
-  integrity sha512-SbagxiP8tLpzMJ+llqIbMo72Vg9VKK/k10ihig8P6shK3Bv0ODEjfwXUWgJKp1376q4YMeP4kqs5KVNIZvolqw==
+"@wix/data_collections@1.0.42":
+  version "1.0.42"
+  resolved "https://registry.npmjs.org/@wix/data_collections/-/data_collections-1.0.42.tgz"
+  integrity sha512-mOMl/1lTaDOVkaZUBjDYMHXUzxqVSbzcx4uHALa501lTp1yww6BAv0nXNopUNbOnX5vBpqsFFHa1OCt8mNYnSQ==
   dependencies:
-    "@wix/metro-runtime" "^1.1528.0"
+    "@wix/metro-runtime" "^1.1792.0"
     "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
-    "@wix/sdk-types" "^1.3.0"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/data_external-database-connections@1.0.38":
+  version "1.0.38"
+  resolved "https://registry.npmjs.org/@wix/data_external-database-connections/-/data_external-database-connections-1.0.38.tgz"
+  integrity sha512-iVMfcn8BwdyiQ7SJnmZZ5RUqRo4in/3r+5JgMOwlOZRzsgP+ZSBye0DN+zxIhJA40Ve3qfFPY5Fj20ZdN5+QMg==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/data_external-database@1.0.19":
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/@wix/data_external-database/-/data_external-database-1.0.19.tgz"
+  integrity sha512-44X03aCMoBNwahEZFI5256VqD6djAl4gRhIFVPxygXmUOEhILD3GktdU03/qga5SOs7kB/kCVDLkii2+z4jmTA==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/data_indexes@1.0.32":
+  version "1.0.32"
+  resolved "https://registry.npmjs.org/@wix/data_indexes/-/data_indexes-1.0.32.tgz"
+  integrity sha512-7pOaEI7HVsxPH7J7j/WtjlpO5LP56H0zRulB9ckO//GR4dt3cQatF2iXAAU72kLJcQTQ+cwGBobtCLQkE4ecCQ==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/data_items@1.0.48":
+  version "1.0.48"
+  resolved "https://registry.npmjs.org/@wix/data_items/-/data_items-1.0.48.tgz"
+  integrity sha512-/1EKz1ZpfuqnwhuNadbegpcf+/E6s0xmL9VLQljPTl/8QNsJ0Kjphis2fTYLzl9LlKo7hDmM5brkk9hftZtvRg==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/data@^1.0.148":
+  version "1.0.148"
+  resolved "https://registry.npmjs.org/@wix/data/-/data-1.0.148.tgz"
+  integrity sha512-CFpLueMnxMDy5K6hkLS0izRkMkiNm2Bd7c9h9O9fBlqwFCad3mcWHHr1l+spYhqWZxgeZeHYzr/fWkKj6pbsHw==
+  dependencies:
+    "@wix/data_collections" "1.0.42"
+    "@wix/data_external-database" "1.0.19"
+    "@wix/data_external-database-connections" "1.0.38"
+    "@wix/data_indexes" "1.0.32"
+    "@wix/data_items" "1.0.48"
 
 "@wix/filter-builder@^1.0.39":
   version "1.0.39"
@@ -3856,41 +3927,187 @@
     kind-of "~5.1.0"
     tslib "^2.6.2"
 
-"@wix/identity@^1.0.72":
-  version "1.0.72"
-  resolved "https://registry.npmjs.org/@wix/identity/-/identity-1.0.72.tgz"
-  integrity sha512-4iKENuZ6PHeHinwg2nf2+583f3gKihdc6qsTmZ1kNPPqQkam6ldBQN11GXq0HXT+sKBQdnm838V57oshF+j6eg==
+"@wix/identity_authentication@1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@wix/identity_authentication/-/identity_authentication-1.0.12.tgz"
+  integrity sha512-4op0TQF2bLl4IERq2nrREqD+9tUrcBDCWt1bAVIgSjICPPGTHW0cZV4IRg094K/Z13DW07iDn0ezyYYRxYvmvQ==
   dependencies:
-    "@wix/metro-runtime" "^1.1528.0"
+    "@wix/metro-runtime" "^1.1792.0"
     "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
-    "@wix/sdk-types" "^1.3.0"
+    "@wix/sdk-runtime" "^0.2.10"
+    "@wix/sdk-types" "^1.5.11"
 
-"@wix/image-kit@^1.50.0":
-  version "1.50.0"
-  resolved "https://registry.npmjs.org/@wix/image-kit/-/image-kit-1.50.0.tgz"
-  integrity sha512-XritVh6HZpgnLDiCeLJnEEBQQFF+1+cQl2M73IFTFhU/HmwDIQTtm+ksxabdDiNCgHppgROcT8aKcYKAEuKpHA==
+"@wix/identity_oauth@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@wix/identity_oauth/-/identity_oauth-1.0.10.tgz"
+  integrity sha512-g8N1H/I1KsMo6PlCEUZf19mqNVZXOTNvqT+/h2iQt7zKlbYtsM1sOFqE+SXfkparofKMObvqBp9ZsG1KTstfoQ==
   dependencies:
-    "@babel/runtime" "^7.23.9"
-    tslib "^2.6.2"
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.2.10"
+    "@wix/sdk-types" "^1.5.11"
 
-"@wix/metro-public-utils@1.0.18":
-  version "1.0.18"
-  resolved "https://registry.npmjs.org/@wix/metro-public-utils/-/metro-public-utils-1.0.18.tgz"
-  integrity sha512-7i0BVqc3JwfpFQ4jkxMB9Q5of66RjeWVfkjCKHvMG+qKe+aq5+Ju6ta67npBm8LK4Ql5nYw3A8mqOy4cA+ZQ3g==
+"@wix/identity_recovery@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@wix/identity_recovery/-/identity_recovery-1.0.10.tgz"
+  integrity sha512-ZwPVwXpPukKxGkpzMirO76VOa4680KiDWVCeQKaqjr6LB819Sj1L4j5NOvWGT2jf+pNBKiDskhJ+dnYaoUymUg==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.2.10"
+    "@wix/sdk-types" "^1.5.11"
+
+"@wix/identity_verification@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@wix/identity_verification/-/identity_verification-1.0.10.tgz"
+  integrity sha512-nw//3bShw5s6ShN9mhaKkucqSpAMjtjspENm8HStMfi8Abstr3PPdjl9zRiyNWVlawAa2KUe9UryQGt8beN+HA==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.2.10"
+    "@wix/sdk-types" "^1.5.11"
+
+"@wix/identity@^1.0.78":
+  version "1.0.82"
+  resolved "https://registry.npmjs.org/@wix/identity/-/identity-1.0.82.tgz"
+  integrity sha512-kL6QZw3vjO9Fsgg4654guihcTdVjfJ2x4hNK6eDnyaiwqtoK3nr8YO7ZwiDzdIvNrSAnmW07GYgpBQTuAPBYtQ==
+  dependencies:
+    "@wix/identity_authentication" "1.0.12"
+    "@wix/identity_oauth" "1.0.10"
+    "@wix/identity_recovery" "1.0.10"
+    "@wix/identity_verification" "1.0.10"
+
+"@wix/image-kit@^1.78.0":
+  version "1.83.0"
+  resolved "https://registry.npmjs.org/@wix/image-kit/-/image-kit-1.83.0.tgz"
+  integrity sha512-YyLLDbSQJeBZQNm/8b13aQWImmCnKKUull6CAZBc91O9y/8G2TlrMFpq6I14aX4Au1uinqgL5ovIRpHp+avWKg==
+  dependencies:
+    "@babel/runtime" "^7.25.6"
+    tslib "^2.7.0"
+
+"@wix/members_authentication@1.0.23":
+  version "1.0.23"
+  resolved "https://registry.npmjs.org/@wix/members_authentication/-/members_authentication-1.0.23.tgz"
+  integrity sha512-0ZRjghnJOqUQBA4j7tbfxew2HllBzLuKCAoLig4sfy9xdfZEE6lL0zX5JT/uOBdth5hp6j4f0kDrBkry4BpRcA==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_authorization@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/members_authorization/-/members_authorization-1.0.3.tgz"
+  integrity sha512-D9H0h0uIrFUtbDiZBbh1kpKICic5lI8cL0scnIG2HWnwMGACElLRUixp3zmT5018hrTMbJ3Ib+3ZCD4oIN7dWg==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_badges@1.0.31":
+  version "1.0.31"
+  resolved "https://registry.npmjs.org/@wix/members_badges/-/members_badges-1.0.31.tgz"
+  integrity sha512-SE01Sd/clqdMZHrjnhLKxG15TyIH6922EEi6RVSc3PpwHkhPu9ERYvSG3QAsaN4Ks5uEzY+hW5QlZJV76zhQAA==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_custom-field-suggestion@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/members_custom-field-suggestion/-/members_custom-field-suggestion-1.0.3.tgz"
+  integrity sha512-JrvK1KfiDX8WK6vYOZmWPPttBuGmXq+lmFtEMGp9pgNTF8GTVTpgRx3e1sN9l13yDjn8jnyXEuDkJSrwpEF6Aw==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_custom-field@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/members_custom-field/-/members_custom-field-1.0.3.tgz"
+  integrity sha512-Ypi9sormaRTb5/wUaKk5ViM+zYljgAwh16HQZlDkuGeuv/PQhMUTLPjsMfVKJXXN3xsiAMoLnaJhPDpbCNYiKA==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_member-role-definition@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/members_member-role-definition/-/members_member-role-definition-1.0.3.tgz"
+  integrity sha512-0H3xSiOrQQG9fZnSTcTdjqD6OSQIvjxnWTWjzoIc0UzbnbBD/l211XIuITdmimNHZZunXkhJhpAjMrI1KIdsjg==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_member-to-member-block@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/members_member-to-member-block/-/members_member-to-member-block-1.0.3.tgz"
+  integrity sha512-NMWc4ioEtmpCVFjGSL6frSG2IDNSYMNeLvRxClAHHQVydeKoLzK76KbEsgsC0burIHIyRWYTao4pPzFxH4Qo9A==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_members@1.0.36":
+  version "1.0.36"
+  resolved "https://registry.npmjs.org/@wix/members_members/-/members_members-1.0.36.tgz"
+  integrity sha512-+W0cBud05FMTySwldTbw9onjoeUQ93I57A8LMyMhey4+CI/0vnA9ttDNM9X0UZi97IbtO7yym/GIYv/+e7cHbg==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members_user-member@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/members_user-member/-/members_user-member-1.0.3.tgz"
+  integrity sha512-zfasmJfZ7l6/zlo1fm37GwiWa3Sebw2yKPwVLckXP9B93eg2odhT2I0PI/0MqvR1U943tDL1J5v/+zB5cOziBQ==
+  dependencies:
+    "@wix/metro-runtime" "^1.1792.0"
+    "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
+    "@wix/sdk-runtime" "^0.3.14"
+    "@wix/sdk-types" "^1.9.2"
+
+"@wix/members@^1.0.95":
+  version "1.0.95"
+  resolved "https://registry.npmjs.org/@wix/members/-/members-1.0.95.tgz"
+  integrity sha512-tNq+UIXcl2AUgYnQGOMKIt+fUWov3y574sekWq2UW1rQmsFSYPrsgJNUPCfpDthwzXZ3S3sGo9QPAVYKEViaGw==
+  dependencies:
+    "@wix/members_authentication" "1.0.23"
+    "@wix/members_authorization" "1.0.3"
+    "@wix/members_badges" "1.0.31"
+    "@wix/members_custom-field" "1.0.3"
+    "@wix/members_custom-field-suggestion" "1.0.3"
+    "@wix/members_member-role-definition" "1.0.3"
+    "@wix/members_member-to-member-block" "1.0.3"
+    "@wix/members_members" "1.0.36"
+    "@wix/members_user-member" "1.0.3"
+
+"@wix/metro-public-utils@1.0.32":
+  version "1.0.32"
+  resolved "https://registry.npmjs.org/@wix/metro-public-utils/-/metro-public-utils-1.0.32.tgz"
+  integrity sha512-TAYvEmX+Gyyyk5/1npSNw7bHQo1FZryjwSySPBLF6zEmYGdjY9S64XsYyb85TgX7a4H110rTkgmOqi8lj/8Ahw==
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-"@wix/metro-runtime@^1.1528.0":
-  version "1.1617.0"
-  resolved "https://registry.npmjs.org/@wix/metro-runtime/-/metro-runtime-1.1617.0.tgz"
-  integrity sha512-ulqS2+pTY75viXeMJjEETEC1IoH2bMPTZG9sfRNpERtHZFeC6dUrBRe9JbRTPS9XDFZ1KZoMYUrmonfsODQY0w==
+"@wix/metro-runtime@^1.1792.0":
+  version "1.1794.0"
+  resolved "https://registry.npmjs.org/@wix/metro-runtime/-/metro-runtime-1.1794.0.tgz"
+  integrity sha512-s189Dfdmd+EasZFP0SJhI/vdcBoq1R4ndCIfMsLXc8JCHXmZNUmHRcZzVr6QpKVy+21eZ8rI/Sq/6OmQM79qVQ==
   dependencies:
-    "@wix/metro-public-utils" "1.0.18"
-    "@wix/motion-edm-autogen-p13n" "1.0.44"
-    "@wix/motion-edm-autogen-transformations" "1.40.0"
-    "@wix/motion-edm-autogen-transformations-core" "1.37.0"
+    "@wix/metro-public-utils" "1.0.32"
+    "@wix/motion-edm-autogen-p13n" "1.0.76"
+    "@wix/motion-edm-autogen-transformations" "1.57.0"
+    "@wix/motion-edm-autogen-transformations-core" "1.51.0"
+    js-base64 "^3.7.7"
     lodash "^4.17.21"
-    long "^4.0.0"
     querystring "^0.2.1"
 
 "@wix/motion-edm-autogen-common@1.33.0":
@@ -3903,14 +4120,25 @@
     lodash "~4.17.0"
     tslib "^2.0.0"
 
-"@wix/motion-edm-autogen-p13n@1.0.44":
-  version "1.0.44"
-  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-p13n/-/motion-edm-autogen-p13n-1.0.44.tgz"
-  integrity sha512-S1dOTCWspp3dWF1xj0SuvwL/dDes1i53TSJKrKAMtNQnXk0WFSak5s/5gZM3S5/fzsTy+yN7Nv5o8689LGv1Tg==
+"@wix/motion-edm-autogen-common@1.47.0":
+  version "1.47.0"
+  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-common/-/motion-edm-autogen-common-1.47.0.tgz"
+  integrity sha512-Z60pG7mmHmEqvjGOZQJVvGtvJITFwblLy+vvpUuYTzUP7W9vHC8kpG9nYuH+Qgf5ga34qL3m2Nkjt9Q7utyNTQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@wix/motion-edm-autogen-types" "1.0.21"
+    "@wix/motion-edm-autogen-types" "1.0.35"
     lodash "~4.17.0"
+    tslib "^2.0.0"
+
+"@wix/motion-edm-autogen-p13n@1.0.76":
+  version "1.0.76"
+  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-p13n/-/motion-edm-autogen-p13n-1.0.76.tgz"
+  integrity sha512-M9ZBusU3WVoTe6i70L9O4nf3AN0Ds2x1S2DhHnRa2VvlvegbgsVshSNy9CpaBs/cU3LIuq87/kgi4ojZvNrWbA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@wix/motion-edm-autogen-types" "1.0.35"
+    lodash "~4.17.0"
+    querystring "^0.2.1"
 
 "@wix/motion-edm-autogen-query-wrapper@^1.0.37":
   version "1.0.58"
@@ -3939,15 +4167,29 @@
     lodash "~4.17.0"
     tslib "^2.0.0"
 
-"@wix/motion-edm-autogen-transformations@1.40.0":
-  version "1.40.0"
-  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-transformations/-/motion-edm-autogen-transformations-1.40.0.tgz"
-  integrity sha512-CwNkqlRFvvd0o3CGjoFQ1joNOj2rL6Cyej6fucO7sMFmfKx9aWibbdR+kohi0ycP2NQaH6a1BeRS9nR8nAS6bw==
+"@wix/motion-edm-autogen-transformations-core@1.51.0":
+  version "1.51.0"
+  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-transformations-core/-/motion-edm-autogen-transformations-core-1.51.0.tgz"
+  integrity sha512-0CaQrZpaKcW/s3I+TT84EfKyt0KUjL0dmcFLeNqfns1uexRy/7VcDKwhBlDY0t3khFm9mdCPVxW6hbrzb+yJew==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@rushstack/eslint-patch" "^1.1.0"
-    "@wix/motion-edm-autogen-common" "1.33.0"
-    "@wix/motion-edm-autogen-transformations-core" "1.37.0"
+    "@wix/motion-edm-autogen-common" "1.47.0"
+    constant-case "~3.0.0"
+    deep-for-each "~3.0.0"
+    jsonpath-plus "~5.1.0"
+    lodash "~4.17.0"
+    tslib "^2.0.0"
+
+"@wix/motion-edm-autogen-transformations@1.57.0":
+  version "1.57.0"
+  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-transformations/-/motion-edm-autogen-transformations-1.57.0.tgz"
+  integrity sha512-MG/DwgaszptfeDtELyskMtUImDdpn3MRRsu72ltz31uYVa2gB4YdwT+6iFDEQwKP43lCFHrgKUfclj7qPwOZZw==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@rushstack/eslint-patch" "^1.1.0"
+    "@wix/motion-edm-autogen-common" "1.47.0"
+    "@wix/motion-edm-autogen-transformations-core" "1.51.0"
     constant-case "~3.0.0"
     deep-for-each "~3.0.0"
     http-status-codes "^2.0.0"
@@ -3961,37 +4203,95 @@
   resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-types/-/motion-edm-autogen-types-1.0.21.tgz"
   integrity sha512-aIyQGABm8B0lqNvVGOIo2GkLlA87QoM23fE0dIl0cSmYAbkTJ7HoeJ11Kzmoa/87uuoSyxveY6jhE0K/Kc5naA==
 
-"@wix/redirects@^1.0.32":
-  version "1.0.32"
-  resolved "https://registry.npmjs.org/@wix/redirects/-/redirects-1.0.32.tgz"
-  integrity sha512-ByU+lqZCQLm2tdp+PQYzolafFCHZtCYWrCZIhp2UZB4mUsGEeT1crgmqq4kCn1Fr8V5aL3wM6IxEldBqfRYqUA==
+"@wix/motion-edm-autogen-types@1.0.35":
+  version "1.0.35"
+  resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-types/-/motion-edm-autogen-types-1.0.35.tgz"
+  integrity sha512-XqRkmvKojVoUdyb/Prdqlb0wwqlXqbpfFC18CqzeVgCBovO8iWbQjC+EyX2KT8DVKz9KB1QDR9qCP5ffBJgbFA==
+
+"@wix/redirects_redirects@1.0.22":
+  version "1.0.22"
+  resolved "https://registry.npmjs.org/@wix/redirects_redirects/-/redirects_redirects-1.0.22.tgz"
+  integrity sha512-fNK3cSxOkXY4H6q18xbcFLEjCJeLStWJB6Ceq/YRMESqSrSKofAmnSQ02jxfww4fR4GZq8RdJty1id7evd6v2A==
   dependencies:
-    "@wix/metro-runtime" "^1.1528.0"
+    "@wix/metro-runtime" "^1.1792.0"
     "@wix/motion-edm-autogen-query-wrapper" "^1.0.37"
-    "@wix/sdk-types" "^1.3.0"
+    "@wix/sdk-runtime" "^0.3.11"
+    "@wix/sdk-types" "^1.9.2"
 
-"@wix/sdk-types@^1.3.0", "@wix/sdk-types@^1.5.5":
-  version "1.5.5"
-  resolved "https://registry.npmjs.org/@wix/sdk-types/-/sdk-types-1.5.5.tgz"
-  integrity sha512-iTTQ1MRd3s8tegmTm4KVg9RpK4JWY+lfeQRQtSXhbcOtywmHh/27eGSo2Yv3bWzvx0GWw5EstdJzFRRFKMSKJQ==
+"@wix/redirects@^1.0.41":
+  version "1.0.52"
+  resolved "https://registry.npmjs.org/@wix/redirects/-/redirects-1.0.52.tgz"
+  integrity sha512-UB01vY1mDBYVHkuO2LgGB5u4uHmmGEwRo2PvOFlhBIf0sk3y5LimsGH/MYGSxiZNzXokY4v1Qdx19Ak9EVg6eA==
+  dependencies:
+    "@wix/redirects_redirects" "1.0.22"
 
-"@wix/sdk@^1.5.0":
-  version "1.7.2"
-  resolved "https://registry.npmjs.org/@wix/sdk/-/sdk-1.7.2.tgz"
-  integrity sha512-Zhq3j07UFei7fmeXwBz0fe+DsFbyQ/csYA/NaIHo/RtSJJh63nJnyxW9eq7F9qZa9AHrVnqEGJKYwHAV7Bnprg==
+"@wix/sdk-context@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/@wix/sdk-context/-/sdk-context-0.0.1.tgz"
+  integrity sha512-ziSzrceUC0KFn4IJIVBn1cXXKrZ49ZKG5tQ6fl+TpontyUw5p/Z4VofFUUsnqNl9JYCpYNTzIXpzwok93Vrl8A==
+
+"@wix/sdk-runtime@^0.2.10":
+  version "0.2.12"
+  resolved "https://registry.npmjs.org/@wix/sdk-runtime/-/sdk-runtime-0.2.12.tgz"
+  integrity sha512-HpZ/HWlQ4r3X8EVHtbe4t2QUk1xu0EvYHl3uTNVklFIXYY66Ag0Yu29x4F9Q/+NrC4rgDs64r+H+sGPb81MEVQ==
+  dependencies:
+    "@wix/sdk-types" "^1.7.0"
+
+"@wix/sdk-runtime@^0.3.11", "@wix/sdk-runtime@^0.3.14":
+  version "0.3.18"
+  resolved "https://registry.npmjs.org/@wix/sdk-runtime/-/sdk-runtime-0.3.18.tgz"
+  integrity sha512-UkGHwOaq1XYKKBp7N9rsx67g0uVvBYhSzuumIHu91oVpBH+Cb8lr/DoDBBRptCZINwgvXXC6Rk+HTdXYEpWr7A==
+  dependencies:
+    "@wix/sdk-context" "^0.0.1"
+    "@wix/sdk-types" "^1.10.0"
+
+"@wix/sdk-runtime@0.3.16":
+  version "0.3.16"
+  resolved "https://registry.npmjs.org/@wix/sdk-runtime/-/sdk-runtime-0.3.16.tgz"
+  integrity sha512-xk0MIIySzBlQwI+88K4uNPJ2JMlz8/nhyerQs7Ug7PItcpGrddOu5hk5B/0bXFkGcCX3n7xNpEA/xigTFxQFow==
+  dependencies:
+    "@wix/sdk-context" "^0.0.1"
+    "@wix/sdk-types" "^1.9.3"
+
+"@wix/sdk-types@^1.10.0", "@wix/sdk-types@^1.5.11", "@wix/sdk-types@^1.7.0", "@wix/sdk-types@^1.9.2", "@wix/sdk-types@^1.9.3":
+  version "1.10.0"
+  resolved "https://registry.npmjs.org/@wix/sdk-types/-/sdk-types-1.10.0.tgz"
+  integrity sha512-PE7pTMC+Olqvn6IrZJwhPMombaMUc6LM4CNwWBxLNPdqWsSgNKuAkT1ml0GA5B/2t/CQnvU/CtCBoDSA3tyxRw==
+
+"@wix/sdk@^1.12.0":
+  version "1.12.12"
+  resolved "https://registry.npmjs.org/@wix/sdk/-/sdk-1.12.12.tgz"
+  integrity sha512-3ImEPBFQv1+lpHs1SwykMBEWVRhHlfx5ivxIkdV9FlLWspBJUYJn9ZqigZUiSn5e5QOziNwA6Bh6W+u6zoRdqQ==
   dependencies:
     "@babel/runtime" "^7.23.2"
-    "@wix/identity" "^1.0.72"
-    "@wix/image-kit" "^1.50.0"
-    "@wix/redirects" "^1.0.32"
-    "@wix/sdk-types" "^1.5.5"
+    "@wix/identity" "^1.0.78"
+    "@wix/image-kit" "^1.78.0"
+    "@wix/redirects" "^1.0.41"
+    "@wix/sdk-context" "^0.0.1"
+    "@wix/sdk-runtime" "0.3.16"
+    "@wix/sdk-types" "^1.9.3"
     crypto-js "^4.2.0"
-    jsonwebtoken "^9.0.2"
+    jose "^5.2.1"
     pkce-challenge "^3.1.0"
     querystring "^0.2.1"
     type-fest "^4.9.0"
   optionalDependencies:
     graphql "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
+
+"@wix/site-members@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.npmjs.org/@wix/site-members/-/site-members-1.14.0.tgz"
+  integrity sha512-cYmaPhrxpn8VzyJGrK1GXboPnVoCKzp1djMt/7eyeGOF+dhYThJkQQ+lXVYD6tO7dbvOQhfk9WjDFHr0rN5hng==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@wix/sdk-runtime" "^0.3.11"
+
+"@wix/site@^1.16.0":
+  version "1.16.0"
+  resolved "https://registry.npmjs.org/@wix/site/-/site-1.16.0.tgz"
+  integrity sha512-W0Aa3H9s2G9I3qw1oHVxa+9RxPnM9wgMAydIQQoVK+GwOMLlQzxLkvS2xfJaCbtTHjL9XJSPeQoKRTXOlLkmZw==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -4856,10 +5156,10 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
-buffer-equal-constant-time@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz"
-  integrity sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==
+bson@^6.7.0:
+  version "6.8.0"
+  resolved "https://registry.npmjs.org/bson/-/bson-6.8.0.tgz"
+  integrity sha512-iOJg8pr7wq2tg/zSlCCHMi3hMm5JTOxLTagf3zxhcenHsFp+c6uOs6K7W5UE7A4QIJGtqh/ZovFNMP4mOPJynQ==
 
 buffer-from@^1.0.0:
   version "1.1.2"
@@ -6285,13 +6585,6 @@ eastasianwidth@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
-
-ecdsa-sig-formatter@1.0.11:
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz"
-  integrity sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==
-  dependencies:
-    safe-buffer "^5.0.1"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -9222,6 +9515,16 @@ jiti@^1.19.1, jiti@^1.20.0, jiti@^1.21.0:
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.21.0.tgz"
   integrity sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==
 
+jose@^5.2.1:
+  version "5.8.0"
+  resolved "https://registry.npmjs.org/jose/-/jose-5.8.0.tgz"
+  integrity sha512-E7CqYpL/t7MMnfGnK/eg416OsFCVUrU/Y3Vwe7QjKhu/BkS1Ms455+2xsqZQVN57/U2MHMBvEb5SrmAZWAIntA==
+
+js-base64@^3.7.7:
+  version "3.7.7"
+  resolved "https://registry.npmjs.org/js-base64/-/js-base64-3.7.7.tgz"
+  integrity sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -9401,22 +9704,6 @@ jsonpointer@^5.0.0:
   resolved "https://registry.npmjs.org/jsonpointer/-/jsonpointer-5.0.1.tgz"
   integrity sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==
 
-jsonwebtoken@^9.0.2:
-  version "9.0.2"
-  resolved "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz"
-  integrity sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==
-  dependencies:
-    jws "^3.2.2"
-    lodash.includes "^4.3.0"
-    lodash.isboolean "^3.0.3"
-    lodash.isinteger "^4.0.4"
-    lodash.isnumber "^3.0.3"
-    lodash.isplainobject "^4.0.6"
-    lodash.isstring "^4.0.1"
-    lodash.once "^4.0.0"
-    ms "^2.1.1"
-    semver "^7.5.4"
-
 "jsx-ast-utils@^2.4.1 || ^3.0.0", jsx-ast-utils@^3.3.5:
   version "3.3.5"
   resolved "https://registry.npmjs.org/jsx-ast-utils/-/jsx-ast-utils-3.3.5.tgz"
@@ -9426,23 +9713,6 @@ jsonwebtoken@^9.0.2:
     array.prototype.flat "^1.3.1"
     object.assign "^4.1.4"
     object.values "^1.1.6"
-
-jwa@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/jwa/-/jwa-1.4.1.tgz"
-  integrity sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==
-  dependencies:
-    buffer-equal-constant-time "1.0.1"
-    ecdsa-sig-formatter "1.0.11"
-    safe-buffer "^5.0.1"
-
-jws@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.npmjs.org/jws/-/jws-3.2.2.tgz"
-  integrity sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==
-  dependencies:
-    jwa "^1.4.1"
-    safe-buffer "^5.0.1"
 
 keyv@^4.5.3:
   version "4.5.4"
@@ -9630,40 +9900,15 @@ lodash.defaults@^4.2.0:
   resolved "https://registry.npmjs.org/lodash.defaults/-/lodash.defaults-4.2.0.tgz"
   integrity sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==
 
-lodash.includes@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npmjs.org/lodash.includes/-/lodash.includes-4.3.0.tgz"
-  integrity sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==
-
 lodash.isarguments@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz"
   integrity sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==
 
-lodash.isboolean@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz"
-  integrity sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==
-
-lodash.isinteger@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npmjs.org/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz"
-  integrity sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==
-
-lodash.isnumber@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz"
-  integrity sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==
-
 lodash.isplainobject@^4.0.6:
   version "4.0.6"
   resolved "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz"
   integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
-
-lodash.isstring@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz"
-  integrity sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -9674,11 +9919,6 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
-
-lodash.once@^4.0.0:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz"
-  integrity sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -9703,7 +9943,7 @@ log-symbols@^4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-long@^4.0.0, long@~4.0.0:
+long@~4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/long/-/long-4.0.0.tgz"
   integrity sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
@@ -9853,6 +10093,11 @@ memoizerific@^1.11.3:
   integrity sha512-/EuHYwAPdLtXwAwSZkh/Gutery6pD2KYd44oQLhAvQp/50mpyduZh8Q7PYHXTCJ+wuXxt7oij2LXyIJOOYFPog==
   dependencies:
     map-or-similar "^1.5.0"
+
+memory-pager@^1.0.2:
+  version "1.5.0"
+  resolved "https://registry.npmjs.org/memory-pager/-/memory-pager-1.5.0.tgz"
+  integrity sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg==
 
 merge-descriptors@1.0.1:
   version "1.0.1"
@@ -10057,6 +10302,23 @@ moize@^6.1.0:
   dependencies:
     fast-equals "^3.0.1"
     micro-memoize "^4.1.2"
+
+mongodb-connection-string-url@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-3.0.1.tgz"
+  integrity sha512-XqMGwRX0Lgn05TDB4PyG2h2kKO/FfWJyCzYQbIhXUxz7ETt0I/FqHjUeqj37irJ+Dl1ZtU82uYyj14u2XsZKfg==
+  dependencies:
+    "@types/whatwg-url" "^11.0.2"
+    whatwg-url "^13.0.0"
+
+mongodb@^6.8.1:
+  version "6.8.1"
+  resolved "https://registry.npmjs.org/mongodb/-/mongodb-6.8.1.tgz"
+  integrity sha512-qsS+gl5EJb+VzJqUjXSZ5Y5rbuM/GZlZUEJ2OIVYP10L9rO9DQ0DGp+ceTzsmoADh6QYMWd9MSdG9IxRyYUkEA==
+  dependencies:
+    "@mongodb-js/saslprep" "^1.1.5"
+    bson "^6.7.0"
+    mongodb-connection-string-url "^3.0.0"
 
 mri@^1.2.0:
   version "1.2.0"
@@ -11656,7 +11918,7 @@ punycode@^1.4.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-1.4.1.tgz"
   integrity sha512-jmYNElW7yvO7TV33CjSmvSiE2yco3bV2czu/OzDKdMNVZQWfxCblURLhf+47syQRBntjfLdd/H0egrzIG+oaFQ==
 
-punycode@^2.1.0, punycode@^2.1.1:
+punycode@^2.1.0, punycode@^2.1.1, punycode@^2.3.0:
   version "2.3.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
@@ -12868,6 +13130,13 @@ space-separated-tokens@^2.0.0:
   resolved "https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-2.0.2.tgz"
   integrity sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==
 
+sparse-bitfield@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/sparse-bitfield/-/sparse-bitfield-3.0.3.tgz"
+  integrity sha512-kvzhi7vqKTfkh0PZU+2D2PIllw2ymqJKujUcyPMd9Y75Nv4nPbGJZXNhxsgdQab2BmlDct1YnfQCguEvHr7VsQ==
+  dependencies:
+    memory-pager "^1.0.2"
+
 spdx-correct@^3.0.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/spdx-correct/-/spdx-correct-3.2.0.tgz"
@@ -13633,6 +13902,13 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
+tr46@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/tr46/-/tr46-4.1.1.tgz"
+  integrity sha512-2lv/66T7e5yNyhAAC4NaKe5nVavzuGJQVVtRYLyQ2OI8tsJ61PMLlelehb0wi2Hx6+hT/OJUWZcw8MjlSRnxvw==
+  dependencies:
+    punycode "^2.3.0"
+
 tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
@@ -13719,10 +13995,10 @@ tslib@^1.8.1:
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.4.0, tslib@^2.6.2:
-  version "2.6.2"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz"
-  integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.4.0, tslib@^2.6.2, tslib@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz"
+  integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==
 
 tsutils@^3.21.0:
   version "3.21.0"
@@ -14244,6 +14520,11 @@ webidl-conversions@^6.1.0:
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-6.1.0.tgz"
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
+webidl-conversions@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-7.0.0.tgz"
+  integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
+
 webpack-dev-middleware@^5.3.4:
   version "5.3.4"
   resolved "https://registry.npmjs.org/webpack-dev-middleware/-/webpack-dev-middleware-5.3.4.tgz"
@@ -14411,6 +14692,14 @@ whatwg-mimetype@^2.3.0:
   resolved "https://registry.npmjs.org/whatwg-mimetype/-/whatwg-mimetype-2.3.0.tgz"
   integrity sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==
 
+whatwg-url@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.npmjs.org/whatwg-url/-/whatwg-url-13.0.0.tgz"
+  integrity sha512-9WWbymnqj57+XEuqADHrCJ2eSXzn8WXIW/YSGaZtb2WKAInQ6CHfaUUcTyyver0p8BDg5StLQq8h1vtZuwmOig==
+  dependencies:
+    tr46 "^4.1.1"
+    webidl-conversions "^7.0.0"
+
 whatwg-url@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/whatwg-url/-/whatwg-url-5.0.0.tgz"
@@ -14510,7 +14799,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-wix-sdk@^1.90.0:
+wix-sdk@^1.12.0:
   version "1.90.0"
   resolved "https://registry.npmjs.org/wix-sdk/-/wix-sdk-1.90.0.tgz"
   integrity sha512-2D/AOD7VowvlgA17MHFkjKhxfhmFW+bP/OIoS4//fl7oPfKw76423PUgl+c9SlQv4hGHOX1/FnP5meBMSkagfA==

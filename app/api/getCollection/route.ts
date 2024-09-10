@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClient } from '@app/hooks/useWixClientServer';
+import { getWixClientData } from '@app/hooks/useWixClientServer';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName } = await req.json();
 
   try {
-    const wixClient = await getWixClient();
+    const wixClient = await getWixClientData();
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,

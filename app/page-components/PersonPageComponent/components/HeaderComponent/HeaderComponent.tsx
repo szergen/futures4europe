@@ -3,9 +3,10 @@ import style from './HeaderComponent.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
+import { getImageUrlForMedia } from '../../../PageComponents.utils';
 
 export type HeaderComponentProps = {
-  post: {
+  person: {
     title: string;
     tagLine: string;
     image: string;
@@ -13,8 +14,8 @@ export type HeaderComponentProps = {
     pageType: 'Post' | 'Event' | 'Project Result';
     description: string;
     countryTag: {
-      tagText: string;
-      tagCounter: number;
+      name: string;
+      popularity: number;
     };
     recommendations: {
       number: number;
@@ -22,19 +23,25 @@ export type HeaderComponentProps = {
     };
     views: number;
     personRoles: Array<TagProps>;
+    personTag: TagProps;
   };
 };
 
-const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
+const HeaderComponent: React.FC<HeaderComponentProps> = ({ person }) => {
   return (
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
         <Image
-          src={post.image}
+          src={getImageUrlForMedia(
+            person?.personTag?.picture ||
+              'https://placehold.co/147x147?text=Profile Image',
+            147,
+            147
+          )}
           width={147}
           height={147}
           className={classNames('rounded-full')}
-          alt={`User Avatar - ${post.title}`}
+          alt={`User Avatar - ${person.title}`}
         />
         {/* Social Icons */}
         <div className={style.socialIcons}>
@@ -116,31 +123,31 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ post }) => {
           tag="p"
           className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
         >
-          {post.views} views
+          {person.views} views
         </Typography>
       </div>
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
         <Typography tag="h1" className=" text-gray-800">
-          {post.title.replace(/_/g, ' ')}
+          {person.personTag.name}
           {/* Person Popularity */}
           <span
-            data-after={post.personPopularity}
+            data-after={person?.personTag?.popularity || ''}
             className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
           ></span>
         </Typography>
         {/* Person Tagline */}
         <Typography tag="h3" className="text-gray-800 italic">
-          {post.tagLine}
+          {person?.personTag?.tagLine}
         </Typography>
         {/* Person domains */}
         <div className={style.domains}>
-          {post.personRoles.slice(0, 3).map((personRole) => (
-            <Tag key={personRole.tagText} {...personRole} />
+          {person.activity.slice(0, 3).map((activity) => (
+            <Tag key={activity.name} {...activity} />
           ))}
         </div>
         {/* Person Country */}
-        <Tag {...post.countryTag} />
+        <Tag {...person.countryTag} />
       </div>
     </div>
   );

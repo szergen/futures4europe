@@ -3,19 +3,20 @@ import React from 'react';
 import style from '../../Tag.module.css';
 import { TagCategories } from '../../Tag.utils';
 import Image from 'next/image';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type TagThumbnailProps = {
-  thumbnail?: string;
-  thumbnailAlt?: string;
+  picture?: string;
+  pictureAlt?: string;
   tagCategory?: TagCategories;
 };
 
 export const TagThumbnail: React.FC<TagThumbnailProps> = ({
-  thumbnail,
-  thumbnailAlt,
+  picture,
+  pictureAlt,
   tagCategory,
 }) =>
-  !thumbnail && tagCategory === TagCategories.person ? (
+  !picture && tagCategory === TagCategories.person ? (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="white"
@@ -32,9 +33,14 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
     </svg>
   ) : (
     <Image
-      alt={thumbnailAlt || 'Avatar Image'}
+      alt={pictureAlt || 'Avatar Image'}
       className={classNames('inline-block z-10', style.tagPicture)}
-      src={thumbnail || 'https://picsum.photos/id/177/40/40'}
+      src={getImageUrlForMedia(
+        picture ||
+          'https://placehold.co/147x147?text=Profile Image',
+        147,
+        147
+      )}
       width={30}
       height={30}
     />

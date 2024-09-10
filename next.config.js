@@ -17,6 +17,7 @@ const nextConfig = {
       'placehold.co',
       'randomuser.me',
       'framerusercontent.com',
+      'uefiscdi.gov.ro',
     ],
     formats: ['image/webp'],
   },

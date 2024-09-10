@@ -21,7 +21,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
         {tagListTitle}
       </Typography>
       {tagList.map((method) => (
-        <Tag key={method.tagText} {...method} />
+        <Tag key={method.name} {...method} />
       ))}
     </section>
   );

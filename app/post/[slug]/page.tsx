@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import PostPageComponent from '@app/page-components/PostPageComponent/PostPageComponent';
 import {
   getCollection,
-  getCollectionItem,
+  getCollectionItemByTitle,
+  getMemberById,
   updateDataItem,
 } from '@app/wixUtils/server-side';
 
@@ -25,9 +26,13 @@ export default async function PostPage({ params }: any) {
   // const postCollection = await getCollection('PostPages');
   // console.log('postCollection', postCollection);
 
-  // TEST Get specific Post by slug
-  const postItem = await getCollectionItem('PostPages', params.slug);
-  console.log('postItem', postItem);
+  //Get specific Post by slug
+  const postPageItem = await getCollectionItemByTitle('PostPages', params.slug);
+  console.log('postItem Data', postPageItem.data);
+
+  const member = await getMemberById(postPageItem?.data._owner);
+
+  console.log('member', member);
 
   // const updatedItem = await updateDataItem(
   //   postItem.dataCollectionId,
@@ -41,7 +46,7 @@ export default async function PostPage({ params }: any) {
 
   return (
     <div className={classNames('w-full')}>
-      <PostPageComponent pageTitle={params.slug} post={postItem} />
+      <PostPageComponent pageTitle={params.slug} post={postPageItem} />
     </div>
   );
 }

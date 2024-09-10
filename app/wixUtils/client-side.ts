@@ -23,9 +23,12 @@ const updateDataItem = async (
   }
 };
 
-const getCollectionItem = async (collectionName: string, itemId: string) => {
+const getCollectionItemByTitle = async (
+  collectionName: string,
+  itemId: string
+) => {
   try {
-    const response = await fetch('/api/getCollectionItem', {
+    const response = await fetch('/api/getCollectionItemByTitle', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,4 +68,58 @@ const getCollection = async (collectionName: string) => {
   }
 };
 
-export { updateDataItem, getCollectionItem, getCollection };
+const bulkInsertItems = async (
+  collectionName: string,
+  dataItems: Record<string, any>[]
+) => {
+  try {
+    const response = await fetch('/api/bulkInsertItems', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName, dataItems }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to insert bulk data items');
+    }
+
+    const updatedItems = await response.json();
+    return updatedItems;
+  } catch (error) {
+    console.error('Error inserting bulk items', error);
+  }
+};
+
+const getItemsForCurrentUser = async (
+  collectionName: string,
+  ownerId: string
+) => {
+  try {
+    const response = await fetch('/api/getItemsForCurrentUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName, ownerId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get items for current user');
+    }
+
+    const items = await response.json();
+    return items;
+  } catch (error) {
+    console.error('Error getting items for current user:', error);
+  }
+};
+
+export {
+  updateDataItem,
+  getCollectionItemByTitle,
+  getCollection,
+  bulkInsertItems,
+  getItemsForCurrentUser,
+};

@@ -4,9 +4,13 @@ import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type HeaderComponentProps = {
   project: {
+    projectFunded: TagProps;
+    projectEndDate: string;
+    projectStartDate: string;
     title: string;
     tagLine: string;
     image: string;
@@ -19,8 +23,8 @@ export type HeaderComponentProps = {
     pageType: 'Post' | 'Event' | 'Project Result';
     description: string;
     countryTag: {
-      tagText: string;
-      tagCounter: number;
+      name: string;
+      popularity: number;
     };
     recommendations: {
       number: number;
@@ -28,6 +32,7 @@ export type HeaderComponentProps = {
     };
     views: number;
     domains: Array<TagProps>;
+    projectTag: TagProps & { tagLine: string };
   };
 };
 
@@ -36,13 +41,17 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ project }) => {
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
         <Image
-          src={project.image}
+          src={getImageUrlForMedia(
+            project?.projectTag?.picture ||
+              'https://placehold.co/147x147?text=Profile Image',
+            147,
+            147
+          )}
           width={147}
           height={147}
           className={classNames('rounded-full')}
           alt={`User Avatar - ${project.title}`}
         />
-        {/* Social Icons */}
         {/* Social Icons */}
         <div className={style.socialIcons}>
           {/* Linkedin */}
@@ -90,34 +99,34 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ project }) => {
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
         <Typography tag="h1" className=" text-gray-800">
-          {project.title.replace(/_/g, ' ')}
+          {project.projectTag.name}
           {/* Person Popularity */}
           <span
-            data-after={project.personPopularity}
+            data-after={project.projectTag.popularity}
             className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
           ></span>
         </Typography>
         {/* Tagline */}
         <Typography tag="h3" className="text-gray-800 italic">
-          {project.tagLine}
+          {project.projectTag.tagLine}
         </Typography>
         {/* Project Period */}
         <Typography
           tag="p"
           className="text-gray-500 text-sm font-bold mt-2 mb-2"
         >
-          {formatDate(project?.projectPeriod?.start)} -{' '}
-          {formatDate(project?.projectPeriod?.end)}
+          {formatDate(project?.projectStartDate)} -{' '}
+          {formatDate(project?.projectEndDate)}
         </Typography>
 
-        {/* EU funded */}
-        {project.euFunded && (
-          <Tag tagText="EU Funded" tagCounter={253} className="mb-1" />
+        {/* project funded */}
+        {project.projectFunded && (
+          <Tag {...project.projectFunded} className="mb-1" />
         )}
         {/* Person domains */}
         {/* <div className={style.domains}>
           {project.domains.slice(0, 3).map((domain) => (
-            <Tag key={domain.tagText} {...domain} />
+            <Tag key={domain.name} {...domain} />
           ))}
         </div> */}
         {/* Person Country */}

@@ -32,7 +32,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
       )}
       {afiliations.map((affilitiation) => (
         <div
-          key={`affiliation-${affilitiation.tagText}`}
+          key={`affiliation-${affilitiation.name}`}
           className={classNames(style.personWorkplaceItem)}
         >
           <Typography
@@ -42,10 +42,10 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             {affilitiation.arole}:
           </Typography>
           <Tag
-            tagText={affilitiation.tagText}
-            tagCounter={affilitiation.tagCounter}
+            name={affilitiation.name}
+            popularity={affilitiation.popularity}
             href={affilitiation.href}
-            thumbnail={affilitiation.thumbnail}
+            picture={affilitiation.picture}
           />
         </div>
       ))}

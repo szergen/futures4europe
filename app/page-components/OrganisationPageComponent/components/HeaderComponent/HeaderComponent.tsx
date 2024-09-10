@@ -3,9 +3,11 @@ import style from './HeaderComponent.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type HeaderComponentProps = {
   organisation: {
+    organisationEstablishedDate: string;
     title: string;
     tagLine: string;
     image: string;
@@ -13,8 +15,8 @@ export type HeaderComponentProps = {
     pageType: 'Post' | 'Event' | 'Project Result';
     description: string;
     countryTag: {
-      tagText: string;
-      tagCounter: number;
+      name: string;
+      popularity: number;
     };
     recommendations: {
       number: number;
@@ -22,6 +24,8 @@ export type HeaderComponentProps = {
     };
     views: number;
     domains: Array<TagProps>;
+    organisationTag: TagProps & { tagLine: string };
+    activity: Array<TagProps>;
   };
 };
 
@@ -30,7 +34,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
         <Image
-          src={organisation.image}
+          src={getImageUrlForMedia(
+            organisation?.organisationTag?.picture ||
+              'https://placehold.co/147x147?text=Profile Image',
+            147,
+            147
+          )}
           width={147}
           height={147}
           className={classNames('rounded-full')}
@@ -84,10 +93,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
       <div className={style.detailsColumn}>
         {/* Organisation Info Name */}
         <Typography tag="h1" className=" text-gray-800">
-          {organisation.title.replace(/_/g, ' ')}
+          {organisation?.organisationTag?.name}
           {/* Organisation Popularity */}
           <span
-            data-after={organisation.personPopularity}
+            data-after={organisation?.organisationTag?.popularity}
             className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
           ></span>
         </Typography>
@@ -108,17 +117,17 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
             />
           </svg>
           <Typography tag="span" className="text-gray-800 italic text-xs ml-2">
-            Founded in 1479
+            {organisation.organisationEstablishedDate}
           </Typography>
         </div>
         {/* Tagline */}
         <Typography tag="h3" className="text-gray-800 italic">
-          {organisation.tagLine}
+          {organisation?.organisationTag?.tagLine}
         </Typography>
         {/* Organisation domains */}
         <div className={style.domains}>
-          {organisation.domains.slice(0, 3).map((domain) => (
-            <Tag key={domain.tagText} {...domain} />
+          {organisation.activity.map((activity) => (
+            <Tag key={activity.name} {...activity} />
           ))}
         </div>
         {/* Organisation Country */}

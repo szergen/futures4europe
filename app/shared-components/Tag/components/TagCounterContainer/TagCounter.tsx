@@ -4,27 +4,27 @@ import style from '../../Tag.module.css';
 import Tooltip3 from '@app/shared-components/Tooltip3/Tooltip3';
 
 export type TagCounterProps = {
-  tagCounter?: number;
+  popularity?: number;
   tagTrend?: number;
 };
 
-export const TagCounter: React.FC<TagCounterProps> = ({
-  tagCounter,
+export const popularity: React.FC<TagCounterProps> = ({
+  popularity,
   tagTrend,
 }) => {
   return (
     <span className={classNames(style.tagCounterBody)}>
-      {tagCounter && (
+      {popularity && (
         <Tooltip3
           trigger="hover"
-          popoverContent={`This Tag has been referenced ${tagCounter} times`}
+          popoverContent={`This Tag has been referenced ${popularity} times`}
         >
           <span
-            after={tagCounter}
+            after={popularity}
             className={classNames(
               'text-gray-500 ',
               'after:content-[attr(after)]',
-              style.tagCounter
+              style.popularity
             )}
           />
         </Tooltip3>
@@ -33,4 +33,4 @@ export const TagCounter: React.FC<TagCounterProps> = ({
   );
 };
 
-export default TagCounter;
+export default popularity;

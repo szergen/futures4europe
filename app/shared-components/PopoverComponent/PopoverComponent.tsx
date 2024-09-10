@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Popover } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type PopoverProps = {
   children?: React.ReactNode;
@@ -35,10 +36,12 @@ const PopoverComponent: React.FC<PopoverProps> = ({
       <div className="px-3 py-2 flex">
         {popoverImage && (
           <Image
-            src={
-              popoverImage || 'https://placehold.co/600x400?text=placeholder'
-            }
-            alt={popoverImageAlt || 'Image Thumbnail'}
+            src={getImageUrlForMedia(
+              popoverImage || 'https://placehold.co/147x147?text=Profile Image',
+              147,
+              147
+            )}
+            alt={popoverImageAlt || 'Image picture'}
             width={100}
             height={100}
           />

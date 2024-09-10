@@ -14,17 +14,48 @@ import { mockProject, projectResults } from '../../mocks/pagesMocks';
 import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 
 function ProjectPageComponent({ pageTitle, project }: any) {
-  project = project || mockProject(pageTitle);
+  // project = project || mockProject(pageTitle);
+  project = { ...mockProject(pageTitle), ...project };
+
+  project = {
+    ...project,
+    pageType: project?.data?.pageTypes[0],
+    updatedDate: project?.data?._updatedDate,
+    projectTag: project?.data?.Project[0],
+    description: project?.data?.description,
+    countryTag: project?.data?.countryTag[0],
+    projectFunded: project?.data?.projectFunded[0],
+    projectStartDate: project?.data?.projectStartDate,
+    projectEndDate: project?.data?.projectEndDate,
+    methods: project?.data?.methods,
+    domains: project?.data?.domains,
+    coordinators: project?.data?.projectCoordinator?.map(
+      (item: any) => item.person[0]
+    ),
+    participants: project?.data?.projectParticipantTeam?.map(
+      (item: any) => item.person[0]
+    ),
+    organisations: project?.data?.projectOrganisationRoles?.map((item: any) => {
+      return {
+        ...project?.data?.projectOrganisation?.find(
+          (org: any) => org.organisation[0].name === item.organisation
+        )?.organisation[0],
+        arole: item.role,
+      };
+    }),
+    registrationDate: project?.data?._createdDate['$date'],
+  };
 
   return (
     <div className={classNames(style.personContainer)}>
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag tagText="Project Info" tagCounter={125} />
+        <Tag {...project.pageType} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited 22h ago
+            Registration Date{' '}
+            {new Date(project.registrationDate).toLocaleString()}
           </Typography>
           {/* Additional meta content */}
         </section>
@@ -36,7 +67,7 @@ function ProjectPageComponent({ pageTitle, project }: any) {
 
       {/* Foresight Methods */}
       <TagListComponent
-        tagList={project.foreSightMethods}
+        tagList={project.methods}
         tagListTitle="Foresight Methods"
       />
       {/* Domains */}

@@ -10,7 +10,7 @@ import Link from 'next/link';
 export type AuthorComponentProps = {
   authors: Array<{
     name: string;
-    thumbnail: string;
+    picture: string;
     href: string;
   }>;
 };
@@ -24,9 +24,9 @@ const AuthorComponent: React.FC<AuthorComponentProps> = ({ authors }) => {
       {authors.map((author, index) => (
         <Tag
           key={`${author.name} - ${index}`}
-          tagText={author.name}
+          name={author.name}
           href={author.href}
-          thumbnail={author.thumbnail}
+          picture={author.picture}
         />
       ))}
     </div>

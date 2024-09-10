@@ -52,7 +52,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {/* Post Tags */}
         <div className={classNames(style.postTags)}>
           {tags?.map((tag) => (
-            <Tag key={tag.tagText} {...tag} />
+            <Tag key={tag.name} {...tag} />
           ))}
         </div>
         {/* Post recommendations */}

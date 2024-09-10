@@ -9,9 +9,12 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
   description,
 }) => {
   return (
-    <section className={classNames('text-gray-500 text-sm')}>
-      {description}
-    </section>
+    <div
+      className={classNames('text-gray-500 text-sm')}
+      dangerouslySetInnerHTML={{
+        __html: description,
+      }}
+    ></div>
   );
 };
 

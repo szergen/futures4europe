@@ -62,7 +62,7 @@ export const MiniPageProjectResults: React.FC<MiniPageProjectResultsProps> = ({
         {/* Project Result Tags */}
         <div className={classNames(style.projectResultTags)}>
           {tags?.map((tag) => (
-            <Tag key={tag.tagText} {...tag} />
+            <Tag key={tag.name} {...tag} />
           ))}
         </div>
         {/* Project Result recommendations */}

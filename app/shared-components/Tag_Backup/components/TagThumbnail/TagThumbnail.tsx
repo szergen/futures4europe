@@ -5,17 +5,17 @@ import { TagCategories } from '../../Tag.utils';
 import Image from 'next/image';
 
 export type TagThumbnailProps = {
-  thumbnail?: string;
-  thumbnailAlt?: string;
+  picture?: string;
+  pictureAlt?: string;
   tagCategory?: TagCategories;
 };
 
 export const TagThumbnail: React.FC<TagThumbnailProps> = ({
-  thumbnail,
-  thumbnailAlt,
+  picture,
+  pictureAlt,
   tagCategory,
 }) =>
-  !thumbnail && tagCategory === TagCategories.person ? (
+  !picture && tagCategory === TagCategories.person ? (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="white"
@@ -32,12 +32,12 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
     </svg>
   ) : (
     <Image
-      alt={thumbnailAlt || 'Avatar Image'}
+      alt={pictureAlt || 'Avatar Image'}
       className={classNames(
         'inline-block mr-1 relative -right-7 z-10',
         style.tagPicture
       )}
-      src={thumbnail || 'https://picsum.photos/id/177/40/40'}
+      src={picture || 'https://picsum.photos/id/177/40/40'}
       width={40}
       height={40}
     />

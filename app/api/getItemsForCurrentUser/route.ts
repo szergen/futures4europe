@@ -3,22 +3,22 @@ import { getWixClientData } from '@app/hooks/useWixClientServer';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
 export const POST = async (req: NextRequest) => {
-  const { collectionName, itemId } = await req.json();
+  const { collectionName, ownerId } = await req.json();
 
   try {
     const wixClient = await getWixClientData();
-    const itemToBeFound = itemId.replace(/_/g, ' ');
+    // const itemToBeFound = itemId.replace(/_/g, ' ');
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
         referencedItemOptions: referencedItemOptions,
       })
-      .eq('title', itemToBeFound)
+      .eq('_owner', ownerId)
       .find();
-    return NextResponse.json(items[0], { status: 200 });
+    return NextResponse.json(items, { status: 200 });
   } catch (error) {
     console.error(
-      `Error getting item: ${itemId} from collection ${collectionName}`,
+      `Error getting item: ${ownerId} from collection ${collectionName}`,
       error
     );
     return NextResponse.json(

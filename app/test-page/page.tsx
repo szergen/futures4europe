@@ -133,52 +133,52 @@ export default function TestPage() {
       </Icons>
       <br />
       {/* Tag examples */}
-      <Tag tagText="This is a default styled tag" />
+      <Tag name="This is a default styled tag" />
       <Tag
-        tagText="This is a tag with overridden styles from tailwindcss"
+        name="This is a tag with overridden styles from tailwindcss"
         className="!bg-pink-100"
       />
       <Tag
-        tagText="This is another tag with overridden styles from the page"
+        name="This is another tag with overridden styles from the page"
         className={style.buttonStyle}
       />
       <br />
       <br />
       <Tag
-        tagText="This is a tag with forced thumbnail"
+        name="This is a tag with forced picture"
         tagCategory={TagCategories.person}
       />
       <Tag
-        tagText="This is a tag with thumbnail"
-        thumbnail="https://picsum.photos/id/1011/40/40"
+        name="This is a tag with picture"
+        picture="https://picsum.photos/id/1011/40/40"
         className="!bg-pink-100"
       />
       <Tag
-        tagText="This is a tag with thumbnail"
-        thumbnail="https://picsum.photos/id/550/40/40"
-        tagCounter={5}
+        name="This is a tag with picture"
+        picture="https://picsum.photos/id/550/40/40"
+        popularity={5}
         tagTrend={2}
       />
       <br />
       <br />
       <Tag
-        tagText="This is a tag with thumbnail"
-        tagCounter={15}
+        name="This is a tag with picture"
+        popularity={15}
         tagTrend={5}
         tagCategory={TagCategories.person}
       />
       <Tag
-        tagText="This is a tag with thumbnail"
-        thumbnail="https://picsum.photos/id/550/40/40"
-        tagCounter={15}
+        name="This is a tag with picture"
+        picture="https://picsum.photos/id/550/40/40"
+        popularity={15}
         tagTrend={2}
         tagCategory={TagCategories.person}
         enableLabel
       />
       <Tag
-        tagText="This is a tag with thumbnail"
-        thumbnail="https://picsum.photos/id/550/40/40"
-        tagCounter={15}
+        name="This is a tag with picture"
+        picture="https://picsum.photos/id/550/40/40"
+        popularity={15}
         tagTrend={2}
         tagCategory={TagCategories.person}
         editable
@@ -186,15 +186,15 @@ export default function TestPage() {
       <br />
       <br />
       <Tag
-        tagText="This is a default tag with link"
+        name="This is a default tag with link"
         href="https://google.com"
-        tagCounter={15}
+        popularity={15}
         tagTrend={2}
       />
       <Tag
-        tagText="This is a tag with link and thumbnail"
+        name="This is a tag with link and picture"
         href="https://google.com"
-        thumbnail="https://picsum.photos/id/650/40/40"
+        picture="https://picsum.photos/id/650/40/40"
       />
       <br />
       <br />

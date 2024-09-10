@@ -17,19 +17,71 @@ import {
   posts,
 } from '../../mocks/pagesMocks';
 import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
+import { it } from 'node:test';
 
 function OrganisationPageComponent({ pageTitle, organisation }: any) {
-  organisation = organisation || mockOrganisation(pageTitle);
+  organisation = { ...mockOrganisation(pageTitle), ...organisation };
+
+  organisation = {
+    ...organisation,
+    pageType: organisation?.data?.pageTypes[0],
+    registrationDate: organisation?.data?._createdDate['$date'],
+    organisationTag: organisation?.data?.organisation[0],
+    organisationEstablishedDate:
+      organisation?.data?.organisationEstablishedDate,
+    activity: organisation?.data?.activity,
+    countryTag: organisation?.data?.countryTag[0],
+    description: organisation?.data?.description,
+    foreSightMethods: organisation?.data?.methods,
+    domains: organisation?.data?.domains,
+    projects: organisation?.data?.organisationProjectRoles?.map((item: any) => {
+      return {
+        ...organisation?.data?.organisationProject?.find(
+          (org: any) => org.Project[0].name === item.project
+        )?.Project[0],
+        arole: item.role,
+      };
+    }),
+    people: organisation?.data?.organisationPeopleRoles?.map((item: any) => {
+      return {
+        ...organisation?.data?.organisationPeople?.find(
+          (org: any) => org.person[0].name === item.people
+        )?.person[0],
+        arole: item.role,
+      };
+    }),
+    memberOrganisations: organisation?.data?.organisationHasMember.map(
+      (item: any) => item.organisation[0]
+    ),
+    memberOfOrganisations: organisation?.data?.organisationMemberOf.map(
+      (item: any) => item.organisation[0]
+    ),
+    // files: organisation?.data?.files,
+    // links: organisation?.data?.links,
+  };
+
+  const people = organisation?.data?.organisationPeopleRoles?.map(
+    (item: any) => {
+      return {
+        ...organisation?.data?.organisationPeople?.find(
+          (org: any) => org.person[0].name === item.people
+        )?.person[0],
+        arole: item.role,
+      };
+    }
+  );
+
+  console.log('people', people);
 
   return (
     <div className={classNames(style.personContainer)}>
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag tagText="Organisation info" tagCounter={123} />
+        <Tag {...organisation.pageType} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited 22h ago
+            {new Date(organisation.registrationDate).toLocaleString()}
           </Typography>
           {/* Additional meta content */}
         </section>

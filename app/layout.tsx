@@ -1,6 +1,8 @@
+'use client';
 import './globals.css';
 import Footer from '@app/shared-components/Layout/Footer';
 import Header from '@app/shared-components/Layout/Header';
+import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -25,10 +27,12 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.ico" />
       </head>
       <body className=" bg-white">
-        {process.env.WIX_CLIENT_ID ? (
+        {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
-            <Header />
-            <main className="bg-white min-h-[600px]">{children}</main>
+            <AuthProvider>
+              <Header />
+              <main className="bg-white min-h-[600px]">{children}</main>
+            </AuthProvider>
             <div className="mt-10 sm:mt-20">
               <Footer />
             </div>
@@ -36,7 +40,7 @@ export default function RootLayout({
         ) : (
           <div className="bg-white min-h-[600px] max-w-5xl mx-auto p-5">
             Page not available. Please add an environment variable called
-            WIX_CLIENT_ID, containing the client ID, to your
+            NEXT_PUBLIC_WIX_CLIENT_ID, containing the client ID, to your
             deployment provider.
           </div>
         )}

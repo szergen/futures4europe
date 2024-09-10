@@ -47,10 +47,10 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
           <span className="" key={index}>
             {tagData && (
               <Tag
-                tagText={tagData.name}
-                tagCounter={tagData.popularity}
+                name={tagData.name}
+                popularity={tagData.popularity}
                 href={tagData.pageLink}
-                thumbnail={tagData.picture}
+                picture={tagData.picture}
               />
             )}
           </span>
@@ -60,10 +60,10 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       {item.searchItemType === 'tag' && (
         <span className="" key={index}>
           <Tag
-            tagText={tagData.name}
-            tagCounter={tagData.popularity}
+            name={tagData.name}
+            popularity={tagData.popularity}
             href={tagData.pageLink}
-            thumbnail={tagData.picture}
+            picture={tagData.picture}
           />
         </span>
       )}
@@ -96,10 +96,10 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       {item.searchItemType === 'sortby' && (
         <span className="" key={index}>
           <Tag
-            tagText={item.searchItem}
-            // tagCounter={tagData.popularity}
+            name={item.searchItem}
+            // popularity={tagData.popularity}
             // href={tagData.pageLink}
-            // thumbnail={tagData.picture}
+            // picture={tagData.picture}
           />
         </span>
       )}

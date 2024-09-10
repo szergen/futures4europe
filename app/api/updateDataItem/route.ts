@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClientServer } from '@app/hooks/useWixClientServer';
+import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName, itemId, data } = await req.json();
@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest) => {
   //   console.log('data->', data);
 
   try {
-    const wixClientServer = await getWixClientServer();
+    const wixClientServer = await getWixClientServerData();
     const updatedItem = await wixClientServer.items.updateDataItem(itemId, {
       dataItem: {
         data,
