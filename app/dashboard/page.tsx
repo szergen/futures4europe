@@ -1,6 +1,7 @@
 'use client';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { getWixClientMember } from '@app/hooks/useWixClientServer';
+import { getItemsForCurrentUser } from '@app/wixUtils/client-side';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -10,8 +11,12 @@ export default function Dashboard() {
   const [userData, setUserData] = useState({});
   console.log('Dashboard isLoggedIn', isLoggedIn);
 
-  const handleCreatePost = () => {
-    router.push('/create-post');
+  const handleGetItemsForCurrentUser = async () => {
+    const items = await getItemsForCurrentUser(
+      'InfoPages',
+      userDetails.contactId.toString()
+    );
+    console.log('getItemsForCurrentUser->items', items);
   };
 
   const handleCreateProfile = () => {
@@ -48,10 +53,10 @@ export default function Dashboard() {
       </h2>
       <div className="mt-20 flex items-center justify-around">
         <button
-          onClick={handleCreatePost}
+          onClick={handleGetItemsForCurrentUser}
           className="bg-blue-600 text-neutral-50 p-4 rounded-md"
         >
-          Create a Post
+          Get Items for current User
         </button>
         <button
           onClick={handleCreateProfile}

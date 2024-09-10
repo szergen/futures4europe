@@ -9,9 +9,35 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import { useMemo } from 'react';
 
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
+
+  const accountSection = useMemo(() => {
+    return isLoggedIn ? (
+      <div className="flex items-center">
+        <Link
+          href="/dashboard"
+          className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mr-2"
+        >
+          <Image
+            width={60}
+            height={60}
+            src="https://picsum.photos/id/195/60/60"
+            alt="User Avatar"
+            className="w-full h-full object-cover"
+          />
+        </Link>
+        {userDetails?.userName}
+      </div>
+    ) : (
+      <Link href="/dashboard" className="">
+        Login
+      </Link>
+    );
+  }, [isLoggedIn, userDetails]);
+
   return (
     <>
       <header
@@ -38,30 +64,7 @@ const Header = () => {
             </SearchProvider>
           </div>
           {/* Account */}
-          {isLoggedIn ? (
-            <div className="flex items-center">
-              <Link
-                href="/dashboard"
-                className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mr-2"
-              >
-                <Image
-                  width={60}
-                  height={60}
-                  src="https://picsum.photos/id/195/60/60"
-                  alt="User Avatar"
-                  className="w-full h-full object-cover"
-                />
-              </Link>
-              {userDetails?.userName}
-            </div>
-          ) : (
-            <Link href="/dashboard" className="">
-              {' '}
-              Login
-            </Link>
-          )}
-
-          {/* <h2 className="flex-1"> */}
+          {accountSection}
 
           {/* </h2> */}
           {/* <div>

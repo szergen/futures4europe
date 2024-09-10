@@ -92,9 +92,34 @@ const bulkInsertItems = async (
   }
 };
 
+const getItemsForCurrentUser = async (
+  collectionName: string,
+  ownerId: string
+) => {
+  try {
+    const response = await fetch('/api/getItemsForCurrentUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName, ownerId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get items for current user');
+    }
+
+    const items = await response.json();
+    return items;
+  } catch (error) {
+    console.error('Error getting items for current user:', error);
+  }
+};
+
 export {
   updateDataItem,
   getCollectionItemByTitle,
   getCollection,
   bulkInsertItems,
+  getItemsForCurrentUser,
 };

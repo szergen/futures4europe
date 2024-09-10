@@ -38,7 +38,7 @@ export default async function PersonPage({ params }: any) {
     infoPageWithReferencedItems
   );
 
-  // console.log('newPage', newPage);
+  console.log('newPage', newPage);
 
   // const member = await getMemberById(infoPageItem.data._owner);
   // console.log('member', member);
