@@ -4230,6 +4230,13 @@
   resolved "https://registry.npmjs.org/@wix/sdk-context/-/sdk-context-0.0.1.tgz"
   integrity sha512-ziSzrceUC0KFn4IJIVBn1cXXKrZ49ZKG5tQ6fl+TpontyUw5p/Z4VofFUUsnqNl9JYCpYNTzIXpzwok93Vrl8A==
 
+"@wix/sdk-react@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.npmjs.org/@wix/sdk-react/-/sdk-react-0.5.7.tgz"
+  integrity sha512-WvAziANjqjMUlvF8t1BYg7a3UmOXaBu1lYr9DDePlr6V4kqkFpRNiXe3rFUSpwzMcOuSL61yW3ZE8XunHY5MPA==
+  dependencies:
+    "@wix/sdk" "^1.12.11"
+
 "@wix/sdk-runtime@^0.2.10":
   version "0.2.12"
   resolved "https://registry.npmjs.org/@wix/sdk-runtime/-/sdk-runtime-0.2.12.tgz"
@@ -4258,7 +4265,7 @@
   resolved "https://registry.npmjs.org/@wix/sdk-types/-/sdk-types-1.10.0.tgz"
   integrity sha512-PE7pTMC+Olqvn6IrZJwhPMombaMUc6LM4CNwWBxLNPdqWsSgNKuAkT1ml0GA5B/2t/CQnvU/CtCBoDSA3tyxRw==
 
-"@wix/sdk@^1.12.0":
+"@wix/sdk@^1.12.0", "@wix/sdk@^1.12.11":
   version "1.12.12"
   resolved "https://registry.npmjs.org/@wix/sdk/-/sdk-1.12.12.tgz"
   integrity sha512-3ImEPBFQv1+lpHs1SwykMBEWVRhHlfx5ivxIkdV9FlLWspBJUYJn9ZqigZUiSn5e5QOziNwA6Bh6W+u6zoRdqQ==

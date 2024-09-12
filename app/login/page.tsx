@@ -29,21 +29,7 @@ export default function LoginPage() {
       });
       console.log('response', response);
 
-      // const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
-      //   response.data.sessionToken
-      // );
-      // console.log('tokens', tokens);
-      // let member;
-
       if (response?.loginState === 'SUCCESS') {
-        // try {
-        //   member = await wixClient.members.getCurrentMember();
-        //   console.log('member', member);
-        //   // member = await wixClient.members.getCurrentMember();
-        // } catch (error) {
-        //   console.error('Error getting member:', error);
-        //   throw error;
-        // }
         const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
           response.data.sessionToken
         );
@@ -53,33 +39,26 @@ export default function LoginPage() {
         const isUserLoggedIn = await wixClient.auth.loggedIn();
 
         console.log('isUserLoggedIn from API?', isUserLoggedIn);
-        const currentMember = await wixClient.members.getCurrentMember();
+        const currentMember = await wixClient.members.getCurrentMember({
+          fieldsets: ['FULL'],
+        });
         console.log('currentMember', currentMember);
 
-        // const memberById = await wixClient.members.getMember(
-        //   '144948d0-9596-4eda-8135-9a6fec9d1330'
-        // );
-
-        // console.log('memberById', memberById);
         if (currentMember) {
           updateUserDetails({
             contactId: currentMember?.member?.contactId,
             userName: currentMember?.member?.profile?.nickname,
             slug: currentMember?.member?.profile?.slug,
+            email: currentMember?.member?.loginEmail,
             createdDate: currentMember?.member?._createdDate,
             updatedDate: currentMember?.member?._updatedDate,
+            privacyStatus: currentMember?.member?.privacyStatus,
+            accountStatus: currentMember?.member?.status,
+            activityStatus: currentMember?.member?.activityStatus,
           });
         }
 
         console.log('User is logged in');
-
-        // get the logged-in member's access and refresh tokens
-        // const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
-        //   response.data.sessionToken
-        // );
-        // console.log('tokens', tokens);
-        // Set the site member's access and refresh tokens as the active tokens for the client:
-        // wixClient.auth.setTokens(tokens);
 
         // Save session token to localStorage
         localStorage.setItem(
@@ -94,23 +73,12 @@ export default function LoginPage() {
         );
 
         login();
-        // router.push('/dashboard');
+        router.push('/dashboard');
       } else if (response?.loginState === 'FAILURE') {
         setError(
           'Login failed. Please check your credentials. ' + response.errorCode
         );
       }
-      // console.log('wixClient', wixClient.auth.loggedIn());
-      // console.log('wixClient', wixClient);
-
-      // Call Wix SDK's login method
-      // getWixClientForAuthetication(email, password);
-
-      // if (response && response.accessToken) {
-      //   // Save token to localStorage or cookie (depending on your authentication flow)
-      //   localStorage.setItem('accessToken', response.accessToken);
-      //   router.push('/dashboard'); // Redirect to dashboard after login
-      // }
     } catch (err) {
       setError('Login failed. Please check your credentials.');
     }

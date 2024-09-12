@@ -22,16 +22,22 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const initialState = {
+  contactId: '',
+  userName: '',
+  slug: '',
+  email: '',
+  createdDate: '',
+  updatedDate: '',
+  privacyStatus: '',
+  accountStatus: '',
+  activityStatus: '',
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [userDetails, setUserDetails] = useState({
-    contactId: '',
-    userName: '',
-    slug: '',
-    createdDate: '',
-    updatedDate: '',
-  });
+  const [userDetails, setUserDetails] = useState(initialState);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -48,8 +54,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           contactId: currentMember?.member?.contactId,
           userName: currentMember?.member?.profile?.nickname,
           slug: currentMember?.member?.profile?.slug,
+          email: currentMember?.member?.loginEmail,
           createdDate: currentMember?.member?._createdDate,
           updatedDate: currentMember?.member?._updatedDate,
+          privacyStatus: currentMember?.member?.privacyStatus,
+          accountStatus: currentMember?.member?.status,
+          activityStatus: currentMember?.member?.activityStatus,
         });
         setIsLoggedIn(true);
         console.log('Logged in as:', currentMember?.member?.profile?.nickname);
@@ -65,13 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem('f4e_wix_sessionToken');
     localStorage.removeItem('f4e_wix_accessTokenAndRefreshToken');
-    setUserDetails({
-      contactId: '',
-      userName: '',
-      slug: '',
-      createdDate: '',
-      updatedDate: '',
-    });
+    setUserDetails(initialState);
     setIsLoggedIn(false);
   };
 
