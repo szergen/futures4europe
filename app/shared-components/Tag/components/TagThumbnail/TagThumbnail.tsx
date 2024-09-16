@@ -36,8 +36,7 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
       alt={pictureAlt || 'Avatar Image'}
       className={classNames('inline-block z-10', style.tagPicture)}
       src={getImageUrlForMedia(
-        picture ||
-          'https://placehold.co/147x147?text=Profile Image',
+        picture || 'https://placehold.co/147x147?text=Profile Image',
         147,
         147
       )}

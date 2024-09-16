@@ -30,10 +30,6 @@ export default async function PostPage({ params }: any) {
   const postPageItem = await getCollectionItemByTitle('PostPages', params.slug);
   console.log('postItem Data', postPageItem.data);
 
-  const member = await getMemberById(postPageItem?.data._owner);
-
-  console.log('member', member);
-
   // const updatedItem = await updateDataItem(
   //   postItem.dataCollectionId,
   //   postItem._id,

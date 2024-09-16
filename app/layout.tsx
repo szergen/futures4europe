@@ -1,8 +1,10 @@
 'use client';
 import './globals.css';
+import { WixProvider, OAuthStrategy, ApiKeyStrategy } from '@wix/sdk-react';
 import Footer from '@app/shared-components/Layout/Footer';
 import Header from '@app/shared-components/Layout/Header';
 import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
+import { channel } from 'diagnostics_channel';
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -29,10 +31,24 @@ export default function RootLayout({
       <body className=" bg-white">
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
-            <AuthProvider>
-              <Header />
-              <main className="bg-white min-h-[600px]">{children}</main>
-            </AuthProvider>
+            {/* <WixProvider
+              auth={ApiKeyStrategy({
+                // clientId: '3bca9b0d-398e-4c47-b2e2-263d4ccd7458',
+                apiKey: process.env.NEXT_PUBLIC_WIX_API_KEY,
+                siteId: process.env.NEXT_PUBLIC_WIX_SITE_ID,
+                accountId: process.env.NEXT_PUBLIC_WIX_ACCOUNT_ID,
+              })}
+            > */}
+            <WixProvider
+              auth={OAuthStrategy({
+                clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
+              })}
+            >
+              <AuthProvider>
+                <Header />
+                <main className="bg-white min-h-[600px]">{children}</main>
+              </AuthProvider>
+            </WixProvider>
             <div className="mt-10 sm:mt-20">
               <Footer />
             </div>
