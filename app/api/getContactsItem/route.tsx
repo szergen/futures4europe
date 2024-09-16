@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const wixClientServer = await getWixClientServerData();
     const contactData = await wixClientServer.contacts.getContact(itemId, {
-      fieldsets: ['FULL'],
+      fieldsets: ['FULL' as any],
     });
     return NextResponse.json(contactData, { status: 200 });
   } catch (error) {

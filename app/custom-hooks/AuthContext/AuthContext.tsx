@@ -80,10 +80,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.log('Auth token found. Logging in...');
         await wixSetTokens(JSON.parse(accessTokenAndRefreshToken));
         const currentMember = await wixGetCurrentMember({
-          fieldsets: ['FULL'],
+          fieldsets: ['FULL' as any],
         });
         const contactData = await getContactsItem(
-          currentMember?.member?.contactId
+          currentMember?.member?.contactId || ''
         );
         if (contactData) {
           console.log('contactData', contactData);

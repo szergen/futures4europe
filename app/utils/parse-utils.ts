@@ -15,5 +15,5 @@ export const extractInfoPageTypeBasedOnTag = (tag: TagProps) => {
 };
 
 export const extactOwnedPagesIds = (ownedPages: any[]) => {
-    return ownedPages.map((page) => page._id);
-}
+  return ownedPages.map((page) => page._id);
+};

@@ -159,7 +159,7 @@ export default function Dashboard() {
           <h2>Owned Items</h2>
           {ownedPostPages.length > 0 ? (
             ownedPostPages.map((postPage) => (
-              <div>
+              <div key={postPage?.data?.title}>
                 <div className="my-4">
                   Post Page: <strong> {postPage?.data?.title}</strong>
                   <Link
@@ -177,7 +177,7 @@ export default function Dashboard() {
           )}
           {ownedInfoPages.length > 0 ? (
             ownedInfoPages.map((infoPage) => (
-              <div>
+              <div key={infoPage.data.title}>
                 <div className="my-4">
                   Info Page: <strong> {infoPage.data.title}</strong>
                   <Link
