@@ -1,3 +1,4 @@
+import { generateFileUploadUrl } from '@app/wixUtils/client-side';
 import { Alert, FileInput, Label } from 'flowbite-react';
 import { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
@@ -14,8 +15,11 @@ export const FileUploader = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isValidState, setIsValidState] = useState(true);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
+
     if (file && file.size > 2 * 1024 * 1024) {
       // file size is in bytes
       setIsValidState(false);
@@ -24,6 +28,53 @@ export const FileUploader = () => {
     } else {
       setIsValidState(true);
       setUploadedFile(file as File);
+      console.log('File selected:', file);
+
+      const generatedFileUploadUrl = await generateFileUploadUrl(
+        file?.type || 'image/jpeg',
+        {
+          fileName: file?.name,
+          filePath: '/PostPages_Images/',
+        },
+        file
+      );
+
+      // const reader = new FileReader();
+      // reader.onloadend = async () => {
+      //   const base64String = reader.result as string;
+      //   console.log('Base64 string:', base64String);
+      //   try {
+      //     const uploadResponse = await fetch(generatedFileUploadUrl.uploadUrl, {
+      //       method: 'PUT',
+      //       headers: {
+      //         'Content-Type': file?.type || 'image/jpeg',
+      //       },
+      //       body: base64String, // Assuming the file is sent as a base64 encoded string
+      //     });
+      //     console.log('File upload response', uploadResponse);
+      //   } catch (error) {
+      //     console.error('Error uploading file', error);
+      //   }
+      // };
+      // reader.readAsDataURL(file as File);
+
+      console.log('generatedFileUploadUrl', generatedFileUploadUrl);
+      try {
+        const uploadResponse = await fetch(generatedFileUploadUrl.uploadUrl, {
+          method: 'PUT',
+          headers: {
+            // 'Access-Control-Allow-Origin': '*', // CORS
+            // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Content-Type': file?.type || 'image/jpeg',
+          },
+          body: file, // Assuming the file is sent as a base64 encoded string
+          mode: 'cors',
+        });
+        console.log('File upload response', uploadResponse);
+      } catch (error) {
+        console.error('Error uploading file', error);
+      }
     }
     // handle the file here
   };

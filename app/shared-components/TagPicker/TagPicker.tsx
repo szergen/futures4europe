@@ -1,12 +1,15 @@
 import React, { use, useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import classNames from 'classnames';
+import { TagProps } from '../Tag/Tag';
 
 export type TagPickerProps = {
   isMulti?: boolean;
   className?: string;
   selectedValue?: string;
   onChange?: (value: string) => void;
+  tags?: TagProps[];
+  updatePostData?: (data: any) => void;
 };
 
 interface Option {
@@ -30,9 +33,13 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   className,
   selectedValue,
   onChange,
+  tags,
+  updatePostData,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState(defaultOptions);
+  const tagOptions =
+    tags?.map((tag) => createOption(tag.name)) || defaultOptions;
+  const [options, setOptions] = useState(tagOptions);
   const [value, setValue] = useState<Option | null>();
 
   const handleCreate = (inputValue: string) => {
@@ -51,23 +58,28 @@ export const TagPicker: React.FC<TagPickerProps> = ({
 
   useEffect(() => {
     if (selectedValue) {
-      setOptions([...defaultOptions, createOption(selectedValue)]);
+      // setOptions([...tagOptions, createOption(selectedValue)]);
       setValue(createOption(selectedValue));
     }
   }, [selectedValue]);
 
-  useEffect(() => {
-    if (onChange) {
-      onChange(value?.label || '');
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (onChange) {
+  //     onChange(value?.label || '');
+  //   }
+  // }, [value]);
 
   return (
     <CreatableSelect
       isClearable
       isDisabled={isLoading}
       isLoading={isLoading}
-      onChange={(newValue: Option) => setValue(newValue)}
+      onChange={(newValue: Option) => {
+        console.log('value changing');
+        updatePostData &&
+          updatePostData(tags?.find((tag) => tag.name === newValue.label));
+        setValue(newValue);
+      }}
       onCreateOption={handleCreate}
       options={options}
       value={value}

@@ -2,7 +2,9 @@ import { createClient, OAuthStrategy, ApiKeyStrategy } from '@wix/sdk';
 import { members } from '@wix/members';
 import { items } from '@wix/data';
 import { currentMember, authentication } from '@wix/site-members';
+import { contacts } from '@wix/crm';
 import { site } from '@wix/site';
+import { files } from '@wix/media';
 
 export const getWixClientData = async () => {
   const { NEXT_PUBLIC_WIX_CLIENT_ID } = process.env;
@@ -44,19 +46,22 @@ export const getWixClientMember = async () => {
 };
 
 export const getWixClientServerData = async () => {
-  const { NEXT_PUBLIC_WIX_API_KEY, NEXT_PUBLIC_WIX_SITE_ID, WIX_ACCOUNT_ID } =
-    process.env;
+  const {
+    NEXT_PUBLIC_WIX_API_KEY,
+    NEXT_PUBLIC_WIX_SITE_ID,
+    NEXT_PUBLIC_WIX_ACCOUNT_ID,
+  } = process.env;
 
   // if (!NEXT_PUBLIC_WIX_API_KEY || !NEXT_PUBLIC_WIX_SITE_ID) {
   //   throw new Error('Missing required environment variables for Wix client.');
   // }
 
   const wixClientServer = createClient({
-    modules: { items },
+    modules: { items, contacts, files },
     auth: ApiKeyStrategy({
       apiKey: NEXT_PUBLIC_WIX_API_KEY,
       siteId: NEXT_PUBLIC_WIX_SITE_ID,
-      // accountId: WIX_ACCOUNT_ID,
+      // accountId: NEXT_PUBLIC_WIX_ACCOUNT_ID,
     }),
   });
 
@@ -67,7 +72,7 @@ export const getWixClientForAuthetication = async (
   email: string,
   password: string
 ) => {
-  // const { NEXT_PUBLIC_WIX_API_KEY, NEXT_PUBLIC_WIX_SITE_ID, WIX_ACCOUNT_ID } = process.env;
+  // const { NEXT_PUBLIC_WIX_API_KEY, NEXT_PUBLIC_WIX_SITE_ID, NEXT_PUBLIC_WIX_ACCOUNT_ID } = process.env;
 
   const wixClient = createClient({
     host: site.host(),
@@ -108,7 +113,7 @@ export const getWixClient = async () => {
 
   const wixClient = createClient({
     modules: { authentication, currentMember },
-    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID,  }),
+    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
     // host: site.host({
     //   applicationId: NEXT_PUBLIC_WIX_SITE_ID,
     // }),
