@@ -1,11 +1,13 @@
-import exp from 'constants';
 import { Label, TextInput } from 'flowbite-react';
+import { useState } from 'react';
 
 export type InputTextProps = {
   label?: string;
   placeholder?: string;
   helperText?: string;
   className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -13,7 +15,17 @@ export const InputText: React.FC<InputTextProps> = ({
   helperText,
   placeholder,
   className,
+  value,
+  onChange,
 }) => {
+  // Handle on change
+  const [inputValue, setInputValue] = useState(value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setInputValue(e.target.value);
+    onChange && onChange(e);
+  };
+
   return (
     <div className="max-w-md">
       {label && (
@@ -28,6 +40,8 @@ export const InputText: React.FC<InputTextProps> = ({
         required
         helperText={helperText ? <>{helperText}</> : undefined}
         className={className}
+        value={inputValue}
+        onChange={handleChange}
       />
     </div>
   );

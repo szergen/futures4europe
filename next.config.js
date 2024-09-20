@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {},
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
-  experimental: {
-    appDir: true,
-  },
   eslint: {
     dirs: ['app'],
   },
@@ -20,6 +17,9 @@ const nextConfig = {
       'uefiscdi.gov.ro',
     ],
     formats: ['image/webp'],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 

@@ -1,6 +1,6 @@
 'use client';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './PostPageComponent.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
@@ -17,13 +17,17 @@ import {
   events,
   posts,
 } from '../../mocks/pagesMocks';
+// import { mockedTags } from '../../custom-hooks/SearchContext/SearchContext.utils';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import {
-  getCollection,
-  getCollectionItemByTitle,
   updateDataItem,
-  bulkInsertItems,
+  bulkInsertDataItemReferences,
+  replaceDataItemReferences,
 } from '@app/wixUtils/client-side';
-import { mockedTags } from '../../custom-hooks/SearchContext/SearchContext.utils';
+import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import { useWixModules } from '@wix/sdk-react';
+import { items } from '@wix/data';
+// import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
   pageTitle: string;
@@ -31,11 +35,32 @@ export type PostPageComponentProps = {
 };
 
 function PostPageComponent({ pageTitle, post }: any) {
+  // Initial mock data
   post = { ...mockPost(pageTitle), ...post };
 
+  // #region useAuth hook for grabbing user details and tags needed for editing
+  // state for if the page is owned by the user
+  // state for if the edit mode is on
+  const { isLoggedIn, userDetails, tags, tagsFetched } = useAuth();
+  const { insertDataItemReference } = useWixModules(items);
+  // console.log('debug1->tags', tags);
+  const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
+  const [isEditModeOn, setIsEditModeOn] = useState(false);
+
+  // check if the page is owned by the user
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    userDetailsIds.find((id) => {
+      if (post.data._owner === id) {
+        setIsPageOwnedByUser(true);
+      }
+    });
+  }, [isLoggedIn]);
+  // Overwrite with Wix Data
   post = {
     ...post,
-    pageType: post?.data?.postType,
+    pageType: post?.data?.pageTypes[0],
     subtitle: post?.data?.subtitle,
     updatedDate: post?.data?._updatedDate,
     countryTag: post?.data?.countryTag[0],
@@ -80,104 +105,194 @@ function PostPageComponent({ pageTitle, post }: any) {
       end: post?.data?.eventEndDate?.['$date'],
     },
   };
-  // console.log('mockedTags', mockedTags);
-  // Client calls
-  const updateSubtitle = async () => {
-    console.log('Update Subtitle', post.dataCollectionId, post._id);
-    // const updatedItem = await updateDataItem(post.dataCollectionId, post._id, {
-    //   _id: post._id,
-    //   subtitle: 'This is a new subtitle',
-    // });
-    // const collection = await getCollection('PostPages');
-    // console.log('Updated Item', collection);
-    // Get Collection
-    // const collection = await getCollection('PostPages');
-    // console.log('Collection', collection);
-    // Bulk Insert
-    // const pageTypeTags = [
-    //   { tagId: 252524, tagType: 'page type', name: 'info', popularity: 184 },
-    //   {
-    //     tagId: 252525,
-    //     tagType: 'page type',
-    //     name: 'organisation info',
-    //     popularity: 58,
-    //   },
-    //   {
-    //     tagId: 252526,
-    //     tagType: 'page type',
-    //     name: 'person info',
-    //     popularity: 91,
-    //   },
-    //   {
-    //     tagId: 252527,
-    //     tagType: 'page type',
-    //     name: 'project info',
-    //     popularity: 35,
-    //   },
-    //   { tagId: 252528, tagType: 'page type', name: 'post', popularity: 253 },
-    //   {
-    //     tagId: 252529,
-    //     tagType: 'page type',
-    //     name: 'project result',
-    //     popularity: 126,
-    //   },
-    //   { tagId: 252530, tagType: 'page type', name: 'event', popularity: 46 },
-    //   {
-    //     tagId: 252531,
-    //     tagType: 'page type',
-    //     name: 'foresight method',
-    //     popularity: 8,
-    //   },
-    // ];
-    // const bulkInsert = await bulkInsertItems(
-    //   'Tags',
-    //   pageTypeTags.map((tag: any) => ({ data: tag }))
-    // );
-    // console.log('Bulk Insert', bulkInsert);
+  // console.log('debug1-post', post);
+  // set default post data and data for editing
+  const [defaultPostData, setDefaultPostData] = useState(post);
+  const [postData, setPostData] = useState(post);
+
+  // Method for updating post data
+  const updatePostData = (newData: any) => {
+    setPostData((prevData: any) => ({ ...prevData, ...newData }));
   };
+  const updatePostDataBasedOnKeyValue = (key: string, value: any) => {
+    setPostData((prevData: any) => ({
+      ...prevData,
+      [key]: value,
+    }));
+  };
+
+  // Method for updating data to server
+  const updateDataToServer = async () => {
+    console.log('Updating Page from', postData.dataCollectionId, postData._id);
+
+    // Update Subtitle
+    if (postData.subtitle !== defaultPostData.subtitle) {
+      const updatedItem = await updateDataItem(
+        postData.dataCollectionId,
+        postData._id,
+        {
+          _id: postData._id,
+          ...postData.data,
+          subtitle: postData?.subtitle,
+          postContentRIch1: postData?.contentText[0],
+          postContentRIch2: postData?.contentText[1],
+          postContentRIch3: postData?.contentText[2],
+          postContentRIch4: postData?.contentText[3],
+          postContentRIch5: postData?.contentText[4],
+          postContentRIch6: postData?.contentText[5],
+          postContentRIch7: postData?.contentText[6],
+          postContentRIch8: postData?.contentText[7],
+          postContentRIch9: postData?.contentText[8],
+          postContentRIch10: postData?.contentText[9],
+          postImage1: postData?.contentImages[0],
+          postImage2: postData?.contentImages[1],
+          postImage3: postData?.contentImages[2],
+          postImage4: postData?.contentImages[3],
+          postImage5: postData?.contentImages[4],
+          postImage6: postData?.contentImages[5],
+          postImage7: postData?.contentImages[6],
+          postImage8: postData?.contentImages[7],
+          postImage9: postData?.contentImages[8],
+          postImage10: postData?.contentImages[9],
+
+          // pageTypes: postData?.pageType,
+        }
+      );
+      console.log('updatedItem', updatedItem);
+    }
+    // Update Page Type
+    if (postData.pageType?._id !== defaultPostData.pageType?._id) {
+      const updatedPageTypes = await replaceDataItemReferences(
+        'PostPages',
+        [postData.pageType?._id],
+        'pageTypes',
+        postData._id
+      );
+      console.log('updatedPageTypes', updatedPageTypes);
+    }
+    // Update Country Tag
+    if (postData.countryTag?._id !== defaultPostData.countryTag?._id) {
+      const updatedCountryTag = await replaceDataItemReferences(
+        'PostPages',
+        [postData.countryTag?._id],
+        'countryTag',
+        postData._id
+      );
+      console.log('updatedCountryTag', updatedCountryTag);
+    }
+  };
+
+  // #endregion
+
+  // useEffect(() => {
+  //   console.log(
+  //     'defaultPostData',
+  //     defaultPostData.contentText,
+  //     defaultPostData.contentImages
+  //   );
+  // }, [defaultPostData]);
 
   return (
     <div className={classNames(style.postContainer)}>
       {/* Test Update */}
-      <button onClick={updateSubtitle}> Update Subtitle</button>
+      {isPageOwnedByUser && (
+        <div>
+          <button
+            onClick={() => {
+              isEditModeOn && updateDataToServer();
+              setIsEditModeOn(!isEditModeOn);
+              setDefaultPostData(postData);
+            }}
+            className="px-2 py-2 rounded-md text-white bg-blue-600 w-40 mr-2"
+          >
+            {!isEditModeOn ? 'Edit Page' : 'Save Changes'}
+          </button>
+          {isEditModeOn && (
+            <button
+              onClick={() => {
+                setPostData(defaultPostData);
+                setIsEditModeOn(!isEditModeOn);
+              }}
+              className="px-2 py-2 rounded-md text-white bg-green-600 w-40"
+            >
+              Discard Changes
+            </button>
+          )}
+        </div>
+      )}
       {/* Page Type Tag */}
       <div className={classNames('py-3 justify-start', style.preHeader)}>
         <div>
-          <Tag name="Post" popularity={123} />
-          <Tag name={post.pageType} popularity={123} />
+          {!isEditModeOn ? (
+            <>{postData.pageType && <Tag {...postData.pageType} />}</>
+          ) : (
+            <TagPicker
+              tags={tags?.filter(
+                (tag) =>
+                  tag?.tagType === 'page type' && !tag?.name?.includes('info')
+              )}
+              className="w-80"
+              selectedValue={postData.pageType?.name}
+              updatePostData={(value) =>
+                updatePostDataBasedOnKeyValue('pageType', value)
+              }
+            />
+          )}
         </div>
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited {new Date(post.updatedDate['$date']).toLocaleString()}
+            Edited {new Date(postData.updatedDate['$date']).toLocaleString()}
           </Typography>
         </section>
       </div>
       {/* Post Header */}
-      <HeaderComponent post={post} />
+      <HeaderComponent
+        post={postData}
+        isEditModeOn={isEditModeOn}
+        updatePostData={updatePostData}
+        updatePostDataBasedOnKeyValue={updatePostDataBasedOnKeyValue}
+        tags={tags}
+      />
       {/* Author */}
-      {post.pageType !== 'Project Result' && post.pageType !== 'Event' && (
-        <AuthorComponent authors={post.authors} />
-      )}
+      {postData.pageType?.name.toLowerCase() !== 'project result' &&
+        postData.pageType?.name.toLowerCase() !== 'event' && (
+          <AuthorComponent authors={postData.authors} />
+        )}
       {/* Project Result Authors */}
-      {post.pageType === 'Project Result' && (
+      {postData.pageType?.name.toLowerCase() === 'project result' && (
         <TagListComponent
-          tagList={post.projectAuthors}
+          tagList={postData.projectAuthors}
           tagListTitle="Authors"
         />
       )}
       {/* Post Content */}
       <ContentComponent
-        contentText={post.contentText}
-        contentImages={post.contentImages}
+        contentText={postData.contentText}
+        contentImages={postData.contentImages}
+        isEditModeOn={isEditModeOn}
+        updatePostDataContent={(value, index) => {
+          const newContentText = [...postData.contentText];
+          newContentText[index] = value;
+          return updatePostData({
+            contentText: newContentText,
+          });
+        }}
+        updatePostDataContentImages={(value, index) => {
+          const newContentImages = [...postData.contentImages];
+          newContentImages[index] = value;
+          return updatePostData({
+            contentImages: newContentImages,
+          });
+        }}
       />
       {/* <div>{post.data.postContent}</div> */}
       {/* EVENT SPECIFIC*/}
-      {post.pageType === 'Event' && (
+      {postData?.pageType?.name?.toLowerCase() === 'event' && (
         <>
           {/* Speakers */}
           <TagListComponent
-            tagList={post.eventSpeakers}
+            tagList={postData.eventSpeakers}
             tagListTitle="Speakers"
           />
         </>
@@ -186,27 +301,33 @@ function PostPageComponent({ pageTitle, post }: any) {
       {/* Post People */}
 
       <TagListComponent
-        tagList={post.people}
-        tagListTitle={post.pageType !== 'Event' ? 'People' : 'Participants'}
+        tagList={postData.people}
+        tagListTitle={
+          postData?.pageType?.name?.toLowerCase() !== 'event'
+            ? 'People'
+            : 'Participants'
+        }
       />
 
       {/* Foresight Methods */}
       <TagListComponent
-        tagList={post.foreSightMethods}
+        tagList={postData.foreSightMethods}
         tagListTitle="Foresight Methods"
       />
 
       {/* Domains */}
-      <TagListComponent tagList={post.domains} tagListTitle="Domains" />
+      <TagListComponent tagList={postData.domains} tagListTitle="Domains" />
 
       {/* Project */}
-      <TagListComponent tagList={post.project} tagListTitle="Project" />
+      <TagListComponent tagList={postData.project} tagListTitle="Project" />
       {/* Organisation */}
 
       <TagListComponent
-        tagList={post.organisation}
+        tagList={postData.organisation}
         tagListTitle={
-          post.pageType !== 'Event' ? 'Organisation' : 'Host Organisations'
+          postData?.pageType?.name?.toLowerCase() !== 'event'
+            ? 'Organisation'
+            : 'Host Organisations'
         }
       />
       {/* Internal Links */}
@@ -216,11 +337,11 @@ function PostPageComponent({ pageTitle, post }: any) {
         events={events.slice(0, 1)}
       />
       {/* Files */}
-      {post.pageType !== 'Project Result' && (
-        <FilesComponent files={post.files} />
+      {postData?.pageType?.name?.toLowerCase() !== 'project result' && (
+        <FilesComponent files={postData.files} />
       )}
       {/* External Links */}
-      <ExternalLinksComponent links={post.links} />
+      <ExternalLinksComponent links={postData.links} />
     </div>
   );
 }

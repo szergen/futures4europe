@@ -1,16 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { EditorState } from 'draft-js';
+import { EditorState, ContentState, convertToRaw } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
+import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 const Editor = dynamic(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
 );
 
-export const RTEComponent = () => {
-  const [editorState, setEditorState] = React.useState(() =>
-    EditorState.createEmpty()
-  );
+export interface RTEComponentProps {
+  // Define your props here
+  content?: string;
+  updatePostData?: (data: any) => void;
+}
+
+export const RTEComponent: React.FC<RTEComponentProps> = ({
+  content,
+  updatePostData,
+}) => {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  // TODO: Add condition for when the payload is
+  // empty to not be parsed as html and updated
+  useEffect(() => {
+    if (content && typeof window !== 'undefined') {
+      const htmlToDraft = require('html-to-draftjs').default;
+      const contentBlock = htmlToDraft(content);
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        setEditorState(EditorState.createWithContent(contentState));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (updatePostData) {
+      const contentState = editorState.getCurrentContent();
+      const htmlContent = draftToHtml(convertToRaw(contentState));
+      updatePostData(htmlContent);
+    }
+  }, [editorState]);
+
+  // const handleEditorStateChange = (state: EditorState) => {
+  //   setEditorState(state);
+  // };
 
   return (
     <Editor
@@ -18,6 +54,7 @@ export const RTEComponent = () => {
       toolbarClassName="toolbarClassName"
       wrapperClassName="wrapperClassName"
       editorClassName="editorClassName"
+      // onEditorStateChange={setEditorState}
       onEditorStateChange={setEditorState}
       toolbar={{
         options: [
@@ -26,7 +63,7 @@ export const RTEComponent = () => {
           // 'fontSize',
           // 'fontFamily',
           'list',
-          'textAlign',
+          // 'textAlign',
           // 'colorPicker',
           // 'link',
           // 'embedded',
