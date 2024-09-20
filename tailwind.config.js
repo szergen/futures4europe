@@ -18,10 +18,15 @@ module.exports = {
     extend: {
       fontSize: {
         12: '12px',
+        14: '14px',
+        16: '16px',
+        18: '18px',
       },
       colors: {
         'purple-site': '#8751BD',
         'blue-site': '#2859B6',
+        'greyShade': '#2C2C2F',
+        'greyLight': 'rgba(15, 19, 36, 0.6)',
       },
       keyframes: {
         fade: {
@@ -35,5 +40,18 @@ module.exports = {
       },
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [
+    require('flowbite/plugin'), // Flowbite plugin
+    function ({ addUtilities }) { // Custom utility function
+      const newUtilities = {
+        '.text-stroke-gray': {
+          '-webkit-text-stroke-color': 'rgba(15, 19, 36, 0.6)',
+          '-webkit-text-stroke-width': '0.5px',
+        },
+      };
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
+    
 };
