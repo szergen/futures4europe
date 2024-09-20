@@ -63,7 +63,8 @@ export default function Dashboard() {
 
   const handleGetContactItem = async () => {
     const contactData = await getContactsItem(
-      userDetails.contactId
+      'a26a590e-e08c-4a24-a642-9909fa8719ba'
+      // userDetails.contactId
       //   '144948d0-9596-4eda-8135-9a6fec9d1330'
       //   'c3b01bea-1097-44ea-9618-17c5dc7d1a67'
       //   'fb7f97b1-1b2c-4205-b06a-197fcaafd205'
@@ -74,7 +75,7 @@ export default function Dashboard() {
   console.log('loading', loading);
 
   useEffect(() => {
-    console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
+    // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }

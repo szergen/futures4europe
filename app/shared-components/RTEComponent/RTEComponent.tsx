@@ -21,6 +21,8 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
 }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+  // TODO: Add condition for when the payload is
+  // empty to not be parsed as html and updated
   useEffect(() => {
     if (content && typeof window !== 'undefined') {
       const htmlToDraft = require('html-to-draftjs').default;
@@ -61,7 +63,7 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
           // 'fontSize',
           // 'fontFamily',
           'list',
-          'textAlign',
+          // 'textAlign',
           // 'colorPicker',
           // 'link',
           // 'embedded',

@@ -61,7 +61,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(initialState);
 
-  const { setTokens: wixSetTokens } = useWixAuth() as unknown as IOAuthStrategy;
+  const { setTokens: wixSetTokens, loggedIn: wixLoggedIn } =
+    useWixAuth() as unknown as IOAuthStrategy;
   const { getCurrentMember: wixGetCurrentMember } = useWixModules(members);
 
   const updateUserDetails = (details: any) => {
@@ -79,6 +80,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (sessionToken && accessTokenAndRefreshToken) {
         console.log('Auth token found. Logging in...');
         await wixSetTokens(JSON.parse(accessTokenAndRefreshToken));
+        const isUserLoggedIn = await wixLoggedIn();
+
+        console.log(
+          'isUserLoggedIn from WixProvider AUTH CONTEXT',
+          isUserLoggedIn
+        );
         const currentMember = await wixGetCurrentMember({
           fieldsets: ['FULL' as any],
         });
