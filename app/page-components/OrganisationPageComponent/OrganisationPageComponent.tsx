@@ -37,17 +37,17 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
     projects: organisation?.data?.organisationProjectRoles?.map((item: any) => {
       return {
         ...organisation?.data?.organisationProject?.find(
-          (org: any) => org.Project[0].name === item.project
+          (org: any) => org?.Project?.[0]?.name === item?.project
         )?.Project[0],
-        arole: item.role,
+        arole: item?.role,
       };
     }),
     people: organisation?.data?.organisationPeopleRoles?.map((item: any) => {
       return {
         ...organisation?.data?.organisationPeople?.find(
-          (org: any) => org.person[0].name === item.people
+          (org: any) => org?.person?.[0]?.name === item?.people
         )?.person[0],
-        arole: item.role,
+        arole: item?.role,
       };
     }),
     memberOrganisations: organisation?.data?.organisationHasMember.map(
@@ -64,7 +64,7 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
     (item: any) => {
       return {
         ...organisation?.data?.organisationPeople?.find(
-          (org: any) => org.person[0].name === item.people
+          (org: any) => org?.person?.[0]?.name === item?.people
         )?.person[0],
         arole: item.role,
       };

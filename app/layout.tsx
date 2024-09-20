@@ -4,7 +4,7 @@ import { WixProvider, OAuthStrategy, ApiKeyStrategy } from '@wix/sdk-react';
 import Footer from '@app/shared-components/Layout/Footer';
 import Header from '@app/shared-components/Layout/Header';
 import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
-import { channel } from 'diagnostics_channel';
+// import { channel } from 'diagnostics_channel';
 import { useEffect, useState } from 'react';
 
 /**
@@ -54,7 +54,7 @@ export default function RootLayout({
             <WixProvider
               auth={OAuthStrategy({
                 clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
-                tokens: tokens,
+                tokens: tokens || undefined,
               })}
             >
               <AuthProvider>

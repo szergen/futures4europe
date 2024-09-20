@@ -9,9 +9,9 @@ import { useWixModules } from '@wix/sdk-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-import { referencedItemOptions } from '@app/wixUtils/server-side';
+// import { referencedItemOptions } from '@app/wixUtils/server-side';
 import Link from 'next/link';
-import { TagProps } from '@app/shared-components/Tag/Tag';
+// import { TagProps } from '@app/shared-components/Tag/Tag';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
 // import TagInput from '@app/shared-components/SearchComponentV1/components/TagInput/TagInput';
 import InputText from '@app/shared-components/InputText/InputText';
@@ -36,7 +36,7 @@ export default function Dashboard() {
   console.log('Dashboard isLoggedIn', isLoggedIn);
 
   const router = useRouter();
-  const { insertDataItem, queryDataItems } = useWixModules(items);
+  const { insertDataItem } = useWixModules(items);
 
   const handleGetItemsForCurrentUser = async () => {
     const items = await getItemsForCurrentUser(
@@ -63,8 +63,8 @@ export default function Dashboard() {
 
   const handleGetContactItem = async () => {
     const contactData = await getContactsItem(
-      'a26a590e-e08c-4a24-a642-9909fa8719ba'
-      // userDetails.contactId
+      // 'a26a590e-e08c-4a24-a642-9909fa8719ba'
+      userDetails.contactId
       //   '144948d0-9596-4eda-8135-9a6fec9d1330'
       //   'c3b01bea-1097-44ea-9618-17c5dc7d1a67'
       //   'fb7f97b1-1b2c-4205-b06a-197fcaafd205'
