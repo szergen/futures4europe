@@ -33,7 +33,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   return (
     <>
       {/* Tag Body */}
-      {name.length > 10 ? (
+      {name?.length > 10 ? (
         <span className={classNames('', style.tagBody, className)}>
           <PopoverComponent
             trigger="hover"

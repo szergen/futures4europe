@@ -9,11 +9,11 @@ import { files } from '@wix/media';
 export const getWixClientData = async () => {
   const NEXT_PUBLIC_WIX_CLIENT_ID = process.env.NEXT_PUBLIC_WIX_CLIENT_ID;
 
-  // if (!NEXT_PUBLIC_WIX_CLIENT_ID) {
-  //   throw new Error(
-  //     'Missing required environment variable: NEXT_PUBLIC_WIX_CLIENT_ID'
-  //   );
-  // }
+  if (!NEXT_PUBLIC_WIX_CLIENT_ID) {
+    throw new Error(
+      'Missing required environment variable: NEXT_PUBLIC_WIX_CLIENT_ID'
+    );
+  }
 
   const wixClient = createClient({
     modules: { items },
@@ -25,8 +25,8 @@ export const getWixClientData = async () => {
     }),
   });
 
-  // const tokens = await wixClient.auth.generateVisitorTokens();
-  // wixClient.auth.setTokens(tokens);
+  const tokens = await wixClient.auth.generateVisitorTokens();
+  wixClient.auth.setTokens(tokens);
 
   return wixClient;
 };

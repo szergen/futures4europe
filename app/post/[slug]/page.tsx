@@ -5,6 +5,7 @@ import {
   getCollection,
   getCollectionItemByTitle,
 } from '@app/wixUtils/server-side';
+// import { getCollection } from '@app/wixUtils/client-side';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 120 seconds.
