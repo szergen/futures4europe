@@ -7,21 +7,26 @@ import { site } from '@wix/site';
 import { files } from '@wix/media';
 
 export const getWixClientData = async () => {
-  const { NEXT_PUBLIC_WIX_CLIENT_ID } = process.env;
+  const NEXT_PUBLIC_WIX_CLIENT_ID = process.env.NEXT_PUBLIC_WIX_CLIENT_ID;
 
-  if (!NEXT_PUBLIC_WIX_CLIENT_ID) {
-    throw new Error(
-      'Missing required environment variable: NEXT_PUBLIC_WIX_CLIENT_ID'
-    );
-  }
+  // if (!NEXT_PUBLIC_WIX_CLIENT_ID) {
+  //   throw new Error(
+  //     'Missing required environment variable: NEXT_PUBLIC_WIX_CLIENT_ID'
+  //   );
+  // }
 
   const wixClient = createClient({
     modules: { items },
-    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
+    auth: OAuthStrategy({
+      clientId: NEXT_PUBLIC_WIX_CLIENT_ID,
+      // tokens: JSON.parse(
+      //   localStorage.getItem('f4e_wix_accessTokenAndRefreshToken') || null
+      // ),
+    }),
   });
 
-  const tokens = await wixClient.auth.generateVisitorTokens();
-  wixClient.auth.setTokens(tokens);
+  // const tokens = await wixClient.auth.generateVisitorTokens();
+  // wixClient.auth.setTokens(tokens);
 
   return wixClient;
 };
@@ -38,7 +43,12 @@ export const getWixClientMember = async () => {
 
   const wixClient = createClient({
     modules: { members },
-    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
+    auth: OAuthStrategy({
+      clientId: NEXT_PUBLIC_WIX_CLIENT_ID,
+      // tokens: JSON.parse(
+      //   localStorage.getItem('f4e_wix_accessTokenAndRefreshToken') || null
+      // ),
+    }),
     // host: site.host(),
   });
 
@@ -68,37 +78,37 @@ export const getWixClientServerData = async () => {
   return wixClientServer;
 };
 
-export const getWixClientForAuthetication = async (
-  email: string,
-  password: string
-) => {
-  // const { NEXT_PUBLIC_WIX_API_KEY, NEXT_PUBLIC_WIX_SITE_ID, NEXT_PUBLIC_WIX_ACCOUNT_ID } = process.env;
+// export const getWixClientForAuthetication = async (
+//   email: string,
+//   password: string
+// ) => {
+//   // const { NEXT_PUBLIC_WIX_API_KEY, NEXT_PUBLIC_WIX_SITE_ID, NEXT_PUBLIC_WIX_ACCOUNT_ID } = process.env;
 
-  const wixClient = createClient({
-    host: site.host(),
-    modules: { authentication },
-  });
+//   const wixClient = createClient({
+//     host: site.host(),
+//     modules: { authentication },
+//   });
 
-  try {
-    await wixClient.authentication.login(email, password);
-    console.log('Member is logged in');
-  } catch (error) {
-    console.error(error);
-  }
+//   try {
+//     await wixClient.authentication.login(email, password);
+//     console.log('Member is logged in');
+//   } catch (error) {
+//     console.error(error);
+//   }
 
-  // const { NEXT_PUBLIC_WIX_CLIENT_ID } = process.env;
+//   // const { NEXT_PUBLIC_WIX_CLIENT_ID } = process.env;
 
-  // if (!NEXT_PUBLIC_WIX_CLIENT_ID) {
-  //   throw new Error('Missing required environment variable: NEXT_PUBLIC_WIX_CLIENT_ID');
-  // }
+//   // if (!NEXT_PUBLIC_WIX_CLIENT_ID) {
+//   //   throw new Error('Missing required environment variable: NEXT_PUBLIC_WIX_CLIENT_ID');
+//   // }
 
-  // const wixClient = createClient({
-  //   modules: { authentication },
-  //   auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
-  // });
+//   // const wixClient = createClient({
+//   //   modules: { authentication },
+//   //   auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
+//   // });
 
-  return wixClient;
-};
+//   return wixClient;
+// };
 
 export const getWixClient = async () => {
   const NEXT_PUBLIC_WIX_CLIENT_ID = process.env.NEXT_PUBLIC_WIX_CLIENT_ID;
@@ -113,7 +123,12 @@ export const getWixClient = async () => {
 
   const wixClient = createClient({
     modules: { authentication, currentMember },
-    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
+    auth: OAuthStrategy({
+      clientId: NEXT_PUBLIC_WIX_CLIENT_ID,
+      // tokens: JSON.parse(
+      //   localStorage.getItem('f4e_wix_accessTokenAndRefreshToken') || null
+      // ),
+    }),
     // host: site.host({
     //   applicationId: NEXT_PUBLIC_WIX_SITE_ID,
     // }),

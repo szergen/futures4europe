@@ -5,6 +5,7 @@ import Footer from '@app/shared-components/Layout/Footer';
 import Header from '@app/shared-components/Layout/Header';
 import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
 import { channel } from 'diagnostics_channel';
+import { useEffect, useState } from 'react';
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -17,6 +18,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [tokens, setTokens] = useState(null);
+
+  useEffect(() => {
+    if (localStorage) {
+      const tokens = JSON.parse(
+        localStorage.getItem('f4e_wix_accessTokenAndRefreshToken') || null
+      );
+      setTokens(tokens);
+    }
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -42,6 +54,7 @@ export default function RootLayout({
             <WixProvider
               auth={OAuthStrategy({
                 clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
+                tokens: tokens,
               })}
             >
               <AuthProvider>

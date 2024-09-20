@@ -194,8 +194,8 @@ const getContactsItem = async (itemId: string) => {
 
 const generateFileUploadUrl = async (
   mimeType: string,
-  options: Record<string, any>,
-  file: File
+  options: Record<string, any>
+  // file: File
 ) => {
   try {
     const response = await fetch('/api/generateFileUploadUrl', {
@@ -203,7 +203,11 @@ const generateFileUploadUrl = async (
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ mimeType, options, file }),
+      body: JSON.stringify({
+        mimeType,
+        options,
+        // file,
+      }),
     });
 
     if (!response.ok) {

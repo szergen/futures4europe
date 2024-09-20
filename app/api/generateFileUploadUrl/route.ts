@@ -2,20 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 
 export const POST = async (req: NextRequest) => {
-  const { mimeType, options, file } = await req.json();
+  const { mimeType, options } = await req.json();
   //   console.log('dataItems->', dataItems);
 
   try {
     const wixClientServer = await getWixClientServerData();
     const generatedFileUploadUrl =
-      await wixClientServer.files.generateFileUploadUrl(mimeType, {
-        fileName: options.fileName,
-        filePath: options.filePath,
+      await wixClientServer?.files?.generateFileUploadUrl(mimeType, {
+        fileName: options?.fileName,
+        filePath: options?.filePath,
       });
     console.log('generatedFileUploadUrl', generatedFileUploadUrl);
-
-    // Upload the file to the generated URL
-
     return NextResponse.json(generatedFileUploadUrl, { status: 200 });
   } catch (error) {
     console.error('Error generating upload URL', error);

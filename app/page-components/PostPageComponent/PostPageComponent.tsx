@@ -105,7 +105,7 @@ function PostPageComponent({ pageTitle, post }: any) {
       end: post?.data?.eventEndDate?.['$date'],
     },
   };
-  console.log('debug1-post', post);
+  // console.log('debug1-post', post);
   // set default post data and data for editing
   const [defaultPostData, setDefaultPostData] = useState(post);
   const [postData, setPostData] = useState(post);
@@ -144,6 +144,16 @@ function PostPageComponent({ pageTitle, post }: any) {
           postContentRIch8: postData?.contentText[7],
           postContentRIch9: postData?.contentText[8],
           postContentRIch10: postData?.contentText[9],
+          postImage1: postData?.contentImages[0],
+          postImage2: postData?.contentImages[1],
+          postImage3: postData?.contentImages[2],
+          postImage4: postData?.contentImages[3],
+          postImage5: postData?.contentImages[4],
+          postImage6: postData?.contentImages[5],
+          postImage7: postData?.contentImages[6],
+          postImage8: postData?.contentImages[7],
+          postImage9: postData?.contentImages[8],
+          postImage10: postData?.contentImages[9],
 
           // pageTypes: postData?.pageType,
         }
@@ -173,6 +183,14 @@ function PostPageComponent({ pageTitle, post }: any) {
   };
 
   // #endregion
+
+  // useEffect(() => {
+  //   console.log(
+  //     'defaultPostData',
+  //     defaultPostData.contentText,
+  //     defaultPostData.contentImages
+  //   );
+  // }, [defaultPostData]);
 
   return (
     <div className={classNames(style.postContainer)}>
@@ -253,10 +271,19 @@ function PostPageComponent({ pageTitle, post }: any) {
         contentText={postData.contentText}
         contentImages={postData.contentImages}
         isEditModeOn={isEditModeOn}
-        updatePostData={(value, index) => {
+        updatePostDataContent={(value, index) => {
           const newContentText = [...postData.contentText];
           newContentText[index] = value;
-          return updatePostData({ contentText: newContentText });
+          return updatePostData({
+            contentText: newContentText,
+          });
+        }}
+        updatePostDataContentImages={(value, index) => {
+          const newContentImages = [...postData.contentImages];
+          newContentImages[index] = value;
+          return updatePostData({
+            contentImages: newContentImages,
+          });
         }}
       />
       {/* <div>{post.data.postContent}</div> */}

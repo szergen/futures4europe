@@ -1,6 +1,6 @@
 import React from 'react';
 import { StoryFn, Meta } from '@storybook/react';
-import FileUploader, { FileUploaderProps } from './FileUploader';
+import FileUploader, { FileUploaderProps } from './ContentImageFileUploader';
 
 export default {
   title: 'FileUploader',
