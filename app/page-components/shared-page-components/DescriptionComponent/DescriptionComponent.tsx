@@ -10,7 +10,7 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
 }) => {
   return (
     <div
-      className={classNames('text-gray-500 text-sm')}
+      className={classNames('text-greyLight text-sm')}
       dangerouslySetInnerHTML={{
         __html: description,
       }}

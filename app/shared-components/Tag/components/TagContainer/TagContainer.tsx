@@ -34,16 +34,15 @@ export const TagContainer: React.FC<TagContainerProps> = ({
     <>
       {/* Tag Body */}
       {name.length > 10 ? (
-        <span className={classNames('', style.tagBody, className)}>
+        <span className={classNames(style.tagBody, className)}>
+          <span className={classNames(style.tagBodyText, className)}>
           <PopoverComponent
             trigger="hover"
             popoverContent={name}
             popoverImage={picture}
           >
-            <div className="inline-flex">
               {href ? (
                 <span className={style.name}>
-                  <strong>
                     {showThumbnail && (
                       <TagThumbnail
                         picture={picture || undefined}
@@ -52,7 +51,6 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                       />
                     )}
                     {name}
-                  </strong>
                 </span>
               ) : (
                 <span className={style.name}>
@@ -66,18 +64,19 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                   {name}
                 </span>
               )}
-            </div>
+
           </PopoverComponent>
           {/* Tag Counter and Trend */}
           {popularity && (
             <TagCounter popularity={popularity} tagTrend={tagTrend} />
           )}
+          </span>
         </span>
       ) : (
         <span className={classNames(style.tagBody, className)}>
+          <span className={classNames(style.tagBodyText, className)}>
           {href ? (
             <span className={style.name}>
-              <strong>
                 {showThumbnail && (
                   <TagThumbnail
                     picture={picture || undefined}
@@ -86,7 +85,6 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                   />
                 )}
                 {name}
-              </strong>
             </span>
           ) : (
             <span className={style.name}>
@@ -104,6 +102,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           {popularity && (
             <TagCounter popularity={popularity} tagTrend={tagTrend} />
           )}
+          </span>
         </span>
       )}
     </>

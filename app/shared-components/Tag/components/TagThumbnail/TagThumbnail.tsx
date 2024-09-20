@@ -41,8 +41,8 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
         147,
         147
       )}
-      width={30}
-      height={30}
+      width={28}
+      height={28}
     />
   );
 
