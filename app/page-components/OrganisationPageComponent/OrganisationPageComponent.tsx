@@ -90,7 +90,8 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
       <HeaderComponent organisation={organisation} />
       {/* Organisation Description */}
       <PersonDescriptionComponent description={organisation.description} />
-
+      {/* People */}
+      <AffiliationsComponent afiliations={organisation.people} title="Afilliates" />
       {/* Foresight Methods */}
       <TagListComponent
         tagList={organisation.foreSightMethods}
@@ -103,8 +104,6 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
         afiliations={organisation.projects}
         title="Projects"
       />
-      {/* People */}
-      <AffiliationsComponent afiliations={organisation.people} title="People" />
       {/* Member Organisations */}
       <TagListComponent
         tagList={organisation.memberOrganisations}
