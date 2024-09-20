@@ -54,7 +54,7 @@ export default function RootLayout({
             <WixProvider
               auth={OAuthStrategy({
                 clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
-                tokens: tokens,
+                // tokens: tokens || undefined,
               })}
             >
               <AuthProvider>
