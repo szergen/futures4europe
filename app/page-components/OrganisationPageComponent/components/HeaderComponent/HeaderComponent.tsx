@@ -128,7 +128,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
         </div>
         {/* Organisation domains */}
         <div className={style.domains}>
-          {organisation.activity.map((activity) => (
+          {organisation.activity?.map((activity) => (
             <Tag key={activity.name} {...activity} />
           ))}
         </div>

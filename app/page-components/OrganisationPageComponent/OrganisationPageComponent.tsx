@@ -24,13 +24,13 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
 
   organisation = {
     ...organisation,
-    pageType: organisation?.data?.pageTypes[0],
-    registrationDate: organisation?.data?._createdDate['$date'],
-    organisationTag: organisation?.data?.organisation[0],
+    pageType: organisation?.data?.pageTypes?.[0],
+    registrationDate: organisation?.data?._createdDate?.['$date'],
+    organisationTag: organisation?.data?.organisation?.[0],
     organisationEstablishedDate:
       organisation?.data?.organisationEstablishedDate,
     activity: organisation?.data?.activity,
-    countryTag: organisation?.data?.countryTag[0],
+    countryTag: organisation?.data?.countryTag?.[0],
     description: organisation?.data?.description,
     foreSightMethods: organisation?.data?.methods,
     domains: organisation?.data?.domains,
@@ -50,10 +50,10 @@ function OrganisationPageComponent({ pageTitle, organisation }: any) {
         arole: item?.role,
       };
     }),
-    memberOrganisations: organisation?.data?.organisationHasMember.map(
+    memberOrganisations: organisation?.data?.organisationHasMember?.map(
       (item: any) => item.organisation[0]
     ),
-    memberOfOrganisations: organisation?.data?.organisationMemberOf.map(
+    memberOfOrganisations: organisation?.data?.organisationMemberOf?.map(
       (item: any) => item.organisation[0]
     ),
     // files: organisation?.data?.files,
