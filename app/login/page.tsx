@@ -21,7 +21,7 @@ export default function LoginPage() {
     loggedIn: wixLoggedIn,
     setTokens: wixSetTokens,
     getMemberTokensForDirectLogin: wixGetMemberTokensForDirectLogin,
-    getMemberTokens
+    getMemberTokens,
   } = useWixAuth() as unknown as IOAuthStrategy;
 
   const { getCurrentMember: wixGetCurrentMember } = useWixModules(members);
