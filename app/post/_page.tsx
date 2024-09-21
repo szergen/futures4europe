@@ -55,7 +55,7 @@ export default async function PostMain() {
                   {/* {formatDate(
                     new Date(item.data!.date?.$date ?? item.data!.date)
                   )} */}
-                </span>
+          {/* </span>
               </div>
               <div className="bg-white relative mt-10 px-8 pb-10">
                 <h2 className="mb-10 font-site">{item.data!.title}</h2>
@@ -68,8 +68,7 @@ export default async function PostMain() {
                   Read More
                 </a>
               </div>
-            </div>
-          ))} */}
+            </div> */}
         </div>
       </div>
     </div>

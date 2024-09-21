@@ -55,8 +55,8 @@ export default async function PersonMain() {
                   {/* {formatDate(
                     new Date(item.data!.date?.$date ?? item.data!.date)
                   )} */}
-                </span>
-              </div>
+          {/* </span> */}
+          {/* </div>
               <div className="bg-white relative mt-10 px-8 pb-10">
                 <h2 className="mb-10 font-site">{item.data!.title}</h2>
                 <p className="text-sm mb-6">{item.data!.short_description}</p>
@@ -68,8 +68,8 @@ export default async function PersonMain() {
                   Read More
                 </a>
               </div>
-            </div>
-          ))} */}
+            </div> */}
+          {/* ))} */}
         </div>
       </div>
     </div>
