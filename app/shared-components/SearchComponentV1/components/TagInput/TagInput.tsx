@@ -475,13 +475,13 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     //     (result) => result.item
     //   )
     // );
-    console.log('debug9->filteredData', filteredData.pages);
-    console.log(
-      'debug9->unique',
-      uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
-        (result) => result.item
-      )
-    );
+    // console.log('debug9->filteredData', filteredData.pages);
+    // console.log(
+    //   'debug9->unique',
+    //   uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
+    //     (result) => result.item
+    //   )
+    // );
     setResultsToShow(
       uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
         (result) => result.item

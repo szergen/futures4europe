@@ -42,7 +42,7 @@ export function WixMediaImage({
   };
 
   return (
-    <div className={`flex justify-center `}>
+    <div className={`flex justify-center`}>
       <div className="overflow-hidden relative group">
         <Image
           {...styleProps}

@@ -37,7 +37,7 @@ const referencedItemOptions = [
 
 const getCollection = async (collectionName: string) => {
   try {
-    const wixClient = await getWixClientData();
+    const wixClient = await getWixClientServerData();
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
