@@ -1,5 +1,5 @@
 // Helper function to format the date
-export function formatDate(dateStr: string) {
+export const formatDate = (dateStr: string) => {
   const months = [
     'January',
     'February',
@@ -36,8 +36,6 @@ export function formatDate(dateStr: string) {
   })(day);
 
   return `${day}${daySuffix} of ${month} ${year}`;
-}
-
-export default {
-  formatDate,
 };
+
+export default { formatDate };

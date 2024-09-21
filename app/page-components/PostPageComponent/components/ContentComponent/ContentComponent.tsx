@@ -1,4 +1,5 @@
 import style from './ContentComponent.module.css';
+import Image from 'next/image';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import WixMediaImage from '@app/shared-components/WixMediaImage/WixMediaImage';
@@ -6,6 +7,7 @@ import Tag from '@app/shared-components/Tag/Tag';
 import RTEComponent from '@app/shared-components/RTEComponent/RTEComponent';
 import { useEffect, useState } from 'react';
 import ContentImageFileUploader from '@app/shared-components/ContentImageFileUploader/ContentImageFileUploader';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type ContentComponentProps = {
   contentText: string[];
@@ -181,10 +183,13 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                     <>
                       {!isEditModeOn ? (
                         initialContentImages?.[index] && (
-                          <WixMediaImage
-                            media={initialContentImages?.[index]}
-                            height={400}
+                          <Image
+                            src={
+                              getImageUrlForMedia(initialContentImages?.[index])
+                                ?.url
+                            }
                             width={600}
+                            height={400}
                             className={classNames('rounded-md block mx-auto')}
                             alt="Post Image"
                           />

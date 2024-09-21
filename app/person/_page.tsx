@@ -2,13 +2,13 @@ import { getWixClientData } from '@app/hooks/useWixClientServer';
 import { formatDate } from '@app/utils/date-formatter';
 import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import testIds from '@app/utils/test-ids';
-export default async function ProjectMain() {
-  const wixClient = await getWixClientData();
-  const { items } = await wixClient.items
-    .queryDataItems({
-      dataCollectionId: 'StoriesFrom2050',
-    })
-    .find();
+export default async function PersonMain() {
+  // const wixClient = await getWixClientData();
+  // const { items } = await wixClient.items
+  //   .queryDataItems({
+  //     dataCollectionId: 'StoriesFrom2050',
+  //   })
+  //   .find();
 
   // console.log('debug1->items', items[0]);
 
@@ -38,7 +38,7 @@ export default async function ProjectMain() {
           className="grid grid-cols-1 sm:grid-cols-3 gap-7 grid-flow-row mt-10"
           data-testid={testIds.NEWS_PAGE.NEWS_LIST}
         >
-          {items?.map((item) => (
+          {/* {items?.map((item) => (
             <div
               key={item._id}
               className="relative border"
@@ -55,8 +55,8 @@ export default async function ProjectMain() {
                   {/* {formatDate(
                     new Date(item.data!.date?.$date ?? item.data!.date)
                   )} */}
-                </span>
-              </div>
+          {/* </span> */}
+          {/* </div>
               <div className="bg-white relative mt-10 px-8 pb-10">
                 <h2 className="mb-10 font-site">{item.data!.title}</h2>
                 <p className="text-sm mb-6">{item.data!.short_description}</p>
@@ -68,8 +68,8 @@ export default async function ProjectMain() {
                   Read More
                 </a>
               </div>
-            </div>
-          ))}
+            </div> */}
+          {/* ))} */}
         </div>
       </div>
     </div>

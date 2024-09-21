@@ -51,8 +51,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         </Typography>
         {/* Post Tags */}
         <div className={classNames(style.postTags)}>
-          {tags?.map((tag) => (
-            <Tag key={tag.name} {...tag} />
+          {tags?.map((tag, index) => (
+            <Tag key={tag.name + '-' + index} {...tag} />
           ))}
         </div>
         {/* Post recommendations */}
@@ -60,7 +60,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           {recommendations?.images.map((image, index) => (
             <Image
               src={image}
-              key={`${index} - ${image}`}
+              key={`${index} - ${image} - ${title} - `}
               width={17}
               height={17}
               className={classNames('rounded-full')}
