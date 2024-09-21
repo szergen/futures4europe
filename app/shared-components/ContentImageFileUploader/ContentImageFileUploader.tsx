@@ -1,8 +1,10 @@
+import Image from 'next/image';
 import { uploadFileToWix } from '@app/wixUtils/client.utils';
 import { Alert, FileInput, Label } from 'flowbite-react';
 import { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
-import WixMediaImage from '../WixMediaImage/WixMediaImage';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
+// import WixMediaImage from '../WixMediaImage/WixMediaImage';
 
 export type FileUploaderProps = {
   currentImage?: string;
@@ -90,11 +92,11 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         </Alert>
       )}
       {imageURL && imageURL !== ' ' && (
-        <WixMediaImage
-          media={imageURL}
-          height={400}
+        <Image
+          src={getImageUrlForMedia(imageURL)?.url || ''}
           width={600}
-          className="rounded-md block mx-auto"
+          height={400}
+          className={classNames('rounded-md block mx-auto')}
           alt="Post Image"
         />
       )}
