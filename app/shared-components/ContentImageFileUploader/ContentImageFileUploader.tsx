@@ -4,6 +4,7 @@ import { Alert, FileInput, Label } from 'flowbite-react';
 import { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
+import classNames from 'classnames';
 // import WixMediaImage from '../WixMediaImage/WixMediaImage';
 
 export type FileUploaderProps = {
