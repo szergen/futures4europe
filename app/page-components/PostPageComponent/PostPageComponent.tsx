@@ -181,6 +181,7 @@ function PostPageComponent({ pageTitle, post }: any) {
       );
       console.log('updatedCountryTag', updatedCountryTag);
     }
+    // Update People Tags
     if (checkIfArrayNeedsUpdate(postData.people, defaultPostData.people)) {
       const updatedPeople = await replaceDataItemReferences(
         'PostPages',
@@ -189,6 +190,56 @@ function PostPageComponent({ pageTitle, post }: any) {
         postData?._id
       );
       console.log('updatedPeople', updatedPeople);
+    }
+    // Update Foresight Methods
+    if (
+      checkIfArrayNeedsUpdate(
+        postData.foreSightMethods,
+        defaultPostData.foreSightMethods
+      )
+    ) {
+      const updatedMethods = await replaceDataItemReferences(
+        'PostPages',
+        postData.foreSightMethods?.map((method: any) => method._id),
+        'methods',
+        postData._id
+      );
+      console.log('updatedMethods', updatedMethods);
+    }
+    // Update Domains
+    if (checkIfArrayNeedsUpdate(postData.domains, defaultPostData.domains)) {
+      const updatedDomains = await replaceDataItemReferences(
+        'PostPages',
+        postData.domains?.map((domain: any) => domain._id),
+        'domains',
+        postData._id
+      );
+      console.log('updatedDomains', updatedDomains);
+    }
+    // Update Projects
+    if (checkIfArrayNeedsUpdate(postData.project, defaultPostData.project)) {
+      const updatedProjects = await replaceDataItemReferences(
+        'PostPages',
+        postData.project?.map((project: any) => project._id),
+        'projects',
+        postData._id
+      );
+      console.log('updatedProjects', updatedProjects);
+    }
+    // Update Organisation
+    if (
+      checkIfArrayNeedsUpdate(
+        postData.organisation,
+        defaultPostData.organisation
+      )
+    ) {
+      const updatedOrganisations = await replaceDataItemReferences(
+        'PostPages',
+        postData.organisation?.map((organisation: any) => organisation._id),
+        'organisations',
+        postData._id
+      );
+      console.log('updatedOrganisations', updatedOrganisations);
     }
   };
 
@@ -319,7 +370,7 @@ function PostPageComponent({ pageTitle, post }: any) {
         }
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'person')}
-        selectedValues={postData.people?.map((person: any) => person.name)}
+        selectedValues={postData.people?.map((person: any) => person?.name)}
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('people', value)
         }
@@ -329,13 +380,39 @@ function PostPageComponent({ pageTitle, post }: any) {
       <TagListComponent
         tagList={postData.foreSightMethods}
         tagListTitle="Foresight Methods"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        selectedValues={postData.foreSightMethods?.map(
+          (method: any) => method?.name
+        )}
+        updatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('foreSightMethods', value)
+        }
       />
 
       {/* Domains */}
-      <TagListComponent tagList={postData.domains} tagListTitle="Domains" />
+      <TagListComponent
+        tagList={postData.domains}
+        tagListTitle="Domains"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        selectedValues={postData.domains?.map((domain: any) => domain?.name)}
+        updatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('domains', value)
+        }
+      />
 
       {/* Project */}
-      <TagListComponent tagList={postData.project} tagListTitle="Project" />
+      <TagListComponent
+        tagList={postData.project}
+        tagListTitle="Project"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        selectedValues={postData.project?.map((project: any) => project?.name)}
+        updatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('project', value)
+        }
+      />
       {/* Organisation */}
 
       <TagListComponent
@@ -344,6 +421,14 @@ function PostPageComponent({ pageTitle, post }: any) {
           postData?.pageType?.name?.toLowerCase() !== 'event'
             ? 'Organisation'
             : 'Host Organisations'
+        }
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        selectedValues={postData.organisation?.map(
+          (organisation: any) => organisation?.name
+        )}
+        updatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('organisation', value)
         }
       />
       {/* Internal Links */}
