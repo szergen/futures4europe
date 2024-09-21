@@ -9,22 +9,22 @@ import {
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 120 seconds.
-// export const revalidate = 120;
+export const revalidate = 120;
 
 // We'll prerender only the params from `generateStaticParams` at build time.
 // If a request comes in for a path that hasn't been generated,
 // Next.js will server-render the page on-demand.
-// export const dynamicParams = true; // or false, to 404 on unknown paths
+export const dynamicParams = true; // or false, to 404 on unknown paths
 
 // Function to generate static paths
-// export async function generateStaticParams() {
-//   const postCollection = await getCollection('PostPages');
-//   const slugs = postCollection?.map((post: any) => ({
-//     params: { slug: post?.data?.title?.replace(/\s+/g, '_') },
-//   }));
-//   console.log('Generated static slugs for PostPages:', slugs);
-//   return slugs;
-// }
+export async function generateStaticParams() {
+  const postCollection = await getCollection('PostPages');
+  const slugs = postCollection?.map((post: any) => ({
+    params: { slug: post?.data?.title?.replace(/\s+/g, '_') },
+  }));
+  console.log('Generated static slugs for PostPages:', slugs);
+  return slugs;
+}
 
 export default async function PostPage({ params }: any) {
   console.log('Post Page Params', params.slug);
