@@ -25,8 +25,8 @@ const ExternalLinksComponent: React.FC<ExternalLinksComponentProps> = ({
         External Links
       </Typography>
       {/* Links */}
-      {links.map((link) => (
-        <LinkComponent key={link.href} {...link} />
+      {links.map((link, index) => (
+        <LinkComponent key={link.href + '-' + index} {...link} />
       ))}
       {/* Example Links */}
     </section>

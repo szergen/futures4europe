@@ -27,6 +27,7 @@ import {
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
+import { formatDate } from './PostPageComponent.utils';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -242,7 +243,7 @@ function PostPageComponent({ pageTitle, post }: any) {
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Edited {new Date(postData.updatedDate['$date']).toLocaleString()}
+            Edited {formatDate(postData.updatedDate['$date'].toLocaleString())}
           </Typography>
         </section>
       </div>

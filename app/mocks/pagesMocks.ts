@@ -757,7 +757,7 @@ const mockProject = (pageTitle: string) => {
 
 const posts = [
   {
-    title: 'ORION: Meet Your Co-Pilot in Horizon Scanning',
+    title: 'ORION: Meet Your Co-Pilot in Horizon Scanning 1',
     date: '12.02.2022',
     image: 'https://picsum.photos/id/193/180/180',
     text: 'Paulo Carvalho has been working in the field of futures and foresight for more than 25 years. On one hand, he is a professor in foresight, strategy and innovation at the Faculty of Economics and Management at the University of Lisbon.',
