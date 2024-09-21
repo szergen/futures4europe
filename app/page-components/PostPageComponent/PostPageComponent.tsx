@@ -27,7 +27,7 @@ import {
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
-import { formatDate } from './PostPageComponent.utils';
+import { formatDate, checkIfArrayNeedsUpdate } from './PostPageComponent.utils';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -181,6 +181,15 @@ function PostPageComponent({ pageTitle, post }: any) {
       );
       console.log('updatedCountryTag', updatedCountryTag);
     }
+    if (checkIfArrayNeedsUpdate(postData.people, defaultPostData.people)) {
+      const updatedPeople = await replaceDataItemReferences(
+        'PostPages',
+        postData?.people.map((person: any) => person._id),
+        'people',
+        postData?._id
+      );
+      console.log('updatedPeople', updatedPeople);
+    }
   };
 
   // #endregion
@@ -307,6 +316,12 @@ function PostPageComponent({ pageTitle, post }: any) {
           postData?.pageType?.name?.toLowerCase() !== 'event'
             ? 'People'
             : 'Participants'
+        }
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        selectedValues={postData.people?.map((person: any) => person.name)}
+        updatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('people', value)
         }
       />
 

@@ -186,7 +186,11 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           <Image
                             src={
                               getImageUrlForMedia(initialContentImages?.[index])
-                                ?.url
+                                ?.url ||
+                              getImageUrlForMedia(
+                                initialContentImages?.[index]
+                              ) ||
+                              ''
                             }
                             width={600}
                             height={400}

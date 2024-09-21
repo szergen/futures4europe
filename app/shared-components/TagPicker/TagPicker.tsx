@@ -7,6 +7,7 @@ export type TagPickerProps = {
   isMulti?: boolean;
   className?: string;
   selectedValue?: string;
+  selectedValues?: Array<string>;
   onChange?: (value: string) => void;
   tags?: TagProps[];
   updatePostData?: (data: any) => void;
@@ -35,12 +36,13 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   onChange,
   tags,
   updatePostData,
+  selectedValues,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const tagOptions =
     tags?.map((tag) => createOption(tag.name)) || defaultOptions;
   const [options, setOptions] = useState(tagOptions);
-  const [value, setValue] = useState<Option | null>();
+  const [value, setValue] = useState<Option | Array<Option> | null>();
 
   const handleCreate = (inputValue: string) => {
     setIsLoading(true);
@@ -61,8 +63,25 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       // setOptions([...tagOptions, createOption(selectedValue)]);
       setValue(createOption(selectedValue));
     }
+    if (selectedValues) {
+      setValue(selectedValues?.map((value) => createOption(value)));
+    }
   }, [selectedValue]);
 
+  const handleUpdateData = (newValue: Option) => {
+    console.log('value changing');
+    updatePostData &&
+      !isMulti &&
+      updatePostData(tags?.find((tag) => tag.name === newValue.label));
+    updatePostData &&
+      isMulti &&
+      updatePostData(
+        newValue?.map((value: any) =>
+          tags?.find((tag) => tag?.name === value?.label)
+        )
+      );
+    setValue(newValue);
+  };
   // useEffect(() => {
   //   if (onChange) {
   //     onChange(value?.label || '');
@@ -74,12 +93,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       isClearable
       isDisabled={isLoading}
       isLoading={isLoading}
-      onChange={(newValue: Option) => {
-        console.log('value changing');
-        updatePostData &&
-          updatePostData(tags?.find((tag) => tag.name === newValue.label));
-        setValue(newValue);
-      }}
+      onChange={handleUpdateData}
       onCreateOption={handleCreate}
       options={options}
       value={value}
