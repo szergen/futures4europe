@@ -20,7 +20,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
       >
         {tagListTitle}
       </Typography>
-      {tagList.map((method) => (
+      {tagList?.map((method) => (
         <Tag key={method.name} {...method} />
       ))}
     </section>
