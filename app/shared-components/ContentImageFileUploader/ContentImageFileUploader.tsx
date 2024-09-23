@@ -125,7 +125,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
           )}
         </div>
       )}
-      {isImageLoading && !imageURL && (
+      {isImageLoading && (!imageURL || imageURL === ' ') && (
         <div className="flex items-center justify-center w-full h-32">
           <Spinner size="xl" />
         </div>

@@ -1,8 +1,8 @@
 'use client';
 import classNames from 'classnames';
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './PostPageComponent.module.css';
-import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
+import Tag from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import ContentComponent from './components/ContentComponent/ContentComponent';
@@ -10,29 +10,20 @@ import TagListComponent from '../shared-page-components/TagListComponent/TagList
 import ExternalLinksComponent from '../shared-page-components/ExternalLinksComponent/ExternalLinksComponent';
 import AuthorComponent from './components/AuthorComponent/AuthorComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
-// import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
-import {
-  mockPost,
-  projectResults,
-  events,
-  posts,
-} from '../../mocks/pagesMocks';
-// import { mockedTags } from '../../custom-hooks/SearchContext/SearchContext.utils';
+import { mockPost } from '../../mocks/pagesMocks';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import {
   updateDataItem,
-  // bulkInsertDataItemReferences,
   replaceDataItemReferences,
+  revalidateDataItem,
 } from '@app/wixUtils/client-side';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import { formatDate, checkIfArrayNeedsUpdate } from './PostPageComponent.utils';
-// import InternalLinksEditor from '@app/shared-components/InternalLinksEditor/InternalLinksEditor';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
-import { title } from 'process';
 import { useRouter } from 'next/navigation';
-import { Button, Modal } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
@@ -49,8 +40,13 @@ function PostPageComponent({ pageTitle, post }: any) {
   // #region useAuth hook for grabbing user details and tags needed for editing
   // state for if the page is owned by the user
   // state for if the edit mode is on
-  const { isLoggedIn, userDetails, tags, handleTagCreated } = useAuth();
-  const { insertDataItemReference } = useWixModules(items);
+  const {
+    isLoggedIn,
+    userDetails,
+    tags,
+    handleTagCreated,
+    handleUserDataRefresh,
+  } = useAuth();
   // console.log('debug1->tags', tags);
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
   const [isEditModeOn, setIsEditModeOn] = useState(pageTitle === 'New_Post');
@@ -299,9 +295,14 @@ function PostPageComponent({ pageTitle, post }: any) {
     }
     // Check if the page was newly created
     if (defaultPostData.title === 'New Post') {
+      handleUserDataRefresh();
       setIsSaveInProgress(false);
       router.push(`/post/${postData.title.replace(/ /g, '_')}`);
     }
+    // Revalidate the cache for the page
+    await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
+
+    setIsSaveInProgress(false);
   };
 
   // #endregion

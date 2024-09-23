@@ -9,7 +9,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
@@ -76,4 +76,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);
