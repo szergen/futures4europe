@@ -40,6 +40,8 @@ export type HeaderComponentProps = {
   updatePostData: (data: any) => void;
   updatePostDataBasedOnKeyValue: (key: string, value: any) => void;
   tags: TagProps[];
+  handleTagCreated?: () => void;
+  setValidationState?: (data: any) => void;
 };
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
@@ -48,7 +50,25 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   updatePostData,
   updatePostDataBasedOnKeyValue,
   tags,
+  handleTagCreated,
+  setValidationState,
 }) => {
+  const validationFunctionForTitle = (tempTitle: string) => {
+    if (tempTitle.length < 5) {
+      return 'Title should be at least 5 characters long';
+    }
+    if (tempTitle.length > 30) {
+      return 'Title should be at most 30 characters long';
+    }
+    if (tempTitle === 'New Post') {
+      return 'Title cannot be "New Post"';
+    }
+    if (tempTitle === 'New Post ') {
+      return 'Title cannot be "Enter title"';
+    }
+    return '';
+  };
+
   return (
     <div className={classNames(style.postHeader)}>
       {post.pageType?.name?.toLowerCase() === 'project result' &&
@@ -77,14 +97,29 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
       <div className={style.detailsColumn}>
         {/* Post Info Name */}
-        <Typography tag="h1" className=" text-gray-800">
-          {post.title.replace(/_/g, ' ')}
-          {/* Post Popularity */}
-          <span
+        {!isEditModeOn ? (
+          <Typography tag="h1" className=" text-gray-800">
+            {post.title.replace(/_/g, ' ')}
+            {/* Post Popularity */}
+            {/* <span
             data-after="320"
             className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
-          ></span>
-        </Typography>
+          ></span> */}
+          </Typography>
+        ) : (
+          <InputText
+            label="Title"
+            placeholder="Enter title"
+            value={post?.title || 'Enter title'}
+            onChange={(e) => updatePostData({ ...post, title: e.target.value })}
+            validate={validationFunctionForTitle}
+            setValidationState={
+              setValidationState
+                ? (value) => setValidationState({ title: value })
+                : undefined
+            }
+          />
+        )}
         {/* Post Subtitle */}
         {!isEditModeOn ? (
           <Typography tag="h3" className="text-gray-800 italic">
@@ -134,12 +169,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               post?.countryTag && <Tag {...post.countryTag} className="mt-1" />
             ) : (
               <TagPicker
+                placeholder="Select Country"
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}
                 className="w-80"
                 selectedValue={post.countryTag?.name || undefined}
                 updatePostData={(value) =>
                   updatePostDataBasedOnKeyValue('countryTag', value)
                 }
+                tagType="country"
+                onTagCreated={handleTagCreated}
+                tagTypeLabel="Country"
               />
             )}
           </div>

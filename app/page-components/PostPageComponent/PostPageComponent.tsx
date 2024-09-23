@@ -1,6 +1,6 @@
 'use client';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import style from './PostPageComponent.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
@@ -10,7 +10,7 @@ import TagListComponent from '../shared-page-components/TagListComponent/TagList
 import ExternalLinksComponent from '../shared-page-components/ExternalLinksComponent/ExternalLinksComponent';
 import AuthorComponent from './components/AuthorComponent/AuthorComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
-import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
+// import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 import {
   mockPost,
   projectResults,
@@ -21,13 +21,19 @@ import {
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import {
   updateDataItem,
-  bulkInsertDataItemReferences,
+  // bulkInsertDataItemReferences,
   replaceDataItemReferences,
 } from '@app/wixUtils/client-side';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import { formatDate, checkIfArrayNeedsUpdate } from './PostPageComponent.utils';
+// import InternalLinksEditor from '@app/shared-components/InternalLinksEditor/InternalLinksEditor';
+import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
+import { title } from 'process';
+import { useRouter } from 'next/navigation';
+import { Button, Modal } from 'flowbite-react';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -38,15 +44,16 @@ export type PostPageComponentProps = {
 function PostPageComponent({ pageTitle, post }: any) {
   // Initial mock data
   post = { ...mockPost(pageTitle), ...post };
+  const router = useRouter();
 
   // #region useAuth hook for grabbing user details and tags needed for editing
   // state for if the page is owned by the user
   // state for if the edit mode is on
-  const { isLoggedIn, userDetails, tags, tagsFetched } = useAuth();
+  const { isLoggedIn, userDetails, tags, handleTagCreated } = useAuth();
   const { insertDataItemReference } = useWixModules(items);
   // console.log('debug1->tags', tags);
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
-  const [isEditModeOn, setIsEditModeOn] = useState(false);
+  const [isEditModeOn, setIsEditModeOn] = useState(pageTitle === 'New_Post');
 
   // check if the page is owned by the user
   useEffect(() => {
@@ -61,6 +68,7 @@ function PostPageComponent({ pageTitle, post }: any) {
   // Overwrite with Wix Data
   post = {
     ...post,
+    title: post?.data?.title,
     pageType: post?.data?.pageTypes[0],
     subtitle: post?.data?.subtitle,
     updatedDate: post?.data?._updatedDate,
@@ -105,6 +113,7 @@ function PostPageComponent({ pageTitle, post }: any) {
       start: post?.data?.eventStartDate?.['$date'],
       end: post?.data?.eventEndDate?.['$date'],
     },
+    internalLinks: post?.data?.internalLinks,
   };
   // console.log('debug1-post', post);
   // set default post data and data for editing
@@ -121,19 +130,51 @@ function PostPageComponent({ pageTitle, post }: any) {
       [key]: value,
     }));
   };
+  const updateValidationState = (newData: any) => {
+    setValidationState((prevData: any) => ({ ...prevData, ...newData }));
+  };
+
+  // #region validationState
+  const [validationState, setValidationState] = useState({
+    title: '',
+    subtitle: '',
+  });
+  useEffect(() => {
+    console.log('validationState', validationState);
+  }, [validationState]);
+  // Helper function for seeing if any validation errors exist
+  const checkValidationErrors = () => {
+    return Object.values(validationState).some((error) => error);
+  };
+  // #endregion
 
   // Method for updating data to server
+
+  const [isSaveInProgress, setIsSaveInProgress] = useState(false);
+
   const updateDataToServer = async () => {
     console.log('Updating Page from', postData.dataCollectionId, postData._id);
-
+    setIsSaveInProgress(true);
     // Update Subtitle
-    if (postData.subtitle !== defaultPostData.subtitle) {
+    if (
+      postData.subtitle !== defaultPostData.subtitle ||
+      postData.title !== defaultPostData.title ||
+      checkIfArrayNeedsUpdate(
+        postData.contentText,
+        defaultPostData.contentText
+      ) ||
+      checkIfArrayNeedsUpdate(
+        postData.contentImages,
+        defaultPostData.contentImages
+      )
+    ) {
       const updatedItem = await updateDataItem(
         postData.dataCollectionId,
         postData._id,
         {
           _id: postData._id,
           ...postData.data,
+          title: postData?.title,
           subtitle: postData?.subtitle,
           postContentRIch1: postData?.contentText[0],
           postContentRIch2: postData?.contentText[1],
@@ -241,21 +282,38 @@ function PostPageComponent({ pageTitle, post }: any) {
       );
       console.log('updatedOrganisations', updatedOrganisations);
     }
+    // Update Internal Links
+    if (
+      checkIfArrayNeedsUpdate(
+        postData.internalLinks,
+        defaultPostData.internalLinks
+      )
+    ) {
+      const updatedInternalLinks = await replaceDataItemReferences(
+        'PostPages',
+        postData.internalLinks?.map((link: any) => link._id),
+        'internalLinks',
+        postData._id
+      );
+      console.log('updatedInternalLinks', updatedInternalLinks);
+    }
+    // Check if the page was newly created
+    if (defaultPostData.title === 'New Post') {
+      setIsSaveInProgress(false);
+      router.push(`/post/${postData.title.replace(/ /g, '_')}`);
+    }
   };
 
   // #endregion
 
-  // useEffect(() => {
-  //   console.log(
-  //     'defaultPostData',
-  //     defaultPostData.contentText,
-  //     defaultPostData.contentImages
-  //   );
-  // }, [defaultPostData]);
+  // #region for when the page is newly created
+  if (pageTitle === 'New Post') {
+    setIsEditModeOn(true);
+  }
 
   return (
     <div className={classNames(style.postContainer)}>
-      {/* Test Update */}
+      {/* Edit buttons */}
       {isPageOwnedByUser && (
         <div>
           <button
@@ -264,7 +322,11 @@ function PostPageComponent({ pageTitle, post }: any) {
               setIsEditModeOn(!isEditModeOn);
               setDefaultPostData(postData);
             }}
-            className="px-2 py-2 rounded-md text-white bg-blue-600 w-40 mr-2"
+            disabled={isEditModeOn && checkValidationErrors()}
+            className={classNames(
+              'px-2 py-2 rounded-md text-white bg-blue-600 w-40 mr-2',
+              isEditModeOn && checkValidationErrors() && 'bg-gray-400'
+            )}
           >
             {!isEditModeOn ? 'Edit Page' : 'Save Changes'}
           </button>
@@ -297,15 +359,21 @@ function PostPageComponent({ pageTitle, post }: any) {
               updatePostData={(value) =>
                 updatePostDataBasedOnKeyValue('pageType', value)
               }
+              tagType="page type"
+              onTagCreated={handleTagCreated}
+              tagTypeLabel="Page Type"
             />
           )}
         </div>
         {/* Timestamp */}
-        <section className="post-meta">
-          <Typography tag="p" className="text-sm text-gray-400">
-            Edited {formatDate(postData.updatedDate['$date'].toLocaleString())}
-          </Typography>
-        </section>
+        {!isEditModeOn && (
+          <section className="post-meta">
+            <Typography tag="p" className="text-sm text-gray-400">
+              Edited{' '}
+              {formatDate(postData.updatedDate['$date'].toLocaleString())}
+            </Typography>
+          </section>
+        )}
       </div>
       {/* Post Header */}
       <HeaderComponent
@@ -314,6 +382,8 @@ function PostPageComponent({ pageTitle, post }: any) {
         updatePostData={updatePostData}
         updatePostDataBasedOnKeyValue={updatePostDataBasedOnKeyValue}
         tags={tags}
+        handleTagCreated={handleTagCreated}
+        setValidationState={updateValidationState}
       />
       {/* Author */}
       {postData.pageType?.name.toLowerCase() !== 'project result' &&
@@ -358,9 +428,7 @@ function PostPageComponent({ pageTitle, post }: any) {
           />
         </>
       )}
-
       {/* Post People */}
-
       <TagListComponent
         tagList={postData.people}
         tagListTitle={
@@ -374,8 +442,9 @@ function PostPageComponent({ pageTitle, post }: any) {
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('people', value)
         }
+        tagType="person"
+        handleTagCreated={handleTagCreated}
       />
-
       {/* Foresight Methods */}
       <TagListComponent
         tagList={postData.foreSightMethods}
@@ -388,8 +457,9 @@ function PostPageComponent({ pageTitle, post }: any) {
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('foreSightMethods', value)
         }
+        tagType="foresight method"
+        handleTagCreated={handleTagCreated}
       />
-
       {/* Domains */}
       <TagListComponent
         tagList={postData.domains}
@@ -400,8 +470,9 @@ function PostPageComponent({ pageTitle, post }: any) {
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('domains', value)
         }
+        tagType="domain"
+        handleTagCreated={handleTagCreated}
       />
-
       {/* Project */}
       <TagListComponent
         tagList={postData.project}
@@ -412,9 +483,10 @@ function PostPageComponent({ pageTitle, post }: any) {
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('project', value)
         }
+        tagType="project"
+        handleTagCreated={handleTagCreated}
       />
       {/* Organisation */}
-
       <TagListComponent
         tagList={postData.organisation}
         tagListTitle={
@@ -430,12 +502,17 @@ function PostPageComponent({ pageTitle, post }: any) {
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('organisation', value)
         }
+        tagType="organisation"
+        handleTagCreated={handleTagCreated}
       />
       {/* Internal Links */}
-      <MiniPagesListComponent
-        posts={posts}
-        projectResults={projectResults.slice(0, 1)}
-        events={events.slice(0, 1)}
+
+      <MiniPagesListComponentPost
+        isEditModeOn={isEditModeOn}
+        internalLinks={postData.internalLinks}
+        handleUpdatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('internalLinks', value)
+        }
       />
       {/* Files */}
       {postData?.pageType?.name?.toLowerCase() !== 'project result' && (
@@ -443,6 +520,16 @@ function PostPageComponent({ pageTitle, post }: any) {
       )}
       {/* External Links */}
       <ExternalLinksComponent links={postData.links} />
+      {/* Saving modal */}
+      <Modal show={isSaveInProgress} size="md" popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            Saving Page...
+            <LoadingSpinner />
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

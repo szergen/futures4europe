@@ -9,8 +9,10 @@ export type TagListComponentProps = {
   tagListTitle: string;
   isEditModeOn?: boolean;
   tags?: Array<TagProps>;
-  selectedValues?: string;
+  selectedValues?: Array<string>;
   updatePostData?: (data: any) => void;
+  tagType?: string;
+  handleTagCreated?: () => void;
 };
 
 const TagListComponent: React.FC<TagListComponentProps> = ({
@@ -20,6 +22,8 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
   tags,
   selectedValues,
   updatePostData,
+  tagType,
+  handleTagCreated,
 }) => {
   return (
     <section className={classNames(style.tagListContainer)}>
@@ -38,6 +42,8 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
           isMulti
           selectedValues={selectedValues}
           updatePostData={updatePostData}
+          tagType={tagType}
+          onTagCreated={handleTagCreated}
         />
       )}
     </section>
