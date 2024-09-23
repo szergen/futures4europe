@@ -33,11 +33,6 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
       >
         {tagListTitle}
       </Typography>
-<<<<<<< HEAD
-      {tagList?.map((method) => (
-        <Tag key={method.name} {...method} />
-      ))}
-=======
       {!isEditModeOn ? (
         tagList.map((tag) => <Tag key={tag.name} {...tag} />)
       ) : (
@@ -51,7 +46,6 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
           onTagCreated={handleTagCreated}
         />
       )}
->>>>>>> dc61749c4e507f1a0444c8b7423c0b65f1b85fc9
     </section>
   );
 };
