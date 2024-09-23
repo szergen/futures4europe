@@ -221,6 +221,38 @@ const generateFileUploadUrl = async (
   }
 };
 
+const revalidateDataItem = async (postSlug: string) => {
+  try {
+    const response = await fetch('/api/revalidate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        postSlug: postSlug,
+        secret: process.env.NEXT_PUBLIC_REVALIDATION_TOKEN,
+      }),
+    });
+
+    const result = await response.json();
+    console.log('revalidateDataItem result:', result);
+
+    if (!response.ok) {
+      throw new Error('Failed to revalidate data item');
+    }
+
+    if (!response.ok) {
+      console.error('Revalidation failed:', result);
+    } else {
+      console.log('Page successfully revalidated.');
+    }
+    // const updatedItems = await response.json();
+    // return updatedItems;
+  } catch (error) {
+    console.error('Error revalidating data item', error);
+  }
+};
+
 export {
   updateDataItem,
   getCollectionItemByTitle,
@@ -231,4 +263,5 @@ export {
   bulkInsertDataItemReferences,
   replaceDataItemReferences,
   generateFileUploadUrl,
+  revalidateDataItem,
 };
