@@ -1,5 +1,6 @@
 import { Label, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { title } from 'process';
+import { useEffect, useState } from 'react';
 
 export type InputTextProps = {
   label?: string;
@@ -8,6 +9,8 @@ export type InputTextProps = {
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  validate?: (value: string) => string;
+  setValidationState?: (value: any) => void;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -17,14 +20,32 @@ export const InputText: React.FC<InputTextProps> = ({
   className,
   value,
   onChange,
+  validate,
+  setValidationState,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
+  const [error, setError] = useState(''); // State for error message
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setInputValue(e.target.value);
+    const newValue = e.target.value;
+    console.log(newValue);
+    setInputValue(newValue);
+
+    if (validate) {
+      const errorMessage = validate(newValue);
+      setError(errorMessage);
+    }
     onChange && onChange(e);
   };
+
+  useEffect(() => {
+    if (validate && value) {
+      const errorMessage = validate(value);
+      setValidationState && setValidationState(errorMessage);
+      setError(errorMessage);
+    }
+  }, [value]);
 
   return (
     <div className="max-w-md">
@@ -34,8 +55,8 @@ export const InputText: React.FC<InputTextProps> = ({
         </div>
       )}
       <TextInput
-        id="email3"
-        type="email"
+        id={label?.toLowerCase()}
+        type="text"
         placeholder={placeholder ? placeholder : undefined}
         required
         helperText={helperText ? <>{helperText}</> : undefined}
@@ -43,6 +64,7 @@ export const InputText: React.FC<InputTextProps> = ({
         value={inputValue}
         onChange={handleChange}
       />
+      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}{' '}
     </div>
   );
 };

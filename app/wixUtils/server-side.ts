@@ -33,6 +33,7 @@ const referencedItemOptions = [
   { fieldName: 'organisationPeople' },
   { fieldName: 'organisationHasMember' },
   { fieldName: 'organisationMemberOf' },
+  { fieldName: 'internalLinks' },
 ];
 
 const getCollection = async (collectionName: string) => {

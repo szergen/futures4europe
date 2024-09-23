@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import { uploadFileToWix } from '@app/wixUtils/client.utils';
-import { Alert, FileInput, Label } from 'flowbite-react';
+import { Alert, FileInput, Label, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 import classNames from 'classnames';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import style from './ContentImageFileUploader.module.css';
 // import WixMediaImage from '../WixMediaImage/WixMediaImage';
 
 export type FileUploaderProps = {
@@ -19,7 +21,12 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isValidState, setIsValidState] = useState(true);
   const [imageURL, setImageURL] = useState(currentImage || '');
-  // TODO: Add path differentatior for uploading to Wix based on user's memberID
+  const [isImageLoading, setIsImageLoading] = useState(false);
+
+  const { userDetails } = useAuth();
+  const composeFilePath = `/PostPages_Images/${
+    userDetails?.contactId || 'visitors'
+  }/`;
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -34,11 +41,9 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
       setIsValidState(true);
       setUploadedFile(file as File);
       console.log('File selected:', file);
-
-      const uploadedFileResponse = await uploadFileToWix(
-        file,
-        '/PostPages_Images/'
-      );
+      setIsImageLoading(true);
+      const uploadedFileResponse = await uploadFileToWix(file, composeFilePath);
+      setIsImageLoading(false);
       console.log('uploadedFileResponse', uploadedFileResponse);
       setImageURL(uploadedFileResponse?.url);
       updatePostData && updatePostData(uploadedFileResponse?.url);
@@ -93,13 +98,37 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         </Alert>
       )}
       {imageURL && imageURL !== ' ' && (
-        <Image
-          src={getImageUrlForMedia(imageURL)?.url || ''}
-          width={600}
-          height={400}
-          className={classNames('rounded-md block mx-auto')}
-          alt="Post Image"
-        />
+        <div className="relative">
+          <Image
+            src={
+              getImageUrlForMedia(imageURL)?.url ||
+              getImageUrlForMedia(imageURL) ||
+              ''
+            }
+            width={600}
+            height={400}
+            className={classNames(
+              'rounded-md block mx-auto',
+              isImageLoading && 'opacity-30'
+            )}
+            alt="Post Image"
+          />
+          {isImageLoading && (
+            <div
+              className={classNames(
+                'absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md',
+                style.existingImageSpinner
+              )}
+            >
+              <Spinner size="xl" />
+            </div>
+          )}
+        </div>
+      )}
+      {isImageLoading && (!imageURL || imageURL === ' ') && (
+        <div className="flex items-center justify-center w-full h-32">
+          <Spinner size="xl" />
+        </div>
       )}
     </div>
     // <div>

@@ -4,7 +4,11 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-const useFetchUserData = (isLoggedIn: boolean, userDetails: any) => {
+const useFetchUserData = (
+  isLoggedIn: boolean,
+  userDetails: any,
+  refresh: boolean
+) => {
   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
   const [ownedPostPagesFetched, setOwnedPostPagesFetched] = useState(false);
@@ -48,7 +52,7 @@ const useFetchUserData = (isLoggedIn: boolean, userDetails: any) => {
       [userDetails.contactId, userDetails.accountId],
       setOwnedInfoPagesFetched
     );
-  }, [isLoggedIn, userDetails]);
+  }, [isLoggedIn, userDetails, refresh]);
 
   return {
     ownedPostPages,

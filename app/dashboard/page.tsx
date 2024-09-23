@@ -15,12 +15,14 @@ import Link from 'next/link';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
 // import TagInput from '@app/shared-components/SearchComponentV1/components/TagInput/TagInput';
 import InputText from '@app/shared-components/InputText/InputText';
+import classNames from 'classnames';
 
 export default function Dashboard() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
   //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  const [showInputForPost, setShowInputForPost] = useState(false);
+  const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [postTitle, setPostTitle] = useState('');
+  const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
 
   const {
     login,
@@ -32,11 +34,12 @@ export default function Dashboard() {
     ownedPostPages,
     ownedPostPagesFetched,
     ownedInfoPagesFetched,
+    handleUserDataRefresh,
   } = useAuth();
   console.log('Dashboard isLoggedIn', isLoggedIn);
 
   const router = useRouter();
-  const { insertDataItem } = useWixModules(items);
+  const { insertDataItem, removeDataItem } = useWixModules(items);
 
   const handleGetItemsForCurrentUser = async () => {
     const items = await getItemsForCurrentUser(
@@ -46,19 +49,40 @@ export default function Dashboard() {
     console.log('getItemsForCurrentUser->items', items);
   };
 
-  const handleCreatePost = async (title: any) => {
+  const handleCreatePost = async () => {
+    setShowLoadingCreatePost(true);
     const post = await insertDataItem({
       dataCollectionId: 'PostPages',
       dataItem: {
         data: {
-          title: title,
-          subtitle: 'Post Body',
+          title: 'New Post',
+          subtitle: 'Article Subtitle',
         },
       },
-    }).then(() => {
-      router.push(`/post/${title.replace(/ /g, '_')}`);
-    });
+    })
+      .then(() => {
+        router.push(`/post/New_Post`);
+      })
+      .finally(() => {
+        handleUserDataRefresh();
+      });
     console.log('post', post);
+  };
+
+  const handleDeletePostPage = async (infoPageId: string) => {
+    setIsLoadingDeletePostPage(infoPageId);
+    try {
+      // Replace with your actual delete logic
+      await removeDataItem(infoPageId, {
+        dataCollectionId: 'PostPages',
+      });
+      // TODO: Refresh Owned Pages
+    } catch (error) {
+      console.error('Failed to delete info page:', error);
+    } finally {
+      setIsLoadingDeletePostPage('');
+      handleUserDataRefresh();
+    }
   };
 
   const handleGetContactItem = async () => {
@@ -92,9 +116,10 @@ export default function Dashboard() {
     router.push('/login');
   };
 
-  const handleOnChange = (event: any) => {
-    setPostTitle(event.target.value);
-  };
+  // const handleOnChange = (event: any) => {
+  //   setPostTitle(event.target.value);
+  // };
+  console.log('ownedPostPages', ownedPostPages);
 
   return (
     <div>
@@ -111,26 +136,35 @@ export default function Dashboard() {
       )}
       <h3></h3>
       <div className="mt-20 flex items-center justify-around">
-        <button
+        {/* <button
           onClick={handleGetItemsForCurrentUser}
           className="bg-blue-600 text-neutral-50 p-4 rounded-md"
         >
           Get Items for current User
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={handleGetContactItem}
           className="bg-blue-600 text-neutral-50 p-4 rounded-md"
         >
           Get Member
-        </button>
-        <div>
+        </button> */}
+        <div className="relative">
           <button
-            onClick={() => setShowInputForPost(!showInputForPost)}
-            className="bg-green-600 text-neutral-50 p-4 rounded-md"
+            onClick={handleCreatePost}
+            className={classNames(
+              'bg-green-600 text-neutral-50 p-4 rounded-md',
+              showLoadingCreatePost && 'opacity-50 cursor-not-allowed'
+            )}
           >
             Create Post
           </button>
-          {showInputForPost && (
+          {showLoadingCreatePost && (
+            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+              <LoadingSpinner />
+            </div>
+          )}
+          {/* <LoadingSpinner /> */}
+          {/* {showInputForPost && (
             <div className="absolute mt-2 flex">
               <InputText
                 placeholder="Enter Post Title"
@@ -146,7 +180,7 @@ export default function Dashboard() {
                 Create
               </button>
             </div>
-          )}
+          )} */}
         </div>
         <button
           onClick={handleLogOut}
@@ -161,7 +195,7 @@ export default function Dashboard() {
           {ownedPostPages.length > 0 ? (
             ownedPostPages.map((postPage) => (
               <div key={postPage?.data?.title}>
-                <div className="my-4">
+                <div className="my-4 flex">
                   Post Page: <strong> {postPage?.data?.title}</strong>
                   <Link
                     href={`/post/${postPage?.data?.title?.replace(/ /g, '_')}`}
@@ -169,7 +203,22 @@ export default function Dashboard() {
                   >
                     View Post Page
                   </Link>
+                  <div className="relative">
+                    <button
+                      onClick={() => handleDeletePostPage(postPage.data._id)}
+                      className="mx-4 px-4 py-1 bg-red-500 text-white rounded-md"
+                    >
+                      Delete Post Page
+                    </button>
+                    {isLoadingDeletePostPage &&
+                      isLoadingDeletePostPage === postPage?.data?._id && (
+                        <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                          <LoadingSpinner />
+                        </div>
+                      )}
+                  </div>
                 </div>
+
                 {/* <pre>{JSON.stringify(postPage.data, null, 2)}</pre> */}
               </div>
             ))
@@ -190,6 +239,7 @@ export default function Dashboard() {
                     View Info Page
                   </Link>
                 </div>
+
                 {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
               </div>
             ))

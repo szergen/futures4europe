@@ -36,11 +36,11 @@ const PopoverComponent: React.FC<PopoverProps> = ({
       <div className="px-3 py-2 flex">
         {popoverImage && (
           <Image
-            src={getImageUrlForMedia(
-              popoverImage || 'https://placehold.co/147x147?text=Profile Image',
-              147,
-              147
-            )}
+            src={
+              getImageUrlForMedia(popoverImage)?.url ||
+              getImageUrlForMedia(popoverImage) ||
+              'https://placehold.co/147x147?text=Profile Image'
+            }
             alt={popoverImageAlt || 'Image picture'}
             width={100}
             height={100}
