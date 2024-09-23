@@ -297,10 +297,13 @@ function PostPageComponent({ pageTitle, post }: any) {
     if (defaultPostData.title === 'New Post') {
       handleUserDataRefresh();
       setIsSaveInProgress(false);
+      await revalidateDataItem(`/post`);
+      // await revalidateDataItem(`/post/New_Post`);
       router.push(`/post/${postData.title.replace(/ /g, '_')}`);
     }
     // Revalidate the cache for the page
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
+    await revalidateDataItem(`/post/New_Post`);
 
     setIsSaveInProgress(false);
   };
