@@ -3,44 +3,44 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-const useFetchTags = (refresh: boolean) => {
-  const [tags, setTags] = useState<any[]>([]);
-  const [tagsFetched, setTagsFetched] = useState(false);
+const useFetchInfoPages = (refresh: boolean) => {
+  const [infoPages, setInfoPages] = useState<any[]>([]);
+  const [infoPagesFetched, setInfoPagesFetched] = useState(false);
 
   const { queryDataItems } = useWixModules(items);
 
   useEffect(() => {
-    const fetchTags = async () => {
+    const fetchInfoPages = async () => {
       try {
-        let allTags = [] as any[];
+        let allInfoPages = [] as any[];
         let skip = 0;
-        const limit = 1000;
+        const limit = 50;
         let totalCount = 0;
         do {
           const result = await queryDataItems({
-            dataCollectionId: 'Tags',
+            dataCollectionId: 'InfoPages',
             referencedItemOptions: referencedItemOptions,
             returnTotalCount: true,
           })
             .skip(skip)
             .limit(limit)
             .find();
-          allTags = [...allTags, ...result?._items];
+          allInfoPages = [...allInfoPages, ...result?._items];
           totalCount = result?._totalCount;
-          skip = limit + skip;
+          skip += limit;
         } while (skip < totalCount);
 
-        setTags(allTags.map((tag: any) => tag.data));
-        setTagsFetched(true);
+        setInfoPages(allInfoPages);
+        setInfoPagesFetched(true);
       } catch (error) {
-        console.error('Error fetching tags:', error);
+        console.error('Error fetching info pages:', error);
       }
     };
 
-    fetchTags();
+    fetchInfoPages();
   }, [refresh]);
 
-  return { tags, tagsFetched };
+  return { infoPages, infoPagesFetched };
 };
 
-export default useFetchTags;
+export default useFetchInfoPages;

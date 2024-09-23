@@ -26,8 +26,8 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
 }) => {
   const [contentText, setContentText] = useState(initialContentText);
   const [contentImages, setContentImages] = useState(initialContentImages);
-  console.log('contentText', contentText);
-  console.log('contentImages', contentImages);
+  // console.log('contentText', contentText);
+  // console.log('contentImages', contentImages);
 
   const handleAddContent = () => {
     setContentText((prevContentText) => {
@@ -186,7 +186,11 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           <Image
                             src={
                               getImageUrlForMedia(initialContentImages?.[index])
-                                ?.url
+                                ?.url ||
+                              getImageUrlForMedia(
+                                initialContentImages?.[index]
+                              ) ||
+                              ''
                             }
                             width={600}
                             height={400}

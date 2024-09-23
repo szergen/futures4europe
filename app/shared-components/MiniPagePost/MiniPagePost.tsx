@@ -4,6 +4,7 @@ import style from './MiniPagePost.module.css';
 import Image from 'next/image';
 import Typography from '../Typography/Typography';
 import Tag, { TagProps } from '../Tag/Tag';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type MiniPagePostProps = {
   title: string;
@@ -30,7 +31,11 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   return (
     <div className={classNames(style.postItem)}>
       <Image
-        src={image || 'https://placehold.co/600x400?text=placeholder'}
+        src={
+          (image && getImageUrlForMedia(image)?.url) ||
+          (image && getImageUrlForMedia(image)) ||
+          'https://placehold.co/600x400?text=placeholder'
+        }
         width={180}
         height={180}
         alt="Post Image"
@@ -47,7 +52,11 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         </Typography>
         {/* Post Text */}
         <Typography tag="p" className="text-gray-500 py-2 text-sm">
-          {text}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: text,
+            }}
+          ></div>
         </Typography>
         {/* Post Tags */}
         <div className={classNames(style.postTags)}>

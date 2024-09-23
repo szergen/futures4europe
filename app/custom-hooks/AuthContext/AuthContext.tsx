@@ -12,6 +12,8 @@ import { members } from '@wix/members';
 import useFetchUserData from '@app/custom-hooks/useFetchUserData';
 import useFetchTags from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
+import useFetchPostPages from '../useFetchPostPages';
+import useFetchInfoPages from '../useFetchInfoPages';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -36,8 +38,16 @@ interface AuthContextType {
   ownedInfoPagesFetched: boolean;
   ownedPostPages: any[];
   ownedInfoPages: any[];
+  handleUserDataRefresh: () => void;
   tags: Array<TagProps>;
   tagsFetched: boolean;
+  handleTagCreated: () => void;
+  postPages: any[];
+  postPagesFetched: boolean;
+  handlePostPageCreated: () => void;
+  infoPages: any[];
+  infoPagesFetched: boolean;
+  handleInfoPageCreated: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -68,8 +78,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const updateUserDetails = (details: any) => {
     setUserDetails(details);
   };
-
-  const { tags, tagsFetched } = useFetchTags();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -122,12 +130,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
   }, []);
 
+  // #region Fetch user data
+  const [refreshUserData, setRefreshUserData] = useState(false);
   const {
     ownedPostPages,
     ownedInfoPages,
     ownedPostPagesFetched,
     ownedInfoPagesFetched,
-  } = useFetchUserData(isLoggedIn, userDetails);
+  } = useFetchUserData(isLoggedIn, userDetails, refreshUserData);
+  const handleUserDataRefresh = () => {
+    setRefreshUserData((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
 
   const login = () => setIsLoggedIn(true);
   const logout = () => {
@@ -136,6 +149,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserDetails(initialState);
     setIsLoggedIn(false);
   };
+  // #endregion
+
+  // #region Fetch tags and refresh based on tag creation
+  const [refreshTags, setRefreshTags] = useState(false);
+  const { tags, tagsFetched } = useFetchTags(refreshTags);
+
+  const handleTagCreated = () => {
+    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  // #endregion
+
+  // #region Fetch post pages
+  const [refreshPostPages, setRefreshPostPages] = useState(false);
+  const { postPages, postPagesFetched } = useFetchPostPages(refreshPostPages);
+
+  const handlePostPageCreated = () => {
+    setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  // #endregion
+
+  // #region Fetch info pages
+  const [refreshInfoPages, setRefreshInfoPages] = useState(false);
+  const { infoPages, infoPagesFetched } = useFetchInfoPages(refreshInfoPages);
+
+  const handleInfoPageCreated = () => {
+    setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+
+  useEffect(() => {
+    console.log('debug1->infoPages', infoPages);
+  }, [infoPages]);
+  // #endregion
 
   return (
     <AuthContext.Provider
@@ -150,8 +195,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         ownedInfoPages,
         ownedPostPagesFetched,
         ownedInfoPagesFetched,
+        handleUserDataRefresh,
         tags,
         tagsFetched,
+        handleTagCreated,
+        postPages,
+        postPagesFetched,
+        handlePostPageCreated,
+        infoPages,
+        infoPagesFetched,
+        handleInfoPageCreated,
       }}
     >
       {children}

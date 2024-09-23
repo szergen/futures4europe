@@ -17,6 +17,8 @@ export type TagProps = {
   popularity?: number;
   tagTrend?: number;
   enableLabel?: boolean;
+  // New changes
+  tagType?: string;
 };
 
 export const Tag: React.FC<TagProps> = ({
@@ -30,6 +32,7 @@ export const Tag: React.FC<TagProps> = ({
   picture,
   pictureAlt,
   enableLabel,
+  tagType,
 }) => {
   // const [isShown, setIsShown] = React.useState(true);
 

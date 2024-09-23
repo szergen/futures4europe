@@ -38,4 +38,16 @@ export const formatDate = (dateStr: string) => {
   return `${day}${daySuffix} of ${month} ${year}`;
 };
 
-export default { formatDate };
+export const checkIfArrayNeedsUpdate = (newArray: any[], oldArray: any[]) => {
+  if (newArray.length !== oldArray.length) {
+    return true;
+  }
+  for (let i = 0; i < newArray.length; i++) {
+    if (newArray[i]?._id !== oldArray[i]?._id) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export default { formatDate, checkIfArrayNeedsUpdate };
