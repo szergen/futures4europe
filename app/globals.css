@@ -3,6 +3,38 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+  :root {
+    --w-z-index-notification: 1000;
+    --w-z-index-modal: 900;
+    --w-z-index-dropdown: 800;
+    --w-z-index-popout: 700;
+    --w-z-index-header: 600;
+    --w-z-index-sticky: 300;
+
+    --w-line-height-condensed: 1.15;
+    --w-line-height-heading: 1.25;
+    --w-line-height-body: 1.5;
+
+    --w-font-weight-emphasis: 550;
+    --w-font-weight-heading: 600;
+    --w-font-weight-body: 450;
+
+    --w-font-size-caption: calc(12 / var(--w-base-rem) * 1rem);
+    --w-font-size-body: calc(14 / var(--w-base-rem) * 1rem);
+    --w-font-size-sub-section-heading: calc(16 / var(--w-base-rem) * 1rem);
+    --w-font-size-section-heading: calc(18 / var(--w-base-rem) * 1rem);
+    --w-font-size-display-heading: calc(24 / var(--w-base-rem) * 1rem);
+
+    --w-space-s: calc(8 / var(--w-base-rem) * 1rem);
+    --w-space-m: calc(16 / var(--w-base-rem) * 1rem);
+    --w-space-l: calc(24 / var(--w-base-rem) * 1rem);
+    --w-space-xl: calc(32 / var(--w-base-rem) * 1rem);
+    --w-space-xxl: calc(48 / var(--w-base-rem) * 1rem);
+  }
+}
+
 @layer components {
   .btn-main {
     @apply text-white;
@@ -55,6 +87,7 @@
     @apply text-base;
     @apply sm:text-xl;
   }
+  
 }
 
 html,
