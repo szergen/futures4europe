@@ -111,7 +111,7 @@ function PostPageComponent({ pageTitle, post }: any) {
     },
     internalLinks: post?.data?.internalLinks,
   };
-  // console.log('debug1-post', post);
+  console.log('debug1-post', post);
   // set default post data and data for editing
   const [defaultPostData, setDefaultPostData] = useState(post);
   const [postData, setPostData] = useState(post);
@@ -162,7 +162,10 @@ function PostPageComponent({ pageTitle, post }: any) {
       checkIfArrayNeedsUpdate(
         postData.contentImages,
         defaultPostData.contentImages
-      )
+      ) ||
+      postData.eventDate?.start !== defaultPostData.eventDate?.start ||
+      postData.eventDate?.end !== defaultPostData.eventDate?.end ||
+      postData.eventRegistration !== defaultPostData.eventRegistration
     ) {
       const updatedItem = await updateDataItem(
         postData.dataCollectionId,
@@ -192,7 +195,9 @@ function PostPageComponent({ pageTitle, post }: any) {
           postImage8: postData?.contentImages[7],
           postImage9: postData?.contentImages[8],
           postImage10: postData?.contentImages[9],
-
+          eventStartDate: { $date: postData?.eventDate?.start },
+          eventEndDate: { $date: postData?.eventDate?.end },
+          eventRegistration: postData?.eventRegistration,
           // pageTypes: postData?.pageType,
         }
       );
@@ -293,6 +298,22 @@ function PostPageComponent({ pageTitle, post }: any) {
       );
       console.log('updatedInternalLinks', updatedInternalLinks);
     }
+    // Update Speakers
+    if (
+      checkIfArrayNeedsUpdate(
+        postData.eventSpeakers,
+        defaultPostData.eventSpeakers
+      )
+    ) {
+      const updatedSpeakers = await replaceDataItemReferences(
+        'PostPages',
+        postData.eventSpeakers?.map((speaker: any) => speaker._id),
+        'speakers',
+        postData._id
+      );
+      console.log('updatedSpeakers', updatedSpeakers);
+    }
+
     // Check if the page was newly created
     if (defaultPostData.title === 'New Post') {
       handleUserDataRefresh();
@@ -388,6 +409,7 @@ function PostPageComponent({ pageTitle, post }: any) {
         tags={tags}
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
+        defaultPostTitle={defaultPostData.title}
       />
       {/* Author */}
       {postData.pageType?.name.toLowerCase() !== 'project result' &&
@@ -429,6 +451,16 @@ function PostPageComponent({ pageTitle, post }: any) {
           <TagListComponent
             tagList={postData.eventSpeakers}
             tagListTitle="Speakers"
+            isEditModeOn={isEditModeOn}
+            tags={tags.filter((tag) => tag?.tagType === 'person')}
+            selectedValues={postData.eventSpeakers?.map(
+              (speaker: any) => speaker?.name
+            )}
+            updatePostData={(value) =>
+              updatePostDataBasedOnKeyValue('eventSpeakers', value)
+            }
+            tagType="person"
+            handleTagCreated={handleTagCreated}
           />
         </>
       )}

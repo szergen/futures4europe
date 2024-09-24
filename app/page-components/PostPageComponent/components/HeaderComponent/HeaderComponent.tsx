@@ -9,6 +9,8 @@ import Link from 'next/link';
 import Button from '@app/shared-components/Button/Button';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 
 export type HeaderComponentProps = {
   post: {
@@ -42,6 +44,7 @@ export type HeaderComponentProps = {
   tags: TagProps[];
   handleTagCreated?: () => void;
   setValidationState?: (data: any) => void;
+  defaultPostTitle: string;
 };
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
@@ -52,7 +55,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   tags,
   handleTagCreated,
   setValidationState,
+  defaultPostTitle,
 }) => {
+  const { existingPostPagesTitles } = useAuth();
+
   const validationFunctionForTitle = (tempTitle: string) => {
     if (tempTitle.length < 5) {
       return 'Title should be at least 5 characters long';
@@ -64,7 +70,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       return 'Title cannot be "New Post"';
     }
     if (tempTitle === 'New Post ') {
-      return 'Title cannot be "Enter title"';
+      return 'Title cannot be "New Post "';
+    }
+    const isTempTitleExisting = existingPostPagesTitles?.some(
+      (postPageTitle) =>
+        postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
+    );
+    if (isTempTitleExisting) {
+      return 'Title already exists';
     }
     return '';
   };
@@ -137,10 +150,46 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
         {/* Event Date */}
         {post.pageType?.name?.toLowerCase() === 'event' && post?.eventDate && (
-          <Typography tag="p" className="text-gray-500 text-sm font-bold mt-3">
-            {formatDate(post?.eventDate?.start)} -{' '}
-            {formatDate(post?.eventDate?.end)}
-          </Typography>
+          <div>
+            {!isEditModeOn ? (
+              <Typography
+                tag="p"
+                className="text-gray-500 text-sm font-bold mt-3"
+              >
+                {formatDate(post?.eventDate?.start)} -{' '}
+                {formatDate(post?.eventDate?.end)}
+              </Typography>
+            ) : (
+              <div className="flex items-center mt-4">
+                <span className="mr-4">Start Date</span>
+                <DatePickerRangeComponentDouble
+                  dateStart={
+                    post?.eventDate?.start
+                      ? new Date(post.eventDate.start)
+                      : undefined
+                  }
+                  dateEnd={
+                    post?.eventDate?.end
+                      ? new Date(post.eventDate.end)
+                      : undefined
+                  }
+                  handleUpdateStartDate={(date) =>
+                    updatePostDataBasedOnKeyValue('eventDate', {
+                      ...post.eventDate,
+                      start: date.toISOString(),
+                    })
+                  }
+                  handleUpdateEndDate={(date) =>
+                    updatePostDataBasedOnKeyValue('eventDate', {
+                      ...post.eventDate,
+                      end: date.toISOString(),
+                    })
+                  }
+                />
+                <span className="ml-4">End Date</span>
+              </div>
+            )}
+          </div>
         )}
         {/* Registration Link */}
         {post.pageType?.name?.toLowerCase() === 'event' &&
@@ -152,13 +201,26 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 className="text-primary-500 text-xs mt-2 text-gray-500"
               >
                 Register Link:
-                <Link
-                  href={post?.eventRegistration}
-                  target="_blank"
-                  className="ml-2"
-                >
-                  {post?.eventRegistration}
-                </Link>
+                {!isEditModeOn ? (
+                  <Link
+                    href={post?.eventRegistration}
+                    target="_blank"
+                    className="ml-2"
+                  >
+                    {post?.eventRegistration}
+                  </Link>
+                ) : (
+                  <InputText
+                    placeholder="Enter registration link"
+                    value={post?.eventRegistration || 'Enter registration link'}
+                    onChange={(e) =>
+                      updatePostData({
+                        ...post,
+                        eventRegistration: e.target.value,
+                      })
+                    }
+                  />
+                )}
               </Typography>
             </>
           )}

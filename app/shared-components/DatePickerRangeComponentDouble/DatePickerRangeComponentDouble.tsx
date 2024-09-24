@@ -11,13 +11,21 @@ export type DatePickerRangeComponentDoubleProps = {
   dateEnd?: Date;
   // onChange?: (date: string) => void;
   className?: string;
+  handleUpdateStartDate?: (date: Date) => void;
+  handleUpdateEndDate?: (date: Date) => void;
 };
 
 export const DatePickerRangeComponentDouble: React.FC<
   DatePickerRangeComponentDoubleProps
-> = ({ dateStart, dateEnd, className }) => {
-  const [startDate, setStartDate] = useState(new Date('2023-2-1'));
-  const [endDate, setEndDate] = useState(new Date('2023-2-1'));
+> = ({
+  dateStart,
+  dateEnd,
+  className,
+  handleUpdateStartDate,
+  handleUpdateEndDate,
+}) => {
+  const [startDate, setStartDate] = useState(dateStart || new Date());
+  const [endDate, setEndDate] = useState(dateEnd || new Date());
 
   useEffect(() => {
     if (startDate >= endDate) {
@@ -28,13 +36,22 @@ export const DatePickerRangeComponentDouble: React.FC<
   // const ref = useRef();
 
   return (
-    <div className={classNames('flex w-1/2', className)}>
+    <div className={classNames('flex w-1/2 items-center', className)}>
       <DatePickerComponent
         date={startDate}
-        onChange={setStartDate}
-        className="mx-6"
+        onChange={(value) => {
+          setStartDate(value);
+          handleUpdateStartDate && handleUpdateStartDate(value);
+        }}
       />
-      <DatePickerComponent date={endDate} onChange={setEndDate} />
+      <span className="mx-4">-</span>
+      <DatePickerComponent
+        date={endDate}
+        onChange={(value) => {
+          setEndDate(value);
+          handleUpdateEndDate && handleUpdateEndDate(value);
+        }}
+      />
     </div>
   );
 };
