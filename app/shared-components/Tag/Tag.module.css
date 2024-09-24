@@ -57,6 +57,10 @@
     position: relative;
   }
 
+  .tagBodyText img {
+    width: 30px;
+  }
+
   .name {
     display: inline-block;
     text-wrap: nowrap;

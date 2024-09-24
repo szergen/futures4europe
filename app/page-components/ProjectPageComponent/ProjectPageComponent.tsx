@@ -19,21 +19,21 @@ function ProjectPageComponent({ pageTitle, project }: any) {
 
   project = {
     ...project,
-    pageType: project?.data?.pageTypes[0],
+    pageType: project?.data?.pageTypes?.[0],
     updatedDate: project?.data?._updatedDate,
-    projectTag: project?.data?.Project[0],
+    projectTag: project?.data?.Project?.[0],
     description: project?.data?.description,
-    countryTag: project?.data?.countryTag[0],
-    projectFunded: project?.data?.projectFunded[0],
+    countryTag: project?.data?.countryTag?.[0],
+    projectFunded: project?.data?.projectFunded?.[0],
     projectStartDate: project?.data?.projectStartDate,
     projectEndDate: project?.data?.projectEndDate,
     methods: project?.data?.methods,
     domains: project?.data?.domains,
     coordinators: project?.data?.projectCoordinator?.map(
-      (item: any) => item.person[0]
+      (item: any) => item.person?.[0]
     ),
     participants: project?.data?.projectParticipantTeam?.map(
-      (item: any) => item.person[0]
+      (item: any) => item.person?.[0]
     ),
     organisations: project?.data?.projectOrganisationRoles?.map((item: any) => {
       return {
@@ -43,7 +43,7 @@ function ProjectPageComponent({ pageTitle, project }: any) {
         arole: item.role,
       };
     }),
-    registrationDate: project?.data?._createdDate['$date'],
+    registrationDate: project?.data?._createdDate?.['$date'],
   };
 
   return (
