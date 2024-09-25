@@ -6,6 +6,8 @@
 
 @layer base {
   :root {
+    --w-base-rem: 16;
+
     --w-z-index-notification: 1000;
     --w-z-index-modal: 900;
     --w-z-index-dropdown: 800;
@@ -27,6 +29,11 @@
     --w-font-size-section-heading: calc(18 / var(--w-base-rem) * 1rem);
     --w-font-size-display-heading: calc(24 / var(--w-base-rem) * 1rem);
 
+    --w-space-nano: calc(0.25 / var(--w-base-rem) * 1rem);
+    --w-space-micro: calc(0 / var(--w-base-rem) * 1rem);
+    --w-space-base: calc(1 / var(--w-base-rem) * 1rem);
+    --w-space-xxs: calc(1.8 / var(--w-base-rem) * 1rem);
+    --w-space-xs: calc(4 / var(--w-base-rem) * 1rem);
     --w-space-s: calc(8 / var(--w-base-rem) * 1rem);
     --w-space-m: calc(16 / var(--w-base-rem) * 1rem);
     --w-space-l: calc(24 / var(--w-base-rem) * 1rem);

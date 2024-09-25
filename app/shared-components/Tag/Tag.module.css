@@ -13,7 +13,6 @@
   .tagPicture {
     border-radius: 0.45em;
     position: relative;
-    left: -0.2em;
     max-height: 38px;
   }
 
@@ -67,10 +66,12 @@
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
+    font-size: 16px;
     height: 30px;
     line-height: 28px;
-    padding: 0 0.3em;
+  }
+  .tagBodyText img {
+    padding: var(--w-space-xxs);
   }
 
   .tagTrend {
