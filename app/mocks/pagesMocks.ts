@@ -136,11 +136,13 @@ const mockPost = (pageTitle: string) => {
         format: 'PDF',
       },
     ],
-    projectResultFile: {
-      href: 'https://framerusercontent.com/images/F46jYRatmGwgDHnyDPIaUs1us.png?scale-down-to=1024',
-      title: 'Project Result Guide',
-      fileSize: '2.5 MB',
-      format: 'PDF',
+    projectResultMedia: {
+      url: 'https://0bbe2e34-e503-441a-af9e-4fc70c17e6af.usrfiles.com/ugd/471908_91d10778997542a0a4552a485cfc3992.pdf',
+      fileName: 'test.pdf',
+      displayName: 'test display name',
+      sizeInBytes: '1024',
+      type: 'document',
+      thumbnail: 'https://picsum.photos/id/155/147/147',
     },
     links: [
       {

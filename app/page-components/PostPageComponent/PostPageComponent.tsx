@@ -104,12 +104,14 @@ function PostPageComponent({ pageTitle, post }: any) {
     project: post?.data?.projects,
     organisation: post?.data?.organisations,
     eventSpeakers: post?.data?.speakers,
+    eventModerators: post?.data?.moderators,
     eventRegistration: post?.data?.eventRegistration,
     eventDate: {
       start: post?.data?.eventStartDate?.['$date'],
       end: post?.data?.eventEndDate?.['$date'],
     },
     internalLinks: post?.data?.internalLinks,
+    projectResultMedia: post?.data?.projectResultMedia,
   };
   console.log('debug1-post', post);
   // set default post data and data for editing
@@ -165,7 +167,11 @@ function PostPageComponent({ pageTitle, post }: any) {
       ) ||
       postData.eventDate?.start !== defaultPostData.eventDate?.start ||
       postData.eventDate?.end !== defaultPostData.eventDate?.end ||
-      postData.eventRegistration !== defaultPostData.eventRegistration
+      postData.eventRegistration !== defaultPostData.eventRegistration ||
+      postData.projectResultMedia.url !==
+        defaultPostData.projectResultMedia.url ||
+      postData.projectResultMedia.displayName !==
+        defaultPostData.projectResultMedia.displayName
     ) {
       const updatedItem = await updateDataItem(
         postData.dataCollectionId,
@@ -198,6 +204,7 @@ function PostPageComponent({ pageTitle, post }: any) {
           eventStartDate: { $date: postData?.eventDate?.start },
           eventEndDate: { $date: postData?.eventDate?.end },
           eventRegistration: postData?.eventRegistration,
+          projectResultMedia: postData?.projectResultMedia,
           // pageTypes: postData?.pageType,
         }
       );
@@ -298,11 +305,27 @@ function PostPageComponent({ pageTitle, post }: any) {
       );
       console.log('updatedInternalLinks', updatedInternalLinks);
     }
+    // Update Moderators
+    if (
+      checkIfArrayNeedsUpdate(
+        postData.eventModerators,
+        defaultPostData.eventModerators
+      )
+    ) {
+      const updatedModerators = await replaceDataItemReferences(
+        'PostPages',
+        postData.eventModerators?.map((moderator: any) => moderator._id),
+        'moderators',
+        postData._id
+      );
+      console.log('updatedModerators', updatedModerators);
+    }
+
     // Update Speakers
     if (
       checkIfArrayNeedsUpdate(
-        postData.eventSpeakers,
-        defaultPostData.eventSpeakers
+        postData?.eventSpeakers,
+        defaultPostData?.eventSpeakers
       )
     ) {
       const updatedSpeakers = await replaceDataItemReferences(
@@ -421,6 +444,16 @@ function PostPageComponent({ pageTitle, post }: any) {
         <TagListComponent
           tagList={postData.projectAuthors}
           tagListTitle="Authors"
+          isEditModeOn={isEditModeOn}
+          tags={tags.filter((tag) => tag?.tagType === 'person')}
+          selectedValues={postData.projectAuthors?.map(
+            (author: any) => author?.name
+          )}
+          updatePostData={(value) =>
+            updatePostDataBasedOnKeyValue('projectAuthors', value)
+          }
+          tagType="person"
+          handleTagCreated={handleTagCreated}
         />
       )}
       {/* Post Content */}
@@ -447,6 +480,21 @@ function PostPageComponent({ pageTitle, post }: any) {
       {/* EVENT SPECIFIC*/}
       {postData?.pageType?.name?.toLowerCase() === 'event' && (
         <>
+          {/* Moderators */}
+          <TagListComponent
+            tagList={postData.eventModerators}
+            tagListTitle="Moderators"
+            isEditModeOn={isEditModeOn}
+            tags={tags.filter((tag) => tag?.tagType === 'person')}
+            selectedValues={postData.eventModerators?.map(
+              (speaker: any) => speaker?.name
+            )}
+            updatePostData={(value) =>
+              updatePostDataBasedOnKeyValue('eventModerators', value)
+            }
+            tagType="person"
+            handleTagCreated={handleTagCreated}
+          />
           {/* Speakers */}
           <TagListComponent
             tagList={postData.eventSpeakers}

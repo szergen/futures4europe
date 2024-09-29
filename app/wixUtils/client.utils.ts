@@ -1,6 +1,10 @@
 import { generateFileUploadUrl } from './client-side';
 
-async function uploadFileToWix(file: File, uploadPath: string) {
+async function uploadFileToWix(
+  file: File,
+  uploadPath: string,
+  isDataURL = false
+) {
   console.log('File selected:', file);
   console.log('Upload path:', uploadPath);
   try {
