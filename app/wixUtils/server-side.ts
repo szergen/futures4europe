@@ -21,6 +21,7 @@ const referencedItemOptions = [
   { fieldName: 'organisation' },
   { fieldName: 'activity' },
   { fieldName: 'personProjectCoordonation' },
+  { fieldName: 'personProjectParticipation' },
   { fieldName: 'personOrganisation' },
   { fieldName: 'personOrganisation' },
   // { fieldName: 'InfoPages_projectCoordinator' },

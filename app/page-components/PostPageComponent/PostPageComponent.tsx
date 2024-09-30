@@ -56,6 +56,8 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
   const [isEditModeOn, setIsEditModeOn] = useState(false);
 
+  // #endregion
+
   // check if the page is owned by the user
   useEffect(() => {
     if (!isLoggedIn) return;
