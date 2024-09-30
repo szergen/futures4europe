@@ -4,6 +4,7 @@ import PostPageComponent from '@app/page-components/PostPageComponent/PostPageCo
 import {
   getCollection,
   getCollectionItemByTitle,
+  getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
 // import { getCollection } from '@app/wixUtils/client-side';
 
@@ -20,7 +21,7 @@ export const dynamicParams = true; // or false, to 404 on unknown paths
 export async function generateStaticParams() {
   const postCollection = await getCollection('PostPages');
   const slugs = postCollection?.map((post: any) => ({
-    params: { slug: post?.data?.title?.replace(/\s+/g, '_') },
+    params: { slug: post?.data?.slug },
   }));
   // const excludedPaths = ['New_Post'];
 
@@ -36,7 +37,7 @@ export default async function PostPage({ params }: any) {
   console.log('Post Page Params', params.slug);
 
   //Get specific Post by slug
-  const postPageItem = await getCollectionItemByTitle('PostPages', params.slug);
+  const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
   // console.log('postItem Data', postPageItem?.data);
 
   if (!postPageItem) {

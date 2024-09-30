@@ -60,7 +60,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   setValidationState,
   defaultPostTitle,
 }) => {
-  const { existingPostPagesTitles } = useAuth();
+  // const { existingPostPagesTitles } = useAuth();
 
   const validationFunctionForTitle = (tempTitle: string) => {
     if (tempTitle.length < 5) {
@@ -72,114 +72,115 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    if (tempTitle === 'New Post ') {
+    if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post "';
     }
-    const isTempTitleExisting = existingPostPagesTitles?.some(
-      (postPageTitle) =>
-        postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    );
-    if (isTempTitleExisting) {
-      return 'Title already exists';
-    }
+    // const isTempTitleExisting = existingPostPagesTitles?.some(
+    //   (postPageTitle) =>
+    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
+    // );
+    // if (isTempTitleExisting) {
+    //   return 'Title already exists';
+    // }
     return '';
   };
 
   return (
     <div className={classNames(style.postHeader)}>
-      {post.pageType?.name?.toLowerCase() === 'project result' &&
-        post?.projectResultMedia && (
-          // Project Result Image
-          <div className={style.imageAndButtons}>
-            <div>
-              {!isEditModeOn ? (
-                <DisplayProjectResultMedia
-                  projectResultMedia={post.projectResultMedia}
-                />
-              ) : (
-                <ProjectResultHeaderImage
-                  currentImage={post?.projectResultMedia?.thumbnail}
-                  resultType={post?.projectResultMedia?.type}
-                  updatePostData={(value) => {
-                    updatePostData({
-                      ...post,
-                      projectResultMedia: {
-                        ...post.projectResultMedia,
-                        thumbnail: value.thumbnail,
-                        sizeInBytes: value.sizeInBytes,
-                        url: value.url,
-                        fileName: value.fileName,
-                        type: value.type,
-                      },
-                    });
-                  }}
-                  updatePostDataForVideoImage={(value) => {
-                    updatePostData({
-                      ...post,
-                      projectResultMedia: {
-                        ...post.projectResultMedia,
-                        thumbnail: value.thumbnail,
-                        sizeInBytes: '',
-                        url: value.url,
-                        fileName: '',
-                        type: 'video',
-                      },
-                    });
-                  }}
-                />
-              )}
-            </div>
+      {post.pageType?.name?.toLowerCase() === 'project result' && (
+        // Project Result Image
+        <div className={style.imageAndButtons}>
+          <div>
             {!isEditModeOn ? (
-              <Typography tag="h3" className="text-gray-800 mt-2">
-                {post?.projectResultMedia.displayName}
-              </Typography>
+              post?.projectResultMedia && (
+                <DisplayProjectResultMedia
+                  projectResultMedia={post?.projectResultMedia || {}}
+                />
+              )
             ) : (
-              <InputText
-                // label="File Display Name"
-                placeholder="Enter display name"
-                value={post?.projectResultMedia.displayName || ''}
-                onChange={(e) =>
+              <ProjectResultHeaderImage
+                currentImage={post?.projectResultMedia?.thumbnail}
+                resultType={post?.projectResultMedia?.type}
+                updatePostData={(value) => {
                   updatePostData({
                     ...post,
                     projectResultMedia: {
                       ...post.projectResultMedia,
-                      displayName: e.target.value,
+                      thumbnail: value.thumbnail,
+                      sizeInBytes: value.sizeInBytes,
+                      url: value.url,
+                      fileName: value.fileName,
+                      type: value.type,
                     },
-                  })
-                }
+                  });
+                }}
+                updatePostDataForVideoImage={(value) => {
+                  updatePostData({
+                    ...post,
+                    projectResultMedia: {
+                      ...post.projectResultMedia,
+                      thumbnail: value.thumbnail,
+                      sizeInBytes: '',
+                      url: value.url,
+                      fileName: '',
+                      type: 'video',
+                    },
+                  });
+                }}
               />
             )}
-            {!isEditModeOn && post?.projectResultMedia.type === 'document' && (
-              <div className={style.downloadAndViews}>
-                <a
-                  href={post?.projectResultMedia.url}
-                  download={post?.projectResultMedia.displayName + '.pdf'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button>
-                    Download result (
-                    {(Number(post.projectResultMedia.sizeInBytes) / 1024)
-                      ?.toString()
-                      ?.split('.')?.[0] + 'kb'}
-                    ){' '}
-                    <span className="rounded-lg bg-white text-blue-500 p-1 font-bold">
-                      {post.projectResultMedia?.url
-                        ?.split('.')
-                        ?.pop()
-                        ?.toUpperCase()}
-                    </span>
-                  </Button>
-                </a>
-              </div>
-            )}
           </div>
-        )}
+          {!isEditModeOn ? (
+            <Typography tag="h3" className="text-gray-800 mt-2">
+              {post?.projectResultMedia.displayName}
+            </Typography>
+          ) : (
+            <InputText
+              // label="File Display Name"
+              placeholder="Enter display name"
+              value={post?.projectResultMedia?.displayName || ''}
+              onChange={(e) =>
+                updatePostData({
+                  ...post,
+                  projectResultMedia: {
+                    ...post.projectResultMedia,
+                    displayName: e.target.value,
+                  },
+                })
+              }
+            />
+          )}
+          {!isEditModeOn && post?.projectResultMedia?.type === 'document' && (
+            <div className={style.downloadAndViews}>
+              <a
+                href={post?.projectResultMedia.url}
+                download={post?.projectResultMedia.displayName + '.pdf'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button>
+                  Download result (
+                  {(Number(post.projectResultMedia.sizeInBytes) / 1024)
+                    ?.toString()
+                    ?.split('.')?.[0] + 'kb'}
+                  ){' '}
+                  <span className="rounded-lg bg-white text-blue-500 p-1 font-bold">
+                    {post.projectResultMedia?.url
+                      ?.split('.')
+                      ?.pop()
+                      ?.toUpperCase()}
+                  </span>
+                </Button>
+              </a>
+            </div>
+          )}
+        </div>
+      )}
       <div className={style.detailsColumn}>
         {/* Post Info Name */}
         {!isEditModeOn ? (
           <Typography tag="h1" className=" text-gray-800">
-            {post.title.replace(/_/g, ' ')}
+            {post?.title?.replace(/_/g, ' ')}
             {/* Post Popularity */}
             {/* <span
             data-after="320"

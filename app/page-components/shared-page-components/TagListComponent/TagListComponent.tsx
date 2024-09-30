@@ -34,7 +34,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
         {tagListTitle}
       </Typography>
       {!isEditModeOn ? (
-        tagList.map((tag) => <Tag key={tag.name} {...tag} />)
+        tagList?.map((tag) => <Tag key={tag.name} {...tag} />)
       ) : (
         <TagPicker
           tags={tags}

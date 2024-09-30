@@ -20,7 +20,11 @@ import {
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
-import { formatDate, checkIfArrayNeedsUpdate } from './PostPageComponent.utils';
+import {
+  formatDate,
+  checkIfArrayNeedsUpdate,
+  generateUniqueHash,
+} from './PostPageComponent.utils';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'flowbite-react';
@@ -30,9 +34,10 @@ import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner
 export type PostPageComponentProps = {
   pageTitle: string;
   post: any;
+  isNewPost?: boolean;
 };
 
-function PostPageComponent({ pageTitle, post }: any) {
+function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   // Initial mock data
   post = { ...mockPost(pageTitle), ...post };
   const router = useRouter();
@@ -49,17 +54,21 @@ function PostPageComponent({ pageTitle, post }: any) {
   } = useAuth();
   // console.log('debug1->tags', tags);
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
-  const [isEditModeOn, setIsEditModeOn] = useState(pageTitle === 'New_Post');
+  const [isEditModeOn, setIsEditModeOn] = useState(false);
 
   // check if the page is owned by the user
   useEffect(() => {
     if (!isLoggedIn) return;
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
-      if (post.data._owner === id) {
+      if (post?.data?._owner === id) {
         setIsPageOwnedByUser(true);
       }
     });
+    if (isNewPost && isLoggedIn) {
+      setIsPageOwnedByUser(true);
+      setIsEditModeOn(true);
+    }
   }, [isLoggedIn]);
   // Overwrite with Wix Data
   post = {
@@ -168,10 +177,10 @@ function PostPageComponent({ pageTitle, post }: any) {
       postData.eventDate?.start !== defaultPostData.eventDate?.start ||
       postData.eventDate?.end !== defaultPostData.eventDate?.end ||
       postData.eventRegistration !== defaultPostData.eventRegistration ||
-      postData.projectResultMedia.url !==
-        defaultPostData.projectResultMedia.url ||
-      postData.projectResultMedia.displayName !==
-        defaultPostData.projectResultMedia.displayName
+      postData.projectResultMedia?.url !==
+        defaultPostData.projectResultMedia?.url ||
+      postData.projectResultMedia?.displayName !==
+        defaultPostData.projectResultMedia?.displayName
     ) {
       const updatedItem = await updateDataItem(
         postData.dataCollectionId,
@@ -344,6 +353,7 @@ function PostPageComponent({ pageTitle, post }: any) {
       await revalidateDataItem(`/post`);
       // await revalidateDataItem(`/post/New_Post`);
       router.push(`/post/${postData.title.replace(/ /g, '_')}`);
+      return;
     }
     // Revalidate the cache for the page
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
@@ -355,9 +365,176 @@ function PostPageComponent({ pageTitle, post }: any) {
   // #endregion
 
   // #region for when the page is newly created
-  if (pageTitle === 'New Post') {
-    setIsEditModeOn(true);
-  }
+  const { insertDataItem } = useWixModules(items);
+
+  const createNewPost = async () => {
+    console.log('Creating New Post');
+    setIsSaveInProgress(true);
+    // Create New Post
+    const newPost = await insertDataItem({
+      dataCollectionId: 'PostPages',
+      dataItem: {
+        data: {
+          title: postData?.title,
+          subtitle: postData?.subtitle,
+          postContentRIch1: postData?.contentText[0],
+          postContentRIch2: postData?.contentText[1],
+          postContentRIch3: postData?.contentText[2],
+          postContentRIch4: postData?.contentText[3],
+          postContentRIch5: postData?.contentText[4],
+          postContentRIch6: postData?.contentText[5],
+          postContentRIch7: postData?.contentText[6],
+          postContentRIch8: postData?.contentText[7],
+          postContentRIch9: postData?.contentText[8],
+          postContentRIch10: postData?.contentText[9],
+          postImage1: postData?.contentImages[0],
+          postImage2: postData?.contentImages[1],
+          postImage3: postData?.contentImages[2],
+          postImage4: postData?.contentImages[3],
+          postImage5: postData?.contentImages[4],
+          postImage6: postData?.contentImages[5],
+          postImage7: postData?.contentImages[6],
+          postImage8: postData?.contentImages[7],
+          postImage9: postData?.contentImages[8],
+          postImage10: postData?.contentImages[9],
+          eventStartDate: { $date: postData?.eventDate?.start },
+          eventEndDate: { $date: postData?.eventDate?.end },
+          eventRegistration: postData?.eventRegistration,
+          projectResultMedia: postData?.projectResultMedia,
+          slug: postData?.title.replace(/ /g, '_') + '_' + generateUniqueHash(),
+        },
+      },
+    });
+    console.log('newPost', newPost);
+
+    const newPostTitlePath = newPost?.dataItem?.data?.title?.replace(/ /g, '_');
+    const newPostSlug = newPost?.dataItem?.data?.slug;
+    const newPostID = newPost?.dataItem?._id;
+
+    // Update Page Type
+    if (postData.pageType?._id && newPostID) {
+      const updatedPageTypes = await replaceDataItemReferences(
+        'PostPages',
+        [postData.pageType?._id],
+        'pageTypes',
+        newPostID
+      );
+      console.log('updatedPageTypes', updatedPageTypes);
+    }
+    // Update Country Tag
+    if (postData.countryTag?._id && newPostID) {
+      const updatedCountryTag = await replaceDataItemReferences(
+        'PostPages',
+        [postData.countryTag?._id],
+        'countryTag',
+        newPostID
+      );
+      console.log('updatedCountryTag', updatedCountryTag);
+    }
+
+    // Update People Tags
+    if (postData.people?.length && newPostID) {
+      const updatedPeople = await replaceDataItemReferences(
+        'PostPages',
+        postData?.people.map((person: any) => person._id),
+        'people',
+        newPostID
+      );
+      console.log('updatedPeople', updatedPeople);
+    }
+
+    // Update Foresight Methods
+    if (postData.foreSightMethods?.length && newPostID) {
+      const updatedMethods = await replaceDataItemReferences(
+        'PostPages',
+        postData.foreSightMethods?.map((method: any) => method._id),
+        'methods',
+        newPostID
+      );
+      console.log('updatedMethods', updatedMethods);
+    }
+
+    // Update Domains
+    if (postData.domains?.length && newPostID) {
+      const updatedDomains = await replaceDataItemReferences(
+        'PostPages',
+        postData.domains?.map((domain: any) => domain._id),
+        'domains',
+        newPostID
+      );
+      console.log('updatedDomains', updatedDomains);
+    }
+
+    // Update Projects
+    if (postData.project?.length && newPostID) {
+      const updatedProjects = await replaceDataItemReferences(
+        'PostPages',
+        postData.project?.map((project: any) => project._id),
+        'projects',
+        newPostID
+      );
+      console.log('updatedProjects', updatedProjects);
+    }
+
+    // Update Organisation
+    if (postData.organisation?.length && newPostID) {
+      const updatedOrganisations = await replaceDataItemReferences(
+        'PostPages',
+        postData.organisation?.map((organisation: any) => organisation._id),
+        'organisations',
+        newPostID
+      );
+      console.log('updatedOrganisations', updatedOrganisations);
+    }
+
+    // Update Internal Links
+    if (postData.internalLinks?.length && newPostID) {
+      const updatedInternalLinks = await replaceDataItemReferences(
+        'PostPages',
+        postData.internalLinks?.map((link: any) => link._id),
+        'internalLinks',
+        newPostID
+      );
+      console.log('updatedInternalLinks', updatedInternalLinks);
+    }
+
+    // Update Moderators
+    if (postData.eventModerators?.length && newPostID) {
+      const updatedModerators = await replaceDataItemReferences(
+        'PostPages',
+        postData.eventModerators?.map((moderator: any) => moderator._id),
+        'moderators',
+        newPostID
+      );
+      console.log('updatedModerators', updatedModerators);
+    }
+
+    // Update Speakers
+    if (postData?.eventSpeakers?.length && newPostID) {
+      const updatedSpeakers = await replaceDataItemReferences(
+        'PostPages',
+        postData.eventSpeakers?.map((speaker: any) => speaker._id),
+        'speakers',
+        newPostID
+      );
+      console.log('updatedSpeakers', updatedSpeakers);
+    }
+
+    // Revalidate the cache for the page
+    await revalidateDataItem(`/post/${newPostSlug}`);
+
+    setIsSaveInProgress(false);
+    router.push(`/post/${newPostSlug}`);
+  };
+
+  // #endregion
+
+  // #region for when the page is newly created
+  // if (pageTitle === 'New Post') {
+  //   setIsEditModeOn(true);
+  // }
+
+  const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
 
   return (
     <div className={classNames(style.postContainer)}>
@@ -366,7 +543,7 @@ function PostPageComponent({ pageTitle, post }: any) {
         <div>
           <button
             onClick={() => {
-              isEditModeOn && updateDataToServer();
+              isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultPostData(postData);
             }}
@@ -376,13 +553,18 @@ function PostPageComponent({ pageTitle, post }: any) {
               isEditModeOn && checkValidationErrors() && 'bg-gray-400'
             )}
           >
-            {!isEditModeOn ? 'Edit Page' : 'Save Changes'}
+            {!isEditModeOn
+              ? 'Edit Page'
+              : isNewPost
+              ? 'Create Post'
+              : 'Save Changes'}
           </button>
           {isEditModeOn && (
             <button
               onClick={() => {
                 setPostData(defaultPostData);
                 setIsEditModeOn(!isEditModeOn);
+                isNewPost && router.push(`/dashboard`);
               }}
               className="px-2 py-2 rounded-md text-white bg-green-600 w-40"
             >
@@ -418,7 +600,7 @@ function PostPageComponent({ pageTitle, post }: any) {
           <section className="post-meta">
             <Typography tag="p" className="text-sm text-gray-400">
               Edited{' '}
-              {formatDate(postData.updatedDate['$date'].toLocaleString())}
+              {formatDate(postData?.updatedDate?.['$date']?.toLocaleString())}
             </Typography>
           </section>
         )}

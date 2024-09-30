@@ -74,6 +74,28 @@ const getCollectionItemByTitle = async (
   }
 };
 
+const getCollectionItemBySlug = async (
+  collectionName: string,
+  slug: string
+) => {
+  try {
+    const wixClient = await getWixClientData();
+    // const itemToBeFound = itemId.replace(/_/g, ' ');
+    console.log('slug->', slug);
+    const { items } = await wixClient.items
+      .queryDataItems({
+        dataCollectionId: collectionName,
+        referencedItemOptions: referencedItemOptions,
+      })
+      .eq('slug', slug)
+      .find();
+    return items[0];
+  } catch (error) {
+    console.error('Error getting collection item:', error);
+    throw error;
+  }
+};
+
 const composeReferencedItemTitlesForInfoPages = (
   referencedPagesKeys: Array<string>,
   dataItem: Record<string, any>
@@ -173,4 +195,5 @@ export {
   getAllReferencedItemsByTitle,
   composePageWithReferencedItems,
   referencedItemOptions,
+  getCollectionItemBySlug,
 };

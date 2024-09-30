@@ -50,23 +50,23 @@ export default function Dashboard() {
   };
 
   const handleCreatePost = async () => {
-    setShowLoadingCreatePost(true);
-    const post = await insertDataItem({
-      dataCollectionId: 'PostPages',
-      dataItem: {
-        data: {
-          title: 'New Post',
-          subtitle: 'Article Subtitle',
-        },
-      },
-    })
-      .then(() => {
-        router.push(`/post/New_Post`);
-      })
-      .finally(() => {
-        handleUserDataRefresh();
-      });
-    console.log('post', post);
+    // setShowLoadingCreatePost(true);
+    // const post = await insertDataItem({
+    //   dataCollectionId: 'PostPages',
+    //   dataItem: {
+    //     data: {
+    //       title: 'New Post',
+    //       subtitle: 'Article Subtitle',
+    //     },
+    //   },
+    // })
+    //   .then(() => {
+    router.push(`/post/New_Post`);
+    // })
+    // .finally(() => {
+    //   handleUserDataRefresh();
+    // });
+    // console.log('post', post);
   };
 
   const handleDeletePostPage = async (infoPageId: string) => {
@@ -198,7 +198,7 @@ export default function Dashboard() {
                 <div className="my-4 flex">
                   Post Page: <strong> {postPage?.data?.title}</strong>
                   <Link
-                    href={`/post/${postPage?.data?.title?.replace(/ /g, '_')}`}
+                    href={`/post/${postPage?.data?.slug}`}
                     className="mx-4 px-4 py-1 bg-blue-500 text-white rounded-md"
                   >
                     View Post Page

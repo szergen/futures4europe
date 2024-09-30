@@ -48,7 +48,7 @@ interface AuthContextType {
   infoPages: any[];
   infoPagesFetched: boolean;
   handleInfoPageCreated: () => void;
-  existingPostPagesTitles: string[];
+  // existingPostPagesTitles: string[];
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -169,7 +169,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
 
-  const existingPostPagesTitles = postPages?.map((link) => link.data.title);
+  // const existingPostPagesTitles = postPages?.map((link) => link.data.title);
   // #endregion
 
   // #region Fetch info pages
@@ -208,7 +208,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         infoPages,
         infoPagesFetched,
         handleInfoPageCreated,
-        existingPostPagesTitles,
+        // existingPostPagesTitles,
       }}
     >
       {children}
