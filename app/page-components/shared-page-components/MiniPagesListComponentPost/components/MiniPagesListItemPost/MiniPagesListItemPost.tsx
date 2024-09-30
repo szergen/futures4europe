@@ -33,7 +33,11 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   const findInternalLinksInPostPages = (internalLinks: any[]) => {
     return internalLinks
       ?.map((link) =>
-        postPages?.find((postPage) => postPage?.data?.title === link?.title)
+        postPages?.find(
+          (postPage) =>
+            postPage?.data?.slug === link?.slug &&
+            postPage?.data?.title === link?.title
+        )
       )
       ?.map((link) => link?.data);
   };

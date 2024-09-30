@@ -13,6 +13,7 @@ const referencedItemOptions = [
   { fieldName: 'organisations' },
   { fieldName: 'projectResultAuthor' },
   { fieldName: 'speakers' },
+  { fieldName: 'moderators' },
   { fieldName: 'pageTypes' },
   { fieldName: 'author' },
   { fieldName: 'person' },
@@ -65,6 +66,28 @@ const getCollectionItemByTitle = async (
         referencedItemOptions: referencedItemOptions,
       })
       .eq('title', itemToBeFound)
+      .find();
+    return items[0];
+  } catch (error) {
+    console.error('Error getting collection item:', error);
+    throw error;
+  }
+};
+
+const getCollectionItemBySlug = async (
+  collectionName: string,
+  slug: string
+) => {
+  try {
+    const wixClient = await getWixClientData();
+    // const itemToBeFound = itemId.replace(/_/g, ' ');
+    console.log('slug->', slug);
+    const { items } = await wixClient.items
+      .queryDataItems({
+        dataCollectionId: collectionName,
+        referencedItemOptions: referencedItemOptions,
+      })
+      .eq('slug', slug)
       .find();
     return items[0];
   } catch (error) {
@@ -172,4 +195,5 @@ export {
   getAllReferencedItemsByTitle,
   composePageWithReferencedItems,
   referencedItemOptions,
+  getCollectionItemBySlug,
 };

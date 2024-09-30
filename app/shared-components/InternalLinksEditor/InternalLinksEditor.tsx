@@ -27,7 +27,11 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
   const findInternalLinksInPostPages = (internalLinks: any[]) => {
     return internalLinks
       ?.map((link) =>
-        postPages?.find((postPage) => postPage?.data?.title === link?.title)
+        postPages?.find(
+          (postPage) =>
+            postPage?.data?.slug === link?.slug &&
+            postPage?.data?.title === link?.title
+        )
       )
       ?.map((link) => link?.data);
   };
@@ -42,10 +46,10 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
 
   //   #endregion
   // #region extractedValidPaths
-  const getURLFromName = (name: string) => name.replace(/ /g, '_');
+  //   const getURLFromName = (name: string) => name.replace(/ /g, '_');
 
   const extractedValidPaths = postPages?.map(
-    (link) => '/post/' + getURLFromName(link.data.title)
+    (link) => '/post/' + link.data.slug
   );
   console.log('extractedValidPaths', extractedValidPaths);
   //   #endregion
@@ -60,8 +64,7 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
     if (newLink.trim()) {
       if (extractedValidPaths.includes(newLink)) {
         const pageFound = postPages.find(
-          (postPage) =>
-            '/post/' + postPage?.data?.title?.replace(/ /g, '_') === newLink
+          (postPage) => '/post/' + postPage?.data?.slug === newLink
         )?.data;
         console.log('pageFound', pageFound);
         setInternalLinks([...internalLinks, pageFound]);

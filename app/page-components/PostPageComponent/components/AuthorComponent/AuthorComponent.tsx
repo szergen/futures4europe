@@ -19,9 +19,9 @@ const AuthorComponent: React.FC<AuthorComponentProps> = ({ authors }) => {
   return (
     <div className="mb-4">
       <span className="me-2.5 text-gray-400">
-        Author{authors.length > 1 ? 's' : ''}:
+        Author{authors?.length > 1 ? 's' : ''}:
       </span>
-      {authors.map((author, index) => (
+      {authors?.map((author, index) => (
         <Tag
           key={`${author.name} - ${index}`}
           name={author.name}

@@ -50,4 +50,8 @@ export const checkIfArrayNeedsUpdate = (newArray: any[], oldArray: any[]) => {
   return false;
 };
 
-export default { formatDate, checkIfArrayNeedsUpdate };
+export const generateUniqueHash = () => {
+  return Math.random().toString(36).substring(2, 7);
+};
+
+export default { formatDate, checkIfArrayNeedsUpdate, generateUniqueHash };

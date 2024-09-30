@@ -34,15 +34,6 @@
   padding-top: 0.5em;
   width: 100%;
 }
-.projectResultImage {
-  outline: lightGray solid 1px;
-  border-radius: 8px;
-  transition: all 0.3s ease-in-out;
-}
-.projectResultImage:hover {
-  cursor: pointer;
-  box-shadow: rgb(75, 145, 243) 0px 0px 5px;
-}
 
 .imageAndButtons {
   display: flex;
