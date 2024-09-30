@@ -140,6 +140,8 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
       }}
       dateFormat="yyyy-MM-dd"
       preventOpenOnFocus
+      placeholderText="Select a date"
+      name="Start Date"
     />
   );
 };

@@ -32,12 +32,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ person }) => {
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
         <Image
-          src={getImageUrlForMedia(
-            person?.personTag?.picture ||
-              'https://placehold.co/147x147?text=Profile Image',
-            147,
-            147
-          )}
+          src={
+            getImageUrlForMedia(person.personTag.picture)?.url ||
+            getImageUrlForMedia(person.personTag.picture) ||
+            'https://placehold.co/147x147?text=Profile Image'
+          }
           width={147}
           height={147}
           className={classNames('rounded-full')}

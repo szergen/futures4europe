@@ -186,7 +186,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           value={value}
           isMulti={isMulti}
           placeholder={placeholder || 'Select or create a tag'}
-          className={classNames(className)}
+          className={classNames('z-50', className)}
           classNames={{
             control: (state) =>
               state.isFocused ? 'text-blue-site ' : 'border-grey-300',
