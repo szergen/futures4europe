@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import { getImageUrlForMedia } from '../../../PageComponents.utils';
+import InputText from '@app/shared-components/InputText/InputText';
+import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 
 export type HeaderComponentProps = {
   person: {
@@ -24,10 +26,48 @@ export type HeaderComponentProps = {
     views: number;
     personRoles: Array<TagProps>;
     personTag: TagProps;
+    activity: Array<TagProps>;
   };
+  isEditModeOn: boolean;
+  tags: TagProps[];
+  updatePersonData: (data: any) => void;
+  updatePersonDataOnKeyValue: (key: string, value: any) => void;
+  setValidationState: (data: any) => void;
+  handleTagCreated: () => void;
 };
 
-const HeaderComponent: React.FC<HeaderComponentProps> = ({ person }) => {
+const HeaderComponent: React.FC<HeaderComponentProps> = ({
+  person,
+  isEditModeOn,
+  tags,
+  updatePersonData,
+  updatePersonDataOnKeyValue,
+  setValidationState,
+  handleTagCreated,
+}) => {
+  const validationFunctionForName = (tempName: string) => {
+    if (tempName.length < 5) {
+      return 'Title should be at least 5 characters long';
+    }
+    if (tempName.length > 30) {
+      return 'Title should be at most 30 characters long';
+    }
+    if (tempName === 'New Post') {
+      return 'Title cannot be "New Post"';
+    }
+    if (tempName === 'New Post') {
+      return 'Title cannot be "New Post "';
+    }
+    // const isTempTitleExisting = existingPostPagesTitles?.some(
+    //   (postPageTitle) =>
+    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
+    // );
+    // if (isTempTitleExisting) {
+    //   return 'Title already exists';
+    // }
+    return '';
+  };
+
   return (
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
@@ -127,26 +167,100 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ person }) => {
       </div>
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
-        <Typography tag="h1" className=" text-gray-800">
-          {person.personTag.name}
-          {/* Person Popularity */}
-          <span
-            data-after={person?.personTag?.popularity || ''}
-            className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
-          ></span>
-        </Typography>
+        {!isEditModeOn ? (
+          <Typography tag="h1" className=" text-gray-800">
+            {person.personTag.name}
+            {/* Person Popularity */}
+            <span
+              data-after={person?.personTag?.popularity || ''}
+              className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
+            ></span>
+          </Typography>
+        ) : (
+          <InputText
+            // label="Title"
+            placeholder="Enter title"
+            value={person.personTag.name || 'Enter your preffered name'}
+            className="w-72"
+            onChange={(e) =>
+              updatePersonData({
+                ...person,
+                title: e.target.value,
+                personTag: {
+                  ...person.personTag,
+                  name: e.target.value,
+                },
+              })
+            }
+            validate={validationFunctionForName}
+            setValidationState={
+              setValidationState
+                ? (value) => setValidationState({ title: value })
+                : undefined
+            }
+          />
+        )}
         {/* Person Tagline */}
-        <Typography tag="h3" className="text-gray-800 italic">
-          {person?.personTag?.tagLine}
-        </Typography>
-        {/* Person domains */}
+        {!isEditModeOn ? (
+          <Typography tag="h3" className="text-gray-800 italic">
+            {person?.personTag?.tagLine}
+          </Typography>
+        ) : (
+          <InputText
+            // label="Tagline"
+            placeholder="Enter tagline"
+            value={person?.personTag?.tagLine || 'Enter your preffered tagline'}
+            onChange={(e) =>
+              updatePersonData({
+                ...person,
+                personTag: {
+                  ...person.personTag,
+                  tagLine: e.target.value,
+                },
+              })
+            }
+          />
+        )}
+        {/* Person type - activity */}
         <div className={style.domains}>
-          {person.activity.slice(0, 3).map((activity) => (
-            <Tag key={activity.name} {...activity} />
-          ))}
+          {!isEditModeOn ? (
+            person.activity?.map((activity) => (
+              <Tag key={activity?.name} {...activity} />
+            ))
+          ) : (
+            <TagPicker
+              tags={tags?.filter((tag) => tag?.tagType === 'person type')}
+              className="w-full"
+              isMulti
+              selectedValues={person?.activity?.map(
+                (activity) => activity?.name
+              )}
+              updatePostData={(value) => {
+                updatePersonDataOnKeyValue('activity', value);
+              }}
+              tagType={'person type'}
+              onTagCreated={handleTagCreated}
+              placeholder="Select Activity Interests"
+            />
+          )}
         </div>
         {/* Person Country */}
-        <Tag {...person.countryTag} />
+        {!isEditModeOn ? (
+          <Tag {...person.countryTag} />
+        ) : (
+          <TagPicker
+            placeholder={'Select Country'}
+            tags={tags?.filter((tag) => tag?.tagType === 'country')}
+            className="w-80"
+            selectedValue={person?.countryTag?.name || undefined}
+            updatePostData={(value) =>
+              updatePersonDataOnKeyValue('countryTag', value)
+            }
+            tagType="country"
+            onTagCreated={handleTagCreated}
+            // tagTypeLabel={'Country'}
+          />
+        )}
       </div>
     </div>
   );

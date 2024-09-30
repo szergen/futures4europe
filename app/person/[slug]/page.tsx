@@ -18,34 +18,34 @@ export default async function PersonPage({ params }: any) {
   // Grab specific Person by slug
   const infoPageItem = await getCollectionItemByTitle('InfoPages', params.slug);
   // console.log('infoPageItem Data', infoPageItem.data);
-  const referencedTitles = composeReferencedItemTitlesForInfoPages(
-    ['personOrganisation', 'personProjectCoordonation'],
-    infoPageItem?.data || {}
-  );
+  // const referencedTitles = composeReferencedItemTitlesForInfoPages(
+  //   ['personOrganisation'],
+  //   infoPageItem?.data || {}
+  // );
 
   // console.log('referencedIDs', referencedTitles);
 
-  const infoPageWithReferencedItems = await getAllReferencedItemsByTitle(
-    'InfoPages',
-    referencedTitles
-  );
+  // const infoPageWithReferencedItems = await getAllReferencedItemsByTitle(
+  //   'InfoPages',
+  //   referencedTitles
+  // );
 
   // console.log('infoPageWithReferencedItems', infoPageWithReferencedItems);
 
-  const newPage = await composePageWithReferencedItems(
-    infoPageItem?.data || {},
-    ['personOrganisation', 'personProjectCoordonation'],
-    infoPageWithReferencedItems
-  );
+  // const newPage = await composePageWithReferencedItems(
+  //   infoPageItem?.data || {},
+  //   ['personOrganisation'],
+  //   infoPageWithReferencedItems
+  // );
 
-  console.log('newPage', newPage);
+  // console.log('newPage', newPage);
 
   // const member = await getMemberById(infoPageItem.data._owner);
   // console.log('member', member);
 
   return (
     <div className={classNames('w-full')}>
-      <PersonPageComponent pageTitle={params.slug} person={{ data: newPage }} />
+      <PersonPageComponent pageTitle={params.slug} person={infoPageItem} />
     </div>
   );
 }

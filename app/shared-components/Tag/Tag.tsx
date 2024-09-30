@@ -19,6 +19,7 @@ export type TagProps = {
   enableLabel?: boolean;
   // New changes
   tagType?: string;
+  tagLine?: string;
 };
 
 export const Tag: React.FC<TagProps> = ({
