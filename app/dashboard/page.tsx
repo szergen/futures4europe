@@ -39,7 +39,7 @@ export default function Dashboard() {
   console.log('Dashboard isLoggedIn', isLoggedIn);
 
   const router = useRouter();
-  const { insertDataItem, removeDataItem } = useWixModules(items);
+  const { removeDataItem } = useWixModules(items);
 
   const handleGetItemsForCurrentUser = async () => {
     const items = await getItemsForCurrentUser(
@@ -67,6 +67,10 @@ export default function Dashboard() {
     //   handleUserDataRefresh();
     // });
     // console.log('post', post);
+  };
+
+  const handleCreatePersonInfoPage = async () => {
+    router.push(`/person/New_Person_Info`);
   };
 
   const handleDeletePostPage = async (infoPageId: string) => {
@@ -182,6 +186,12 @@ export default function Dashboard() {
             </div>
           )} */}
         </div>
+        <button
+          onClick={handleCreatePersonInfoPage}
+          className="bg-blue-600 text-neutral-50 p-4 rounded-md"
+        >
+          Create Person Info Page
+        </button>
         <button
           onClick={handleLogOut}
           className="bg-red-600 text-neutral-50 p-4 rounded-md"

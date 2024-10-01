@@ -31,6 +31,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   const [currentAffiliations, setCurrentAffiliations] = useState(afiliations);
 
   useEffect(() => {
+    console.log('afiliations', afiliations);
     setCurrentAffiliations(afiliations);
   }, [afiliations, isEditModeOn]);
 
@@ -68,7 +69,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           Former Affiliations
         </Typography>
       )}
-      {currentAffiliations.map((affilitiation, index) => (
+      {currentAffiliations?.map((affilitiation, index) => (
         <div
           key={`affiliation-${affilitiation.name}`}
           className={classNames(style.personWorkplaceItem)}

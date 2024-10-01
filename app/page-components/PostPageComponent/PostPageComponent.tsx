@@ -576,13 +576,13 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   //   setIsEditModeOn(true);
   // }
 
-  useEffect(() => {
-    console.log('PostPages -> userDetails', userDetails);
-    const userTag = tags.find(
-      (tag) => tag?.tagType === 'person' && tag?.name === userDetails?.userName
-    );
-    console.log('userTag', userTag);
-  }, [userDetails]);
+  // useEffect(() => {
+  //   console.log('PostPages -> userDetails', userDetails);
+  //   const userTag = tags.find(
+  //     (tag) => tag?.tagType === 'person' && tag?.name === userDetails?.userName
+  //   );
+  //   console.log('userTag', userTag);
+  // }, [userDetails]);
 
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
 
@@ -605,9 +605,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
           >
             {!isEditModeOn
               ? 'Edit Page'
-              : isNewPost
-              ? 'Create Post'
-              : 'Save Changes'}
+              : 'Publish Page'}
           </button>
           {isEditModeOn && (
             <button

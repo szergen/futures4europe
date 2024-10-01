@@ -44,6 +44,7 @@ const getCollection = async (collectionName: string) => {
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
+        referencedItemOptions: referencedItemOptions,
       })
       .find();
     return items;

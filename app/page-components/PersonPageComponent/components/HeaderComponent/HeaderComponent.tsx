@@ -75,8 +75,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Image
             src={
-              getImageUrlForMedia(person.personTag.picture)?.url ||
-              getImageUrlForMedia(person.personTag.picture) ||
+              getImageUrlForMedia(person?.personTag?.picture)?.url ||
+              getImageUrlForMedia(person?.personTag?.picture) ||
               'https://placehold.co/147x147?text=Profile Image'
             }
             width={147}
@@ -87,10 +87,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <div className="w-72">
             <InfoPagesImageFileUploader
-              currentImage={person.personTag.picture}
+              currentImage={person?.personTag?.picture}
               updatePostData={(value) =>
                 updatePersonDataOnKeyValue('personTag', {
-                  ...person.personTag,
+                  ...person?.personTag,
                   picture: value,
                 })
               }
@@ -184,7 +184,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {/* Person Info Name */}
         {!isEditModeOn ? (
           <Typography tag="h1" className=" text-gray-800">
-            {person.personTag.name}
+            {person?.personTag?.name}
             {/* Person Popularity */}
             <span
               data-after={person?.personTag?.popularity || ''}
@@ -195,15 +195,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <InputText
             // label="Title"
             placeholder="Enter title"
-            value={person.personTag.name || 'Enter your preffered name'}
+            value={person?.personTag?.name || 'Enter your preffered name'}
             className="w-72"
             onChange={(e) =>
               updatePersonData({
                 ...person,
-                title: e.target.value,
+                title: e?.target?.value,
                 personTag: {
-                  ...person.personTag,
-                  name: e.target.value,
+                  ...person?.personTag,
+                  name: e?.target?.value,
                 },
               })
             }
