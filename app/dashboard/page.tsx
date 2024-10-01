@@ -89,7 +89,23 @@ export default function Dashboard() {
     }
   };
 
-  const handleGetContactItem = async () => {
+  const handleDeleteInfoPage = async (infoPageId: string) => {
+    setIsLoadingDeletePostPage(infoPageId);
+    try {
+      // Replace with your actual delete logic
+      await removeDataItem(infoPageId, {
+        dataCollectionId: 'InfoPages',
+      });
+      // TODO: Refresh Owned Pages
+    } catch (error) {
+      console.error('Failed to delete info page:', error);
+    } finally {
+      setIsLoadingDeletePostPage('');
+      handleUserDataRefresh();
+    }
+  };
+
+  const handleGetConttem = async () => {
     const contactData = await getContactsItem(
       // 'a26a590e-e08c-4a24-a642-9909fa8719ba'
       userDetails.contactId
@@ -248,6 +264,20 @@ export default function Dashboard() {
                   >
                     View Info Page
                   </Link>
+                  <div className="relative">
+                    <button
+                      onClick={() => handleDeleteInfoPage(infoPage.data._id)}
+                      className="mx-4 px-4 py-1 bg-red-500 text-white rounded-md"
+                    >
+                      Delete Info Page
+                    </button>
+                    {isLoadingDeletePostPage &&
+                      isLoadingDeletePostPage === infoPage?.data?._id && (
+                        <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                          <LoadingSpinner />
+                        </div>
+                      )}
+                  </div>
                 </div>
 
                 {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
