@@ -23,7 +23,7 @@ const referencedItemOptions = [
   { fieldName: 'personProjectCoordonation' },
   { fieldName: 'personProjectParticipation' },
   { fieldName: 'personOrganisation' },
-  { fieldName: 'personOrganisation' },
+  { fieldName: 'personOrganisationFormer' },
   // { fieldName: 'InfoPages_projectCoordinator' },
   // { fieldName: 'InfoPages_personOrganisation' },
   { fieldName: 'projectFunded' },

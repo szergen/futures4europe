@@ -1,8 +1,8 @@
 'use client';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import style from './PersonPageComponent.module.css';
-import Tag from '@app/shared-components/Tag/Tag';
+import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import PersonDescriptionComponent from '../shared-page-components/DescriptionComponent/DescriptionComponent';
@@ -23,6 +23,7 @@ import { revalidateDataItem, updateDataItem } from '@app/wixUtils/client-side';
 import { checkIfArrayNeedsUpdate } from '../PostPageComponent/PostPageComponent.utils';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
+import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -37,6 +38,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     tags,
     handleTagCreated,
     handleUserDataRefresh,
+    postPages,
   } = useAuth();
   // console.log('debug1->tags', tags);
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
@@ -76,6 +78,16 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       (item: any) => {
         return {
           ...person?.data?.personOrganisation?.find(
+            (org: any) => org.name === item.organisation
+          ),
+          arole: item.role,
+        };
+      }
+    ),
+    formerAfiliations: person?.data?.personOrganisationRolesFormer?.map(
+      (item: any) => {
+        return {
+          ...person?.data?.personOrganisationFormer?.find(
             (org: any) => org.name === item.organisation
           ),
           arole: item.role,
@@ -322,6 +334,23 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // #region handle for when the page is newly created
   // const { insertDataItem } = useWixModules(items);
 
+  // useEffect(() => {
+  //   console.log('defaultPersonData', defaultPersonData);
+  //   // console.log('personData', personData);
+  // }, [defaultPersonData]);
+
+  // #region handlePersonInternalLinks
+  console.log('postPages', postPages);
+  const internalLinks = postPages
+    ?.filter((page) => {
+      return page?.data?.author?.find(
+        (item: TagProps) => item?.name === personData?.personTag?.name
+      );
+    })
+    ?.map((link) => link?.data);
+  console.log('internalLinks', internalLinks);
+  // #endregion
+
   return (
     <div className={classNames(style.personContainer)}>
       {/* Edit buttons */}
@@ -381,13 +410,24 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         setValidationState={updateValidationState}
       />
       {/* Person Description */}
-      <PersonDescriptionComponent description={person.description} />
+      <PersonDescriptionComponent
+        description={personData.description}
+        isEditModeOn={isEditModeOn}
+        handleUpdate={(value) =>
+          updatePersonDataOnKeyValue('description', value)
+        }
+      />
 
       {/* Person Workplace/Current Affiliations*/}
       <AffiliationsComponent
         afiliations={personData.currentAfiliations}
         current
         isEditModeOn={isEditModeOn}
+        updatePersonDataAffiliations={(value) =>
+          updatePersonDataOnKeyValue('currentAfiliations', value)
+        }
+        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        handleTagCreated={handleTagCreated}
       />
 
       {/* Foresight Methods */}
@@ -445,19 +485,28 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagType="project"
       />
       {/* Internal Links */}
-      <MiniPagesListComponent
-        posts={posts}
-        projectResults={projectResults}
-        events={events}
+      <MiniPagesListComponentPost
+        internalLinks={internalLinks}
+        title="Posts"
+        // projectResults={projectResults}
+        // events={events}
       />
       {/* Former Affiliations */}
       <section className={classNames(style.affiliations)}>
-        <AffiliationsComponent afiliations={person.formerAfiliations} />
+        <AffiliationsComponent
+          afiliations={personData.formerAfiliations}
+          isEditModeOn={isEditModeOn}
+          updatePersonDataAffiliations={(value) =>
+            updatePersonDataOnKeyValue('formerAfiliations', value)
+          }
+          tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+          handleTagCreated={handleTagCreated}
+        />
       </section>
       {/* Files */}
       <FilesComponent files={person.files} />
       {/* External Links */}
-      <ExternalLinksComponent links={person.links} />
+      {/* <ExternalLinksComponent links={person.links} /> */}
     </div>
   );
 }

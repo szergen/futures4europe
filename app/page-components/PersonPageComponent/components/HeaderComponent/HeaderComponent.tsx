@@ -6,6 +6,7 @@ import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import { getImageUrlForMedia } from '../../../PageComponents.utils';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFileUploader/InfoPagesImageFileUploader';
 
 export type HeaderComponentProps = {
   person: {
@@ -71,17 +72,31 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   return (
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
-        <Image
-          src={
-            getImageUrlForMedia(person.personTag.picture)?.url ||
-            getImageUrlForMedia(person.personTag.picture) ||
-            'https://placehold.co/147x147?text=Profile Image'
-          }
-          width={147}
-          height={147}
-          className={classNames('rounded-full')}
-          alt={`User Avatar - ${person.title}`}
-        />
+        {!isEditModeOn ? (
+          <Image
+            src={
+              getImageUrlForMedia(person.personTag.picture)?.url ||
+              getImageUrlForMedia(person.personTag.picture) ||
+              'https://placehold.co/147x147?text=Profile Image'
+            }
+            width={147}
+            height={147}
+            className={classNames('rounded-full')}
+            alt={`User Avatar - ${person.title}`}
+          />
+        ) : (
+          <div className="w-72">
+            <InfoPagesImageFileUploader
+              currentImage={person.personTag.picture}
+              updatePostData={(value) =>
+                updatePersonDataOnKeyValue('personTag', {
+                  ...person.personTag,
+                  picture: value,
+                })
+              }
+            />
+          </div>
+        )}
         {/* Social Icons */}
         <div className={style.socialIcons}>
           {/* Linkedin */}

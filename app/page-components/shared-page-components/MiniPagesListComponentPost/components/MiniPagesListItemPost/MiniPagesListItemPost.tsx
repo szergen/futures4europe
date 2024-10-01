@@ -9,10 +9,12 @@ import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export type MiniPagesListItemPostProps = {
   items: any[];
+  title?: string;
 };
 
 const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   items,
+  title = 'Internal Links',
 }) => {
   const [displayCountPosts, setDisplayCountPosts] = useState(3);
 
@@ -56,7 +58,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
         tag="h2"
         className={classNames('text-gray-800 w-full my-4', style.title)}
       >
-        Internal Links
+        {title}
       </Typography>
       {items.slice(0, displayCountPosts).map((item, index) => (
         <MiniPagePost
