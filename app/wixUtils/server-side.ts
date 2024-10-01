@@ -21,10 +21,11 @@ const referencedItemOptions = [
   { fieldName: 'organisation' },
   { fieldName: 'activity' },
   { fieldName: 'personProjectCoordonation' },
+  { fieldName: 'personProjectParticipation' },
   { fieldName: 'personOrganisation' },
-  { fieldName: 'personOrganisation' },
-  { fieldName: 'InfoPages_projectCoordinator' },
-  { fieldName: 'InfoPages_personOrganisation' },
+  { fieldName: 'personOrganisationFormer' },
+  // { fieldName: 'InfoPages_projectCoordinator' },
+  // { fieldName: 'InfoPages_personOrganisation' },
   { fieldName: 'projectFunded' },
   { fieldName: 'projectCoordinator' },
   { fieldName: 'projectParticipantTeam' },
@@ -43,6 +44,7 @@ const getCollection = async (collectionName: string) => {
     const { items } = await wixClient.items
       .queryDataItems({
         dataCollectionId: collectionName,
+        referencedItemOptions: referencedItemOptions,
       })
       .find();
     return items;

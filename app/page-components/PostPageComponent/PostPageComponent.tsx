@@ -1,6 +1,6 @@
 'use client';
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import style from './PostPageComponent.module.css';
 import Tag from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
@@ -55,6 +55,8 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   // console.log('debug1->tags', tags);
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
   const [isEditModeOn, setIsEditModeOn] = useState(false);
+
+  // #endregion
 
   // check if the page is owned by the user
   useEffect(() => {
@@ -219,6 +221,22 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       );
       console.log('updatedItem', updatedItem);
     }
+    // Update Project Authors
+    if (
+      checkIfArrayNeedsUpdate(
+        postData.projectAuthors,
+        defaultPostData.projectAuthors
+      )
+    ) {
+      const updatedAuthors = await replaceDataItemReferences(
+        'PostPages',
+        postData.projectAuthors?.map((author: any) => author._id),
+        'projectAuthors',
+        postData._id
+      );
+      console.log('updatedAuthors', updatedAuthors);
+    }
+
     // Update Page Type
     if (postData.pageType?._id !== defaultPostData.pageType?._id) {
       const updatedPageTypes = await replaceDataItemReferences(
@@ -411,6 +429,30 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
     const newPostSlug = newPost?.dataItem?.data?.slug;
     const newPostID = newPost?.dataItem?._id;
 
+    // Update Author based on the user
+    const userTag = tags.find(
+      (tag) => tag?.tagType === 'person' && tag?.name === userDetails.userName
+    );
+    if (newPostID && userTag) {
+      const updatedAuthor = await replaceDataItemReferences(
+        'PostPages',
+        [userTag?._id],
+        'author',
+        newPostID
+      );
+    }
+
+    // Update Project Authors
+    if (postData.projectAuthors?.length && newPostID) {
+      const updatedAuthors = await replaceDataItemReferences(
+        'PostPages',
+        postData.projectAuthors?.map((author: any) => author._id),
+        'projectAuthors',
+        newPostID
+      );
+      console.log('updatedAuthors', updatedAuthors);
+    }
+
     // Update Page Type
     if (postData.pageType?._id && newPostID) {
       const updatedPageTypes = await replaceDataItemReferences(
@@ -534,6 +576,14 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   //   setIsEditModeOn(true);
   // }
 
+  // useEffect(() => {
+  //   console.log('PostPages -> userDetails', userDetails);
+  //   const userTag = tags.find(
+  //     (tag) => tag?.tagType === 'person' && tag?.name === userDetails?.userName
+  //   );
+  //   console.log('userTag', userTag);
+  // }, [userDetails]);
+
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
 
   return (
@@ -555,9 +605,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
           >
             {!isEditModeOn
               ? 'Edit Page'
-              : isNewPost
-              ? 'Create Post'
-              : 'Save Changes'}
+              : 'Publish Page'}
           </button>
           {isEditModeOn && (
             <button
