@@ -603,9 +603,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
               isEditModeOn && checkValidationErrors() && 'bg-gray-400'
             )}
           >
-            {!isEditModeOn
-              ? 'Edit Page'
-              : 'Publish Page'}
+            {!isEditModeOn ? 'Edit Page' : 'Publish Page'}
           </button>
           {isEditModeOn && (
             <button
