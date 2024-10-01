@@ -70,7 +70,7 @@ export default function Dashboard() {
   };
 
   const handleCreatePersonInfoPage = async () => {
-    router.push(`/person/New_Person_Info`);
+    router.push(`/person/New_Info_Page`);
   };
 
   const handleDeletePostPage = async (infoPageId: string) => {
@@ -243,7 +243,7 @@ export default function Dashboard() {
                   <Link
                     href={`/${extractInfoPageTypeBasedOnTag(
                       infoPage?.data?.pageTypes[0]
-                    )}/${infoPage.data.title.replace(/ /g, '_')}`}
+                    )}/${infoPage.data.slug}`}
                     className="mx-4 px-4 py-1 bg-blue-500 text-white rounded-md"
                   >
                     View Info Page

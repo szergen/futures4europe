@@ -505,7 +505,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         updatePersonDataOnKeyValue('pageType', personInfoTag);
       }
     }
-  }, [userDetails, tags, personData]);
+  }, [userDetails, tags]);
 
   return (
     <div className={classNames(style.personContainer)}>
