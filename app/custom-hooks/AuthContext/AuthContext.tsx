@@ -114,8 +114,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           ]
             ? true
             : false,
-          // userName: currentMember?.member?.profile?.nickname,
-          userName: 'Eva Pericolini',
+          userName: currentMember?.member?.profile?.nickname,
+          // userName: 'Eva Pericolini',
           slug: currentMember?.member?.profile?.slug,
           email: currentMember?.member?.loginEmail,
           createdDate: currentMember?.member?._createdDate,

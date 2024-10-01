@@ -31,11 +31,23 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   const [currentAffiliations, setCurrentAffiliations] = useState(afiliations);
 
   useEffect(() => {
-    console.log('afiliations', afiliations);
+    // console.log('currentAffiliations', currentAffiliations);
     setCurrentAffiliations(afiliations);
   }, [afiliations, isEditModeOn]);
 
+  useEffect(() => {
+    console.log('currentAffiliations', currentAffiliations);
+  }, [currentAffiliations]);
+
   const handleAddAffiliation = (index: number) => {
+    if (index === 0 && !currentAffiliations && !currentAffiliations?.length) {
+      const newAffiliation = { id: '', name: '', arole: '' };
+      const updatedAffiliations = [newAffiliation];
+      updatePersonDataAffiliations &&
+        updatePersonDataAffiliations(updatedAffiliations);
+      setCurrentAffiliations(updatedAffiliations);
+      return;
+    }
     const newAffiliation = { id: '', name: '', arole: '' };
     const updatedAffiliations = [
       ...currentAffiliations.slice(0, index + 1),
@@ -68,6 +80,16 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         >
           Former Affiliations
         </Typography>
+      )}
+      {isEditModeOn && !currentAffiliations && !currentAffiliations?.length && (
+        <button
+          onClick={() => handleAddAffiliation(0)}
+          className={
+            'ml-4 text-sm bg-green-600 text-neutral-50 p-1 rounded-md w-32'
+          }
+        >
+          Add Affiliation
+        </button>
       )}
       {currentAffiliations?.map((affilitiation, index) => (
         <div

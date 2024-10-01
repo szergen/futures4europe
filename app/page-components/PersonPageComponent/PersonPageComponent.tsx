@@ -202,10 +202,42 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       console.log('updatedItem', updatedItem);
     }
 
+    // Update personOrganisation
+    if (
+      checkIfArrayNeedsUpdate(
+        personData.currentAfiliations,
+        defaultPersonData.currentAfiliations
+      )
+    ) {
+      const updatedOrganisations = await replaceDataItemReferences(
+        'InfoPages',
+        personData.currentAfiliations?.map((org: any) => org._id),
+        'personOrganisation',
+        personData._id
+      );
+      console.log('updatedOrganisations', updatedOrganisations);
+    }
+
+    // Update personOrganisationFormer
+    if (
+      checkIfArrayNeedsUpdate(
+        personData.formerAfiliations,
+        defaultPersonData.formerAfiliations
+      )
+    ) {
+      const updatedOrganisationsFormer = await replaceDataItemReferences(
+        'InfoPages',
+        personData.formerAfiliations?.map((org: any) => org._id),
+        'personOrganisationFormer',
+        personData._id
+      );
+      console.log('updatedOrganisationsFormer', updatedOrganisationsFormer);
+    }
+
     // Update Country Tag
     if (personData.countryTag?._id !== defaultPersonData.countryTag?._id) {
       const updatedCountryTag = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         [personData.countryTag?._id],
         'countryTag',
         personData._id
@@ -221,7 +253,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       )
     ) {
       const updatedMethods = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.foreSightMethods?.map((method: any) => method._id),
         'methods',
         personData._id
@@ -233,7 +265,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       checkIfArrayNeedsUpdate(personData.domains, defaultPersonData.domains)
     ) {
       const updatedDomains = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.domains?.map((domain: any) => domain._id),
         'domains',
         personData._id
@@ -245,7 +277,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       checkIfArrayNeedsUpdate(personData.activity, defaultPersonData.activity)
     ) {
       const updateAcvitiy = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.activity?.map((activity: any) => activity._id),
         'activity',
         personData._id
@@ -261,7 +293,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       )
     ) {
       const updateProjectsCoordindation = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.projectsCoordindation?.map((projects: any) => projects._id),
         'personProjectCoordonation',
         personData._id
@@ -277,7 +309,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       )
     ) {
       const updateProjectsParticipation = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.projectsParticipation?.map((projects: any) => projects._id),
         'personProjectParticipation',
         personData._id
@@ -324,13 +356,13 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       dataCollectionId: 'InfoPages',
       dataItem: {
         data: {
-          title: personData.personTag.name,
-          description: personData.description,
+          title: personData?.personTag?.name,
+          description: personData?.description,
           personOrganisationRoles: personData?.currentAfiliations?.map(
             (item: any) => {
               return {
-                organisation: item.name,
-                role: item.arole,
+                organisation: item?.name,
+                role: item?.arole,
               };
             }
           ),
@@ -343,7 +375,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
             }
           ),
           slug:
-            personData.personTag.name.replace(/ /g, '_') +
+            personData?.personTag?.name?.replace(/ /g, '_') +
             '_' +
             generateUniqueHash(),
           // subtitle: personData.personTag.tagLine,
@@ -356,14 +388,14 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // #region Update Author Tag and Person Tag
     const personTag = tags.find(
-      (tag) => tag.name === personData.personTag.name
+      (tag) => tag.name === personData?.personTag?.name
     );
 
     if (newPersonInfoId && personTag) {
       const updatedAuthor = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
-        'author',
+        'Author',
         newPersonInfoId
       );
       console.log('updatedAuthor', updatedAuthor);
@@ -380,7 +412,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Page Type Tag
     if (personData.pageType?._id && newPersonInfoId) {
       const updatedPageTypes = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         [personData.pageType?._id],
         'pageTypes',
         newPersonInfoId
@@ -392,7 +424,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Country Tag
     if (personData.countryTag?._id && newPersonInfoId) {
       const updatedCountryTag = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         [personData.countryTag?._id],
         'countryTag',
         newPersonInfoId
@@ -402,10 +434,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #endregion
 
     // #region Update Foresight Methods
-    if (personData.foreSightMethods && newPersonInfoId) {
+    if (personData.methods && newPersonInfoId) {
       const updatedMethods = await replaceDataItemReferences(
-        'PostPages',
-        personData.foreSightMethods?.map((method: any) => method._id),
+        'InfoPages',
+        personData.methods?.map((method: any) => method._id),
         'methods',
         newPersonInfoId
       );
@@ -416,7 +448,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Domains
     if (personData.domains && newPersonInfoId) {
       const updatedDomains = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.domains?.map((domain: any) => domain._id),
         'domains',
         newPersonInfoId
@@ -428,7 +460,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Activity
     if (personData.activity && newPersonInfoId) {
       const updateAcvitiy = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.activity?.map((activity: any) => activity._id),
         'activity',
         newPersonInfoId
@@ -440,7 +472,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update projectsCoordindation
     if (personData.projectsCoordindation && newPersonInfoId) {
       const updateProjectsCoordindation = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.projectsCoordindation?.map((projects: any) => projects._id),
         'personProjectCoordonation',
         newPersonInfoId
@@ -452,7 +484,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update projectsParticipation
     if (personData.projectsParticipation && newPersonInfoId) {
       const updateProjectsParticipation = await replaceDataItemReferences(
-        'PostPages',
+        'InfoPages',
         personData.projectsParticipation?.map((projects: any) => projects._id),
         'personProjectParticipation',
         newPersonInfoId
@@ -479,7 +511,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #endregion
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${personData.title.replace(/ /g, '_')}`);
+    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);
@@ -514,7 +546,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         <div>
           <button
             onClick={() => {
-              isEditModeOn && updateDataToServer();
+              isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultPersonData(personData);
             }}
