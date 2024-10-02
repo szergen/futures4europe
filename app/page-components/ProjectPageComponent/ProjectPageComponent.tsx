@@ -2,16 +2,16 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import style from './ProjectPageComponent.module.css';
-import Tag from '@app/shared-components/Tag/Tag';
+import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import DescriptionComponent from '../shared-page-components/DescriptionComponent/DescriptionComponent';
 import TagListComponent from '../shared-page-components/TagListComponent/TagListComponent';
-import AffiliationsComponent from './components/AffiliationsComponent/AffiliationsComponent';
+import AffiliationsComponent from '../PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
 import ExternalLinksComponent from '../shared-page-components/ExternalLinksComponent/ExternalLinksComponent';
 import { mockProject, projectResults } from '../../mocks/pagesMocks';
-import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
+// import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { arraysEqual, deepEqual } from '../PageComponents.utils';
@@ -21,6 +21,9 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import { checkIfArrayNeedsUpdate } from '../PostPageComponent/PostPageComponent.utils';
+import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
+import { Modal } from 'flowbite-react';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -90,11 +93,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   // #endregion
 
   // #region Methods for updating person data
-  const updatePersonData = (newData: any) => {
+  const updateProjectnData = (newData: any) => {
     setProjectData((prevData: any) => ({ ...prevData, ...newData }));
   };
 
-  const updatePersonDataOnKeyValue = (key: string, value: any) => {
+  const updateProjectDataOnKeyValue = (key: string, value: any) => {
     setProjectData((prevData: any) => ({ ...prevData, [key]: value }));
   };
   // #endregion
@@ -225,27 +228,88 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${projectData.slug}`);
+    await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
   };
   // #endregion
 
+  // #region handle save or create new page
+  // const saveOrCreateHandler = isNewPage
+  //   ? createNewPersonPage
+  //   : updateDataToServer;
+  // #endregion
+
+  // #region handleProjectInternalLinks
+  // console.log('postPages', postPages);
+  const internalLinks = postPages
+    ?.filter((page) => {
+      return page?.data?.projects?.find(
+        (item: TagProps) => item?.name === projectData?.projectTag?.name
+      );
+    })
+    ?.map((link) => link?.data);
+  console.log('internalLinks', internalLinks);
+  // #endregion
+
   return (
     <div className={classNames(style.personContainer)}>
+      {/*  Edit buttons */}
+      {isPageOwnedByUser && (
+        <div>
+          <button
+            onClick={() => {
+              isEditModeOn && updateDataToServer();
+              setIsEditModeOn(!isEditModeOn);
+              setDefaultProjectData(projectData);
+            }}
+            disabled={isEditModeOn && checkValidationErrors()}
+            className={classNames(
+              'px-2 py-2 rounded-md text-white bg-blue-600 w-40 mr-2',
+              isEditModeOn && checkValidationErrors() && 'bg-gray-400'
+            )}
+          >
+            {!isEditModeOn
+              ? 'Edit Page'
+              : isNewPage
+              ? 'Publish Page'
+              : 'Save&Publish Changes'}
+          </button>
+          {isEditModeOn && (
+            <button
+              onClick={() => {
+                setProjectData(defaultProjectData);
+                setIsEditModeOn(!isEditModeOn);
+                isNewPage && router.push(`/dashboard`);
+              }}
+              className="px-2 py-2 rounded-md text-white bg-green-600 w-40"
+            >
+              Discard Changes
+            </button>
+          )}
+        </div>
+      )}
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag {...project.pageType} />
+        <Tag {...project?.pageType} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
             Registration Date{' '}
-            {new Date(project.registrationDate).toLocaleString()}
+            {new Date(project?.registrationDate)?.toLocaleString()}
           </Typography>
         </section>
       </div>
       {/* Project Header */}
-      <HeaderComponent project={project} />
+      <HeaderComponent
+        project={project}
+        isEditModeOn={isEditModeOn}
+        updateProjectData={updateProjectnData}
+        updateProjectDataOnKeyValue={updateProjectDataOnKeyValue}
+        tags={tags}
+        handleTagCreated={handleTagCreated}
+        setValidationState={updateValidationState}
+      />
       {/* Project Description */}
       <DescriptionComponent description={project.description} />
 
@@ -272,11 +336,21 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         title="Organisations"
       />
       {/* Internal Links */}
-      <MiniPagesListComponent projectResults={projectResults} />
+      <MiniPagesListComponentPost internalLinks={internalLinks} title="Posts" />
       {/* Files */}
       <FilesComponent files={project.files} />
       {/* External Links */}
       <ExternalLinksComponent links={project.links} />
+      {/* Modal for Saving page */}
+      <Modal show={isSaveInProgress} size="md" popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            Saving Page...
+            <LoadingSpinner />
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
