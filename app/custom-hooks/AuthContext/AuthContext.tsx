@@ -114,7 +114,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           ]
             ? true
             : false,
-          userName: currentMember?.member?.profile?.nickname,
+          // userName: currentMember?.member?.profile?.nickname,
+          userName: 'Eva Pericolini',
           slug: currentMember?.member?.profile?.slug,
           email: currentMember?.member?.loginEmail,
           createdDate: currentMember?.member?._createdDate,
@@ -181,8 +182,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    console.log('debug1->infoPages', infoPages);
-  }, [infoPages]);
+    console.log('debug1->userDetails', userDetails);
+  }, [userDetails]);
   // #endregion
 
   return (

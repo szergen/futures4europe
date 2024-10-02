@@ -3,7 +3,7 @@ import React from 'react';
 import PostPageComponent from '@app/page-components/PostPageComponent/PostPageComponent';
 import {
   getCollection,
-  getCollectionItemByTitle,
+  // getCollectionItemByTitle,
   getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
 // import { getCollection } from '@app/wixUtils/client-side';

@@ -5,18 +5,20 @@ export type MiniPagesListComponentPostProps = {
   isEditModeOn?: boolean;
   internalLinks?: any[];
   handleUpdatePostData?: (data: any) => void;
+  title?: string;
 };
 
 const MiniPagesListComponentPost: React.FC<MiniPagesListComponentPostProps> = ({
   isEditModeOn,
   internalLinks,
   handleUpdatePostData,
+  title,
 }) => {
   return (
     <>
       {/* Posts */}
       {internalLinks && internalLinks.length > 0 && !isEditModeOn && (
-        <MiniPagesListItemPost items={internalLinks} />
+        <MiniPagesListItemPost items={internalLinks} title={title} />
       )}
       {isEditModeOn && (
         <div className="w-full">
