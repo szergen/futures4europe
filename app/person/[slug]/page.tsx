@@ -2,12 +2,6 @@ import classNames from 'classnames';
 import React from 'react';
 import {
   getCollection,
-  // getCollectionItemByTitle,
-  // getMemberById,
-  // updateDataItem,
-  // composeReferencedItemTitlesForInfoPages,
-  // getAllReferencedItemsByTitle,
-  // composePageWithReferencedItems,
   getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
 import PersonPageComponent from '@app/page-components/PersonPageComponent/PersonPageComponent';

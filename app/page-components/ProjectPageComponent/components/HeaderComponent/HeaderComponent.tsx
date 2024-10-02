@@ -99,16 +99,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ project }) => {
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
         <Typography tag="h1" className=" text-gray-800">
-          {project.projectTag.name}
+          {project?.projectTag?.name}
           {/* Person Popularity */}
           <span
-            data-after={project.projectTag.popularity}
+            data-after={project?.projectTag?.popularity}
             className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
           ></span>
         </Typography>
         {/* Tagline */}
         <Typography tag="h3" className="text-gray-800 italic">
-          {project.projectTag.tagLine}
+          {project?.projectTag?.tagLine}
         </Typography>
         {/* Project Period */}
         <Typography
