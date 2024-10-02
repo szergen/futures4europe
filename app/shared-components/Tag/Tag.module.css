@@ -31,15 +31,16 @@
     line-height: 10px;
     padding: 4px;
   }
+
   .tagBody {
+    position: relative;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    background-color: #EAE9EC;
-    border-radius: 0.34em;
-    cursor: pointer;
-    height: 38px;
-    margin-right: 0.6em;
-    position: relative;
+    background-color: var(--color-background-brand-tag);
+    border-radius: var(--p-border-radius-200);
+    height: calc(var(--w-space-xl));
+    margin-right: calc(var(--w-space-s));
   }
 
   .tagBody:hover {
@@ -54,21 +55,24 @@
     line-height: 1;
     vertical-align: middle;
     position: relative;
+    padding-right: var(--w-space-s);
   }
 
   .tagBodyText img {
     width: 30px;
+    margin-right: var(--w-space-xs);;
   }
 
   .name {
     display: inline-block;
     text-wrap: nowrap;
-    max-width: 200px;
+    max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 16px;
     height: 30px;
     line-height: 28px;
+    text-decoration: underline;
   }
   .tagBodyText img {
     padding: var(--w-space-xxs);

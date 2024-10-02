@@ -48,7 +48,7 @@ export const InputText: React.FC<InputTextProps> = ({
   }, [value]);
 
   return (
-    <div className="max-w-md">
+    <div className="max-w-md relative">
       {label && (
         <div className="mb-2 block">
           <Label htmlFor="email3" value={label} />
@@ -64,7 +64,7 @@ export const InputText: React.FC<InputTextProps> = ({
         value={inputValue}
         onChange={handleChange}
       />
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}{' '}
+      {error && <p className="errorInputText text-red-500 text-sm mt-2">{error}</p>}{' '}
     </div>
   );
 };

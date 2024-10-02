@@ -42,9 +42,9 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {!isEditModeOn ? (
             <Typography
               tag="span"
-              className={classNames('text-gray-400', 'mr-2')}
+              className={classNames('backgroundLabelAffiliation', 'pr-4 pl-2')}
             >
-              {affilitiation.arole}:
+              {affilitiation.arole}
             </Typography>
           ) : (
             <InputText

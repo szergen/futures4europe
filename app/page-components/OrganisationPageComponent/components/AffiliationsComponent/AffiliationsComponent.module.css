@@ -1,6 +1,6 @@
 .personWorkplace {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-top: 1em;
   width: 100%;
 
