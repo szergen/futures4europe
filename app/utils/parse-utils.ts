@@ -2,7 +2,7 @@ import { TagProps } from '@app/shared-components/Tag/Tag';
 
 export const extractInfoPageTypeBasedOnTag = (tag: TagProps) => {
   // case switch
-  switch (tag.name) {
+  switch (tag?.name) {
     case 'person info':
       return 'person';
     case 'organisation info':

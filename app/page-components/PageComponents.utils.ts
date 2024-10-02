@@ -40,7 +40,8 @@ function deepEqual(obj1: any, obj2: any): boolean {
 }
 
 function arraysEqual(arr1: any[], arr2: any[]): boolean {
-  if (arr1?.length !== arr2?.length) return false;
+  if (!arr1 || !arr2) return false;
+  if (arr1.length !== arr2.length) return false;
 
   for (let i = 0; i < arr1?.length; i++) {
     if (!deepEqual(arr1[i], arr2[i])) {
