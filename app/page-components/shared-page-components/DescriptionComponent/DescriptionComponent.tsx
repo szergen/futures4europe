@@ -26,18 +26,10 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
   }, [initialDescription]);
 
   return (
-<<<<<<< HEAD
-    <div
-      className={classNames('text-greyLight text-sm')}
-      dangerouslySetInnerHTML={{
-        __html: description,
-      }}
-    ></div>
-=======
     <div>
       {!isEditModeOn ? (
         <div
-          className={classNames('text-gray-500 text-sm')}
+          className={classNames('text-greyLight text-sm')}
           dangerouslySetInnerHTML={{
             __html: contentText,
           }}
@@ -49,7 +41,6 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
         />
       )}
     </div>
->>>>>>> d5caceef806603d201102a34468925755b5963e2
   );
 };
 

@@ -286,7 +286,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${personData.title.replace(/ /g, '_')}`);
+    await revalidateDataItem(`/person/${personData.title?.replace(/ /g, '_')}`);
 
     setIsSaveInProgress(false);
   };

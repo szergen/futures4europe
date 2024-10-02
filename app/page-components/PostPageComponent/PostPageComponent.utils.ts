@@ -39,10 +39,10 @@ export const formatDate = (dateStr: string) => {
 };
 
 export const checkIfArrayNeedsUpdate = (newArray: any[], oldArray: any[]) => {
-  if (newArray.length !== oldArray.length) {
+  if (newArray?.length !== oldArray?.length) {
     return true;
   }
-  for (let i = 0; i < newArray.length; i++) {
+  for (let i = 0; i < newArray?.length; i++) {
     if (newArray[i]?._id !== oldArray[i]?._id) {
       return true;
     }
