@@ -35,6 +35,7 @@
     --w-font-size-body: calc(14 / var(--w-base-rem) * 1rem);
     --w-font-size-sub-section-heading: calc(16 / var(--w-base-rem) * 1rem);
     --w-font-size-section-heading: calc(18 / var(--w-base-rem) * 1rem);
+    --w-font-size-tag: calc(18 / var(--w-base-rem) * 1rem);
     --w-font-size-display-heading: calc(24 / var(--w-base-rem) * 1rem);
     --w-font-size-display-large: calc(32 / var(--w-base-rem) * 1rem);
     --w-font-size-xl: calc(40 / var(--w-base-rem) * 1rem);
@@ -45,6 +46,7 @@
     --p-font-letter-spacing-densest: -0.54px;
     --p-font-letter-spacing-denser: -0.36px;
     --p-font-letter-spacing-dense: -0.24px;
+    --p-font-letter-spacing-tag: -0.14px;
     --p-font-letter-spacing-normal: 0px;
 
     --w-space-nano: calc(0.25 / var(--w-base-rem) * 1rem);
@@ -72,6 +74,7 @@
     --p-border-radius-750: 30px;
     --p-border-radius-800: 32px;
     --p-border-radius-full: 9999px;
+    --p-border-radius-tag: calc(8 / var(--w-base-rem) * 1rem);
 
     --p-border-width-0: 0px;
     --p-border-width-0165: 0.66px;
@@ -479,7 +482,6 @@
     @apply text-sm;
     @apply font-medium;
     @apply bg-blue-site;
-    @apply font-site;
     @apply hover:bg-purple-800;
     @apply focus:outline-none;
     @apply focus:ring-4;
@@ -494,14 +496,6 @@
     @apply bg-gray-400;
     @apply border-gray-400;
     @apply hover:bg-gray-400;
-  }
-
-  .font-site {
-    font-family: Oswald-Medium, Oswald, sans-serif;
-  }
-
-  .font-helvetica {
-    font-family: Helvetica-W01-Light, sans-serif;
   }
 
   input {
@@ -538,10 +532,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font: normal normal normal 18px/1.4em avenir-lt-w01_35-light1475496,
-    sans-serif;
-  @apply text-black;
-  @apply font-helvetica;
+  font-size: var(--w-font-size-body);
 }
 
 a {
@@ -559,10 +550,10 @@ a {
 .backgroundLabelAffiliation {
   background-color: var(--color-background-brand-tag);
   border-radius: var(--p-border-radius-200) 0 0 var(--p-border-radius-200);
-  height: calc(var(--w-space-xl));
-  line-height: calc(var(--w-space-xl));
+  height: calc(var(--w-space-xxxl));
+  line-height: calc(var(--w-space-xxxl));
   margin-right: calc(var(--w-space-s) * -1);
-  font-size: var(--w-font-size-body);
+  font-size: var(--w-font-size-tag);
 }
 
 .textPostTitleEdit input{

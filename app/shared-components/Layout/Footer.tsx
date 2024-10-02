@@ -10,7 +10,7 @@ const Footer = () => (
     <div className="flex flex-col sm:flex-row">
       <div className="basis-2/3 bg-blue-site text-white p-14 sm:pl-44">
         <h2 className="text-2xl sm:text-3xl font-bold">CONTACT US</h2>
-        <div className="flex flex-col sm:flex-row text-sm font-helvetica">
+        <div className="flex flex-col sm:flex-row text-sm">
           <div className="basis-1/3 border-b border-white pb-4">
             <p className="mt-10">
               Please reach out to us with any questions or concerns. We’re happy

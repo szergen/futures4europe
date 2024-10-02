@@ -39,7 +39,7 @@
     align-items: center;
     background-color: var(--color-background-brand-tag);
     border-radius: var(--p-border-radius-200);
-    height: calc(var(--w-space-xl));
+    height: calc(var(--w-space-xxxl));
     margin-right: calc(var(--w-space-s));
   }
 
@@ -48,18 +48,18 @@
   }
 
   .tagBodyText{
-    height: 30px;
+    height: calc(var(--w-space-xxl));
     background: white;
     margin: 4px;
-    border-radius: 0.30em;
-    line-height: 1;
+    border-radius: var(--p-border-radius-tag);
+    line-height: calc(var(--w-space-xxl));
     vertical-align: middle;
     position: relative;
     padding-right: var(--w-space-s);
   }
 
   .tagBodyText img {
-    width: 30px;
+    width: var(--w-space-xxl);
     margin-right: var(--w-space-xs);;
   }
 
@@ -69,13 +69,14 @@
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 16px;
-    height: 30px;
-    line-height: 28px;
-    text-decoration: underline;
+    font-size: var(--w-font-size-tag);
+    line-height: var(--w-space-xxl);
+    letter-spacing: var(--p-font-letter-spacing-tag);
+    margin-left: var(--w-space-s);
   }
   .tagBodyText img {
     padding: var(--w-space-xxs);
+    margin-left: var(--w-space-xs);
   }
 
   .tagTrend {
