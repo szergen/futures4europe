@@ -542,7 +542,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   return (
     <div className={classNames(style.personContainer)}>
-      {/* Edit buttons */}
+      {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div>
           <button
