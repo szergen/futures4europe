@@ -611,6 +611,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       {/* Person Workplace/Current Affiliations*/}
       <AffiliationsComponent
         afiliations={personData.currentAfiliations}
+        tagListTitle="Current Affiliations"
         current
         isEditModeOn={isEditModeOn}
         updatePersonDataAffiliations={(value) =>
@@ -619,7 +620,19 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tags={tags.filter((tag) => tag?.tagType === 'organisation')}
         handleTagCreated={handleTagCreated}
       />
-
+      {/* Former Affiliations */}
+      <section className={classNames(style.affiliations)}>
+        <AffiliationsComponent
+          afiliations={personData.formerAfiliations}
+          tagListTitle="Former Affiliations"
+          isEditModeOn={isEditModeOn}
+          updatePersonDataAffiliations={(value) =>
+            updatePersonDataOnKeyValue('formerAfiliations', value)
+          }
+          tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+          handleTagCreated={handleTagCreated}
+        />
+      </section>
       {/* Foresight Methods */}
       <TagListComponent
         tagList={personData.methods}
@@ -679,18 +692,6 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         // projectResults={projectResults}
         // events={events}
       />
-      {/* Former Affiliations */}
-      <section className={classNames(style.affiliations)}>
-        <AffiliationsComponent
-          afiliations={personData.formerAfiliations}
-          isEditModeOn={isEditModeOn}
-          updatePersonDataAffiliations={(value) =>
-            updatePersonDataOnKeyValue('formerAfiliations', value)
-          }
-          tags={tags.filter((tag) => tag?.tagType === 'organisation')}
-          handleTagCreated={handleTagCreated}
-        />
-      </section>
       {/* Files */}
       <FilesComponent files={person.files} />
       {/* External Links */}

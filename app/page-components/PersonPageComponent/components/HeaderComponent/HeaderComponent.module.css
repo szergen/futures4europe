@@ -6,16 +6,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 2em;
+    width: 100%;
+    max-width: calc(var(--w-space-l) * var(--w-base-rem) / 2);
+    margin-right: var(--w-space-l);
+  }
+  .imageAndSocialColumn img{
+    width: var(--c-avatar-size-150);
+    height: var(--c-avatar-size-150);
+    object-fit: cover;
   }
   .socialIcons {
-    width: 90%;
     display: flex;
-    margin-top: 0.5em;
-    justify-content: space-around;
+    margin-top: var(--w-space-s);
+    justify-content: center;
+  }
+  .socialIcons svg{
+    margin-right: var(--w-space-m);
+  }
+  .socialIcons svg:last-child{
+    margin-right: 0px;
   }
   .detailsColumn {
     display: flex;
     flex-direction: column;
+  }
+  .detailsColumn h1 {
+    font-size: var(--w-font-size-xl);
   }
 }

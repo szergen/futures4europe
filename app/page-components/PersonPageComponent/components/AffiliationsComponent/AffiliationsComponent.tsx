@@ -13,6 +13,7 @@ export type AffiliationsComponentProps = {
       arole: string;
     }
   >;
+  tagListTitle: string;
   current?: boolean;
   isEditModeOn?: boolean;
   updatePersonDataAffiliations?: (affiliations: any) => void;
@@ -22,6 +23,7 @@ export type AffiliationsComponentProps = {
 
 const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   afiliations,
+  tagListTitle,
   current,
   isEditModeOn,
   updatePersonDataAffiliations,
@@ -69,18 +71,22 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   };
 
   return (
-    <section className={style.personWorkplace}>
-      {!current && (
+    
+    <section className={classNames(style.tagListContainer)}>
+      <Typography
+        tag="h2"
+        className={classNames('text-gray-800 w-full', style.tagListTitle)}
+        >
+        {tagListTitle}
+      </Typography>
+      {/* {!current && (
         <Typography
           tag="h2"
-          className={classNames(
-            'text-gray-800 w-full my-4',
-            style.affiliationsTitle
-          )}
+          className={classNames('text-gray-800 w-full my-4', style.tagListTitle)}  
         >
           Former Affiliations
         </Typography>
-      )}
+      )} */}
       {isEditModeOn && !currentAffiliations && !currentAffiliations?.length && (
         <button
           onClick={() => handleAddAffiliation(0)}
@@ -94,7 +100,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
       {currentAffiliations?.map((affilitiation, index) => (
         <div
           key={`affiliation-${affilitiation.name}`}
-          className={classNames(style.personWorkplaceItem)}
+          className={classNames(style.tagListContainer)}
         >
           {!isEditModeOn ? (
             affilitiation.arole &&
@@ -103,7 +109,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                 tag="span"
                 className={classNames('backgroundLabelAffiliation', 'pr-4 pl-2')}
               >
-                {affilitiation.arole}:
+                {affilitiation.arole}
               </Typography>
             )
           ) : (
