@@ -78,6 +78,7 @@
 
     --p-border-width-0: 0px;
     --p-border-width-0165: 0.66px;
+    --p-border-width-015: 0.50px;
     --p-border-width-025: 1px;
     --p-border-width-050: 2px;
     --p-border-width-075: 3px;
@@ -121,11 +122,19 @@
     --p-shadow-bevel-100: 1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset, -1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset, 0px -1px 0px 0px rgba(0, 0, 0, 0.17) inset, 0px 1px 0px 0px rgba(204, 204, 204, 0.5) inset;
     --p-shadow-inset-100: 0px 1px 2px 0px rgba(26, 26, 26, 0.15) inset, 0px 1px 1px 0px rgba(26, 26, 26, 0.15) inset;
 
+    --c-avatar-size-10: 10px;
+    --c-avatar-size-30: 30px;
+    --c-avatar-size-50: 50px;
+    --c-avatar-size-100: 100px;
+    --c-avatar-size-150: 150px;
+    --c-avatar-size-180: 180px;
+    --c-avatar-size-200: 200px;
 
     /* special */
     --color-text-brand-label: rgb(234, 233, 236);
     --color-background-brand-tag: rgb(234, 233, 236);
-
+    --color-border-brand-separator: rgb(195, 196, 194, 0.5);
+    
 
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
