@@ -180,7 +180,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           {person.views} views
         </Typography>
       </div>
-      <div className={style.detailsColumn}>
+      <div className={style.detailsColumn, 'w-full'}>
         {/* Person Info Name */}
         {!isEditModeOn ? (
           <Typography tag="h1" className=" text-gray-800">
@@ -196,7 +196,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             // label="Title"
             placeholder="Enter title"
             value={person?.personTag?.name || 'Enter your preffered name'}
-            className="w-72"
+            className="personNameTitle"
             onChange={(e) =>
               updatePersonData({
                 ...person,
@@ -224,6 +224,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <InputText
             // label="Tagline"
             placeholder="Enter tagline"
+            className="personTaglineTitle"
             value={person?.personTag?.tagLine || 'Enter your preffered tagline'}
             onChange={(e) =>
               updatePersonData({

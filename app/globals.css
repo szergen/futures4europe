@@ -16,6 +16,7 @@
     --w-z-index-sticky: 300;
     --w-z-index-auto: auto;
 
+    --w-line-height-normal: 1;
     --w-line-height-condensed: 1.15;
     --w-line-height-heading: 1.25;
     --w-line-height-body: 1.5;
@@ -49,6 +50,7 @@
     --p-font-letter-spacing-tag: -0.14px;
     --p-font-letter-spacing-normal: 0px;
 
+    --w-space-none: 0px;
     --w-space-nano: calc(0.25 / var(--w-base-rem) * 1rem);
     --w-space-micro: calc(0 / var(--w-base-rem) * 1rem);
     --w-space-base: calc(1 / var(--w-base-rem) * 1rem);
@@ -523,14 +525,21 @@
 
   h1,
   .title {
-    @apply text-4xl;
-    @apply font-bold;
+    font-size: var(--w-font-size-xxl);
+    font-weight: var(--w-font-weight-book);
     color: var(--primary-color);
+    line-height: var(--w-font-size-xxl);
+    line-height: var(--w-line-height-heading);
   }
 
   h2 {
     @apply text-base;
     @apply sm:text-xl;
+  }
+
+  h3 {
+    font-size: var(--w-font-size-tag);
+    line-height: var(--w-line-height-heading);
   }
   
 }
@@ -575,4 +584,195 @@ a {
 .errorInputText {
   position: absolute;
   bottom: 0px;
+}
+
+/* de mutat in import FileUplaoder.tsx*/
+  .avatarUpload{
+    position: absolute;
+    transform: translate(0px, 0px);
+    z-index: var(--w-z-index-modal);
+    width: var(--c-avatar-size-150);
+    height: var(--c-avatar-size-150);
+    border-radius: var(--p-border-radius-full);
+    text-align: center;
+    vertical-align: middle;
+    opacity: 0;
+  }
+  .avatarUpload:hover{
+    cursor: pointer;
+    background: var(--color-background-brand-tag);
+    opacity: .77;
+  }
+
+ .avatarUpload svg {
+    text-align: center;
+    position: relative;
+    display: block;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+ }
+
+/* de mutat in import PersonHeader  tsx*/
+ .personNameTitle input{
+  all: unset;
+  font-size: var(--w-font-size-xxl);
+  font-weight: var(--w-font-weight-book);
+  padding: var(--w-space-none);
+  line-height: var(--w-line-height-normal);
+  height: var(--w-space-xxl);
+}
+.personTaglineTitle input {
+  all: unset;
+  font-size: var(--w-font-size-tag);
+  padding: var(--w-space-none);
+  line-height: var(--w-line-height-normal);
+  height: var(--w-space-xxl);
+}
+
+.personDescriptionText *{
+  font-size: var(--w-font-size-section-heading)!important;
+  margin-bottom: var(--w-space-xxl);
+}
+
+/* de mutat in import TagPicker  tsx*/
+.tagPickerPill {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-background-brand-tag);
+  border-radius: var(--p-border-radius-200);
+  height: calc(var(--w-space-xxxl));
+  margin-right: calc(var(--w-space-s));
+}
+
+.tagPickerPill .react-select__multi-value__label{
+  height: calc(var(--w-space-xxl));
+  background: white;
+  margin: 4px;
+  border-radius: var(--p-border-radius-tag);
+  line-height: calc(var(--w-space-xxl));
+  vertical-align: middle;
+  position: relative;
+  padding:0px var(--w-space-s);
+  display: inline-block;
+  text-wrap: nowrap;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--w-font-size-tag);
+  line-height: var(--w-space-xxl);
+  letter-spacing: var(--p-font-letter-spacing-tag);
+}
+.tagPickerPill .react-select__multi-value__remove {
+  position: absolute;
+  right: 8px;
+  width: var(--w-space-xl);
+  height: var(--w-space-xl);
+  border-radius: var(--p-border-radius-tag);
+  opacity: 0;
+}
+.tagPickerPill:hover {
+  cursor: grab;
+}
+.tagPickerPill:hover.tagPickerPill .react-select__multi-value__remove {
+  background: var(--color-text-link-destructive);
+  opacity: 1;
+}
+.react-select__multi-value__remove svg {
+  fill: var(--color-text-weakest);
+  text-align: center;
+  margin: 0 auto;
+  transform: scale(1.5);
+}
+.react-select__dropdown-indicator {
+  display: none!important;
+}
+
+/* single - value */
+.react-select__value-container--has-value:not(.react-select__value-container--is-multi){
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-background-brand-tag);
+  border-radius: var(--p-border-radius-200);
+  height: calc(var(--w-space-xxxl));
+  margin-right: calc(var(--w-space-s));
+}
+.tagPickerPillSingle {
+  height: calc(var(--w-space-xxl));
+  background: white;
+  margin: 4px;
+  border-radius: var(--p-border-radius-tag);
+  line-height: calc(var(--w-space-xxl));
+  vertical-align: middle;
+  position: relative;
+  padding:0px var(--w-space-s);
+  display: inline-block;
+  text-wrap: nowrap;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--w-font-size-tag);
+  line-height: var(--w-space-xxl);
+  letter-spacing: var(--p-font-letter-spacing-tag);
+}
+
+
+/* important in editor rdw */
+/* Initially hide the toolbar */
+.editor-toolbar {
+  display: none!important;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  width: 100%;
+  top: 0;  
+}
+
+/* Show toolbar when editor-wrapper is hovered */
+.rdw-editor-wrapper:hover .editor-toolbar {
+  display: flex !important;
+  opacity: 1;
+  z-index: var(--w-z-index-dropdown);
+  top: -15px;
+  border-width: var(--p-border-width-0);
+}
+
+/* Customize editor container and toolbar */
+.rdw-editor-wrapper {
+  position: relative;
+  padding: 0;
+  transition: border-color 0.3s ease;
+}
+
+.rdw-editor-wrapper:hover {
+  border-color: #888; /* Optional: Change border color on hover */
+}
+
+.editor-content {
+  min-height: auto;
+  padding: 10px;
+  margin-bottom: var(--w-space-xxl);
+}
+.rdw-start-aligned-block *{
+  font-size: var(--w-font-size-section-heading);
+}
+
+/* search */
+
+.searchBox input {
+  border-radius: var(--p-border-radius-600) !important;
+  background: transparent !important;
+  padding: var(--w-space-s);
+  margin: var(--w-space-none);
+}
+
+.searchBox.flex button {
+  margin-left: var(--w-space-m);
+}
+
+footer.footerLayout {
+  background: #000;
 }

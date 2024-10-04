@@ -31,7 +31,8 @@
     flex-direction: column;
   }
   .detailsColumn h1 {
-    font-size: var(--w-font-size-xl);
+    font-size: var(--w-font-size-xxl);
+    height: var(--w-space-xxl);
   }
 }
 

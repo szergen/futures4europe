@@ -187,7 +187,7 @@ const SearchComponentV1 = () => {
 
   return (
     <div>
-      <div className="style.searchBox flex">
+      <div className="searchBox flex">
         <SearchedItems
           searchedItems={searchedItems}
           handleRemoveSearchedItem={handleRemoveSearchedItem}

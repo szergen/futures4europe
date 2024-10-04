@@ -51,11 +51,10 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
   return (
     <Editor
       editorState={editorState}
-      toolbarClassName="toolbarClassName"
-      wrapperClassName="wrapperClassName"
-      editorClassName="editorClassName"
-      // onEditorStateChange={setEditorState}
       onEditorStateChange={setEditorState}
+      toolbarClassName="editor-toolbar"
+      wrapperClassName="editor-container"
+      editorClassName="editor-content"
       toolbar={{
         options: [
           'inline',

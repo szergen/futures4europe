@@ -24,12 +24,12 @@ const Header = () => {
           <Image
             width={60}
             height={60}
-            src="https://picsum.photos/id/195/60/60"
+            src="https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512"
             alt="User Avatar"
             className="w-full h-full object-cover"
           />
         </Link>
-        {userDetails?.userName}
+        {/* {userDetails?.userName} */}
       </div>
     ) : (
       <Link href="/dashboard" className="">

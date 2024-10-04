@@ -561,7 +561,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               ? 'Edit Page'
               : isNewPage
               ? 'Publish Page'
-              : 'Save&Publish Changes'}
+              : 'Save & publish'}
           </button>
           {isEditModeOn && (
             <button
@@ -572,7 +572,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               }}
               className="px-2 py-2 rounded-md text-white bg-green-600 w-40"
             >
-              Discard Changes
+              Discard changes
             </button>
           )}
         </div>

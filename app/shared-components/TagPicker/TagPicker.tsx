@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import { items } from '@wix/data';
 import CreatableSelect from 'react-select/creatable';
+import Select, { components } from 'react-select';
 import classNames from 'classnames';
 import { TagProps } from '../Tag/Tag';
 import { Modal, Button, TextInput, Label } from 'flowbite-react';
@@ -34,6 +35,17 @@ let defaultOptions = [
   createOption('Two'),
   createOption('Three'),
 ];
+
+
+// Custom ClearIndicator component for single-value selects
+const customClearIndicator = (props) => {
+  return props.isMulti ? null : <components.ClearIndicator {...props} />;
+};
+
+// components
+const customComponents = {
+  ClearIndicator: customClearIndicator,
+};
 
 export const TagPicker: React.FC<TagPickerProps> = ({
   isMulti,
@@ -172,12 +184,15 @@ export const TagPicker: React.FC<TagPickerProps> = ({
 
   return (
     <>
-      <div className="flex flex-col mt-2">
+      <div className="flex flex-col mt-2 w-full">
         <Label htmlFor="tagPicker" className="mb-2">
           {tagTypeLabel}
         </Label>
         <CreatableSelect
-          isClearable
+          classNamePrefix="react-select"
+          unstyled
+          components={customComponents}
+          isClearable={true}
           isDisabled={isLoading}
           isLoading={isLoading}
           onChange={handleUpdateData}
@@ -191,9 +206,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             control: (state) =>
               state.isFocused ? 'text-blue-site ' : 'border-grey-300',
             multiValue: () =>
-              '!bg-white !rounded-3xl px-5 shadow-md text-ellipsis',
-            // singleValue: () =>
-            //   '!bg-white !rounded-3xl px-5 shadow-md text-ellipsis !max-w-64',
+              'tagPickerPill z-5',
+            singleValue: () =>
+              'tagPickerPillSingle z-5',
           }}
         />
         {showCreateForm && (
