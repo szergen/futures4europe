@@ -37,21 +37,21 @@ export const TagContainer: React.FC<TagContainerProps> = ({
       {name?.length > 12 ? (
         <span className={classNames(style.tagBody, thumbnailClass, className)}>
           <span className={style.tagBodyText}>
-          <PopoverComponent
-            trigger="hover"
-            popoverContent={name}
-            popoverImage={picture}
-          >
+            <PopoverComponent
+              trigger="hover"
+              popoverContent={name}
+              popoverImage={picture}
+            >
               {tagPageLink ? (
                 <span className={style.name}>
-                    {showThumbnail && (
-                      <TagThumbnail
-                        picture={picture || undefined}
-                        pictureAlt={pictureAlt}
-                        tagCategory={tagCategory}
-                      />
-                    )}
-                    {name}
+                  {showThumbnail && (
+                    <TagThumbnail
+                      picture={picture || undefined}
+                      pictureAlt={pictureAlt}
+                      tagCategory={tagCategory}
+                    />
+                  )}
+                  {name}
                 </span>
               ) : (
                 <span className={style.name}>
@@ -65,19 +65,18 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                   {name}
                 </span>
               )}
-
-          </PopoverComponent>
-          {/* Tag Counter and Trend */}
-          {popularity && (
-            <TagCounter popularity={popularity} tagTrend={tagTrend} />
-          )}
+            </PopoverComponent>
+            {/* Tag Counter and Trend */}
+            {popularity && (
+              <TagCounter popularity={popularity} tagTrend={tagTrend} />
+            )}
           </span>
         </span>
       ) : (
         <span className={classNames(style.tagBody, thumbnailClass, className)}>
           <span className={style.tagBodyText}>
-          {tagPageLink ? (
-            <span className={style.name}>
+            {tagPageLink ? (
+              <span className={style.name}>
                 {showThumbnail && (
                   <TagThumbnail
                     picture={picture || undefined}
@@ -86,23 +85,23 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                   />
                 )}
                 {name}
-            </span>
-          ) : (
-            <span className={style.name}>
-              {showThumbnail && (
-                <TagThumbnail
-                  picture={picture || undefined}
-                  pictureAlt={pictureAlt}
-                  tagCategory={tagCategory}
-                />
-              )}
-              {name}
-            </span>
-          )}
-          {/* Tag Counter and Trend */}
-          {popularity && (
-            <TagCounter popularity={popularity} tagTrend={tagTrend} />
-          )}
+              </span>
+            ) : (
+              <span className={style.name}>
+                {showThumbnail && (
+                  <TagThumbnail
+                    picture={picture || undefined}
+                    pictureAlt={pictureAlt}
+                    tagCategory={tagCategory}
+                  />
+                )}
+                {name}
+              </span>
+            )}
+            {/* Tag Counter and Trend */}
+            {popularity && (
+              <TagCounter popularity={popularity} tagTrend={tagTrend} />
+            )}
           </span>
         </span>
       )}

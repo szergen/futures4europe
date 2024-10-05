@@ -36,7 +36,6 @@ let defaultOptions = [
   createOption('Three'),
 ];
 
-
 // Custom ClearIndicator component for single-value selects
 const customClearIndicator = (props) => {
   return props.isMulti ? null : <components.ClearIndicator {...props} />;
@@ -205,10 +204,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           classNames={{
             control: (state) =>
               state.isFocused ? 'text-blue-site ' : 'border-grey-300',
-            multiValue: () =>
-              'tagPickerPill z-5',
-            singleValue: () =>
-              'tagPickerPillSingle z-5',
+            multiValue: () => 'tagPickerPill z-5',
+            singleValue: () => 'tagPickerPillSingle z-5',
           }}
         />
         {showCreateForm && (

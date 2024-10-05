@@ -69,7 +69,9 @@ export const InputText: React.FC<InputTextProps> = ({
         value={inputValue}
         onChange={handleChange}
       />
-      {error && <p className="errorInputText text-red-500 text-sm mt-2">{error}</p>}{' '}
+      {error && (
+        <p className="errorInputText text-red-500 text-sm mt-2">{error}</p>
+      )}{' '}
     </div>
   );
 };
