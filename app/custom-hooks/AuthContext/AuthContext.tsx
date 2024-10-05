@@ -105,6 +105,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           console.log('contactData', contactData);
         }
         console.log('Logged in as:', currentMember?.member?.profile?.nickname);
+        console.log('currentMember', currentMember);
         updateUserDetails({
           contactId: currentMember?.member?.contactId,
           accountId:

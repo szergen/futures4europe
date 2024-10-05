@@ -1,21 +1,14 @@
 'use client';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import {
-  getItemsForCurrentUser,
-  getContactsItem,
-} from '@app/wixUtils/client-side';
 import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-// import { referencedItemOptions } from '@app/wixUtils/server-side';
 import Link from 'next/link';
-// import { TagProps } from '@app/shared-components/Tag/Tag';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
-// import TagInput from '@app/shared-components/SearchComponentV1/components/TagInput/TagInput';
-import InputText from '@app/shared-components/InputText/InputText';
 import classNames from 'classnames';
+import { members } from '@wix/members';
 
 export default function Dashboard() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -41,6 +34,7 @@ export default function Dashboard() {
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
+  // const { updateMember } = useWixModules(members);
 
   const handleCreatePost = async () => {
     router.push(`/post/New_Post`);
@@ -101,6 +95,7 @@ export default function Dashboard() {
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
+    // Get the user's tag page link
     if (isLoggedIn && tags) {
       const userTag = tags.find(
         (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
@@ -121,26 +116,14 @@ export default function Dashboard() {
     router.push('/login');
   };
 
-  // const handleOnChange = (event: any) => {
-  //   setPostTitle(event.target.value);
+  // const handleChangeNickname = async () => {
+  //   const member = await updateMember(userDetails.contactId, {
+  //     profile: {
+  //       nickname: 'Alexandru-Sergiu Ciobanasu',
+  //     },
+  //   });
+  //   console.log('gotMember', member);
   // };
-
-  // useEffect(() => {
-  //   if (ownedInfoPagesFetched) {
-  //     const personInfoPage = ownedInfoPages.find(
-  //       (infoPage) =>
-  //         infoPage?.data?.pageTypes[0] === 'person info' &&
-  //         infoPage?.data?.slug === userDetails.slug
-  //     );
-  //     if (personInfoPage) {
-  //       setDoesUserHavePersonInfoPage(true);
-  //     }
-  //   }
-  // }, [ownedInfoPages]);
-
-  // useEffect(() => {
-  //   console.log('doesUserHavePersonInfoPage', doesUserHavePersonInfoPage);
-  // }, [doesUserHavePersonInfoPage]);
 
   return (
     <div>
@@ -157,18 +140,6 @@ export default function Dashboard() {
       )}
       <h3></h3>
       <div className="mt-20 flex items-center justify-around">
-        {/* <button
-          onClick={handleGetItemsForCurrentUser}
-          className="bg-blue-600 text-neutral-50 p-4 rounded-md"
-        >
-          Get Items for current User
-        </button> */}
-        {/* <button
-          onClick={handleGetContactItem}
-          className="bg-blue-600 text-neutral-50 p-4 rounded-md"
-        >
-          Get Member
-        </button> */}
         <div className="relative">
           <button
             onClick={handleCreatePost}
