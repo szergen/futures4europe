@@ -1,28 +1,21 @@
 'use client';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import {
-  getItemsForCurrentUser,
-  getContactsItem,
-} from '@app/wixUtils/client-side';
 import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-// import { referencedItemOptions } from '@app/wixUtils/server-side';
 import Link from 'next/link';
-// import { TagProps } from '@app/shared-components/Tag/Tag';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
-// import TagInput from '@app/shared-components/SearchComponentV1/components/TagInput/TagInput';
-import InputText from '@app/shared-components/InputText/InputText';
 import classNames from 'classnames';
+import { members } from '@wix/members';
 
 export default function Dashboard() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
   //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
-  const [postTitle, setPostTitle] = useState('');
+  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
+  const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
     login,
@@ -35,19 +28,13 @@ export default function Dashboard() {
     ownedPostPagesFetched,
     ownedInfoPagesFetched,
     handleUserDataRefresh,
+    tags,
   } = useAuth();
   console.log('Dashboard isLoggedIn', isLoggedIn);
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
-
-  const handleGetItemsForCurrentUser = async () => {
-    const items = await getItemsForCurrentUser(
-      'PostPages',
-      userDetails.contactId.toString()
-    );
-    console.log('getItemsForCurrentUser->items', items);
-  };
+  // const { updateMember } = useWixModules(members);
 
   const handleCreatePost = async () => {
     router.push(`/post/New_Post`);
@@ -58,7 +45,15 @@ export default function Dashboard() {
   };
 
   const handleCreatePersonInfoPage = async () => {
+    if (userInfoPage) {
+      router.push(`/person/${userInfoPage}`);
+      return;
+    }
     router.push(`/person/New_Info_Page`);
+  };
+
+  const handleCreateOrganisation = async () => {
+    router.push(`/organisation/New_Organisation`);
   };
 
   const handleDeletePostPage = async (infoPageId: string) => {
@@ -93,17 +88,6 @@ export default function Dashboard() {
     }
   };
 
-  const handleGetConttem = async () => {
-    const contactData = await getContactsItem(
-      // 'a26a590e-e08c-4a24-a642-9909fa8719ba'
-      userDetails.contactId
-      //   '144948d0-9596-4eda-8135-9a6fec9d1330'
-      //   'c3b01bea-1097-44ea-9618-17c5dc7d1a67'
-      //   'fb7f97b1-1b2c-4205-b06a-197fcaafd205'
-    );
-
-    console.log('contactData', contactData);
-  };
   console.log('loading', loading);
 
   useEffect(() => {
@@ -111,7 +95,15 @@ export default function Dashboard() {
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
-    if (isLoggedIn) {
+    // Get the user's tag page link
+    if (isLoggedIn && tags) {
+      const userTag = tags.find(
+        (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
+      );
+      console.log('userTag', userTag);
+      if (userTag) {
+        setUserInfoPage(userTag?.tagPageLink);
+      }
     }
   }, [isLoggedIn, router, loading]);
 
@@ -124,10 +116,14 @@ export default function Dashboard() {
     router.push('/login');
   };
 
-  // const handleOnChange = (event: any) => {
-  //   setPostTitle(event.target.value);
+  // const handleChangeNickname = async () => {
+  //   const member = await updateMember(userDetails.contactId, {
+  //     profile: {
+  //       nickname: 'Alexandru-Sergiu Ciobanasu',
+  //     },
+  //   });
+  //   console.log('gotMember', member);
   // };
-  console.log('ownedPostPages', ownedPostPages);
 
   return (
     <div>
@@ -144,55 +140,39 @@ export default function Dashboard() {
       )}
       <h3></h3>
       <div className="mt-20 flex items-center justify-around">
-        {/* <button
-          onClick={handleGetItemsForCurrentUser}
-          className="bg-blue-600 text-neutral-50 p-4 rounded-md"
-        >
-          Get Items for current User
-        </button> */}
-        {/* <button
-          onClick={handleGetContactItem}
-          className="bg-blue-600 text-neutral-50 p-4 rounded-md"
-        >
-          Get Member
-        </button> */}
         <div className="relative">
           <button
             onClick={handleCreatePost}
             className={classNames(
-              'bg-green-600 text-neutral-50 p-4 rounded-md',
-              showLoadingCreatePost && 'opacity-50 cursor-not-allowed'
+              'bg-green-600 text-neutral-50 p-4 rounded-md'
             )}
           >
             Create Post
           </button>
-          {showLoadingCreatePost && (
-            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-              <LoadingSpinner />
-            </div>
-          )}
         </div>
         <div className="relative">
           <button
             onClick={handleCreateProject}
-            className={classNames(
-              'bg-blue-800 text-neutral-50 p-4 rounded-md',
-              showLoadingCreatePost && 'opacity-50 cursor-not-allowed'
-            )}
+            className={classNames('bg-blue-800 text-neutral-50 p-4 rounded-md')}
           >
             Create Project
           </button>
-          {showLoadingCreatePost && (
-            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-              <LoadingSpinner />
-            </div>
-          )}
+        </div>
+        <div className="relative">
+          <button
+            onClick={handleCreateOrganisation}
+            className={classNames(
+              'bg-green-800 text-neutral-50 p-4 rounded-md'
+            )}
+          >
+            Create Organisation
+          </button>
         </div>
         <button
           onClick={handleCreatePersonInfoPage}
           className="bg-blue-600 text-neutral-50 p-4 rounded-md"
         >
-          Create Person Info Page
+          {userInfoPage ? 'View Info Page' : 'Create Person Info Page'}
         </button>
         <button
           onClick={handleLogOut}

@@ -240,7 +240,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               }}
               shouldUpdateValueState={isNewPage}
             />
-            {tagLine}
           </>
         )}
         {/* Project Period */}
