@@ -136,7 +136,7 @@
     --color-text-brand-label: rgb(234, 233, 236);
     --color-background-brand-tag: rgb(234, 233, 236);
     --color-border-brand-separator: rgb(195, 196, 194, 0.5);
-    
+    --primary-color:rgb(234, 233, 236);
 
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
@@ -509,6 +509,16 @@
     @apply hover:bg-gray-400;
   }
 
+  .btn-disabled {
+    @apply text-gray-600;
+    @apply hover:text-white;
+    @apply bg-gray-400;
+    @apply border-gray-400;
+    @apply hover:bg-gray-400;  
+    @apply pointer-events-none;
+    @apply opacity-50;
+  }
+
   input {
     @apply block;
     @apply w-full;
@@ -518,9 +528,9 @@
     @apply focus:outline-none;
     @apply mb-4;
     /* de vazut de unde se extrage style pentru inputuri * layout.css */
-    border: none!important;
+    /* border: none!important;
     background: linear-gradient(270deg, #ffffff, #f1f1f1)!important;
-    border-radius: var(--p-border-radius-0)!important;
+    border-radius: var(--p-border-radius-0)!important; */
   }
 
   h1,
@@ -560,6 +570,28 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* Override default focus colors for tailwindcss-forms https://github.com/tailwindlabs/tailwindcss-forms */
+[type='text']:focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='checkbox']:focus,
+[type='radio']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+  --tw-ring-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 
