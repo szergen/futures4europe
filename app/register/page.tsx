@@ -10,7 +10,6 @@ import {
   Label,
   TextInput,
   Alert,
-  f4eTheme,
 } from 'flowbite-react';
 import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
 

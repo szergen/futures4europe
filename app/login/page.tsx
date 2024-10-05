@@ -208,7 +208,6 @@ export default function LoginPage() {
                         <div className="flex max-w-md flex-col gap-4">
                           <div className="flex items-center gap-2">
                             <Checkbox
-                              theme={f4eTheme}
                               id="accept"
                               className="mb-4"
                               defaultChecked
