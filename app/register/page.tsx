@@ -9,7 +9,7 @@ import {
   Checkbox,
   Label,
   TextInput,
-  Alert
+  Alert,
 } from 'flowbite-react';
 import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
 
