@@ -21,6 +21,7 @@ const Header = () => {
     };  
 
     // SVGs Icons
+    // TODO: move to global SVG import
     const DashboardIcon = () => (
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
@@ -56,8 +57,6 @@ const Header = () => {
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
       
-
-
     <Dropdown
       label={<Avatar alt="User settings" img="https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512" rounded />}
       arrowIcon={true}
@@ -67,7 +66,7 @@ const Header = () => {
       <span className="block text-sm">{userDetails?.userName}</span>
       <span className="block text-sm">{userDetails?.email}</span>
       </Dropdown.Header>
-      <Dropdown.Item icon={DashboardIcon}><Link  href="/dashboard"> Dashboard </Link></Dropdown.Item>
+      <Dropdown.Item icon={DashboardIcon}><Link href="/dashboard"> Dashboard </Link></Dropdown.Item>
         <Dropdown.Item icon={AddPostIcon}>Settings</Dropdown.Item>
         <Dropdown.Item icon={DashboardIcon}>Earnings</Dropdown.Item>
       <Dropdown.Divider />
