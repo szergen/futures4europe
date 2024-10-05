@@ -180,7 +180,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           {person.views} views
         </Typography>
       </div>
-      <div className={style.detailsColumn, 'w-full'}>
+      <div className={style.detailsColumn}>
         {/* Person Info Name */}
         {!isEditModeOn ? (
           <Typography tag="h1" className=" text-gray-800">
