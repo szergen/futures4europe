@@ -14,7 +14,7 @@ const mockPost = (pageTitle: string) => {
       'Deep-Learning and HPC to Boost Biomedical Applications for Health',
     content: `
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit
-    <a href="https://google.com">https://google.com</a></p>
+    <a tagPageLink="https://google.com">https://google.com</a></p>
     <p>https://google.com</p>
     <p>https://google.com</p>
     `,
@@ -35,53 +35,53 @@ const mockPost = (pageTitle: string) => {
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
     ],
     projectAuthors: [
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Dan Lardsen',
         picture: 'https://picsum.photos/id/165/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Ava Pericolini',
         picture: 'https://picsum.photos/id/175/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
     ],
     project: {
       name: 'Project H2020',
       popularity: 253,
       picture: 'https://picsum.photos/id/155/147/147',
-      href: '/project/H2020',
+      tagPageLink: '/project/H2020',
     },
     organisation: {
       name: 'ISINOVA',
       popularity: 253,
       picture: 'https://picsum.photos/id/155/147/147',
-      href: '/organisation/ISINOVA',
+      tagPageLink: '/organisation/ISINOVA',
     },
     eventSpeakers: [
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
     ],
     foreSightMethods: [
@@ -92,7 +92,7 @@ const mockPost = (pageTitle: string) => {
       {
         name: 'Delphi Method',
         popularity: 153,
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         picture: 'https://picsum.photos/id/185/300/300',
       },
     ],
@@ -124,13 +124,13 @@ const mockPost = (pageTitle: string) => {
     ],
     files: [
       {
-        href: '/files/1.pdf',
+        tagPageLink: '/files/1.pdf',
         title: 'Styleguide',
         fileSize: '2.3 MB',
         format: 'PDF',
       },
       {
-        href: '/files/2.pdf',
+        tagPageLink: '/files/2.pdf',
         title: 'Description',
         fileSize: '2.1 MB',
         format: 'PDF',
@@ -146,17 +146,17 @@ const mockPost = (pageTitle: string) => {
     },
     links: [
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'Anticipation and monitoring of emerging technologies and disruptive innovation',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'An Interview of transforming Innovation Ecosystems Towards Sustainability',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description: ' NEXT conference overview',
       },
     ],
@@ -164,68 +164,68 @@ const mockPost = (pageTitle: string) => {
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
     ],
     eventHostOrganisations: [
       {
         name: 'European Commission',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/European_Commission',
+        tagPageLink: '/organisation/European_Commission',
       },
       {
         name: 'French National Centre for Scientific Research',
         picture: 'https://picsum.photos/id/154/147/147',
-        href: '/organisation/European_Commission',
+        tagPageLink: '/organisation/European_Commission',
       },
       {
         name: 'ISINOVA',
         picture: 'https://picsum.photos/id/153/147/147',
-        href: '/organisation/European_Commission',
+        tagPageLink: '/organisation/European_Commission',
       },
     ],
     people: [
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Dan Lardsen',
         picture: 'https://picsum.photos/id/165/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Ava Pericolini',
         picture: 'https://picsum.photos/id/175/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
     ],
     participants: [
       {
         name: 'Eva Pericolini',
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Dan Lardsen',
         picture: 'https://picsum.photos/id/165/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
       {
         name: 'Ava Pericolini',
         picture: 'https://picsum.photos/id/175/147/147',
-        href: '/person/Eva_Pericolini',
+        tagPageLink: '/person/Eva_Pericolini',
       },
     ],
   };
@@ -278,21 +278,21 @@ const mockPerson = (pageTitle: string) => {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: 'Coordinator',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
     ],
@@ -301,21 +301,21 @@ const mockPerson = (pageTitle: string) => {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: 'Coordinator',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
     ],
@@ -324,14 +324,14 @@ const mockPerson = (pageTitle: string) => {
         name: 'ISINOVA',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Foresight, Strategy and Innovation',
       },
       {
         name: 'UEFISCDI',
         popularity: 253,
         picture: 'https://picsum.photos/id/145/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Quantum Computing',
       },
     ],
@@ -340,14 +340,14 @@ const mockPerson = (pageTitle: string) => {
         name: 'ISINOVA',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Foresight, Strategy and Innovation',
       },
       {
         name: 'UEFISCDI',
         popularity: 253,
         picture: 'https://picsum.photos/id/145/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Quantum Computing',
       },
     ],
@@ -359,7 +359,7 @@ const mockPerson = (pageTitle: string) => {
       {
         name: 'Delphi Method',
         popularity: 153,
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         picture: 'https://picsum.photos/id/185/300/300',
       },
     ],
@@ -391,13 +391,13 @@ const mockPerson = (pageTitle: string) => {
     ],
     files: [
       {
-        href: '/files/1.pdf',
+        tagPageLink: '/files/1.pdf',
         title: 'Styleguide',
         fileSize: '2.3 MB',
         format: 'PDF',
       },
       {
-        href: '/files/2.pdf',
+        tagPageLink: '/files/2.pdf',
         title: 'Description',
         fileSize: '2.1 MB',
         format: 'PDF',
@@ -405,17 +405,17 @@ const mockPerson = (pageTitle: string) => {
     ],
     links: [
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'Anticipation and monitoring of emerging technologies and disruptive innovation',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'An Interview of transforming Innovation Ecosystems Towards Sustainability',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description: ' NEXT conference overview',
       },
     ],
@@ -455,21 +455,21 @@ const mockOrganisation = (pageTitle: string) => {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: 'Coordinator',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
     ],
@@ -478,14 +478,14 @@ const mockOrganisation = (pageTitle: string) => {
         name: 'Eva Pericolini',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Foresight, Strategy and Innovation',
       },
       {
         name: 'Dan Lardsen',
         popularity: 253,
         picture: 'https://picsum.photos/id/145/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Quantum Computing',
       },
     ],
@@ -494,14 +494,14 @@ const mockOrganisation = (pageTitle: string) => {
         name: 'ISINOVA',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Foresight, Strategy and Innovation',
       },
       {
         name: 'UEFISCDI',
         popularity: 253,
         picture: 'https://picsum.photos/id/145/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Quantum Computing',
       },
     ],
@@ -513,7 +513,7 @@ const mockOrganisation = (pageTitle: string) => {
       {
         name: 'Delphi Method',
         popularity: 153,
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         picture: 'https://picsum.photos/id/185/300/300',
       },
     ],
@@ -551,19 +551,19 @@ const mockOrganisation = (pageTitle: string) => {
       {
         name: 'Delphi Method',
         popularity: 153,
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         picture: 'https://picsum.photos/id/185/300/300',
       },
     ],
     files: [
       {
-        href: '/files/1.pdf',
+        tagPageLink: '/files/1.pdf',
         title: 'Styleguide',
         fileSize: '2.3 MB',
         format: 'PDF',
       },
       {
-        href: '/files/2.pdf',
+        tagPageLink: '/files/2.pdf',
         title: 'Description',
         fileSize: '2.1 MB',
         format: 'PDF',
@@ -571,17 +571,17 @@ const mockOrganisation = (pageTitle: string) => {
     ],
     links: [
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'Anticipation and monitoring of emerging technologies and disruptive innovation',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'An Interview of transforming Innovation Ecosystems Towards Sustainability',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description: ' NEXT conference overview',
       },
     ],
@@ -636,21 +636,21 @@ const mockProject = (pageTitle: string) => {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: 'Coordinator',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
       {
         name: 'Project H2020',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/project/H2020',
+        tagPageLink: '/project/H2020',
         arole: '',
       },
     ],
@@ -659,14 +659,14 @@ const mockProject = (pageTitle: string) => {
         name: 'Eva Pericolini',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Foresight, Strategy and Innovation',
       },
       {
         name: 'Dan Lardsen',
         popularity: 253,
         picture: 'https://picsum.photos/id/145/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Professor of Quantum Computing',
       },
     ],
@@ -675,14 +675,14 @@ const mockProject = (pageTitle: string) => {
         name: 'ISINOVA',
         popularity: 253,
         picture: 'https://picsum.photos/id/155/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Coordintor',
       },
       {
         name: 'UEFISCDI',
         popularity: 253,
         picture: 'https://picsum.photos/id/145/147/147',
-        href: '/organisation/ISINOVA',
+        tagPageLink: '/organisation/ISINOVA',
         arole: 'Partner',
       },
     ],
@@ -720,19 +720,19 @@ const mockProject = (pageTitle: string) => {
       {
         name: 'Delphi Method',
         popularity: 153,
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         picture: 'https://picsum.photos/id/185/300/300',
       },
     ],
     files: [
       {
-        href: '/files/1.pdf',
+        tagPageLink: '/files/1.pdf',
         title: 'Styleguide',
         fileSize: '2.3 MB',
         format: 'PDF',
       },
       {
-        href: '/files/2.pdf',
+        tagPageLink: '/files/2.pdf',
         title: 'Description',
         fileSize: '2.1 MB',
         format: 'PDF',
@@ -740,17 +740,17 @@ const mockProject = (pageTitle: string) => {
     ],
     links: [
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'Anticipation and monitoring of emerging technologies and disruptive innovation',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description:
           'An Interview of transforming Innovation Ecosystems Towards Sustainability',
       },
       {
-        href: 'https://google.com',
+        tagPageLink: 'https://google.com',
         description: ' NEXT conference overview',
       },
     ],

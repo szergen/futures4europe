@@ -11,7 +11,7 @@ export type TagProps = {
   editable?: boolean;
   className?: string;
   tagCategory?: TagCategories;
-  href?: string;
+  tagPageLink?: string;
   picture?: string;
   pictureAlt?: string;
   popularity?: number;
@@ -24,7 +24,7 @@ export const Tag: React.FC<TagProps> = ({
   editable,
   className,
   tagCategory,
-  href,
+  tagPageLink,
   popularity,
   tagTrend,
   picture,
@@ -80,14 +80,14 @@ export const Tag: React.FC<TagProps> = ({
       )}
       {isShown && (
         <div className={classNames('m-1', style.tagContainer)}>
-          {href ? (
+          {tagPageLink ? (
             // <PopoverComponent
             //   trigger="hover"
             //   // popoverTitle={tagCategory}
             //   popoverContent={name}
             //   popoverImage={picture}
             // >
-            <Link href={href} className={style.tagLink}>
+            <Link tagPageLink={tagPageLink} className={style.tagLink}>
               <TagContainer
                 name={name}
                 editable={editable}
@@ -98,7 +98,7 @@ export const Tag: React.FC<TagProps> = ({
                 picture={picture}
                 pictureAlt={pictureAlt}
                 onClick={onClick}
-                href={href}
+                tagPageLink={tagPageLink}
               />
             </Link>
           ) : (

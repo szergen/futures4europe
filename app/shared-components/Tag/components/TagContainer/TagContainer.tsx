@@ -15,7 +15,7 @@ export type TagContainerProps = {
   pictureAlt?: string;
   popularity?: number;
   tagTrend?: number;
-  href?: string;
+  tagPageLink?: string;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -26,7 +26,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   tagTrend,
   picture,
   pictureAlt,
-  href,
+  tagPageLink,
 }) => {
   const showThumbnail = picture || tagCategory === 'person';
 
@@ -41,7 +41,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
             popoverImage={picture}
           >
             <div className="inline-flex">
-              {href ? (
+              {tagPageLink ? (
                 <span className={style.name}>
                   <strong>
                     {showThumbnail && (
@@ -75,7 +75,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
         </span>
       ) : (
         <span className={classNames(style.tagBody, className)}>
-          {href ? (
+          {tagPageLink ? (
             <span className={style.name}>
               <strong>
                 {showThumbnail && (

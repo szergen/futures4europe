@@ -49,7 +49,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
               <Tag
                 name={tagData.name}
                 popularity={tagData.popularity}
-                href={tagData.pageLink}
+                tagPageLink={tagData.pageLink}
                 picture={tagData.picture}
               />
             )}
@@ -62,7 +62,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
           <Tag
             name={tagData.name}
             popularity={tagData.popularity}
-            href={tagData.pageLink}
+            tagPageLink={tagData.pageLink}
             picture={tagData.picture}
           />
         </span>
@@ -98,7 +98,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
           <Tag
             name={item.searchItem}
             // popularity={tagData.popularity}
-            // href={tagData.pageLink}
+            // tagPageLink={tagData.pageLink}
             // picture={tagData.picture}
           />
         </span>

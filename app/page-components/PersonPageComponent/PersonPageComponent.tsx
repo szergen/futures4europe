@@ -99,6 +99,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     ), //done
     projectsCoordindation: person?.data?.personProjectCoordonation, // done
     projectsParticipation: person?.data?.personProjectParticipation, // done
+    slug: person?.data?.slug,
   };
   // #endregion
 
@@ -318,7 +319,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${personData.title.replace(/ /g, '_')}`);
+    await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
   };
@@ -512,6 +513,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Revalidate the cache for the page
     await revalidateDataItem(`/person/${newPersonInfoSlug}`);
+    handleUserDataRefresh();
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);
@@ -541,7 +543,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   return (
     <div className={classNames(style.personContainer)}>
-      {/* Edit buttons */}
+      {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div>
           <button
