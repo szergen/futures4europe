@@ -189,7 +189,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <InputText
-            className=' textPostTitleEdit InputRequired'
+            className=" textPostTitleEdit InputRequired"
             label=""
             placeholder="Enter the post title*"
             value={post?.title || 'Enter the post title*'}

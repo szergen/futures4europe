@@ -73,12 +73,11 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   };
 
   return (
-    
     <section className={classNames(style.tagListContainer)}>
       <Typography
         tag="h2"
         className={classNames('text-gray-800 w-full', style.tagListTitle)}
-        >
+      >
         {tagListTitle}
       </Typography>
       {/* {!current && (
@@ -109,7 +108,10 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             affilitiation.name && (
               <Typography
                 tag="span"
-                className={classNames('backgroundLabelAffiliation', 'pr-4 pl-2')}
+                className={classNames(
+                  'backgroundLabelAffiliation',
+                  'pr-4 pl-2'
+                )}
               >
                 {affilitiation.arole}
               </Typography>
