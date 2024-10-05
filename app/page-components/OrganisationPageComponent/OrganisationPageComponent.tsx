@@ -645,7 +645,7 @@ function OrganisationPageComponent({
         }
         tags={tags.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
-      />      
+      />
       {/* Organisation Description */}
       <PersonDescriptionComponent
         description={organisationData.description}
