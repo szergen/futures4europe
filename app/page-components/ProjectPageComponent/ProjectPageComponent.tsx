@@ -9,8 +9,7 @@ import DescriptionComponent from '../shared-page-components/DescriptionComponent
 import TagListComponent from '../shared-page-components/TagListComponent/TagListComponent';
 import AffiliationsComponent from '../PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
-import ExternalLinksComponent from '../shared-page-components/ExternalLinksComponent/ExternalLinksComponent';
-import { mockProject, projectResults } from '../../mocks/pagesMocks';
+import { mockProject } from '../../mocks/pagesMocks';
 // import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
@@ -89,6 +88,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       }; //done
     }), //done
     registrationDate: project?.data?._createdDate['$date'], //done-system field
+    slug: project?.data?.slug, //done
   };
   // #endregion
 
@@ -334,14 +334,14 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     const newProjectInfoSlug = newProjectInfo?.dataItem?.data?.slug;
 
     // #region Update Author Tag and Project Tag
-    const projectTag = tags.find(
-      (tag) => tag.name === projectData?.projectTag?.name
-    );
+    const projectTag = projectData?.projectTag;
 
-    if (newProjectInfoId && projectTag) {
+    const userTag = tags.find((tag) => tag.name === userDetails?.userName);
+
+    if (newProjectInfoId && projectTag && userTag) {
       const updatedAuthor = await replaceDataItemReferences(
         'InfoPages',
-        [projectTag._id],
+        [userTag._id],
         'Author',
         newProjectInfoId
       );

@@ -4,6 +4,12 @@ import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
+import { useEffect, useState } from 'react';
+import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFileUploader/InfoPagesImageFileUploader';
+import InputText from '@app/shared-components/InputText/InputText';
+import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import DatePickerComponent from '@app/shared-components/DatePickerComponent/DatePickerComponent';
+import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 
 export type HeaderComponentProps = {
   organisation: {
@@ -27,24 +33,93 @@ export type HeaderComponentProps = {
     organisationTag: TagProps & { tagLine: string };
     activity: Array<TagProps>;
   };
+  isEditModeOn?: boolean;
+  updateOrganisationData: (data: any) => void;
+  updateOrganisationDataOnKeyValue: (key: string, value: any) => void;
+  tags?: TagProps[];
+  handleTagCreated?: () => void;
+  setValidationState: (data: any) => void;
+  isNewPage?: boolean;
 };
 
-const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
+const HeaderComponent: React.FC<HeaderComponentProps> = ({
+  organisation,
+  isEditModeOn,
+  updateOrganisationData,
+  updateOrganisationDataOnKeyValue,
+  tags,
+  handleTagCreated,
+  setValidationState,
+  isNewPage,
+}) => {
+  const validationFunctionForName = (tempName: string) => {
+    if (tempName.length < 5) {
+      return 'Title should be at least 5 characters long';
+    }
+    if (tempName.length > 30) {
+      return 'Title should be at most 30 characters long';
+    }
+    if (tempName === 'New Post') {
+      return 'Title cannot be "New Post"';
+    }
+    if (tempName === 'New Post') {
+      return 'Title cannot be "New Post "';
+    }
+    // const isTempTitleExisting = existingPostPagesTitles?.some(
+    //   (postPageTitle) =>
+    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
+    // );
+    // if (isTempTitleExisting) {
+    //   return 'Title already exists';
+    // }
+    return '';
+  };
+
+  // if is newPage, update the projectTag with the new tag created or selected
+  // const [projectTag, setProjectTag] = useState(project?.projectTag);
+  const [tagLine, setTagLine] = useState(
+    organisation?.organisationTag?.tagLine || ''
+  );
+
+  useEffect(() => {
+    console.log('project?.projectTag?.name', organisation?.organisationTag);
+    // setProjectTag(project?.projectTag);
+    setTagLine(organisation?.organisationTag?.tagLine || '');
+  }, [organisation?.organisationTag]);
+
+  useEffect(() => {
+    console.log('tagLine', tagLine);
+  }, [tagLine]);
+
   return (
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
-        <Image
-          src={getImageUrlForMedia(
-            organisation?.organisationTag?.picture ||
-              'https://placehold.co/147x147?text=Profile Image',
-            147,
-            147
-          )}
-          width={147}
-          height={147}
-          className={classNames('rounded-full')}
-          alt={`User Avatar - ${organisation.title}`}
-        />
+        {!isEditModeOn ? (
+          <Image
+            src={
+              getImageUrlForMedia(organisation?.organisationTag?.picture)
+                ?.url ||
+              getImageUrlForMedia(organisation?.organisationTag?.picture) ||
+              'https://placehold.co/147x147?text=Profile Image'
+            }
+            width={147}
+            height={147}
+            className={classNames('rounded-full')}
+            alt={`Organisation Image - ${organisation?.organisationTag?.name}`}
+          />
+        ) : (
+          <div className="w-72">
+            <InfoPagesImageFileUploader
+              currentImage={organisation?.organisationTag?.picture}
+              updatePostData={(value) =>
+                updateOrganisationDataOnKeyValue('organisationTag', {
+                  ...organisation?.organisationTag,
+                  picture: value,
+                })
+              }
+            />
+          </div>
+        )}
         {/* Social Icons */}
         {/* Social Icons */}
         <div className={style.socialIcons}>
@@ -92,14 +167,54 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
       </div>
       <div className={style.detailsColumn}>
         {/* Organisation Info Name */}
-        <Typography tag="h1" className=" text-gray-800">
-          {organisation?.organisationTag?.name}
-          {/* Organisation Popularity */}
-          <span
-            data-after={organisation?.organisationTag?.popularity}
-            className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
-          ></span>
-        </Typography>
+        {!isEditModeOn ? (
+          <Typography tag="h1" className=" text-gray-800">
+            {organisation?.organisationTag?.name}
+            {/* Organisation Popularity */}
+            <span
+              data-after={organisation?.organisationTag?.popularity}
+              className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
+            ></span>
+          </Typography>
+        ) : !isNewPage ? (
+          <InputText
+            // label="Title"
+            placeholder="Enter title"
+            value={
+              organisation?.organisationTag?.name || 'Enter your preffered name'
+            }
+            className="w-72"
+            onChange={(e) =>
+              updateOrganisationData({
+                ...organisation,
+                title: e?.target?.value,
+                organisationTag: {
+                  ...organisation?.organisationTag,
+                  name: e?.target?.value,
+                },
+              })
+            }
+            validate={validationFunctionForName}
+            setValidationState={
+              setValidationState
+                ? (value) => setValidationState({ title: value })
+                : undefined
+            }
+          />
+        ) : (
+          <TagPicker
+            placeholder="Select Project Tag or Create New"
+            tags={tags?.filter(
+              (tag) => tag.tagType === 'organisation' && !tag?.tagPageLink
+            )}
+            className="w-80"
+            updatePostData={(value) =>
+              updateOrganisationDataOnKeyValue('organisationTag', value)
+            }
+            tagType="organisation"
+            onTagCreated={handleTagCreated}
+          />
+        )}
         {/* Founded */}
         <div className="flex items-center my-2">
           <svg
@@ -116,22 +231,93 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ organisation }) => {
               d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
             />
           </svg>
-          <Typography tag="span" className="text-gray-800 italic text-xs ml-2">
-            {organisation.organisationEstablishedDate}
-          </Typography>
+          {!isEditModeOn ? (
+            <Typography
+              tag="span"
+              className="text-gray-800 italic text-xs ml-2"
+            >
+              {organisation?.organisationEstablishedDate &&
+                formatDate(organisation?.organisationEstablishedDate)}
+            </Typography>
+          ) : (
+            <DatePickerComponent
+              date={
+                isNewPage || !organisation?.organisationEstablishedDate
+                  ? new Date(Date.now())
+                  : new Date(organisation?.organisationEstablishedDate)
+              }
+              onChange={(value) =>
+                updateOrganisationDataOnKeyValue(
+                  'organisationEstablishedDate',
+                  value.toISOString()
+                )
+              }
+            />
+          )}
         </div>
         {/* Tagline */}
-        <Typography tag="h3" className="text-gray-800 italic">
-          {organisation?.organisationTag?.tagLine}
-        </Typography>
+        {!isEditModeOn ? (
+          <Typography tag="h3" className="text-gray-800 italic">
+            {tagLine}
+          </Typography>
+        ) : (
+          <>
+            <InputText
+              placeholder="Enter tagline"
+              value={tagLine}
+              onChange={(e) => {
+                updateOrganisationData({
+                  ...organisation,
+                  organisationTag: {
+                    ...organisation.organisationTag,
+                    tagLine: e.target.value,
+                  },
+                });
+                setTagLine(e.target.value);
+              }}
+              shouldUpdateValueState={isNewPage}
+            />
+          </>
+        )}
         {/* Organisation domains */}
         <div className={style.domains}>
-          {organisation.activity.map((activity) => (
-            <Tag key={activity.name} {...activity} />
-          ))}
+          {!isEditModeOn ? (
+            organisation?.activity?.map((activity) => (
+              <Tag key={activity.name} {...activity} />
+            ))
+          ) : (
+            <TagPicker
+              tags={tags?.filter((tag) => tag?.tagType === 'person type')}
+              className="w-full"
+              isMulti
+              selectedValues={organisation?.activity?.map(
+                (activity) => activity?.name
+              )}
+              updatePostData={(value) => {
+                updateOrganisationDataOnKeyValue('activity', value);
+              }}
+              tagType={'person type'}
+              onTagCreated={handleTagCreated}
+              placeholder="Select Activity Interests"
+            />
+          )}
         </div>
         {/* Organisation Country */}
-        <Tag {...organisation.countryTag} />
+        {!isEditModeOn ? (
+          <Tag {...organisation.countryTag} />
+        ) : (
+          <TagPicker
+            placeholder={'Select Country'}
+            tags={tags?.filter((tag) => tag?.tagType === 'country')}
+            className="w-80"
+            selectedValue={organisation?.countryTag?.name || undefined}
+            updatePostData={(value) =>
+              updateOrganisationDataOnKeyValue('countryTag', value)
+            }
+            tagType="country"
+            onTagCreated={handleTagCreated}
+          />
+        )}
       </div>
     </div>
   );
