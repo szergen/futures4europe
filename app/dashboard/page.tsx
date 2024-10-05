@@ -61,6 +61,10 @@ export default function Dashboard() {
     router.push(`/person/New_Info_Page`);
   };
 
+  const handleCreateOrganisation = async () => {
+    router.push(`/organisation/New_Organisation`);
+  };
+
   const handleDeletePostPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
     try {
@@ -181,6 +185,22 @@ export default function Dashboard() {
             )}
           >
             Create Project
+          </button>
+          {showLoadingCreatePost && (
+            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+              <LoadingSpinner />
+            </div>
+          )}
+        </div>
+        <div className="relative">
+          <button
+            onClick={handleCreateOrganisation}
+            className={classNames(
+              'bg-green-800 text-neutral-50 p-4 rounded-md',
+              showLoadingCreatePost && 'opacity-50 cursor-not-allowed'
+            )}
+          >
+            Create Organisation
           </button>
           {showLoadingCreatePost && (
             <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
