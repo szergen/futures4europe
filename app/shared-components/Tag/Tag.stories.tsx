@@ -16,7 +16,7 @@ Default.args = {
   editable: true,
   //   className: 'bg-blue-500',
   //   tagCategory: TagCategories.person,
-  href: 'https://www.google.com',
+  tagPageLink: 'https://www.google.com',
   picture: 'https://picsum.photos/id/101/140/140',
   pictureAlt: 'picture',
   popularity: 5,

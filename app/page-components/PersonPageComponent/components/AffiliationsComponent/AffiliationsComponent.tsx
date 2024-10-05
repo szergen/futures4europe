@@ -18,6 +18,7 @@ export type AffiliationsComponentProps = {
   updatePersonDataAffiliations?: (affiliations: any) => void;
   tags?: TagProps[];
   handleTagCreated?: () => void;
+  title?: string;
 };
 
 const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
@@ -27,6 +28,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   updatePersonDataAffiliations,
   tags,
   handleTagCreated,
+  title,
 }) => {
   const [currentAffiliations, setCurrentAffiliations] = useState(afiliations);
 
@@ -78,7 +80,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             style.affiliationsTitle
           )}
         >
-          Former Affiliations
+          {title ? title : 'Former Affiliations'}
         </Typography>
       )}
       {isEditModeOn && !currentAffiliations && !currentAffiliations?.length && (

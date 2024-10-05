@@ -7,6 +7,9 @@ import { formatDate } from '@app/page-components/PostPageComponent/PostPageCompo
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFileUploader/InfoPagesImageFileUploader';
 import InputText from '@app/shared-components/InputText/InputText';
+import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
+import { useEffect, useState } from 'react';
 
 export type HeaderComponentProps = {
   project: {
@@ -42,6 +45,7 @@ export type HeaderComponentProps = {
   tags?: TagProps[];
   handleTagCreated?: () => void;
   setValidationState: (data: any) => void;
+  isNewPage?: boolean;
 };
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
@@ -52,6 +56,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   handleTagCreated,
   setValidationState,
   tags,
+  isNewPage,
 }) => {
   const validationFunctionForName = (tempName: string) => {
     if (tempName.length < 5) {
@@ -75,6 +80,20 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     // }
     return '';
   };
+
+  // if is newPage, update the projectTag with the new tag created or selected
+  // const [projectTag, setProjectTag] = useState(project?.projectTag);
+  const [tagLine, setTagLine] = useState(project?.projectTag?.tagLine || '');
+
+  useEffect(() => {
+    console.log('project?.projectTag?.name', project?.projectTag);
+    // setProjectTag(project?.projectTag);
+    setTagLine(project?.projectTag?.tagLine || '');
+  }, [project?.projectTag]);
+
+  useEffect(() => {
+    console.log('tagLine', tagLine);
+  }, [tagLine]);
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -159,7 +178,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
             ></span>
           </Typography>
-        ) : (
+        ) : !isNewPage ? (
           <InputText
             // label="Title"
             placeholder="Enter title"
@@ -182,43 +201,105 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 : undefined
             }
           />
+        ) : (
+          <TagPicker
+            placeholder="Select Project Tag or Create New"
+            tags={tags?.filter(
+              (tag) => tag.tagType === 'project' && !tag?.tagPageLink
+            )}
+            className="w-80"
+            updatePostData={(value) =>
+              updateProjectDataOnKeyValue('projectTag', value)
+            }
+            tagType="project"
+            onTagCreated={handleTagCreated}
+          />
         )}
         {/* Tagline */}
         {!isEditModeOn ? (
           <Typography tag="h3" className="text-gray-800 italic">
-            {project?.projectTag?.tagLine}
+            {tagLine}
           </Typography>
         ) : (
-          <InputText
-            // label="Tagline"
-            placeholder="Enter tagline"
-            value={
-              project?.projectTag?.tagLine || 'Enter your preffered tagline'
-            }
-            onChange={(e) =>
-              updateProjectData({
-                ...project,
-                projectTag: {
-                  ...project.projectTag,
-                  tagLine: e.target.value,
-                },
-              })
-            }
-          />
+          <>
+            <InputText
+              placeholder="Enter tagline"
+              // value={
+              //   project?.projectTag?.tagLine || 'Enter your preffered tagline'
+              // }
+              value={tagLine}
+              onChange={(e) => {
+                updateProjectData({
+                  ...project,
+                  projectTag: {
+                    ...project.projectTag,
+                    tagLine: e.target.value,
+                  },
+                });
+                setTagLine(e.target.value);
+              }}
+              shouldUpdateValueState={isNewPage}
+            />
+            {tagLine}
+          </>
         )}
         {/* Project Period */}
-        <Typography
-          tag="p"
-          className="text-gray-500 text-sm font-bold mt-2 mb-2"
-        >
-          {formatDate(project?.projectStartDate)} -{' '}
-          {formatDate(project?.projectEndDate)}
-        </Typography>
+        {!isEditModeOn ? (
+          <Typography
+            tag="p"
+            className="text-gray-500 text-sm font-bold mt-2 mb-2"
+          >
+            {formatDate(project?.projectStartDate)} -{' '}
+            {formatDate(project?.projectEndDate)}
+          </Typography>
+        ) : (
+          <div className="flex items-center mt-4">
+            <span className="mr-4">Start Date</span>
+            <DatePickerRangeComponentDouble
+              dateStart={
+                project?.projectStartDate
+                  ? new Date(project?.projectStartDate)
+                  : undefined
+              }
+              dateEnd={
+                project?.projectEndDate
+                  ? new Date(project?.projectEndDate)
+                  : undefined
+              }
+              handleUpdateStartDate={(date) =>
+                updateProjectDataOnKeyValue(
+                  'projectStartDate',
+                  date.toISOString()
+                )
+              }
+              handleUpdateEndDate={(date) =>
+                updateProjectDataOnKeyValue(
+                  'projectEndDate',
+                  date.toISOString()
+                )
+              }
+            />
+            <span className="ml-4">End Date</span>
+          </div>
+        )}
 
         {/* project funded */}
-        {project.projectFunded && (
+        {!isEditModeOn ? (
           <Tag {...project.projectFunded} className="mb-1" />
+        ) : (
+          <TagPicker
+            placeholder="Select Project Funded"
+            tags={tags?.filter((tag) => tag.tagType === 'project type')}
+            className="w-80"
+            selectedValue={project.projectFunded?.name || undefined}
+            updatePostData={(value) =>
+              updateProjectDataOnKeyValue('projectFunded', value)
+            }
+            tagType="project type"
+            onTagCreated={handleTagCreated}
+          />
         )}
+
         {/* Person domains */}
         {/* <div className={style.domains}>
           {project.domains.slice(0, 3).map((domain) => (
@@ -226,7 +307,22 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           ))}
         </div> */}
         {/* Person Country */}
-        <Tag {...project.countryTag} />
+        {!isEditModeOn ? (
+          <Tag {...project.countryTag} />
+        ) : (
+          <TagPicker
+            placeholder={'Select Country'}
+            tags={tags?.filter((tag) => tag?.tagType === 'country')}
+            className="w-80"
+            selectedValue={project?.countryTag?.name || undefined}
+            updatePostData={(value) =>
+              updateProjectDataOnKeyValue('countryTag', value)
+            }
+            tagType="country"
+            onTagCreated={handleTagCreated}
+            // tagTypeLabel={'Country'}
+          />
+        )}
       </div>
     </div>
   );

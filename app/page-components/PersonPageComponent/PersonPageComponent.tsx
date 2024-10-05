@@ -513,6 +513,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Revalidate the cache for the page
     await revalidateDataItem(`/person/${newPersonInfoSlug}`);
+    handleUserDataRefresh();
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);

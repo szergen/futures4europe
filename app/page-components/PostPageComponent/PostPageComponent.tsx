@@ -564,6 +564,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
 
     // Revalidate the cache for the page
     await revalidateDataItem(`/post/${newPostSlug}`);
+    handleUserDataRefresh();
 
     setIsSaveInProgress(false);
     router.push(`/post/${newPostSlug}`);

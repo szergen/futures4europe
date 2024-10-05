@@ -50,23 +50,11 @@ export default function Dashboard() {
   };
 
   const handleCreatePost = async () => {
-    // setShowLoadingCreatePost(true);
-    // const post = await insertDataItem({
-    //   dataCollectionId: 'PostPages',
-    //   dataItem: {
-    //     data: {
-    //       title: 'New Post',
-    //       subtitle: 'Article Subtitle',
-    //     },
-    //   },
-    // })
-    //   .then(() => {
     router.push(`/post/New_Post`);
-    // })
-    // .finally(() => {
-    //   handleUserDataRefresh();
-    // });
-    // console.log('post', post);
+  };
+
+  const handleCreateProject = async () => {
+    router.push(`/project/New_Project`);
   };
 
   const handleCreatePersonInfoPage = async () => {
@@ -183,24 +171,22 @@ export default function Dashboard() {
               <LoadingSpinner />
             </div>
           )}
-          {/* <LoadingSpinner /> */}
-          {/* {showInputForPost && (
-            <div className="absolute mt-2 flex">
-              <InputText
-                placeholder="Enter Post Title"
-                value={postTitle}
-                onChange={handleOnChange}
-              />
-              <button
-                className="bg-green-600 text-neutral-50 p-2 rounded-md"
-                onClick={() => {
-                  handleCreatePost(postTitle);
-                }}
-              >
-                Create
-              </button>
+        </div>
+        <div className="relative">
+          <button
+            onClick={handleCreateProject}
+            className={classNames(
+              'bg-blue-800 text-neutral-50 p-4 rounded-md',
+              showLoadingCreatePost && 'opacity-50 cursor-not-allowed'
+            )}
+          >
+            Create Project
+          </button>
+          {showLoadingCreatePost && (
+            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+              <LoadingSpinner />
             </div>
-          )} */}
+          )}
         </div>
         <button
           onClick={handleCreatePersonInfoPage}
