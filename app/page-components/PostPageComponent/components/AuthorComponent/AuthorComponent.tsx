@@ -11,7 +11,7 @@ export type AuthorComponentProps = {
   authors: Array<{
     name: string;
     picture: string;
-    href: string;
+    tagPageLink: string;
   }>;
 };
 
@@ -25,7 +25,7 @@ const AuthorComponent: React.FC<AuthorComponentProps> = ({ authors }) => {
         <Tag
           key={`${author.name} - ${index}`}
           name={author.name}
-          href={author.href}
+          tagPageLink={author.tagPageLink}
           picture={author.picture}
         />
       ))}

@@ -11,7 +11,7 @@ export type TagProps = {
   editable?: boolean;
   className?: string;
   tagCategory?: TagCategories;
-  href?: string;
+  tagPageLink?: string;
   picture?: string;
   pictureAlt?: string;
   popularity?: number;
@@ -27,7 +27,7 @@ export const Tag: React.FC<TagProps> = ({
   editable,
   className,
   tagCategory,
-  href,
+  tagPageLink,
   popularity,
   tagTrend,
   picture,
@@ -47,11 +47,10 @@ export const Tag: React.FC<TagProps> = ({
         <span className={style.tagLabel}>{TagCategories?.[tagCategory]}: </span>
       )}
       <div className={classNames('my-1', style.tagContainer)}>
-        {href ? (
-          <Link href={href} className={style.tagLink}>
+        {tagPageLink ? (
+          <Link href={tagPageLink} className={style.tagLink}>
             <TagContainer
               name={name}
-              editable={editable}
               className={className}
               tagCategory={tagCategory}
               popularity={popularity}
@@ -59,13 +58,12 @@ export const Tag: React.FC<TagProps> = ({
               picture={picture}
               pictureAlt={pictureAlt}
               // onClick={onClick}
-              href={href}
+              tagPageLink={tagPageLink}
             />
           </Link>
         ) : (
           <TagContainer
             name={name}
-            editable={editable}
             className={className}
             tagCategory={tagCategory}
             popularity={popularity}

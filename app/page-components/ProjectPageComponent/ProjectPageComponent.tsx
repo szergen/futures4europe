@@ -20,10 +20,15 @@ import {
   revalidateDataItem,
   updateDataItem,
 } from '@app/wixUtils/client-side';
-import { checkIfArrayNeedsUpdate } from '../PostPageComponent/PostPageComponent.utils';
+import {
+  checkIfArrayNeedsUpdate,
+  generateUniqueHash,
+} from '../PostPageComponent/PostPageComponent.utils';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
+import { useWixModules } from '@wix/sdk-react';
+import { items } from '@wix/data';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -68,20 +73,20 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     projectTag: project?.data?.Project[0], //done
     description: project?.data?.description, //done
     countryTag: project?.data?.countryTag[0], //done
-    projectFunded: project?.data?.projectFunded[0],
-    projectStartDate: project?.data?.projectStartDate,
-    projectEndDate: project?.data?.projectEndDate,
+    projectFunded: project?.data?.projectFunded[0], //done
+    projectStartDate: project?.data?.projectStartDate, //done
+    projectEndDate: project?.data?.projectEndDate, //done
     methods: project?.data?.methods, //done
     domains: project?.data?.domains, //done
-    coordinators: project?.data?.projectCoordinator,
-    participants: project?.data?.projectParticipantTeam,
+    coordinators: project?.data?.projectCoordinator, //done
+    participants: project?.data?.projectParticipantTeam, //done
     organisations: project?.data?.projectOrganisationRoles?.map((item: any) => {
       return {
         ...project?.data?.projectOrganisation?.find(
           (org: any) => org?.name === item?.organisation
         ),
         arole: item?.role,
-      };
+      }; //done
     }), //done
     registrationDate: project?.data?._createdDate['$date'], //done-system field
   };
@@ -146,98 +151,139 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // #endregion
 
     // Update page fields
-    // if (
-    //   projectData.description !== defaultProjectData.description ||
-    //   !arraysEqual(
-    //     projectData.organisations,
-    //     defaultProjectData.organisations
-    //   ) ||
-    //   projectData.projectTag.name !== defaultProjectData.projectTag.name
-    // ) {
-    //   const updatedItem = await updateDataItem(
-    //     projectData.dataCollectionId,
-    //     projectData._id,
-    //     {
-    //       _id: projectData._id,
-    //       ...projectData.data,
-    //       title: projectData.projectTag.name,
-    //       description: projectData?.description,
-    //       projectOrganisationRoles: projectData?.currentAfiliations?.map(
-    //         (item: any) => {
-    //           return {
-    //             organisation: item.name,
-    //             role: item.arole,
-    //           };
-    //         }
-    //       ),
-    //     }
-    //   );
-    //   console.log('updatedItem', updatedItem);
-    // }
+    if (
+      projectData.description !== defaultProjectData.description ||
+      !arraysEqual(
+        projectData.organisations,
+        defaultProjectData.organisations
+      ) ||
+      projectData.projectTag.name !== defaultProjectData.projectTag.name
+    ) {
+      const updatedItem = await updateDataItem(
+        projectData.dataCollectionId,
+        projectData._id,
+        {
+          _id: projectData._id,
+          ...projectData.data,
+          title: projectData.projectTag.name,
+          description: projectData?.description,
+          projectStartDate: projectData?.projectStartDate,
+          projectEndDate: projectData?.projectEndDate,
+          projectOrganisationRoles: projectData?.organisations?.map(
+            (item: any) => {
+              return {
+                organisation: item.name,
+                role: item.arole,
+              };
+            }
+          ),
+        }
+      );
+      console.log('updatedItem', updatedItem);
+    }
 
     // Update projectOrganisation
-    // if (
-    //   checkIfArrayNeedsUpdate(
-    //     projectData.organisations,
-    //     defaultProjectData.organisations
-    //   )
-    // ) {
-    //   const updatedOrganisations = await replaceDataItemReferences(
-    //     'InfoPages',
-    //     projectData.organisations?.map((org: any) => org._id),
-    //     'personOrganisation',
-    //     projectData._id
-    //   );
-    //   console.log('updatedOrganisations', updatedOrganisations);
-    // }
+    if (
+      checkIfArrayNeedsUpdate(
+        projectData.organisations,
+        defaultProjectData.organisations
+      )
+    ) {
+      const updatedOrganisations = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.organisations?.map((org: any) => org._id),
+        'projectOrganisation',
+        projectData._id
+      );
+      console.log('updatedOrganisations', updatedOrganisations);
+    }
+
+    // Update Project Funded
+    if (
+      projectData.projectFunded?._id !== defaultProjectData.projectFunded?._id
+    ) {
+      const updatedProjectFunded = await replaceDataItemReferences(
+        'InfoPages',
+        [projectData.projectFunded?._id],
+        'projectFunded',
+        projectData._id
+      );
+      console.log('updatedProjectFunded', updatedProjectFunded);
+    }
 
     // Update Country Tag
-    // if (projectData.countryTag?._id !== defaultProjectData.countryTag?._id) {
-    //   const updatedCountryTag = await replaceDataItemReferences(
-    //     'InfoPages',
-    //     [projectData.countryTag?._id],
-    //     'countryTag',
-    //     projectData._id
-    //   );
-    //   console.log('updatedCountryTag', updatedCountryTag);
-    // }
+    if (projectData.countryTag?._id !== defaultProjectData.countryTag?._id) {
+      const updatedCountryTag = await replaceDataItemReferences(
+        'InfoPages',
+        [projectData.countryTag?._id],
+        'countryTag',
+        projectData._id
+      );
+      console.log('updatedCountryTag', updatedCountryTag);
+    }
 
     // Update Foresight Methods
-    // if (
-    //   checkIfArrayNeedsUpdate(projectData.methods, defaultProjectData.methods)
-    // ) {
-    //   const updatedMethods = await replaceDataItemReferences(
-    //     'InfoPages',
-    //     projectData.methods?.map((method: any) => method._id),
-    //     'methods',
-    //     projectData._id
-    //   );
-    //   console.log('updatedMethods', updatedMethods);
-    // }
+    if (
+      checkIfArrayNeedsUpdate(projectData.methods, defaultProjectData.methods)
+    ) {
+      const updatedMethods = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.methods?.map((method: any) => method._id),
+        'methods',
+        projectData._id
+      );
+      console.log('updatedMethods', updatedMethods);
+    }
     // Update Domains
-    // if (
-    //   checkIfArrayNeedsUpdate(projectData.domains, defaultProjectData.domains)
-    // ) {
-    //   const updatedDomains = await replaceDataItemReferences(
-    //     'InfoPages',
-    //     projectData.domains?.map((domain: any) => domain._id),
-    //     'domains',
-    //     projectData._id
-    //   );
-    //   console.log('updatedDomains', updatedDomains);
-    // }
+    if (
+      checkIfArrayNeedsUpdate(projectData.domains, defaultProjectData.domains)
+    ) {
+      const updatedDomains = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.domains?.map((domain: any) => domain._id),
+        'domains',
+        projectData._id
+      );
+      console.log('updatedDomains', updatedDomains);
+    }
+
+    // Update Coordinators
+    if (
+      checkIfArrayNeedsUpdate(
+        projectData.coordinators,
+        defaultProjectData.coordinators
+      )
+    ) {
+      const updatedCoordinators = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.coordinators?.map((coordinator: any) => coordinator._id),
+        'projectCoordinator',
+        projectData._id
+      );
+      console.log('updatedCoordinators', updatedCoordinators);
+    }
+
+    // Update Participants
+    if (
+      checkIfArrayNeedsUpdate(
+        projectData.participants,
+        defaultProjectData.participants
+      )
+    ) {
+      const updatedParticipants = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.participants?.map((participant: any) => participant._id),
+        'projectParticipantTeam',
+        projectData._id
+      );
+      console.log('updatedParticipants', updatedParticipants);
+    }
 
     // Revalidate the cache for the page
     await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
   };
-  // #endregion
-
-  // #region handle save or create new page
-  // const saveOrCreateHandler = isNewPage
-  //   ? createNewPersonPage
-  //   : updateDataToServer;
   // #endregion
 
   // #region handleProjectInternalLinks
@@ -252,6 +298,207 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   console.log('internalLinks', internalLinks);
   // #endregion
 
+  // #region handle save or create new page
+  const { insertDataItem } = useWixModules(items);
+
+  const createNewProjectPage = async () => {
+    console.log('Creating New Person Info Page');
+    setIsSaveInProgress(true);
+
+    // Create new project info page
+    const newProjectInfo = await insertDataItem({
+      dataCollectionId: 'InfoPages',
+      dataItem: {
+        data: {
+          title: projectData?.projectTag?.name,
+          description: projectData?.description,
+          projectStartDate: projectData?.projectStartDate,
+          projectEndDate: projectData?.projectEndDate,
+          projectOrganisationRoles: projectData?.organisations?.map(
+            (item: any) => {
+              return {
+                organisation: item.name,
+                role: item.arole,
+              };
+            }
+          ),
+          slug:
+            projectData?.projectTag?.name.replace(/ /g, '_') +
+            '_' +
+            generateUniqueHash(),
+        },
+      },
+    });
+
+    const newProjectInfoId = newProjectInfo?.dataItem?._id;
+    const newProjectInfoSlug = newProjectInfo?.dataItem?.data?.slug;
+
+    // #region Update Author Tag and Project Tag
+    const projectTag = tags.find(
+      (tag) => tag.name === projectData?.projectTag?.name
+    );
+
+    if (newProjectInfoId && projectTag) {
+      const updatedAuthor = await replaceDataItemReferences(
+        'InfoPages',
+        [projectTag._id],
+        'Author',
+        newProjectInfoId
+      );
+      console.log('updatedProjectTag', updatedAuthor);
+
+      const updatedProjectTag = await replaceDataItemReferences(
+        'InfoPages',
+        [projectTag._id],
+        'Project',
+        newProjectInfoId
+      );
+      console.log('updatedProjectTag', updatedProjectTag);
+    }
+    // #endregion
+
+    // #region Update Page Type Tag
+    if (projectData.pageType?._id && newProjectInfoId) {
+      const updatedPageTypes = await replaceDataItemReferences(
+        'InfoPages',
+        [projectData.pageType?._id],
+        'pageTypes',
+        newProjectInfoId
+      );
+      console.log('updatedPageTypes', updatedPageTypes);
+    }
+    // #endregion
+
+    // #region Update Country Tag
+    if (projectData.countryTag?._id && newProjectInfoId) {
+      const updatedCountryTag = await replaceDataItemReferences(
+        'InfoPages',
+        [projectData.countryTag?._id],
+        'countryTag',
+        newProjectInfoId
+      );
+      console.log('updatedCountryTag', updatedCountryTag);
+    }
+    // #endregion
+
+    // #region Update Project Funded
+    if (projectData.projectFunded?._id && newProjectInfoId) {
+      const updatedProjectFunded = await replaceDataItemReferences(
+        'InfoPages',
+        [projectData.projectFunded?._id],
+        'projectFunded',
+        newProjectInfoId
+      );
+      console.log('updatedProjectFunded', updatedProjectFunded);
+    }
+    // #endregion
+
+    // #region Update Foresight Methods
+    if (projectData.methods && newProjectInfoId) {
+      const updatedMethods = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.methods?.map((method: any) => method._id),
+        'methods',
+        newProjectInfoId
+      );
+      console.log('updatedMethods', updatedMethods);
+    }
+    // #endregion
+
+    // #region Update Domains
+    if (projectData.domains && newProjectInfoId) {
+      const updatedDomains = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.domains?.map((domain: any) => domain._id),
+        'domains',
+        newProjectInfoId
+      );
+      console.log('updatedDomains', updatedDomains);
+    }
+    // #endregion
+
+    // #region Update Coordinators
+    if (projectData.coordinators && newProjectInfoId) {
+      const updatedCoordinators = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.coordinators?.map((coordinator: any) => coordinator._id),
+        'projectCoordinator',
+        newProjectInfoId
+      );
+      console.log('updatedCoordinators', updatedCoordinators);
+    }
+    // #endregion
+
+    // #region Update Participants
+    if (projectData.participants && newProjectInfoId) {
+      const updatedParticipants = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.participants?.map((participant: any) => participant._id),
+        'projectParticipantTeam',
+        newProjectInfoId
+      );
+      console.log('updatedParticipants', updatedParticipants);
+    }
+    // #endregion
+
+    // #region Update Organisation Roles
+    if (projectData.organisations && newProjectInfoId) {
+      const updatedOrganisations = await replaceDataItemReferences(
+        'InfoPages',
+        projectData.organisations?.map((org: any) => org._id),
+        'projectOrganisation',
+        newProjectInfoId
+      );
+      console.log('updatedOrganisations', updatedOrganisations);
+    }
+    // #endregion
+
+    // #region Update Person Tag
+    // Check if object projectTag has changed
+    if (!deepEqual(projectData?.projectTag, defaultProjectData?.projectTag)) {
+      console.log('projectTag has changed');
+      const updatedProjectTag = await updateDataItem(
+        'Tags',
+        projectData?.projectTag?._id,
+        {
+          _id: projectData.projectTag._id,
+          ...projectData.projectTag,
+          tagPageLink: newProjectInfoSlug,
+        }
+      );
+      console.log('updatedProjectTag', updatedProjectTag);
+    }
+    // #endregion
+
+    // #region Revalidate the cache for the page
+    await revalidateDataItem(`/project/${newProjectInfoSlug}`);
+    handleUserDataRefresh();
+    router.push(`/project/${newProjectInfoSlug}`);
+    setIsSaveInProgress(false);
+    // #endregion
+  };
+
+  const saveOrCreateHandler = isNewPage
+    ? createNewProjectPage
+    : updateDataToServer;
+  // #endregion
+
+  // #region handle for when the page is newly created by associatig the pageType tag
+  useEffect(() => {
+    if (isLoggedIn && projectData && isNewPage) {
+      // const personTag = tags.find((tag) => tag.name === userDetails?.userName);
+      // console.log('debug1->personTag', personTag);
+      // if (personTag) {
+      //   updatePersonDataOnKeyValue('personTag', personTag);
+      // }
+      const projectInfoTag = tags.find((tag) => tag.name === 'project info');
+      console.log('debug1->projectInfoTag', projectInfoTag);
+      if (projectInfoTag) {
+        updateProjectDataOnKeyValue('pageType', projectInfoTag);
+      }
+    }
+  }, [userDetails, tags]);
+
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
@@ -259,7 +506,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         <div>
           <button
             onClick={() => {
-              isEditModeOn && updateDataToServer();
+              isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultProjectData(projectData);
             }}
@@ -291,7 +538,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       )}
       {/* Page Type Tag */}
       <div className={classNames('py-3', style.preHeader)}>
-        <Tag {...project?.pageType} />
+        <Tag {...projectData?.pageType} />
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
@@ -302,45 +549,97 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       </div>
       {/* Project Header */}
       <HeaderComponent
-        project={project}
+        project={projectData}
         isEditModeOn={isEditModeOn}
         updateProjectData={updateProjectnData}
         updateProjectDataOnKeyValue={updateProjectDataOnKeyValue}
         tags={tags}
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
+        isNewPage={isNewPage}
       />
       {/* Project Description */}
-      <DescriptionComponent description={project.description} />
+      <DescriptionComponent
+        description={projectData.description}
+        isEditModeOn={isEditModeOn}
+        handleUpdate={(value) =>
+          updateProjectDataOnKeyValue('description', value)
+        }
+      />
 
       {/* Foresight Methods */}
       <TagListComponent
-        tagList={project.methods}
+        tagList={projectData.methods}
         tagListTitle="Foresight Methods"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        selectedValues={projectData.methods?.map((method: any) => method?.name)}
+        updatePostData={(value) =>
+          updateProjectDataOnKeyValue('methods', value)
+        }
+        tagType="foresight method"
+        handleTagCreated={handleTagCreated}
       />
       {/* Domains */}
-      <TagListComponent tagList={project.domains} tagListTitle="Domains" />
+      <TagListComponent
+        tagList={projectData.domains}
+        tagListTitle="Domains"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        selectedValues={projectData.domains?.map((domain: any) => domain?.name)}
+        updatePostData={(value) =>
+          updateProjectDataOnKeyValue('domains', value)
+        }
+        tagType="domain"
+        handleTagCreated={handleTagCreated}
+      />
       {/* Coordinators */}
       <TagListComponent
-        tagList={project.coordinators}
+        tagList={projectData.coordinators}
         tagListTitle="Coordinators"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        selectedValues={projectData.coordinators?.map(
+          (coordinator: any) => coordinator?.name
+        )}
+        updatePostData={(value) =>
+          updateProjectDataOnKeyValue('coordinators', value)
+        }
+        tagType="person"
+        handleTagCreated={handleTagCreated}
       />
       {/* Participants */}
       <TagListComponent
-        tagList={project.participants}
+        tagList={projectData.participants}
         tagListTitle="Participants"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        selectedValues={projectData.participants?.map(
+          (participant: any) => participant?.name
+        )}
+        updatePostData={(value) =>
+          updateProjectDataOnKeyValue('participants', value)
+        }
+        tagType="person"
+        handleTagCreated={handleTagCreated}
       />
-      {/* Organizations */}
+      {/* Organization Roles */}
       <AffiliationsComponent
-        afiliations={project.organisations}
-        title="Organisations"
+        afiliations={projectData.organisations}
+        title="Organization Roles"
+        isEditModeOn={isEditModeOn}
+        updatePersonDataAffiliations={(value) =>
+          updateProjectDataOnKeyValue('organisations', value)
+        }
+        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        handleTagCreated={handleTagCreated}
       />
       {/* Internal Links */}
       <MiniPagesListComponentPost internalLinks={internalLinks} title="Posts" />
       {/* Files */}
       <FilesComponent files={project.files} />
       {/* External Links */}
-      <ExternalLinksComponent links={project.links} />
+      {/* <ExternalLinksComponent links={project.links} /> */}
       {/* Modal for Saving page */}
       <Modal show={isSaveInProgress} size="md" popup>
         <Modal.Header />

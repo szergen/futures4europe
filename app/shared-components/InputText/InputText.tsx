@@ -11,6 +11,7 @@ export type InputTextProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   validate?: (value: string) => string;
   setValidationState?: (value: any) => void;
+  shouldUpdateValueState?: boolean;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -22,6 +23,7 @@ export const InputText: React.FC<InputTextProps> = ({
   onChange,
   validate,
   setValidationState,
+  shouldUpdateValueState,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
@@ -44,6 +46,9 @@ export const InputText: React.FC<InputTextProps> = ({
       const errorMessage = validate(value);
       setValidationState && setValidationState(errorMessage);
       setError(errorMessage);
+    }
+    if (shouldUpdateValueState) {
+      setInputValue(value);
     }
   }, [value]);
 

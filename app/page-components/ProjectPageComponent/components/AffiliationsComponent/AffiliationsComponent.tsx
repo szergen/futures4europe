@@ -45,7 +45,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           <Tag
             name={affilitiation.name}
             popularity={affilitiation.popularity}
-            href={affilitiation.href}
+            tagPageLink={affilitiation.tagPageLink}
             picture={affilitiation.picture}
           />
         </div>
