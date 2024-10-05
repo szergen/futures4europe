@@ -79,8 +79,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               getImageUrlForMedia(person?.personTag?.picture) ||
               'https://placehold.co/147x147?text=Profile Image'
             }
-            width={147}
-            height={147}
+            width={647}
+            height={647}
             className={classNames('rounded-full')}
             alt={`User Avatar - ${person.title}`}
           />
@@ -104,8 +104,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             className=" rounded-full"
             fill="currentColor"
-            width={32}
-            height={32}
+            width={24}
+            height={24}
             style={{
               color: '#fff',
               backgroundColor: '#0077b5',
@@ -118,8 +118,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           {/* Research Gate */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="32px"
-            height="32px"
+            width={24}
+            height={24}
             version="1.1"
             style={{
               shapeRendering: 'geometricPrecision',
@@ -148,8 +148,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             id="Layer_1"
             x="0px"
             y="0px"
-            width="32px"
-            height="32px"
+            width={24}
+            height={24}
             viewBox="0 0 256 256"
           >
             <path
@@ -196,7 +196,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             // label="Title"
             placeholder="Enter title"
             value={person?.personTag?.name || 'Enter your preffered name'}
-            className="w-72"
+            className="personNameTitle"
             onChange={(e) =>
               updatePersonData({
                 ...person,
@@ -224,6 +224,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <InputText
             // label="Tagline"
             placeholder="Enter tagline"
+            className="personTaglineTitle"
             value={person?.personTag?.tagLine || 'Enter your preffered tagline'}
             onChange={(e) =>
               updatePersonData({

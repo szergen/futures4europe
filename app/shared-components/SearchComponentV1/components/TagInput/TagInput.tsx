@@ -504,7 +504,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // }, [searchState.selectedSuggestionIndex]);
 
   return (
-    <div className={classNames(style.inputContainer)}>
+    <div className={classNames(style.inputContainer, 'flex')}>
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -518,16 +518,32 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={2}
+          strokeWidth={0}
           stroke="currentColor"
           className="w-6 h-6"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-          />
-        </svg>
+        <g>
+          <path d="M 0 24 L 0 0 L 24 0 L 24 24 Z" fill="transparent"></path>
+          <g transform="translate(4.75 3.6)">
+            <g>
+              <path
+                d="M 5.56 1.19 C 2.43 1.53 0 4.18 0 7.4 C 0 10.85 2.8 13.65 6.25 13.65 C 9.53 13.65 12.22 11.12 12.48 7.9 M 14.5 15.65 L 10.75 11.9"
+                fill="transparent"
+                stroke-width="1.49996"
+                stroke="rgb(64,112,244)"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-dasharray=""
+              ></path>
+              <path
+                d="M 12.39 4.74 C 12.294 5.124 11.946 5.4 11.55 5.4 C 11.154 5.4 10.806 5.124 10.71 4.74 L 10.602 4.308 C 10.518 3.984 10.266 3.732 9.942 3.648 L 9.51 3.54 C 9.126 3.444 8.85 3.096 8.85 2.7 C 8.85 2.304 9.126 1.956 9.51 1.86 L 9.942 1.752 C 10.266 1.668 10.518 1.416 10.602 1.092 L 10.71 0.66 C 10.806 0.276 11.154 0 11.55 0 C 11.946 0 12.294 0.276 12.39 0.66 L 12.498 1.092 C 12.582 1.416 12.834 1.668 13.158 1.752 L 13.59 1.86 C 13.974 1.956 14.25 2.304 14.25 2.7 C 14.25 3.096 13.974 3.444 13.59 3.54 L 13.158 3.648 C 12.834 3.732 12.582 3.984 12.498 4.308 Z"
+                fill="rgb(64,112,244)"
+              ></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+
       </button>
     </div>
   );

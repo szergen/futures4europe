@@ -29,7 +29,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         {title}
       </Typography>
 
-      {afiliations.map((affilitiation) => (
+      {afiliations?.map((affilitiation) => (
         <div
           key={`affiliation-${affilitiation.name}`}
           className={classNames(style.personWorkplaceItem)}

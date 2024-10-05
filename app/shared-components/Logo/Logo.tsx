@@ -2,6 +2,7 @@ import React from 'react';
 
 type LogoProps = {
   className?: string;
+  fill: string;
 };
 
 export const Logo: React.FC<LogoProps> = ({ className }) => {
@@ -13,6 +14,7 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
       viewBox="0.3 5.71 116.301 55.41"
       height="64"
       width="118"
+      fill="currentColor"
       data-type="shape"
       role="presentation"
       aria-hidden="true"

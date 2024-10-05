@@ -5,55 +5,78 @@
 }
 .tagContainer {
   display: inline-block;
-  font-family: Oswald, sans-serif;
+  font-family: "Inter", Courier, monospace;
+  line-height: 1;
+  text-transform: capitalize;
+  letter-spacing: -0.01em;
 
   .tagPicture {
-    padding: 0.15em;
     border-radius: 0.45em;
     position: relative;
-    left: -0.2em;
+    max-height: 38px;
   }
 
   .tagCounterBody {
-    display: flex;
-    right: -10px;
+    border-radius: 0.01em;
     position: absolute;
     top: -15px;
+    right: -10px;
   }
 
   .popularity {
     background-color: white;
-    border-radius: 10px;
     font-size: 10px;
     font-weight: 500;
     height: 24px;
     line-height: 10px;
     padding: 4px;
   }
+
   .tagBody {
+    position: relative;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    border: 3px solid #d9d9d9;
-    transition: border 0.3s;
-    border-radius: 0.24em;
-    padding: 0.3em 0.4em;
-    cursor: pointer;
-    height: 38px;
-    margin-right: 0.5em;
-    position: relative;
+    background-color: var(--color-background-brand-tag);
+    border-radius: var(--p-border-radius-200);
+    height: calc(var(--w-space-xxxl));
+    margin-right: calc(var(--w-space-s));
   }
 
   .tagBody:hover {
-    border: 3px solid #a1d4e4;
+    background-color: #9c8af1;
+  }
+
+  .tagBodyText{
+    height: calc(var(--w-space-xxl));
+    background: white;
+    margin: 4px;
+    border-radius: var(--p-border-radius-tag);
+    line-height: calc(var(--w-space-xxl));
+    vertical-align: middle;
+    position: relative;
+    padding-right: var(--w-space-s);
+  }
+
+  .tagBodyText img {
+    width: var(--w-space-xxl);
+    margin-right: var(--w-space-xs);;
   }
 
   .name {
     display: inline-block;
     text-wrap: nowrap;
-    max-width: 200px;
+    max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
+    font-size: var(--w-font-size-tag);
+    line-height: var(--w-space-xxl);
+    letter-spacing: var(--p-font-letter-spacing-tag);
+    margin-left: var(--w-space-s);
+  }
+  .tagBodyText img {
+    padding: var(--w-space-xxs);
+    margin-left: var(--w-space-xs);
   }
 
   .tagTrend {

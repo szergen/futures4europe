@@ -1,17 +1,12 @@
-.personWorkplace {
+.tagListContainer {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  .personWorkplaceItem {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1em;
 }
-.affiliationsTitle {
-  font-weight: bold;
-  border-bottom: 1px solid #d9d9d9;
-  padding-bottom: 12px;
-  margin-bottom: 1em;
+.tagListTitle {
+  font-weight: var(--w-font-weight-book);
+  border-bottom: var(--p-border-width-025) solid var(--color-border-brand-separator);
+  padding-bottom: var(--w-space-m);
+  margin-top: 2em;
 }

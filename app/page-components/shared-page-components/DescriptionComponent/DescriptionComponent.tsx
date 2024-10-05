@@ -29,7 +29,7 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
     <div>
       {!isEditModeOn ? (
         <div
-          className={classNames('text-gray-500 text-sm')}
+          className={classNames('personDescriptionText')}
           dangerouslySetInnerHTML={{
             __html: contentText,
           }}

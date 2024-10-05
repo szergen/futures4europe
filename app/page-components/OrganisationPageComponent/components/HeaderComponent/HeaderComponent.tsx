@@ -168,7 +168,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       <div className={style.detailsColumn}>
         {/* Organisation Info Name */}
         {!isEditModeOn ? (
-          <Typography tag="h1" className=" text-gray-800">
+          <Typography tag="h1" className=" font-bold text-greyShade">
             {organisation?.organisationTag?.name}
             {/* Organisation Popularity */}
             <span
@@ -219,24 +219,25 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         <div className="flex items-center my-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
+            fill="black"
+            viewBox="0 0 16 16"
+            strokeWidth={0}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-4 h-4"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"
-            />
+            <path 
+              fill-rule="evenodd" 
+              clip-rule="evenodd" 
+              d="M15.2085 3.66662V6.67138H13.795V11.7597H15.2085V16H0.791504V11.7597H2.20418V6.67138H0.791504V3.66662L7.99961 0L15.2085 3.66662ZM2.20493 4.53201L7.99961 1.58605L13.795 4.53201V5.25795H2.20493V4.53201ZM12.3816 13.1731H13.795V14.5866H2.20493V13.1731H3.61836V6.67138H5.59716V13.1731H7.00983V6.67138H8.98938V13.1731H10.4021V6.67138H12.3816V13.1731Z"
+              />
           </svg>
           {!isEditModeOn ? (
             <Typography
               tag="span"
-              className="text-gray-800 italic text-xs ml-2"
+              className="text-greyShade text-stroke-gray font-medium text-14 ml-2"
             >
               {organisation?.organisationEstablishedDate &&
+              // TODO: Show year
                 formatDate(organisation?.organisationEstablishedDate)}
             </Typography>
           ) : (

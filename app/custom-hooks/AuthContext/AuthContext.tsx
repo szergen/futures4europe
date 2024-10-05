@@ -32,6 +32,7 @@ interface AuthContextType {
     privacyStatus: string;
     accountStatus: string;
     activityStatus: string;
+    avatarUrl: string; // TODO need to pass src avatar
   };
   updateUserDetails: (details: any) => void;
   ownedPostPagesFetched: boolean;

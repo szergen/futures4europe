@@ -10,27 +10,70 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { useMemo, memo } from 'react';
+import { Avatar, Dropdown } from "flowbite-react";
 
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
+  console.log(userDetails);
+    const handleLogOut = async () => {
+      logout();
+      router.push('/login');
+    };  
+
+    // SVGs Icons
+    // TODO: move to global SVG import
+    const DashboardIcon = () => (
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        strokeWidth={1.5} 
+        stroke="currentColor" 
+        className="w-5 h-5" 
+      >
+        <path d="M17.5003 14.9999C17.5003 14.9999 16.3887 16.2869 15.1387 16.2869C13.8887 16.2869 12.8831 15.0957 11.6558 15.0957C10.4285 15.0957 9.71686 15.6549 8.95866 16.4582M14.7562 2.8808L16.2861 4.41062C16.6115 4.73605 16.6115 5.26369 16.2861 5.58913L5.2444 16.6308C5.08812 16.7871 4.87616 16.8749 4.65515 16.8749H2.29199V14.5117C2.29199 14.2907 2.37979 14.0787 2.53607 13.9225L13.5777 2.8808C13.9032 2.55536 14.4308 2.55536 14.7562 2.8808Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    );  
+    const AddPostIcon = () => (
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        className="w-5 h-5" 
+      >
+          <path d="M12.5 3a.75.75 0 0 1 .75.75v1.25a.75.75 0 0 1-1.5 0v-1.25a.75.75 0 0 1 .75-.75Z"/><path d="M16.03 5.03a.75.75 0 0 0-1.06-1.06l-1 1a.75.75 0 0 0 1.06 1.06l1-1Z"/><path d="M5.5 7c0-.69.56-1.25 1.25-1.25h3.25a.75.75 0 0 0 0-1.5h-3.25a2.75 2.75 0 0 0-2.75 2.75v7.25a2.75 2.75 0 0 0 2.75 2.75h6.5a2.75 2.75 0 0 0 2.75-2.75v-3.625a.75.75 0 0 0-1.5 0v3.625c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-7.25Z"/><path d="M7.25 12.5a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Z"/><path fill-rule="evenodd" d="M6.25 7.25a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75v-3Zm1.5.75v1.5h4.5v-1.5h-4.5Z"/><path d="M16.5 8.25a.75.75 0 0 0 0-1.5h-1.25a.75.75 0 0 0 0 1.5h1.25Z"/>
+      </svg>
+    );  
+    const SignOutUser = () => (
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        className="w-5 h-5" 
+      >
+          <path d="M9.75 3c-1.243 0-2.25 1.007-2.25 2.25 0 .414.336.75.75.75s.75-.336.75-.75.336-.75.75-.75h3.5c.69 0 1.25.56 1.25 1.25v8.5c0 .69-.56 1.25-1.25 1.25h-3.5c-.414 0-.75-.336-.75-.75s-.336-.75-.75-.75-.75.336-.75.75c0 1.243 1.007 2.25 2.25 2.25h3.5c1.519 0 2.75-1.231 2.75-2.75v-8.5c0-1.519-1.231-2.75-2.75-2.75h-3.5Z"/><path d="M4.75 9.25c-.414 0-.75.336-.75.75s.336.75.75.75h5.69l-.97.97c-.293.293-.293.767 0 1.06.293.293.767.293 1.06 0l2.25-2.25c.141-.14.22-.331.22-.53s-.079-.39-.22-.53l-2.25-2.25c-.293-.293-.767-.293-1.06 0-.293.293-.293.767 0 1.06l.97.97h-5.69Z"/>
+      </svg>
+    );  
+
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
-      <div className="flex items-center">
-        <Link
-          href="/dashboard"
-          className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mr-2"
-        >
-          <Image
-            width={60}
-            height={60}
-            src="https://picsum.photos/id/195/60/60"
-            alt="User Avatar"
-            className="w-full h-full object-cover"
-          />
-        </Link>
-        {userDetails?.userName}
-      </div>
+      
+    <Dropdown
+      label={<Avatar alt="User settings" img="https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512" rounded />}
+      arrowIcon={true}
+      inline
+    >
+      <Dropdown.Header>
+      <span className="block text-sm">{userDetails?.userName}</span>
+      <span className="block text-sm">{userDetails?.email}</span>
+      </Dropdown.Header>
+      <Dropdown.Item icon={DashboardIcon}><Link href="/dashboard"> Dashboard </Link></Dropdown.Item>
+        <Dropdown.Item icon={AddPostIcon}>Settings</Dropdown.Item>
+        <Dropdown.Item icon={DashboardIcon}>Earnings</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>Sign out</Dropdown.Item>
+    </Dropdown>
+
+
     ) : (
       <Link href="/dashboard" className="">
         Login

@@ -28,22 +28,22 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   pictureAlt,
   tagPageLink,
 }) => {
-  const showThumbnail = picture || tagCategory === 'person';
+  const showThumbnail = Boolean(picture || tagCategory === 'person');
+  const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
 
   return (
     <>
       {/* Tag Body */}
-      {name?.length > 10 ? (
-        <span className={classNames('', style.tagBody, className)}>
+      {name?.length > 12 ? (
+        <span className={classNames(style.tagBody, thumbnailClass, className)}>
+          <span className={style.tagBodyText}>
           <PopoverComponent
             trigger="hover"
             popoverContent={name}
             popoverImage={picture}
           >
-            <div className="inline-flex">
               {tagPageLink ? (
                 <span className={style.name}>
-                  <strong>
                     {showThumbnail && (
                       <TagThumbnail
                         picture={picture || undefined}
@@ -52,7 +52,6 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                       />
                     )}
                     {name}
-                  </strong>
                 </span>
               ) : (
                 <span className={style.name}>
@@ -66,18 +65,19 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                   {name}
                 </span>
               )}
-            </div>
+
           </PopoverComponent>
           {/* Tag Counter and Trend */}
           {popularity && (
             <TagCounter popularity={popularity} tagTrend={tagTrend} />
           )}
+          </span>
         </span>
       ) : (
-        <span className={classNames(style.tagBody, className)}>
+        <span className={classNames(style.tagBody, thumbnailClass, className)}>
+          <span className={style.tagBodyText}>
           {tagPageLink ? (
             <span className={style.name}>
-              <strong>
                 {showThumbnail && (
                   <TagThumbnail
                     picture={picture || undefined}
@@ -86,7 +86,6 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                   />
                 )}
                 {name}
-              </strong>
             </span>
           ) : (
             <span className={style.name}>
@@ -104,6 +103,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           {popularity && (
             <TagCounter popularity={popularity} tagTrend={tagTrend} />
           )}
+          </span>
         </span>
       )}
     </>

@@ -40,8 +40,8 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
         getImageUrlForMedia(picture) ||
         'https://placehold.co/147x147?text=Profile Image'
       }
-      width={30}
-      height={30}
+      width={147}
+      height={147}
     />
   );
 

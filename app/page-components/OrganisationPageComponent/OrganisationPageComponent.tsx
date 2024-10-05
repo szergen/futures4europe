@@ -635,6 +635,17 @@ function OrganisationPageComponent({
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
       />
+      {/* People */}
+      <AffiliationsComponent
+        afiliations={organisationData.people}
+        tagListTitle="People"
+        isEditModeOn={isEditModeOn}
+        updatePersonDataAffiliations={(value) =>
+          updateOrganisationDataOnKeyValue('people', value)
+        }
+        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        handleTagCreated={handleTagCreated}
+      />      
       {/* Organisation Description */}
       <PersonDescriptionComponent
         description={organisationData.description}
@@ -677,23 +688,12 @@ function OrganisationPageComponent({
       {/* Projects */}
       <AffiliationsComponent
         afiliations={organisationData.projects}
-        title="Projects"
+        tagListTitle="Projects"
         isEditModeOn={isEditModeOn}
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('projects', value)
         }
         tags={tags.filter((tag) => tag?.tagType === 'project')}
-        handleTagCreated={handleTagCreated}
-      />
-      {/* People */}
-      <AffiliationsComponent
-        afiliations={organisationData.people}
-        title="People"
-        isEditModeOn={isEditModeOn}
-        updatePersonDataAffiliations={(value) =>
-          updateOrganisationDataOnKeyValue('people', value)
-        }
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
       />
       {/* Member Organisations */}

@@ -189,9 +189,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <InputText
-            label="Title"
-            placeholder="Enter title"
-            value={post?.title || 'Enter title'}
+            className=' textPostTitleEdit InputRequired'
+            label=""
+            placeholder="Enter the post title*"
+            value={post?.title || 'Enter the post title*'}
             onChange={(e) => updatePostData({ ...post, title: e.target.value })}
             validate={validationFunctionForTitle}
             setValidationState={
@@ -208,9 +209,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <InputText
-            label="Subtitle"
-            placeholder="Enter subtitle"
-            value={post?.subtitle || 'Enter subtitle'}
+            label=""
+            placeholder="Enter the post subtitle"
+            value={post?.subtitle || 'Enter the post subtitle'}
             onChange={(e) =>
               updatePostData({ ...post, subtitle: e.target.value })
             }
