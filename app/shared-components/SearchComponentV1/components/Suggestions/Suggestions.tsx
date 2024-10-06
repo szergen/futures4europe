@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import style from './Suggestions.module.css';
 import Link from 'next/link';
 import { highlightMatches } from '../../SearchComponentV1.utils';
+import { HiDocumentSearch } from "react-icons/hi";
+import { motion } from 'framer-motion';
 
 export type SuggestionsProps = {
   fieldSuggestions: any[];
@@ -140,17 +142,30 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     // Switch between field and tag suggestions indexes
   }, [selectedSuggestionIndex, clickedField]);
 
-  return (
+return (
+
+<motion.div
+  className={classNames("relative z-10", style.suggestionsContainerWrap)}
+  initial={{ opacity: 0, scaleY: 0, translateY: '-10px'}} 
+  animate={{ opacity: 1, scaleY: 1, translateY: '0px'}} 
+  transition={{
+    duration: 0.5, 
+    ease: 'easeIn', 
+    opacity: { delay: 0.3, duration: .5 }, 
+    translateY: { delay: 0.3, duration: .4 },
+  }}
+  style={{ 
+    transformOrigin: 'top'
+  }} 
+> 
+
     <div
-      className={classNames(
-        'w-1/2 border-dashed border-2',
-        style.suggestionsContainer
-      )}
+      className={style.suggestionsContainer}
       onWheel={handleScrollForSuggestions}
     >
       {/* Sort Tags */}
       {availableSortTags.length > 0 && (
-        <div className="border">
+        <div className={classNames(style.tagSuggestionsLabel)}>
           Sort by:
           <ul className="style.tags">
             {availableSortTags?.map((sortTag: any, index: number) => (
@@ -160,7 +175,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   'flex items-center',
                   index === selectedSuggestionIndex &&
                     activeSelection === 'sortby' &&
-                    'bg-blue-200'
+                    'bg-gray-100'
                 )}
               >
                 <span className="w-20">tag:</span>
@@ -181,9 +196,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         </div>
       )}
       {/* Field Tags */}
-      <div className="border" />
       {!clickedField && (
-        <div className="style.fieldSuggestions">
+        <div className={style.tagSuggestionsWrapper}>
           <span className="text-purple-700">Field Suggestions:</span>
           <ul className="style.tags">
             {uniqueFields?.map(
@@ -195,11 +209,11 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       'flex items-center',
                       index === highlightedIndexWithType.index &&
                         highlightedIndexWithType.type === 'field' &&
-                        'bg-blue-100',
+                        'bg-gray-200',
                       index ===
                         selectedSuggestionIndex - availableSortTags.length &&
                         activeSelection === 'field' &&
-                        'bg-blue-200'
+                        'bg-gray-100'
                     )}
                     onMouseOver={() =>
                       setHighlightedIndexWithType({ index, type: 'field' })
@@ -224,8 +238,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         </div>
       )}
       {/* Tags */}
-      <div className="style.tagSuggestions">
-        <span className="text-purple-700">Tag Suggestions:</span>
+      <div className={style.tagSuggestionsWrapper}>
+        <span className={classNames("ml-2 pb-4 block text-[14px]", style.tagSuggestionsLabel)}>Tag Suggestions</span>
         <ul className="style.tags">
           {tagSuggestions
             ?.slice(
@@ -241,16 +255,16 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                 <li
                   key={tagSuggestion.item?.name}
                   className={classNames(
-                    'flex items-center mb-2',
+                    'flex items-center',
                     actualIndex === highlightedIndexWithType.index &&
                       highlightedIndexWithType.type === 'tag' &&
-                      'bg-blue-100',
+                      'bg-gray-200',
                     actualIndex ===
                       selectedSuggestionIndex -
                         fieldSuggestions.length -
                         availableSortTags.length &&
                       activeSelection === 'tag' &&
-                      'bg-blue-200'
+                      'bg-gray-100'
                   )}
                   onMouseOver={() =>
                     setHighlightedIndexWithType({ index, type: 'tag' })
@@ -262,10 +276,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   >
                     {tagSuggestion.item?.tagType}:
                   </span>
-                  <div className="flex">
+                  <div className="flex content-center searchTagImage">
                     <Image
                       alt={'Tag Image'}
-                      className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
                       src={
                         tagSuggestion.item?.picture ||
                         'https://placehold.co/600x400?text=placeholder'
@@ -273,7 +286,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       width={40}
                       height={40}
                     />
-                    <div className="flex flex-wrap items-center">
+                    <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
                       <span
                         // dangerouslySetInnerHTML={{
                         //   __html: tagSuggestion.name,
@@ -316,8 +329,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         </ul>
       </div>
       {/* Pages */}
-      <div className="border" />
-      <div className="style.pageSuggestions">
+      <div className={style.tagSuggestionsWrapper}/>
         <span className="text-pink-700">Quick Results(Page Suggestions:)</span>
         <ul className="style.pages">
           {pageSuggestions?.map(
@@ -328,8 +340,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   className={classNames(
                     index === highlightedIndexWithType.index &&
                       highlightedIndexWithType.type === 'page' &&
-                      'bg-blue-100',
-                    'flex items-center mb-2'
+                      'bg-gray-200',
+                    'flex items-center'
                   )}
                   onMouseOver={() =>
                     setHighlightedIndexWithType({ index, type: 'page' })
@@ -340,10 +352,10 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   <span className="w-20">
                     {resolvePageType(pageSuggestion)}:
                   </span>
-                  <div className="flex">
+                  <div className="flex content-center searchTagImage">
                     <Image
                       alt={'Tag Image'}
-                      className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
+                      className={(classNames('inline-block mr-1 ml-4 w-10 h-10'), style.searchTagImage)}
                       src={
                         pageSuggestion.item?.pictures ||
                         'https://placehold.co/600x400?text=placeholder'
@@ -352,7 +364,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       height={40}
                     />
                     <Link
-                      className="flex flex-wrap items-center"
+                      className="flex flex-wrap items-center ml-2 searchTagText"
                       href={
                         pageSuggestion.item?.pageLink || 'https://google.com'
                       }
@@ -388,8 +400,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
               )
           )}
         </ul>
-      </div>
     </div>
+
+    </motion.div>
   );
 };
 

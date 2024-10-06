@@ -9,15 +9,21 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { useMemo, memo } from 'react';
+import { useEffect, useState, useMemo, memo } from 'react';
 import { Avatar, Dropdown } from 'flowbite-react';
 
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
-  console.log(userDetails);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const handleLogOut = async () => {
     logout();
     router.push('/login');
+  };
+
+  // Handle dropdown open/close state
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev); // Toggle dropdown state
   };
 
   // SVGs Icons
@@ -71,18 +77,21 @@ const Header = () => {
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
       <Dropdown
+        className='rounded-lg shadow-sm'
         label={
           <Avatar
             alt="User settings"
             img="https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512"
             rounded
+            className={classNames('avatarUserHeader', { active: isDropdownOpen })} // Conditionally add "active" class
+            onClick={toggleDropdown} // Toggle dropdown state on click
           />
         }
-        arrowIcon={true}
+        arrowIcon={false}
         inline
       >
         <Dropdown.Header>
-          <span className="block text-sm">{userDetails?.userName}</span>
+          <span className="block text-sm font-semibold">{userDetails?.userName}</span>
           <span className="block text-sm">{userDetails?.email}</span>
         </Dropdown.Header>
         <Dropdown.Item icon={DashboardIcon}>
@@ -100,7 +109,7 @@ const Header = () => {
         Login
       </Link>
     );
-  }, [isLoggedIn, userDetails]);
+  }, [isLoggedIn, userDetails, isDropdownOpen]);
 
   return (
     <>

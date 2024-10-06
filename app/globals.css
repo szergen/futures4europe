@@ -137,6 +137,7 @@
     --color-background-brand-tag: rgb(234, 233, 236);
     --color-border-brand-separator: rgb(195, 196, 194, 0.5);
     --primary-color:rgb(234, 233, 236);
+    --primary-white:rgb(255, 255, 255);
 
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
@@ -792,19 +793,15 @@ select:focus {
   font-size: var(--w-font-size-section-heading);
 }
 
-/* search */
-
-.searchBox input {
-  border-radius: var(--p-border-radius-600) !important;
-  background: transparent !important;
-  padding: var(--w-space-s);
-  margin: var(--w-space-none);
-}
-
-.searchBox.flex button {
-  margin-left: var(--w-space-m);
-}
+/* footer */
 
 footer.footerLayout {
   background: #000;
+}
+
+/* TODO: Movo to header css, for some reasons it dose not register the cess there */
+.avatarUserHeader.active{
+  border-radius: var(--p-border-radius-full);
+  box-shadow: 0 0 0px 3px var(--color-border-weak);
+  transition: box-shadow .13s ease-out;
 }
