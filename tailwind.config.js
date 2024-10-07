@@ -32,7 +32,7 @@ module.exports = {
         18: '18px',
       },
       colors: {
-        'purple-site': '#8751BD',
+        'purple-site': 'rgb(119, 85, 204)',
         'blue-site': '#2859B6',
         'greyShade': '#2C2C2F',
         'greyLight': 'rgba(15, 19, 36, 0.6)',

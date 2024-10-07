@@ -32,6 +32,7 @@ interface AuthContextType {
     privacyStatus: string;
     accountStatus: string;
     activityStatus: string;
+    lastLoginDate: string;
     avatarUrl: string; // TODO need to pass src avatar
   };
   updateUserDetails: (details: any) => void;
@@ -66,6 +67,8 @@ const initialState = {
   privacyStatus: '',
   accountStatus: '',
   activityStatus: '',
+  lastLoginDate: '',
+  avatarUrl: '',
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -125,6 +128,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           privacyStatus: currentMember?.member?.privacyStatus,
           accountStatus: currentMember?.member?.status,
           activityStatus: currentMember?.member?.activityStatus,
+          lastLoginDate: currentMember?.member?.lastLoginDate,
         });
         setIsLoggedIn(true);
       }

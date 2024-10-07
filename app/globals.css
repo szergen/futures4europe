@@ -89,6 +89,7 @@
     --p-breakpoints-xs:0px;
     --p-breakpoints-sm: 490px;
     --p-breakpoints-md: 768px;
+    --p-breakpoints-base: 850px;
     --p-breakpoints-lg: 1024px;
     --p-breakpoints-xl: 1280px;
     --p-breakpoints-2xl: 1440px;
@@ -138,6 +139,8 @@
     --color-border-brand-separator: rgb(195, 196, 194, 0.5);
     --primary-color:rgb(234, 233, 236);
     --primary-white:rgb(255, 255, 255);
+    --primary-brand:rgb(119, 85, 204);
+    --primary-green:rgb(47, 148, 97);    
 
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
