@@ -11,11 +11,14 @@ import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { useEffect, useState, useMemo, memo } from 'react';
 import { Avatar, Dropdown } from 'flowbite-react';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  console.log(userDetails);
+  const router = useRouter();
   const handleLogOut = async () => {
     logout();
     router.push('/login');
@@ -25,6 +28,7 @@ const Header = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev); // Toggle dropdown state
   };
+  console.log('debug2->userDetails', userDetails);
 
   // SVGs Icons
   // TODO: move to global SVG import
@@ -40,9 +44,9 @@ const Header = () => {
       <path
         d="M17.5003 14.9999C17.5003 14.9999 16.3887 16.2869 15.1387 16.2869C13.8887 16.2869 12.8831 15.0957 11.6558 15.0957C10.4285 15.0957 9.71686 15.6549 8.95866 16.4582M14.7562 2.8808L16.2861 4.41062C16.6115 4.73605 16.6115 5.26369 16.2861 5.58913L5.2444 16.6308C5.08812 16.7871 4.87616 16.8749 4.65515 16.8749H2.29199V14.5117C2.29199 14.2907 2.37979 14.0787 2.53607 13.9225L13.5777 2.8808C13.9032 2.55536 14.4308 2.55536 14.7562 2.8808Z"
         stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -81,9 +85,13 @@ const Header = () => {
         label={
           <Avatar
             alt="User settings"
-            img="https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512"
+            img={
+              userDetails?.userTag?.picture
+                ? userDetails?.userTag?.picture
+                : 'https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512'
+            }
             rounded
-            className={classNames('avatarUserHeader', { active: isDropdownOpen })} // Conditionally add "active" class
+            className={classNames(style.avatarImage, 'avatarUserHeader', { active: isDropdownOpen })} // Conditionally add "active" class
             onClick={toggleDropdown} // Toggle dropdown state on click
           />
         }

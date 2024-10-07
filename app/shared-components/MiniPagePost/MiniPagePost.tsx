@@ -51,13 +51,11 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           {date}
         </Typography>
         {/* Post Text */}
-        <Typography tag="p" className="text-gray-500 py-2 text-sm">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: text,
-            }}
-          ></div>
-        </Typography>
+        <Typography
+          tag="div"
+          className="text-gray-500 py-2 text-sm"
+          htmlText={text}
+        ></Typography>
         {/* Post Tags */}
         <div className={classNames(style.postTags)}>
           {tags?.map((tag, index) => (

@@ -463,7 +463,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         {
           _id: projectData.projectTag._id,
           ...projectData.projectTag,
-          tagPageLink: newProjectInfoSlug,
+          tagPageLink: '/project/' + newProjectInfoSlug,
         }
       );
       console.log('updatedProjectTag', updatedProjectTag);

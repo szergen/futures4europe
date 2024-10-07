@@ -440,6 +440,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
         'author',
         newPostID
       );
+      console.log('updatedAuthor', updatedAuthor);
     }
 
     // Update Project Authors
@@ -638,7 +639,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
               }
               tagType="page type"
               onTagCreated={handleTagCreated}
-              tagTypeLabel="Page Type"
+              // tagTypeLabel="Page Type"
             />
           )}
         </div>

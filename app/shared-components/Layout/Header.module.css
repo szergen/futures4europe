@@ -6,3 +6,9 @@
 .searchedItems {
   cursor: pointer;
 }
+
+.avatarImage {
+  img {
+    object-fit: cover;
+  }
+}

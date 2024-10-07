@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --w-base-rem: 16;
@@ -42,7 +41,6 @@
     --w-font-size-xl: calc(40 / var(--w-base-rem) * 1rem);
     --w-font-size-xxl: calc(48 / var(--w-base-rem) * 1rem);
     --w-font-size-xxxl: calc(64 / var(--w-base-rem) * 1rem);
-    
 
     --p-font-letter-spacing-densest: -0.54px;
     --p-font-letter-spacing-denser: -0.36px;
@@ -80,13 +78,13 @@
 
     --p-border-width-0: 0px;
     --p-border-width-0165: 0.66px;
-    --p-border-width-015: 0.50px;
+    --p-border-width-015: 0.5px;
     --p-border-width-025: 1px;
     --p-border-width-050: 2px;
     --p-border-width-075: 3px;
     --p-border-width-100: 4px;
 
-    --p-breakpoints-xs:0px;
+    --p-breakpoints-xs: 0px;
     --p-breakpoints-sm: 490px;
     --p-breakpoints-md: 768px;
     --p-breakpoints-base: 850px;
@@ -117,13 +115,17 @@
     --p-shadow-0: none;
     --p-shadow-100: 0px 1px 0px 0px rgba(26, 26, 26, 0.07);
     --p-shadow-200: 0px 3px 1px -1px rgba(26, 26, 26, 0.07);
-    --p-shadow-300: 0px 4px 6px -2px rgba(26, 26, 26, 0.20);
+    --p-shadow-300: 0px 4px 6px -2px rgba(26, 26, 26, 0.2);
     --p-shadow-400: 0px 8px 16px -4px rgba(26, 26, 26, 0.22);
     --p-shadow-500: 0px 12px 20px -8px rgba(26, 26, 26, 0.24);
     --p-shadow-600: 0px 20px 20px -8px rgba(26, 26, 26, 0.28);
 
-    --p-shadow-bevel-100: 1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset, -1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset, 0px -1px 0px 0px rgba(0, 0, 0, 0.17) inset, 0px 1px 0px 0px rgba(204, 204, 204, 0.5) inset;
-    --p-shadow-inset-100: 0px 1px 2px 0px rgba(26, 26, 26, 0.15) inset, 0px 1px 1px 0px rgba(26, 26, 26, 0.15) inset;
+    --p-shadow-bevel-100: 1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset,
+      -1px 0px 0px 0px rgba(0, 0, 0, 0.13) inset,
+      0px -1px 0px 0px rgba(0, 0, 0, 0.17) inset,
+      0px 1px 0px 0px rgba(204, 204, 204, 0.5) inset;
+    --p-shadow-inset-100: 0px 1px 2px 0px rgba(26, 26, 26, 0.15) inset,
+      0px 1px 1px 0px rgba(26, 26, 26, 0.15) inset;
 
     --c-avatar-size-10: 10px;
     --c-avatar-size-30: 30px;
@@ -363,7 +365,7 @@
     /* Weaker border color with no semantic meaning, used for decorative purposes only. Should generally be used with matching decorative background and/or text tokens. */
     --color-border-decorative-30-weaker: rgb(209, 250, 224);
 
-      /* Weak shade of destructive link text to be used in interactions */
+    /* Weak shade of destructive link text to be used in interactions */
     --color-text-link-destructive-weak: rgb(246, 177, 177);
     /* Stronger shade of link text to be used in interactions */
     --color-text-link-stronger: rgb(3, 11, 93);
@@ -487,7 +489,6 @@
     --color-text-error-stronger: rgb(74, 11, 11);
     /* Strong shade of destructive link text to be used in interactions */
     --color-text-link-destructive-strong: rgb(173, 17, 17);
-
   }
 }
 
@@ -518,7 +519,7 @@
     @apply hover:text-white;
     @apply bg-gray-400;
     @apply border-gray-400;
-    @apply hover:bg-gray-400;  
+    @apply hover:bg-gray-400;
     @apply pointer-events-none;
     @apply opacity-50;
   }
@@ -555,7 +556,6 @@
     font-size: var(--w-font-size-tag);
     line-height: var(--w-line-height-heading);
   }
-  
 }
 
 html,
@@ -598,7 +598,6 @@ select:focus {
   border-color: var(--primary-color);
 }
 
-
 /* de mutat in import */
 
 .backgroundLabelAffiliation {
@@ -610,47 +609,48 @@ select:focus {
   font-size: var(--w-font-size-tag);
 }
 
-.textPostTitleEdit input{
+.textPostTitleEdit textarea {
   font-size: var(--w-font-size-display-large);
   font-weight: var(--w-font-weight-book);
 }
-.InputRequired input{
-  border-bottom: 2px solid var(--color-background-required)!important;
+.InputRequired textarea {
+  border-bottom: 2px solid var(--color-background-required) !important;
 }
 .errorInputText {
   position: absolute;
-  bottom: 0px;
+  bottom: -5px;
+  right: 0;
 }
 
 /* de mutat in import FileUplaoder.tsx*/
-  .avatarUpload{
-    position: absolute;
-    transform: translate(0px, 0px);
-    z-index: var(--w-z-index-modal);
-    width: var(--c-avatar-size-150);
-    height: var(--c-avatar-size-150);
-    border-radius: var(--p-border-radius-full);
-    text-align: center;
-    vertical-align: middle;
-    opacity: 0;
-  }
-  .avatarUpload:hover{
-    cursor: pointer;
-    background: var(--color-background-brand-tag);
-    opacity: .77;
-  }
+.avatarUpload {
+  position: absolute;
+  transform: translate(0px, 0px);
+  z-index: var(--w-z-index-modal);
+  width: var(--c-avatar-size-150);
+  height: var(--c-avatar-size-150);
+  border-radius: var(--p-border-radius-full);
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0;
+}
+.avatarUpload:hover {
+  cursor: pointer;
+  background: var(--color-background-brand-tag);
+  opacity: 0.77;
+}
 
- .avatarUpload svg {
-    text-align: center;
-    position: relative;
-    display: block;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
- }
+.avatarUpload svg {
+  text-align: center;
+  position: relative;
+  display: block;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
 
 /* de mutat in import PersonHeader  tsx*/
- .personNameTitle input{
+.personNameTitle input {
   all: unset;
   font-size: var(--w-font-size-xxl);
   font-weight: var(--w-font-weight-book);
@@ -666,8 +666,8 @@ select:focus {
   height: var(--w-space-xxl);
 }
 
-.personDescriptionText *{
-  font-size: var(--w-font-size-section-heading)!important;
+.personDescriptionText * {
+  font-size: var(--w-font-size-section-heading) !important;
   margin-bottom: var(--w-space-xxl);
 }
 
@@ -683,7 +683,7 @@ select:focus {
   margin-right: calc(var(--w-space-s));
 }
 
-.tagPickerPill .react-select__multi-value__label{
+.tagPickerPill .react-select__multi-value__label {
   height: calc(var(--w-space-xxl));
   background: white;
   margin: 4px;
@@ -691,7 +691,7 @@ select:focus {
   line-height: calc(var(--w-space-xxl));
   vertical-align: middle;
   position: relative;
-  padding:0px var(--w-space-s);
+  padding: 0px var(--w-space-s);
   display: inline-block;
   text-wrap: nowrap;
   max-width: 300px;
@@ -723,11 +723,13 @@ select:focus {
   transform: scale(1.5);
 }
 .react-select__dropdown-indicator {
-  display: none!important;
+  display: none !important;
 }
 
 /* single - value */
-.react-select__value-container--has-value:not(.react-select__value-container--is-multi){
+.react-select__value-container--has-value:not(
+    .react-select__value-container--is-multi
+  ) {
   position: relative;
   cursor: pointer;
   display: inline-flex;
@@ -745,7 +747,7 @@ select:focus {
   line-height: calc(var(--w-space-xxl));
   vertical-align: middle;
   position: relative;
-  padding:0px var(--w-space-s);
+  padding: 0px var(--w-space-s);
   display: inline-block;
   text-wrap: nowrap;
   max-width: 300px;
@@ -756,15 +758,14 @@ select:focus {
   letter-spacing: var(--p-font-letter-spacing-tag);
 }
 
-
 /* important in editor rdw */
 /* Initially hide the toolbar */
 .editor-toolbar {
-  display: none!important;
+  display: none !important;
   transition: opacity 0.3s ease;
   position: absolute;
   width: 100%;
-  top: 0;  
+  top: 0;
 }
 
 /* Show toolbar when editor-wrapper is hovered */
@@ -792,7 +793,7 @@ select:focus {
   padding: 10px;
   margin-bottom: var(--w-space-xxl);
 }
-.rdw-start-aligned-block *{
+.rdw-start-aligned-block * {
   font-size: var(--w-font-size-section-heading);
 }
 

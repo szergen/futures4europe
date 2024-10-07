@@ -34,6 +34,7 @@ interface AuthContextType {
     activityStatus: string;
     lastLoginDate: string;
     avatarUrl: string; // TODO need to pass src avatar
+    userTag: TagProps;
   };
   updateUserDetails: (details: any) => void;
   ownedPostPagesFetched: boolean;
@@ -69,6 +70,7 @@ const initialState = {
   activityStatus: '',
   lastLoginDate: '',
   avatarUrl: '',
+  userTag: {} as TagProps,
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -83,6 +85,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const updateUserDetails = (details: any) => {
     setUserDetails(details);
   };
+
+  // #region Fetch tags and refresh based on tag creation
+  const [refreshTags, setRefreshTags] = useState(false);
+  const { tags, tagsFetched } = useFetchTags(refreshTags);
+
+  // console.log('Context -> userTag', getUserTag());
+
+  const getUserTag = (userName: string) => {
+    const userTag = tags.find((tag) => tag.name === userName);
+    return userTag;
+  };
+
+  const handleTagCreated = () => {
+    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  useEffect(() => {
+    if (tags.length > 0 && userDetails.userName && !userDetails.userTag) {
+      updateUserDetails((prev: any) => ({
+        ...prev,
+        userTag: getUserTag(userDetails.userName),
+      }));
+    }
+  }, [tags, userDetails.userName]);
+  // #endregion
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -110,6 +136,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
         console.log('Logged in as:', currentMember?.member?.profile?.nickname);
         console.log('currentMember', currentMember);
+
         updateUserDetails({
           contactId: currentMember?.member?.contactId,
           accountId:
@@ -156,15 +183,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('f4e_wix_accessTokenAndRefreshToken');
     setUserDetails(initialState);
     setIsLoggedIn(false);
-  };
-  // #endregion
-
-  // #region Fetch tags and refresh based on tag creation
-  const [refreshTags, setRefreshTags] = useState(false);
-  const { tags, tagsFetched } = useFetchTags(refreshTags);
-
-  const handleTagCreated = () => {
-    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
   // #endregion
 
