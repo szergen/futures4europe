@@ -1,12 +1,49 @@
-.tagListContainer {
+.tagListRootContainer {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 1em;
+  align-content: center;
 }
+
+.tagListContainer {
+  display: flex;
+  margin-top: 1em;
+  align-items: center;
+}
+
 .tagListTitle {
   font-weight: var(--w-font-weight-book);
-  border-bottom: var(--p-border-width-025) solid var(--color-border-brand-separator);
+  border-bottom: var(--p-border-width-025) solid
+    var(--color-border-brand-separator);
   padding-bottom: var(--w-space-m);
   margin-top: 2em;
+  width: 100%;
+}
+
+.inputContainer {
+  display: inline-block;
+  flex-basis: content;
+  width: auto;
+  max-width: 100%;
+}
+
+.roleInput {
+  display: inline-block;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  font-size: var(--w-font-size-tag);
+  height: 1em;
+  line-height: 1em;
+  transform: translateY(0.7em);
+  white-space: nowrap; /* Prevent wrapping */
+  width: auto; /* Allow the width to adjust based on content */
+  min-width: 1em; /* Ensure it doesn't collapse when empty */
+}
+
+input.roleInput:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }

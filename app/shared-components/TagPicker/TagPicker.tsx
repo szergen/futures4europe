@@ -205,7 +205,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           classNames={{
             control: (state) =>
               state.isFocused ? 'text-blue-site ' : 'border-grey-300',
-            multiValue: () => 'tagPickerPill z-5',
+            multiValue: () => 'tagPickerPill z-5 my-1',
             singleValue: () => 'tagPickerPillSingle z-5',
             menu: () =>
               classNames(
