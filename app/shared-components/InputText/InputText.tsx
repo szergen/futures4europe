@@ -90,7 +90,7 @@ export const InputText: React.FC<InputTextProps> = ({
         <Toast className="absolute -right-20 z-10">
           <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500">
             <svg
-              className="h-5 w-5" 
+              className="h-5 w-5"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
