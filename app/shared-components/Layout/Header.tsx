@@ -81,7 +81,7 @@ const Header = () => {
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
       <Dropdown
-        className='rounded-lg shadow-sm'
+        className="rounded-lg shadow-sm"
         label={
           <Avatar
             alt="User settings"
@@ -91,7 +91,9 @@ const Header = () => {
                 : 'https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512'
             }
             rounded
-            className={classNames(style.avatarImage, 'avatarUserHeader', { active: isDropdownOpen })} // Conditionally add "active" class
+            className={classNames(style.avatarImage, 'avatarUserHeader', {
+              active: isDropdownOpen,
+            })} // Conditionally add "active" class
             onClick={toggleDropdown} // Toggle dropdown state on click
           />
         }
@@ -99,7 +101,9 @@ const Header = () => {
         inline
       >
         <Dropdown.Header>
-          <span className="block text-sm font-semibold">{userDetails?.userName}</span>
+          <span className="block text-sm font-semibold">
+            {userDetails?.userName}
+          </span>
           <span className="block text-sm">{userDetails?.email}</span>
         </Dropdown.Header>
         <Dropdown.Item icon={DashboardIcon}>

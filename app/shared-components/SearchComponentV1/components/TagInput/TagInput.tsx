@@ -513,7 +513,10 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
       />
-      <button className={classNames(style.SearchInputButton, 'rounded-md')} onMouseDown={handleSearchButton}>
+      <button
+        className={classNames(style.SearchInputButton, 'rounded-md')}
+        onMouseDown={handleSearchButton}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
