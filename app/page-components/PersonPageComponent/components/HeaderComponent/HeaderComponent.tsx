@@ -183,7 +183,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
         {!isEditModeOn ? (
-          <Typography tag="h1" className=" text-gray-800">
+          <Typography tag="h1" className="text-gray-800">
             {person?.personTag?.name}
             {/* Person Popularity */}
             <span
@@ -193,10 +193,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <InputText
-            // label="Title"
-            placeholder="Enter title"
+            placeholder="Enter the post title*"
             value={person?.personTag?.name || 'Enter your preffered name'}
-            className="personNameTitle"
+            className={classNames(
+              // 'personNameTitle',
+              style.genericTextArea,
+              style.textPostTitleEdit,
+              validationFunctionForName(person?.title) && style.InputRequired
+            )}
             onChange={(e) =>
               updatePersonData({
                 ...person,
@@ -224,7 +228,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <InputText
             // label="Tagline"
             placeholder="Enter tagline"
-            className="personTaglineTitle"
+            className={classNames(
+              // 'personTaglineTitle',
+              style.genericTextArea,
+              style.textPostSubtitle
+            )}
             value={person?.personTag?.tagLine || 'Enter your preffered tagline'}
             onChange={(e) =>
               updatePersonData({
@@ -261,22 +269,24 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         </div>
         {/* Person Country */}
-        {!isEditModeOn ? (
-          <Tag {...person.countryTag} />
-        ) : (
-          <TagPicker
-            placeholder={'Select Country'}
-            tags={tags?.filter((tag) => tag?.tagType === 'country')}
-            className="w-80"
-            selectedValue={person?.countryTag?.name || undefined}
-            updatePostData={(value) =>
-              updatePersonDataOnKeyValue('countryTag', value)
-            }
-            tagType="country"
-            onTagCreated={handleTagCreated}
-            // tagTypeLabel={'Country'}
-          />
-        )}
+        <div className="mt-1">
+          {!isEditModeOn ? (
+            <Tag {...person.countryTag} />
+          ) : (
+            <TagPicker
+              placeholder={'Select Country'}
+              tags={tags?.filter((tag) => tag?.tagType === 'country')}
+              className="w-80"
+              selectedValue={person?.countryTag?.name || undefined}
+              updatePostData={(value) =>
+                updatePersonDataOnKeyValue('countryTag', value)
+              }
+              tagType="country"
+              onTagCreated={handleTagCreated}
+              // tagTypeLabel={'Country'}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

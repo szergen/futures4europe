@@ -132,7 +132,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </div>
           {!isEditModeOn ? (
             <Typography tag="h3" className="text-gray-800 mt-2">
-              {post?.projectResultMedia.displayName}
+              {post?.projectResultMedia?.displayName}
             </Typography>
           ) : (
             <InputText
@@ -194,7 +194,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               style.textPostTitleEdit,
               validationFunctionForTitle(post?.title) && style.InputRequired
             )}
-            label=""
+            // label=""
             placeholder="Enter the post title*"
             value={post?.title || 'Enter the post title*'}
             onChange={(e) => updatePostData({ ...post, title: e.target.value })}

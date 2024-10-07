@@ -12,6 +12,7 @@ export type InputTextProps = {
   validate?: (value: string) => string;
   setValidationState?: (value: any) => void;
   shouldUpdateValueState?: boolean;
+  isHorizontal?: boolean;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -24,6 +25,7 @@ export const InputText: React.FC<InputTextProps> = ({
   validate,
   setValidationState,
   shouldUpdateValueState,
+  isHorizontal,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
@@ -57,12 +59,42 @@ export const InputText: React.FC<InputTextProps> = ({
     e.target.style.height = e.target.scrollHeight + 'px'; // Adjust height based on content
   };
 
+  const autoResizeInput = (input: HTMLInputElement) => {
+    // input.style.width = 'auto';
+    input.style.width = input.scrollWidth + 'px';
+  };
+
   return (
-    <div className="relative">
+    <>
       {label && (
         <div className="mb-2 block">
           <Label htmlFor="email3" value={label} />
         </div>
+      )}
+      {isHorizontal ? (
+        <input
+          id={label?.toLowerCase()}
+          type="text"
+          placeholder={placeholder ? placeholder : undefined}
+          required
+          helperText={helperText ? <>{helperText}</> : undefined}
+          className={className}
+          value={inputValue}
+          onChange={handleChange}
+          onInput={(e) => autoResizeInput(e.target as HTMLInputElement)}
+        />
+      ) : (
+        <Textarea
+          id={label?.toLowerCase()}
+          type="text"
+          placeholder={placeholder ? placeholder : undefined}
+          required
+          helperText={helperText ? <>{helperText}</> : undefined}
+          className={className}
+          value={inputValue}
+          onChange={handleChange}
+          onInput={autoResize}
+        />
       )}
       {/* <TextInput
         id={label?.toLowerCase()}
@@ -74,7 +106,7 @@ export const InputText: React.FC<InputTextProps> = ({
         value={inputValue}
         onChange={handleChange}
       /> */}
-      <Textarea
+      {/* <Textarea
         id={label?.toLowerCase()}
         type="text"
         placeholder={placeholder ? placeholder : undefined}
@@ -84,7 +116,7 @@ export const InputText: React.FC<InputTextProps> = ({
         value={inputValue}
         onChange={handleChange}
         onInput={autoResize}
-      />
+      /> */}
       {/* {error && <p className="errorInputText text-red-500 text-xs">{error}</p>}{' '} */}
       {error && (
         <Toast className="absolute -right-20 z-10">
@@ -105,7 +137,7 @@ export const InputText: React.FC<InputTextProps> = ({
           <div className="ml-3 text-sm font-normal">{error}</div>
         </Toast>
       )}
-    </div>
+    </>
   );
 };
 
