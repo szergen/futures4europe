@@ -548,7 +548,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         <div>
           <button
             onClick={() => {
-              isEditModeOn && saveOrCreateHandler();
+              // isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultPersonData(personData);
             }}

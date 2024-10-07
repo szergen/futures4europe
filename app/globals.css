@@ -649,22 +649,22 @@ select:focus {
   left: 50%;
 }
 
-/* de mutat in import PersonHeader  tsx*/
-.personNameTitle input {
+/* de mutat in import PersonHeader. done  tsx*/
+/* .personNameTitle input {
   all: unset;
   font-size: var(--w-font-size-xxl);
   font-weight: var(--w-font-weight-book);
   padding: var(--w-space-none);
   line-height: var(--w-line-height-normal);
   height: var(--w-space-xxl);
-}
-.personTaglineTitle input {
+} */
+/* .personTaglineTitle input {
   all: unset;
   font-size: var(--w-font-size-tag);
   padding: var(--w-space-none);
   line-height: var(--w-line-height-normal);
   height: var(--w-space-xxl);
-}
+} */
 
 .personDescriptionText * {
   font-size: var(--w-font-size-section-heading) !important;

@@ -10,7 +10,7 @@
     max-width: calc(var(--w-space-l) * var(--w-base-rem) / 2);
     margin-right: var(--w-space-l);
   }
-  .imageAndSocialColumn img{
+  .imageAndSocialColumn img {
     width: var(--c-avatar-size-150);
     height: var(--c-avatar-size-150);
     object-fit: cover;
@@ -20,10 +20,10 @@
     margin-top: var(--w-space-s);
     justify-content: center;
   }
-  .socialIcons svg{
+  .socialIcons svg {
     margin-right: var(--w-space-m);
   }
-  .socialIcons svg:last-child{
+  .socialIcons svg:last-child {
     margin-right: 0px;
   }
   .detailsColumn {
@@ -32,7 +32,38 @@
   }
   .detailsColumn h1 {
     font-size: var(--w-font-size-xxl);
-    height: var(--w-space-xxl);
+    /* height: var(--w-space-xxl); */
   }
 }
 
+.genericTextArea {
+  /* Overwrite default styles for textarea */
+  max-width: 90%;
+  border: none;
+  outline: none;
+  resize: none; /* Disable manual resizing by the user */
+  overflow: hidden;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1em;
+  height: 1.1em;
+  /* box-shadow: none !important; */
+}
+
+.InputRequired {
+  border-bottom: 2px solid var(--color-background-required) !important;
+}
+
+.textPostTitleEdit {
+  font-size: var(--w-font-size-xxl);
+  font-weight: var(--w-font-weight-book);
+  transform: translateY(0.15em);
+  /* height: 1.1em; */
+}
+
+.textPostSubtitle {
+  font-size: var(--w-font-size-tag);
+  font-style: italic;
+  /* line-height: 1em; */
+  transform: translateY(0.55em);
+}

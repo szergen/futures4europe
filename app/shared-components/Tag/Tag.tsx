@@ -33,6 +33,7 @@ export const Tag: React.FC<TagProps> = ({
   enableLabel,
   tagType,
 }) => {
+  if (!name) return null;
   return (
     <>
       {enableLabel && tagCategory && (
