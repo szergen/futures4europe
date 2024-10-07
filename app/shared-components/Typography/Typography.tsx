@@ -4,7 +4,8 @@ export type TypographyProps = {
   tag: keyof JSX.IntrinsicElements;
   className?: string;
   style?: React.CSSProperties;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  htmlText?: string;
 };
 
 const Typography: React.FC<TypographyProps> = ({
@@ -12,13 +13,22 @@ const Typography: React.FC<TypographyProps> = ({
   className,
   style,
   children,
+  htmlText,
 }) => {
   const Tag = tag;
 
-  return (
+  return !htmlText ? (
     <Tag className={className} style={style}>
       {children}
     </Tag>
+  ) : (
+    <Tag
+      className={className}
+      style={style}
+      dangerouslySetInnerHTML={{
+        __html: htmlText || '',
+      }}
+    ></Tag>
   );
 };
 

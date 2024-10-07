@@ -189,7 +189,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <InputText
-            className=" textPostTitleEdit InputRequired"
+            className={classNames(
+              style.genericTextArea,
+              style.textPostTitleEdit,
+              validationFunctionForTitle(post?.title) && style.InputRequired
+            )}
             label=""
             placeholder="Enter the post title*"
             value={post?.title || 'Enter the post title*'}
@@ -215,6 +219,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             onChange={(e) =>
               updatePostData({ ...post, subtitle: e.target.value })
             }
+            className={classNames(
+              style.genericTextArea,
+              style.textPostSubtitle
+            )}
           />
         )}
         {/* Event Date */}
@@ -295,9 +303,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         {/* Post Country */}
         {
-          <div>
+          <div className="mt-1">
             {!isEditModeOn ? (
-              post?.countryTag && <Tag {...post.countryTag} className="mt-1" />
+              post?.countryTag && <Tag {...post.countryTag} />
             ) : (
               <TagPicker
                 placeholder={
@@ -306,16 +314,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                     : 'Select Location'
                 }
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}
-                className="w-80"
+                className="w-80 mt-1"
                 selectedValue={post.countryTag?.name || undefined}
                 updatePostData={(value) =>
                   updatePostDataBasedOnKeyValue('countryTag', value)
                 }
                 tagType="country"
                 onTagCreated={handleTagCreated}
-                tagTypeLabel={
-                  post?.pageType?.name !== 'event' ? 'Country' : 'Location'
-                }
+                // tagTypeLabel={
+                //   post?.pageType?.name !== 'event' ? 'Country' : 'Location'
+                // }
               />
             )}
           </div>
@@ -338,7 +346,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           {post.views} views
         </Typography>
       </div>
-      <Button className="h-9">Recommend</Button>
+      {!isEditModeOn && <Button className="h-9">Recommend</Button>}
     </div>
   );
 };

@@ -8,7 +8,6 @@ import PopoverComponent from '../PopoverComponent/PopoverComponent';
 
 export type TagProps = {
   name: string;
-  editable?: boolean;
   className?: string;
   tagCategory?: TagCategories;
   tagPageLink?: string;
@@ -24,7 +23,6 @@ export type TagProps = {
 
 export const Tag: React.FC<TagProps> = ({
   name,
-  editable,
   className,
   tagCategory,
   tagPageLink,
@@ -35,12 +33,6 @@ export const Tag: React.FC<TagProps> = ({
   enableLabel,
   tagType,
 }) => {
-  // const [isShown, setIsShown] = React.useState(true);
-
-  // const onClick = () => {
-  //   setIsShown(false);
-  // };
-
   return (
     <>
       {enableLabel && tagCategory && (
@@ -57,7 +49,6 @@ export const Tag: React.FC<TagProps> = ({
               tagTrend={tagTrend}
               picture={picture}
               pictureAlt={pictureAlt}
-              // onClick={onClick}
               tagPageLink={tagPageLink}
             />
           </Link>
@@ -70,7 +61,6 @@ export const Tag: React.FC<TagProps> = ({
             tagTrend={tagTrend}
             picture={picture}
             pictureAlt={pictureAlt}
-            // onClick={onClick}
           />
         )}
       </div>

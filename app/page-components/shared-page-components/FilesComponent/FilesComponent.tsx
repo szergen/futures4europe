@@ -25,7 +25,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({ files }) => {
       </Typography>
       <div className="flex">
         {files.map((file, index) => (
-          <div key={file.href + index} className={style.fileContainer}>
+          <div key={file?.title + index} className={style.fileContainer}>
             <Image
               src="https://framerusercontent.com/images/F46jYRatmGwgDHnyDPIaUs1us.png?scale-down-to=1024"
               width={147}
