@@ -504,7 +504,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         {
           _id: personData.personTag._id,
           ...personData.personTag,
-          tagPageLink: newPersonInfoSlug,
+          tagPageLink: '/person/' + newPersonInfoSlug,
         }
       );
       console.log('updatedPersonTag', updatedPersonTag);

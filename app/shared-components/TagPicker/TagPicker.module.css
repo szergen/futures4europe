@@ -1,0 +1,25 @@
+.tagPickerMenu {
+  width: calc(100% - 25px) !important;
+  overflow: hidden !important;
+  z-index: 999999;
+}
+.tagPickerMenu {
+  overflow: hidden !important;
+  z-index: 999999;
+}
+.option {
+  height: calc(var(--w-space-xxl));
+  background: white;
+  margin: 4px;
+  border-radius: var(--p-border-radius-tag);
+  line-height: calc(var(--w-space-xxl));
+  padding: 0px var(--w-space-s);
+  display: block !important;
+  text-wrap: nowrap;
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: fit-content !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--w-font-size-tag);
+  letter-spacing: var(--p-font-letter-spacing-tag);
+}

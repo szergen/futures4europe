@@ -538,7 +538,7 @@ function OrganisationPageComponent({
         {
           _id: organisationData.organisationTag._id,
           ...organisationData.organisationTag,
-          tagPageLink: newOrganisationInfoSlug,
+          tagPageLink: '/organisation/' + newOrganisationInfoSlug,
         }
       );
       console.log('updatedOrganisationTag', updatedOrganisationTag);

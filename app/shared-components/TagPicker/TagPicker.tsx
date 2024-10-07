@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { TagProps } from '../Tag/Tag';
 import { Modal, Button, TextInput, Label } from 'flowbite-react';
 import { useWixModules } from '@wix/sdk-react';
+import styles from './TagPicker.module.css';
 
 export type TagPickerProps = {
   isMulti?: boolean;
@@ -183,7 +184,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
 
   return (
     <>
-      <div className="flex flex-col mt-2 w-full">
+      <div className="flex flex-col w-full ">
         <Label htmlFor="tagPicker" className="mb-2">
           {tagTypeLabel}
         </Label>
@@ -200,12 +201,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           value={value}
           isMulti={isMulti}
           placeholder={placeholder || 'Select or create a tag'}
-          className={classNames('z-50', className)}
+          className={classNames('', className)}
           classNames={{
             control: (state) =>
               state.isFocused ? 'text-blue-site ' : 'border-grey-300',
             multiValue: () => 'tagPickerPill z-5',
             singleValue: () => 'tagPickerPillSingle z-5',
+            menu: () =>
+              classNames(
+                'text-black bg-slate-100 rounded-lg ',
+                styles.tagPickerMenu
+              ),
+            menuList: () => classNames('', styles.tagPickerMenuList),
+            option: () => classNames('', styles.option),
           }}
         />
         {showCreateForm && (
