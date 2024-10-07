@@ -63,10 +63,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   // const { existingPostPagesTitles } = useAuth();
 
   const validationFunctionForTitle = (tempTitle: string) => {
-    if (tempTitle.length < 5) {
+    if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempTitle.length > 30) {
+    if (tempTitle?.length > 30) {
       return 'Title should be at most 30 characters long';
     }
     if (tempTitle === 'New Post') {

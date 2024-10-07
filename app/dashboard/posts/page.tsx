@@ -334,13 +334,13 @@ export default function DashboardProjects() {
                   ownedPostPages
                   .map((infoPage) => (
                       <div className="pt-2 pb-2 flex flex-row items-center justify-between">
-                        <div className="flex flex-col text-left">
+                        <div className="flex flex-col flex-start text-left">
                             <Tag
                                 name={infoPage?.data?.title}
                                 tagPageLink={`/${extractInfoPageTypeBasedOnTag(
                                     infoPage?.data?.pageTypes[0]
                                   )}/${infoPage.data.slug}`}
-                                tagTrend={infoPage?.data?.pageTypes[0]?.popularity}
+                                  popularity={infoPage?.data?.pageTypes[0]?.popularity}
                                 >
                                 
                             </Tag>
@@ -401,7 +401,7 @@ export default function DashboardProjects() {
                                 <LoadingSpinner />
                               </div>
                             )}
-                          <pre>{JSON.stringify(infoPage.data, null, 2)}</pre>
+                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
                       </div>
                   ))
                 ) : (
