@@ -4,16 +4,26 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import Link from 'next/link';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
 import classNames from 'classnames';
 import { members } from '@wix/members';
 import Icon from '@app/shared-components/Icon/Icon';
-import style from './pageDashboard.module.css';
-import { Avatar } from 'flowbite-react';
+import stylefile from './pageDashboardChangePassword.module.css';
+import style from '../dashboard/pageDashboard.module.css';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
+import {
+  Button,
+  Card,
+  Checkbox,
+  Label,
+  TextInput,
+  Alert,
+  Avatar,
+} from 'flowbite-react';
+import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
 
-export default function Dashboard() {
+export default function DashboardChangePassword() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
   //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
   // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
@@ -222,6 +232,37 @@ export default function Dashboard() {
       <path
         d="M10.5 20.7143C11.3306 20.7141 12.1424 20.471 12.8329 20.0158C13.5234 19.5606 14.0616 18.9136 14.3794 18.1567C14.6973 17.3998 14.7804 16.567 14.6185 15.7634C14.4565 14.9599 14.0566 14.2218 13.4694 13.6424C12.882 13.0632 12.1337 12.6688 11.3191 12.509C10.5045 12.3492 9.66019 12.4313 8.89285 12.7448C8.12551 13.0583 7.46963 13.5891 7.00811 14.2702C6.5466 14.9514 6.30018 15.7522 6.3 16.5714C6.3 17.6702 6.7425 18.7239 7.53015 19.5009C8.3178 20.2778 9.38609 20.7143 10.5 20.7143ZM10.5 14.5C10.9155 14.4999 11.3217 14.6213 11.6672 14.849C12.0127 15.0767 12.2819 15.4003 12.4409 15.779C12.5998 16.1576 12.6413 16.5743 12.5601 16.9762C12.4789 17.3782 12.2787 17.7473 11.9847 18.037C11.6909 18.3266 11.3167 18.5239 10.9093 18.6037C10.5019 18.6836 10.0797 18.6425 9.69594 18.4856C9.31223 18.3287 8.9843 18.0631 8.75362 17.7224C8.52294 17.3817 8.39988 16.9811 8.4 16.5714C8.4 16.0221 8.62125 15.4952 9.01508 15.1067C9.4089 14.7182 9.94304 14.5 10.5 14.5ZM8.4 4.14286H12.6V6.21429H8.4V4.14286ZM18.9 0H2.1C1.54305 0 1.0089 0.218239 0.615076 0.606707C0.221249 0.995175 0 1.52205 0 2.07143V26.9286C0 27.4779 0.221249 28.0048 0.615076 28.3933C1.0089 28.7818 1.54305 29 2.1 29H18.9C19.4565 28.999 19.9899 28.7804 20.3836 28.392C20.7774 28.0036 20.9989 27.4775 21 26.9286V2.07143C21 1.52205 20.7787 0.995175 20.3849 0.606707C19.9911 0.218239 19.457 0 18.9 0ZM14.7 26.9286H6.3V24.8571C6.3 24.5825 6.41062 24.319 6.60754 24.1248C6.80445 23.9305 7.07152 23.8214 7.35 23.8214H13.65C13.9285 23.8214 14.1955 23.9305 14.3925 24.1248C14.5894 24.319 14.7 24.5825 14.7 24.8571V26.9286ZM16.8 26.9286V24.8571C16.8 24.0331 16.4681 23.2428 15.8774 22.6601C15.2866 22.0774 14.4854 21.75 13.65 21.75H7.35C6.51457 21.75 5.71335 22.0774 5.12261 22.6601C4.53187 23.2428 4.2 24.0331 4.2 24.8571V26.9286H2.1V2.07143H18.9V26.9286H16.8Z"
         fill="currentColor"
+      />
+    </svg>
+  );
+
+  const AccountHumanIcon = () => (
+    <svg>
+      <path
+        d="M11 6.00099C12.473 6.00099 13.667 4.80694 13.667 3.33399C13.667 1.86105 12.473 0.666992 11 0.666992C9.52706 0.666992 8.33301 1.86105 8.33301 3.33399C8.33301 4.80694 9.52706 6.00099 11 6.00099Z"
+        fill="currentColor"
+      />
+      <path
+        d="M16.186 8.81399C15.666 8.29399 14.773 7.33399 13.04 7.33399H9.65301C5.98601 7.31999 3.00001 4.33399 3.00001 0.666992H0.333008C0.333008 4.87999 3.14601 8.45399 7.00001 9.61399V27.334H9.66601V19.334H12.333V27.334H15V11.4L20.266 16.667L22.146 14.787L16.186 8.81399Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+
+  const AccountLockIcon = () => (
+    <svg>
+      <path
+        d="M15.066 0.265974L25.566 3.62597C26.2727 3.85196 26.8893 4.29668 27.3268 4.89595C27.7643 5.49521 28.0001 6.218 28 6.95997V14C28 17.132 27.36 20.364 25.394 23.364C23.428 26.36 20.224 28.99 15.33 31.074C14.9095 31.2531 14.4571 31.3454 14 31.3454C13.5429 31.3454 13.0905 31.2531 12.67 31.074C7.776 28.99 4.572 26.36 2.606 23.364C0.64 20.364 1.17537e-08 17.132 1.17537e-08 14V6.95997C-6.0777e-05 6.218 0.235673 5.49521 0.673168 4.89595C1.11066 4.29668 1.72728 3.85196 2.434 3.62597L12.934 0.265974C13.6273 0.0439918 14.3727 0.0439918 15.066 0.265974ZM13.846 3.12397L13.848 3.12597L3.348 6.48597C3.24752 6.51836 3.15981 6.58159 3.09733 6.66669C3.03486 6.75178 3.0008 6.85441 3 6.95997V14C3 16.72 3.55 19.332 5.114 21.718C6.682 24.106 9.356 26.402 13.846 28.314C13.8947 28.3348 13.9471 28.3455 14 28.3455C14.0529 28.3455 14.1053 28.3348 14.154 28.314C18.644 26.4 21.318 24.108 22.886 21.72C24.45 19.332 25 16.716 25 14V6.95997C24.9999 6.85399 24.9662 6.75077 24.9036 6.66522C24.8411 6.57966 24.753 6.51619 24.652 6.48397L14.152 3.12397C14.0525 3.09199 13.9455 3.09199 13.846 3.12397ZM17 13C17 14.072 16.428 15.064 15.5 15.6V20.5C15.5 20.8978 15.342 21.2793 15.0607 21.5606C14.7794 21.8419 14.3978 22 14 22C13.6022 22 13.2206 21.8419 12.9393 21.5606C12.658 21.2793 12.5 20.8978 12.5 20.5V15.6C12.044 15.3367 11.6653 14.9581 11.402 14.5021C11.1387 14.0461 11.0001 13.5289 11 13.0024C10.9999 12.4759 11.1384 11.9586 11.4016 11.5025C11.6647 11.0465 12.0433 10.6677 12.4992 10.4043C12.9551 10.1409 13.4723 10.0021 13.9988 10.0019C14.5253 10.0017 15.0426 10.1401 15.4988 10.4031C15.9549 10.6661 16.3337 11.0446 16.5972 11.5004C16.8608 11.9563 16.9997 12.4734 17 13Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+
+  const AccountPasswordIcon = () => (
+    <svg>
+      <path
+        d="M9 3.66281C9.35362 3.66281 9.69276 3.80329 9.94281 4.05334C10.1929 4.30338 10.3333 4.64252 10.3333 4.99614M13 4.99614C13.0002 5.62092 12.854 6.23706 12.5732 6.79518C12.2924 7.35329 11.8847 7.83786 11.3829 8.21006C10.8811 8.58226 10.2991 8.83173 9.68347 8.93849C9.06788 9.04524 8.43584 9.00631 7.838 8.82481L6.33333 10.3295H5V11.6628H3.66667V12.9961H1.66667C1.48986 12.9961 1.32029 12.9259 1.19526 12.8009C1.07024 12.6759 1 12.5063 1 12.3295V10.6055C1.00004 10.4287 1.0703 10.2591 1.19533 10.1341L5.17133 6.15814C5.00497 5.60815 4.95904 5.02877 5.0367 4.45944C5.11435 3.89011 5.31375 3.34419 5.62133 2.85884C5.92891 2.37349 6.33744 1.96011 6.81913 1.64682C7.30082 1.33354 7.84434 1.12771 8.41272 1.04335C8.9811 0.958984 9.56098 0.998066 10.1129 1.15793C10.6648 1.3178 11.1758 1.5947 11.6111 1.96979C12.0464 2.34487 12.3958 2.80934 12.6354 3.33157C12.8751 3.8538 12.9994 4.42154 13 4.99614Z"
+        stroke="currentColor"
       />
     </svg>
   );
@@ -492,7 +533,10 @@ export default function Dashboard() {
           )}
         >
           <li>
-            <Link href={`/dashboard`} className={classNames(style.active, '')}>
+            <Link
+              href={`/dashboard`}
+              className={classNames(style.subnavLink, '')}
+            >
               Profile information
             </Link>
           </li>
@@ -507,7 +551,7 @@ export default function Dashboard() {
           <li>
             <Link
               href={`/change-password`}
-              className={classNames(style.subnavLink, '')}
+              className={classNames(style.active, '')}
             >
               Password
             </Link>
@@ -522,24 +566,12 @@ export default function Dashboard() {
         )}
       >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
-          Your profile information
+          Change Password
         </h1>
-        {/* <h2 className={style.headingDashboardh3}>
-        Welcome, {userDetails?.userName} ({userDetails.slug}) -{' '}
-        {userDetails.contactId}
-      </h2> */}
-        {/* {userDetails?.isAdmin && (
-        <h3 className={style.headingDashboardh3}>
-          Admin with <strong>AccountId:</strong>
-          <span>{userDetails.accountId}</span>
-        </h3>
-      )} */}
-
         <p className="text-base text-[#606b85]">
-          Info about you and your preferences across futures4europe services.
-          Manage all your personal information and options. You can make some of
-          this information, like your contact details, visible to others so they
-          can reach you easily. You can also see a summary of your profiles.
+          Choose a strong password and dont reuse it for other accounts. You may
+          be signed out of your account on some devices. You will be signed out
+          of all devices.
         </p>
 
         <div className={classNames(style.dashboardBox, 'mt-14 mb-10 p-8')}>
@@ -553,100 +585,14 @@ export default function Dashboard() {
               >
                 <Icon
                   className="mb-0"
-                  sizeW={38}
-                  sizeH={38}
-                  fill={'currentColor'}
-                  strokeWidth={0}
+                  sizeW={48}
+                  sizeH={48}
+                  viewBox="0 0 24 24"
+                  fill={'none'}
+                  strokeWidth={1}
                   inline={true}
                 >
-                  <AccountVerifyIcon />
-                </Icon>
-              </h3>
-
-              <div className="flex items-center bg-gradient-to-br from-emerald-100 to-emerald-200 border-small border-white/50 shadow-black text-[#2F9461] py-2 px-4 rounded-full h-34 font-medium text-base">
-                <Icon
-                  className="text-color-white"
-                  sizeW={28}
-                  sizeH={14}
-                  viewBox={'0 -3 28 14'}
-                  fill={'green'}
-                  strokeWidth={0}
-                  inline={false}
-                >
-                  <AccountSmallKeyIcon />
-                </Icon>
-                <span className="">Claimed person page</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-between">
-              <h2
-                className={classNames(
-                  style.headingDashboardh1,
-                  'mt-8 mb-0 flex flex-row items-center'
-                )}
-              >
-                Basic info
-              </h2>
-              <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Some info may be visible to other people on the platform.
-              </p>
-            </div>
-
-            <div
-              className={classNames(
-                style.listDashboard,
-                'flex flex-col text-base text-[#606b85]'
-              )}
-            >
-              <div
-                className={
-                  'pt-2 pb-2 flex flex-row items-center justify-between'
-                }
-              >
-                <span className="">Account registration date</span>
-                <span className="ml-4">{userDetails?.createdDate}</span>
-              </div>
-
-              <div
-                className={
-                  'pt-2 pb-2 flex flex-row items-center justify-between'
-                }
-              >
-                <span className="">Last profile update</span>
-                <span className="ml-4">{userDetails?.updatedDate}</span>
-              </div>
-
-              <div
-                className={
-                  'pt-2 pb-2 flex flex-row items-center justify-between'
-                }
-              >
-                <span className="">Member</span>
-                <span className="ml-4">Person</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className={classNames(style.dashboardBox, 'mt-14 mb-10 p-8')}>
-          <div className="flex flex-col">
-            <div className="flex justify-between">
-              <h3
-                className={classNames(
-                  style.headingDashboardh3,
-                  'mr-4 flex flex-row items-center'
-                )}
-              >
-                <Icon
-                  className="mb-0"
-                  sizeW={38}
-                  sizeH={38}
-                  fill={'currentColor'}
-                  strokeWidth={0}
-                  inline={true}
-                >
-                  <AccountCardIcon />
+                  <AccountPasswordIcon />
                 </Icon>
               </h3>
             </div>
@@ -658,50 +604,59 @@ export default function Dashboard() {
                   'mt-8 mb-0 flex flex-row items-center'
                 )}
               >
-                Profile picture
+                Password strength
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Your profile card is visible to all members of this site.
+                Use at least 8 characters. Don’t use a password from another
+                site, or something too obvious like your pet’s name.
               </p>
             </div>
 
-            <div
-              className={classNames(
-                style.listDashboard,
-                'flex flex-col text-base text-[#606b85]'
-              )}
+            <form
+              // onSubmit={handleReset}
+              className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl"
             >
-              <div
-                className={classNames(
-                  style.listItemDashboard,
-                  'pt-4 pb-4 flex flex-row items-center justify-between'
-                )}
-              >
-                <span className="flex flex-row items-center">
-                  <Avatar
-                    alt="User settings"
-                    img="https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512"
-                    rounded
-                    className={classNames(
-                      style.avatarUserHeader,
-                      'mr-4 border-none'
-                    )} // Conditionally add "active" class
-                  />
-                  <span>A profile picture helps personalize your account</span>
-                </span>
-                <span className="ml-4">Change </span>
-              </div>
+              <Label
+                className="mb-2 text-sm text-start text-grey-900"
+                htmlFor="passwordNew"
+                value="Your new password"
+              />
 
-              <div className={'pt-2 pb-2 mt-10 flex flex-col'}>
-                <span className="text-[#606b85]">
-                  Who can see your profile photo?{' '}
-                </span>{' '}
-                <span>
-                  Your visibility setting only applies to your profile photo.
-                  Your header image is always visible to anyone.
-                </span>
-              </div>
-            </div>
+              <TextInput
+                className="block relative"
+                id="passwordNew"
+                type="password"
+                sizing="lg"
+                shadow
+                placeholder="enter new password"
+                icon={HiMail}
+                required
+              />
+
+              <Label
+                className="mb-2 text-sm text-start text-grey-900"
+                htmlFor="passwordNewRepeat"
+                value="Repeat Password*"
+              />
+              <TextInput
+                id="passwordNewRepeat"
+                className="block relative"
+                sizing="lg"
+                shadow
+                placeholder="Repeat password"
+                icon={HiKey}
+                type="password"
+                required
+              />
+
+              <Button
+                color="primary"
+                className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 rounded-10 hover:bg-purple-600 focus:ring-4 bg-purple-500"
+                type="submit"
+              >
+                Reset account
+              </Button>
+            </form>
           </div>
         </div>
       </div>

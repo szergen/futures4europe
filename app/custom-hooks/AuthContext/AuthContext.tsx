@@ -32,6 +32,7 @@ interface AuthContextType {
     privacyStatus: string;
     accountStatus: string;
     activityStatus: string;
+    lastLoginDate: string;
     avatarUrl: string; // TODO need to pass src avatar
     userTag: TagProps;
   };
@@ -67,6 +68,7 @@ const initialState = {
   privacyStatus: '',
   accountStatus: '',
   activityStatus: '',
+  lastLoginDate: '',
   avatarUrl: '',
   userTag: {} as TagProps,
 };
@@ -153,6 +155,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           privacyStatus: currentMember?.member?.privacyStatus,
           accountStatus: currentMember?.member?.status,
           activityStatus: currentMember?.member?.activityStatus,
+          lastLoginDate: currentMember?.member?.lastLoginDate,
         });
         setIsLoggedIn(true);
       }

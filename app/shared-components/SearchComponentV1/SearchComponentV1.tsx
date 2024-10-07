@@ -186,7 +186,7 @@ const SearchComponentV1 = () => {
   }, [results]);
 
   return (
-    <div>
+    <div className="searchBoxWrapper relative">
       <div className="searchBox flex">
         <SearchedItems
           searchedItems={searchedItems}

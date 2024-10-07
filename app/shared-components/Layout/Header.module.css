@@ -3,6 +3,9 @@
   /* display: flex; */
   max-width: 1440px;
 }
+.searchedItems {
+  cursor: pointer;
+}
 
 .avatarImage {
   img {

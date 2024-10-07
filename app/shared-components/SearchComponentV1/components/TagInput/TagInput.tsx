@@ -504,7 +504,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // }, [searchState.selectedSuggestionIndex]);
 
   return (
-    <div className={classNames(style.inputContainer, 'flex')}>
+    <div className={classNames(style.SearchInputContainer, 'flex rounded-md')}>
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -513,14 +513,17 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
       />
-      <button onMouseDown={handleSearchButton}>
+      <button
+        className={classNames(style.SearchInputButton, 'rounded-md')}
+        onMouseDown={handleSearchButton}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={0}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-7 h-7"
         >
           <g>
             <path d="M 0 24 L 0 0 L 24 0 L 24 24 Z" fill="transparent"></path>

@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import style from './Suggestions.module.css';
 import Link from 'next/link';
 import { highlightMatches } from '../../SearchComponentV1.utils';
+import { HiDocumentSearch } from 'react-icons/hi';
+import { motion } from 'framer-motion';
 
 export type SuggestionsProps = {
   fieldSuggestions: any[];
@@ -141,183 +143,198 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   }, [selectedSuggestionIndex, clickedField]);
 
   return (
-    <div
-      className={classNames(
-        'w-1/2 border-dashed border-2',
-        style.suggestionsContainer
-      )}
-      onWheel={handleScrollForSuggestions}
+    <motion.div
+      className={classNames('relative z-10', style.suggestionsContainerWrap)}
+      initial={{ opacity: 0, scaleY: 0, translateY: '-10px' }}
+      animate={{ opacity: 1, scaleY: 1, translateY: '0px' }}
+      transition={{
+        duration: 0.5,
+        ease: 'easeIn',
+        opacity: { delay: 0.3, duration: 0.5 },
+        translateY: { delay: 0.3, duration: 0.4 },
+      }}
+      style={{
+        transformOrigin: 'top',
+      }}
     >
-      {/* Sort Tags */}
-      {availableSortTags.length > 0 && (
-        <div className="border">
-          Sort by:
-          <ul className="style.tags">
-            {availableSortTags?.map((sortTag: any, index: number) => (
-              <li
-                key={index}
-                className={classNames(
-                  'flex items-center',
-                  index === selectedSuggestionIndex &&
-                    activeSelection === 'sortby' &&
-                    'bg-blue-200'
-                )}
-              >
-                <span className="w-20">tag:</span>
-                <span
-                  // dangerouslySetInnerHTML={{ __html: sortTag?.item.name }}
-                  dangerouslySetInnerHTML={{
-                    __html: highlightMatches(
-                      sortTag?.item?.name,
-                      sortTag?.matches
-                    ),
-                  }}
-                  onMouseDown={handleSelectedSortTag}
-                  className="ml-4"
-                ></span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {/* Field Tags */}
-      <div className="border" />
-      {!clickedField && (
-        <div className="style.fieldSuggestions">
-          <span className="text-purple-700">Field Suggestions:</span>
-          <ul className="style.tags">
-            {uniqueFields?.map(
-              (fieldSuggestion: any, index: number) =>
-                index < 10 && (
-                  <li
-                    key={index}
-                    className={classNames(
-                      'flex items-center',
-                      index === highlightedIndexWithType.index &&
-                        highlightedIndexWithType.type === 'field' &&
-                        'bg-blue-100',
-                      index ===
-                        selectedSuggestionIndex - availableSortTags.length &&
-                        activeSelection === 'field' &&
-                        'bg-blue-200'
-                    )}
-                    onMouseOver={() =>
-                      setHighlightedIndexWithType({ index, type: 'field' })
-                    }
-                  >
-                    <span className="w-20">field:</span>
-                    <span
-                      // dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
-                      dangerouslySetInnerHTML={{
-                        __html: highlightMatches(
-                          fieldSuggestion?.item?.name,
-                          fieldSuggestion?.matches
-                        ),
-                      }}
-                      onMouseDown={handleFieldSelection}
-                      className="ml-4"
-                    ></span>
-                  </li>
-                )
-            )}
-          </ul>
-        </div>
-      )}
-      {/* Tags */}
-      <div className="style.tagSuggestions">
-        <span className="text-purple-700">Tag Suggestions:</span>
-        <ul className="style.tags">
-          {tagSuggestions
-            ?.slice(
-              selectedSuggestionIndex >= 5 ? selectedSuggestionIndex - 1 : 0,
-              selectedSuggestionIndex >= 5 ? selectedSuggestionIndex + 4 : 5
-            )
-            .map((tagSuggestion: any, index: number) => {
-              const actualIndex =
-                selectedSuggestionIndex >= 5
-                  ? selectedSuggestionIndex - 1 + index
-                  : index;
-              return (
+      <div
+        className={style.suggestionsContainer}
+        onWheel={handleScrollForSuggestions}
+      >
+        {/* Sort Tags */}
+        {availableSortTags.length > 0 && (
+          <div className={classNames(style.tagSuggestionsLabel)}>
+            Sort by:
+            <ul className="style.tags">
+              {availableSortTags?.map((sortTag: any, index: number) => (
                 <li
-                  key={tagSuggestion.item?.name}
+                  key={index}
                   className={classNames(
-                    'flex items-center mb-2',
-                    actualIndex === highlightedIndexWithType.index &&
-                      highlightedIndexWithType.type === 'tag' &&
-                      'bg-blue-100',
-                    actualIndex ===
-                      selectedSuggestionIndex -
-                        fieldSuggestions.length -
-                        availableSortTags.length &&
-                      activeSelection === 'tag' &&
-                      'bg-blue-200'
+                    'flex items-center',
+                    index === selectedSuggestionIndex &&
+                      activeSelection === 'sortby' &&
+                      'bg-gray-100'
                   )}
-                  onMouseOver={() =>
-                    setHighlightedIndexWithType({ index, type: 'tag' })
-                  }
                 >
+                  <span className="w-20">tag:</span>
                   <span
-                    className="w-20"
-                    // onMouseDown={handleClickedSuggestion}
-                  >
-                    {tagSuggestion.item?.tagType}:
-                  </span>
-                  <div className="flex">
-                    <Image
-                      alt={'Tag Image'}
-                      className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
-                      src={
-                        tagSuggestion.item?.picture ||
-                        'https://placehold.co/600x400?text=placeholder'
+                    // dangerouslySetInnerHTML={{ __html: sortTag?.item.name }}
+                    dangerouslySetInnerHTML={{
+                      __html: highlightMatches(
+                        sortTag?.item?.name,
+                        sortTag?.matches
+                      ),
+                    }}
+                    onMouseDown={handleSelectedSortTag}
+                    className="ml-4"
+                  ></span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {/* Field Tags */}
+        {!clickedField && (
+          <div className={style.tagSuggestionsWrapper}>
+            <span className="text-purple-700">Field Suggestions:</span>
+            <ul className="style.tags">
+              {uniqueFields?.map(
+                (fieldSuggestion: any, index: number) =>
+                  index < 10 && (
+                    <li
+                      key={index}
+                      className={classNames(
+                        'flex items-center',
+                        index === highlightedIndexWithType.index &&
+                          highlightedIndexWithType.type === 'field' &&
+                          'bg-gray-200',
+                        index ===
+                          selectedSuggestionIndex - availableSortTags.length &&
+                          activeSelection === 'field' &&
+                          'bg-gray-100'
+                      )}
+                      onMouseOver={() =>
+                        setHighlightedIndexWithType({ index, type: 'field' })
                       }
-                      width={40}
-                      height={40}
-                    />
-                    <div className="flex flex-wrap items-center">
+                    >
+                      <span className="w-20">field:</span>
                       <span
-                        // dangerouslySetInnerHTML={{
-                        //   __html: tagSuggestion.name,
-                        // }}
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            highlightMatches(
-                              tagSuggestion?.item?.name,
-                              tagSuggestion?.matches
-                            ) || tagSuggestion?.item?.name,
-                        }}
-                        onMouseDown={handleTagSuggestion}
-                        className={classNames(
-                          tagSuggestion.item?.pageLink && 'font-bold'
-                        )}
-                      />
-                      <span
-                        data-after={tagSuggestion.item?.popularity}
-                        className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
-                      ></span>
-                      <span
-                        className="w-full text-12"
+                        // dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
                         dangerouslySetInnerHTML={{
                           __html: highlightMatches(
-                            tagSuggestion?.item?.tagLine,
-                            tagSuggestion?.matches
+                            fieldSuggestion?.item?.name,
+                            fieldSuggestion?.matches
                           ),
                         }}
-                        // dangerouslySetInnerHTML={{
-                        //   __html: tagSuggestion.tagLine,
-                        // }}
+                        onMouseDown={handleFieldSelection}
+                        className="ml-4"
+                      ></span>
+                    </li>
+                  )
+              )}
+            </ul>
+          </div>
+        )}
+        {/* Tags */}
+        <div className={style.tagSuggestionsWrapper}>
+          <span
+            className={classNames(
+              'ml-2 pb-4 block text-[14px]',
+              style.tagSuggestionsLabel
+            )}
+          >
+            Tag Suggestions
+          </span>
+          <ul className="style.tags">
+            {tagSuggestions
+              ?.slice(
+                selectedSuggestionIndex >= 5 ? selectedSuggestionIndex - 1 : 0,
+                selectedSuggestionIndex >= 5 ? selectedSuggestionIndex + 4 : 5
+              )
+              .map((tagSuggestion: any, index: number) => {
+                const actualIndex =
+                  selectedSuggestionIndex >= 5
+                    ? selectedSuggestionIndex - 1 + index
+                    : index;
+                return (
+                  <li
+                    key={tagSuggestion.item?.name}
+                    className={classNames(
+                      'flex items-center',
+                      actualIndex === highlightedIndexWithType.index &&
+                        highlightedIndexWithType.type === 'tag' &&
+                        'bg-gray-200',
+                      actualIndex ===
+                        selectedSuggestionIndex -
+                          fieldSuggestions.length -
+                          availableSortTags.length &&
+                        activeSelection === 'tag' &&
+                        'bg-gray-100'
+                    )}
+                    onMouseOver={() =>
+                      setHighlightedIndexWithType({ index, type: 'tag' })
+                    }
+                  >
+                    <span
+                      className="w-20"
+                      // onMouseDown={handleClickedSuggestion}
+                    >
+                      {tagSuggestion.item?.tagType}:
+                    </span>
+                    <div className="flex content-center searchTagImage">
+                      <Image
+                        alt={'Tag Image'}
+                        src={
+                          tagSuggestion.item?.picture ||
+                          'https://placehold.co/600x400?text=placeholder'
+                        }
+                        width={40}
+                        height={40}
                       />
-                      {/* {tagSuggestion.tagLine} */}
-                      {/* </span> */}
+                      <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
+                        <span
+                          // dangerouslySetInnerHTML={{
+                          //   __html: tagSuggestion.name,
+                          // }}
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              highlightMatches(
+                                tagSuggestion?.item?.name,
+                                tagSuggestion?.matches
+                              ) || tagSuggestion?.item?.name,
+                          }}
+                          onMouseDown={handleTagSuggestion}
+                          className={classNames(
+                            tagSuggestion.item?.pageLink && 'font-bold'
+                          )}
+                        />
+                        <span
+                          data-after={tagSuggestion.item?.popularity}
+                          className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
+                        ></span>
+                        <span
+                          className="w-full text-12"
+                          dangerouslySetInnerHTML={{
+                            __html: highlightMatches(
+                              tagSuggestion?.item?.tagLine,
+                              tagSuggestion?.matches
+                            ),
+                          }}
+                          // dangerouslySetInnerHTML={{
+                          //   __html: tagSuggestion.tagLine,
+                          // }}
+                        />
+                        {/* {tagSuggestion.tagLine} */}
+                        {/* </span> */}
+                      </div>
                     </div>
-                  </div>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-      {/* Pages */}
-      <div className="border" />
-      <div className="style.pageSuggestions">
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+        {/* Pages */}
+        <div className={style.tagSuggestionsWrapper} />
         <span className="text-pink-700">Quick Results(Page Suggestions:)</span>
         <ul className="style.pages">
           {pageSuggestions?.map(
@@ -328,8 +345,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   className={classNames(
                     index === highlightedIndexWithType.index &&
                       highlightedIndexWithType.type === 'page' &&
-                      'bg-blue-100',
-                    'flex items-center mb-2'
+                      'bg-gray-200',
+                    'flex items-center'
                   )}
                   onMouseOver={() =>
                     setHighlightedIndexWithType({ index, type: 'page' })
@@ -340,10 +357,13 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   <span className="w-20">
                     {resolvePageType(pageSuggestion)}:
                   </span>
-                  <div className="flex">
+                  <div className="flex content-center searchTagImage">
                     <Image
                       alt={'Tag Image'}
-                      className={classNames('inline-block mr-1 ml-4 w-10 h-10')}
+                      className={
+                        (classNames('inline-block mr-1 ml-4 w-10 h-10'),
+                        style.searchTagImage)
+                      }
                       src={
                         pageSuggestion.item?.pictures ||
                         'https://placehold.co/600x400?text=placeholder'
@@ -352,7 +372,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       height={40}
                     />
                     <Link
-                      className="flex flex-wrap items-center"
+                      className="flex flex-wrap items-center ml-2 searchTagText"
                       href={
                         pageSuggestion.item?.pageLink || 'https://google.com'
                       }
@@ -389,7 +409,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           )}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

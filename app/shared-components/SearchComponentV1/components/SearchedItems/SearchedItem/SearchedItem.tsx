@@ -1,6 +1,7 @@
 import Tag from '@app/shared-components/Tag/Tag';
 import classNames from 'classnames';
 import React from 'react';
+import style from './SearchedItem.module.css';
 
 export type SearchedItemProps = {
   item: {
@@ -34,7 +35,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       key={index}
       className={classNames(
         'flex mx-1 items-center',
-        isSelected && 'bg-blue-200'
+        isSelected && 'searchTagSelected'
       )}
     >
       {/* Field with Tag */}
