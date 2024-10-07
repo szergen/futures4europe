@@ -136,8 +136,8 @@ export default function Dashboard() {
     router.push(`/post/New_Post`);
   };
 
-  const handleCreateProject = async () => {
-    router.push(`/project/New_Project`);
+  const handleListProjects = async () => {
+    router.push(`/dashboard/projects`);
   };
 
   const handleCreatePersonInfoPage = async () => {
@@ -148,6 +148,14 @@ export default function Dashboard() {
     router.push(`/person/New_Info_Page`);
   };
 
+  const handleListProfileSettings = async () => {
+    router.push(`/dashboard`);
+  };
+  
+  const handleListPosts = async () => {
+    router.push(`/dashboard/posts`);
+  };
+  
   const handleCreateOrganisation = async () => {
     router.push(`/organisation/New_Organisation`);
   };
@@ -223,10 +231,10 @@ export default function Dashboard() {
 
   return (
     <div className={classNames(style.UserDashboard, "flex flex-col")}>
-      <div className={classNames(style.UserDashboardWrapper, "flex m-auto justify-center relative")}>
+      <div className={classNames(style.UserDashboardWrapper, "flex m-auto justify-center relative mb-4")}>
         <div className={classNames(style.UserDashboardNavItem, "text-purple-site flex justify-center")}>
           <button
-            onClick={handleCreatePost}
+            onClick={handleListPosts}
             className={classNames(
               'font-semibold flex flex-col justify-center items-center'
             )}
@@ -246,7 +254,7 @@ export default function Dashboard() {
 
         <div className={classNames(style.UserDashboardNavItem, "text-purple-site flex justify-center")}>
           <button
-            onClick={handleCreateProject}
+            onClick={handleListProjects}
             className={classNames(
               'font-semibold flex flex-col justify-center items-center'
             )}
@@ -304,9 +312,9 @@ export default function Dashboard() {
         </button>
         </div>
 
-        <div className={classNames(style.UserDashboardNavItem, "text-purple-site flex justify-center")}>
+        <div className={classNames(style.UserDashboardNavItem, style.active, "text-purple-site flex justify-center")}>
         <button
-          onClick={handleCreatePersonInfoPage}
+          onClick={handleListProfileSettings}
           className='font-semibold flex flex-col justify-center items-center'
         >
             <Icon 
@@ -407,8 +415,8 @@ export default function Dashboard() {
                 <Icon 
                     className="text-color-white" 
                     sizeW={28}
-                    sizeH={28}
-                    viewBox={'0 0 28 14'}
+                    sizeH={14}
+                    viewBox={'0 -3 28 14'}
                     fill={'green'}
                     strokeWidth={0}
                     inline={false}
@@ -426,7 +434,7 @@ export default function Dashboard() {
             <p className={classNames(style.boxTextDashboard, 'mb-8')}>Some info may be visible to other people on the platform.</p>
           </div>
 
-          <div className={classNames(style.listDashboard, 'flex flex-col text-base text-[#606b8580]')}>
+          <div className={classNames(style.listDashboard, 'flex flex-col text-base text-[#606b85]')}>
             <div className={'pt-2 pb-2 flex flex-row items-center justify-between'}>
               <span className=''>Account registration date</span>
               <span className='ml-4'>{userDetails?.createdDate}</span>
@@ -474,7 +482,7 @@ export default function Dashboard() {
             <p className={classNames(style.boxTextDashboard, 'mb-8')}>Your profile card is visible to all members of this site.</p>
           </div>
 
-          <div className={classNames(style.listDashboard, 'flex flex-col text-base text-[#606b8580]')}>
+          <div className={classNames(style.listDashboard, 'flex flex-col text-base text-[#606b85]')}>
             <div className={classNames(style.listItemDashboard,'pt-4 pb-4 flex flex-row items-center justify-between')}>
               <span className='flex flex-row items-center'>
               <Avatar
@@ -496,89 +504,7 @@ export default function Dashboard() {
           
         </div>
       </div>
-            
-</div>   
-      {ownedPostPages.length || ownedInfoPages.length ? (
-        <div className="mt-10">
-          <h2>Owned Items</h2>
-          {ownedPostPages.length > 0 ? (
-            ownedPostPages.map((postPage) => (
-              <div key={postPage?.data?.title}>
-                <div className="my-4 flex">
-                  Post Page: <strong> {postPage?.data?.title}</strong>
-                  <Link
-                    href={`/post/${postPage?.data?.slug}`}
-                    className="mx-4 px-4 py-1 bg-blue-500 text-white rounded-md"
-                  >
-                    View Post Page
-                  </Link>
-                  <div className="relative">
-                    <button
-                      onClick={() => handleDeletePostPage(postPage.data._id)}
-                      className="mx-4 px-4 py-1 bg-red-500 text-white rounded-md"
-                    >
-                      Delete Post Page
-                    </button>
-                    {isLoadingDeletePostPage &&
-                      isLoadingDeletePostPage === postPage?.data?._id && (
-                        <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                          <LoadingSpinner />
-                        </div>
-                      )}
-                  </div>
-                </div>
-
-                {/* <pre>{JSON.stringify(postPage.data, null, 2)}</pre> */}
-              </div>
-            ))
-          ) : (
-            <div>No Post Pages</div>
-          )}
-          {ownedInfoPages.length > 0 ? (
-            ownedInfoPages.map((infoPage) => (
-              <div key={infoPage.data.title}>
-                <div className="my-4">
-                  Info Page: <strong> {infoPage.data.title}</strong>
-                  <Link
-                    href={`/${extractInfoPageTypeBasedOnTag(
-                      infoPage?.data?.pageTypes[0]
-                    )}/${infoPage.data.slug}`}
-                    className="mx-4 px-4 py-1 bg-blue-500 text-white rounded-md"
-                  >
-                    View Info Page
-                  </Link>
-                  <div className="relative">
-                    <button
-                      onClick={() => handleDeleteInfoPage(infoPage.data._id)}
-                      className="mx-4 px-4 py-1 bg-red-500 text-white rounded-md"
-                    >
-                      Delete Info Page
-                    </button>
-                    {isLoadingDeletePostPage &&
-                      isLoadingDeletePostPage === infoPage?.data?._id && (
-                        <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                          <LoadingSpinner />
-                        </div>
-                      )}
-                  </div>
-                </div>
-
-                {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-              </div>
-            ))
-          ) : (
-            <div>No Info Pages</div>
-          )}
-        </div>
-      ) : (
-        <>
-          {ownedPostPagesFetched && ownedInfoPagesFetched ? (
-            <div>No Owned Items</div>
-          ) : (
-            <LoadingSpinner />
-          )}
-        </>
-      )}
-    </div>
+    </div>   
+  </div>
   );
 }

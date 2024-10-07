@@ -32,6 +32,7 @@ module.exports = {
         18: '18px',
       },
       colors: {
+        'white-site': 'rgb(255, 255, 255)',
         'purple-site': 'rgb(119, 85, 204)',
         'blue-site': '#2859B6',
         'greyShade': '#2C2C2F',

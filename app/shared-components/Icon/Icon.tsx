@@ -86,23 +86,10 @@ const Icon: React.FC<IconProps> = ({
     ...restProps,
   };
 
-  const childContent = React.Children.map(children, child => {
-    if (React.isValidElement(child)) {
-      if (child.type === 'svg') {
-        return child.props.children;
-      }
-      const renderedChild = child;
-      if (renderedChild && React.isValidElement(renderedChild) && renderedChild.type === 'svg') {
-        return renderedChild.props.children;
-      }
-    }
-    return child;
-  });
-
   return (
     <svg {...svgProps}>
       {title && <title>{title}</title>}
-      {childContent}
+      {children}
     </svg>
   );
 };
