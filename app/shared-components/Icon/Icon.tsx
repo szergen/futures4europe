@@ -57,7 +57,7 @@ const Icon: React.FC<IconProps> = ({
   ...restProps
 }) => {
   const displayClass = inline ? 'inline-block' : 'block';
-  const combinedClassName = className 
+  const combinedClassName = className
     ? `${displayClass} ${className}`
     : displayClass;
 
@@ -68,7 +68,7 @@ const Icon: React.FC<IconProps> = ({
     strokeWidth,
     viewBox,
     preserveAspectRatio,
-    xmlns: "http://www.w3.org/2000/svg",
+    xmlns: 'http://www.w3.org/2000/svg',
     width: sizeW !== undefined ? sizeW : size,
     height: sizeH !== undefined ? sizeH : size,
     style: {
