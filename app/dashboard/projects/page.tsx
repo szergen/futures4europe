@@ -484,7 +484,7 @@ export default function DashboardProjects() {
               ) : (
                 <>
                   {ownedPostPagesFetched && ownedInfoPagesFetched ? (
-                    <div>No Owned Items</div>
+                    <div>No Items</div>
                   ) : (
                     <LoadingSpinner />
                   )}
