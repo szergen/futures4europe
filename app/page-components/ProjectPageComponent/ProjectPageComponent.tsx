@@ -626,7 +626,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       {/* Organization Roles */}
       <AffiliationsComponent
         afiliations={projectData.organisations}
-        title="Organization Roles"
+        tagListTitle="Organization Roles"
         isEditModeOn={isEditModeOn}
         updatePersonDataAffiliations={(value) =>
           updateProjectDataOnKeyValue('organisations', value)
