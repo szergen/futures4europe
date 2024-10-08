@@ -25,9 +25,9 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
   tagType,
   handleTagCreated,
 }) => {
-  // if (!tagList || tagList?.length === 0) {
-  //   return null;
-  // }
+  if ((!tagList || tagList?.length === 0) && !isEditModeOn) {
+    return null;
+  }
   return (
     <section className={classNames(style.tagListContainer)}>
       <Typography
@@ -37,8 +37,6 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
         {tagListTitle}
       </Typography>
       {!isEditModeOn ? (
-        tagList &&
-        tagList?.length &&
         tagList?.map((tag) => <Tag key={tag?.name} {...tag} />)
       ) : (
         <TagPicker

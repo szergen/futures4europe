@@ -46,7 +46,7 @@
 
 .genericTextArea {
   /* Overwrite default styles for textarea */
-  max-width: 90%;
+  max-width: 100%;
   border: none;
   outline: none;
   resize: none; /* Disable manual resizing by the user */

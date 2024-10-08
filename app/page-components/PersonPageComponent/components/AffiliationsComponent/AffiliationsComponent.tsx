@@ -77,6 +77,13 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
     setCurrentAffiliations(updatedAffiliations);
   };
 
+  if (
+    (!currentAffiliations || currentAffiliations?.length === 0) &&
+    !isEditModeOn
+  ) {
+    return null;
+  }
+
   return (
     <section className={classNames(style.tagListRootContainer)}>
       <div className={classNames('flex', style.tagListTitle)}>

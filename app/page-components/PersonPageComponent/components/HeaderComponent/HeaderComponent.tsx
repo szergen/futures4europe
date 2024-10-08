@@ -191,7 +191,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <InputText
             placeholder="Enter the post title*"
-            value={person?.personTag?.name || 'Enter your preffered name'}
+            value={person?.personTag?.name}
             className={classNames(
               // 'personNameTitle',
               style.genericTextArea,

@@ -58,7 +58,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   tags,
   isNewPage,
 }) => {
-  const validationFunctionForName = (tempName: string) => {
+  const validationFunctionForName = (tempName: string | undefined) => {
+    if (!tempName) {
+      return 'Title is required';
+    }
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
@@ -177,10 +180,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : !isNewPage ? (
           <InputText
-            // label="Title"
+            className={classNames(
+              style.genericTextArea,
+              style.textPostTitleEdit,
+              validationFunctionForName(project?.projectTag.name) &&
+                style.InputRequired
+            )}
             placeholder="Enter title"
-            value={project?.projectTag?.name || 'Enter your preffered name'}
-            className="w-72"
+            value={project?.projectTag?.name}
             onChange={(e) =>
               updateProjectData({
                 ...project,
@@ -236,6 +243,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 setTagLine(e.target.value);
               }}
               shouldUpdateValueState={isNewPage}
+              className={classNames(
+                style.genericTextArea,
+                style.textPostSubtitle
+              )}
             />
           </>
         )}
