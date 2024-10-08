@@ -128,8 +128,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             className=" rounded-full"
             fill="currentColor"
-            width={32}
-            height={32}
+            width={24}
+            height={24}
             style={{
               color: '#fff',
               backgroundColor: '#0077b5',

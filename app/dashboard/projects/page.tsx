@@ -11,8 +11,7 @@ import classNames from 'classnames';
 import { members } from '@wix/members';
 import Icon from '@app/shared-components/Icon/Icon';
 import style from '../pageDashboard.module.css';
-import { Avatar } from 'flowbite-react';
-import { Button } from "flowbite-react";
+import { Avatar, Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 
 export default function DashboardProjects() {

@@ -71,7 +71,9 @@
 
 .textPostSubtitle {
   font-size: var(--w-font-size-tag);
+  line-height: var(--w-line-height-heading);
   font-style: italic;
-  /* line-height: 1em; */
-  transform: translateY(0.55em);
+}
+.personTagPopularity {
+
 }

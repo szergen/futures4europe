@@ -53,10 +53,8 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
   return (
     <div className="flex flex-wrap items-center justify-center relative">
       <Label htmlFor="dropzone-file" className="absolute avatarUpload">
-        <div className="flex">
-          {!imageURL || imageURL === ' ' ? 'Upload Image' : ''}
-        </div>
         <div className="w-full h-full">
+          <span className='top-10 relative'>{!imageURL || imageURL === ' ' ? 'Upload Image' : ''}</span>
           <svg width="18" height="18" viewBox="0 0 24 24" focusable="false">
             <path d="M20.41 4.94l-1.35-1.35c-.78-.78-2.05-.78-2.83 0L3 16.82V21h4.18L20.41 7.77c.79-.78.79-2.05 0-2.83zm-14 14.12L5 19v-1.36l9.82-9.82 1.41 1.41-9.82 9.83z"></path>
           </svg>
@@ -80,7 +78,7 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
         </Alert>
       )}
       {imageURL && imageURL !== ' ' && (
-        <div className="relative">
+        <div className={classNames( style.AvatarImagine, "relative w-[147px] h-[147px]")}>
           <Image
             src={
               getImageUrlForMedia(imageURL)?.url ||
@@ -90,7 +88,7 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
             width={147}
             height={147}
             className={classNames(
-              'rounded-full block mx-auto',
+              'rounded-full block object-cover',
               isImageLoading && 'opacity-30'
             )}
             alt="Post Image"

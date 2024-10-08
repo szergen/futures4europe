@@ -47,10 +47,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   handleTagCreated,
 }) => {
   const validationFunctionForName = (tempName: string) => {
-    if (tempName.length < 5) {
+    if (tempName?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName.length > 30) {
+    if (tempName?.length > 30) {
       return 'Title should be at most 30 characters long';
     }
     if (tempName === 'New Post') {
@@ -183,12 +183,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
         {!isEditModeOn ? (
-          <Typography tag="h1" className="text-gray-800">
+          <Typography tag="h1" 
+            className="text-gray-800"
+            >
             {person?.personTag?.name}
             {/* Person Popularity */}
             <span
               data-after={person?.personTag?.popularity || ''}
-              className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
+              className={classNames(style.personTagPopularity, "after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400")}
             ></span>
           </Typography>
         ) : (

@@ -23,3 +23,52 @@
   font-size: var(--w-font-size-tag);
   letter-spacing: var(--p-font-letter-spacing-tag);
 }
+.react-select__input,
+.Input:after, .Input {
+  border: 0px!important;
+  border-image: none!important;
+}
+.TagCursor{
+  transition: 1s all ease;
+  min-width: 200px;
+}
+
+.TagCursor .tagPickerPillSingle {
+  display: none!important;
+}
+
+.TagCursorAnimation {
+  animation: cursorBlink 0.3s ease-in-out;
+}
+
+@keyframes cursorBlink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.react-select__input-container {
+  height: calc(var(--w-space-xxl));
+    background: white;
+    margin: 4px;
+    border-radius: var(--p-border-radius-tag);
+    line-height: calc(var(--w-space-xxl));
+    vertical-align: middle;
+    position: relative;
+    padding: 0px var(--w-space-s);
+    display: inline-block;
+    text-wrap: nowrap;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--w-font-size-tag);
+    line-height: var(--w-space-xxl);
+    letter-spacing: var(--p-font-letter-spacing-tag);
+}
+

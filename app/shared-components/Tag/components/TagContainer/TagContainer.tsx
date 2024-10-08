@@ -51,7 +51,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                     tagCategory={tagCategory}
                   />
                 )}
-                {name}
+                <span className={style.tagNameBody}>{name}</span>
               </span>
             ) : (
               <span className={style.name}>
@@ -62,7 +62,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
                     tagCategory={tagCategory}
                   />
                 )}
-                {name}
+                <span className={style.tagNameBody}>{name}</span>
               </span>
             )}
           </PopoverComponent>

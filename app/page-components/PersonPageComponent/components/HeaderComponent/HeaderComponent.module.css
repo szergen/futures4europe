@@ -29,10 +29,12 @@
   .detailsColumn {
     display: flex;
     flex-direction: column;
+    position: relative;
   }
   .detailsColumn h1 {
     font-size: var(--w-font-size-xxl);
-    /* height: var(--w-space-xxl); */
+    min-height: var(--w-space-xxxl);
+    line-height: var(--w-line-height-normal);
   }
 }
 
@@ -57,13 +59,13 @@
 .textPostTitleEdit {
   font-size: var(--w-font-size-xxl);
   font-weight: var(--w-font-weight-book);
-  transform: translateY(0.15em);
-  /* height: 1.1em; */
 }
 
 .textPostSubtitle {
   font-size: var(--w-font-size-tag);
+  line-height: var(--w-line-height-heading);
   font-style: italic;
-  /* line-height: 1em; */
-  transform: translateY(0.55em);
+}
+.personTagPopularity {
+
 }

@@ -111,7 +111,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             alt={`Project Picture - ${project.projectTag?.name}`}
           />
         ) : (
-          <div className="w-72">
+          <div className="w-[147px]">
             <InfoPagesImageFileUploader
               currentImage={project?.projectTag?.picture}
               updatePostData={(value) =>
@@ -130,8 +130,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             className=" rounded-full"
             fill="currentColor"
-            width={32}
-            height={32}
+            width={24}
+            height={24}
             style={{
               color: '#fff',
               backgroundColor: '#0077b5',
@@ -183,7 +183,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             // label="Title"
             placeholder="Enter title"
             value={project?.projectTag?.name || 'Enter your preffered name'}
-            className="w-72"
+            className={classNames(
+              // 'personNameTitle',
+              style.genericTextArea,
+              style.textPostTitleEdit,
+              validationFunctionForName(project?.title) && style.InputRequired
+            )}
             onChange={(e) =>
               updateProjectData({
                 ...project,

@@ -598,6 +598,15 @@ select:focus {
   border-color: var(--primary-color);
 }
 
+
+/* tag  react-select */
+.react-select__placeholder {
+  z-index: 3!important;
+}
+textarea {
+  background: transparent;
+  border: none;
+}
 /* de mutat in import */
 
 .backgroundLabelAffiliation {
@@ -704,23 +713,26 @@ select:focus {
 .tagPickerPill .react-select__multi-value__remove {
   position: absolute;
   right: 8px;
-  width: var(--w-space-xl);
-  height: var(--w-space-xl);
-  border-radius: var(--p-border-radius-tag);
+  width: var(--w-space-l);
+  height: var(--w-space-l);
+  border-radius: var(--p-border-radius-full);
   opacity: 0;
 }
 .tagPickerPill:hover {
   cursor: grab;
 }
 .tagPickerPill:hover.tagPickerPill .react-select__multi-value__remove {
-  background: var(--color-text-link-destructive);
+  background: var(--color-background-destructive-weaker);
   opacity: 1;
+}
+.react-select__multi-value__remove:hover {
+  background-color: var(--color-background-destructive)!important;
 }
 .react-select__multi-value__remove svg {
   fill: var(--color-text-weakest);
   text-align: center;
   margin: 0 auto;
-  transform: scale(1.5);
+  transform: scale(1);
 }
 .react-select__dropdown-indicator {
   display: none !important;
@@ -732,26 +744,27 @@ select:focus {
   ) {
   position: relative;
   cursor: pointer;
-  display: inline-flex;
+  /* display: inline-flex; */
   align-items: center;
   background-color: var(--color-background-brand-tag);
   border-radius: var(--p-border-radius-200);
   height: calc(var(--w-space-xxxl));
   margin-right: calc(var(--w-space-s));
 }
+
 .tagPickerPillSingle {
   height: calc(var(--w-space-xxl));
-  background: white;
+  background: var(--primary-white);
   margin: 4px;
   border-radius: var(--p-border-radius-tag);
-  line-height: calc(var(--w-space-xxl));
+  line-height: calc(var(--w-space-xxl))!important;
   vertical-align: middle;
   position: relative;
   padding: 0px var(--w-space-s);
   display: inline-block;
-  text-wrap: nowrap;
-  max-width: 300px;
-  overflow: hidden;
+  text-wrap: nowrap!important;
+  max-width: 300px!important;
+  overflow: hidden!important;
   text-overflow: ellipsis;
   font-size: var(--w-font-size-tag);
   line-height: var(--w-space-xxl);

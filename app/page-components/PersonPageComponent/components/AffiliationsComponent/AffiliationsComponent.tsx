@@ -5,6 +5,8 @@ import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import { Button } from 'flowbite-react';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { useEffect, useState } from 'react';
 
 export type AffiliationsComponentProps = {
@@ -79,26 +81,34 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   return (
     <section className={classNames(style.tagListRootContainer)}>
-      <div className={classNames('flex', style.tagListTitle)}>
+      <div className={classNames('flex items-center', style.tagListTitle)}>
         <Typography
           tag="h2"
           className={classNames(
-            'text-gray-800 w-full'
+            'text-gray-800 grow'
             //  style.tagListTitle
           )}
         >
           {tagListTitle}
         </Typography>
         {isEditModeOn && (
-          <button
+          <Button
+            size={'sm'}
+            color={'light'}
+            className={classNames(style.buttonAddDashboard, 'w-240')}
             onClick={() => handleAddAffiliation(0)}
-            className={
-              'ml-4 text-sm bg-green-600 text-neutral-50 p-1 rounded-md w-auto inline-block text-nowrap'
-            }
-          >
-            Add Affiliation
-          </button>
+            pill
+            >
+            <SpriteSvg.AccountAddIcon 
+              sizeH={18}
+              sizeW={18}
+              viewBox={'0 -1 14 14'}
+              strokeWidth={1}
+            />
+            <span className='text-lg'>Add affiliation</span>
+          </Button>
         )}
+
       </div>
       {/* {!current && (
         <Typography
@@ -108,7 +118,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {title ? title : 'Former Affiliations'}
         </Typography>
       )} */}
-      <div className={classNames('flex w-full', isEditModeOn && 'flex-wrap')}>
+      <div className={classNames('flex w-full flex-wrap', isEditModeOn && 'flex-wrap')}>
         {currentAffiliations?.map((affilitiation, index) => (
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
