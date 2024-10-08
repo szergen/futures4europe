@@ -45,29 +45,28 @@ export default function DashboardProjects() {
     router.push(`/post/New_Post`);
   };
 
-  const handleCreateProject = async () => {
-    router.push(`/project/New_Project`);
-  };
+  // const handleListProjects = async () => {
+  //   router.push(`/dashboard/projects`);
+  // };
 
-  const handleCreatePersonInfoPage = async () => {
+  const handleCreateOrNavigateToPersonInfoPage = () => {
     if (userInfoPage) {
-      router.push(`/person/${userInfoPage}`);
-      return;
+      return `${userInfoPage}`;
     }
-    router.push(`/person/New_Info_Page`);
+    return `/person/New_Info_Page`;
   };
 
-  const handleListProfileSettings = async () => {
-    router.push(`/dashboard`);
-  };
+  // const handleListProfileSettings = async () => {
+  //   router.push(`/dashboard`);
+  // };
 
-  const handleListPosts = async () => {
-    router.push(`/dashboard/posts`);
-  };
+  // const handleListPosts = async () => {
+  //   router.push(`/dashboard/posts`);
+  // };
 
-  const handleCreateOrganisation = async () => {
-    router.push(`/organisation/New_Organisation`);
-  };
+  // const handleCreateOrganisation = async () => {
+  //   router.push(`/organisation/New_Organisation`);
+  // };
 
   const handleDeletePostPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
@@ -76,7 +75,7 @@ export default function DashboardProjects() {
       await removeDataItem(infoPageId, {
         dataCollectionId: 'PostPages',
       });
-      // TODO: Refresh Owned Pages
+      handleUserDataRefresh();
     } catch (error) {
       console.error('Failed to delete info page:', error);
     } finally {
@@ -85,21 +84,21 @@ export default function DashboardProjects() {
     }
   };
 
-  const handleDeleteInfoPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'InfoPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
-    }
-  };
+  // const handleDeleteInfoPage = async (infoPageId: string) => {
+  //   setIsLoadingDeletePostPage(infoPageId);
+  //   try {
+  //     // Replace with your actual delete logic
+  //     await removeDataItem(infoPageId, {
+  //       dataCollectionId: 'InfoPages',
+  //     });
+  //     // TODO: Refresh Owned Pages
+  //   } catch (error) {
+  //     console.error('Failed to delete info page:', error);
+  //   } finally {
+  //     setIsLoadingDeletePostPage('');
+  //     handleUserDataRefresh();
+  //   }
+  // };
 
   console.log('loading', loading);
 
@@ -156,120 +155,130 @@ export default function DashboardProjects() {
           className={classNames(
             style.UserDashboardNavItem,
             style.active,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleListPosts}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountPostIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <span>Posts</span>
-          </button>
+          <Link href="/dashboard/posts">
+            <button
+              // onClick={handleListPosts}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
+            >
+              <SpriteSvg.AccountPostIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              <span>Posts</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreateProject}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountProjectIcon
-              className="mb-2"
-              size={38}
-              fill={'none'}
-              strokeWidth={2.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              inline={false}
-            />
-            <span>Projects</span>
-          </button>
+          <Link href="/dashboard/projects">
+            <button
+              // onClick={handleListProjects}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
+            >
+              <SpriteSvg.AccountProjectIcon
+                className="mb-2"
+                size={38}
+                fill={'none'}
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                inline={false}
+              />
+              <span>Projects</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreateOrganisation}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountOrgIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <span>Organisation</span>
-          </button>
+          <Link href="/dashboard/organisations">
+            <button
+              // onClick={handleCreateOrganisation}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
+            >
+              <SpriteSvg.AccountOrgIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              <span>Organisation</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreatePersonInfoPage}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountPersonIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            {userInfoPage ? 'View Info Page' : 'Person Page'}
-          </button>
+          <Link href={handleCreateOrNavigateToPersonInfoPage() as any}>
+            <button
+              // onClick={handleCreatePersonInfoPage}
+              className="font-semibold flex flex-col justify-center items-center"
+            >
+              <SpriteSvg.AccountPersonIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              {userInfoPage ? 'View Info Page' : 'Person Page'}
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleListProfileSettings}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountSettingsIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            {userInfoPage ? 'Profile settings' : 'Profile settings'}
-          </button>
+          <Link href="/dashboard">
+            <button
+              // onClick={handleListProfileSettings}
+              className="font-semibold flex flex-col justify-center items-center"
+            >
+              <SpriteSvg.AccountSettingsIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              {userInfoPage ? 'Profile settings' : 'Profile settings'}
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
           <button
@@ -392,7 +401,7 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Project list
+                Posts list
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 In this section of your account you can manage your list.
@@ -408,31 +417,25 @@ export default function DashboardProjects() {
               {ownedPostPages.length || ownedInfoPages.length ? (
                 <>
                   {ownedPostPages.length > 0 ? (
-                    ownedPostPages.map((infoPage, index) => (
+                    ownedPostPages.map((postPage, index) => (
                       <div
-                        key={infoPage?.data?.title + index}
+                        key={postPage?.data?.title + index}
                         className="pt-2 pb-2 flex flex-row items-center justify-between"
                       >
                         <div className="flex flex-col flex-start text-left">
                           <Tag
-                            name={infoPage?.data?.title}
-                            tagPageLink={`/${extractInfoPageTypeBasedOnTag(
-                              infoPage?.data?.pageTypes[0]
-                            )}/${infoPage.data.slug}`}
+                            name={postPage?.data?.title}
+                            tagPageLink={`/post/${postPage.data.slug}`}
                             popularity={
-                              infoPage?.data?.pageTypes[0]?.popularity
+                              postPage?.data?.pageTypes[0]?.popularity
                             }
                           ></Tag>
                           <Badge className="capitalize" color="purple">
-                            {infoPage?.data?.pageTypes[0]?.name}
+                            {postPage?.data?.pageTypes[0]?.name}
                           </Badge>
                         </div>
                         <div className={'flex flex-row'}>
-                          <Link
-                            href={`/${extractInfoPageTypeBasedOnTag(
-                              infoPage?.data?.pageTypes[0]
-                            )}/${infoPage.data.slug}`}
-                          >
+                          <Link href={`/post/${postPage.data.slug}`}>
                             <Button
                               size={'sm'}
                               color={'gray'}
@@ -456,7 +459,7 @@ export default function DashboardProjects() {
 
                           <Button
                             onClick={() =>
-                              handleDeleteInfoPage(infoPage.data._id)
+                              handleDeletePostPage(postPage.data._id)
                             }
                             size={'sm'}
                             color={''}
@@ -479,7 +482,7 @@ export default function DashboardProjects() {
                         </div>
 
                         {isLoadingDeletePostPage &&
-                          isLoadingDeletePostPage === infoPage?.data?._id && (
+                          isLoadingDeletePostPage === postPage?.data?._id && (
                             <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
                               <LoadingSpinner />
                             </div>

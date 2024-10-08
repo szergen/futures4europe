@@ -54,7 +54,7 @@ export default function Dashboard() {
   const AccountPostIcon = () => (
     <svg>
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M11.4243 22.8486V24.6061H8.78788e-05V22.8486H11.4243ZM28.1213 22.8486V24.6061H11.4243V22.8486H28.1213ZM19.3334 19.3334V21.091H8.78788e-05V19.3334H19.3334ZM28.1213 19.3334V21.091H19.3334V19.3334H28.1213ZM7.90918 15.8183V17.5758H8.78788e-05V15.8183H7.90918ZM28.1213 15.8183V17.5758H7.90918V15.8183H28.1213ZM24.3758 0L28.1212 12.303V14.0606H8.78788V12.303H26.3232L23.0787 1.75758H5.04248L1.798 12.303H8.78788V14.0606H0L0.0386667 12.0447L3.74539 0H24.3758ZM14.0607 7.90918V9.66675H7.03039V7.90918H14.0607ZM21.091 4.39403V6.1516H7.03039V4.39403H21.091Z"
       />
@@ -78,11 +78,11 @@ export default function Dashboard() {
     <svg>
       <path
         d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM6.5 4a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       />
       <path
         d="M8 8c-2.972 0-5.377 2.338-5.895 5.118C1.9 14.217 2.83 15 3.75 15h8.5c.92 0 1.85-.783 1.645-1.882C13.377 10.338 10.972 8 8 8Zm-4.42 5.393C3.984 11.225 5.846 9.5 8 9.5s4.016 1.725 4.42 3.893c.003.014.001.02 0 .022a.071.071 0 0 1-.017.027.213.213 0 0 1-.153.058h-8.5a.213.213 0 0 1-.153-.058.072.072 0 0 1-.018-.026c0-.003-.002-.008 0-.023Z"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       />
     </svg>
   );
@@ -90,7 +90,7 @@ export default function Dashboard() {
     <svg>
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M6.75 6.812c0 3.598 2.258 6.313 5.25 6.313 2.993 0 5.25-2.715 5.25-6.313 0-2.88-2.403-5.312-5.25-5.312-2.846 0-5.25 2.432-5.25 5.312ZM12 3.32c-1.822 0-3.42 1.629-3.42 3.485 0 2.563 1.47 4.497 3.42 4.497s3.42-1.934 3.42-4.497c0-1.856-1.597-3.485-3.42-3.485ZM4.138 22.5l.158-1.742c.37-3.523 4.376-4.3 7.704-4.3 3.327 0 7.333.775 7.703 4.283l.157 1.759h1.883l-.175-1.939c-.403-3.83-3.776-5.936-9.568-5.936s-9.167 2.104-9.572 5.95l-.17 1.925h1.88Z"
         clip-rule="evenodd"
       />
@@ -106,7 +106,7 @@ export default function Dashboard() {
   );
   const AccountSettingsIcon = () => (
     <svg>
-      <g stroke-width="2" fill="currentColor" stroke="currentColor">
+      <g strokeWidth="2" fill="currentColor" stroke="currentColor">
         <polyline
           fill="none"
           stroke="currentColor"
@@ -141,8 +141,8 @@ export default function Dashboard() {
           data-color="color-2"
           data-stroke="none"
           d="M4,19c0-1.657,1.343-3,3-3h2c1.657,0,3,1.343,3,3H4z"
-          stroke-linejoin="miter"
-          stroke-linecap="square"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
           stroke="none"
         ></path>{' '}
         <circle
@@ -151,8 +151,8 @@ export default function Dashboard() {
           cx="8"
           cy="13"
           r="2"
-          stroke-linejoin="miter"
-          stroke-linecap="square"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
           stroke="none"
         ></circle>
       </g>
@@ -177,7 +177,7 @@ export default function Dashboard() {
   const AccountSmallKeyIcon = () => (
     <svg>
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M4.66675 5.33352C3.93342 5.33352 3.33323 4.73389 3.33323 4C3.33323 3.26668 3.93342 2.66648 4.66675 2.66648C5.40007 2.66648 6.00027 3.26668 6.00027 4C6.00027 4.73389 5.40007 5.33352 4.66675 5.33352ZM8.43321 2.66648C7.88661 1.11352 6.40642 0 4.66675 0C2.46001 0 0.666748 1.79382 0.666748 4C0.666748 6.20674 2.46001 8 4.66675 8C6.40642 8 7.88661 6.88648 8.43321 5.33352H11.3332V8H14.0003V5.33352H15.3332V2.66648H8.43321Z"
         fill="currentColor"
@@ -211,9 +211,9 @@ export default function Dashboard() {
         d="M24 13.5C22.3188 13.5 20.6755 13.9985 19.2776 14.9325C17.8798 15.8665 16.7904 17.194 16.147 18.7472C15.5037 20.3004 15.3353 22.0094 15.6633 23.6583C15.9913 25.3071 16.8008 26.8217 17.9896 28.0104C19.1783 29.1992 20.6929 30.0087 22.3417 30.3367C23.9906 30.6647 25.6996 30.4963 27.2528 29.853C28.806 29.2096 30.1335 28.1202 31.0675 26.7223C32.0015 25.3245 32.5 23.6811 32.5 22C32.5 19.7457 31.6045 17.5837 30.0104 15.9896C28.4163 14.3955 26.2543 13.5 24 13.5Z"
         fill="#047E43"
         stroke="white"
-        stroke-width="3"
+        strokeWidth="3"
       />
-      <path d="M27 20L23 24L21 22" stroke="white" stroke-width="1.5" />
+      <path d="M27 20L23 24L21 22" stroke="white" strokeWidth="1.5" />
     </svg>
   );
 
@@ -230,64 +230,71 @@ export default function Dashboard() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  const handleCreatePost = async () => {
-    router.push(`/post/New_Post`);
-  };
+  // const handleCreatePost = async () => {
+  //   router.push(`/post/New_Post`);
+  // };
 
-  const handleListProjects = async () => {
-    router.push(`/dashboard/projects`);
-  };
+  // const handleListProjects = async () => {
+  //   router.push(`/dashboard/projects`);
+  // };
 
-  const handleCreatePersonInfoPage = async () => {
-    if (userInfoPage) {
-      router.push(`/person/${userInfoPage}`);
-      return;
-    }
-    router.push(`/person/New_Info_Page`);
-  };
+  // const handleCreatePersonInfoPage = async () => {
+  //   if (userInfoPage) {
+  //     router.push(`/person/${userInfoPage}`);
+  //     return;
+  //   }
+  //   router.push(`/person/New_Info_Page`);
+  // };
 
   const handleListProfileSettings = async () => {
     router.push(`/dashboard`);
   };
 
-  const handleListPosts = async () => {
-    router.push(`/dashboard/posts`);
-  };
+  // const handleListPosts = async () => {
+  //   router.push(`/dashboard/posts`);
+  // };
 
-  const handleCreateOrganisation = async () => {
-    router.push(`/organisation/New_Organisation`);
-  };
+  // const handleCreateOrganisation = async () => {
+  //   router.push(`/organisation/New_Organisation`);
+  // };
 
-  const handleDeletePostPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'PostPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
+  // const handleDeletePostPage = async (infoPageId: string) => {
+  //   setIsLoadingDeletePostPage(infoPageId);
+  //   try {
+  //     // Replace with your actual delete logic
+  //     await removeDataItem(infoPageId, {
+  //       dataCollectionId: 'PostPages',
+  //     });
+  //     // TODO: Refresh Owned Pages
+  //   } catch (error) {
+  //     console.error('Failed to delete info page:', error);
+  //   } finally {
+  //     setIsLoadingDeletePostPage('');
+  //     handleUserDataRefresh();
+  //   }
+  // };
+
+  // const handleDeleteInfoPage = async (infoPageId: string) => {
+  //   setIsLoadingDeletePostPage(infoPageId);
+  //   try {
+  //     // Replace with your actual delete logic
+  //     await removeDataItem(infoPageId, {
+  //       dataCollectionId: 'InfoPages',
+  //     });
+  //     handleUserDataRefresh();
+  //   } catch (error) {
+  //     console.error('Failed to delete info page:', error);
+  //   } finally {
+  //     setIsLoadingDeletePostPage('');
+  //     handleUserDataRefresh();
+  //   }
+  // };
+
+  const handleCreateOrNavigateToPersonInfoPage = () => {
+    if (userInfoPage) {
+      return `${userInfoPage}`;
     }
-  };
-
-  const handleDeleteInfoPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'InfoPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
-    }
+    return `/person/New_Info_Page`;
   };
 
   console.log('loading', loading);
@@ -338,101 +345,109 @@ export default function Dashboard() {
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleListPosts}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <Icon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
+          <Link href="/dashboard/posts">
+            <button
+              // onClick={handleListPosts}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
             >
-              <AccountPostIcon />
-            </Icon>
-            <span>Posts</span>
-          </button>
+              <Icon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              >
+                <AccountPostIcon />
+              </Icon>
+              <span>Posts</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleListProjects}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <Icon
-              className="mb-2"
-              size={38}
-              fill={'none'}
-              strokeWidth={2.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              inline={false}
+          <Link href="/dashboard/projects">
+            <button
+              // onClick={handleListProjects}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
             >
-              <AccountProjectIcon />
-            </Icon>
-            <span>Projects</span>
-          </button>
+              <Icon
+                className="mb-2"
+                size={38}
+                fill={'none'}
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                inline={false}
+              >
+                <AccountProjectIcon />
+              </Icon>
+              <span>Projects</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreateOrganisation}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <Icon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
+          <Link href="/dashboard/organisations">
+            <button
+              // onClick={handleCreateOrganisation}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
             >
-              <AccountOrgIcon />
-            </Icon>
-            <span>Organisation</span>
-          </button>
+              <Icon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              >
+                <AccountOrgIcon />
+              </Icon>
+              <span>Organisation</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreatePersonInfoPage}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <Icon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
+          <Link href={handleCreateOrNavigateToPersonInfoPage() as any}>
+            <button
+              // onClick={handleCreatePersonInfoPage}
+              className="font-semibold flex flex-col justify-center items-center"
             >
-              <AccountPersonIcon />
-            </Icon>
-            {userInfoPage ? 'View Info Page' : 'Person Page'}
-          </button>
+              <Icon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              >
+                <AccountPersonIcon />
+              </Icon>
+              {userInfoPage ? 'View Info Page' : 'Person Page'}
+            </button>
+          </Link>
         </div>
 
         <div

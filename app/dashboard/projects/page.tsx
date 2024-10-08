@@ -41,49 +41,56 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  const handleCreatePost = async () => {
-    router.push(`/post/New_Post`);
-  };
+  // const handleCreatePost = async () => {
+  //   router.push(`/post/New_Post`);
+  // };
 
   const handleCreateProject = async () => {
     router.push(`/project/New_Project`);
   };
 
-  const handleCreatePersonInfoPage = async () => {
+  const handleCreateOrNavigateToPersonInfoPage = () => {
     if (userInfoPage) {
-      router.push(`/person/${userInfoPage}`);
-      return;
+      return `${userInfoPage}`;
     }
-    router.push(`/person/New_Info_Page`);
+    return `/person/New_Info_Page`;
   };
 
-  const handleListProfileSettings = async () => {
-    router.push(`/dashboard`);
-  };
+  // const handleCreatePersonInfoPage = async () => {
+  //   if (userInfoPage) {
+  //     router.push(`/person/${userInfoPage}`);
+  //     return;
+  //   }
+  //   router.push(`/person/New_Info_Page`);
+  // };
 
-  const handleListPosts = async () => {
-    router.push(`/dashboard/posts`);
-  };
+  // const handleListProfileSettings = async () => {
+  //   router.push(`/dashboard`);
+  // };
 
-  const handleCreateOrganisation = async () => {
+  // const handleListPosts = async () => {
+  //   router.push(`/dashboard/posts`);
+  // };
+
+  const handleCreateOrganisation = () => {
     router.push(`/organisation/New_Organisation`);
   };
 
-  const handleDeletePostPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'PostPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
-    }
-  };
+  // const handleDeletePostPage = async (infoPageId: string) => {
+  //   setIsLoadingDeletePostPage(infoPageId);
+  //   try {
+  //     // Replace with your actual delete logic
+  //     await removeDataItem(infoPageId, {
+  //       dataCollectionId: 'PostPages',
+  //     });
+  //     // TODO: Refresh Owned Pages
+  //   } catch (error) {
+  //     console.error('Failed to delete info page:', error);
+  //   } finally {
+  //     setIsLoadingDeletePostPage('');
+  //     handleUserDataRefresh();
+  //   }
+  // };
 
   const handleDeleteInfoPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
@@ -155,115 +162,125 @@ export default function DashboardProjects() {
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleListPosts}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountPostIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <span>Posts</span>
-          </button>
+          <Link href="/dashboard/posts">
+            <button
+              // onClick={handleListPosts}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
+            >
+              <SpriteSvg.AccountPostIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              <span>Posts</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
             style.active,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreateProject}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountProjectIcon
-              className="mb-2"
-              size={38}
-              fill={'none'}
-              strokeWidth={2.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              inline={false}
-            />
-            <span>Projects</span>
-          </button>
+          <Link href="/dashboard/projects">
+            <button
+              // onClick={handleCreateProject}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
+            >
+              <SpriteSvg.AccountProjectIcon
+                className="mb-2"
+                size={38}
+                fill={'none'}
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                inline={false}
+              />
+              <span>Projects</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreateOrganisation}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountOrgIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <span>Organisation</span>
-          </button>
+          <Link href="/dashboard/organisations">
+            <button
+              // onClick={handleCreateOrganisation}
+              className={classNames(
+                'font-semibold flex flex-col justify-center items-center'
+              )}
+            >
+              <SpriteSvg.AccountOrgIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              <span>Organisation</span>
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleCreatePersonInfoPage}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountPersonIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            {userInfoPage ? 'View Info Page' : 'Person Page'}
-          </button>
+          <Link href={handleCreateOrNavigateToPersonInfoPage() as any}>
+            <button
+              // onClick={handleCreatePersonInfoPage}
+              className="font-semibold flex flex-col justify-center items-center"
+            >
+              <SpriteSvg.AccountPersonIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              {userInfoPage ? 'View Info Page' : 'Person Page'}
+            </button>
+          </Link>
         </div>
 
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
+            'text-purple-site flex justify-center items-center'
           )}
         >
-          <button
-            onClick={handleListProfileSettings}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountSettingsIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            {userInfoPage ? 'Profile settings' : 'Profile settings'}
-          </button>
+          <Link href="/dashboard">
+            <button
+              // onClick={handleListProfileSettings}
+              className="font-semibold flex flex-col justify-center items-center"
+            >
+              <SpriteSvg.AccountSettingsIcon
+                className="mb-2"
+                size={38}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+              {userInfoPage ? 'Profile settings' : 'Profile settings'}
+            </button>
+          </Link>
         </div>
 
         <div

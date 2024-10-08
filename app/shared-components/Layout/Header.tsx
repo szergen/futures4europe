@@ -9,13 +9,14 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { useEffect, useState, useMemo, memo } from 'react';
+import { useEffect, useState, useMemo, memo, useRef } from 'react';
 import { Avatar, Dropdown } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   console.log(userDetails);
   const router = useRouter();
@@ -61,7 +62,7 @@ const Header = () => {
       <path d="M5.5 7c0-.69.56-1.25 1.25-1.25h3.25a.75.75 0 0 0 0-1.5h-3.25a2.75 2.75 0 0 0-2.75 2.75v7.25a2.75 2.75 0 0 0 2.75 2.75h6.5a2.75 2.75 0 0 0 2.75-2.75v-3.625a.75.75 0 0 0-1.5 0v3.625c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-7.25Z" />
       <path d="M7.25 12.5a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Z" />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M6.25 7.25a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75v-3Zm1.5.75v1.5h4.5v-1.5h-4.5Z"
       />
       <path d="M16.5 8.25a.75.75 0 0 0 0-1.5h-1.25a.75.75 0 0 0 0 1.5h1.25Z" />
@@ -78,44 +79,65 @@ const Header = () => {
     </svg>
   );
 
+  const handleClickOutside = (event) => {
+    console.log('handleClickOutside', event, dropdownRef);
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      console.log('handleClickOutside -> inside the if', event);
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
-      <Dropdown
-        className="rounded-lg shadow-sm"
-        label={
-          <Avatar
-            alt="User settings"
-            img={
-              userDetails?.userTag?.picture
-                ? userDetails?.userTag?.picture
-                : 'https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512'
-            }
-            rounded
-            className={classNames(style.avatarImage, 'avatarUserHeader', {
-              active: isDropdownOpen,
-            })} // Conditionally add "active" class
-            onClick={toggleDropdown} // Toggle dropdown state on click
-          />
-        }
-        arrowIcon={false}
-        inline
-      >
-        <Dropdown.Header>
-          <span className="block text-sm font-semibold">
-            {userDetails?.userName}
-          </span>
-          <span className="block text-sm">{userDetails?.email}</span>
-        </Dropdown.Header>
-        <Dropdown.Item icon={DashboardIcon}>
-          <Link href="/dashboard"> Dashboard </Link>
-        </Dropdown.Item>
-        <Dropdown.Item icon={AddPostIcon}>Settings</Dropdown.Item>
-        <Dropdown.Item icon={DashboardIcon}>Earnings</Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
-          Sign out
-        </Dropdown.Item>
-      </Dropdown>
+      <div ref={dropdownRef}>
+        <Dropdown
+          className="rounded-lg shadow-sm"
+          label={
+            <Avatar
+              alt="User settings"
+              img={
+                userDetails?.userTag?.picture
+                  ? userDetails?.userTag?.picture
+                  : 'https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512'
+              }
+              rounded
+              className={classNames(style.avatarImage, 'avatarUserHeader', {
+                active: isDropdownOpen,
+              })} // Conditionally add "active" class
+              onClick={toggleDropdown} // Toggle dropdown state on click
+            />
+          }
+          arrowIcon={false}
+          inline
+        >
+          <Dropdown.Header>
+            <span className="block text-sm font-semibold">
+              {userDetails?.userName}
+            </span>
+            <span className="block text-sm">{userDetails?.email}</span>
+          </Dropdown.Header>
+          <Dropdown.Item icon={DashboardIcon}>
+            <Link href="/dashboard"> Dashboard </Link>
+          </Dropdown.Item>
+          <Dropdown.Item icon={AddPostIcon}>Settings</Dropdown.Item>
+          <Dropdown.Item icon={DashboardIcon}>Earnings</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
+            Sign out
+          </Dropdown.Item>
+        </Dropdown>
+      </div>
     ) : (
       <Link href="/dashboard" className="">
         Login

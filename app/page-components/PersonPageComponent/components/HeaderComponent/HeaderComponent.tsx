@@ -50,14 +50,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName.length > 30) {
-      return 'Title should be at most 30 characters long';
+    if (tempName.length > 50) {
+      return 'Title should be at most 50 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
-    }
-    if (tempName === 'New Post') {
-      return 'Title cannot be "New Post "';
     }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>

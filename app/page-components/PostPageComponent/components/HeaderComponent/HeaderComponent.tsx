@@ -47,7 +47,6 @@ export type HeaderComponentProps = {
   tags: TagProps[];
   handleTagCreated?: () => void;
   setValidationState?: (data: any) => void;
-  defaultPostTitle: string;
 };
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
@@ -58,22 +57,21 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   tags,
   handleTagCreated,
   setValidationState,
-  defaultPostTitle,
 }) => {
   // const { existingPostPagesTitles } = useAuth();
 
-  const validationFunctionForTitle = (tempTitle: string) => {
+  const validationFunctionForTitle = (tempTitle: string | undefined) => {
+    if (!tempTitle) {
+      return 'Title is required';
+    }
     if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempTitle?.length > 30) {
-      return 'Title should be at most 30 characters long';
+    if (tempTitle?.length > 50) {
+      return 'Title should be at most 50 characters long';
     }
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
-    }
-    if (tempTitle === 'New Post') {
-      return 'Title cannot be "New Post "';
     }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>
@@ -196,7 +194,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             )}
             // label=""
             placeholder="Enter the post title*"
-            value={post?.title || 'Enter the post title*'}
+            value={post?.title}
             onChange={(e) => updatePostData({ ...post, title: e.target.value })}
             validate={validationFunctionForTitle}
             setValidationState={
@@ -204,6 +202,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 ? (value) => setValidationState({ title: value })
                 : undefined
             }
+            shouldUpdateValueState={true}
           />
         )}
         {/* Post Subtitle */}
