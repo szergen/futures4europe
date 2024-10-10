@@ -285,11 +285,11 @@ const customComponents = {
         />
         {showCreateForm && (
           <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-            <Modal.Header>Create New Tag</Modal.Header>
+            <Modal.Header>Add project title</Modal.Header>
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
-                  <Label htmlFor="tagName">Tag Name</Label>
+                  <Label htmlFor="tagName">Project Name</Label>
                   <TextInput
                     id="tagName"
                     value={tagName}
@@ -298,7 +298,7 @@ const customComponents = {
                   />
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="tagTagline">Tag Tagline</Label>
+                  <Label htmlFor="tagTagline">Project Tagline</Label>
                   <TextInput
                     id="tagTagline"
                     value={tagTagline}
