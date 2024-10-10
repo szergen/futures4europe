@@ -56,14 +56,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName.length > 30) {
-      return 'Title should be at most 30 characters long';
+    if (tempName.length > 50) {
+      return 'Title should be at most 50 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
-    }
-    if (tempName === 'New Post') {
-      return 'Title cannot be "New Post "';
     }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>
@@ -183,7 +180,13 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             value={
               organisation?.organisationTag?.name || 'Enter your preffered name'
             }
-            className="w-72"
+            className={classNames(
+              // 'personNameTitle',
+              style.genericTextArea,
+              style.textPostTitleEdit,
+              validationFunctionForName(organisation.organisationTag?.name) &&
+                style.InputRequired
+            )}
             onChange={(e) =>
               updateOrganisationData({
                 ...organisation,
@@ -226,8 +229,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             className="w-4 h-4"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M15.2085 3.66662V6.67138H13.795V11.7597H15.2085V16H0.791504V11.7597H2.20418V6.67138H0.791504V3.66662L7.99961 0L15.2085 3.66662ZM2.20493 4.53201L7.99961 1.58605L13.795 4.53201V5.25795H2.20493V4.53201ZM12.3816 13.1731H13.795V14.5866H2.20493V13.1731H3.61836V6.67138H5.59716V13.1731H7.00983V6.67138H8.98938V13.1731H10.4021V6.67138H12.3816V13.1731Z"
             />
           </svg>
@@ -277,6 +280,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 setTagLine(e.target.value);
               }}
               shouldUpdateValueState={isNewPage}
+              className={classNames(
+                // 'personTaglineTitle',
+                style.genericTextArea,
+                style.textPostSubtitle
+              )}
             />
           </>
         )}

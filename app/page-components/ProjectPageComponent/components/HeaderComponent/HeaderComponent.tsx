@@ -58,15 +58,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   tags,
   isNewPage,
 }) => {
-  const validationFunctionForName = (tempName: string) => {
+  const validationFunctionForName = (tempName: string | undefined) => {
+    if (!tempName) {
+      return 'Title is required';
+    }
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName.length > 30) {
-      return 'Title should be at most 30 characters long';
-    }
-    if (tempName === 'New Post') {
-      return 'Title cannot be "New Post"';
+    if (tempName.length > 50) {
+      return 'Title should be at most 50 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post "';
@@ -180,15 +180,20 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : !isNewPage ? (
           <InputText
-            // label="Title"
-            placeholder="Enter title"
-            value={project?.projectTag?.name || 'Enter your preffered name'}
             className={classNames(
-              // 'personNameTitle',
               style.genericTextArea,
               style.textPostTitleEdit,
-              validationFunctionForName(project?.title) && style.InputRequired
+              validationFunctionForName(project?.projectTag.name) &&
+                style.InputRequired
             )}
+            placeholder="Enter title"
+            value={project?.projectTag?.name || 'Enter your preffered name'}
+            // className={classNames(
+            //   // 'personNameTitle',
+            //   style.genericTextArea,
+            //   style.textPostTitleEdit,
+            //   validationFunctionForName(project?.title) && style.InputRequired
+            // )}
             onChange={(e) =>
               updateProjectData({
                 ...project,
@@ -244,6 +249,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 setTagLine(e.target.value);
               }}
               shouldUpdateValueState={isNewPage}
+              className={classNames(
+                style.genericTextArea,
+                style.textPostSubtitle
+              )}
             />
           </>
         )}

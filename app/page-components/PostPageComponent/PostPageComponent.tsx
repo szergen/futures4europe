@@ -586,6 +586,22 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   //   console.log('userTag', userTag);
   // }, [userDetails]);
 
+  // #region for when the page is newly created to set defaultData
+  useEffect(() => {
+    if (isLoggedIn && postData && isNewPost) {
+      const postTag = tags.find((tag) => tag.name === 'post');
+      console.log('debug1->personTag', postTag);
+      if (postTag) {
+        updatePostDataBasedOnKeyValue('pageType', postTag);
+      }
+      const personInfoTag = tags.find((tag) => tag.name === 'person info');
+      console.log('debug1->personInfoTag', personInfoTag);
+      // if (personInfoTag) {
+      //   updatePostDataBasedOnKeyValue('pageType', personInfoTag);
+      // }
+    }
+  }, [userDetails, tags]);
+
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
 
   return (

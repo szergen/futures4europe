@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Label, TextInput, Textarea, Toast } from 'flowbite-react';
 import { title } from 'process';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,7 @@ export type InputTextProps = {
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  validate?: (value: string) => string;
+  validate?: (value: string | undefined) => string;
   setValidationState?: (value: any) => void;
   shouldUpdateValueState?: boolean;
   isHorizontal?: boolean;
@@ -41,10 +42,14 @@ export const InputText: React.FC<InputTextProps> = ({
       setError(errorMessage);
     }
     onChange && onChange(e);
+    setError('');
   };
 
   useEffect(() => {
-    if (validate && value) {
+    if (inputValue === '' && validate) {
+      setError('This field is required');
+    }
+    if (validate) {
       const errorMessage = validate(value);
       setValidationState && setValidationState(errorMessage);
       setError(errorMessage);
@@ -52,7 +57,7 @@ export const InputText: React.FC<InputTextProps> = ({
     if (shouldUpdateValueState) {
       setInputValue(value);
     }
-  }, [value]);
+  }, [inputValue]);
 
   const autoResize = (e) => {
     // e.target.style.height = 'auto'; // Reset height
@@ -63,6 +68,25 @@ export const InputText: React.FC<InputTextProps> = ({
     // input.style.width = 'auto';
     input.style.width = input.scrollWidth + 'px';
   };
+
+  // Avoid navigation on backspace
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (
+        e.key === 'Backspace' &&
+        e.target.tagName !== 'INPUT' &&
+        e.target.tagName !== 'TEXTAREA'
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <>
@@ -88,9 +112,9 @@ export const InputText: React.FC<InputTextProps> = ({
           id={label?.toLowerCase()}
           type="text"
           placeholder={placeholder ? placeholder : undefined}
-          required
+          // required
           helperText={helperText ? <>{helperText}</> : undefined}
-          className={className}
+          className={classNames('relative', className)}
           value={inputValue}
           onChange={handleChange}
           onInput={autoResize}
@@ -119,7 +143,7 @@ export const InputText: React.FC<InputTextProps> = ({
       /> */}
       {/* {error && <p className="errorInputText text-red-500 text-xs">{error}</p>}{' '} */}
       {error && (
-        <Toast className="absolute -right-20 z-10">
+        <Toast className="absolute left-3/4 z-10">
           <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500">
             <svg
               className="h-5 w-5"

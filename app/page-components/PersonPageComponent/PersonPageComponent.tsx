@@ -27,6 +27,7 @@ import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListC
 import { arraysEqual, deepEqual } from '../PageComponents.utils';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
+import { members } from '@wix/members';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -136,6 +137,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   // #region handle updating data to server
   const [isSaveInProgress, setIsSaveInProgress] = useState(false);
+  const { updateMember } = useWixModules(members);
 
   const updateDataToServer = async () => {
     console.log(
@@ -148,7 +150,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Person Tag
     // Check if object personTag has changed
     if (!deepEqual(personData.personTag, defaultPersonData.personTag)) {
-      console.log('personTag has not changed');
+      console.log('personTag has  changed');
       const updatedPersonTag = await updateDataItem(
         'Tags',
         personData.personTag._id,
@@ -158,6 +160,17 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         }
       );
       console.log('updatedPersonTag', updatedPersonTag);
+      const nickName = updatedPersonTag?.dataItem?.data?.name;
+      console.log('nickName', nickName);
+      if (nickName !== userDetails.userName) {
+        console.log('Updating Nickname');
+        const member = await updateMember(userDetails.contactId, {
+          profile: {
+            nickname: nickName,
+          },
+        });
+        console.log('gotMember', member);
+      }
     }
     // #endregion
 
@@ -407,6 +420,15 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         newPersonInfoId
       );
       console.log('updatedPersonTag', updatedPersonTag);
+      const nickName = updatedPersonTag?.dataItem?.data?.name;
+      if (nickName !== userDetails.userName) {
+        const member = await updateMember(userDetails.contactId, {
+          profile: {
+            nickname: nickName,
+          },
+        });
+        console.log('gotMember', member);
+      }
     }
     // #endregion
 
@@ -548,7 +570,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         <div>
           <button
             onClick={() => {
-              // isEditModeOn && saveOrCreateHandler();
+              isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultPersonData(personData);
             }}
