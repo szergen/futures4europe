@@ -103,9 +103,7 @@
   .tagLink {
     cursor: pointer!important;
   }
-  
   .tagLink .tagNameBody{
-    font-weight:var(--w-font-weight-emphasis);
     text-decoration: underline;
   }
   .tagThumbnail {
@@ -120,6 +118,7 @@
   }  
   .tagNameBody {
     margin-left: var(--w-space-s);
+    color: var(--color-text-brand-tag);
   }
   .detailsColumn textarea {
     all: unset;

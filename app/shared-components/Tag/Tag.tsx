@@ -39,7 +39,7 @@ export const Tag: React.FC<TagProps> = ({
       {enableLabel && tagCategory && (
         <span className={style.tagLabel}>{TagCategories?.[tagCategory]}: </span>
       )}
-      <div className={classNames('my-1', style.tagContainer)}>
+      <div className={classNames('my-1', style.tagContainer, className)}>
         {tagPageLink ? (
           <Link href={tagPageLink} className={style.tagLink}>
             <TagContainer

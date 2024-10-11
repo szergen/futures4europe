@@ -21,7 +21,7 @@ import {
   Alert,
   Avatar,
 } from 'flowbite-react';
-import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
+import { HiFingerPrint, HiLockOpen } from 'react-icons/hi';
 
 export default function DashboardChangePassword() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -629,7 +629,7 @@ export default function DashboardChangePassword() {
                 sizing="lg"
                 shadow
                 placeholder="enter new password"
-                icon={HiMail}
+                icon={HiLockOpen}
                 required
               />
 
@@ -644,7 +644,7 @@ export default function DashboardChangePassword() {
                 sizing="lg"
                 shadow
                 placeholder="Repeat password"
-                icon={HiKey}
+                icon={HiLockOpen}
                 type="password"
                 required
               />

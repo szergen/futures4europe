@@ -40,10 +40,6 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  const handleCreateProject = async () => {
-    router.push(`/project/New_Project`);
-  };
-
   const handleCreateOrNavigateToPersonInfoPage = () => {
     if (userInfoPage) {
       return `${userInfoPage}`;
@@ -51,41 +47,9 @@ export default function DashboardProjects() {
     return `/person/New_Info_Page`;
   };
 
-  // const handleCreatePersonInfoPage = async () => {
-  //   if (userInfoPage) {
-  //     router.push(`/person/${userInfoPage}`);
-  //     return;
-  //   }
-  //   router.push(`/person/New_Info_Page`);
-  // };
-
-  // const handleListProfileSettings = async () => {
-  //   router.push(`/dashboard`);
-  // };
-
-  // const handleListPosts = async () => {
-  //   router.push(`/dashboard/posts`);
-  // };
-
   const handleCreateOrganisation = () => {
     router.push(`/organisation/New_Organisation`);
   };
-
-  // const handleDeletePostPage = async (infoPageId: string) => {
-  //   setIsLoadingDeletePostPage(infoPageId);
-  //   try {
-  //     // Replace with your actual delete logic
-  //     await removeDataItem(infoPageId, {
-  //       dataCollectionId: 'PostPages',
-  //     });
-  //     // TODO: Refresh Owned Pages
-  //   } catch (error) {
-  //     console.error('Failed to delete info page:', error);
-  //   } finally {
-  //     setIsLoadingDeletePostPage('');
-  //     handleUserDataRefresh();
-  //   }
-  // };
 
   const handleDeleteInfoPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
@@ -135,15 +99,6 @@ export default function DashboardProjects() {
     router.push('/login');
   };
 
-  // const handleChangeNickname = async () => {
-  //   const member = await updateMember(userDetails.contactId, {
-  //     profile: {
-  //       nickname: 'Alexandru-Sergiu Ciobanasu',
-  //     },
-  //   });
-  //   console.log('gotMember', member);
-  // };
-
   return (
     <div
       className={classNames(
@@ -186,7 +141,6 @@ export default function DashboardProjects() {
         <div
           className={classNames(
             style.UserDashboardNavItem,
-            style.active,
             'text-purple-site flex justify-center items-center'
           )}
         >
@@ -214,6 +168,7 @@ export default function DashboardProjects() {
         <div
           className={classNames(
             style.UserDashboardNavItem,
+            style.active,
             'text-purple-site flex justify-center items-center'
           )}
         >
@@ -317,7 +272,7 @@ export default function DashboardProjects() {
               href={`/dashboard/projects`}
               className={classNames(style.active, '')}
             >
-              Projects
+              Organisations
             </Link>
           </li>
         </ul>
@@ -330,12 +285,11 @@ export default function DashboardProjects() {
         )}
       >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
-          My projects
+          My organisations
         </h1>
         <p className="text-base text-[#606b85]">
-          Would you like to showcase your foresight project and share insights
-          from your work? You can upload your project here and add outputs and
-          team members.
+          This is your dashboard for managing all the organisations you're connected. You can showcase 
+          your foresight project and share insights. Access your organizations to manage members and much more.
         </p>
 
         <div
@@ -349,14 +303,13 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountProjectIcon
+            <SpriteSvg.AccountOrg2Icon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
-              viewBox={'0 0 32 32'}
-              fill={'none'}
-              stroke={'#fff'}
-              strokeWidth={2}
+              viewBox={'0 0 18 18'}
+              fill={'#fff'}
+              stroke={'0'}
               inline={false}
             />
 
@@ -367,11 +320,11 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Project
+                Organisation
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your project. Include its objectives,
-                scope, key activities, and any significant outcomes or findings.
+                Add a detailed overview of your organisation. Include its afilliates,
+                projects, key members, and any significant outcomes or findings.
               </p>
             </div>
 
@@ -381,28 +334,9 @@ export default function DashboardProjects() {
                 color={'light'}
                 className={classNames(
                   style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
-                )}
-                onClick={handleCreateProject}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add project</span>
-              </Button>
-
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
                   'block border-0 focus:ring-purple-300'
                 )}
-                onClick={handleCreatePost}
+                onClick={handleCreateOrganisation}
                 pill
               >
                 <SpriteSvg.AccountAddIcon
@@ -411,9 +345,8 @@ export default function DashboardProjects() {
                   viewBox={'0 -1 14 14'}
                   strokeWidth={1}
                 />
-                
-                <span className="text-lg">Add project result</span>
-              </Button>              
+                <span className="text-lg">Add organisation</span>
+              </Button>            
             </div>
           </div>
         </div>
@@ -427,8 +360,7 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                {/* TODO: Add separate page or lists for results */}
-                Project list
+                Organisations list
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 In this section of your account you can manage your list.
@@ -447,7 +379,7 @@ export default function DashboardProjects() {
                     ownedInfoPages
                       .filter(
                         (infoPage) =>
-                          infoPage?.data?.pageTypes[0]?.name === 'project info'
+                          infoPage?.data?.pageTypes[0]?.name === 'organisation info'
                       )
                       .map((infoPage, index) => (
                         <div
@@ -466,7 +398,7 @@ export default function DashboardProjects() {
                                 color={'gray'}
                                 className={classNames(
                                   style.buttonAddDashboard,
-                                  'block mr-2'
+                                  'block mr-2 focus:ring-purple-300'
                                 )}
                                 pill
                               >

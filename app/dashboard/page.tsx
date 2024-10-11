@@ -11,7 +11,9 @@ import classNames from 'classnames';
 import { members } from '@wix/members';
 import Icon from '@app/shared-components/Icon/Icon';
 import style from './pageDashboard.module.css';
-import { Avatar } from 'flowbite-react';
+import { Avatar, Button } from 'flowbite-react';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import Typography from '@app/shared-components/Typography/Typography';
 
 export default function Dashboard() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -406,7 +408,6 @@ export default function Dashboard() {
         >
           <Link href="/dashboard/organisations">
             <button
-              // onClick={handleCreateOrganisation}
               className={classNames(
                 'font-semibold flex flex-col justify-center items-center'
               )}
@@ -530,12 +531,14 @@ export default function Dashboard() {
         </ul>
       </div>
 
+
       <div
         className={classNames(
           style.UserDashboardWrapper,
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
+        
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           Your profile information
         </h1>
@@ -556,6 +559,68 @@ export default function Dashboard() {
           this information, like your contact details, visible to others so they
           can reach you easily. You can also see a summary of your profiles.
         </p>
+
+        <div
+          className={classNames(
+            style.dashboardBox, // CSS Module class
+            style.dashboardBoxAddWrap, // Another CSS Module class
+            'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
+            'mb-10',
+            'p-8',
+            'bg-alertLight-site'
+          )}
+          >
+          <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
+            <SpriteSvg.AccountAlertIcon
+              className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
+              sizeW={24}
+              sizeH={24}
+              viewBox={'0 0 32 32'}
+              fill={'currentColor'}
+              strokeWidth={0}
+              inline={false}
+            />
+
+            <div className="flex flex-col justify-between">
+              <Typography tag="h1" className={classNames(
+                style.headingDashboardh1, 
+                'mt-0 mb-0 flex flex-row items-center')}>
+                Person Info
+              </Typography>     
+
+              <Typography tag="p" className={classNames(
+                style.boxTextDashboard, 
+                'text-black-site mb-8')}>
+                Your profile dose not have a Person Info page or you did not claim it. 
+                Create now a person page to be visible to all members of futures4europe platform.
+              </Typography>
+
+            </div>
+
+            <div className={classNames(style.listDashboard, 'block')}>
+              <Link href={handleCreateOrNavigateToPersonInfoPage() as any}>
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountHumanIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 32 32'}
+                    strokeWidth={1}
+                  />
+                  {/* // TODO: Must show claim Person Info Page if it allready exists */}
+                  <span className="text-lg">{userInfoPage ? 'View Info Page' : 'Create Person Info Page'}</span>
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
 
         <div className={classNames(style.dashboardBox, 'mt-14 mb-10 p-8')}>
           <div className="flex flex-col">
@@ -637,7 +702,7 @@ export default function Dashboard() {
                   'pt-2 pb-2 flex flex-row items-center justify-between'
                 }
               >
-                <span className="">Member</span>
+                <span className="">Member type</span>
                 <span className="ml-4">Person</span>
               </div>
             </div>

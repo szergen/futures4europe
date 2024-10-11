@@ -310,7 +310,7 @@ export default function DashboardProjects() {
               href={`/dashboard/projects`}
               className={classNames(style.active, '')}
             >
-              Posts list
+              Posts
             </Link>
           </li>
         </ul>
@@ -321,7 +321,7 @@ export default function DashboardProjects() {
           style.UserDashboardWrapper,
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
-      >
+        >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My posts
         </h1>
@@ -340,16 +340,16 @@ export default function DashboardProjects() {
             'p-8',
             'bg-purple-site'
           )}
-        >
+          >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountProjectIcon
+            <SpriteSvg.AccountPostIcon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
               viewBox={'0 0 32 32'}
-              fill={'none'}
+              fill={'#fff'}
               stroke={'#fff'}
-              strokeWidth={2}
+              strokeWidth={0}
               inline={false}
             />
 
@@ -360,7 +360,7 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Post
+                Posts
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your post. Include text content or
@@ -369,13 +369,13 @@ export default function DashboardProjects() {
               </p>
             </div>
 
-            <div className={classNames(style.listDashboard, 'block')}>
+            <div className={classNames(style.listDashboard, 'flex')}>
               <Button
                 size={'md'}
                 color={'light'}
                 className={classNames(
                   style.buttonAddDashboard,
-                  'block border-0'
+                  'block border-0 mr-4 focus:ring-purple-300'
                 )}
                 onClick={handleCreatePost}
                 pill
@@ -386,8 +386,46 @@ export default function DashboardProjects() {
                   viewBox={'0 -1 14 14'}
                   strokeWidth={1}
                 />
-                <span className="text-lg">Add new post</span>
+                <span className="text-lg">Add post</span>
               </Button>
+
+              <Button
+                size={'md'}
+                color={'light'}
+                className={classNames(
+                  style.buttonAddDashboard,
+                  'block border-0 mr-4 focus:ring-purple-300'
+                )}
+                onClick={handleCreatePost}
+                pill
+              >
+                <SpriteSvg.AccountAddIcon
+                  sizeH={24}
+                  sizeW={24}
+                  viewBox={'0 -1 14 14'}
+                  strokeWidth={1}
+                />
+                <span className="text-lg">Add event</span>
+              </Button>
+
+              <Button
+                size={'md'}
+                color={'light'}
+                className={classNames(
+                  style.buttonAddDashboard,
+                  'block border-0 focus:ring-purple-300'
+                )}
+                onClick={handleCreatePost}
+                pill
+              >
+                <SpriteSvg.AccountAddIcon
+                  sizeH={24}
+                  sizeW={24}
+                  viewBox={'0 -1 14 14'}
+                  strokeWidth={1}
+                />
+                <span className="text-lg">Add foresight methond</span>
+              </Button>              
             </div>
           </div>
         </div>
@@ -401,7 +439,7 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Posts list
+                My Posts
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 In this section of your account you can manage your list.
@@ -422,15 +460,16 @@ export default function DashboardProjects() {
                         key={postPage?.data?.title + index}
                         className="pt-2 pb-2 flex flex-row items-center justify-between"
                       >
-                        <div className="flex flex-col flex-start text-left">
+                        <div className="flex flex-wrap flex-start text-left">
                           <Tag
+                            className="flex-grow basis-full"
                             name={postPage?.data?.title}
                             tagPageLink={`/post/${postPage.data.slug}`}
                             popularity={
                               postPage?.data?.pageTypes[0]?.popularity
                             }
                           ></Tag>
-                          <Badge className="capitalize" color="purple">
+                          <Badge className="basis-auto mt-2 capitalize rounded-full" color="gray">
                             {postPage?.data?.pageTypes[0]?.name}
                           </Badge>
                         </div>
@@ -457,7 +496,8 @@ export default function DashboardProjects() {
                             </Button>
                           </Link>
 
-                          <Button
+                          {/* // TODO- Visible if admin user WIX */}
+                          {/* <Button
                             onClick={() =>
                               handleDeletePostPage(postPage.data._id)
                             }
@@ -478,7 +518,7 @@ export default function DashboardProjects() {
                               fill={'currentColor'}
                             />
                             <span className="text-md">Delete</span>
-                          </Button>
+                          </Button> */}
                         </div>
 
                         {isLoadingDeletePostPage &&

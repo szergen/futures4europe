@@ -137,10 +137,12 @@
 
     /* special */
     --color-text-brand-label: rgb(234, 233, 236);
+    --color-text-brand-tag: rgb(0, 0, 0);
     --color-background-brand-tag: rgb(234, 233, 236);
     --color-border-brand-separator: rgb(195, 196, 194, 0.5);
     --primary-color:rgb(234, 233, 236);
     --primary-white:rgb(255, 255, 255);
+    --primary-black:rgb(0, 0, 0);
     --primary-brand:rgb(119, 85, 204);
     --primary-green:rgb(47, 148, 97);    
 
@@ -396,7 +398,7 @@
     /* Color for text indicating a new status. */
     --color-text-new: rgb(109, 46, 209);
     /* Icon color for indicating an error. */
-    --color-text-icon-error: rgb(214, 31, 31);
+    --color-text-icon-error: rgb(255, 0, 0);
     /* Weak inverse text color for dark backgrounds. Must pass AA color contrast with color-background-body-inverse. */
     --color-text-inverse-weak: rgb(202, 205, 216);
     /* Icon color for indicating a available status */
