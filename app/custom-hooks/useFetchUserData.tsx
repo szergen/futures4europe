@@ -40,16 +40,20 @@ const useFetchUserData = (
       }
     };
 
+    const idsToFetch = userDetails.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
+
     fetchPages(
       'PostPages',
       setOwnedPostPages,
-      [userDetails.contactId, userDetails.accountId],
+      idsToFetch,
       setOwnedPostPagesFetched
     );
     fetchPages(
       'InfoPages',
       setOwnedInfoPages,
-      [userDetails.contactId, userDetails.accountId],
+      idsToFetch,
       setOwnedInfoPagesFetched
     );
   }, [isLoggedIn, userDetails, refresh]);
