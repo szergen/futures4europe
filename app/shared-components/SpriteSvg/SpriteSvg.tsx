@@ -76,19 +76,19 @@ const iconPaths = {
         <polyline
           fill="none"
           stroke="currentColor"
-          stroke-miterlimit="10"
+          strokeMiterlimit="10"
           points="14,6 23,6 23,23 1,23 1,6 10,6 "
         ></polyline>{' '}
         <path
           fill="none"
           stroke="currentColor"
-          stroke-miterlimit="10"
+          strokeMiterlimit="10"
           d="M14,8h-4V3 c0-1.105,0.895-2,2-2h0c1.105,0,2,0.895,2,2V8z"
         ></path>{' '}
         <line
           data-color="color-2"
           fill="none"
-          stroke-miterlimit="10"
+          strokeMiterlimit="10"
           x1="15"
           y1="13"
           x2="19"
@@ -97,7 +97,7 @@ const iconPaths = {
         <line
           data-color="color-2"
           fill="none"
-          stroke-miterlimit="10"
+          strokeMiterlimit="10"
           x1="15"
           y1="17"
           x2="19"
