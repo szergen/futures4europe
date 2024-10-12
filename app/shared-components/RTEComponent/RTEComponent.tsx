@@ -48,10 +48,23 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
   //   setEditorState(state);
   // };
 
+  const handlePastedText = (text: string, html: string, editorState: EditorState, onChange: (editorState: EditorState) => void): boolean => {
+    const contentState = ContentState.createFromText(text);
+    const newEditorState = EditorState.push(
+      editorState,
+      contentState,
+      'insert-characters'   
+  
+    );
+    onChange(newEditorState); // Use onChange to update the editor state
+    return true; // Return true to indicate that pasting is handled
+  };
+
   return (
     <Editor
       editorState={editorState}
       onEditorStateChange={setEditorState}
+      handlePastedText={handlePastedText}      
       toolbarClassName="editor-toolbar"
       wrapperClassName="editor-container"
       editorClassName="editor-content"
