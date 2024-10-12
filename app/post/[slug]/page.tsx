@@ -38,7 +38,7 @@ export default async function PostPage({ params }: any) {
 
   //Get specific Post by slug
   const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
-  // console.log('postItem Data', postPageItem?.data);
+  console.log('postItem Data', postPageItem?.data);
 
   if (!postPageItem) {
     return <div>Loading...</div>; // You can also add a loading spinner here

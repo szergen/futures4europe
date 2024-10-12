@@ -46,8 +46,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   setValidationState,
   handleTagCreated,
 }) => {
-  const validationFunctionForName = (tempName: string) => {
-    if (tempName?.length < 5) {
+  const validationFunctionForName = (
+    tempName: string | undefined,
+    existingPostPagesTitles?: string[],
+    defaultPostTitle?: string
+  ): string => {
+    if (!tempName) {
+      return 'Title is required';
+    }
+  
+    if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
     if (tempName.length > 50) {
@@ -56,13 +64,17 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    // const isTempTitleExisting = existingPostPagesTitles?.some(
-    //   (postPageTitle) =>
-    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    // );
-    // if (isTempTitleExisting) {
-    //   return 'Title already exists';
-    // }
+    
+    if (Array.isArray(existingPostPagesTitles) && defaultPostTitle) {
+      const isTempTitleExisting = existingPostPagesTitles.some(
+        (postPageTitle) =>
+          postPageTitle !== defaultPostTitle && postPageTitle === tempName
+      );
+      if (isTempTitleExisting) {
+        return 'Title already exists';
+      }
+    }
+    
     return '';
   };
 
