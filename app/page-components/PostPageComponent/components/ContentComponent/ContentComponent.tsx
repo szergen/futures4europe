@@ -11,10 +11,10 @@ import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type ContentComponentProps = {
   contentText: string[];
-  contentImages: string[];
+  contentImages: Array<{ url: string; caption: string }>;
   isEditModeOn: boolean;
   updatePostDataContent: (value: string, index: number) => void;
-  updatePostDataContentImages: (value: string, index: number) => void;
+  updatePostDataContentImages: (value: { url: string; caption: string }, index: number) => void;
 };
 
 const ContentComponent: React.FC<ContentComponentProps> = ({
@@ -102,9 +102,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     updatePostDataContent(value, index);
   };
 
-  const handleUpdatePostDataContentImages = (value: string, index: number) => {
+  const handleUpdatePostDataContentImages = (value: { url: string; caption: string }, index: number) => {
     const newContentImages = [...contentImages];
-    newContentImages[index] !== ' ' ? value : '';
+    newContentImages[index] = value;
     setContentImages(newContentImages);
     updatePostDataContentImages(value, index);
   };
@@ -183,25 +183,26 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                     <>
                       {!isEditModeOn ? (
                         initialContentImages?.[index] && (
+                        <figure>
                           <Image
-                            src={
-                              getImageUrlForMedia(initialContentImages?.[index])
-                                ?.url ||
-                              getImageUrlForMedia(
-                                initialContentImages?.[index]
-                              ) ||
-                              ''
-                            }
+                            src={getImageUrlForMedia(contentImages[index].url)?.url || getImageUrlForMedia(contentImages[index].url) || ''}
                             width={600}
                             height={400}
                             className={classNames('rounded-md block mx-auto')}
-                            alt="Post Image"
+                            alt={contentImages[index].caption || "Post Image"}
                           />
+                          {contentImages[index].caption && (
+                            <figcaption className="text-center mt-2 text-sm text-gray-600">
+                              {contentImages[index].caption}
+                            </figcaption>
+                          )}
+                        </figure>
                         )
                       ) : (
                         <div>
                           <ContentImageFileUploader
-                            currentImage={initialContentImages[index]}
+                            currentImage={contentImages[index].url}
+                            currentCaption={contentImages[index].caption}
                             updatePostData={(value) =>
                               handleUpdatePostDataContentImages(value, index)
                             }
