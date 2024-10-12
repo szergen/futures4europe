@@ -9,15 +9,15 @@ import Link from 'next/link';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
 import classNames from 'classnames';
 import { members } from '@wix/members';
-import Icon from '@app/shared-components/Icon/Icon';
-import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
+import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import stylefile from './pageDashboardSecurity.module.css';
-import style from '../dashboard/pageDashboard.module.css';
-import { Avatar } from 'flowbite-react';
+import style from '../pageDashboard.module.css';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 
 export default function DashboardSecurity() {
-  //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
+  // const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
+  // const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
   // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
@@ -129,190 +129,27 @@ export default function DashboardSecurity() {
     router.push('/login');
   };
 
-  // const handleChangeNickname = async () => {
-  //   const member = await updateMember(userDetails.contactId, {
-  //     profile: {
-  //       nickname: 'Alexandru-Sergiu Ciobanasu',
-  //     },
-  //   });
-  //   console.log('gotMember', member);
-  // };
+  const handleCreateOrNavigateToPersonInfoPage = () => {
+    if (userInfoPage) {
+      return `${userInfoPage}`;
+    }
+    return `/person/New_Info_Page`;
+  };
 
+  const subNavItems = [
+    { href: '/dashboard', text: 'Profile information', isActive: true },
+    { href: '/dashboard/security', text: 'Security' },
+    { href: '/dashboard/change-password', text: 'Password' },
+  ];  
+  
   return (
     <div className={classNames(style.UserDashboard, 'flex flex-col')}>
-      <div
-        className={classNames(
-          style.UserDashboardWrapper,
-          'flex m-auto justify-center relative mb-4'
-        )}
-      >
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleListPosts}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountPostIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <span>Posts</span>
-          </button>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleListProjects}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountProjectIcon
-              className="mb-2"
-              size={38}
-              fill={'none'}
-              strokeWidth={2.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              inline={false}
-            />
-            <span>Projects</span>
-          </button>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleCreateOrganisation}
-            className={classNames(
-              'font-semibold flex flex-col justify-center items-center'
-            )}
-          >
-            <SpriteSvg.AccountOrgIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <span>Organisation</span>
-          </button>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleCreatePersonInfoPage}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountPersonIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            {userInfoPage ? 'View Info Page' : 'Person Page'}
-          </button>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            style.active,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleListProfileSettings}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountSettingsIcon
-              className="mb-2"
-              size={38}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            {userInfoPage ? 'Profile settings' : 'Profile settings'}
-          </button>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleLogOut}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountLogoutIcon
-              className="mb-2"
-              sizeW={28}
-              sizeH={28}
-              viewBox={'-3 0 28 28'}
-              fill={'none'}
-              strokeWidth={2}
-              inline={false}
-            />
-            Log Out
-          </button>
-        </div>
-      </div>
-      <div className={style.subnavDashboard}>
-        <ul
-          className={classNames(
-            style.UserDashboardWrapper,
-            'flex flex-row m-auto align-center place-content-evenly'
-          )}
-        >
-          <li>
-            <Link
-              href={`/dashboard`}
-              className={classNames(style.subnavLink, '')}
-            >
-              Profile information
-            </Link>
-          </li>
-          <li>
-            <Link href={`/security`} className={classNames(style.active, '')}>
-              Security
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={`/change-password`}
-              className={classNames(style.subnavLink, '')}
-            >
-              Password
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <NavDashboard
+        userInfoPage={true}
+        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleLogOut={handleLogOut}
+        SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+      />
 
       <div
         className={classNames(

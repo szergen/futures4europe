@@ -9,10 +9,12 @@ import Link from 'next/link';
 import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
 import classNames from 'classnames';
 import { members } from '@wix/members';
-import Icon from '@app/shared-components/Icon/Icon';
+import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
+import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from '../pageDashboard.module.css';
-import { Avatar, Button } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import Tag from '../../shared-components/Tag/Tag';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -40,17 +42,6 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  const handleCreateProject = async () => {
-    router.push(`/project/New_Project`);
-  };
-
-  const handleCreateOrNavigateToPersonInfoPage = () => {
-    if (userInfoPage) {
-      return `${userInfoPage}`;
-    }
-    return `/person/New_Info_Page`;
-  };
-
   // const handleCreatePersonInfoPage = async () => {
   //   if (userInfoPage) {
   //     router.push(`/person/${userInfoPage}`);
@@ -67,9 +58,9 @@ export default function DashboardProjects() {
   //   router.push(`/dashboard/posts`);
   // };
 
-  const handleCreateOrganisation = () => {
-    router.push(`/organisation/New_Organisation`);
-  };
+  // const handleCreateOrganisation = () => {
+  //   router.push(`/organisation/New_Organisation`);
+  // };
 
   // const handleDeletePostPage = async (infoPageId: string) => {
   //   setIsLoadingDeletePostPage(infoPageId);
@@ -107,7 +98,9 @@ export default function DashboardProjects() {
     router.push(`/post/New_Post`);
   };
 
-  console.log('loading', loading);
+  const handleCreateProject = async () => {
+    router.push(`/project/New_Project`);
+  };
 
   useEffect(() => {
     // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
@@ -130,19 +123,22 @@ export default function DashboardProjects() {
     //Loading Spinner
     return <LoadingSpinner />;
   }
+
   const handleLogOut = async () => {
     logout();
     router.push('/login');
   };
 
-  // const handleChangeNickname = async () => {
-  //   const member = await updateMember(userDetails.contactId, {
-  //     profile: {
-  //       nickname: 'Alexandru-Sergiu Ciobanasu',
-  //     },
-  //   });
-  //   console.log('gotMember', member);
-  // };
+  const handleCreateOrNavigateToPersonInfoPage = () => {
+    if (userInfoPage) {
+      return `${userInfoPage}`;
+    }
+    return `/person/New_Info_Page`;
+  };
+
+  const subNavItems = [
+    { href: '/dashboard/projects', text: 'Projects', isActive: true }
+  ];
 
   return (
     <div
@@ -151,177 +147,14 @@ export default function DashboardProjects() {
         style.UserDashboardProjects,
         'flex flex-col'
       )}
-    >
-      <div
-        className={classNames(
-          style.UserDashboardWrapper,
-          'flex m-auto justify-center relative mb-4'
-        )}
-      >
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center items-center'
-          )}
-        >
-          <Link href="/dashboard/posts">
-            <button
-              // onClick={handleListPosts}
-              className={classNames(
-                'font-semibold flex flex-col justify-center items-center'
-              )}
-            >
-              <SpriteSvg.AccountPostIcon
-                className="mb-2"
-                size={38}
-                fill={'currentColor'}
-                strokeWidth={0}
-                inline={false}
-              />
-              <span>Posts</span>
-            </button>
-          </Link>
-        </div>
+     >
 
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            style.active,
-            'text-purple-site flex justify-center items-center'
-          )}
-        >
-          <Link href="/dashboard/projects">
-            <button
-              // onClick={handleCreateProject}
-              className={classNames(
-                'font-semibold flex flex-col justify-center items-center'
-              )}
-            >
-              <SpriteSvg.AccountProjectIcon
-                className="mb-2"
-                size={38}
-                fill={'none'}
-                strokeWidth={2.2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                inline={false}
-              />
-              <span>Projects</span>
-            </button>
-          </Link>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center items-center'
-          )}
-        >
-          <Link href="/dashboard/organisations">
-            <button
-              // onClick={handleCreateOrganisation}
-              className={classNames(
-                'font-semibold flex flex-col justify-center items-center'
-              )}
-            >
-              <SpriteSvg.AccountOrgIcon
-                className="mb-2"
-                size={38}
-                fill={'currentColor'}
-                strokeWidth={0}
-                inline={false}
-              />
-              <span>Organisation</span>
-            </button>
-          </Link>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center items-center'
-          )}
-        >
-          <Link href={handleCreateOrNavigateToPersonInfoPage() as any}>
-            <button
-              // onClick={handleCreatePersonInfoPage}
-              className="font-semibold flex flex-col justify-center items-center"
-            >
-              <SpriteSvg.AccountPersonIcon
-                className="mb-2"
-                size={38}
-                fill={'currentColor'}
-                strokeWidth={0}
-                inline={false}
-              />
-              {userInfoPage ? 'View Info Page' : 'Person Page'}
-            </button>
-          </Link>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center items-center'
-          )}
-        >
-          <Link href="/dashboard">
-            <button
-              // onClick={handleListProfileSettings}
-              className="font-semibold flex flex-col justify-center items-center"
-            >
-              <SpriteSvg.AccountSettingsIcon
-                className="mb-2"
-                size={38}
-                fill={'currentColor'}
-                strokeWidth={0}
-                inline={false}
-              />
-              {userInfoPage ? 'Profile settings' : 'Profile settings'}
-            </button>
-          </Link>
-        </div>
-
-        <div
-          className={classNames(
-            style.UserDashboardNavItem,
-            'text-purple-site flex justify-center'
-          )}
-        >
-          <button
-            onClick={handleLogOut}
-            className="font-semibold flex flex-col justify-center items-center"
-          >
-            <SpriteSvg.AccountLogoutIcon
-              className="mb-2"
-              sizeW={28}
-              sizeH={28}
-              viewBox={'-3 0 28 28'}
-              fill={'none'}
-              strokeWidth={2}
-              inline={false}
-            />
-            Log Out
-          </button>
-        </div>
-      </div>
-      <div className={style.subnavDashboard}>
-        <ul
-          className={classNames(
-            style.UserDashboardWrapper,
-            'flex flex-row m-auto align-center place-content-evenly'
-          )}
-        >
-          <li>
-            <Link
-              href={`/dashboard/projects`}
-              className={classNames(style.active, '')}
-            >
-              Projects
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <NavDashboard
+        userInfoPage={true}
+        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleLogOut={handleLogOut}
+        SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+      />      
 
       <div
         className={classNames(
