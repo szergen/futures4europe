@@ -212,7 +212,6 @@ export default function DashboardProjects() {
         >
           <Link href="/dashboard/organisations">
             <button
-              // onClick={handleCreateOrganisation}
               className={classNames(
                 'font-semibold flex flex-col justify-center items-center'
               )}
@@ -365,7 +364,7 @@ export default function DashboardProjects() {
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your post. Include text content or
                 image. Add any significant outcomes or findings in the foresight
-                community.
+                community. 
               </p>
             </div>
 
