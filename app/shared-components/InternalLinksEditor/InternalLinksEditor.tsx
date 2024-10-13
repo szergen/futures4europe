@@ -22,8 +22,8 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
 
   //   #region get all pages from Wix
   const { postPages, postPagesFetched } = useAuth();
-  console.log('postPages', postPages);
-  console.log('internalLinks', internalLinks);
+//   console.log('postPages', postPages);
+//   console.log('internalLinks', internalLinks);
   const findInternalLinksInPostPages = (internalLinks: any[]) => {
     return internalLinks
       ?.map((link) =>

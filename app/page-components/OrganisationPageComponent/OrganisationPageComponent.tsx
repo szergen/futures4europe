@@ -44,6 +44,7 @@ function OrganisationPageComponent({
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
+    infoPages,
   } = useAuth();
 
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
@@ -221,7 +222,9 @@ function OrganisationPageComponent({
     ) {
       const updatedProjects = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.projects?.map((proj: any) => proj._id),
+        organisationData.projects
+          ?.map((proj: any) => proj._id)
+          .filter((id: any) => id),
         'organisationProject',
         organisationData._id
       );
@@ -237,7 +240,9 @@ function OrganisationPageComponent({
     ) {
       const updatedPeople = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.people?.map((person: any) => person._id),
+        organisationData.people
+          ?.map((person: any) => person._id)
+          .filter((id: any) => id),
         'organisationPeople',
         organisationData._id
       );
@@ -510,7 +515,9 @@ function OrganisationPageComponent({
     if (organisationData.projects && newOrganisationInfoId) {
       const updatedProjects = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.projects?.map((org: any) => org._id),
+        organisationData.projects
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'organisationProject',
         newOrganisationInfoId
       );
@@ -522,7 +529,9 @@ function OrganisationPageComponent({
     if (organisationData.people && newOrganisationInfoId) {
       const updatedPeople = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.people?.map((org: any) => org._id),
+        organisationData.people
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'organisationPeople',
         newOrganisationInfoId
       );

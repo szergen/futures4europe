@@ -16,7 +16,7 @@ import ProjectResultHeaderImage from '@app/shared-components/ProjectResultHeader
 export type HeaderComponentProps = {
   post: {
     title: string;
-    pageType: TagProps;
+    pageType: TagProps[];
     eventDate?: {
       start: string;
       end: string;
@@ -85,7 +85,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
 
   return (
     <div className={classNames(style.postHeader)}>
-      {post.pageType?.name?.toLowerCase() === 'project result' && (
+      {post.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
         // Project Result Image
         <div className={style.imageAndButtons}>
           <div>
@@ -225,50 +225,51 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           />
         )}
         {/* Event Date */}
-        {post.pageType?.name?.toLowerCase() === 'event' && post?.eventDate && (
-          <div>
-            {!isEditModeOn ? (
-              <Typography
-                tag="p"
-                className="text-gray-500 text-sm font-bold mt-3"
-              >
-                {formatDate(post?.eventDate?.start)} -{' '}
-                {formatDate(post?.eventDate?.end)}
-              </Typography>
-            ) : (
-              <div className="flex items-center mt-4">
-                <span className="mr-4">Start Date</span>
-                <DatePickerRangeComponentDouble
-                  dateStart={
-                    post?.eventDate?.start
-                      ? new Date(post.eventDate.start)
-                      : undefined
-                  }
-                  dateEnd={
-                    post?.eventDate?.end
-                      ? new Date(post.eventDate.end)
-                      : undefined
-                  }
-                  handleUpdateStartDate={(date) =>
-                    updatePostDataBasedOnKeyValue('eventDate', {
-                      ...post.eventDate,
-                      start: date.toISOString(),
-                    })
-                  }
-                  handleUpdateEndDate={(date) =>
-                    updatePostDataBasedOnKeyValue('eventDate', {
-                      ...post.eventDate,
-                      end: date.toISOString(),
-                    })
-                  }
-                />
-                <span className="ml-4">End Date</span>
-              </div>
-            )}
-          </div>
-        )}
+        {post.pageType?.[0]?.name?.toLowerCase() === 'event' &&
+          post?.eventDate && (
+            <div>
+              {!isEditModeOn ? (
+                <Typography
+                  tag="p"
+                  className="text-gray-500 text-sm font-bold mt-3"
+                >
+                  {formatDate(post?.eventDate?.start)} -{' '}
+                  {formatDate(post?.eventDate?.end)}
+                </Typography>
+              ) : (
+                <div className="flex items-center mt-4">
+                  <span className="mr-4">Start Date</span>
+                  <DatePickerRangeComponentDouble
+                    dateStart={
+                      post?.eventDate?.start
+                        ? new Date(post.eventDate.start)
+                        : undefined
+                    }
+                    dateEnd={
+                      post?.eventDate?.end
+                        ? new Date(post.eventDate.end)
+                        : undefined
+                    }
+                    handleUpdateStartDate={(date) =>
+                      updatePostDataBasedOnKeyValue('eventDate', {
+                        ...post.eventDate,
+                        start: date.toISOString(),
+                      })
+                    }
+                    handleUpdateEndDate={(date) =>
+                      updatePostDataBasedOnKeyValue('eventDate', {
+                        ...post.eventDate,
+                        end: date.toISOString(),
+                      })
+                    }
+                  />
+                  <span className="ml-4">End Date</span>
+                </div>
+              )}
+            </div>
+          )}
         {/* Registration Link */}
-        {post.pageType?.name?.toLowerCase() === 'event' &&
+        {post.pageType?.[0]?.name?.toLowerCase() === 'event' &&
           post?.eventRegistration && (
             <>
               <Divider className="mt-2" />
@@ -308,7 +309,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             ) : (
               <TagPicker
                 placeholder={
-                  post?.pageType?.name !== 'event'
+                  post?.pageType?.[0]?.name !== 'event'
                     ? 'Select Country'
                     : 'Select Location'
                 }

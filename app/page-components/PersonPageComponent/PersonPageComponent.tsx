@@ -223,9 +223,16 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         defaultPersonData.currentAfiliations
       )
     ) {
+      console.log('Updating Organisations');
+      console.log(
+        'personData.currentAfiliations',
+        personData.currentAfiliations
+      );
       const updatedOrganisations = await replaceDataItemReferences(
         'InfoPages',
-        personData.currentAfiliations?.map((org: any) => org._id),
+        personData.currentAfiliations
+          ?.map((org: any) => org?._id)
+          .filter((id: any) => id),
         'personOrganisation',
         personData._id
       );
@@ -241,7 +248,9 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     ) {
       const updatedOrganisationsFormer = await replaceDataItemReferences(
         'InfoPages',
-        personData.formerAfiliations?.map((org: any) => org._id),
+        personData.formerAfiliations
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'personOrganisationFormer',
         personData._id
       );
@@ -441,6 +450,34 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         newPersonInfoId
       );
       console.log('updatedPageTypes', updatedPageTypes);
+    }
+    // #endregion
+
+    // #region Update Current Afiliations
+    if (personData.currentAfiliations && newPersonInfoId) {
+      const updatedOrganisations = await replaceDataItemReferences(
+        'InfoPages',
+        personData.currentAfiliations
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
+        'personOrganisation',
+        newPersonInfoId
+      );
+      console.log('updatedOrganisations', updatedOrganisations);
+    }
+    // #endregion
+
+    // #region Update Former Afiliations
+    if (personData.formerAfiliations && newPersonInfoId) {
+      const updatedOrganisationsFormer = await replaceDataItemReferences(
+        'InfoPages',
+        personData.formerAfiliations
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
+        'personOrganisationFormer',
+        newPersonInfoId
+      );
+      console.log('updatedOrganisationsFormer', updatedOrganisationsFormer);
     }
     // #endregion
 

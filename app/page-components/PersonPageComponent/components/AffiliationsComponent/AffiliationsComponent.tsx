@@ -34,16 +34,25 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 }) => {
   const [currentAffiliations, setCurrentAffiliations] = useState(afiliations);
 
+  const shouldAddNewAffiliation = () => {
+    if (afiliations?.length === 0) return false;
+    const lastMember = afiliations?.[afiliations.length - 1];
+    return lastMember?.name && lastMember?.arole;
+  };
+
   useEffect(() => {
     // console.log('currentAffiliations', currentAffiliations);
     if (isEditModeOn) {
+      if (shouldAddNewAffiliation() || !currentAffiliations) {
+        handleAddAffiliation(0);
+      }
       setCurrentAffiliations(afiliations);
     }
   }, [afiliations, isEditModeOn]);
 
-  useEffect(() => {
-    console.log('currentAffiliations', currentAffiliations);
-  }, [currentAffiliations]);
+  // useEffect(() => {
+  //   console.log('currentAffiliations', currentAffiliations);
+  // }, [currentAffiliations]);
 
   const handleAddAffiliation = (index: number) => {
     if (index === 0 && !currentAffiliations && !currentAffiliations?.length) {
@@ -78,11 +87,19 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   };
 
   if (
-    (!currentAffiliations || currentAffiliations?.length === 0) &&
+    (!currentAffiliations ||
+      currentAffiliations?.length === 0 ||
+      (!currentAffiliations?.[0]?.arole && !currentAffiliations?.[0]?.name)) &&
     !isEditModeOn
   ) {
     return null;
   }
+
+  // useEffect(() => {
+  //   if (shouldAddNewAffiliation()) {
+  //     handleAddAffiliation(0);
+  //   }
+  // }, [currentAffiliations]);
 
   return (
     <section className={classNames(style.tagListRootContainer)}>
@@ -96,7 +113,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         >
           {tagListTitle}
         </Typography>
-        {isEditModeOn && (
+        {/* {isEditModeOn && (
           <button
             onClick={() => handleAddAffiliation(0)}
             className={
@@ -105,7 +122,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           >
             Add Affiliation
           </button>
-        )}
+        )} */}
       </div>
       {/* {!current && (
         <Typography
@@ -115,7 +132,12 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {title ? title : 'Former Affiliations'}
         </Typography>
       )} */}
-      <div className={classNames('flex w-full', isEditModeOn && 'flex-wrap')}>
+      <div
+        className={classNames(
+          'flex w-full',
+          isEditModeOn && 'flex-col flex-wrap'
+        )}
+      >
         {currentAffiliations?.map((affilitiation, index) => (
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
@@ -184,16 +206,19 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                 onTagCreated={handleTagCreated}
               />
             )}
-            {isEditModeOn && (
-              <button
-                onClick={() => handleRemoveAffiliation(index)}
-                className={
-                  'ml-4 text-sm bg-red-600 text-neutral-50 p-1 rounded-md inline-block text-nowrap'
-                }
-              >
-                Remove Affiliation
-              </button>
-            )}
+            {isEditModeOn &&
+              currentAffiliations?.[index + 1] &&
+              affilitiation.arole &&
+              affilitiation.name && (
+                <button
+                  onClick={() => handleRemoveAffiliation(index)}
+                  className={
+                    'ml-4 text-sm bg-red-600 text-neutral-50 p-1 rounded-md inline-block text-nowrap'
+                  }
+                >
+                  Remove Affiliation
+                </button>
+              )}
           </div>
         ))}
       </div>
