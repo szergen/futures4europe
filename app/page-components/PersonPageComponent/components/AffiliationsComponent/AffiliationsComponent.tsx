@@ -116,24 +116,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         >
           {tagListTitle}
         </Typography>
-        {isEditModeOn && (
-          <Button
-            size={'sm'}
-            color={'light'}
-            className={classNames(style.buttonAddDashboard, 'w-240')}
-            onClick={() => handleAddAffiliation(0)}
-            pill
-            >
-            <SpriteSvg.AccountAddIcon 
-              sizeH={18}
-              sizeW={18}
-              viewBox={'0 -1 14 14'}
-              strokeWidth={1}
-            />
-            <span className='text-lg'>Add affiliation</span>
-          </Button>
-        )}
-
       </div>
       {/* {!current && (
         <Typography
@@ -149,10 +131,10 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           isEditModeOn && 'flex-wrap'
         )}
       >
-        <ReactSortable
+        {/* <ReactSortable
           list={currentAffiliations}
           setList={setCurrentAffiliations}
-        >
+        > */}
           {currentAffiliations?.map((affilitiation, index) => (
             // <Reorder.Item
             //   key={`affiliation-${affilitiation.name}-${index}`}
@@ -242,7 +224,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             </div>
             // </Reorder.Item>
           ))}
-        </ReactSortable>
+        {/* </ReactSortable> */}
       </div>
     </section>
   );

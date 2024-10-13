@@ -36,8 +36,7 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
   } = useAuth();
-  console.log('ownedInfoPages', ownedInfoPages);
-
+  console.log('ownedPostPages', ownedPostPages);
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
@@ -305,6 +304,7 @@ export default function DashboardProjects() {
                           </Badge>
                         </div>
                         <div className={'flex flex-row'}>
+                         
                           <Link href={`/post/${postPage.data.slug}`}>
                             <Button
                               size={'sm'}
