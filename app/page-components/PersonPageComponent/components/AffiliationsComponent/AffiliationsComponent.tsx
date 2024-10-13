@@ -5,6 +5,8 @@ import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
+import { Button } from 'flowbite-react';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { useEffect, useState } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 
@@ -104,26 +106,16 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   return (
     <section className={classNames(style.tagListRootContainer)}>
-      <div className={classNames('flex', style.tagListTitle)}>
+      <div className={classNames('flex items-center', style.tagListTitle)}>
         <Typography
           tag="h2"
           className={classNames(
-            'text-gray-800 w-full'
+            'text-gray-800 grow'
             //  style.tagListTitle
           )}
         >
           {tagListTitle}
         </Typography>
-        {/* {isEditModeOn && (
-          <button
-            onClick={() => handleAddAffiliation(0)}
-            className={
-              'ml-4 text-sm bg-green-600 text-neutral-50 p-1 rounded-md w-auto inline-block text-nowrap'
-            }
-          >
-            Add Affiliation
-          </button>
-        )} */}
       </div>
       {/* {!current && (
         <Typography
@@ -133,106 +125,101 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {title ? title : 'Former Affiliations'}
         </Typography>
       )} */}
-      <div
-        className={classNames(
-          'flex w-full',
-          isEditModeOn && 'flex-col flex-wrap'
-        )}
-      >
-        <ReactSortable
+      <div className={classNames('flex w-full', isEditModeOn && 'flex-wrap')}>
+        {/* <ReactSortable
           list={currentAffiliations}
           setList={setCurrentAffiliations}
-        >
-          {currentAffiliations?.map((affilitiation, index) => (
-            // <Reorder.Item
-            //   key={`affiliation-${affilitiation.name}-${index}`}
-            //   value={affilitiation}
-            //   animate={false}
-            // >
-            <div
-              key={`affiliation-${affilitiation.name}-${index}`}
-              className={classNames(style.tagListContainer)}
-            >
-              {!isEditModeOn ? (
-                affilitiation.arole &&
-                affilitiation.name && (
-                  <Typography
-                    tag="span"
-                    className={classNames(
-                      'backgroundLabelAffiliation',
-                      'pr-4 pl-2'
-                    )}
-                  >
-                    {affilitiation.arole}
-                  </Typography>
-                )
-              ) : (
-                <div className={classNames(style.inputContainer)}>
-                  <InputText
-                    placeholder="Role"
-                    key={`affiliation-${affilitiation.name}`}
-                    value={affilitiation.arole || ''}
-                    onChange={(e) => {
-                      console.log(e?.target?.value);
-                      const newAffiliations = [...currentAffiliations];
-                      newAffiliations[index] = {
-                        ...newAffiliations[index],
-                        arole: e?.target?.value,
-                      };
-                      setCurrentAffiliations(newAffiliations);
-                      console.log('newAffiliations', newAffiliations);
-                      updatePersonDataAffiliations &&
-                        updatePersonDataAffiliations(newAffiliations);
-                    }}
-                    className={classNames(
-                      // 'backgroundLabelAffiliation',
-                      // style.genericTextArea,
-                      style.roleInput
-                    )}
-                    isHorizontal
-                  />
-                </div>
-              )}
-              {!isEditModeOn ? (
-                affilitiation.name && <Tag {...affilitiation} />
-              ) : (
-                <TagPicker
-                  key={`affiliation-${affilitiation.name}-${index}`}
-                  placeholder="Select Organisation"
-                  tags={tags}
-                  selectedValue={affilitiation?.name || undefined}
-                  updatePostData={(value) => {
+        > */}
+        {currentAffiliations?.map((affilitiation, index) => (
+          // <Reorder.Item
+          //   key={`affiliation-${affilitiation.name}-${index}`}
+          //   value={affilitiation}
+          //   animate={false}
+          // >
+          <div
+            key={`affiliation-${affilitiation.name}-${index}`}
+            className={classNames(style.tagListContainer)}
+          >
+            {!isEditModeOn ? (
+              affilitiation.arole &&
+              affilitiation.name && (
+                <Typography
+                  tag="span"
+                  className={classNames(
+                    'backgroundLabelAffiliation',
+                    'pr-4 pl-2'
+                  )}
+                >
+                  {affilitiation.arole}
+                </Typography>
+              )
+            ) : (
+              <div className={classNames(style.inputContainer)}>
+                <InputText
+                  placeholder="Role"
+                  key={`affiliation-${affilitiation.name}`}
+                  value={affilitiation.arole || ''}
+                  onChange={(e) => {
+                    console.log(e?.target?.value);
                     const newAffiliations = [...currentAffiliations];
                     newAffiliations[index] = {
                       ...newAffiliations[index],
-                      ...value,
+                      arole: e?.target?.value,
                     };
                     setCurrentAffiliations(newAffiliations);
                     console.log('newAffiliations', newAffiliations);
                     updatePersonDataAffiliations &&
                       updatePersonDataAffiliations(newAffiliations);
                   }}
-                  tagType="organisation"
-                  onTagCreated={handleTagCreated}
+                  className={classNames(
+                    // 'backgroundLabelAffiliation',
+                    // style.genericTextArea,
+                    style.roleInput
+                  )}
+                  isHorizontal
                 />
+              </div>
+            )}
+            {!isEditModeOn ? (
+              affilitiation.name && <Tag {...affilitiation} />
+            ) : (
+              <TagPicker
+                key={`affiliation-${affilitiation.name}-${index}`}
+                placeholder="Select Organisation"
+                tags={tags}
+                selectedValue={affilitiation?.name || undefined}
+                updatePostData={(value) => {
+                  const newAffiliations = [...currentAffiliations];
+                  newAffiliations[index] = {
+                    ...newAffiliations[index],
+                    ...value,
+                  };
+                  setCurrentAffiliations(newAffiliations);
+                  console.log('newAffiliations', newAffiliations);
+                  updatePersonDataAffiliations &&
+                    updatePersonDataAffiliations(newAffiliations);
+                }}
+                tagType="organisation"
+                onTagCreated={handleTagCreated}
+              />
+            )}
+            {isEditModeOn &&
+              currentAffiliations?.[index + 1] &&
+              affilitiation.arole &&
+              affilitiation.name && (
+                <button
+                  onClick={() => handleRemoveAffiliation(index)}
+                  className={
+                    'ml-4 text-sm bg-red-600 text-neutral-50 p-1 rounded-md inline-block text-nowrap'
+                  }
+                >
+                  Remove Affiliation
+                </button>
               )}
-              {isEditModeOn &&
-                currentAffiliations?.[index + 1] &&
-                affilitiation.arole &&
-                affilitiation.name && (
-                  <button
-                    onClick={() => handleRemoveAffiliation(index)}
-                    className={
-                      'ml-4 text-sm bg-red-600 text-neutral-50 p-1 rounded-md inline-block text-nowrap'
-                    }
-                  >
-                    Remove Affiliation
-                  </button>
-                )}
-            </div>
-            // </Reorder.Item>
-          ))}
-        </ReactSortable>
+          </div>
+          // </Reorder.Item>
+        ))}
+        {/* </ReactSortable> */}
       </div>
     </section>
   );

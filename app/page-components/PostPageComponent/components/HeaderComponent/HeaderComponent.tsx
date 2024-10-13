@@ -67,8 +67,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempTitle?.length > 50) {
-      return 'Title should be at most 50 characters long';
+    if (tempTitle?.length > 150) {
+      return 'Title should be at most 150 characters long';
     }
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
@@ -303,18 +303,18 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         {/* Post Country */}
         {
-          <div className="mt-1">
+          <div className="flex mt-1">
             {!isEditModeOn ? (
               post?.countryTag && <Tag {...post.countryTag} />
             ) : (
               <TagPicker
                 placeholder={
                   post?.pageType?.[0]?.name !== 'event'
-                    ? 'Select Country'
-                    : 'Select Location'
+                    ? 'Add country tag relevant to your post'
+                    : 'Add country tag relevant to your post'
                 }
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}
-                className="w-80 mt-1"
+                className="mt-1"
                 selectedValue={post.countryTag?.name || undefined}
                 updatePostData={(value) =>
                   updatePostDataBasedOnKeyValue('countryTag', value)

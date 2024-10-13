@@ -5,7 +5,8 @@ export function getImageUrlForMedia(
   // width: number,
   // height: number
 ): string | any {
-  if (media && media.startsWith('wix:image')) {
+  // TODO: @ALEX
+  if (typeof media === 'string' && media && media.startsWith('wix:image')) {
     return wixMedia.getImageUrl(media);
     // return wixMedia.getScaledToFillImageUrl(media, width, height, {});
   } else {

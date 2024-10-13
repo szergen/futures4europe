@@ -128,8 +128,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             className=" rounded-full"
             fill="currentColor"
-            width={32}
-            height={32}
+            width={24}
+            height={24}
             style={{
               color: '#fff',
               backgroundColor: '#0077b5',
@@ -213,7 +213,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             tags={tags?.filter(
               (tag) => tag.tagType === 'organisation' && !tag?.tagPageLink
             )}
-            className="w-80"
+            className="relative"
             updatePostData={(value) =>
               updateOrganisationDataOnKeyValue('organisationTag', value)
             }
@@ -321,7 +321,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder={'Select Country'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
-            className="w-80"
+            className="relative"
             selectedValue={organisation?.countryTag?.name || undefined}
             updatePostData={(value) =>
               updateOrganisationDataOnKeyValue('countryTag', value)

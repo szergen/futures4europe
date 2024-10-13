@@ -1,27 +1,32 @@
 import Image from 'next/image';
 import { uploadFileToWix } from '@app/wixUtils/client.utils';
-import { Alert, FileInput, Label, Spinner } from 'flowbite-react';
+import { Textarea, Alert, FileInput, Label, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 import classNames from 'classnames';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import style from './ContentImageFileUploader.module.css';
+import SpriteSvg from '../SpriteSvg/SpriteSvg';
 // import WixMediaImage from '../WixMediaImage/WixMediaImage';
 
 export type FileUploaderProps = {
   currentImage?: string;
-  updatePostData?: (value: string) => void;
+  currentCaption?: string;
+  updatePostData?: (value: string, caption: string) => void;
 };
 
 const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
   currentImage,
+  currentCaption,
   updatePostData,
 }) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isValidState, setIsValidState] = useState(true);
   const [imageURL, setImageURL] = useState(currentImage || '');
+  const [caption, setCaption] = useState(currentCaption || '');
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [imageCaption, setImageCaption] = useState('');
 
   const { userDetails } = useAuth();
   const composeFilePath = `/PostPages_Images/${
@@ -46,36 +51,52 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
       setIsImageLoading(false);
       console.log('uploadedFileResponse', uploadedFileResponse);
       setImageURL(uploadedFileResponse?.url);
-      updatePostData && updatePostData(uploadedFileResponse?.url);
+      updatePostData &&
+        updatePostData({
+          url: uploadedFileResponse?.url,
+          caption: imageCaption,
+        });
     }
   };
 
+  {
+    /* REVIEW: Check new caption handleCaptionChange function to update the caption state and call */
+  }
+  const handleCaptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newCaption = event.target.value;
+    setCaption(newCaption);
+    updatePostData && updatePostData({ url: imageURL, caption: newCaption });
+  };
+
   return (
-    <div className="flex w-full flex-wrap items-center justify-center">
+    <div
+      className={classNames(
+        style.imageEditor,
+        'flex w-full flex-wrap items-center justify-center relative pt-4'
+      )}
+    >
       <Label
         htmlFor="dropzone-file"
-        className="relative flex h-12 w-full cursor-pointer items-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        className="relative flex h-12 pr-4 w-full max-w-[600px] cursor-pointer items-center rounded-lg bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
-        <div className="flex items-center border-r-2  border-dashed border-gray-300 dark:border-gray-600 mr-4 px-4">
-          {!imageURL || imageURL === ' ' ? 'Upload Image' : 'Replace Image'}
-        </div>
-        <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
-          <svg
-            className="h-10 w-10 text-gray-500 dark:text-gray-400  mr-4 p-2 rounded-lg"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 16"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-            />
-          </svg>
-          Click to upload or drag and drop
+        {/* REVIEW: Removed the text to show like teh design // Dont delete, maybe it will change in the future */}
+        {/* <div className="flex items-center border-r-2  border-dashed border-gray-300 dark:border-gray-600 mr-4 px-4">
+          {!imageURL || imageURL === ' ' ? '' : ''}
+        </div> */}
+        <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center ml-4">
+          <SpriteSvg.EditImageIcon
+            className="text-site-black mt-1"
+            sizeW={24}
+            sizeH={24}
+            viewBox={'0 0 32 32'}
+            fill={'currentColor'}
+            strokeWidth={0}
+            inline={false}
+          />
+          <div className="pl-2 mb-0">
+            Click to upload or drag and drop a file relevant to your post
+            (pdf/doc, 5 MB max.)
+          </div>
         </div>
 
         <FileInput
@@ -84,12 +105,11 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
           onChange={handleFileChange}
         />
       </Label>
-      <p className="text-xs w-full text-gray-500 dark:text-gray-400">
-        {uploadedFile?.name || 'No file selected'}
-      </p>
-      <p className="text-xs w-full text-gray-500 dark:text-gray-400">
-        SVG, PNG, JPG or GIF (MAX. 5MB)
-      </p>
+
+      {/* REVIEW: Removed the text to show like teh design // Dont delete, maybe it will change in the future */}
+      {/* <p className="text-xs w-full text-gray-500 dark:text-gray-400">
+        {uploadedFile?.name || ''}
+      </p> */}
       {!isValidState && (
         <Alert color="failure" icon={HiInformationCircle} className="my-2">
           <span className="font-small">
@@ -98,7 +118,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         </Alert>
       )}
       {imageURL && imageURL !== ' ' && (
-        <div className="relative">
+        <div className={classNames(style.imagePreview, 'relative w-full')}>
           <Image
             src={
               getImageUrlForMedia(imageURL)?.url ||
@@ -125,6 +145,21 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
           )}
         </div>
       )}
+
+      {/* // TODO: Limit textarea caption to just 2 rows */}
+      <div className={classNames(style.imageContent, 'mt-2 w-full')}>
+        <Label htmlFor="image-caption" />
+        <Textarea
+          id="image-caption"
+          type="textarea"
+          value={caption}
+          rows={1}
+          onChange={handleCaptionChange}
+          placeholder="Enter image caption"
+          className="mt-2 p-2 resize-none bg-transparent w-1/2 m-auto"
+        />
+      </div>
+
       {isImageLoading && (!imageURL || imageURL === ' ') && (
         <div className="flex items-center justify-center w-full h-32">
           <Spinner size="xl" />

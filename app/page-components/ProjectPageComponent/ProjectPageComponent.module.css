@@ -111,4 +111,8 @@
     flex-direction: row;
     align-items: center;
   }
+  .react-select__placeholder {
+    z-index: 3;
+  }
+
 }

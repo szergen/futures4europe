@@ -46,7 +46,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   setValidationState,
   handleTagCreated,
 }) => {
-  const validationFunctionForName = (tempName: string) => {
+  const validationFunctionForName = (
+    tempName: string | undefined,
+    existingPostPagesTitles?: string[],
+    defaultPostTitle?: string
+  ): string => {
+    if (!tempName) {
+      return 'Title is required';
+    }
+
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
@@ -56,13 +64,17 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    // const isTempTitleExisting = existingPostPagesTitles?.some(
-    //   (postPageTitle) =>
-    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    // );
-    // if (isTempTitleExisting) {
-    //   return 'Title already exists';
-    // }
+
+    if (Array.isArray(existingPostPagesTitles) && defaultPostTitle) {
+      const isTempTitleExisting = existingPostPagesTitles.some(
+        (postPageTitle) =>
+          postPageTitle !== defaultPostTitle && postPageTitle === tempName
+      );
+      if (isTempTitleExisting) {
+        return 'Title already exists';
+      }
+    }
+
     return '';
   };
 
@@ -185,7 +197,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             {/* Person Popularity */}
             <span
               data-after={person?.personTag?.popularity || ''}
-              className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
+              className={classNames(
+                style.personTagPopularity,
+                'after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400'
+              )}
             ></span>
           </Typography>
         ) : (
@@ -273,7 +288,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             <TagPicker
               placeholder={'Select Country'}
               tags={tags?.filter((tag) => tag?.tagType === 'country')}
-              className="w-80"
+              className="relative"
               selectedValue={person?.countryTag?.name || undefined}
               updatePostData={(value) =>
                 updatePersonDataOnKeyValue('countryTag', value)

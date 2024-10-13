@@ -22,7 +22,12 @@
     top: -15px;
     right: -10px;
   }
-
+  .tagCounterBody:hover {
+    cursor: pointer;
+  }
+  .tagCounterBody:hover .Tag_popularity {
+    background: var(--primary-color)!important;
+  }
   .popularity {
     background-color: white;
     font-size: 10px;
@@ -34,13 +39,16 @@
 
   .tagBody {
     position: relative;
-    cursor: pointer;
+    cursor: default;
     display: inline-flex;
     align-items: center;
     background-color: var(--color-background-brand-tag);
     border-radius: var(--p-border-radius-200);
     height: calc(var(--w-space-xxxl));
     margin-right: calc(var(--w-space-s));
+  }
+  :not(.tagLink) {
+    cursor: pointer;
   }
 
   .tagBody:hover {
@@ -72,7 +80,6 @@
     font-size: var(--w-font-size-tag);
     line-height: var(--w-space-xxl);
     letter-spacing: var(--p-font-letter-spacing-tag);
-    margin-left: var(--w-space-s);
   }
   .tagBodyText img {
     padding: var(--w-space-xxs);
@@ -92,8 +99,40 @@
     right: 4px;
     top: 11px;
   }
-}
 
-.tagLink {
-  font-weight: 600 !important;
+  .tagLink {
+    cursor: pointer!important;
+  }
+  .tagLink .tagNameBody{
+    text-decoration: underline;
+  }
+  .tagLink .tagNameBody:before {
+
+  }
+  .tagLink:hover .tagNameBody {
+    -webkit-text-stroke: 1px black;
+    text-decoration: none;
+  }  
+  .tagThumbnail {
+    margin-left: 0px;
+  }
+  .tagThumbnail img{
+    color: transparent;
+    object-fit: cover;
+    margin-left: 0px;    
+    width: var(--w-space-xxl);
+    height: var(--w-space-xxl);
+  }  
+  .tagNameBody {
+    margin-left: var(--w-space-s);
+    color: var(--color-text-brand-tag);
+  }
+  .detailsColumn textarea {
+    all: unset;
+    font-size: var(--w-font-size-xxl);
+    font-weight: var(--w-font-weight-book);
+    padding: var(--w-space-none);
+    line-height: var(--w-line-height-normal);
+    height: var(--w-space-xxl);
+  }
 }

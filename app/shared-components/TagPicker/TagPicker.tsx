@@ -7,6 +7,7 @@ import { TagProps } from '../Tag/Tag';
 import { Modal, Button, TextInput, Label } from 'flowbite-react';
 import { useWixModules } from '@wix/sdk-react';
 import styles from './TagPicker.module.css';
+import { motion } from 'framer-motion';
 
 export type TagPickerProps = {
   isMulti?: boolean;
@@ -41,11 +42,6 @@ let defaultOptions = [
 // Custom ClearIndicator component for single-value selects
 const customClearIndicator = (props) => {
   return props.isMulti ? null : <components.ClearIndicator {...props} />;
-};
-
-// components
-const customComponents = {
-  ClearIndicator: customClearIndicator,
 };
 
 export const TagPicker: React.FC<TagPickerProps> = ({
@@ -194,16 +190,106 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
+  / * catalin */;
+
+  // Define the custom animated Input component
+  const AnimatedInput = (props) => {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Spread props to include the original Input component */}
+        <components.Input {...props} />
+      </motion.div>
+    );
+  };
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: 'none', // Removes the border
+      boxShadow: 'none', // Removes the focus outline
+      '&:hover': {
+        border: 'none', // Removes the border on hover as well
+      },
+      minHeight: '5 0px',
+      height: '50px',
+    }),
+
+    input: (provided, state) => ({
+      ...provided,
+      color: 'var(--primary-brand-color)',
+      fontSize: 'var(--w-font-size-tag)',
+      padding: '0px var(--w-space-s)',
+      backgroundColor: state.isFocused ? null : 'var(--primary-white)',
+      borderRadius: 'var(--p-border-radius-tag)',
+      margin: '8px 0px',
+      // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',
+      transition: 'all 100ms',
+      border: 'none', // Removes the border on the input field
+      outline: 'none', // Removes the input outline
+      boxShadow: '0px 0px 0px 3px var(--color-background-brand-tag)',
+      // height: 'var(--w-space-xxl)',
+    }),
+    menu: (provided) => ({
+      ...provided,
+      width: '300px', // Set the desired width for the menu
+      position: 'absolute', // Ensures the menu is positioned absolutely
+      zIndex: 9999, // Ensures the menu is on top
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      maxHeight: '200px', // Set a max height if needed
+      padding: '10px 6px',
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      // padding: '0px',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      margin: '0 4px', // Adjust margin if necessary
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      padding: '0px var(--w-space-s)', // Set a max height if needed
+    }),
+    // indicatorSeparator: state => ({
+    //   display: 'none',
+    // }),
+    // indicatorsContainer: (provided, state) => ({
+    //   ...provided,
+    //   height: '30px',
+    // }),
+  };
+
+  // REVIEW catalin
+
+  // components
+  const customComponents = {
+    ClearIndicator: customClearIndicator,
+  };
 
   return (
     <>
-      <div className="flex flex-col w-full ">
-        <Label htmlFor="tagPicker" className="mb-2">
-          {tagTypeLabel}
-        </Label>
+      <div
+        className={classNames(
+          styles.tagPickerWrapper,
+          'relative cursor-pointer'
+        )}
+      >
+        {tagTypeLabel && (
+          <Label htmlFor="tagPicker" className="mb-20">
+            {tagTypeLabel}
+          </Label>
+        )}
         <CreatableSelect
           classNamePrefix="react-select"
           unstyled
+          // menuIsOpen={true}
           components={customComponents}
           isClearable={true}
           isDisabled={isLoading}
@@ -214,28 +300,32 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           value={value}
           isMulti={isMulti}
           placeholder={placeholder || 'Select or create a tag'}
+          styles={customStyles}
           className={classNames('', className)}
           classNames={{
             control: (state) =>
-              state.isFocused ? 'text-blue-site ' : 'border-grey-300',
-            multiValue: () => 'tagPickerPill z-5 my-1',
-            singleValue: () => 'tagPickerPillSingle z-5',
-            menu: () =>
               classNames(
-                'text-black bg-slate-100 rounded-lg ',
-                styles.tagPickerMenu
+                state.isFocused ? styles.TagCursor : 'text-gray-site' // Proper ternary expression
               ),
+            multiValue: () => 'tagPickerPill z-5 my-1 cursor-pointer',
+            singleValue: () => 'tagPickerPillSingle z-5',
+            menu: () => classNames('', styles.tagPickerMenu),
             menuList: () => classNames('', styles.tagPickerMenuList),
             option: () => classNames('', styles.option),
+            valueContainer: () =>
+              classNames(
+                'text-black bg-slate-100 rounded-lg ',
+                styles.tagPickerValueContainer
+              ),
           }}
         />
         {showCreateForm && (
           <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-            <Modal.Header>Create New Tag</Modal.Header>
+            <Modal.Header>Add project title</Modal.Header>
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
-                  <Label htmlFor="tagName">Tag Name</Label>
+                  <Label htmlFor="tagName">Project Name</Label>
                   <TextInput
                     id="tagName"
                     value={tagName}
@@ -244,7 +334,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                   />
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="tagTagline">Tag Tagline</Label>
+                  <Label htmlFor="tagTagline">Project Tagline</Label>
                   <TextInput
                     id="tagTagline"
                     value={tagTagline}
