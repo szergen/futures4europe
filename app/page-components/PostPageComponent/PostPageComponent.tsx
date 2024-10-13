@@ -648,7 +648,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
                 (tag) =>
                   tag?.tagType === 'page type' && !tag?.name?.includes('info')
               )}
-              className="w-80"
+              className="relative"
               selectedValue={postData.pageType?.name}
               updatePostData={(value) =>
                 updatePostDataBasedOnKeyValue('pageType', value)
@@ -730,6 +730,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
           <TagListComponent
             tagList={postData.eventModerators}
             tagListTitle="Moderators"
+            placeholder='Add one or more person tags'
             isEditModeOn={isEditModeOn}
             tags={tags.filter((tag) => tag?.tagType === 'person')}
             selectedValues={postData.eventModerators?.map(
@@ -745,6 +746,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
           <TagListComponent
             tagList={postData.eventSpeakers}
             tagListTitle="Speakers"
+            placeholder='Add one or more person tags'
             isEditModeOn={isEditModeOn}
             tags={tags.filter((tag) => tag?.tagType === 'person')}
             selectedValues={postData.eventSpeakers?.map(
@@ -766,6 +768,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
             ? 'People'
             : 'Participants'
         }
+        placeholder='Add one or more person tags'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'person')}
         selectedValues={postData.people?.map((person: any) => person?.name)}
@@ -779,6 +782,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       <TagListComponent
         tagList={postData.foreSightMethods}
         tagListTitle="Foresight Methods"
+        placeholder='Add one or more foresight method tags relevant to your post'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={postData.foreSightMethods?.map(
@@ -794,6 +798,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       <TagListComponent
         tagList={postData.domains}
         tagListTitle="Domains"
+        placeholder='Add one or more domain tags relevant to your post'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={postData.domains?.map((domain: any) => domain?.name)}
@@ -807,6 +812,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       <TagListComponent
         tagList={postData.project}
         tagListTitle="Project"
+        placeholder='Add one or more project tags relevant to your post'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'project')}
         selectedValues={postData.project?.map((project: any) => project?.name)}
@@ -824,6 +830,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
             ? 'Organisation'
             : 'Host Organisations'
         }
+        placeholder='Add one or more organisation tags relevant to your post'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={postData.organisation?.map(

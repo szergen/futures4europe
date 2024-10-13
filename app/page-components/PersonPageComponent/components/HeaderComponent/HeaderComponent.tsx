@@ -287,7 +287,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             <TagPicker
               placeholder={'Select Country'}
               tags={tags?.filter((tag) => tag?.tagType === 'country')}
-              className="w-80"
+              className="relative"
               selectedValue={person?.countryTag?.name || undefined}
               updatePostData={(value) =>
                 updatePersonDataOnKeyValue('countryTag', value)

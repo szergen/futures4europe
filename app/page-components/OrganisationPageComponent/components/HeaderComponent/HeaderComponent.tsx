@@ -210,7 +210,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             tags={tags?.filter(
               (tag) => tag.tagType === 'organisation' && !tag?.tagPageLink
             )}
-            className="w-80"
+            className="relative"
             updatePostData={(value) =>
               updateOrganisationDataOnKeyValue('organisationTag', value)
             }
@@ -318,7 +318,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder={'Select Country'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
-            className="w-80"
+            className="relative"
             selectedValue={organisation?.countryTag?.name || undefined}
             updatePostData={(value) =>
               updateOrganisationDataOnKeyValue('countryTag', value)

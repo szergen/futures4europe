@@ -217,7 +217,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             tags={tags?.filter(
               (tag) => tag.tagType === 'project' && !tag?.tagPageLink
             )}
-            className="w-80"
+            className="relative"
             updatePostData={(value) =>
               updateProjectDataOnKeyValue('projectTag', value)
             }
@@ -303,7 +303,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder="Select Project Funded"
             tags={tags?.filter((tag) => tag.tagType === 'project type')}
-            className="w-80"
+            className="relative"
             selectedValue={project.projectFunded?.name || undefined}
             updatePostData={(value) =>
               updateProjectDataOnKeyValue('projectFunded', value)
@@ -326,7 +326,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder={'Select Country'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
-            className="w-80"
+            className="relative"
             selectedValue={project?.countryTag?.name || undefined}
             updatePostData={(value) =>
               updateProjectDataOnKeyValue('countryTag', value)

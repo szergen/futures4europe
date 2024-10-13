@@ -302,18 +302,18 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         {/* Post Country */}
         {
-          <div className="mt-1">
+          <div className="flex mt-1">
             {!isEditModeOn ? (
               post?.countryTag && <Tag {...post.countryTag} />
             ) : (
               <TagPicker
                 placeholder={
                   post?.pageType?.name !== 'event'
-                    ? 'Select Country'
-                    : 'Select Location'
+                    ? 'Add country tag relevant to your post'
+                    : 'Add country tag relevant to your post'
                 }
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}
-                className="w-80 mt-1"
+                className="mt-1"
                 selectedValue={post.countryTag?.name || undefined}
                 updatePostData={(value) =>
                   updatePostDataBasedOnKeyValue('countryTag', value)

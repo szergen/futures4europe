@@ -13,6 +13,7 @@ export type TagListComponentProps = {
   updatePostData?: (data: any) => void;
   tagType?: string;
   handleTagCreated?: () => void;
+  placeholder?: string; // New
 };
 
 const TagListComponent: React.FC<TagListComponentProps> = ({
@@ -24,6 +25,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
   updatePostData,
   tagType,
   handleTagCreated,
+  placeholder, // New
 }) => {
   if ((!tagList || tagList?.length === 0) && !isEditModeOn) {
     return null;
@@ -47,6 +49,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
           updatePostData={updatePostData}
           tagType={tagType}
           onTagCreated={handleTagCreated}
+          placeholder={placeholder} // New @alex
         />
       )}
     </section>

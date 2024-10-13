@@ -106,6 +106,13 @@
   .tagLink .tagNameBody{
     text-decoration: underline;
   }
+  .tagLink .tagNameBody:before {
+
+  }
+  .tagLink:hover .tagNameBody {
+    -webkit-text-stroke: 1px black;
+    text-decoration: none;
+  }  
   .tagThumbnail {
     margin-left: 0px;
   }

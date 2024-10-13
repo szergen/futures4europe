@@ -750,9 +750,14 @@ textarea {
   /* display: inline-flex; */
   align-items: center;
   background-color: var(--color-background-brand-tag);
-  border-radius: var(--p-border-radius-200);
-  height: calc(var(--w-space-xxxl));
+  /* border-radius: var(--p-border-radius-200); */
+  /* height: calc(var(--w-space-xxxl)); */
   margin-right: calc(var(--w-space-s));
+  padding: 0px var(--w-space-xs);
+
+  div {
+    margin:4px 0px;
+  }
 }
 
 .tagPickerPillSingle {
