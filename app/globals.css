@@ -36,6 +36,7 @@
     --w-font-size-sub-section-heading: calc(16 / var(--w-base-rem) * 1rem);
     --w-font-size-section-heading: calc(18 / var(--w-base-rem) * 1rem);
     --w-font-size-tag: calc(18 / var(--w-base-rem) * 1rem);
+    --w-font-size-post: calc(21 / var(--w-base-rem) * 1rem);
     --w-font-size-display-heading: calc(24 / var(--w-base-rem) * 1rem);
     --w-font-size-display-large: calc(32 / var(--w-base-rem) * 1rem);
     --w-font-size-xl: calc(40 / var(--w-base-rem) * 1rem);
@@ -775,42 +776,67 @@ textarea {
 
 /* important in editor rdw */
 /* Initially hide the toolbar */
-.editor-toolbar {
-  display: none !important;
-  transition: opacity 0.3s ease;
-  position: absolute;
+.editor-container {
+  display: table!important;
   width: 100%;
-  top: 0;
+}
+.editor-content {
+  border: 1px solid #fff;
+  padding: var(--w-space-s);
+  margin-bottom: var(--w-space-l);
+}
+.editor-toolbar {
+  visibility: hidden !important;
+  transition: opacity 0.3s ease;
+  width: 100%;
+  padding: 6px 5px 0;
+  border-radius: var(--p-border-radius-200)!important;
+  border: 1px solid #e3e3e3;
+  display: flex;
+  justify-content: flex-start;
+  background: #fdfdfd;
+  flex-wrap: wrap;
+  font-size: 15px;
+  margin-bottom: 5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  box-shadow: 0px 1px 13px 3px #0000000f;  
 }
 
 /* Show toolbar when editor-wrapper is hovered */
-.rdw-editor-wrapper:hover .editor-toolbar {
-  display: flex !important;
-  opacity: 1;
-  z-index: var(--w-z-index-dropdown);
-  top: -15px;
-  border-width: var(--p-border-width-0);
+.editor-container:hover .editor-toolbar {
+  visibility: visible !important;
+}
+.editor-container:hover button{
+  visibility: visible !important;
+}
+
+.editor-content.rdw-editor-main:hover {
+  border: 1px solid #a103ff38;
+  border-radius: var(--p-border-radius-200);
 }
 
 /* Customize editor container and toolbar */
-.rdw-editor-wrapper {
+.editor-wrapper {
   position: relative;
   padding: 0;
   transition: border-color 0.3s ease;
-}
-
-.rdw-editor-wrapper:hover {
+} 
+.editor-wrapper:hover {
   border-color: #888; /* Optional: Change border color on hover */
-}
-
-.editor-content {
-  min-height: auto;
-  padding: 10px;
-  margin-bottom: var(--w-space-xxl);
 }
 .rdw-start-aligned-block * {
   font-size: var(--w-font-size-section-heading);
 }
+.rdw-option-wrapper {
+  border-radius: var(--p-border-radius-150)!important;
+}
+.rdw-option-wrapper:hover {
+  filter: invert(1)!important;
+  box-shadow:none!important;
+}
+
 
 /* footer */
 
@@ -818,7 +844,7 @@ footer.footerLayout {
   background: #000;
 }
 
-/* TODO: Movo to header css, for some reasons it dose not register the cess there */
+/* TODO: Movo to header css, for some reasons it dose not register the css there */
 .avatarUserHeader.active{
   border-radius: var(--p-border-radius-full);
   box-shadow: 0 0 0px 3px var(--color-border-weak);

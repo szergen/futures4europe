@@ -1,9 +1,12 @@
+import './RTEComponent.module.css';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import { RxFontBold } from 'react-icons/rx';
+
 const Editor = dynamic(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
@@ -60,14 +63,33 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
     return true; // Return true to indicate that pasting is handled
   };
 
+  
   return (
+    <div>
+      {/* // TODO: Somehow register css in the .css file and overrideStyle, not working now. */}
+    <style jsx global>
+    {` 
+      .public-DraftStyleDefault-block {
+        font-size: var(----w-font-size-tag);
+      }
+      .editor-content .public-DraftEditorPlaceholder-hasFocus {
+        display: none !important;
+      }
+    `}
+  </style>    
     <Editor
+      placeholder='Type or paste the body of your post'
       editorState={editorState}
       onEditorStateChange={setEditorState}
       handlePastedText={handlePastedText}      
       toolbarClassName="editor-toolbar"
       wrapperClassName="editor-container"
       editorClassName="editor-content"
+      toolbarStyle={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+      }}
       toolbar={{
         options: [
           'inline',
@@ -84,12 +106,15 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
           // 'remove',
           // 'history',
         ],
-        // inline: { inDropdown: true },
+        inline: {
+          // bold: { icon: <RxFontBold /> , className: 'demo-option-custom' },
+        },
         // list: { inDropdown: true },
         // textAlign: { inDropdown: true },
         history: { inDropdown: true },
       }}
     />
+    </div>
   );
 };
 

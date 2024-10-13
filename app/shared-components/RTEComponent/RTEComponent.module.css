@@ -1,0 +1,7 @@
+.rdw-option-wrapper {
+    border-radius: var(--p-border-radius-150);
+}
+.rdw-option-wrapper:hover {
+    background-color: var(--color-background-strong);
+    box-shadow:none;
+}

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { uploadFileToWix } from '@app/wixUtils/client.utils';
-import { TextInput, Alert, FileInput, Label, Spinner } from 'flowbite-react';
+import { Textarea, Alert, FileInput, Label, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
@@ -63,10 +63,10 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
   };
 
   return (
-    <div className="flex w-full flex-wrap items-center justify-center">
+    <div className={classNames(style.imageEditor, 'flex w-full flex-wrap items-center justify-center relative pt-4')}>
       <Label
         htmlFor="dropzone-file"
-        className="relative flex h-12 w-full cursor-pointer items-center rounded-lg bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        className="relative flex h-12 pr-4 w-full max-w-[600px] cursor-pointer items-center rounded-lg bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
         {/* REVIEW: Removed the text to show like teh design // Dont delete, maybe it will change in the future */}
         {/* <div className="flex items-center border-r-2  border-dashed border-gray-300 dark:border-gray-600 mr-4 px-4">
@@ -82,7 +82,11 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
               strokeWidth={0}
               inline={false}
             />
-          Click to upload or drag and drop a file relevant to your post (pdf/doc, 5 MB max.)
+            <div 
+              className='pl-2 mb-0'
+            >
+              Click to upload or drag and drop a file relevant to your post (pdf/doc, 5 MB max.)
+            </div>
         </div>
 
         <FileInput
@@ -104,7 +108,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         </Alert>
       )}
       {imageURL && imageURL !== ' ' && (
-        <div className="relative">
+        <div className={classNames(style.imagePreview, 'relative w-full')}>
           <Image
             src={
               getImageUrlForMedia(imageURL)?.url ||
@@ -132,15 +136,17 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         </div>
       )}
 
-      <div className="mt-2">
-        <Label htmlFor="image-caption" value="Image Caption" />
-        <TextInput
+      {/* // TODO: Limit textarea caption to just 2 rows */}
+      <div className={classNames( style.imageContent, "mt-2 w-full")}>
+        <Label htmlFor="image-caption"/>
+        <Textarea
           id="image-caption"
-          type="text"
+          type="textarea"
           value={caption}
+          rows={1}
           onChange={handleCaptionChange}
           placeholder="Enter image caption"
-          className="mt-2 p-2 border rounded"
+          className="mt-2 p-2 resize-none bg-transparent w-1/2 m-auto"
         />
       </div>
 
