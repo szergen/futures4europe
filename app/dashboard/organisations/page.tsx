@@ -83,7 +83,7 @@ export default function DashboardProjects() {
   const handleCreateOrganisation = () => {
     router.push(`/organisation/New_Organisation`);
   };
-  
+
   const handleLogOut = async () => {
     logout();
     router.push('/login');
@@ -97,7 +97,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'Organisations', isActive: true }
+    { href: '/dashboard/projects', text: 'Organisations', isActive: true },
   ];
 
   return (
@@ -108,13 +108,14 @@ export default function DashboardProjects() {
         'flex flex-col'
       )}
     >
-
       <NavDashboard
         userInfoPage={true}
-        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-      />    
+      />
 
       <div
         className={classNames(
@@ -126,8 +127,9 @@ export default function DashboardProjects() {
           My organisations
         </h1>
         <p className="text-base text-[#606b85]">
-          This is your dashboard for managing all the organisations you're connected. You can showcase 
-          your foresight project and share insights. Access your organizations to manage members and much more.
+          This is your dashboard for managing all the organisations youre
+          connected. You can showcase your foresight project and share insights.
+          Access your organizations to manage members and much more.
         </p>
 
         <div
@@ -161,8 +163,9 @@ export default function DashboardProjects() {
                 Organisation
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your organisation. Include its afilliates,
-                projects, key members, and any significant outcomes or findings.
+                Add a detailed overview of your organisation. Include its
+                afilliates, projects, key members, and any significant outcomes
+                or findings.
               </p>
             </div>
 
@@ -184,7 +187,7 @@ export default function DashboardProjects() {
                   strokeWidth={1}
                 />
                 <span className="text-lg">Add organisation</span>
-              </Button>            
+              </Button>
             </div>
           </div>
         </div>
@@ -217,7 +220,8 @@ export default function DashboardProjects() {
                     ownedInfoPages
                       .filter(
                         (infoPage) =>
-                          infoPage?.data?.pageTypes[0]?.name === 'organisation info'
+                          infoPage?.data?.pageTypes[0]?.name ===
+                          'organisation info'
                       )
                       .map((infoPage, index) => (
                         <div

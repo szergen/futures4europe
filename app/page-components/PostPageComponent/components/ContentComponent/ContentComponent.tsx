@@ -15,7 +15,10 @@ export type ContentComponentProps = {
   contentImages: Array<{ url: string; caption: string }>;
   isEditModeOn: boolean;
   updatePostDataContent: (value: string, index: number) => void;
-  updatePostDataContentImages: (value: { url: string; caption: string }, index: number) => void;
+  updatePostDataContentImages: (
+    value: { url: string; caption: string },
+    index: number
+  ) => void;
 };
 
 const ContentComponent: React.FC<ContentComponentProps> = ({
@@ -103,7 +106,10 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     updatePostDataContent(value, index);
   };
 
-  const handleUpdatePostDataContentImages = (value: { url: string; caption: string }, index: number) => {
+  const handleUpdatePostDataContentImages = (
+    value: { url: string; caption: string },
+    index: number
+  ) => {
     const newContentImages = [...contentImages];
     newContentImages[index] = value;
     setContentImages(newContentImages);
@@ -125,7 +131,10 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
         ? initialContentText.map(
             (item, index) =>
               item && (
-                <section key={`contentItem-${index}`} className={classNames(style.editorMode, 'w-full')}>
+                <section
+                  key={`contentItem-${index}`}
+                  className={classNames(style.editorMode, 'w-full')}
+                >
                   {initialContentText?.[index] && (
                     <>
                       {!isEditModeOn ? (
@@ -146,19 +155,19 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           <div className="flex flex-col">
                             {/* Delete RTE */}
                             {!initialContentText?.[index + 1] && (
-                              <button 
+                              <button
                                 onClick={handleRemoveContent}
-                              className={classNames(style.buttonRemove, '')}
+                                className={classNames(style.buttonRemove, '')}
                               >
                                 <SpriteSvg.EditCloseIcon
-                                    className="text-site-black mt-1"
-                                    sizeW={24}
-                                    sizeH={24}
-                                    viewBox={'0 0 32 32'}
-                                    fill={'currentColor'}
-                                    strokeWidth={0}
-                                    inline={false}
-                                  />
+                                  className="text-site-black mt-1"
+                                  sizeW={24}
+                                  sizeH={24}
+                                  viewBox={'0 0 32 32'}
+                                  fill={'currentColor'}
+                                  strokeWidth={0}
+                                  inline={false}
+                                />
                               </button>
                             )}
                             {!initialContentText?.[index + 1] &&
@@ -182,23 +191,33 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                     <>
                       {!isEditModeOn ? (
                         initialContentImages?.[index] && (
-                        <figure>
-                          <Image
-                            src={getImageUrlForMedia(contentImages[index].url)?.url || getImageUrlForMedia(contentImages[index].url) || ''}
-                            width={600}
-                            height={400}
-                            className={classNames('rounded-md block mx-auto')}
-                            alt={contentImages[index].caption || "Post Image"}
-                          />
-                          {contentImages[index].caption && (
-                            <figcaption className="text-center mt-2 text-sm text-gray-600">
-                              {contentImages[index].caption}
-                            </figcaption>
-                          )}
-                        </figure>
+                          <figure>
+                            <Image
+                              src={
+                                getImageUrlForMedia(contentImages[index].url)
+                                  ?.url ||
+                                getImageUrlForMedia(contentImages[index].url) ||
+                                ''
+                              }
+                              width={600}
+                              height={400}
+                              className={classNames('rounded-md block mx-auto')}
+                              alt={contentImages[index].caption || 'Post Image'}
+                            />
+                            {contentImages[index].caption && (
+                              <figcaption className="text-center mt-2 text-sm text-gray-600">
+                                {contentImages[index].caption}
+                              </figcaption>
+                            )}
+                          </figure>
                         )
                       ) : (
-                        <div className={classNames(style.ContentImageWrapper ,'relative')}>
+                        <div
+                          className={classNames(
+                            style.ContentImageWrapper,
+                            'relative'
+                          )}
+                        >
                           <ContentImageFileUploader
                             currentImage={contentImages[index].url}
                             currentCaption={contentImages[index].caption}
@@ -209,19 +228,19 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           <div className="flex flex-col">
                             {/* Delete FIle Uploader */}
                             {!initialContentImages?.[index + 1] && (
-                              <button 
+                              <button
                                 onClick={handleRemoveImage}
                                 className={classNames(style.buttonRemove, '')}
                               >
                                 <SpriteSvg.EditCloseIcon
-                                    className="text-site-black mt-1"
-                                    sizeW={24}
-                                    sizeH={24}
-                                    viewBox={'0 0 32 32'}
-                                    fill={'currentColor'}
-                                    strokeWidth={0}
-                                    inline={false}
-                                  />
+                                  className="text-site-black mt-1"
+                                  sizeW={24}
+                                  sizeH={24}
+                                  viewBox={'0 0 32 32'}
+                                  fill={'currentColor'}
+                                  strokeWidth={0}
+                                  inline={false}
+                                />
                               </button>
                             )}
                             {!contentText?.[index + 1] &&
@@ -233,7 +252,10 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                 // initialContentText?.[index - 1] === ' ' &&
                                 <button
                                   onClick={() => handleAddContent()}
-                                  className={classNames(style.buttonAdd, 'px-2 py-2 rounded-md text-white bg-blue-600 w-40 mt-4 px-2 py-2 rounded-md text-white bg-blue-600 w-40 mt-4')}
+                                  className={classNames(
+                                    style.buttonAdd,
+                                    'px-2 py-2 rounded-md text-white bg-blue-600 w-40 mt-4 px-2 py-2 rounded-md text-white bg-blue-600 w-40 mt-4'
+                                  )}
                                 >
                                   Add Content
                                 </button>
@@ -248,10 +270,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
           )
         : ''}
       {isEditModeOn && definedItemsCount < 10 && !initialContentText[0] && (
-        <button
-          onClick={() => handleAddContent()}
-          className=""
-        >
+        <button onClick={() => handleAddContent()} className="">
           Add Content
         </button>
       )}

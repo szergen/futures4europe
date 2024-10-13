@@ -44,7 +44,6 @@ const customClearIndicator = (props) => {
   return props.isMulti ? null : <components.ClearIndicator {...props} />;
 };
 
-
 export const TagPicker: React.FC<TagPickerProps> = ({
   isMulti,
   className,
@@ -191,99 +190,103 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-/ * catalin */
+  / * catalin */;
 
-// Define the custom animated Input component
-const AnimatedInput = (props) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Spread props to include the original Input component */}
-      <components.Input {...props} />
-    </motion.div>
-  );
-};
+  // Define the custom animated Input component
+  const AnimatedInput = (props) => {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Spread props to include the original Input component */}
+        <components.Input {...props} />
+      </motion.div>
+    );
+  };
 
-const customStyles = {
-  control: (provided, state) => ({
-    ...provided,
-    border: 'none', // Removes the border
-    boxShadow: 'none', // Removes the focus outline
-    '&:hover': {
-      border: 'none', // Removes the border on hover as well
-    },
-    minHeight: '5 0px',
-    height: '50px',
-  }),
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: 'none', // Removes the border
+      boxShadow: 'none', // Removes the focus outline
+      '&:hover': {
+        border: 'none', // Removes the border on hover as well
+      },
+      minHeight: '5 0px',
+      height: '50px',
+    }),
 
-  
-  input: (provided, state) => ({
-    ...provided,
-    color: 'var(--primary-brand-color)',
-    fontSize: 'var(--w-font-size-tag)',
-    padding: '0px var(--w-space-s)',
-    backgroundColor: state.isFocused ? null : 'var(--primary-white)',
-    borderRadius: 'var(--p-border-radius-tag)',
-    margin: '8px 0px',
-    // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',
-    transition: 'all 100ms',      
-    border: 'none', // Removes the border on the input field
-    outline: 'none', // Removes the input outline
-    boxShadow: '0px 0px 0px 3px var(--color-background-brand-tag)',
-    // height: 'var(--w-space-xxl)',
-  }),
-  menu: (provided) => ({
-    ...provided,
-    width: '300px', // Set the desired width for the menu
-    position: 'absolute', // Ensures the menu is positioned absolutely
-    zIndex: 9999, // Ensures the menu is on top
-  }),  
-  menuList: (provided) => ({
-    ...provided,
-    maxHeight: '200px', // Set a max height if needed
-    padding: '10px 6px',
-  }),  
-  valueContainer: (provided) => ({
-    ...provided,
-    // padding: '0px',
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    margin: '0 4px', // Adjust margin if necessary
-  }),
-  placeholder: (provided) => ({
-    ...provided,
-    padding: '0px var(--w-space-s)', // Set a max height if needed
-  }),
-  // indicatorSeparator: state => ({
-  //   display: 'none',
-  // }),  
-  // indicatorsContainer: (provided, state) => ({
-  //   ...provided,
-  //   height: '30px',
-  // }),  
-};
+    input: (provided, state) => ({
+      ...provided,
+      color: 'var(--primary-brand-color)',
+      fontSize: 'var(--w-font-size-tag)',
+      padding: '0px var(--w-space-s)',
+      backgroundColor: state.isFocused ? null : 'var(--primary-white)',
+      borderRadius: 'var(--p-border-radius-tag)',
+      margin: '8px 0px',
+      // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',
+      transition: 'all 100ms',
+      border: 'none', // Removes the border on the input field
+      outline: 'none', // Removes the input outline
+      boxShadow: '0px 0px 0px 3px var(--color-background-brand-tag)',
+      // height: 'var(--w-space-xxl)',
+    }),
+    menu: (provided) => ({
+      ...provided,
+      width: '300px', // Set the desired width for the menu
+      position: 'absolute', // Ensures the menu is positioned absolutely
+      zIndex: 9999, // Ensures the menu is on top
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      maxHeight: '200px', // Set a max height if needed
+      padding: '10px 6px',
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      // padding: '0px',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      margin: '0 4px', // Adjust margin if necessary
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      padding: '0px var(--w-space-s)', // Set a max height if needed
+    }),
+    // indicatorSeparator: state => ({
+    //   display: 'none',
+    // }),
+    // indicatorsContainer: (provided, state) => ({
+    //   ...provided,
+    //   height: '30px',
+    // }),
+  };
 
-// REVIEW catalin 
+  // REVIEW catalin
 
-// components
-const customComponents = {
-  ClearIndicator: customClearIndicator,
-};
+  // components
+  const customComponents = {
+    ClearIndicator: customClearIndicator,
+  };
 
   return (
     <>
-      <div className={classNames(styles.tagPickerWrapper, 'relative cursor-pointer')}>
-      {tagTypeLabel && (
-        <Label htmlFor="tagPicker" className="mb-20">
-          {tagTypeLabel}
-        </Label>
-      )}
-        <CreatableSelect  
+      <div
+        className={classNames(
+          styles.tagPickerWrapper,
+          'relative cursor-pointer'
+        )}
+      >
+        {tagTypeLabel && (
+          <Label htmlFor="tagPicker" className="mb-20">
+            {tagTypeLabel}
+          </Label>
+        )}
+        <CreatableSelect
           classNamePrefix="react-select"
           unstyled
           // menuIsOpen={true}
@@ -302,15 +305,11 @@ const customComponents = {
           classNames={{
             control: (state) =>
               classNames(
-                state.isFocused ? styles.TagCursor : 'text-gray-site', // Proper ternary expression
+                state.isFocused ? styles.TagCursor : 'text-gray-site' // Proper ternary expression
               ),
             multiValue: () => 'tagPickerPill z-5 my-1 cursor-pointer',
             singleValue: () => 'tagPickerPillSingle z-5',
-            menu: () =>
-              classNames(
-                '',
-                styles.tagPickerMenu
-              ),
+            menu: () => classNames('', styles.tagPickerMenu),
             menuList: () => classNames('', styles.tagPickerMenuList),
             option: () => classNames('', styles.option),
             valueContainer: () =>

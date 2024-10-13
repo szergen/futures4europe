@@ -118,14 +118,14 @@ export default function Dashboard() {
     //Loading Spinner
     return <LoadingSpinner />;
   }
-  
+
   const handleCreateOrNavigateToPersonInfoPage = () => {
     if (userInfoPage) {
       return `${userInfoPage}`;
     }
     return `/person/New_Info_Page`;
   };
-  
+
   const handleLogOut = async () => {
     logout();
     router.push('/login');
@@ -135,29 +135,33 @@ export default function Dashboard() {
     { href: '/dashboard', text: 'Profile information', isActive: true },
     { href: '/dashboard/security', text: 'Security' },
     { href: '/dashboard/change-password', text: 'Password' },
-  ];  
+  ];
 
   return (
     <div className={classNames(style.UserDashboard, 'flex flex-col')}>
-          <NavDashboard
-            userInfoPage={true}
-            handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
-            handleLogOut={handleLogOut}
-            SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-          />
+      <NavDashboard
+        userInfoPage={true}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
+        handleLogOut={handleLogOut}
+        SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+      />
 
-    <div
-      className={classNames(
-        style.UserDashboardWrapper,
-        'flex flex-col relative m-auto mt-10 mb-6'
-      )}
-    >
-        
-        <Typography tag='h1' className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+      <div
+        className={classNames(
+          style.UserDashboardWrapper,
+          'flex flex-col relative m-auto mt-10 mb-6'
+        )}
+      >
+        <Typography
+          tag="h1"
+          className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}
+        >
           Your profile information
         </Typography>
 
-        <Typography tag='p' className="text-base text-[#606b85]">
+        <Typography tag="p" className="text-base text-[#606b85]">
           Info about you and your preferences across futures4europe services.
           Manage all your personal information and options. You can make some of
           this information, like your contact details, visible to others so they
@@ -173,7 +177,7 @@ export default function Dashboard() {
             'p-8',
             'bg-alertLight-site'
           )}
-          >
+        >
           <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
             <SpriteSvg.AccountAlertIcon
               className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
@@ -186,19 +190,27 @@ export default function Dashboard() {
             />
 
             <div className="flex flex-col justify-between">
-              <Typography tag="h1" className={classNames(
-                style.headingDashboardh1, 
-                'mt-0 mb-0 flex flex-row items-center')}>
+              <Typography
+                tag="h1"
+                className={classNames(
+                  style.headingDashboardh1,
+                  'mt-0 mb-0 flex flex-row items-center'
+                )}
+              >
                 Person Info
-              </Typography>     
-
-              <Typography tag="p" className={classNames(
-                style.boxTextDashboard, 
-                'text-black-site mb-8')}>
-                Your profile dose not have a Person Info page or you did not claim it. 
-                Create now a person page to be visible to all members of futures4europe platform.
               </Typography>
 
+              <Typography
+                tag="p"
+                className={classNames(
+                  style.boxTextDashboard,
+                  'text-black-site mb-8'
+                )}
+              >
+                Your profile dose not have a Person Info page or you did not
+                claim it. Create now a person page to be visible to all members
+                of futures4europe platform.
+              </Typography>
             </div>
 
             <div className={classNames(style.listDashboard, 'block')}>
@@ -219,7 +231,11 @@ export default function Dashboard() {
                     strokeWidth={1}
                   />
                   {/* // TODO: Must show claim Person Info Page if it allready exists */}
-                  <span className="text-lg">{userInfoPage ? 'View Info Page' : 'Create Person Info Page'}</span>
+                  <span className="text-lg">
+                    {userInfoPage
+                      ? 'View Info Page'
+                      : 'Create Person Info Page'}
+                  </span>
                 </Button>
               </Link>
             </div>
@@ -235,14 +251,14 @@ export default function Dashboard() {
                   'mr-4 flex flex-row items-center'
                 )}
               >
-              <SpriteSvg.AccountVerifyIcon
+                <SpriteSvg.AccountVerifyIcon
                   className="mb-0"
                   sizeW={38}
                   sizeH={38}
                   fill={'currentColor'}
                   strokeWidth={0}
                   inline={true}
-              />                
+                />
               </h3>
 
               <div className="flex items-center bg-gradient-to-br from-emerald-100 to-emerald-200 border-small border-white/50 shadow-black text-[#2F9461] py-2 px-4 rounded-full h-34 font-medium text-base">

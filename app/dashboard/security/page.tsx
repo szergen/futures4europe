@@ -140,13 +140,15 @@ export default function DashboardSecurity() {
     { href: '/dashboard', text: 'Profile information', isActive: true },
     { href: '/dashboard/security', text: 'Security' },
     { href: '/dashboard/change-password', text: 'Password' },
-  ];  
-  
+  ];
+
   return (
     <div className={classNames(style.UserDashboard, 'flex flex-col')}>
       <NavDashboard
         userInfoPage={true}
-        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
       />

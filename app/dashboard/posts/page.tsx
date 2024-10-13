@@ -127,8 +127,8 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/posts', text: 'Posts', isActive: true }
-  ];  
+    { href: '/dashboard/posts', text: 'Posts', isActive: true },
+  ];
 
   return (
     <div
@@ -138,10 +138,11 @@ export default function DashboardProjects() {
         'flex flex-col'
       )}
     >
-
       <NavDashboard
         userInfoPage={true}
-        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
       />
@@ -151,7 +152,7 @@ export default function DashboardProjects() {
           style.UserDashboardWrapper,
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
-        >
+      >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My posts
         </h1>
@@ -170,7 +171,7 @@ export default function DashboardProjects() {
             'p-8',
             'bg-purple-site'
           )}
-          >
+        >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
             <SpriteSvg.AccountPostIcon
               className="text-color-white mb-6"
@@ -195,7 +196,7 @@ export default function DashboardProjects() {
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your post. Include text content or
                 image. Add any significant outcomes or findings in the foresight
-                community. 
+                community.
               </p>
             </div>
 
@@ -255,7 +256,7 @@ export default function DashboardProjects() {
                   strokeWidth={1}
                 />
                 <span className="text-lg">Add foresight methond</span>
-              </Button>              
+              </Button>
             </div>
           </div>
         </div>
@@ -299,12 +300,14 @@ export default function DashboardProjects() {
                               postPage?.data?.pageTypes[0]?.popularity
                             }
                           ></Tag>
-                          <Badge className="basis-auto mt-2 capitalize rounded-full" color="gray">
+                          <Badge
+                            className="basis-auto mt-2 capitalize rounded-full"
+                            color="gray"
+                          >
                             {postPage?.data?.pageTypes[0]?.name}
                           </Badge>
                         </div>
                         <div className={'flex flex-row'}>
-                         
                           <Link href={`/post/${postPage.data.slug}`}>
                             <Button
                               size={'sm'}

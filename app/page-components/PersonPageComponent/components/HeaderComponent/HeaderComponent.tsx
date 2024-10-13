@@ -54,7 +54,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (!tempName) {
       return 'Title is required';
     }
-  
+
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
@@ -64,7 +64,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    
+
     if (Array.isArray(existingPostPagesTitles) && defaultPostTitle) {
       const isTempTitleExisting = existingPostPagesTitles.some(
         (postPageTitle) =>
@@ -74,7 +74,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         return 'Title already exists';
       }
     }
-    
+
     return '';
   };
 
@@ -192,14 +192,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       <div className={style.detailsColumn}>
         {/* Person Info Name */}
         {!isEditModeOn ? (
-          <Typography tag="h1" 
-            className="text-gray-800"
-            >
+          <Typography tag="h1" className="text-gray-800">
             {person?.personTag?.name}
             {/* Person Popularity */}
             <span
               data-after={person?.personTag?.popularity || ''}
-              className={classNames(style.personTagPopularity, "after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400")}
+              className={classNames(
+                style.personTagPopularity,
+                'after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400'
+              )}
             ></span>
           </Typography>
         ) : (

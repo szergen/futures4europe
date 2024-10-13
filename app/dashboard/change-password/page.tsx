@@ -149,17 +149,19 @@ export default function DashboardChangePassword() {
     { href: '/dashboard', text: 'Profile information', isActive: true },
     { href: '/dashboard/security', text: 'Security' },
     { href: '/dashboard/change-password', text: 'Password' },
-  ];  
+  ];
 
   return (
     <div className={classNames(style.UserDashboard, 'flex flex-col')}>
-          <NavDashboard
-            userInfoPage={true}
-            handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
-            handleLogOut={handleLogOut}
-            SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-          />
-      
+      <NavDashboard
+        userInfoPage={true}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
+        handleLogOut={handleLogOut}
+        SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+      />
+
       <div
         className={classNames(
           style.UserDashboardWrapper,
@@ -191,7 +193,7 @@ export default function DashboardChangePassword() {
                   fill={'currentColor'}
                   strokeWidth={0}
                   inline={true}
-                />             
+                />
               </h3>
             </div>
 

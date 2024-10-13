@@ -14,7 +14,6 @@ import { Avatar, Dropdown } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { HiUserCircle, HiPlusSm } from 'react-icons/hi';
 
-
 const Header = () => {
   const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -37,7 +36,7 @@ const Header = () => {
   //
   const handleCreateProject = async () => {
     router.push(`/project/New_Project`);
-  };  
+  };
 
   const handleCreatePost = async () => {
     router.push(`/post/New_Post`);
@@ -45,7 +44,7 @@ const Header = () => {
 
   const handleCreateOrganisation = async () => {
     router.push(`/organisation/New_Organisation`);
-  };  
+  };
 
   // SVGs Icons
   // TODO: move to global SVG import
@@ -146,12 +145,30 @@ const Header = () => {
           <Dropdown.Item icon={HiUserCircle}>
             <Link href="/dashboard"> Dashboard </Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreateProject}> Add Project</Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}> Add Project result</Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreateOrganisation}> Add Organisation</Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}> Add Article</Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}> Add Event</Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}> Add Foresight method</Dropdown.Item>
+          <Dropdown.Item icon={HiPlusSm} onClick={handleCreateProject}>
+            {' '}
+            Add Project
+          </Dropdown.Item>
+          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
+            {' '}
+            Add Project result
+          </Dropdown.Item>
+          <Dropdown.Item icon={HiPlusSm} onClick={handleCreateOrganisation}>
+            {' '}
+            Add Organisation
+          </Dropdown.Item>
+          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
+            {' '}
+            Add Article
+          </Dropdown.Item>
+          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
+            {' '}
+            Add Event
+          </Dropdown.Item>
+          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
+            {' '}
+            Add Foresight method
+          </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
             Sign out

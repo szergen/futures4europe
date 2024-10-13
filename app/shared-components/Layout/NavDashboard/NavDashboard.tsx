@@ -24,15 +24,15 @@ interface NavItemProps {
   onClick?: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ 
-  href, 
-  icon: Icon, 
-  text, 
-  fill = 'currentColor', 
-  strokeWidth = 0, 
+const NavItem: React.FC<NavItemProps> = ({
+  href,
+  icon: Icon,
+  text,
+  fill = 'currentColor',
+  strokeWidth = 0,
   className = '',
   active,
-  onClick 
+  onClick,
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -41,8 +41,22 @@ const NavItem: React.FC<NavItemProps> = ({
   };
 
   return (
-    <Link href={href} className={classNames(className, style.navItem, 'text-purple-site flex justify-center items-center', active && style.active)}>
-      <button className={classNames(style.navButton, 'font-semibold flex flex-col justify-center items-center')} onClick={handleClick} >
+    <Link
+      href={href}
+      className={classNames(
+        className,
+        style.navItem,
+        'text-purple-site flex justify-center items-center',
+        active && style.active
+      )}
+    >
+      <button
+        className={classNames(
+          style.navButton,
+          'font-semibold flex flex-col justify-center items-center'
+        )}
+        onClick={handleClick}
+      >
         <Icon
           className="mb-2"
           size={38}
@@ -61,7 +75,7 @@ interface UserDashboardProps {
   handleCreateOrNavigateToPersonInfoPage: () => string;
   handleLogOut: () => void;
   customStyles?: {
-    wrapper?: string; 
+    wrapper?: string;
     navItem?: string;
     // active?: string;
   };
@@ -73,27 +87,56 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
   handleCreateOrNavigateToPersonInfoPage,
   handleLogOut,
   customStyles,
-  SubNav
+  SubNav,
 }) => {
   const [activeNavItem, setActiveNavItem] = useState('');
 
   return (
     <>
-      <div className={classNames(style.UserDashboardWrapper, style.UserDashboardNavItem, customStyles?.wrapper, 'flex m-auto justify-center relative mb-4')}> 
-        <NavItem href="/dashboard/posts" icon={SpriteSvg.AccountPostIcon} text="Posts" onClick={() => setActiveNavItem('/dashboard/posts')} active={activeNavItem === '/dashboard/posts'}/>
-        <NavItem href="/dashboard/projects" icon={SpriteSvg.AccountProjectIcon} text="Projects" strokeWidth={2.2} fill={'none'} onClick={() => setActiveNavItem('/dashboard/projects')} active={activeNavItem === '/dashboard/projects'} />
-        <NavItem href="/dashboard/organisations" icon={SpriteSvg.AccountOrgIcon} text="Organisation" />
-        <NavItem 
-          href={handleCreateOrNavigateToPersonInfoPage()} 
-          icon={SpriteSvg.AccountPersonIcon} 
-          text={userInfoPage ? 'View Info Page' : 'Person Page'} 
+      <div
+        className={classNames(
+          style.UserDashboardWrapper,
+          style.UserDashboardNavItem,
+          customStyles?.wrapper,
+          'flex m-auto justify-center relative mb-4'
+        )}
+      >
+        <NavItem
+          href="/dashboard/posts"
+          icon={SpriteSvg.AccountPostIcon}
+          text="Posts"
+          onClick={() => setActiveNavItem('/dashboard/posts')}
+          active={activeNavItem === '/dashboard/posts'}
         />
-        <NavItem href="/dashboard" icon={SpriteSvg.AccountSettingsIcon} text="Profile settings" />
-        <NavItem 
+        <NavItem
+          href="/dashboard/projects"
+          icon={SpriteSvg.AccountProjectIcon}
+          text="Projects"
+          strokeWidth={2.2}
+          fill={'none'}
+          onClick={() => setActiveNavItem('/dashboard/projects')}
+          active={activeNavItem === '/dashboard/projects'}
+        />
+        <NavItem
+          href="/dashboard/organisations"
+          icon={SpriteSvg.AccountOrgIcon}
+          text="Organisation"
+        />
+        <NavItem
+          href={handleCreateOrNavigateToPersonInfoPage()}
+          icon={SpriteSvg.AccountPersonIcon}
+          text={userInfoPage ? 'View Info Page' : 'Person Page'}
+        />
+        <NavItem
+          href="/dashboard"
+          icon={SpriteSvg.AccountSettingsIcon}
+          text="Profile settings"
+        />
+        <NavItem
           href="#" // Or logout link if different
-          icon={SpriteSvg.AccountLogoutIcon} 
-          text="Log Out" 
-          onClick={handleLogOut}  
+          icon={SpriteSvg.AccountLogoutIcon}
+          text="Log Out"
+          onClick={handleLogOut}
           fill="none"
           strokeWidth={2}
         />

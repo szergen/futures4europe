@@ -51,11 +51,17 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
       setIsImageLoading(false);
       console.log('uploadedFileResponse', uploadedFileResponse);
       setImageURL(uploadedFileResponse?.url);
-      updatePostData && updatePostData({ url: uploadedFileResponse?.url, caption: imageCaption });
+      updatePostData &&
+        updatePostData({
+          url: uploadedFileResponse?.url,
+          caption: imageCaption,
+        });
     }
   };
 
-  {/* REVIEW: Check new caption handleCaptionChange function to update the caption state and call */}
+  {
+    /* REVIEW: Check new caption handleCaptionChange function to update the caption state and call */
+  }
   const handleCaptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCaption = event.target.value;
     setCaption(newCaption);
@@ -63,7 +69,12 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
   };
 
   return (
-    <div className={classNames(style.imageEditor, 'flex w-full flex-wrap items-center justify-center relative pt-4')}>
+    <div
+      className={classNames(
+        style.imageEditor,
+        'flex w-full flex-wrap items-center justify-center relative pt-4'
+      )}
+    >
       <Label
         htmlFor="dropzone-file"
         className="relative flex h-12 pr-4 w-full max-w-[600px] cursor-pointer items-center rounded-lg bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -74,19 +85,18 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         </div> */}
         <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center ml-4">
           <SpriteSvg.EditImageIcon
-              className="text-site-black mt-1"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'0 0 32 32'}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <div 
-              className='pl-2 mb-0'
-            >
-              Click to upload or drag and drop a file relevant to your post (pdf/doc, 5 MB max.)
-            </div>
+            className="text-site-black mt-1"
+            sizeW={24}
+            sizeH={24}
+            viewBox={'0 0 32 32'}
+            fill={'currentColor'}
+            strokeWidth={0}
+            inline={false}
+          />
+          <div className="pl-2 mb-0">
+            Click to upload or drag and drop a file relevant to your post
+            (pdf/doc, 5 MB max.)
+          </div>
         </div>
 
         <FileInput
@@ -137,8 +147,8 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
       )}
 
       {/* // TODO: Limit textarea caption to just 2 rows */}
-      <div className={classNames( style.imageContent, "mt-2 w-full")}>
-        <Label htmlFor="image-caption"/>
+      <div className={classNames(style.imageContent, 'mt-2 w-full')}>
+        <Label htmlFor="image-caption" />
         <Textarea
           id="image-caption"
           type="textarea"

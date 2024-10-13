@@ -137,7 +137,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'Projects', isActive: true }
+    { href: '/dashboard/projects', text: 'Projects', isActive: true },
   ];
 
   return (
@@ -147,14 +147,15 @@ export default function DashboardProjects() {
         style.UserDashboardProjects,
         'flex flex-col'
       )}
-     >
-
+    >
       <NavDashboard
         userInfoPage={true}
-        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-      />      
+      />
 
       <div
         className={classNames(
@@ -244,9 +245,9 @@ export default function DashboardProjects() {
                   viewBox={'0 -1 14 14'}
                   strokeWidth={1}
                 />
-                
+
                 <span className="text-lg">Add project result</span>
-              </Button>              
+              </Button>
             </div>
           </div>
         </div>

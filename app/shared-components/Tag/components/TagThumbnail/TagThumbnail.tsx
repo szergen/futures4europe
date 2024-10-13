@@ -17,7 +17,7 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
   tagCategory,
 }) => {
   return (
-    <div className={classNames(style.tagThumbnail, "inline")}>
+    <div className={classNames(style.tagThumbnail, 'inline')}>
       {!picture && tagCategory === TagCategories.person ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
