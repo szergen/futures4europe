@@ -20,6 +20,7 @@ export type TagPickerProps = {
   onTagCreated?: () => void;
   tagTypeLabel?: string;
   placeholder?: string;
+  extraFilterTags?: (tags: TagProps[], firstTag: string) => TagProps[];
 };
 
 interface Option {
@@ -55,6 +56,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   onTagCreated,
   tagTypeLabel,
   placeholder,
+  extraFilterTags,
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -68,6 +70,17 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     tags?.map((tag) => createOption(tag.name)) || defaultOptions;
   const [options, setOptions] = useState(tagOptions);
   const [value, setValue] = useState<Option | Array<Option> | null>();
+  // #endregion
+
+  // #region extra filtering logic
+  useEffect(() => {
+    if (extraFilterTags) {
+      console.log('filteredTags 1st value', selectedValues);
+      const filteredTags = extraFilterTags(tags, selectedValues[0]);
+      console.log('filteredTags', filteredTags);
+      setOptions(filteredTags?.map((tag) => createOption(tag.name)));
+    }
+  }, [tags]);
   // #endregion
 
   // #region Wix upload logic

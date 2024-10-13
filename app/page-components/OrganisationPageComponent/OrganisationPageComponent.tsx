@@ -25,6 +25,8 @@ import {
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
+import { Modal } from 'flowbite-react';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 
 function OrganisationPageComponent({
   pageTitle,
@@ -42,6 +44,7 @@ function OrganisationPageComponent({
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
+    infoPages,
   } = useAuth();
 
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
@@ -72,7 +75,8 @@ function OrganisationPageComponent({
     organisationTag: organisation?.data?.organisation[0], //done
     organisationEstablishedDate:
       organisation?.data?.organisationEstablishedDate, //done
-    activity: organisation?.data?.activity, //not needed
+    // activity: organisation?.data?.activity, //not needed
+    organisationType: organisation?.data?.organisationType, //done
     countryTag: organisation?.data?.countryTag[0], //done
     description: organisation?.data?.description, //done
     methods: organisation?.data?.methods, //done
@@ -218,7 +222,9 @@ function OrganisationPageComponent({
     ) {
       const updatedProjects = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.projects?.map((proj: any) => proj._id),
+        organisationData.projects
+          ?.map((proj: any) => proj._id)
+          .filter((id: any) => id),
         'organisationProject',
         organisationData._id
       );
@@ -234,11 +240,29 @@ function OrganisationPageComponent({
     ) {
       const updatedPeople = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.people?.map((person: any) => person._id),
+        organisationData.people
+          ?.map((person: any) => person._id)
+          .filter((id: any) => id),
         'organisationPeople',
         organisationData._id
       );
       console.log('updated organisationPeople', updatedPeople);
+    }
+
+    // Update Organisation Type
+    if (
+      !deepEqual(
+        organisationData.organisationType,
+        defaultOrganisationData.organisationType
+      )
+    ) {
+      const updatedOrganisationType = await replaceDataItemReferences(
+        'InfoPages',
+        organisationData?.organisationType?.map((type: any) => type._id),
+        'organisationType',
+        organisationData._id
+      );
+      console.log('updatedOrganisationType', updatedOrganisationType);
     }
 
     // Update Country Tag
@@ -426,6 +450,18 @@ function OrganisationPageComponent({
     }
     // #endregion
 
+    // #region Update Organisation Type
+    if (organisationData.organisationType?._id && newOrganisationInfoId) {
+      const updatedOrganisationType = await replaceDataItemReferences(
+        'InfoPages',
+        [organisationData.organisationType?._id],
+        'organisationType',
+        newOrganisationInfoId
+      );
+      console.log('updatedOrganisationType', updatedOrganisationType);
+    }
+    // #endregion
+
     // #region Update Country Tag
     if (organisationData.countryTag?._id && newOrganisationInfoId) {
       const updatedCountryTag = await replaceDataItemReferences(
@@ -479,7 +515,9 @@ function OrganisationPageComponent({
     if (organisationData.projects && newOrganisationInfoId) {
       const updatedProjects = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.projects?.map((org: any) => org._id),
+        organisationData.projects
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'organisationProject',
         newOrganisationInfoId
       );
@@ -491,7 +529,9 @@ function OrganisationPageComponent({
     if (organisationData.people && newOrganisationInfoId) {
       const updatedPeople = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.people?.map((org: any) => org._id),
+        organisationData.people
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'organisationPeople',
         newOrganisationInfoId
       );
@@ -730,6 +770,15 @@ function OrganisationPageComponent({
       <MiniPagesListComponentPost internalLinks={internalLinks} />
       {/* Files */}
       <FilesComponent files={organisation.files} />
+      <Modal show={isSaveInProgress} size="md" popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            Saving Page...
+            <LoadingSpinner />
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

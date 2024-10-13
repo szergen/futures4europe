@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import React, { use, useEffect, useState } from 'react';
 import style from './PostPageComponent.module.css';
-import Tag from '@app/shared-components/Tag/Tag';
+import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import ContentComponent from './components/ContentComponent/ContentComponent';
@@ -35,9 +35,10 @@ export type PostPageComponentProps = {
   pageTitle: string;
   post: any;
   isNewPost?: boolean;
+  pageType?: string;
 };
 
-function PostPageComponent({ pageTitle, post, isNewPost }: any) {
+function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   // Initial mock data
   post = { ...mockPost(pageTitle), ...post };
   const router = useRouter();
@@ -76,7 +77,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
   post = {
     ...post,
     title: post?.data?.title,
-    pageType: post?.data?.pageTypes[0],
+    pageType: post?.data?.pageTypes,
     subtitle: post?.data?.subtitle,
     updatedDate: post?.data?._updatedDate,
     countryTag: post?.data?.countryTag[0],
@@ -238,10 +239,10 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
     }
 
     // Update Page Type
-    if (postData.pageType?._id !== defaultPostData.pageType?._id) {
+    if (checkIfArrayNeedsUpdate(postData.pageType, defaultPostData.pageType)) {
       const updatedPageTypes = await replaceDataItemReferences(
         'PostPages',
-        [postData.pageType?._id],
+        postData?.pageType.map((pageType: any) => pageType._id),
         'pageTypes',
         postData._id
       );
@@ -455,15 +456,16 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
     }
 
     // Update Page Type
-    if (postData.pageType?._id && newPostID) {
+    if (postData.pageType?.length && newPostID) {
       const updatedPageTypes = await replaceDataItemReferences(
         'PostPages',
-        [postData.pageType?._id],
+        postData?.pageType.map((pageType: any) => pageType._id),
         'pageTypes',
         newPostID
       );
       console.log('updatedPageTypes', updatedPageTypes);
     }
+
     // Update Country Tag
     if (postData.countryTag?._id && newPostID) {
       const updatedCountryTag = await replaceDataItemReferences(
@@ -570,6 +572,40 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
     setIsSaveInProgress(false);
     router.push(`/post/${newPostSlug}`);
   };
+  // #endregion
+
+  // #region Filter pageType Tags based on the first tag
+  const extraFilterTags = (tags: Array<TagProps>, firstTagName: string) => {
+    if (firstTagName === 'project result') {
+      return tags?.filter(
+        (tag) =>
+          tag?.tagType === 'page type' &&
+          !tag?.name?.includes('info') &&
+          tag?.name !== 'event' &&
+          tag?.name !== 'post'
+      );
+    }
+    if (firstTagName === 'event') {
+      return tags?.filter(
+        (tag) =>
+          tag?.tagType === 'page type' &&
+          !tag?.name?.includes('info') &&
+          tag?.name !== 'project result' &&
+          tag?.name !== 'post'
+      );
+    }
+    if (firstTagName === 'post') {
+      return tags?.filter(
+        (tag) =>
+          tag?.tagType === 'page type' &&
+          !tag?.name?.includes('info') &&
+          tag?.name !== 'project result' &&
+          tag?.name !== 'event'
+      );
+    }
+    // ...rest of conditions
+    return tags;
+  };
 
   // #endregion
 
@@ -588,11 +624,11 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
 
   // #region for when the page is newly created to set defaultData
   useEffect(() => {
-    if (isLoggedIn && postData && isNewPost) {
-      const postTag = tags.find((tag) => tag.name === 'post');
+    if (isLoggedIn && postData && isNewPost && pageType) {
+      const postTag = tags.find((tag) => tag.name === pageType);
       console.log('debug1->personTag', postTag);
       if (postTag) {
-        updatePostDataBasedOnKeyValue('pageType', postTag);
+        updatePostDataBasedOnKeyValue('pageType', [postTag]);
       }
       const personInfoTag = tags.find((tag) => tag.name === 'person info');
       console.log('debug1->personInfoTag', personInfoTag);
@@ -641,7 +677,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       <div className={classNames('py-3 justify-start', style.preHeader)}>
         <div>
           {!isEditModeOn ? (
-            <>{postData.pageType && <Tag {...postData.pageType} />}</>
+            <>{postData.pageType?.[0] && <Tag {...postData.pageType?.[0]} />}</>
           ) : (
             <TagPicker
               tags={tags?.filter(
@@ -649,12 +685,16 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
                   tag?.tagType === 'page type' && !tag?.name?.includes('info')
               )}
               className="relative"
-              selectedValue={postData.pageType?.name}
+              selectedValues={postData.pageType?.map(
+                (pageType: any) => pageType?.name
+              )}
               updatePostData={(value) =>
                 updatePostDataBasedOnKeyValue('pageType', value)
               }
               tagType="page type"
               onTagCreated={handleTagCreated}
+              isMulti
+              extraFilterTags={extraFilterTags}
               // tagTypeLabel="Page Type"
             />
           )}
@@ -678,15 +718,15 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
         tags={tags}
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
-        defaultPostTitle={defaultPostData.title}
+        // defaultPostTitle={defaultPostData.title}
       />
       {/* Author */}
-      {postData.pageType?.name.toLowerCase() !== 'project result' &&
-        postData.pageType?.name.toLowerCase() !== 'event' && (
+      {postData.pageType?.[0]?.name?.toLowerCase() !== 'project result' &&
+        postData.pageType?.[0]?.name?.toLowerCase() !== 'event' && (
           <AuthorComponent authors={postData.authors} />
         )}
       {/* Project Result Authors */}
-      {postData.pageType?.name.toLowerCase() === 'project result' && (
+      {postData.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
         <TagListComponent
           tagList={postData.projectAuthors}
           tagListTitle="Authors"
@@ -724,7 +764,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       />
       {/* <div>{post.data.postContent}</div> */}
       {/* EVENT SPECIFIC*/}
-      {postData?.pageType?.name?.toLowerCase() === 'event' && (
+      {postData?.pageType?.[0]?.name?.toLowerCase() === 'event' && (
         <>
           {/* Moderators */}
           <TagListComponent
@@ -764,7 +804,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       <TagListComponent
         tagList={postData.people}
         tagListTitle={
-          postData?.pageType?.name?.toLowerCase() !== 'event'
+          postData?.pageType?.[0]?.name?.toLowerCase() !== 'event'
             ? 'People'
             : 'Participants'
         }
@@ -826,7 +866,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
       <TagListComponent
         tagList={postData.organisation}
         tagListTitle={
-          postData?.pageType?.name?.toLowerCase() !== 'event'
+          postData?.pageType?.[0]?.name?.toLowerCase() !== 'event'
             ? 'Organisation'
             : 'Host Organisations'
         }
@@ -852,7 +892,7 @@ function PostPageComponent({ pageTitle, post, isNewPost }: any) {
         }
       />
       {/* Files */}
-      {postData?.pageType?.name?.toLowerCase() !== 'project result' && (
+      {postData?.pageType?.[0]?.name?.toLowerCase() !== 'project result' && (
         <FilesComponent files={postData.files} />
       )}
       {/* External Links */}
