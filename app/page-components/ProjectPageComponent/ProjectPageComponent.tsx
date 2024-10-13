@@ -191,7 +191,9 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     ) {
       const updatedOrganisations = await replaceDataItemReferences(
         'InfoPages',
-        projectData.organisations?.map((org: any) => org._id),
+        projectData.organisations
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'projectOrganisation',
         projectData._id
       );
@@ -445,7 +447,9 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     if (projectData.organisations && newProjectInfoId) {
       const updatedOrganisations = await replaceDataItemReferences(
         'InfoPages',
-        projectData.organisations?.map((org: any) => org._id),
+        projectData.organisations
+          ?.map((org: any) => org._id)
+          .filter((id: any) => id),
         'projectOrganisation',
         newProjectInfoId
       );

@@ -89,6 +89,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // #region Fetch tags and refresh based on tag creation
   const [refreshTags, setRefreshTags] = useState(false);
   const { tags, tagsFetched } = useFetchTags(refreshTags);
+  console.log('debu10->tags', tags);
 
   // console.log('Context -> userTag', getUserTag());
 
@@ -200,6 +201,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // #region Fetch info pages
   const [refreshInfoPages, setRefreshInfoPages] = useState(false);
   const { infoPages, infoPagesFetched } = useFetchInfoPages(refreshInfoPages);
+  console.log('debug1->infoPages', infoPages);
 
   const handleInfoPageCreated = () => {
     setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch

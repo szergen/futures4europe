@@ -31,7 +31,8 @@ export type HeaderComponentProps = {
     views: number;
     domains: Array<TagProps>;
     organisationTag: TagProps & { tagLine: string };
-    activity: Array<TagProps>;
+    // activity: Array<TagProps>;
+    organisationType: Array<TagProps>;
   };
   isEditModeOn?: boolean;
   updateOrganisationData: (data: any) => void;
@@ -87,6 +88,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   useEffect(() => {
     console.log('tagLine', tagLine);
   }, [tagLine]);
+
+  console.log('organisation', organisation);
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -291,23 +294,23 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {/* Organisation domains */}
         <div className={style.domains}>
           {!isEditModeOn ? (
-            organisation?.activity?.map((activity) => (
-              <Tag key={activity.name} {...activity} />
+            organisation?.organisationType?.map((orgType) => (
+              <Tag key={orgType.name} {...orgType} />
             ))
           ) : (
             <TagPicker
-              tags={tags?.filter((tag) => tag?.tagType === 'person type')}
+              tags={tags?.filter((tag) => tag?.tagType === 'organisation type')}
               className="w-full"
               isMulti
-              selectedValues={organisation?.activity?.map(
-                (activity) => activity?.name
+              selectedValues={organisation?.organisationType?.map(
+                (orgType) => orgType?.name
               )}
               updatePostData={(value) => {
-                updateOrganisationDataOnKeyValue('activity', value);
+                updateOrganisationDataOnKeyValue('organisationType', value);
               }}
               tagType={'person type'}
               onTagCreated={handleTagCreated}
-              placeholder="Select Activity Interests"
+              placeholder="Select Organisation Type"
             />
           )}
         </div>

@@ -10,7 +10,7 @@ export type InputTextProps = {
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  validate?: (value: string | undefined) => string;
+  validate?: (value: string) => string;
   setValidationState?: (value: any) => void;
   shouldUpdateValueState?: boolean;
   isHorizontal?: boolean;

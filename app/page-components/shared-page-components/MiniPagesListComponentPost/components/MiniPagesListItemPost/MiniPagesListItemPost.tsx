@@ -30,8 +30,8 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   const [internalLinks, setInternalLinks] = useState(items || []);
 
   const { postPages, postPagesFetched } = useAuth();
-  console.log('postPages', postPages);
-  console.log('internalLinks', internalLinks);
+  // console.log('postPages', postPages);
+  // console.log('internalLinks', internalLinks);
   const findInternalLinksInPostPages = (internalLinks: any[]) => {
     return internalLinks
       ?.map((link) =>

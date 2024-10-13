@@ -4,7 +4,7 @@ export function getImageUrlForMedia(
   media?: string
   // width: number,
   // height: number
-) {
+): string | any {
   if (media && media.startsWith('wix:image')) {
     return wixMedia.getImageUrl(media);
     // return wixMedia.getScaledToFillImageUrl(media, width, height, {});

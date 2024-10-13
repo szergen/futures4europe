@@ -49,6 +49,7 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
   // };
 
   return (
+    // All configs can be found here: https://jpuri.github.io/react-draft-wysiwyg/#/docs?_k=jjqinp:~:text=/%3E-,toolbar,-toolbar%20property%20provides
     <Editor
       editorState={editorState}
       onEditorStateChange={setEditorState}
@@ -64,17 +65,65 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
           'list',
           // 'textAlign',
           // 'colorPicker',
-          // 'link',
+          'link',
           // 'embedded',
           // 'emoji',
           // 'image',
           // 'remove',
           // 'history',
         ],
-        // inline: { inDropdown: true },
-        // list: { inDropdown: true },
-        // textAlign: { inDropdown: true },
-        history: { inDropdown: true },
+        inline: {
+          // inDropdown: false,
+          // className: undefined,
+          // component: undefined,
+          // dropdownClassName: undefined,
+          options: [
+            'bold',
+            'italic',
+            'underline',
+            // 'strikethrough',
+            // 'monospace',
+            'superscript',
+            // 'subscript',
+          ],
+          // bold: { icon: bold, className: undefined },
+          // italic: { icon: italic, className: undefined },
+          // underline: { icon: underline, className: undefined },
+          // strikethrough: { icon: strikethrough, className: undefined },
+          // monospace: { icon: monospace, className: undefined },
+          // superscript: { icon: superscript, className: undefined },
+          // subscript: { icon: subscript, className: undefined },
+        },
+        list: {
+          // inDropdown: false,
+          // className: undefined,
+          // component: undefined,
+          // dropdownClassName: undefined,
+          options: [
+            'unordered',
+            'ordered',
+            // 'indent',
+            // 'outdent'
+          ],
+          // unordered: { icon: unordered, className: undefined },
+          // ordered: { icon: ordered, className: undefined },
+          // indent: { icon: indent, className: undefined },
+          // outdent: { icon: outdent, className: undefined },
+        },
+        link: {
+          // inDropdown: false,
+          // className: undefined,
+          // component: undefined,
+          // popupClassName: undefined,
+          // dropdownClassName: undefined,
+          showOpenOptionOnHover: true,
+          // defaultTargetOption: '_self',
+          options: ['link', 'unlink'],
+          // link: { icon: link, className: undefined },
+          // unlink: { icon: unlink, className: undefined },
+          // linkCallback: undefined,
+        },
+        // history: { inDropdown: true },
       }}
     />
   );
