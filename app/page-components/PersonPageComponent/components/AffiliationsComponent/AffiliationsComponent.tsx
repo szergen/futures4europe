@@ -35,7 +35,9 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   handleTagCreated,
   title,
 }) => {
-  const [currentAffiliations, setCurrentAffiliations] = useState(afiliations);
+  const [currentAffiliations, setCurrentAffiliations] = useState(
+    afiliations || []
+  );
 
   // #region Initialize Sortable Array
   // const [sortableArray, setSortableArray] = useState(
