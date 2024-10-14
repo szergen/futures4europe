@@ -307,8 +307,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
               classNames(
                 state.isFocused ? styles.TagCursor : 'text-gray-site' // Proper ternary expression
               ),
-            multiValue: () => 'tagPickerPill z-5 my-1 cursor-pointer',
-            singleValue: () => 'tagPickerPillSingle z-5',
+            multiValue: () => 'tagPickerPill tagPickerPillRemove z-5 my-1 cursor-pointer',
+            singleValue: () => 'tagPickerPillSingle tagPickerPillRemove cursor-pointer z-5',
             menu: () => classNames('', styles.tagPickerMenu),
             menuList: () => classNames('', styles.tagPickerMenuList),
             option: () => classNames('', styles.option),
