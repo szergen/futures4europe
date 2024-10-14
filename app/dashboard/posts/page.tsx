@@ -145,6 +145,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem={'/dashboard/posts'}
       />
 
       <div
@@ -201,62 +202,63 @@ export default function DashboardProjects() {
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
-                )}
-                onClick={handleCreatePost}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add post</span>
-              </Button>
-
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
-                )}
-                onClick={handleCreatePost}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add event</span>
-              </Button>
-
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 focus:ring-purple-300'
-                )}
-                onClick={handleCreatePost}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add foresight methond</span>
-              </Button>
+              <Link href="/post/New_Post?pageType=post">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 mr-4 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add post</span>
+                </Button>
+              </Link>
+              <Link href="/post/New_Post?pageType=event">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 mr-4 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add event</span>
+                </Button>
+              </Link>
+              <Link href="/post/New_Post?pageType=projectResult">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add project result</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

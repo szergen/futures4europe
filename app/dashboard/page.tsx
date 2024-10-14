@@ -146,6 +146,7 @@ export default function Dashboard() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem={'/dashboard'}
       />
 
       <div
@@ -160,7 +161,6 @@ export default function Dashboard() {
         >
           Your profile information
         </Typography>
-
         <Typography tag="p" className="text-base text-[#606b85]">
           Info about you and your preferences across futures4europe services.
           Manage all your personal information and options. You can make some of
