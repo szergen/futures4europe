@@ -38,7 +38,40 @@ export default function Dashboard() {
   } = useAuth();
 
   const router = useRouter();
-  const { removeDataItem } = useWixModules(items);
+  const { listMembers } = useWixModules(members);
+  const { bulkInsertDataItems } = useWixModules(items);
+
+  // const handleCreateAccountTags = async () => {
+  //   // let allMembers = [] as any[];
+  //   let offset = 0;
+  //   const limit = 1000;
+  //   // let totalCount = 0;
+  //   // do {
+  //   const result = await listMembers({ paging: { limit, offset } });
+  //   // allMembers = [...allMembers, ...result?.items];
+  //   // totalCount = result?.totalCount;
+  //   // offset = limit + offset;
+  //   // } while(offset < totalCount);
+  //   // const membersList = await listMembers();
+  //   console.log('result', result);
+  //   const tempResult = [...result.members];
+  //   console.log('creating tags');
+  //   const accountTags = tempResult?.map((account) => {
+  //     return {
+  //       data: {
+  //         name: account?.profile?.nickname,
+  //         tagType: 'person',
+  //       },
+  //     };
+  //   });
+  //   console.log('accountTags', accountTags);
+
+  //   const insertedTags = await bulkInsertDataItems({
+  //     dataCollectionId: 'Tags',
+  //     dataItems: accountTags,
+  //   });
+  //   console.log('insertedTags', insertedTags);
+  // };
   // const { updateMember } = useWixModules(members);
 
   // const handleCreatePost = async () => {
@@ -167,6 +200,7 @@ export default function Dashboard() {
           this information, like your contact details, visible to others so they
           can reach you easily. You can also see a summary of your profiles.
         </Typography>
+        {/* <button onClick={handleCreateAccountTags}>Create Tags</button> */}
 
         <div
           className={classNames(
