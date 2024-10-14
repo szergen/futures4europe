@@ -174,6 +174,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.contentText,
         defaultPostData.contentText
       ) ||
+      !postData.contentText[0] ||
+      !postData.contentText[1] ||
       checkIfArrayNeedsUpdate(
         postData.contentImages,
         defaultPostData.contentImages

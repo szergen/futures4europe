@@ -47,128 +47,40 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
     },
   ];
 
-  if (!mediaFiles || mediaFiles?.length === 0) {
-    return null;
-  }
+  // if (!mediaFiles || mediaFiles?.length === 0) {
+  //   return null;
+  // }
 
   useEffect(() => {
     setCurrentFiles(mediaFiles);
   }, [mediaFiles]);
 
   return (
-    mediaFiles.length > 0 && (
-      <section>
-        <Typography
-          tag="h2"
-          className={classNames('text-gray-800 w-full my-4', style.filesTitle)}
-        >
-          Files
-        </Typography>
+    <section>
+      {mediaFiles?.length > 0 ||
+        (isEditModeOn && (
+          <Typography
+            tag="h2"
+            className={classNames(
+              'text-gray-800 w-full my-4',
+              style.filesTitle
+            )}
+          >
+            Files
+          </Typography>
+        ))}
 
-        <div className="flex">
-          {mediaFiles.map((media, index) => (
-            <div key={`${media?.thumbnail}-${index}`} className="mr-4">
-              {!isEditModeOn ? (
-                media && (
-                  <DisplayProjectResultMedia projectResultMedia={media || {}} />
-                )
-              ) : (
-                <ProjectResultHeaderImage
-                  currentImage={media.thumbnail}
-                  resultType={media.type}
-                  updatePostData={(value) => {
-                    // updatePostData({
-                    //   ...post,
-                    //   projectResultMedia: {
-                    //     ...post.projectResultMedia,
-                    //     thumbnail: value.thumbnail,
-                    //     sizeInBytes: value.sizeInBytes,
-                    //     url: value.url,
-                    //     fileName: value.fileName,
-                    //     type: value.type,
-                    //   },
-                    // });
-                    let newMediaFiles = [...mediaFiles];
-                    newMediaFiles[index] = {
-                      ...newMediaFiles[index],
-                      thumbnail: value.thumbnail,
-                      sizeInBytes: value.sizeInBytes,
-                      url: value.url,
-                      fileName: value.fileName,
-                      type: value.type,
-                    };
-                    updatePostDataBasedOnKeyValue &&
-                      updatePostDataBasedOnKeyValue(
-                        'mediaFiles',
-                        newMediaFiles
-                      );
-                  }}
-                  updatePostDataForVideoImage={(value) => {
-                    // updatePostData({
-                    //   ...post,
-                    //   projectResultMedia: {
-                    //     ...post.projectResultMedia,
-                    //     thumbnail: value.thumbnail,
-                    //     sizeInBytes: '',
-                    //     url: value.url,
-                    //     fileName: '',
-                    //     type: 'video',
-                    //   },
-                    // });
-                    let newMediaFiles = [...mediaFiles];
-                    newMediaFiles[index] = {
-                      ...newMediaFiles[index],
-                      thumbnail: value.thumbnail,
-                      sizeInBytes: '',
-                      url: value.url,
-                      fileName: '',
-                      type: 'video',
-                    };
-                    updatePostDataBasedOnKeyValue &&
-                      updatePostDataBasedOnKeyValue(
-                        'mediaFiles',
-                        newMediaFiles
-                      );
-                  }}
-                />
-              )}
-              {!isEditModeOn ? (
-                <Typography tag="h3" className="text-gray-800 mt-2">
-                  {media?.displayName}
-                </Typography>
-              ) : (
-                <InputText
-                  // label="File Display Name"
-                  placeholder="Enter display name"
-                  value={media.displayName || ''}
-                  onChange={(e) => {
-                    let newMediaFiles = [...mediaFiles];
-                    newMediaFiles[index] = {
-                      ...newMediaFiles[index],
-                      displayName: e.target.value,
-                    };
-                    updatePostDataBasedOnKeyValue &&
-                      updatePostDataBasedOnKeyValue(
-                        'mediaFiles',
-                        newMediaFiles
-                      );
-                    // updatePostData({
-                    //   ...post,
-                    //   projectResultMedia: {
-                    //     ...post.projectResultMedia,
-                    //     displayName: e.target.value,
-                    //   },
-                    // })
-                  }}
-                />
-              )}
-            </div>
-          ))}
-          {isEditModeOn && (
-            <div className="blank">
+      <div className="flex">
+        {mediaFiles?.map((media, index) => (
+          <div key={`${media?.thumbnail}-${index}`} className="mr-4">
+            {!isEditModeOn ? (
+              media && (
+                <DisplayProjectResultMedia projectResultMedia={media || {}} />
+              )
+            ) : (
               <ProjectResultHeaderImage
-                currentImage={''}
-                resultType={''}
+                currentImage={media.thumbnail}
+                resultType={media.type}
                 updatePostData={(value) => {
                   // updatePostData({
                   //   ...post,
@@ -182,8 +94,8 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                   //   },
                   // });
                   let newMediaFiles = [...mediaFiles];
-                  newMediaFiles[mediaFiles?.length || 0] = {
-                    ...newMediaFiles[mediaFiles?.length || 0],
+                  newMediaFiles[index] = {
+                    ...newMediaFiles[index],
                     thumbnail: value.thumbnail,
                     sizeInBytes: value.sizeInBytes,
                     url: value.url,
@@ -206,8 +118,8 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                   //   },
                   // });
                   let newMediaFiles = [...mediaFiles];
-                  newMediaFiles[mediaFiles?.length || 0] = {
-                    ...newMediaFiles[mediaFiles?.length || 0],
+                  newMediaFiles[index] = {
+                    ...newMediaFiles[index],
                     thumbnail: value.thumbnail,
                     sizeInBytes: '',
                     url: value.url,
@@ -218,11 +130,116 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                     updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
                 }}
               />
-            </div>
-          )}
-        </div>
-      </section>
-    )
+            )}
+            {!isEditModeOn ? (
+              <Typography tag="h3" className="text-gray-800 mt-2">
+                {media?.displayName}
+              </Typography>
+            ) : (
+              <InputText
+                // label="File Display Name"
+                placeholder="Enter display name"
+                value={media.displayName || ''}
+                onChange={(e) => {
+                  let newMediaFiles = [...mediaFiles];
+                  newMediaFiles[index] = {
+                    ...newMediaFiles[index],
+                    displayName: e.target.value,
+                  };
+                  updatePostDataBasedOnKeyValue &&
+                    updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
+                  // updatePostData({
+                  //   ...post,
+                  //   projectResultMedia: {
+                  //     ...post.projectResultMedia,
+                  //     displayName: e.target.value,
+                  //   },
+                  // })
+                }}
+              />
+            )}
+          </div>
+        ))}
+        {isEditModeOn && (
+          <div className="blank">
+            <ProjectResultHeaderImage
+              currentImage={''}
+              resultType={''}
+              updatePostData={(value) => {
+                // updatePostData({
+                //   ...post,
+                //   projectResultMedia: {
+                //     ...post.projectResultMedia,
+                //     thumbnail: value.thumbnail,
+                //     sizeInBytes: value.sizeInBytes,
+                //     url: value.url,
+                //     fileName: value.fileName,
+                //     type: value.type,
+                //   },
+                // });
+                let newMediaFiles = mediaFiles?.length ? [...mediaFiles] : [];
+                newMediaFiles[mediaFiles?.length || 0] = {
+                  ...newMediaFiles[mediaFiles?.length || 0],
+                  thumbnail: value.thumbnail,
+                  sizeInBytes: value.sizeInBytes,
+                  url: value.url,
+                  fileName: value.fileName,
+                  type: value.type,
+                };
+                updatePostDataBasedOnKeyValue &&
+                  updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
+              }}
+              updatePostDataForVideoImage={(value) => {
+                // updatePostData({
+                //   ...post,
+                //   projectResultMedia: {
+                //     ...post.projectResultMedia,
+                //     thumbnail: value.thumbnail,
+                //     sizeInBytes: '',
+                //     url: value.url,
+                //     fileName: '',
+                //     type: 'video',
+                //   },
+                // });
+                let newMediaFiles = mediaFiles?.length ? [...mediaFiles] : [];
+                newMediaFiles[mediaFiles?.length || 0] = {
+                  ...newMediaFiles[mediaFiles?.length || 0],
+                  thumbnail: value.thumbnail,
+                  sizeInBytes: '',
+                  url: value.url,
+                  fileName: '',
+                  type: 'video',
+                };
+                updatePostDataBasedOnKeyValue &&
+                  updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
+              }}
+            />
+
+            <InputText
+              // label="File Display Name"
+              placeholder="Enter display name"
+              value={''}
+              onChange={(e) => {
+                let newMediaFiles = [...mediaFiles];
+                newMediaFiles[mediaFiles?.length] = {
+                  ...newMediaFiles[mediaFiles?.length],
+                  displayName: e.target.value,
+                };
+                updatePostDataBasedOnKeyValue &&
+                  updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
+                // updatePostData({
+                //   ...post,
+                //   projectResultMedia: {
+                //     ...post.projectResultMedia,
+                //     displayName: e.target.value,
+                //   },
+                // })
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 
