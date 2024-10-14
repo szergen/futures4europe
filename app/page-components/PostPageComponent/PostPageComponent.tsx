@@ -124,6 +124,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     },
     internalLinks: post?.data?.internalLinks,
     projectResultMedia: post?.data?.projectResultMedia,
+    mediaFiles: post?.data?.mediaFiles,
   };
   console.log('debug1-post', post);
   // set default post data and data for editing
@@ -893,10 +894,15 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       />
       {/* Files */}
       {postData?.pageType?.[0]?.name?.toLowerCase() !== 'project result' && (
-        <FilesComponent files={postData.files} />
+        <FilesComponent
+          files={postData.files}
+          isEditModeOn={isEditModeOn}
+          mediaFiles={postData.mediaFiles}
+          updatePostDataBasedOnKeyValue={updatePostDataBasedOnKeyValue}
+        />
       )}
       {/* External Links */}
-      <ExternalLinksComponent links={postData.links} />
+      {/* <ExternalLinksComponent links={postData.links} /> */}
       {/* Saving modal */}
       <Modal show={isSaveInProgress} size="md" popup>
         <Modal.Header />

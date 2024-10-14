@@ -146,6 +146,7 @@ export default function Dashboard() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem={'/dashboard'}
       />
 
       <div

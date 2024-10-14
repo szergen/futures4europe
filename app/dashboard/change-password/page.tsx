@@ -160,6 +160,7 @@ export default function DashboardChangePassword() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem={'/dashboard'}
       />
 
       <div

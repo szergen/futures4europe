@@ -47,3 +47,9 @@ input.roleInput:focus {
   box-shadow: none;
   border: none;
 }
+
+.dragShadow {
+  cursor: pointer !important;
+  background: var(--color-background-brand-tag);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

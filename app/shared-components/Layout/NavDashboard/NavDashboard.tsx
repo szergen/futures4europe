@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
@@ -80,6 +80,7 @@ interface UserDashboardProps {
     // active?: string;
   };
   SubNav: React.ReactNode;
+  activeItem?: string;
 }
 
 const UserDashboard: React.FC<UserDashboardProps> = ({
@@ -88,8 +89,12 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
   handleLogOut,
   customStyles,
   SubNav,
+  activeItem,
 }) => {
-  const [activeNavItem, setActiveNavItem] = useState('');
+  const [activeNavItem, setActiveNavItem] = useState(activeItem || '');
+  useEffect(() => {
+    console.log('activeNavItem', activeNavItem);
+  }, [activeNavItem]);
 
   return (
     <>
@@ -121,6 +126,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           href="/dashboard/organisations"
           icon={SpriteSvg.AccountOrgIcon}
           text="Organisation"
+          active={activeNavItem === '/dashboard/organisations'}
         />
         <NavItem
           href={handleCreateOrNavigateToPersonInfoPage()}
@@ -131,6 +137,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           href="/dashboard"
           icon={SpriteSvg.AccountSettingsIcon}
           text="Profile settings"
+          active={activeNavItem === '/dashboard'}
         />
         <NavItem
           href="#" // Or logout link if different
