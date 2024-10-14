@@ -42,42 +42,6 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  // const handleCreatePersonInfoPage = async () => {
-  //   if (userInfoPage) {
-  //     router.push(`/person/${userInfoPage}`);
-  //     return;
-  //   }
-  //   router.push(`/person/New_Info_Page`);
-  // };
-
-  // const handleListProfileSettings = async () => {
-  //   router.push(`/dashboard`);
-  // };
-
-  // const handleListPosts = async () => {
-  //   router.push(`/dashboard/posts`);
-  // };
-
-  // const handleCreateOrganisation = () => {
-  //   router.push(`/organisation/New_Organisation`);
-  // };
-
-  // const handleDeletePostPage = async (infoPageId: string) => {
-  //   setIsLoadingDeletePostPage(infoPageId);
-  //   try {
-  //     // Replace with your actual delete logic
-  //     await removeDataItem(infoPageId, {
-  //       dataCollectionId: 'PostPages',
-  //     });
-  //     // TODO: Refresh Owned Pages
-  //   } catch (error) {
-  //     console.error('Failed to delete info page:', error);
-  //   } finally {
-  //     setIsLoadingDeletePostPage('');
-  //     handleUserDataRefresh();
-  //   }
-  // };
-
   const handleDeleteInfoPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
     try {
@@ -164,11 +128,11 @@ export default function DashboardProjects() {
         )}
       >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
-          My projects
+          My project results
         </h1>
         <p className="text-base text-[#606b85]">
-          Would you like to showcase your foresight project and share insights
-          from your work? You can upload your project here and add outputs and
+          Would you like to showcase your project results and share insights
+          from your work? You can upload your project results here and add outputs and
           team members.
         </p>
 
@@ -201,11 +165,11 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Project
+                Project Result
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your project. Include its objectives,
-                scope, key activities, and any significant outcomes or findings.
+                Add a detailed overview of your project result. Include the delivrable,
+                description, authors, and any significant information of the project result.
               </p>
             </div>
 
@@ -226,7 +190,7 @@ export default function DashboardProjects() {
                   viewBox={'0 -1 14 14'}
                   strokeWidth={1}
                 />
-                <span className="text-lg">Add project</span>
+                <span className="text-lg">Add project result</span>
               </Button>
             </div>
           </div>
