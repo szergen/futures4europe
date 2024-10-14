@@ -11,9 +11,12 @@ import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner
 interface IconProps {
   className?: string;
   size?: number;
+  sizeW?: number;
+  sizeH?: number;
   fill?: string;
   strokeWidth?: number;
   inline?: boolean;
+  viewBox?: string;
 }
 
 interface NavItemProps {
@@ -25,6 +28,9 @@ interface NavItemProps {
   fill?: string;
   active?: boolean;
   onClick?: () => void;
+  sizeW?: number;
+  sizeH?: number;
+  viewBox?: string;
 }
 
 const NavItem: React.FC<NavItemProps> = ({
@@ -36,6 +42,9 @@ const NavItem: React.FC<NavItemProps> = ({
   className = '',
   active,
   onClick,
+  sizeW,
+  sizeH,
+  viewBox, 
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -62,10 +71,12 @@ const NavItem: React.FC<NavItemProps> = ({
       >
         <Icon
           className="mb-2"
-          size={38}
+          sizeW={sizeW}
+          sizeH={sizeH}
           fill={fill}
           strokeWidth={strokeWidth}
           inline={false}
+          viewBox={viewBox}
         />
         <span>{text}</span>
       </button>
@@ -137,19 +148,21 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
         />
         <NavItem
           href="/dashboard/project-results"
-          icon={SpriteSvg.AccountIcon}
+          icon={SpriteSvg.AccountProjectResultsIcon}
           text="Project Results"
           strokeWidth={0.2}
+          sizeW={24}
+          sizeH={24}
+          viewBox="0 0 20 20"
           onClick={() => setActiveNavItem('/dashboard/project-results')}
           active={activeNavItem === '/dashboard/project-results'}
         />    
         <NavItem
           href="/dashboard/events"
-          icon={SpriteSvg.AccountSettingsIcon}
+          icon={SpriteSvg.AccountEventsIcon}
           text="Events"
-          strokeWidth={2.2}
-          fill={'none'}
-          size={20}
+          strokeWidth={0}
+          fill={'currentColor'}
           onClick={() => setActiveNavItem('/dashboard/events')}
           active={activeNavItem === '/dashboard/events'}
         />                
@@ -157,12 +170,16 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           href="/dashboard/organisations"
           icon={SpriteSvg.AccountOrgIcon}
           text="Organisation"
+          sizeW={34}
+          sizeH={32}
           active={activeNavItem === '/dashboard/organisations'}
         />
         <NavItem
           href="/dashboard/foresight-methods"
-          icon={SpriteSvg.AccountOrgIcon}
+          icon={SpriteSvg.AccountForesightsIcon}
           text="Foresight Methods"
+          sizeW={34}
+          sizeH={32}          
         />        
         <NavItem
           href={handleCreateOrNavigateToPersonInfoPage()}

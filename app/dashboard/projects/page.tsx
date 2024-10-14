@@ -94,14 +94,6 @@ export default function DashboardProjects() {
     }
   };
 
-  const handleCreatePost = async () => {
-    router.push(`/post/New_Post`);
-  };
-
-  const handleCreateProject = async () => {
-    router.push(`/project/New_Project`);
-  };
-
   useEffect(() => {
     // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
     if (!loading && !isLoggedIn) {
@@ -211,6 +203,7 @@ export default function DashboardProjects() {
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
+            <Link href="/project/New_Project">
               <Button
                 size={'md'}
                 color={'light'}
@@ -218,7 +211,6 @@ export default function DashboardProjects() {
                   style.buttonAddDashboard,
                   'block border-0 mr-4 focus:ring-purple-300'
                 )}
-                onClick={handleCreateProject}
                 pill
               >
                 <SpriteSvg.AccountAddIcon
@@ -229,6 +221,7 @@ export default function DashboardProjects() {
                 />
                 <span className="text-lg">Add project</span>
               </Button>
+            </Link>
             </div>
           </div>
         </div>
@@ -284,41 +277,9 @@ export default function DashboardProjects() {
                                 )}
                                 pill
                               >
-                                {/* <SpriteSvg.AccountTrashIcon 
-                              className={'mr-2'}
-                              sizeH={16}
-                              sizeW={16}
-                              viewBox={'0 0 16 16'}
-                              strokeWidth={0}
-                              fill={'currentColor'}
-                            /> */}
                                 <span className="text-md">View</span>
                               </Button>
                             </Link>
-
-                            {/* TODO: Show delete if user is admin */}
-                            {/* <Button
-                              onClick={() =>
-                                handleDeleteInfoPage(infoPage.data._id)
-                              }
-                              size={'sm'}
-                              color={''}
-                              className={classNames(
-                                style.buttonAddDashboard,
-                                'block border-0'
-                              )}
-                              pill
-                            >
-                              <SpriteSvg.AccountTrashIcon
-                                className={'mr-2'}
-                                sizeH={16}
-                                sizeW={16}
-                                viewBox={'0 0 16 16'}
-                                strokeWidth={0}
-                                fill={'currentColor'}
-                              />
-                              <span className="text-md">Delete</span>
-                            </Button> */}
                           </div>
 
                           {isLoadingDeletePostPage &&

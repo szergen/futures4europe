@@ -12,7 +12,7 @@ import { members } from '@wix/members';
 import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from '../pageDashboard.module.css';
-import { Button, Badge } from 'flowbite-react';
+import { Avatar, Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 
@@ -93,7 +93,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/events', text: 'Events', isActive: true },
+    { href: '/dashboard/projects', text: 'Foresight Methods', isActive: true },
   ];
 
   return (
@@ -111,6 +111,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem={'/dashboard/foresight-methods'}
       />
 
       <div
@@ -120,11 +121,11 @@ export default function DashboardProjects() {
         )}
       >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
-          My events
+          My Foresight Methods
         </h1>
         <p className="text-base text-[#606b85]">
-          Would you like to showcase your events and share insights
-          from your work? You can upload your events here and add outputs, speakers and participants.
+          This is your dashboard for managing all the foresight methods. You can showcase your foresight methods and share insights.
+          Access your methods to manage all details and much more.
         </p>
 
         <div
@@ -138,13 +139,13 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountParticipationIcon  
+            <SpriteSvg.AccountForesightMethod2Icon
               className="text-color-white mb-6"
-              sizeW={34}
+              sizeW={24}
               sizeH={24}
-              viewBox={'0 0 20 18'}
+              viewBox={'0 0 28 28'}
               fill={'#fff'}
-              strokeWidth={0}
+              stroke={'0'}
               inline={false}
             />
 
@@ -155,22 +156,22 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Event
+                Foresight Method
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your event. Include the type of event, a brief description, the organizers. 
-                Give the location date and time, and any significant information.
+                Add a detailed overview of your foresigh method. Include how the method was implemented and
+                any particular information you consider insightful. 
               </p>
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-            <Link href="/post/New_Post?pageType=event">
+            <Link href="/post/New_Post?pageType=foresightMethod">
               <Button
                 size={'md'}
                 color={'light'}
                 className={classNames(
                   style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
+                  'block border-0 focus:ring-purple-300'
                 )}
                 pill
               >
@@ -180,7 +181,7 @@ export default function DashboardProjects() {
                   viewBox={'0 -1 14 14'}
                   strokeWidth={1}
                 />
-                <span className="text-lg">Add event</span>
+                <span className="text-lg">Add foresight method</span>
               </Button>
             </Link>
             </div>
@@ -196,7 +197,7 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Events list
+                Foresight Methods list
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 In this section of your account you can manage your list.
@@ -209,24 +210,24 @@ export default function DashboardProjects() {
                 'flex flex-col text-base text-[#606b85]'
               )}
             >
-              {ownedPostPages.length || ownedInfoPages.length ? (
+             {ownedPostPages.length || ownedInfoPages.length ? (
                 <>
-                  {ownedPostPages.length > 0 ? (
-                    ownedPostPages
-                    .filter(
-                      (postPage) =>
-                        postPage?.data?.pageTypes[0]?.name ===
-                        'event'
-                    ).map((postPage, index) => (
+                {ownedPostPages.length > 0 ? (
+                  ownedPostPages
+                  .filter(
+                    (postPage) =>
+                      postPage?.data?.pageTypes[0]?.name ===
+                      'foresight method'
+                  ).map((postPage, index) => (
                       <div
                         key={postPage?.data?.title + index}
                         className="pt-2 pb-2 flex flex-row items-center justify-between"
                       >
                         <div className="flex flex-wrap flex-start text-left">
                           <Tag
-                            className="flex-grow basis-full cursor-default"
-                            disableTooltip={true}
+                            className="flex-grow basis-full"
                             name={postPage?.data?.title}
+                            tagPageLink={`/post/${postPage.data.slug}`}
                             popularity={
                               postPage?.data?.pageTypes[0]?.popularity
                             }
@@ -239,15 +240,13 @@ export default function DashboardProjects() {
                               color={'gray'}
                               className={classNames(
                                 style.buttonAddDashboard,
-                                'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
+                                'block mr-2'
                               )}
                               pill
                             >
                               <span className="text-md">View</span>
                             </Button>
                           </Link>
-                          {/* // TODO- Visible if admin user WIX */}
-                          {/* // TODO- Transform the List in a component */}
                         </div>
 
                         {isLoadingDeletePostPage &&
