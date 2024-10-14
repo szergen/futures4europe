@@ -118,16 +118,39 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           active={activeNavItem === '/dashboard/projects'}
         />
         <NavItem
+          href="/dashboard/project-results"
+          icon={SpriteSvg.AccountIcon}
+          text="Project Results"
+          strokeWidth={0.2}
+          onClick={() => setActiveNavItem('/dashboard/project-results')}
+          active={activeNavItem === '/dashboard/project-results'}
+        />    
+        <NavItem
+          href="/dashboard/events"
+          icon={SpriteSvg.AccountSettingsIcon}
+          text="Events"
+          strokeWidth={2.2}
+          fill={'none'}
+          size={20}
+          onClick={() => setActiveNavItem('/dashboard/events')}
+          active={activeNavItem === '/dashboard/events'}
+        />                
+        <NavItem
           href="/dashboard/organisations"
           icon={SpriteSvg.AccountOrgIcon}
           text="Organisation"
         />
         <NavItem
+          href="/dashboard/foresight-methods"
+          icon={SpriteSvg.AccountOrgIcon}
+          text="Foresight Methods"
+        />        
+        <NavItem
           href={handleCreateOrNavigateToPersonInfoPage()}
           icon={SpriteSvg.AccountPersonIcon}
-          text={userInfoPage ? 'View Info Page' : 'Person Page'}
+          text={userInfoPage ? 'Person Info' : 'Create Person Info'}
         />
-        <NavItem
+        {/* <NavItem
           href="/dashboard"
           icon={SpriteSvg.AccountSettingsIcon}
           text="Profile settings"
@@ -139,7 +162,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           onClick={handleLogOut}
           fill="none"
           strokeWidth={2}
-        />
+        /> */}
       </div>
       {SubNav}
     </>
