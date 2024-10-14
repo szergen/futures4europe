@@ -1,5 +1,5 @@
 .tagPickerMenu {
-  max-width: 960px!important;
+  max-width: 650px!important;
   width: 100vw!important;
   z-index: 999999;
 }
@@ -27,7 +27,7 @@
 .tagPickerMenu:before {
   content: "";
   position: absolute;
-  background: linear-gradient(0deg, #ffffffbf, transparent);
+  /* background: linear-gradient(0deg, #ffffffbf, transparent); */
   height: 100%;
   width: 100%;
   z-index: 1;
@@ -41,7 +41,7 @@
 .tagPickerMenu:after {
   content: "";
   position: absolute;
-  background: linear-gradient(0deg, #ffffffd0, transparent);
+  /* background: linear-gradient(0deg, #ffffffd0, transparent); */
   height: calc(100% + 18px);
   width: 100%;
   z-index: -1;
@@ -54,8 +54,8 @@
 
 }
 .tagPickerMenuList {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
   padding: var(--w-space-s);
   background-color: transparent;
   border-radius: 19px;

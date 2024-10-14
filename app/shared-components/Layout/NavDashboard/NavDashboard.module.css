@@ -20,7 +20,7 @@
     border-right: 1px solid var(--primary-color);
 }
 .UserDashboardNavItem a {
-    font-size: var(--w-font-size-sub-section-heading);
+    font-size: var(--w-font-size-menu);
     text-align: center;
     min-width: 130px;
     padding: 0px var(--w-space-xl);

@@ -32,6 +32,7 @@
     --w-font-weight-body: 450;
 
     --w-font-size-caption: calc(12 / var(--w-base-rem) * 1rem);
+    --w-font-size-menu: calc(12 / var(--w-base-rem) * 1rem);
     --w-font-size-body: calc(14 / var(--w-base-rem) * 1rem);
     --w-font-size-sub-section-heading: calc(16 / var(--w-base-rem) * 1rem);
     --w-font-size-section-heading: calc(18 / var(--w-base-rem) * 1rem);
@@ -742,24 +743,6 @@ textarea {
 }
 
 /* single - value */
-.react-select__value-container--has-value:not(
-    .react-select__value-container--is-multi
-  ) {
-  position: relative;
-  cursor: pointer;
-  /* display: inline-flex; */
-  align-items: center;
-  background-color: var(--color-background-brand-tag);
-  /* border-radius: var(--p-border-radius-200); */
-  /* height: calc(var(--w-space-xxxl)); */
-  margin-right: calc(var(--w-space-s));
-  padding: 0px var(--w-space-xs);
-
-  div {
-    margin:4px 0px;
-  }
-}
-
 .tagPickerPillSingle {
   height: calc(var(--w-space-xxl));
   background: var(--primary-white);
@@ -777,6 +760,54 @@ textarea {
   font-size: var(--w-font-size-tag);
   line-height: var(--w-space-xxl);
   letter-spacing: var(--p-font-letter-spacing-tag);
+}
+.react-select__control .react-select__clear-indicator {
+  position: absolute;
+  right: 16px;
+  width: var(--w-space-l);
+  height: var(--w-space-l);
+  border-radius: var(--p-border-radius-full);
+  opacity: 0;
+  cursor: pointer;
+}
+.react-select__control:hover {
+  cursor: grab;
+}
+.react-select__control:hover.react-select__control .react-select__clear-indicator {
+  background: var(--color-background-destructive-weaker);
+  opacity: 1;
+}
+.react-select__control:hover.react-select__control .react-select__clear-indicator {
+  background: var(--color-background-destructive-weaker);
+  opacity: 1;
+}
+.react-select__clear-indicator:hover {
+  background-color: var(--color-background-destructive)!important;
+}
+.react-select__clear-indicator svg {
+  fill: var(--color-text-weakest);
+  text-align: center;
+  margin: 0 auto;
+  transform: scale(1);
+  width: 14px;
+}
+
+.react-select__value-container--has-value:not(
+    .react-select__value-container--is-multi
+  ) {
+  position: relative;
+  cursor: pointer;
+  /* display: inline-flex; */
+  align-items: center;
+  background-color: var(--color-background-brand-tag);
+  /* border-radius: var(--p-border-radius-200); */
+  /* height: calc(var(--w-space-xxxl)); */
+  margin-right: calc(var(--w-space-s));
+  padding: 0px var(--w-space-xs);
+
+  div {
+    margin:4px 0px;
+  }
 }
 
 /* important in editor rdw */
