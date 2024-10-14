@@ -156,7 +156,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             ) : (
               <div className={classNames(style.inputContainer)}>
                 <InputText
-                  placeholder="Role"
+                  placeholder="Position"
                   key={`affiliation-${affilitiation.name}`}
                   value={affilitiation.arole || ''}
                   onChange={(e) => {
@@ -209,11 +209,17 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
               affilitiation.name && (
                 <button
                   onClick={() => handleRemoveAffiliation(index)}
-                  className={
-                    'ml-4 text-sm bg-red-600 text-neutral-50 p-1 rounded-md inline-block text-nowrap'
-                  }
+                  className={classNames(style.affiliationRemove, '')}
                 >
-                  Remove Affiliation
+                <SpriteSvg.EditCloseIcon
+                  className="mb-0"
+                  sizeW={16}
+                  sizeH={16}
+                  viewBox={'-3 -2 22 22'}
+                  fill={'#fff'}
+                  strokeWidth={0}
+                  inline={true}
+                />
                 </button>
               )}
           </div>

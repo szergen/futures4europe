@@ -661,6 +661,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       />
       {/* Person Description */}
       <PersonDescriptionComponent
+        placeholder={'Type or paste a short description of yourself'} // TODO: Placeholder 
         description={personData.description}
         isEditModeOn={isEditModeOn}
         handleUpdate={(value) =>
@@ -697,6 +698,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       <TagListComponent
         tagList={personData.methods}
         tagListTitle="Foresight Methods"
+        placeholder='Add one or more foresight method tags'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={personData.methods?.map((method: any) => method?.name)}
@@ -710,6 +712,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       <TagListComponent
         tagList={personData.domains}
         tagListTitle="Domains"
+        placeholder='Add one or more domain tags relevant to you'
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={personData.domains?.map((domain: any) => domain?.name)}
