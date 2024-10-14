@@ -4,6 +4,9 @@ import classNames from 'classnames';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import style from './NavDashboard.module.css';
 import { useState } from 'react';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import Loading from '@app/dashboard/loading';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 
 interface IconProps {
   className?: string;
@@ -92,9 +95,19 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
   activeItem,
 }) => {
   const [activeNavItem, setActiveNavItem] = useState(activeItem || '');
+
+  // #region Check if user info page is ready
+  const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
+  const [personInfoPageLink, setPersonInfoPageLink] = useState('');
+  const { userDetails } = useAuth();
+
   useEffect(() => {
-    console.log('activeNavItem', activeNavItem);
-  }, [activeNavItem]);
+    if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
+      setIsPersonInfoPageReady(true);
+      setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
+    }
+  }, [userDetails]);
+  // #endregion
 
   return (
     <>
@@ -128,11 +141,18 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           text="Organisation"
           active={activeNavItem === '/dashboard/organisations'}
         />
-        <NavItem
-          href={handleCreateOrNavigateToPersonInfoPage()}
-          icon={SpriteSvg.AccountPersonIcon}
-          text={userInfoPage ? 'View Info Page' : 'Person Page'}
-        />
+        {!isPersonInfoPageReady ? (
+          <LoadingSpinner />
+        ) : (
+          <NavItem
+            href={
+              !personInfoPageLink ? '/person/New_Info_Page' : personInfoPageLink
+            }
+            icon={SpriteSvg.AccountPersonIcon}
+            text={userInfoPage ? 'View Info Page' : 'Person Page'}
+          />
+        )}
+
         <NavItem
           href="/dashboard"
           icon={SpriteSvg.AccountSettingsIcon}
