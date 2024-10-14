@@ -24,54 +24,21 @@ export default function Dashboard() {
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
-    login,
+    // login,
     isLoggedIn,
     loading,
     userDetails,
     logout,
-    ownedInfoPages,
-    ownedPostPages,
-    ownedPostPagesFetched,
-    ownedInfoPagesFetched,
-    handleUserDataRefresh,
-    tags,
+    // ownedInfoPages,
+    // ownedPostPages,
+    // ownedPostPagesFetched,
+    // ownedInfoPagesFetched,
+    // handleUserDataRefresh,
+    // tags,
   } = useAuth();
 
   const router = useRouter();
-  const { listMembers } = useWixModules(members);
-  const { bulkInsertDataItems } = useWixModules(items);
-
-  // const handleCreateAccountTags = async () => {
-  //   // let allMembers = [] as any[];
-  //   let offset = 0;
-  //   const limit = 1000;
-  //   // let totalCount = 0;
-  //   // do {
-  //   const result = await listMembers({ paging: { limit, offset } });
-  //   // allMembers = [...allMembers, ...result?.items];
-  //   // totalCount = result?.totalCount;
-  //   // offset = limit + offset;
-  //   // } while(offset < totalCount);
-  //   // const membersList = await listMembers();
-  //   console.log('result', result);
-  //   const tempResult = [...result.members];
-  //   console.log('creating tags');
-  //   const accountTags = tempResult?.map((account) => {
-  //     return {
-  //       data: {
-  //         name: account?.profile?.nickname,
-  //         tagType: 'person',
-  //       },
-  //     };
-  //   });
-  //   console.log('accountTags', accountTags);
-
-  //   const insertedTags = await bulkInsertDataItems({
-  //     dataCollectionId: 'Tags',
-  //     dataItems: accountTags,
-  //   });
-  //   console.log('insertedTags', insertedTags);
-  // };
+  const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
   // const handleCreatePost = async () => {
@@ -130,22 +97,30 @@ export default function Dashboard() {
   //   }
   // };
 
+  // #region Check if user info page is ready
+  const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
+  const [personInfoPageLink, setPersonInfoPageLink] = useState('');
+
   useEffect(() => {
     // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
     // Get the user's tag page link
-    if (isLoggedIn && tags) {
-      const userTag = tags.find(
-        (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
-      );
-      console.log('userTag', userTag);
-      if (userTag) {
-        setUserInfoPage(userTag?.tagPageLink);
-      }
+    // if (isLoggedIn && tags) {
+    //   const userTag = tags.find(
+    //     (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
+    //   );
+    //   console.log('userTag', userTag);
+    //   if (userTag) {
+    //     setUserInfoPage(userTag?.tagPageLink);
+    //   }
+    // }
+    if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
+      setIsPersonInfoPageReady(true);
+      setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
     }
-  }, [isLoggedIn, router, loading]);
+  }, [isLoggedIn, router, loading, userDetails]);
 
   if (!isLoggedIn) {
     //Loading Spinner
@@ -200,7 +175,6 @@ export default function Dashboard() {
           this information, like your contact details, visible to others so they
           can reach you easily. You can also see a summary of your profiles.
         </Typography>
-        {/* <button onClick={handleCreateAccountTags}>Create Tags</button> */}
 
         <div
           className={classNames(
@@ -209,19 +183,32 @@ export default function Dashboard() {
             'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
             'mb-10',
             'p-8',
-            'bg-alertLight-site'
+            'bg-alertLight-site',
+            personInfoPageLink && 'bg-stone-200'
           )}
         >
           <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
-            <SpriteSvg.AccountAlertIcon
-              className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'0 0 32 32'}
-              fill={'currentColor'}
-              strokeWidth={0}
-              inline={false}
-            />
+            {!personInfoPageLink ? (
+              <SpriteSvg.AccountAlertIcon
+                className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'0 0 32 32'}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+            ) : (
+              <SpriteSvg.InformationCircle
+                className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'0 0 32 32'}
+                fill={'currentColor'}
+                strokeWidth={0}
+                inline={false}
+              />
+            )}
 
             <div className="flex flex-col justify-between">
               <Typography
@@ -241,14 +228,20 @@ export default function Dashboard() {
                   'text-black-site mb-8'
                 )}
               >
-                Your profile dose not have a Person Info page or you did not
-                claim it. Create now a person page to be visible to all members
-                of futures4europe platform.
+                {!personInfoPageLink
+                  ? 'Your profile dose not have a Person Info page or you did not claim it. Create now a person page to be visible to all members of futures4europe platform.'
+                  : 'Edit your Person Info page to be visible to all members of futures4europe platform.'}
               </Typography>
             </div>
 
             <div className={classNames(style.listDashboard, 'block')}>
-              <Link href={handleCreateOrNavigateToPersonInfoPage() as any}>
+              <Link
+                href={
+                  !personInfoPageLink
+                    ? '/person/New_Info_Page'
+                    : personInfoPageLink
+                }
+              >
                 <Button
                   size={'md'}
                   color={'light'}
@@ -266,7 +259,7 @@ export default function Dashboard() {
                   />
                   {/* // TODO: Must show claim Person Info Page if it allready exists */}
                   <span className="text-lg">
-                    {userInfoPage
+                    {personInfoPageLink
                       ? 'View Info Page'
                       : 'Create Person Info Page'}
                   </span>
