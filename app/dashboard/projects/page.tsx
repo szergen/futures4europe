@@ -155,6 +155,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem="/dashboard/projects"
       />
 
       <div

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import style from './NavDashboard.module.css';
 import { useState } from 'react';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import Loading from '@app/dashboard/loading';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 
 interface IconProps {
   className?: string;
@@ -80,6 +83,7 @@ interface UserDashboardProps {
     // active?: string;
   };
   SubNav: React.ReactNode;
+  activeItem?: string;
 }
 
 const UserDashboard: React.FC<UserDashboardProps> = ({
@@ -88,8 +92,22 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
   handleLogOut,
   customStyles,
   SubNav,
+  activeItem,
 }) => {
-  const [activeNavItem, setActiveNavItem] = useState('');
+  const [activeNavItem, setActiveNavItem] = useState(activeItem || '');
+
+  // #region Check if user info page is ready
+  const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
+  const [personInfoPageLink, setPersonInfoPageLink] = useState('');
+  const { userDetails } = useAuth();
+
+  useEffect(() => {
+    if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
+      setIsPersonInfoPageReady(true);
+      setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
+    }
+  }, [userDetails]);
+  // #endregion
 
   return (
     <>
@@ -139,6 +157,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           href="/dashboard/organisations"
           icon={SpriteSvg.AccountOrgIcon}
           text="Organisation"
+          active={activeNavItem === '/dashboard/organisations'}
         />
         <NavItem
           href="/dashboard/foresight-methods"
@@ -154,6 +173,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           href="/dashboard"
           icon={SpriteSvg.AccountSettingsIcon}
           text="Profile settings"
+          active={activeNavItem === '/dashboard'}
         />
         <NavItem
           href="#" // Or logout link if different

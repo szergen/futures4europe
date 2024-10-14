@@ -76,3 +76,9 @@ input.roleInput:focus {
 .tagListContainer .IndicatorsContainer {
   display: none!important;
 }
+
+.dragShadow {
+  cursor: pointer !important;
+  background: var(--color-background-brand-tag);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

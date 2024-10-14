@@ -35,7 +35,16 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   handleTagCreated,
   title,
 }) => {
-  const [currentAffiliations, setCurrentAffiliations] = useState(afiliations);
+  const [currentAffiliations, setCurrentAffiliations] = useState(
+    afiliations || []
+  );
+
+  // #region Initialize Sortable Array
+  // const [sortableArray, setSortableArray] = useState(
+  //   currentAffiliations?.map((affiliation, index) => {
+  //     return { id: index, name: affiliation.name };
+  //   })
+  // );
 
   const shouldAddNewAffiliation = () => {
     if (afiliations?.length === 0) return false;
@@ -99,6 +108,14 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   }
 
   // useEffect(() => {
+  //   setSortableArray(
+  //     currentAffiliations?.map((affiliation, index) => {
+  //       return { id: index, name: affiliation?.name };
+  //     })
+  //   );
+  // }, [currentAffiliations]);
+
+  // useEffect(() => {
   //   if (shouldAddNewAffiliation()) {
   //     handleAddAffiliation(0);
   //   }
@@ -125,17 +142,23 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {title ? title : 'Former Affiliations'}
         </Typography>
       )} */}
-      <div className={classNames('flex w-full', isEditModeOn && 'flex-wrap')}>
-        {/* <ReactSortable
-          list={currentAffiliations}
-          setList={setCurrentAffiliations}
-        > */}
+
+      <ReactSortable
+        list={currentAffiliations}
+        setList={(newState) => {
+          updatePersonDataAffiliations(newState as any);
+          setCurrentAffiliations(newState as any);
+        }}
+        disabled={!isEditModeOn}
+        className={classNames(
+          'flex w-full flex-wrap',
+          isEditModeOn && 'flex-col'
+        )}
+        onStart={(e) => {
+          e.item.classList.add(style.dragShadow);
+        }}
+      >
         {currentAffiliations?.map((affilitiation, index) => (
-          // <Reorder.Item
-          //   key={`affiliation-${affilitiation.name}-${index}`}
-          //   value={affilitiation}
-          //   animate={false}
-          // >
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
             className={classNames(style.tagListContainer)}
@@ -223,10 +246,8 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                 </button>
               )}
           </div>
-          // </Reorder.Item>
         ))}
-        {/* </ReactSortable> */}
-      </div>
+      </ReactSortable>
     </section>
   );
 };

@@ -339,7 +339,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     id="tagTagline"
                     value={tagTagline}
                     onChange={(e) => setTagTagline(e.target.value)}
-                    required
                   />
                 </div>
                 <Button type="submit" disabled={isLoading}>

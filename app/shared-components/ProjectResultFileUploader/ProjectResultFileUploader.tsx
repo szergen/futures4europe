@@ -102,6 +102,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
         }
       );
       // Upload the file to Wix
+      console.log('Uploading generated Image from PDF to Wix');
       const composeFilePathForThumbnail = `/PostPages_Images/thumbnails/${
         userDetails?.contactId || 'visitors'
       }/`;
@@ -109,7 +110,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
         newFile,
         composeFilePathForThumbnail
       );
-      console.log('uploadedFileResponse', uploadedThumbnailResponse);
+      console.log('uploadedFileResponse for Image', uploadedThumbnailResponse);
 
       // #endregion
 
