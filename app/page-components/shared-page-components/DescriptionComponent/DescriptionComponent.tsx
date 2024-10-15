@@ -6,12 +6,14 @@ import RTEComponent from '@app/shared-components/RTEComponent/RTEComponent';
 export type DescriptionComponentProps = {
   description: string;
   isEditModeOn?: boolean;
+  placeholder?: string;
   handleUpdate?: (value: string) => void;
 };
 
 const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
   description: initialDescription,
   isEditModeOn,
+  placeholder,
   handleUpdate,
 }) => {
   const [contentText, setContentText] = useState(initialDescription);
@@ -36,6 +38,7 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({
         ></div>
       ) : (
         <RTEComponent
+          placeholder={placeholder}
           content={contentText}
           updatePostData={(value) => handleUpdateDescription(value)}
         />
