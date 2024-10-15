@@ -52,7 +52,13 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
 
   return (
     <div className="flex flex-wrap items-center justify-center relative">
-      <Label htmlFor="dropzone-file" className="absolute avatarUpload">
+      <Label
+        htmlFor="dropzone-file-avatar"
+        className={classNames(
+          style.avatarUpload,
+          !imageURL && style.avatarUploadEpty
+        )}
+      >
         <div className="w-full h-full">
           <span className="top-10 relative">
             {!imageURL || imageURL === ' ' ? 'Upload Image' : ''}
@@ -63,7 +69,7 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
         </div>
 
         <FileInput
-          id="dropzone-file"
+          id="dropzone-file-avatar"
           className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
           onChange={handleFileChange}
         />

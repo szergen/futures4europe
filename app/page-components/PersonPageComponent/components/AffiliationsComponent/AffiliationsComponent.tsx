@@ -53,7 +53,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   const shouldAddNewAffiliation = () => {
     if (afiliations?.length === 0) return false;
     const lastMember = afiliations?.[afiliations.length - 1];
-    return lastMember?.name && lastMember?.arole;
+    return lastMember?.name;
   };
 
   useEffect(() => {

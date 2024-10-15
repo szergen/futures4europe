@@ -5,6 +5,7 @@ import { HiInformationCircle } from 'react-icons/hi';
 import 'react-datepicker/dist/react-datepicker.css';
 import classNames from 'classnames';
 import { set } from 'lodash';
+import { on } from 'events';
 
 export type DatePickerComponentProps = {
   date: Date;
@@ -19,7 +20,7 @@ export const dateHelper = (date: Date) =>
 
 // eslint-disable-next-line react/display-name
 const CustomInput = React.forwardRef(
-  ({ date, onClick, className }: any, ref: any) => {
+  ({ date, onClick, className, onChange }: any, ref: any) => {
     const dateToString = dateHelper(date);
     const [inputState, setInputState] = useState(dateToString);
     const [isFormValid, setIsFormValid] = useState(true);
@@ -47,7 +48,7 @@ const CustomInput = React.forwardRef(
       }
 
       setInputState(transformDate);
-      console.log('OnBlur date-->', date);
+      console.log('OnBlur date-->', transformDate);
     };
 
     useEffect(() => {
@@ -62,6 +63,7 @@ const CustomInput = React.forwardRef(
           onBlur={onBlur}
           onChange={(event) => {
             setInputState(event?.target?.value);
+
             console.log('OnChange date-->', date);
           }}
           variant="outlined"
@@ -117,7 +119,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
   onChange,
   className,
 }) => {
-  const [dateState, setDateState] = useState(date);
+  const [dateState, setDateState] = useState(date || Date.now());
   const ref = useRef();
 
   useEffect(() => {
@@ -142,6 +144,9 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
       preventOpenOnFocus
       placeholderText="Select a date"
       name="Start Date"
+      // className="z-100"
+      calendarClassName="z-100 opacity-100"
+      popperClassName={'!z-10 opacity-100'}
     />
   );
 };
