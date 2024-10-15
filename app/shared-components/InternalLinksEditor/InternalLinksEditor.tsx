@@ -99,7 +99,7 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
           type="text"
           value={newLink}
           onChange={(e) => setNewLink(e.target.value)}
-          placeholder="Enter new link"
+          placeholder="Paste a link to a related post on this site"
           className="border p-2 mr-2"
         />
         <button type="submit" className="bg-blue-500 text-white p-2">

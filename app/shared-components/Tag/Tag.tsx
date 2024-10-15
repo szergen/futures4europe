@@ -19,6 +19,7 @@ export type TagProps = {
   // New changes
   tagType?: string;
   tagLine?: string;
+  disableTooltip?: boolean;
 };
 
 export const Tag: React.FC<TagProps> = ({
@@ -32,6 +33,7 @@ export const Tag: React.FC<TagProps> = ({
   pictureAlt,
   enableLabel,
   tagType,
+  disableTooltip,
 }) => {
   if (!name) return null;
   return (
@@ -51,6 +53,7 @@ export const Tag: React.FC<TagProps> = ({
               picture={picture}
               pictureAlt={pictureAlt}
               tagPageLink={tagPageLink}
+              disableTooltip={disableTooltip}
             />
           </Link>
         ) : (
@@ -62,6 +65,7 @@ export const Tag: React.FC<TagProps> = ({
             tagTrend={tagTrend}
             picture={picture}
             pictureAlt={pictureAlt}
+            disableTooltip={disableTooltip}
           />
         )}
       </div>

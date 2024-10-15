@@ -299,7 +299,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           options={options}
           value={value}
           isMulti={isMulti}
-          placeholder={placeholder || 'Select or create a tag'}
+          placeholder={placeholder || 'Add one or more post type tags'}
           styles={customStyles}
           className={classNames('', className)}
           classNames={{
@@ -307,14 +307,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
               classNames(
                 state.isFocused ? styles.TagCursor : 'text-gray-site' // Proper ternary expression
               ),
-            multiValue: () => 'tagPickerPill z-5 my-1 cursor-pointer',
-            singleValue: () => 'tagPickerPillSingle z-5',
+            multiValue: () =>
+              'tagPickerPill tagPickerPillRemove z-5 my-1 cursor-pointer',
+            singleValue: () =>
+              'tagPickerPillSingle tagPickerPillRemove cursor-pointer z-5',
             menu: () => classNames('', styles.tagPickerMenu),
             menuList: () => classNames('', styles.tagPickerMenuList),
             option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
-                'text-black bg-slate-100 rounded-lg ',
+                'text-gray-400 bg-slate-100 rounded-lg ',
                 styles.tagPickerValueContainer
               ),
           }}

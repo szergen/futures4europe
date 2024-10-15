@@ -564,6 +564,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       />
       {/* Project Description */}
       <DescriptionComponent
+        placeholder="Type or paste the description of the project"
         description={projectData.description}
         isEditModeOn={isEditModeOn}
         handleUpdate={(value) =>
@@ -573,6 +574,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
       {/* Foresight Methods */}
       <TagListComponent
+        placeholder="Add one or more foresight method tags used in the project"
         tagList={projectData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
@@ -586,6 +588,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       />
       {/* Domains */}
       <TagListComponent
+        placeholder="Add one or more domain tags relevant to the project"
         tagList={projectData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
@@ -599,6 +602,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       />
       {/* Coordinators */}
       <TagListComponent
+        placeholder="Add one or more person tags"
         tagList={projectData.coordinators}
         tagListTitle="Coordinators"
         isEditModeOn={isEditModeOn}
@@ -614,6 +618,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       />
       {/* Participants */}
       <TagListComponent
+        placeholder="Add one or more person tags"
         tagList={projectData.participants}
         tagListTitle="Participants"
         isEditModeOn={isEditModeOn}
@@ -629,8 +634,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       />
       {/* Organization Roles */}
       <AffiliationsComponent
+        placeholderRole="Optionally prefixed by roles"
+        placeholderTag="Add one or more organisation tags"
         afiliations={projectData.organisations}
-        tagListTitle="Organization Roles"
+        tagListTitle="Organisations"
         isEditModeOn={isEditModeOn}
         updatePersonDataAffiliations={(value) =>
           updateProjectDataOnKeyValue('organisations', value)

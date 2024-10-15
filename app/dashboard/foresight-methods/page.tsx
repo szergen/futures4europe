@@ -36,7 +36,7 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
   } = useAuth();
-  console.log('ownedInfoPages', ownedInfoPages);
+  console.log('ownedPostPages', ownedPostPages);
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
@@ -93,7 +93,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'Organisations', isActive: true },
+    { href: '/dashboard/projects', text: 'Foresight Methods', isActive: true },
   ];
 
   return (
@@ -111,7 +111,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem={'/dashboard/organisations'}
+        activeItem={'/dashboard/foresight-methods'}
       />
 
       <div
@@ -121,12 +121,12 @@ export default function DashboardProjects() {
         )}
       >
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
-          My organisations
+          My Foresight Methods
         </h1>
         <p className="text-base text-[#606b85]">
-          This is your dashboard for managing all the organisations youre
-          connected. You can showcase your foresight project and share insights.
-          Access your organizations to manage members and much more.
+          This is your dashboard for managing all the foresight methods. You can
+          showcase your foresight methods and share insights. Access your
+          methods to manage all details and much more.
         </p>
 
         <div
@@ -140,11 +140,11 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountOrg2Icon
+            <SpriteSvg.AccountForesightMethod2Icon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
-              viewBox={'0 0 18 18'}
+              viewBox={'0 0 28 28'}
               fill={'#fff'}
               stroke={'0'}
               inline={false}
@@ -157,17 +157,17 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Organisation
+                Foresight Method
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your organisation. Include its
-                afilliates, projects, key members, and any significant outcomes
-                or findings.
+                Add a detailed overview of your foresigh method. Include how the
+                method was implemented and any particular information you
+                consider insightful.
               </p>
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-              <Link href="/organisation/New_Organisation">
+              <Link href="/post/New_Post?pageType=foresightMethod">
                 <Button
                   size={'md'}
                   color={'light'}
@@ -183,7 +183,7 @@ export default function DashboardProjects() {
                     viewBox={'0 -1 14 14'}
                     strokeWidth={1}
                   />
-                  <span className="text-lg">Add organisation</span>
+                  <span className="text-lg">Add foresight method</span>
                 </Button>
               </Link>
             </div>
@@ -199,7 +199,7 @@ export default function DashboardProjects() {
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
-                Organisations list
+                Foresight Methods list
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 In this section of your account you can manage your list.
@@ -214,31 +214,36 @@ export default function DashboardProjects() {
             >
               {ownedPostPages.length || ownedInfoPages.length ? (
                 <>
-                  {ownedInfoPages.length > 0 ? (
-                    ownedInfoPages
+                  {ownedPostPages.length > 0 ? (
+                    ownedPostPages
                       .filter(
-                        (infoPage) =>
-                          infoPage?.data?.pageTypes[0]?.name ===
-                          'organisation info'
+                        (postPage) =>
+                          postPage?.data?.pageTypes[0]?.name ===
+                          'foresight method'
                       )
-                      .map((infoPage, index) => (
+                      .map((postPage, index) => (
                         <div
-                          key={infoPage.data.title + index}
+                          key={postPage?.data?.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
-                          <span>{infoPage.data.title}</span>
+                          <div className="flex flex-wrap flex-start text-left">
+                            <Tag
+                              className="flex-grow basis-full"
+                              name={postPage?.data?.title}
+                              tagPageLink={`/post/${postPage.data.slug}`}
+                              popularity={
+                                postPage?.data?.pageTypes[0]?.popularity
+                              }
+                            ></Tag>
+                          </div>
                           <div className={'flex flex-row'}>
-                            <Link
-                              href={`/${extractInfoPageTypeBasedOnTag(
-                                infoPage?.data?.pageTypes[0]
-                              )}/${infoPage.data.slug}`}
-                            >
+                            <Link href={`/post/${postPage.data.slug}`}>
                               <Button
                                 size={'sm'}
                                 color={'gray'}
                                 className={classNames(
                                   style.buttonAddDashboard,
-                                  'block mr-2 focus:ring-purple-300'
+                                  'block mr-2'
                                 )}
                                 pill
                               >
@@ -248,7 +253,7 @@ export default function DashboardProjects() {
                           </div>
 
                           {isLoadingDeletePostPage &&
-                            isLoadingDeletePostPage === infoPage?.data?._id && (
+                            isLoadingDeletePostPage === postPage?.data?._id && (
                               <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
                                 <LoadingSpinner />
                               </div>
@@ -263,7 +268,7 @@ export default function DashboardProjects() {
               ) : (
                 <>
                   {ownedPostPagesFetched && ownedInfoPagesFetched ? (
-                    <div>No Items</div>
+                    <div>No Owned Items</div>
                   ) : (
                     <LoadingSpinner />
                   )}

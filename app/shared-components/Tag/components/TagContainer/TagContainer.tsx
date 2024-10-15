@@ -16,6 +16,7 @@ export type TagContainerProps = {
   popularity?: number;
   tagTrend?: number;
   tagPageLink?: string;
+  disableTooltip?: boolean;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -26,10 +27,40 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   tagTrend,
   picture,
   pictureAlt,
+  disableTooltip,
   tagPageLink,
 }) => {
   const showThumbnail = Boolean(picture || tagCategory === 'person');
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
+
+  // REVIEW: TAG CONTENT @ALEX
+  const TagContent = (
+    <span className={style.name}>
+      {picture ? (
+        <span className={style.name}>
+          {showThumbnail && (
+            <TagThumbnail
+              picture={picture || undefined}
+              pictureAlt={pictureAlt}
+              tagCategory={tagCategory}
+            />
+          )}
+          <span className={style.tagNameBody}>{name}</span>
+        </span>
+      ) : (
+        <span className={style.name}>
+          {showThumbnail && (
+            <TagThumbnail
+              picture={picture || undefined}
+              pictureAlt={pictureAlt}
+              tagCategory={tagCategory}
+            />
+          )}
+          <span className={style.tagNameBody}>{name}</span>
+        </span>
+      )}
+    </span>
+  );
 
   return (
     <>
@@ -37,35 +68,17 @@ export const TagContainer: React.FC<TagContainerProps> = ({
       {/* {name?.length > 12 ? ( */}
       <span className={classNames(style.tagBody, thumbnailClass, className)}>
         <span className={style.tagBodyText}>
-          <PopoverComponent
-            trigger="hover"
-            popoverContent={name}
-            popoverImage={picture}
-          >
-            {picture ? (
-              <span className={style.name}>
-                {showThumbnail && (
-                  <TagThumbnail
-                    picture={picture || undefined}
-                    pictureAlt={pictureAlt}
-                    tagCategory={tagCategory}
-                  />
-                )}
-                <span className={style.tagNameBody}>{name}</span>
-              </span>
-            ) : (
-              <span className={style.name}>
-                {showThumbnail && (
-                  <TagThumbnail
-                    picture={picture || undefined}
-                    pictureAlt={pictureAlt}
-                    tagCategory={tagCategory}
-                  />
-                )}
-                <span className={style.tagNameBody}>{name}</span>
-              </span>
-            )}
-          </PopoverComponent>
+          {disableTooltip ? (
+            TagContent
+          ) : (
+            <PopoverComponent
+              trigger="hover"
+              popoverContent={name}
+              popoverImage={picture}
+            >
+              {TagContent}
+            </PopoverComponent>
+          )}
           {/* Tag Counter and Trend */}
           {popularity && (
             <TagCounter popularity={popularity} tagTrend={tagTrend} />

@@ -176,15 +176,16 @@ export default function Dashboard() {
           can reach you easily. You can also see a summary of your profiles.
         </Typography>
 
+        {/* // TODO: To make component for dashbaordBoxe's */}
         <div
           className={classNames(
-            style.dashboardBox, // CSS Module class
-            style.dashboardBoxAddWrap, // Another CSS Module class
-            'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
+            style.dashboardBox,
+            style.dashboardBoxAddWrap,
+            'mt-14',
             'mb-10',
             'p-8',
             'bg-alertLight-site',
-            personInfoPageLink && 'bg-stone-200'
+            personInfoPageLink && 'bg-gray-100'
           )}
         >
           <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
@@ -199,12 +200,12 @@ export default function Dashboard() {
                 inline={false}
               />
             ) : (
-              <SpriteSvg.InformationCircle
+              <SpriteSvg.AccountAiIcon
                 className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
                 sizeW={24}
                 sizeH={24}
                 viewBox={'0 0 32 32'}
-                fill={'currentColor'}
+                fill={'var(--p-border-radius-800)'}
                 strokeWidth={0}
                 inline={false}
               />
@@ -260,8 +261,8 @@ export default function Dashboard() {
                   {/* // TODO: Must show claim Person Info Page if it allready exists */}
                   <span className="text-lg">
                     {personInfoPageLink
-                      ? 'View Info Page'
-                      : 'Create Person Info Page'}
+                      ? 'View Person Info page'
+                      : 'Create Person Info page'}
                   </span>
                 </Button>
               </Link>

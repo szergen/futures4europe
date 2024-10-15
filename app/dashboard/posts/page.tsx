@@ -37,45 +37,10 @@ export default function DashboardProjects() {
     tags,
   } = useAuth();
   console.log('ownedPostPages', ownedPostPages);
+
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
-
-  const handleCreatePost = async () => {
-    router.push(`/post/New_Post`);
-  };
-
-  // const handleListProjects = async () => {
-  //   router.push(`/dashboard/projects`);
-  // };
-
-  // const handleListProfileSettings = async () => {
-  //   router.push(`/dashboard`);
-  // };
-
-  // const handleListPosts = async () => {
-  //   router.push(`/dashboard/posts`);
-  // };
-
-  // const handleCreateOrganisation = async () => {
-  //   router.push(`/organisation/New_Organisation`);
-  // };
-
-  // const handleDeleteInfoPage = async (infoPageId: string) => {
-  //   setIsLoadingDeletePostPage(infoPageId);
-  //   try {
-  //     // Replace with your actual delete logic
-  //     await removeDataItem(infoPageId, {
-  //       dataCollectionId: 'InfoPages',
-  //     });
-  //     // TODO: Refresh Owned Pages
-  //   } catch (error) {
-  //     console.error('Failed to delete info page:', error);
-  //   } finally {
-  //     setIsLoadingDeletePostPage('');
-  //     handleUserDataRefresh();
-  //   }
-  // };
 
   const handleDeletePostPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
@@ -160,14 +125,14 @@ export default function DashboardProjects() {
         <p className="text-base text-[#606b85]">
           Would you like to showcase your foresight posts and share insights
           from your work? You can create your posts here and add various content
-          raging from articles, blog posts, foresight methods, any outputs.
+          raging from articles, blog posts, news, any type of editorial posts.
         </p>
 
         <div
           className={classNames(
-            style.dashboardBox, // CSS Module class
-            style.dashboardBoxAddWrap, // Another CSS Module class
-            'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
+            style.dashboardBox,
+            style.dashboardBoxAddWrap,
+            'mt-14',
             'mb-10',
             'p-8',
             'bg-purple-site'
@@ -219,44 +184,6 @@ export default function DashboardProjects() {
                     strokeWidth={1}
                   />
                   <span className="text-lg">Add post</span>
-                </Button>
-              </Link>
-              <Link href="/post/New_Post?pageType=event">
-                <Button
-                  size={'md'}
-                  color={'light'}
-                  className={classNames(
-                    style.buttonAddDashboard,
-                    'block border-0 mr-4 focus:ring-purple-300'
-                  )}
-                  pill
-                >
-                  <SpriteSvg.AccountAddIcon
-                    sizeH={24}
-                    sizeW={24}
-                    viewBox={'0 -1 14 14'}
-                    strokeWidth={1}
-                  />
-                  <span className="text-lg">Add event</span>
-                </Button>
-              </Link>
-              <Link href="/post/New_Post?pageType=projectResult">
-                <Button
-                  size={'md'}
-                  color={'light'}
-                  className={classNames(
-                    style.buttonAddDashboard,
-                    'block border-0 focus:ring-purple-300'
-                  )}
-                  pill
-                >
-                  <SpriteSvg.AccountAddIcon
-                    sizeH={24}
-                    sizeW={24}
-                    viewBox={'0 -1 14 14'}
-                    strokeWidth={1}
-                  />
-                  <span className="text-lg">Add project result</span>
                 </Button>
               </Link>
             </div>

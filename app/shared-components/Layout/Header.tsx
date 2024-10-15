@@ -171,7 +171,7 @@ const Header = () => {
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
-            Sign out
+            Log out
           </Dropdown.Item>
         </Dropdown>
       </div>

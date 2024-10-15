@@ -209,7 +209,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <InputText
-            placeholder="Enter the post title*"
+            placeholder="Enter your full name (as you want to be seen by others)*"
             value={person?.personTag?.name}
             className={classNames(
               // 'personNameTitle',
@@ -243,13 +243,13 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <InputText
             // label="Tagline"
-            placeholder="Enter tagline"
+            placeholder="Enter a tagline (motto, slogan, ...)"
             className={classNames(
               // 'personTaglineTitle',
               style.genericTextArea,
               style.textPostSubtitle
             )}
-            value={person?.personTag?.tagLine || 'Enter your preffered tagline'}
+            value={person?.personTag?.tagLine || ''}
             onChange={(e) =>
               updatePersonData({
                 ...person,
@@ -290,7 +290,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             <Tag {...person.countryTag} />
           ) : (
             <TagPicker
-              placeholder={'Select Country'}
+              placeholder={'Add a country tag (your current residence)'}
               tags={tags?.filter((tag) => tag?.tagType === 'country')}
               className="relative"
               selectedValue={person?.countryTag?.name || undefined}

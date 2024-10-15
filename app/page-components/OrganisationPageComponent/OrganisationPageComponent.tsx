@@ -675,10 +675,21 @@ function OrganisationPageComponent({
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
       />
+      {/* Organisation Description */}
+      <PersonDescriptionComponent
+        placeholder="Type or paste a short description"
+        description={organisationData.description}
+        isEditModeOn={isEditModeOn}
+        handleUpdate={(value) =>
+          updateOrganisationDataOnKeyValue('description', value)
+        }
+      />
       {/* People */}
       <AffiliationsComponent
+        placeholderRole="Optionally prefixed by roles"
+        placeholderTag="Add one or more person tags"
         afiliations={organisationData.people}
-        tagListTitle="People"
+        tagListTitle="Affiliates"
         isEditModeOn={isEditModeOn}
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('people', value)
@@ -686,17 +697,9 @@ function OrganisationPageComponent({
         tags={tags.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
       />
-      {/* Organisation Description */}
-      <PersonDescriptionComponent
-        description={organisationData.description}
-        isEditModeOn={isEditModeOn}
-        handleUpdate={(value) =>
-          updateOrganisationDataOnKeyValue('description', value)
-        }
-      />
-
       {/* Foresight Methods */}
       <TagListComponent
+        placeholder="Add one or more foresight method tags"
         tagList={organisationData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
@@ -712,6 +715,7 @@ function OrganisationPageComponent({
       />
       {/* Domains */}
       <TagListComponent
+        placeholder="Add one or more domain tags"
         tagList={organisationData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
@@ -727,6 +731,8 @@ function OrganisationPageComponent({
       />
       {/* Projects */}
       <AffiliationsComponent
+        placeholderRole="Optionally prefixed by your role"
+        placeholderTag="Add one or more project tags (that the organisation is/was involved into)"
         afiliations={organisationData.projects}
         tagListTitle="Projects"
         isEditModeOn={isEditModeOn}
@@ -738,8 +744,9 @@ function OrganisationPageComponent({
       />
       {/* Member Organisations */}
       <TagListComponent
+        placeholder="Add one or more organisation tags (affiliated to this one)"
         tagList={organisationData.memberOrganisations}
-        tagListTitle="Member Organisations"
+        tagListTitle="Members"
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOrganisations?.map(
@@ -753,8 +760,9 @@ function OrganisationPageComponent({
       />
       {/* Member of Organisations */}
       <TagListComponent
+        placeholder="Add one or more organisation tags (that this one is affiliated to)"
         tagList={organisationData.memberOfOrganisations}
-        tagListTitle="Member of Organisations"
+        tagListTitle="Member of"
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOfOrganisations?.map(

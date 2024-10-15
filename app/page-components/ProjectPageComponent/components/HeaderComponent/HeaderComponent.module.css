@@ -27,10 +27,6 @@
   outline: none;
   resize: none; /* Disable manual resizing by the user */
   overflow: hidden;
-  padding: 0 !important;
-  margin: 0 !important;
-  line-height: 1em;
-  height: 1.1em;
   /* box-shadow: none !important; */
 }
 
@@ -42,12 +38,10 @@
   font-size: var(--w-font-size-xxl);
   font-weight: var(--w-font-weight-book);
   transform: translateY(0.15em);
-  /* height: 1.1em; */
 }
 
 .textPostSubtitle {
   font-size: var(--w-font-size-tag);
   font-style: italic;
-  /* line-height: 1em; */
   transform: translateY(0.55em);
 }

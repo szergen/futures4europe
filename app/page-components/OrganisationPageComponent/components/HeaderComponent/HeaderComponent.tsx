@@ -214,7 +214,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           />
         ) : (
           <TagPicker
-            placeholder="Select Project Tag or Create New"
+            placeholder="Enter the organisation name"
             tags={tags?.filter(
               (tag) => tag.tagType === 'organisation' && !tag?.tagPageLink
             )}
@@ -275,7 +275,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <>
             <InputText
-              placeholder="Enter tagline"
+              placeholder="Enter a tagline (slogan, acronym, English translation, ...)"
               value={tagLine}
               onChange={(e) => {
                 updateOrganisationData({
@@ -304,6 +304,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             ))
           ) : (
             <TagPicker
+              placeholder="Add one or more organisation type tags"
               tags={tags?.filter((tag) => tag?.tagType === 'organisation type')}
               className="w-full"
               isMulti
@@ -315,7 +316,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               }}
               tagType={'person type'}
               onTagCreated={handleTagCreated}
-              placeholder="Select Organisation Type"
             />
           )}
         </div>
@@ -324,7 +324,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <Tag {...organisation.countryTag} />
         ) : (
           <TagPicker
-            placeholder={'Select Country'}
+            placeholder={
+              'Add one or more country tags (where the organisation is based in)'
+            }
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
             className="relative"
             selectedValue={organisation?.countryTag?.name || undefined}

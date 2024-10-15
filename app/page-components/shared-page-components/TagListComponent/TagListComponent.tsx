@@ -25,7 +25,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
   updatePostData,
   tagType,
   handleTagCreated,
-  placeholder, // New
+  placeholder, // New @alex
 }) => {
   if ((!tagList || tagList?.length === 0) && !isEditModeOn) {
     return null;

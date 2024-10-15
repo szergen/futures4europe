@@ -15,11 +15,13 @@ const Editor = dynamic(
 export interface RTEComponentProps {
   // Define your props here
   content?: string;
+  placeholder?: string;
   updatePostData?: (data: any) => void;
 }
 
 export const RTEComponent: React.FC<RTEComponentProps> = ({
   content,
+  placeholder = 'Type or paste the body of your post.',
   updatePostData,
 }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -79,10 +81,21 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
           .editor-content .public-DraftEditorPlaceholder-hasFocus {
             display: none !important;
           }
+          .editor-container .public-DraftEditor-content::before {
+            content: attr(
+              data-placeholder
+            ); /* Get the placeholder text from the attribute */
+            color: #999; /* Example color */
+            font-style: italic; /* Example style */
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Prevent interaction with the placeholder */
+          }
         `}
       </style>
       <Editor
-        placeholder="Type or paste the body of your post"
+        placeholder={placeholder}
         editorState={editorState}
         onEditorStateChange={setEditorState}
         handlePastedText={handlePastedText}
