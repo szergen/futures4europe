@@ -6,7 +6,7 @@ import RTEComponent from '@app/shared-components/RTEComponent/RTEComponent';
 export type DescriptionComponentProps = {
   description: string;
   isEditModeOn?: boolean;
-  placeholder?: string;
+  placeholder?: string; // Added new prop
   handleUpdate?: (value: string) => void;
 };
 
