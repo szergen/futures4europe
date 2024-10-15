@@ -210,13 +210,14 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border: 'none', // Removes the border
-      boxShadow: 'none', // Removes the focus outline
+      border: 'none',
+      boxShadow: 'none',
       '&:hover': {
-        border: 'none', // Removes the border on hover as well
+        border: 'none',
       },
       minHeight: '5 0px',
-      height: '50px',
+      //height: '50px',
+      margin: '0px 0px 10px 0px'
     }),
 
     input: (provided, state) => ({
@@ -316,7 +317,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
-                'text-gray-400 bg-slate-100 rounded-lg ',
+                'text-gray-400 rounded-lg ', // bg-slate-100
                 styles.tagPickerValueContainer
               ),
           }}
