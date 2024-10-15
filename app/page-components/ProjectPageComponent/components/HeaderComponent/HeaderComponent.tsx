@@ -120,7 +120,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             <InfoPagesImageFileUploader
               currentImage={project?.projectTag?.picture}
               updatePostData={(value) =>
-                updateProjectDataOnKeyValue('personTag', {
+                updateProjectDataOnKeyValue('projectTag', {
                   ...project?.projectTag,
                   picture: value,
                 })

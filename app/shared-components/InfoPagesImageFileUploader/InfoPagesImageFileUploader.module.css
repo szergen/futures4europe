@@ -8,3 +8,34 @@
   width: 147px;
   height: 147px;
 }
+
+.avatarUpload {
+  position: absolute;
+  transform: translate(0px, 0px);
+  z-index: var(--w-z-index-modal);
+  width: var(--c-avatar-size-150);
+  height: var(--c-avatar-size-150);
+  border-radius: var(--p-border-radius-full);
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0;
+}
+
+.avatarUploadEpty {
+  position: relative;
+}
+
+.avatarUpload:hover {
+  cursor: pointer;
+  background: var(--color-background-brand-tag);
+  opacity: 0.77;
+}
+
+.avatarUpload svg {
+  text-align: center;
+  position: relative;
+  display: block;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
