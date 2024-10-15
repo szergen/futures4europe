@@ -299,7 +299,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           options={options}
           value={value}
           isMulti={isMulti}
-          placeholder={placeholder || 'Select or create a tag'}
+          placeholder={placeholder || 'Add one or more post type tags'}
           styles={customStyles}
           className={classNames('', className)}
           classNames={{
@@ -314,7 +314,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
-                'text-black bg-slate-100 rounded-lg ',
+                'text-gray-400 bg-slate-100 rounded-lg ',
                 styles.tagPickerValueContainer
               ),
           }}
