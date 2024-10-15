@@ -235,7 +235,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       const updatedAuthors = await replaceDataItemReferences(
         'PostPages',
         postData.projectAuthors?.map((author: any) => author._id),
-        'projectAuthors',
+        'projectResultAuthor',
         postData._id
       );
       console.log('updatedAuthors', updatedAuthors);
@@ -452,7 +452,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       const updatedAuthors = await replaceDataItemReferences(
         'PostPages',
         postData.projectAuthors?.map((author: any) => author._id),
-        'projectAuthors',
+        'projectResultAuthor',
         newPostID
       );
       console.log('updatedAuthors', updatedAuthors);

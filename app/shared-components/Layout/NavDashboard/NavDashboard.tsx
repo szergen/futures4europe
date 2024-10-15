@@ -182,7 +182,9 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           sizeH={32}
         />
         <NavItem
-          href={handleCreateOrNavigateToPersonInfoPage()}
+          href={
+            !personInfoPageLink ? '/person/New_Info_Page' : personInfoPageLink
+          }
           icon={SpriteSvg.AccountPersonIcon}
           text={userInfoPage ? 'Person Info' : 'Create Person Info'}
         />

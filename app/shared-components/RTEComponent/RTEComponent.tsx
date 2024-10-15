@@ -1,7 +1,7 @@
 import './RTEComponent.module.css';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { EditorState, ContentState, convertToRaw } from 'draft-js';
+import { EditorState, ContentState, convertToRaw, Modifier } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -59,14 +59,31 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
     editorState: EditorState,
     onChange: (editorState: EditorState) => void
   ): boolean => {
-    const contentState = ContentState.createFromText(text);
+    // const contentState = ContentState.createFromText(text);
+    // const newEditorState = EditorState.push(
+    //   editorState,
+    //   contentState,
+    //   'insert-characters'
+    // );
+    // onChange(newEditorState); // Use onChange to update the editor state
+    // return true; // Return true to indicate that pasting is handled
+    const contentState = editorState.getCurrentContent();
+    const selectionState = editorState.getSelection();
+
+    const newContentState = Modifier.insertText(
+      contentState,
+      selectionState,
+      text
+    );
+
     const newEditorState = EditorState.push(
       editorState,
-      contentState,
+      newContentState,
       'insert-characters'
     );
-    onChange(newEditorState); // Use onChange to update the editor state
-    return true; // Return true to indicate that pasting is handled
+
+    onChange(newEditorState);
+    return true;
   };
 
   return (

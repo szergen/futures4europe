@@ -65,7 +65,11 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
           key={index}
           title={item?.title}
           date={item?._updatedDate?.$date}
-          image={item?.postImage1}
+          image={
+            item?.projectResultMedia?.thumbnail ||
+            item?.postImage1?.url ||
+            'https://placehold.co/600x400?text=placeholder'
+          }
           text={item?.postContentRIch1}
           tags={[...(item?.domains ?? []), ...(item?.methods ?? [])]}
         />

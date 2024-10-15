@@ -28,6 +28,7 @@ import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
+import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -71,6 +72,30 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     updatedDate: project?.data?._updatedDate, //done - system field
     projectTag: project?.data?.Project[0], //done
     description: project?.data?.description, //done
+    contentText: [
+      project?.data?.postContentRIch2,
+      project?.data?.postContentRIch1,
+      project?.data?.postContentRIch3,
+      project?.data?.postContentRIch4,
+      project?.data?.postContentRIch5,
+      project?.data?.postContentRIch6,
+      project?.data?.postContentRIch7,
+      project?.data?.postContentRIch8,
+      project?.data?.postContentRIch9,
+      project?.data?.postContentRIch10,
+    ],
+    contentImages: [
+      project?.data?.postImage1,
+      project?.data?.postImage2,
+      project?.data?.postImage3,
+      project?.data?.postImage4,
+      project?.data?.postImage5,
+      project?.data?.postImage6,
+      project?.data?.postImage7,
+      project?.data?.postImage8,
+      project?.data?.postImage9,
+      project?.data?.postImage10,
+    ],
     countryTag: project?.data?.countryTag[0], //done
     projectFunded: project?.data?.projectFunded[0], //done
     projectStartDate: project?.data?.projectStartDate, //done
@@ -157,6 +182,14 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.organisations,
         defaultProjectData.organisations
       ) ||
+      checkIfArrayNeedsUpdate(
+        projectData.contentText,
+        projectData.contentText
+      ) ||
+      !projectData.contentText[0] ||
+      !projectData.contentText[1] ||
+      projectData.projectStartDate !== defaultProjectData.projectStartDate ||
+      projectData.projectEndDate !== defaultProjectData.projectEndDate ||
       projectData.projectTag.name !== defaultProjectData.projectTag.name
     ) {
       const updatedItem = await updateDataItem(
@@ -167,6 +200,26 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           ...projectData.data,
           title: projectData.projectTag.name,
           description: projectData?.description,
+          postContentRIch1: projectData?.contentText[0],
+          postContentRIch2: projectData?.contentText[1],
+          postContentRIch3: projectData?.contentText[2],
+          postContentRIch4: projectData?.contentText[3],
+          postContentRIch5: projectData?.contentText[4],
+          postContentRIch6: projectData?.contentText[5],
+          postContentRIch7: projectData?.contentText[6],
+          postContentRIch8: projectData?.contentText[7],
+          postContentRIch9: projectData?.contentText[8],
+          postContentRIch10: projectData?.contentText[9],
+          postImage1: projectData?.contentImages[0],
+          postImage2: projectData?.contentImages[1],
+          postImage3: projectData?.contentImages[2],
+          postImage4: projectData?.contentImages[3],
+          postImage5: projectData?.contentImages[4],
+          postImage6: projectData?.contentImages[5],
+          postImage7: projectData?.contentImages[6],
+          postImage8: projectData?.contentImages[7],
+          postImage9: projectData?.contentImages[8],
+          postImage10: projectData?.contentImages[9],
           projectStartDate: projectData?.projectStartDate,
           projectEndDate: projectData?.projectEndDate,
           projectOrganisationRoles: projectData?.organisations?.map(
@@ -314,6 +367,26 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         data: {
           title: projectData?.projectTag?.name,
           description: projectData?.description,
+          postContentRIch1: projectData?.contentText[0],
+          postContentRIch2: projectData?.contentText[1],
+          postContentRIch3: projectData?.contentText[2],
+          postContentRIch4: projectData?.contentText[3],
+          postContentRIch5: projectData?.contentText[4],
+          postContentRIch6: projectData?.contentText[5],
+          postContentRIch7: projectData?.contentText[6],
+          postContentRIch8: projectData?.contentText[7],
+          postContentRIch9: projectData?.contentText[8],
+          postContentRIch10: projectData?.contentText[9],
+          postImage1: projectData?.contentImages[0],
+          postImage2: projectData?.contentImages[1],
+          postImage3: projectData?.contentImages[2],
+          postImage4: projectData?.contentImages[3],
+          postImage5: projectData?.contentImages[4],
+          postImage6: projectData?.contentImages[5],
+          postImage7: projectData?.contentImages[6],
+          postImage8: projectData?.contentImages[7],
+          postImage9: projectData?.contentImages[8],
+          postImage10: projectData?.contentImages[9],
           projectStartDate: projectData?.projectStartDate,
           projectEndDate: projectData?.projectEndDate,
           projectOrganisationRoles: projectData?.organisations?.map(
@@ -563,13 +636,33 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         isNewPage={isNewPage}
       />
       {/* Project Description */}
-      <DescriptionComponent
+      {/* <DescriptionComponent
         placeholder="Type or paste the description of the project"
         description={projectData.description}
         isEditModeOn={isEditModeOn}
         handleUpdate={(value) =>
           updateProjectDataOnKeyValue('description', value)
         }
+      /> */}
+      {/* Content Component replaces Description */}
+      <ContentComponent
+        contentText={project.contentText}
+        contentImages={project.contentImages}
+        isEditModeOn={isEditModeOn}
+        updatePostDataContent={(value, index) => {
+          const newContentText = [...project.contentText];
+          newContentText[index] = value;
+          return updateProjectnData({
+            contentText: newContentText,
+          });
+        }}
+        updatePostDataContentImages={(value, index) => {
+          const newContentImages = [...project.contentImages];
+          newContentImages[index] = value;
+          return updateProjectnData({
+            contentImages: newContentImages,
+          });
+        }}
       />
 
       {/* Foresight Methods */}
