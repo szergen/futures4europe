@@ -124,8 +124,9 @@ export default function DashboardProjects() {
           My Foresight Methods
         </h1>
         <p className="text-base text-[#606b85]">
-          This is your dashboard for managing all the foresight methods. You can showcase your foresight methods and share insights.
-          Access your methods to manage all details and much more.
+          This is your dashboard for managing all the foresight methods. You can
+          showcase your foresight methods and share insights. Access your
+          methods to manage all details and much more.
         </p>
 
         <div
@@ -159,31 +160,32 @@ export default function DashboardProjects() {
                 Foresight Method
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your foresigh method. Include how the method was implemented and
-                any particular information you consider insightful. 
+                Add a detailed overview of your foresigh method. Include how the
+                method was implemented and any particular information you
+                consider insightful.
               </p>
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-            <Link href="/post/New_Post?pageType=foresightMethod">
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 focus:ring-purple-300'
-                )}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add foresight method</span>
-              </Button>
-            </Link>
+              <Link href="/post/New_Post?pageType=foresightMethod">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add foresight method</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -210,54 +212,55 @@ export default function DashboardProjects() {
                 'flex flex-col text-base text-[#606b85]'
               )}
             >
-             {ownedPostPages.length || ownedInfoPages.length ? (
+              {ownedPostPages.length || ownedInfoPages.length ? (
                 <>
-                {ownedPostPages.length > 0 ? (
-                  ownedPostPages
-                  .filter(
-                    (postPage) =>
-                      postPage?.data?.pageTypes[0]?.name ===
-                      'foresight method'
-                  ).map((postPage, index) => (
-                      <div
-                        key={postPage?.data?.title + index}
-                        className="pt-2 pb-2 flex flex-row items-center justify-between"
-                      >
-                        <div className="flex flex-wrap flex-start text-left">
-                          <Tag
-                            className="flex-grow basis-full"
-                            name={postPage?.data?.title}
-                            tagPageLink={`/post/${postPage.data.slug}`}
-                            popularity={
-                              postPage?.data?.pageTypes[0]?.popularity
-                            }
-                          ></Tag>
-                        </div>
-                        <div className={'flex flex-row'}>
-                          <Link href={`/post/${postPage.data.slug}`}>
-                            <Button
-                              size={'sm'}
-                              color={'gray'}
-                              className={classNames(
-                                style.buttonAddDashboard,
-                                'block mr-2'
-                              )}
-                              pill
-                            >
-                              <span className="text-md">View</span>
-                            </Button>
-                          </Link>
-                        </div>
+                  {ownedPostPages.length > 0 ? (
+                    ownedPostPages
+                      .filter(
+                        (postPage) =>
+                          postPage?.data?.pageTypes[0]?.name ===
+                          'foresight method'
+                      )
+                      .map((postPage, index) => (
+                        <div
+                          key={postPage?.data?.title + index}
+                          className="pt-2 pb-2 flex flex-row items-center justify-between"
+                        >
+                          <div className="flex flex-wrap flex-start text-left">
+                            <Tag
+                              className="flex-grow basis-full"
+                              name={postPage?.data?.title}
+                              tagPageLink={`/post/${postPage.data.slug}`}
+                              popularity={
+                                postPage?.data?.pageTypes[0]?.popularity
+                              }
+                            ></Tag>
+                          </div>
+                          <div className={'flex flex-row'}>
+                            <Link href={`/post/${postPage.data.slug}`}>
+                              <Button
+                                size={'sm'}
+                                color={'gray'}
+                                className={classNames(
+                                  style.buttonAddDashboard,
+                                  'block mr-2'
+                                )}
+                                pill
+                              >
+                                <span className="text-md">View</span>
+                              </Button>
+                            </Link>
+                          </div>
 
-                        {isLoadingDeletePostPage &&
-                          isLoadingDeletePostPage === postPage?.data?._id && (
-                            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                              <LoadingSpinner />
-                            </div>
-                          )}
-                        {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-                      </div>
-                    ))
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === postPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
+                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
+                        </div>
+                      ))
                   ) : (
                     <div>No Info Pages</div>
                   )}

@@ -44,7 +44,7 @@ const NavItem: React.FC<NavItemProps> = ({
   onClick,
   sizeW,
   sizeH,
-  viewBox, 
+  viewBox,
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -156,7 +156,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           viewBox="0 0 20 20"
           onClick={() => setActiveNavItem('/dashboard/project-results')}
           active={activeNavItem === '/dashboard/project-results'}
-        />    
+        />
         <NavItem
           href="/dashboard/events"
           icon={SpriteSvg.AccountEventsIcon}
@@ -165,7 +165,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           fill={'currentColor'}
           onClick={() => setActiveNavItem('/dashboard/events')}
           active={activeNavItem === '/dashboard/events'}
-        />                
+        />
         <NavItem
           href="/dashboard/organisations"
           icon={SpriteSvg.AccountOrgIcon}
@@ -179,8 +179,8 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           icon={SpriteSvg.AccountForesightsIcon}
           text="Foresight Methods"
           sizeW={34}
-          sizeH={32}          
-        />        
+          sizeH={32}
+        />
         <NavItem
           href={handleCreateOrNavigateToPersonInfoPage()}
           icon={SpriteSvg.AccountPersonIcon}

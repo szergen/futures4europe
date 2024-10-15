@@ -123,8 +123,9 @@ export default function DashboardProjects() {
           My events
         </h1>
         <p className="text-base text-[#606b85]">
-          Would you like to showcase your events and share insights
-          from your work? You can upload your events here and add outputs, speakers and participants.
+          Would you like to showcase your events and share insights from your
+          work? You can upload your events here and add outputs, speakers and
+          participants.
         </p>
 
         <div
@@ -138,7 +139,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountParticipationIcon  
+            <SpriteSvg.AccountParticipationIcon
               className="text-color-white mb-6"
               sizeW={34}
               sizeH={24}
@@ -158,31 +159,32 @@ export default function DashboardProjects() {
                 Event
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your event. Include the type of event, a brief description, the organizers. 
-                Give the location date and time, and any significant information.
+                Add a detailed overview of your event. Include the type of
+                event, a brief description, the organizers. Give the location
+                date and time, and any significant information.
               </p>
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-            <Link href="/post/New_Post?pageType=event">
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
-                )}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add event</span>
-              </Button>
-            </Link>
+              <Link href="/post/New_Post?pageType=event">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 mr-4 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add event</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -213,52 +215,52 @@ export default function DashboardProjects() {
                 <>
                   {ownedPostPages.length > 0 ? (
                     ownedPostPages
-                    .filter(
-                      (postPage) =>
-                        postPage?.data?.pageTypes[0]?.name ===
-                        'event'
-                    ).map((postPage, index) => (
-                      <div
-                        key={postPage?.data?.title + index}
-                        className="pt-2 pb-2 flex flex-row items-center justify-between"
-                      >
-                        <div className="flex flex-wrap flex-start text-left">
-                          <Tag
-                            className="flex-grow basis-full cursor-default"
-                            disableTooltip={true}
-                            name={postPage?.data?.title}
-                            popularity={
-                              postPage?.data?.pageTypes[0]?.popularity
-                            }
-                          ></Tag>
-                        </div>
-                        <div className={'flex flex-row'}>
-                          <Link href={`/post/${postPage.data.slug}`}>
-                            <Button
-                              size={'sm'}
-                              color={'gray'}
-                              className={classNames(
-                                style.buttonAddDashboard,
-                                'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
-                              )}
-                              pill
-                            >
-                              <span className="text-md">View</span>
-                            </Button>
-                          </Link>
-                          {/* // TODO- Visible if admin user WIX */}
-                          {/* // TODO- Transform the List in a component */}
-                        </div>
+                      .filter(
+                        (postPage) =>
+                          postPage?.data?.pageTypes[0]?.name === 'event'
+                      )
+                      .map((postPage, index) => (
+                        <div
+                          key={postPage?.data?.title + index}
+                          className="pt-2 pb-2 flex flex-row items-center justify-between"
+                        >
+                          <div className="flex flex-wrap flex-start text-left">
+                            <Tag
+                              className="flex-grow basis-full cursor-default"
+                              disableTooltip={true}
+                              name={postPage?.data?.title}
+                              popularity={
+                                postPage?.data?.pageTypes[0]?.popularity
+                              }
+                            ></Tag>
+                          </div>
+                          <div className={'flex flex-row'}>
+                            <Link href={`/post/${postPage.data.slug}`}>
+                              <Button
+                                size={'sm'}
+                                color={'gray'}
+                                className={classNames(
+                                  style.buttonAddDashboard,
+                                  'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
+                                )}
+                                pill
+                              >
+                                <span className="text-md">View</span>
+                              </Button>
+                            </Link>
+                            {/* // TODO- Visible if admin user WIX */}
+                            {/* // TODO- Transform the List in a component */}
+                          </div>
 
-                        {isLoadingDeletePostPage &&
-                          isLoadingDeletePostPage === postPage?.data?._id && (
-                            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                              <LoadingSpinner />
-                            </div>
-                          )}
-                        {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-                      </div>
-                    ))
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === postPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
+                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
+                        </div>
+                      ))
                   ) : (
                     <div>No Info Pages</div>
                   )}

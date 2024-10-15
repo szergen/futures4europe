@@ -36,8 +36,8 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   tags,
   handleTagCreated,
   title,
-  placeholderRole='Optionally prefixed by your position',
-  placeholderTag='Add one or more organisation tags',
+  placeholderRole = 'Optionally prefixed by your position',
+  placeholderTag = 'Add one or more organisation tags',
 }) => {
   const [currentAffiliations, setCurrentAffiliations] = useState(
     afiliations || []
@@ -238,15 +238,15 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   onClick={() => handleRemoveAffiliation(index)}
                   className={classNames(style.affiliationRemove, '')}
                 >
-                <SpriteSvg.EditCloseIcon
-                  className="mb-0"
-                  sizeW={16}
-                  sizeH={16}
-                  viewBox={'-3 -2 22 22'}
-                  fill={'#fff'}
-                  strokeWidth={0}
-                  inline={true}
-                />
+                  <SpriteSvg.EditCloseIcon
+                    className="mb-0"
+                    sizeW={16}
+                    sizeH={16}
+                    viewBox={'-3 -2 22 22'}
+                    fill={'#fff'}
+                    strokeWidth={0}
+                    inline={true}
+                  />
                 </button>
               )}
           </div>
