@@ -10,6 +10,7 @@ import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerComponent from '@app/shared-components/DatePickerComponent/DatePickerComponent';
 import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 
 export type HeaderComponentProps = {
   organisation: {
@@ -228,20 +229,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
         {/* Founded */}
         <div className="flex items-center my-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="black"
-            viewBox="0 0 16 16"
-            strokeWidth={0}
-            stroke="currentColor"
-            className="w-4 h-4"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M15.2085 3.66662V6.67138H13.795V11.7597H15.2085V16H0.791504V11.7597H2.20418V6.67138H0.791504V3.66662L7.99961 0L15.2085 3.66662ZM2.20493 4.53201L7.99961 1.58605L13.795 4.53201V5.25795H2.20493V4.53201ZM12.3816 13.1731H13.795V14.5866H2.20493V13.1731H3.61836V6.67138H5.59716V13.1731H7.00983V6.67138H8.98938V13.1731H10.4021V6.67138H12.3816V13.1731Z"
+            <SpriteSvg.AccountOrg2Icon
+              className="mb-4 mr-2"
+              sizeW={24}
+              sizeH={24}
+              viewBox={'0 0 18 18'}
+              fill={'#000'}
+              stroke={'0'}
+              inline={false}
             />
-          </svg>
+
           {!isEditModeOn ? (
             <Typography
               tag="span"
