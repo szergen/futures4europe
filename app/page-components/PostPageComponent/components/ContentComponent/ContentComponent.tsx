@@ -57,14 +57,18 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
       const newContentImages = [...prevContentImages];
       let indexToInsert = -1;
       for (let i = 0; i < 10; i++) {
-        if (newContentImages[i] === undefined || newContentImages[i] === ' ') {
-          newContentImages[i] = ' ';
+        if (
+          newContentImages?.[i] === undefined ||
+          newContentImages?.[i]?.url === ' '
+        ) {
+          console.log('Adding new image', newContentImages[i]);
+          newContentImages[i] = { url: ' ', caption: '' };
           indexToInsert = i;
           break;
         }
       }
       if (indexToInsert !== -1) {
-        updatePostDataContentImages(' ', indexToInsert);
+        updatePostDataContentImages({ url: ' ', caption: '' }, indexToInsert);
         setContentImages(newContentImages);
       }
       return newContentImages;
@@ -123,7 +127,12 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
   useEffect(() => {
     setContentText(initialContentText);
     setContentImages(initialContentImages);
+    console.log('initialContentImages', initialContentImages);
   }, [initialContentText, initialContentImages]);
+
+  useEffect(() => {
+    console.log('contentImages', contentImages);
+  }, [contentImages]);
 
   return (
     <main className={style.postContent}>
@@ -173,8 +182,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                             {!initialContentText?.[index + 1] &&
                               isEditModeOn &&
                               definedItemsCount < 10 &&
-                              !initialContentImages?.[index] &&
-                              initialContentImages?.[index - 1] !== ' ' && (
+                              !initialContentImages?.[index]?.url &&
+                              initialContentImages?.[index - 1]?.url !==
+                                ' ' && (
                                 <button
                                   onClick={() => handleAddImage()}
                                   className="px-2 py-2 rounded-md text-white bg-blue-600 w-40 mt-4"
@@ -187,20 +197,13 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                       )}
                     </>
                   )}
-                  {initialContentImages?.[index] && (
+                  {initialContentImages?.[index]?.url && (
                     <>
                       {!isEditModeOn ? (
                         initialContentImages?.[index] && (
                           <figure>
                             <Image
-                              src={
-                                getImageUrlForMedia(contentImages?.[index])
-                                  ?.url ||
-                                getImageUrlForMedia(
-                                  contentImages[index]?.url
-                                ) ||
-                                ''
-                              }
+                              src={initialContentImages[index].url}
                               width={600}
                               height={400}
                               className={classNames('rounded-md block mx-auto')}

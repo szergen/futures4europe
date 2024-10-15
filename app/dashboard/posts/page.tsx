@@ -215,39 +215,46 @@ export default function DashboardProjects() {
               {ownedPostPages.length || ownedInfoPages.length ? (
                 <>
                   {ownedPostPages.length > 0 ? (
-                    ownedPostPages.map((postPage, index) => (
-                      <div
-                        key={postPage?.data?.title + index}
-                        className="pt-2 pb-2 flex flex-row items-center justify-between"
-                      >
-                        <div className="flex flex-wrap flex-start text-left">
-                          <Tag
-                            className="flex-grow basis-full"
-                            name={postPage?.data?.title}
-                            tagPageLink={`/post/${postPage.data.slug}`}
-                            popularity={
-                              postPage?.data?.pageTypes[0]?.popularity
-                            }
-                          ></Tag>
-                          <Badge
-                            className="basis-auto mt-2 capitalize rounded-full"
-                            color="gray"
-                          >
-                            {postPage?.data?.pageTypes[0]?.name}
-                          </Badge>
-                        </div>
-                        <div className={'flex flex-row'}>
-                          <Link href={`/post/${postPage.data.slug}`}>
-                            <Button
-                              size={'sm'}
-                              color={'gray'}
-                              className={classNames(
-                                style.buttonAddDashboard,
-                                'block mr-2'
-                              )}
-                              pill
+                    ownedPostPages
+                      .filter(
+                        (postPage) =>
+                          postPage?.data?.pageTypes[0]?.name !==
+                            'project result' &&
+                          postPage?.data?.pageTypes[0]?.name !== 'event'
+                      )
+                      .map((postPage, index) => (
+                        <div
+                          key={postPage?.data?.title + index}
+                          className="pt-2 pb-2 flex flex-row items-center justify-between"
+                        >
+                          <div className="flex flex-wrap flex-start text-left">
+                            <Tag
+                              className="flex-grow basis-full"
+                              name={postPage?.data?.title}
+                              tagPageLink={`/post/${postPage.data.slug}`}
+                              popularity={
+                                postPage?.data?.pageTypes[0]?.popularity
+                              }
+                            ></Tag>
+                            <Badge
+                              className="basis-auto mt-2 capitalize rounded-full"
+                              color="gray"
                             >
-                              {/* <SpriteSvg.AccountTrashIcon 
+                              {postPage?.data?.pageTypes[0]?.name}
+                            </Badge>
+                          </div>
+                          <div className={'flex flex-row'}>
+                            <Link href={`/post/${postPage.data.slug}`}>
+                              <Button
+                                size={'sm'}
+                                color={'gray'}
+                                className={classNames(
+                                  style.buttonAddDashboard,
+                                  'block mr-2'
+                                )}
+                                pill
+                              >
+                                {/* <SpriteSvg.AccountTrashIcon 
                               className={'mr-2'}
                               sizeH={16}
                               sizeW={16}
@@ -255,12 +262,12 @@ export default function DashboardProjects() {
                               strokeWidth={0}
                               fill={'currentColor'}
                             /> */}
-                              <span className="text-md">View</span>
-                            </Button>
-                          </Link>
+                                <span className="text-md">View</span>
+                              </Button>
+                            </Link>
 
-                          {/* // TODO- Visible if admin user WIX */}
-                          {/* <Button
+                            {/* // TODO- Visible if admin user WIX */}
+                            {/* <Button
                             onClick={() =>
                               handleDeletePostPage(postPage.data._id)
                             }
@@ -282,17 +289,17 @@ export default function DashboardProjects() {
                             />
                             <span className="text-md">Delete</span>
                           </Button> */}
-                        </div>
+                          </div>
 
-                        {isLoadingDeletePostPage &&
-                          isLoadingDeletePostPage === postPage?.data?._id && (
-                            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                              <LoadingSpinner />
-                            </div>
-                          )}
-                        {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-                      </div>
-                    ))
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === postPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
+                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
+                        </div>
+                      ))
                   ) : (
                     <div>No Info Pages</div>
                   )}

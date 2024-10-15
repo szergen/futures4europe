@@ -584,6 +584,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
+              console.log('projectData', projectData);
               setIsEditModeOn(!isEditModeOn);
               setDefaultProjectData(projectData);
             }}
@@ -646,11 +647,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       /> */}
       {/* Content Component replaces Description */}
       <ContentComponent
-        contentText={project.contentText}
-        contentImages={project.contentImages}
+        contentText={projectData.contentText}
+        contentImages={projectData.contentImages}
         isEditModeOn={isEditModeOn}
         updatePostDataContent={(value, index) => {
-          const newContentText = [...project.contentText];
+          const newContentText = [...projectData.contentText];
           newContentText[index] = value;
           return updateProjectnData({
             contentText: newContentText,

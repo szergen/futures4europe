@@ -169,7 +169,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
         <NavItem
           href="/dashboard/organisations"
           icon={SpriteSvg.AccountOrgIcon}
-          text="Organisation"
+          text="Organisations"
           sizeW={34}
           sizeH={32}
           active={activeNavItem === '/dashboard/organisations'}
@@ -203,7 +203,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           strokeWidth={2}
         /> */}
       </div>
-      {SubNav}
+      {activeItem === '/dashboard' && SubNav}
     </>
   );
 };

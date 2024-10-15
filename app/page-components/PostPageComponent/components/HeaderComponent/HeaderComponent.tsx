@@ -73,9 +73,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
+    const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
     if (!validTitleRegex.test(tempTitle)) {
-      return 'Title can only contain small characters, capital characters, numbers, and spaces';
+      return 'Title cannot contain multiple spaces or |';
     }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>

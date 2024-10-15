@@ -75,6 +75,7 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
       selectionState,
       text
     );
+    
 
     const newEditorState = EditorState.push(
       editorState,
