@@ -197,7 +197,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               validationFunctionForTitle(post?.title) && style.InputRequired
             )}
             // label=""
-            placeholder="Enter the post title*"
+            placeholder={
+              post?.pageType?.[0]?.name !== 'event'
+                ? 'Enter the post title'
+                : 'Enter the event title'
+            }
             value={post?.title}
             onChange={(e) => updatePostData({ ...post, title: e.target.value })}
             validate={validationFunctionForTitle}
@@ -217,8 +221,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <InputText
             label=""
-            placeholder="Enter the post subtitle"
-            value={post?.subtitle || 'Enter the post subtitle'}
+            placeholder={
+              post?.pageType?.[0]?.name !== 'event'
+                ? 'Enter the post subtitle'
+                : 'Enter the event subtitle'
+            }
+            value={post?.subtitle || ''}
             onChange={(e) =>
               updatePostData({ ...post, subtitle: e.target.value })
             }
@@ -292,7 +300,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   </Link>
                 ) : (
                   <InputText
-                    placeholder="Enter registration link"
+                    placeholder="Paste link to the registration page"
                     value={post?.eventRegistration || 'Enter registration link'}
                     onChange={(e) =>
                       updatePostData({
@@ -314,7 +322,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               <TagPicker
                 placeholder={
                   post?.pageType?.[0]?.name !== 'event'
-                    ? 'Add country tag relevant to your post'
+                    ? 'Add one or more country tags relevant to your post'
                     : 'Add country tag relevant to your post'
                 }
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}

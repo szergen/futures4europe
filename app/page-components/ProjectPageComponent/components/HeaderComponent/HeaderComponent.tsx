@@ -218,7 +218,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           />
         ) : (
           <TagPicker
-            placeholder="Select Project Tag or Create New"
+            placeholder="Enter the project name"
             tags={tags?.filter(
               (tag) => tag.tagType === 'project' && !tag?.tagPageLink
             )}
@@ -238,7 +238,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <>
             <InputText
-              placeholder="Enter tagline"
+              placeholder="Enter a tagline (slogan, acronym, English translation, ...)"
               // value={
               //   project?.projectTag?.tagLine || 'Enter your preffered tagline'
               // }
@@ -272,7 +272,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         ) : (
           <div className="flex items-center mt-4">
-            <span className="mr-4">Start Date</span>
+            <span className="mr-4">Enter begin date</span>
             <DatePickerRangeComponentDouble
               dateStart={
                 project?.projectStartDate
@@ -297,7 +297,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 )
               }
             />
-            <span className="ml-4">End Date</span>
+            <span className="ml-4">Enter end date</span>
           </div>
         )}
 
@@ -306,7 +306,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <Tag {...project.projectFunded} className="mb-1" />
         ) : (
           <TagPicker
-            placeholder="Select Project Funded"
+            placeholder="Add a project type tag"
             tags={tags?.filter((tag) => tag.tagType === 'project type')}
             className="relative"
             selectedValue={project.projectFunded?.name || undefined}
@@ -329,7 +329,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <Tag {...project.countryTag} />
         ) : (
           <TagPicker
-            placeholder={'Select Country'}
+            placeholder={'Add one or more country tags relevant to the project'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
             className="relative"
             selectedValue={project?.countryTag?.name || undefined}

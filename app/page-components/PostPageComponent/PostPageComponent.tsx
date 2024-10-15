@@ -731,6 +731,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       {/* Project Result Authors */}
       {postData.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
         <TagListComponent
+          placeholder='Add one or more person tags'
           tagList={postData.projectAuthors}
           tagListTitle="Authors"
           isEditModeOn={isEditModeOn}
@@ -811,7 +812,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
             ? 'People'
             : 'Participants'
         }
-        placeholder="Add one or more person tags"
+        placeholder="Add one or more person tags relevant to your post"
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'person')}
         selectedValues={postData.people?.map((person: any) => person?.name)}

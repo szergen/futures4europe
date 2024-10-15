@@ -661,7 +661,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       />
       {/* Person Description */}
       <PersonDescriptionComponent
-        placeholder={'Type or paste a short description of yourself'} // TODO: Placeholder 
+        placeholder={'Type or paste a short description of yourself'} // TODO: Placeholder @alex
         description={personData.description}
         isEditModeOn={isEditModeOn}
         handleUpdate={(value) =>
@@ -722,6 +722,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       />
       {/* Projects Coordination */}
       <TagListComponent
+        placeholder='Add one or more project tags'
         tagList={personData.projectsCoordindation}
         tagListTitle="Project Coordination"
         isEditModeOn={isEditModeOn}
@@ -736,6 +737,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       />
       {/* Projects Participation */}
       <TagListComponent
+        placeholder='Add one or more project tags'
         tagList={personData.projectsParticipation}
         tagListTitle="Project Participation"
         isEditModeOn={isEditModeOn}
