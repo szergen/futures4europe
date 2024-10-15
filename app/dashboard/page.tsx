@@ -185,7 +185,7 @@ export default function Dashboard() {
             'mb-10',
             'p-8',
             'bg-alertLight-site',
-            personInfoPageLink && 'bg-purple-200'
+            personInfoPageLink && 'bg-gray-100'
           )}
         >
           <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
