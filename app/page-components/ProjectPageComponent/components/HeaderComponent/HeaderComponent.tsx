@@ -188,7 +188,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             className={classNames(
               style.genericTextArea,
               style.textPostTitleEdit,
-              validationFunctionForName(project?.projectTag.name) &&
+              validationFunctionForName(project?.projectTag?.name) &&
                 style.InputRequired
             )}
             placeholder="Enter title"

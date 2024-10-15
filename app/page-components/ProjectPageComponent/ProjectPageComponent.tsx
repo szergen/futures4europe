@@ -661,7 +661,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           });
         }}
         updatePostDataContentImages={(value, index) => {
-          const newContentImages = [...project.contentImages];
+          const newContentImages = [...projectData.contentImages];
           newContentImages[index] = value;
           return updateProjectnData({
             contentImages: newContentImages,

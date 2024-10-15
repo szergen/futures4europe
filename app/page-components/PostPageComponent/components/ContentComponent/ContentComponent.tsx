@@ -59,9 +59,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
       for (let i = 0; i < 10; i++) {
         if (
           newContentImages?.[i] === undefined ||
-          newContentImages?.[i]?.url === ' '
+          newContentImages?.[i]?.url === ''
         ) {
-          console.log('Adding new image', newContentImages[i]);
+          console.log('Adding new image');
           newContentImages[i] = { url: ' ', caption: '' };
           indexToInsert = i;
           break;
@@ -128,6 +128,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     setContentText(initialContentText);
     setContentImages(initialContentImages);
     console.log('initialContentImages', initialContentImages);
+    console.log('initialContentText', initialContentText);
   }, [initialContentText, initialContentImages]);
 
   useEffect(() => {
