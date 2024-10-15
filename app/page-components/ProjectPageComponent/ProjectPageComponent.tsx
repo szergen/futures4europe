@@ -186,8 +186,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.contentText,
         projectData.contentText
       ) ||
-      !projectData.contentText[0] ||
-      !projectData.contentText[1] ||
+      checkIfArrayNeedsUpdate(
+        projectData.contentImages,
+        projectData.contentImages
+      ) ||
+      projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
       projectData.projectTag.name !== defaultProjectData.projectTag.name
