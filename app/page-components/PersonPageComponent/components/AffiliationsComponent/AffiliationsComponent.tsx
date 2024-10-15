@@ -23,6 +23,8 @@ export type AffiliationsComponentProps = {
   tags?: TagProps[];
   handleTagCreated?: () => void;
   title?: string;
+  placeholderRole?: string;
+  placeholderTag?: string;
 };
 
 const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
@@ -34,6 +36,8 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   tags,
   handleTagCreated,
   title,
+  placeholderRole='Optionally prefixed by your position',
+  placeholderTag='Add one or more organisation tags',
 }) => {
   const [currentAffiliations, setCurrentAffiliations] = useState(
     afiliations || []
@@ -179,7 +183,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             ) : (
               <div className={classNames(style.inputContainer)}>
                 <InputText
-                  placeholder="Position"
+                  placeholder={placeholderRole}
                   key={`affiliation-${affilitiation.name}`}
                   value={affilitiation.arole || ''}
                   onChange={(e) => {
@@ -208,7 +212,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             ) : (
               <TagPicker
                 key={`affiliation-${affilitiation.name}-${index}`}
-                placeholder="Select Organisation"
+                placeholder={placeholderTag}
                 tags={tags}
                 selectedValue={affilitiation?.name || undefined}
                 updatePostData={(value) => {

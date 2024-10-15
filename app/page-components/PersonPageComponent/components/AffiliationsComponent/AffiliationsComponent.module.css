@@ -44,10 +44,13 @@
   height: var(--w-space-xl);
   line-height: var(--w-font-size-tag);
   white-space: nowrap; /* Prevent wrapping */
-  min-width: calc(var(--w-space-m) * 2);
+  min-width: calc(var(--w-space-m) * 20);
   max-width: calc(var(--w-space-m) * 20);
   padding: 0px 5px 0px 5px;
   margin: 7px 0px;
+}
+.roleInput::placeholder {
+  font-size: var(var(--w-font-size-tag));
 }
 
 input.roleInput:focus {
