@@ -324,7 +324,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <Tag {...organisation.countryTag} />
         ) : (
           <TagPicker
-            placeholder={'Add one or more country tags (where the organisation is based in)'}
+            placeholder={
+              'Add one or more country tags (where the organisation is based in)'
+            }
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
             className="relative"
             selectedValue={organisation?.countryTag?.name || undefined}

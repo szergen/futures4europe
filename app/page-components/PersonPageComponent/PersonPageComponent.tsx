@@ -698,7 +698,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       <TagListComponent
         tagList={personData.methods}
         tagListTitle="Foresight Methods"
-        placeholder='Add one or more foresight method tags'
+        placeholder="Add one or more foresight method tags"
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={personData.methods?.map((method: any) => method?.name)}
@@ -712,7 +712,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       <TagListComponent
         tagList={personData.domains}
         tagListTitle="Domains"
-        placeholder='Add one or more domain tags relevant to you'
+        placeholder="Add one or more domain tags relevant to you"
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={personData.domains?.map((domain: any) => domain?.name)}
@@ -722,7 +722,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       />
       {/* Projects Coordination */}
       <TagListComponent
-        placeholder='Add one or more project tags'
+        placeholder="Add one or more project tags"
         tagList={personData.projectsCoordindation}
         tagListTitle="Project Coordination"
         isEditModeOn={isEditModeOn}
@@ -737,7 +737,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       />
       {/* Projects Participation */}
       <TagListComponent
-        placeholder='Add one or more project tags'
+        placeholder="Add one or more project tags"
         tagList={personData.projectsParticipation}
         tagListTitle="Project Participation"
         isEditModeOn={isEditModeOn}

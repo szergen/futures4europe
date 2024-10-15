@@ -731,7 +731,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       {/* Project Result Authors */}
       {postData.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
         <TagListComponent
-          placeholder='Add one or more person tags'
+          placeholder="Add one or more person tags"
           tagList={postData.projectAuthors}
           tagListTitle="Authors"
           isEditModeOn={isEditModeOn}

@@ -37,11 +37,10 @@ export default function DashboardProjects() {
     tags,
   } = useAuth();
   console.log('ownedPostPages', ownedPostPages);
-  
+
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
-
 
   const handleDeletePostPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);

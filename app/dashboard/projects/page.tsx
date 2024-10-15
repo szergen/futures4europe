@@ -203,25 +203,25 @@ export default function DashboardProjects() {
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-            <Link href="/project/New_Project">
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
-                )}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add project</span>
-              </Button>
-            </Link>
+              <Link href="/project/New_Project">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 mr-4 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add project</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

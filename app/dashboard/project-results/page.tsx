@@ -93,7 +93,11 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/project-results', text: 'Project results', isActive: true },
+    {
+      href: '/dashboard/project-results',
+      text: 'Project results',
+      isActive: true,
+    },
   ];
 
   return (
@@ -124,8 +128,8 @@ export default function DashboardProjects() {
         </h1>
         <p className="text-base text-[#606b85]">
           Would you like to showcase your project results and share insights
-          from your work? You can upload your project results here and add outputs and
-          team members.
+          from your work? You can upload your project results here and add
+          outputs and team members.
         </p>
 
         <div
@@ -139,7 +143,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountResultsIcon  
+            <SpriteSvg.AccountResultsIcon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
@@ -159,31 +163,32 @@ export default function DashboardProjects() {
                 Project result
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your project result. Include the delivrable,
-                description, authors, and any significant information of the project result.
+                Add a detailed overview of your project result. Include the
+                delivrable, description, authors, and any significant
+                information of the project result.
               </p>
             </div>
 
             <div className={classNames(style.listDashboard, 'flex')}>
-            <Link href="/post/New_Post?pageType=projectResult">
-              <Button
-                size={'md'}
-                color={'light'}
-                className={classNames(
-                  style.buttonAddDashboard,
-                  'block border-0 mr-4 focus:ring-purple-300'
-                )}
-                pill
-              >
-                <SpriteSvg.AccountAddIcon
-                  sizeH={24}
-                  sizeW={24}
-                  viewBox={'0 -1 14 14'}
-                  strokeWidth={1}
-                />
-                <span className="text-lg">Add project result</span>
-              </Button>
-            </Link>
+              <Link href="/post/New_Post?pageType=projectResult">
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 mr-4 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.AccountAddIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 14 14'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Add project result</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -214,52 +219,53 @@ export default function DashboardProjects() {
                 <>
                   {ownedPostPages.length > 0 ? (
                     ownedPostPages
-                    .filter(
-                      (postPage) =>
-                        postPage?.data?.pageTypes[0]?.name ===
-                        'project result'
-                    ).map((postPage, index) => (
-                      <div
-                        key={postPage?.data?.title + index}
-                        className="pt-2 pb-2 flex flex-row items-center justify-between"
-                      >
-                        <div className="flex flex-wrap flex-start text-left">
-                          <Tag
-                            className="flex-grow basis-full cursor-default"
-                            disableTooltip={true}
-                            name={postPage?.data?.title}
-                            popularity={
-                              postPage?.data?.pageTypes[0]?.popularity
-                            }
-                          ></Tag>
-                        </div>
-                        <div className={'flex flex-row'}>
-                          <Link href={`/post/${postPage.data.slug}`}>
-                            <Button
-                              size={'sm'}
-                              color={'gray'}
-                              className={classNames(
-                                style.buttonAddDashboard,
-                                'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
-                              )}
-                              pill
-                            >
-                              <span className="text-md">View</span>
-                            </Button>
-                          </Link>
-                          {/* // TODO- Visible if admin user WIX */}
-                          {/* // TODO- Transform the List in a component */}
-                        </div>
+                      .filter(
+                        (postPage) =>
+                          postPage?.data?.pageTypes[0]?.name ===
+                          'project result'
+                      )
+                      .map((postPage, index) => (
+                        <div
+                          key={postPage?.data?.title + index}
+                          className="pt-2 pb-2 flex flex-row items-center justify-between"
+                        >
+                          <div className="flex flex-wrap flex-start text-left">
+                            <Tag
+                              className="flex-grow basis-full cursor-default"
+                              disableTooltip={true}
+                              name={postPage?.data?.title}
+                              popularity={
+                                postPage?.data?.pageTypes[0]?.popularity
+                              }
+                            ></Tag>
+                          </div>
+                          <div className={'flex flex-row'}>
+                            <Link href={`/post/${postPage.data.slug}`}>
+                              <Button
+                                size={'sm'}
+                                color={'gray'}
+                                className={classNames(
+                                  style.buttonAddDashboard,
+                                  'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
+                                )}
+                                pill
+                              >
+                                <span className="text-md">View</span>
+                              </Button>
+                            </Link>
+                            {/* // TODO- Visible if admin user WIX */}
+                            {/* // TODO- Transform the List in a component */}
+                          </div>
 
-                        {isLoadingDeletePostPage &&
-                          isLoadingDeletePostPage === postPage?.data?._id && (
-                            <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                              <LoadingSpinner />
-                            </div>
-                          )}
-                        {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-                      </div>
-                    ))
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === postPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
+                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
+                        </div>
+                      ))
                   ) : (
                     <div>No Info Pages</div>
                   )}

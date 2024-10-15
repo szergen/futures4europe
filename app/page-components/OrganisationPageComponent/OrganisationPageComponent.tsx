@@ -677,17 +677,17 @@ function OrganisationPageComponent({
       />
       {/* Organisation Description */}
       <PersonDescriptionComponent
-        placeholder='Type or paste a short description'
+        placeholder="Type or paste a short description"
         description={organisationData.description}
         isEditModeOn={isEditModeOn}
         handleUpdate={(value) =>
           updateOrganisationDataOnKeyValue('description', value)
         }
-      />      
+      />
       {/* People */}
       <AffiliationsComponent
-        placeholderRole='Optionally prefixed by roles'
-        placeholderTag='Add one or more person tags'
+        placeholderRole="Optionally prefixed by roles"
+        placeholderTag="Add one or more person tags"
         afiliations={organisationData.people}
         tagListTitle="Affiliates"
         isEditModeOn={isEditModeOn}
@@ -699,7 +699,7 @@ function OrganisationPageComponent({
       />
       {/* Foresight Methods */}
       <TagListComponent
-        placeholder='Add one or more foresight method tags'
+        placeholder="Add one or more foresight method tags"
         tagList={organisationData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
@@ -715,7 +715,7 @@ function OrganisationPageComponent({
       />
       {/* Domains */}
       <TagListComponent
-        placeholder='Add one or more domain tags'
+        placeholder="Add one or more domain tags"
         tagList={organisationData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
@@ -731,8 +731,8 @@ function OrganisationPageComponent({
       />
       {/* Projects */}
       <AffiliationsComponent
-        placeholderRole='Optionally prefixed by your role'
-        placeholderTag='Add one or more project tags (that the organisation is/was involved into)'      
+        placeholderRole="Optionally prefixed by your role"
+        placeholderTag="Add one or more project tags (that the organisation is/was involved into)"
         afiliations={organisationData.projects}
         tagListTitle="Projects"
         isEditModeOn={isEditModeOn}
@@ -744,7 +744,7 @@ function OrganisationPageComponent({
       />
       {/* Member Organisations */}
       <TagListComponent
-        placeholder='Add one or more organisation tags (affiliated to this one)'
+        placeholder="Add one or more organisation tags (affiliated to this one)"
         tagList={organisationData.memberOrganisations}
         tagListTitle="Members"
         isEditModeOn={isEditModeOn}
@@ -760,7 +760,7 @@ function OrganisationPageComponent({
       />
       {/* Member of Organisations */}
       <TagListComponent
-        placeholder='Add one or more organisation tags (that this one is affiliated to)'
+        placeholder="Add one or more organisation tags (that this one is affiliated to)"
         tagList={organisationData.memberOfOrganisations}
         tagListTitle="Member of"
         isEditModeOn={isEditModeOn}
