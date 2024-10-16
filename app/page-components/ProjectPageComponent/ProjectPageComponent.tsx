@@ -73,8 +73,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     projectTag: project?.data?.Project[0], //done
     description: project?.data?.description, //done
     contentText: [
-      project?.data?.postContentRIch2,
       project?.data?.postContentRIch1,
+      project?.data?.postContentRIch2,
       project?.data?.postContentRIch3,
       project?.data?.postContentRIch4,
       project?.data?.postContentRIch5,
