@@ -115,6 +115,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem="/dashboard/project-results"
       />
 
       <div
@@ -123,14 +124,14 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My project results
         </h1>
         <p className="text-base text-[#606b85]">
           Would you like to showcase your project results and share insights
           from your work? You can upload your project results here and add
           outputs and team members.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -143,7 +144,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountResultsIcon
+            {/* <SpriteSvg.AccountResultsIcon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
@@ -151,21 +152,27 @@ export default function DashboardProjects() {
               fill={'#fff'}
               strokeWidth={0}
               inline={false}
-            />
+            /> */}
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Project result
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your project result. Include the
                 delivrable, description, authors, and any significant
                 information of the project result.
+                <Link
+                  href="/post/New_Post?pageType=projectResult"
+                  className="ml-4 underline"
+                >
+                  View Example Project Result
+                </Link>
               </p>
             </div>
 

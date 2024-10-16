@@ -120,14 +120,14 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My Foresight Methods
         </h1>
         <p className="text-base text-[#606b85]">
           This is your dashboard for managing all the foresight methods. You can
           showcase your foresight methods and share insights. Access your
           methods to manage all details and much more.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -151,18 +151,24 @@ export default function DashboardProjects() {
             />
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Foresight Method
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your foresigh method. Include how the
                 method was implemented and any particular information you
                 consider insightful.
+                <Link
+                  href="/post/New_Post?pageType=event"
+                  className="ml-4 underline"
+                >
+                  View Example Foresight Method
+                </Link>
               </p>
             </div>
 

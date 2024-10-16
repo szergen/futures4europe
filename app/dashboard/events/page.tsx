@@ -111,6 +111,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem="/dashboard/events"
       />
 
       <div
@@ -119,14 +120,14 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My events
         </h1>
         <p className="text-base text-[#606b85]">
           Would you like to showcase your events and share insights from your
           work? You can upload your events here and add outputs, speakers and
           participants.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -139,7 +140,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountParticipationIcon
+            {/* <SpriteSvg.AccountParticipationIcon
               className="text-color-white mb-6"
               sizeW={34}
               sizeH={24}
@@ -147,21 +148,27 @@ export default function DashboardProjects() {
               fill={'#fff'}
               strokeWidth={0}
               inline={false}
-            />
+            /> */}
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Event
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your event. Include the type of
                 event, a brief description, the organizers. Give the location
                 date and time, and any significant information.
+                <Link
+                  href="/post/New_Post?pageType=event"
+                  className="ml-4 underline"
+                >
+                  View Example Event
+                </Link>
               </p>
             </div>
 

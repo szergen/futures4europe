@@ -119,14 +119,16 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* NOTE: Removed afeter 15.11 discussion */}
+
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My posts
-        </h1>
-        <p className="text-base text-[#606b85]">
+        </h1> */}
+        {/* <p className="text-base text-[#606b85]">
           Would you like to showcase your foresight posts and share insights
           from your work? You can create your posts here and add various content
           raging from articles, blog posts, news, any type of editorial posts.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -139,7 +141,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountPostIcon
+            {/* <SpriteSvg.AccountPostIcon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
@@ -148,21 +150,27 @@ export default function DashboardProjects() {
               stroke={'#fff'}
               strokeWidth={0}
               inline={false}
-            />
+            /> */}
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Posts
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Add a detailed overview of your post. Include text content or
-                image. Add any significant outcomes or findings in the foresight
-                community.
+                Create Posts section. Include text content or image. Add any
+                significant outcomes or findings in the foresight community.
+                Here is an example of a post:
+                <Link
+                  href="/post/Webinar_Platform_driven_horizon_scanning_in_practice_6n0a2"
+                  className="ml-4 underline"
+                >
+                  View Example Post
+                </Link>
               </p>
             </div>
 
