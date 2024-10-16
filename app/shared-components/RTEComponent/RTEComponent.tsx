@@ -5,6 +5,8 @@ import { EditorState, ContentState, convertToRaw, Modifier } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import classNames from 'classnames';
+import style from './RTEComponent.module.css';
 // import { RxFontBold } from 'react-icons/rx';
 
 const Editor = dynamic(
@@ -17,12 +19,14 @@ export interface RTEComponentProps {
   content?: string;
   placeholder?: string;
   updatePostData?: (data: any) => void;
+  className?: string;
 }
 
 export const RTEComponent: React.FC<RTEComponentProps> = ({
   content,
   placeholder = 'Type or paste the body of your post.',
   updatePostData,
+  className,
 }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -118,7 +122,7 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
         handlePastedText={handlePastedText}
         toolbarClassName="editor-toolbar"
         wrapperClassName="editor-container"
-        editorClassName="editor-content"
+        editorClassName={classNames('editor-content', className)}
         toolbarStyle={{
           position: 'sticky',
           top: 0,
@@ -182,10 +186,10 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
             // inDropdown: false,
             // className: undefined,
             // component: undefined,
-            // popupClassName: undefined,
+            popupClassName: style.linkPopup,
             // dropdownClassName: undefined,
             showOpenOptionOnHover: true,
-            // defaultTargetOption: '_self',
+            defaultTargetOption: '_blank',
             options: ['link', 'unlink'],
             // link: { icon: link, className: undefined },
             // unlink: { icon: unlink, className: undefined },

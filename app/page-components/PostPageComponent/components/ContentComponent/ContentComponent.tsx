@@ -152,7 +152,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           dangerouslySetInnerHTML={{
                             __html: initialContentText?.[index],
                           }}
-                          className="py-4"
+                          className={classNames('py-4', style.displayText)}
                         ></div>
                       ) : (
                         <div className="relative">
@@ -161,6 +161,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                             updatePostData={(value) =>
                               handleUpdatePostDataContent(value, index)
                             }
+                            className={classNames(style.displayText)}
                           />
                           <div className="flex flex-col">
                             {/* Delete RTE */}

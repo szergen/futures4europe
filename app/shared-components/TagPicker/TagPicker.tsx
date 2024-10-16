@@ -308,9 +308,15 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                 state.isFocused ? styles.TagCursor : 'text-gray-site' // Proper ternary expression
               ),
             multiValue: () =>
-              'tagPickerPill tagPickerPillRemove z-5 my-1 cursor-pointer',
+              classNames(
+                'tagPickerPill tagPickerPillRemove z-5 my-1 cursor-pointer',
+                styles.tagPickerPillMultiModule
+              ),
             singleValue: () =>
-              'tagPickerPillSingle tagPickerPillRemove cursor-pointer z-5',
+              classNames(
+                'tagPickerPillSingle tagPickerPillRemove cursor-pointer z-5',
+                styles.tagPickerPillSingleModule
+              ),
             menu: () => classNames('', styles.tagPickerMenu),
             menuList: () => classNames('', styles.tagPickerMenuList),
             option: () => classNames('', styles.option),
