@@ -43,14 +43,6 @@ export default function RootLayout({
       <body className=" bg-white">
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
-            {/* <WixProvider
-              auth={ApiKeyStrategy({
-                // clientId: '3bca9b0d-398e-4c47-b2e2-263d4ccd7458',
-                apiKey: process.env.NEXT_PUBLIC_WIX_API_KEY,
-                siteId: process.env.NEXT_PUBLIC_WIX_SITE_ID,
-                accountId: process.env.NEXT_PUBLIC_WIX_ACCOUNT_ID,
-              })}
-            > */}
             <WixProvider
               auth={OAuthStrategy({
                 clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,

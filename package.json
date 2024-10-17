@@ -14,6 +14,10 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.4",
+    "@mui/x-date-pickers": "^7.20.0",
     "@netlify/plugin-nextjs": "^4.36.0",
     "@react-spring/web": "^9.7.4",
     "@wix/crm": "^1.0.126",
@@ -25,6 +29,7 @@
     "@wix/sdk-react": "^0.5.7",
     "@wix/site": "^1.16.0",
     "@wix/site-members": "^1.14.0",
+    "dayjs": "^1.11.13",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "flowbite": "^1.5.4",

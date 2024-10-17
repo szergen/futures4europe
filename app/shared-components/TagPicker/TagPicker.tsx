@@ -8,6 +8,7 @@ import { Modal, Button, TextInput, Label } from 'flowbite-react';
 import { useWixModules } from '@wix/sdk-react';
 import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export type TagPickerProps = {
   isMulti?: boolean;
@@ -62,6 +63,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   const [tagName, setTagName] = useState('');
   const [tagTagline, setTagTagline] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { tags: allTags } = useAuth();
   // #endregion
 
   // #region Tag picker state
@@ -273,6 +275,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     ClearIndicator: customClearIndicator,
   };
 
+  const validationForTagName = (tagName: string) => {
+    return allTags?.find((tag) => tag.name === tagName);
+  };
+
+  const [isTagNameValid, setIsTagNameValid] = useState(true);
+
+  useEffect(() => {
+    setIsTagNameValid(!validationForTagName(tagName));
+  }, [tagName]);
+
   return (
     <>
       <div
@@ -333,12 +345,21 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
-                  <Label htmlFor="tagName">Project Name</Label>
+                  <Label htmlFor="tagName" className="relative">
+                    Project Name
+                  </Label>
                   <TextInput
                     id="tagName"
                     value={tagName}
                     onChange={(e) => setTagName(e.target.value)}
                     required
+                    helperText={
+                      !isTagNameValid && (
+                        <span className="text-red-600 relative -top-3">
+                          TagName already exists in a different tag type
+                        </span>
+                      )
+                    }
                   />
                 </div>
                 <div className="mb-4">
@@ -349,7 +370,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     onChange={(e) => setTagTagline(e.target.value)}
                   />
                 </div>
-                <Button type="submit" disabled={isLoading}>
+                <Button
+                  disabled={!isTagNameValid || isLoading}
+                  type="submit"
+                  // disabled={isLoading}
+                >
                   Submit
                 </Button>
               </form>

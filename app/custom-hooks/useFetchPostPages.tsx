@@ -3,7 +3,10 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-const useFetchPostPages = (refresh: boolean) => {
+const useFetchPostPages = (
+  refresh: boolean,
+  setIsLoadingInProgress: (value: boolean) => void
+) => {
   const [postPages, setPostPages] = useState<any[]>([]);
   const [postPagesFetched, setPostPagesFetched] = useState(false);
 
@@ -11,6 +14,7 @@ const useFetchPostPages = (refresh: boolean) => {
 
   useEffect(() => {
     const fetchPostPages = async () => {
+      setIsLoadingInProgress(true);
       try {
         let allPostPages = [] as any[];
         let skip = 0;
@@ -35,6 +39,7 @@ const useFetchPostPages = (refresh: boolean) => {
       } catch (error) {
         console.error('Error fetching post pages:', error);
       }
+      setIsLoadingInProgress(false);
     };
 
     fetchPostPages();
