@@ -71,7 +71,7 @@ const CustomInput = React.forwardRef(
           // label="Date"
           color={isFormValid ? undefined : 'error'}
         />
-        
+
         <button onClick={onClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
