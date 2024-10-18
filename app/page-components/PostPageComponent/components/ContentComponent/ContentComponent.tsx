@@ -45,8 +45,8 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
         }
       }
       if (indexToInsert !== -1) {
-        updatePostDataContent(' ', indexToInsert);
         setContentText(newContentText);
+        updatePostDataContent(' ', indexToInsert);
       }
       return newContentText;
     });
@@ -57,15 +57,19 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
       const newContentImages = [...prevContentImages];
       let indexToInsert = -1;
       for (let i = 0; i < 10; i++) {
-        if (newContentImages[i] === undefined || newContentImages[i] === ' ') {
-          newContentImages[i] = ' ';
+        if (
+          newContentImages?.[i] === undefined ||
+          newContentImages?.[i]?.url === ''
+        ) {
+          console.log('Adding new image');
+          newContentImages[i] = { url: ' ', caption: '' };
           indexToInsert = i;
           break;
         }
       }
       if (indexToInsert !== -1) {
-        updatePostDataContentImages(' ', indexToInsert);
         setContentImages(newContentImages);
+        updatePostDataContentImages({ url: ' ', caption: '' }, indexToInsert);
       }
       return newContentImages;
     });
@@ -123,38 +127,111 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
   useEffect(() => {
     setContentText(initialContentText);
     setContentImages(initialContentImages);
-  }, [initialContentText, initialContentImages]);
+    console.log('main initialContentImages', initialContentImages);
+    console.log('main initialContentText', initialContentText);
+  }, [isEditModeOn]);
+
+  const shouldAddEmptyContentText = () => {
+    const definedImagesCount = contentImages.filter(
+      (item) => item !== undefined
+    ).length;
+    const definedContentCount = contentText.filter(
+      (item) => item !== undefined
+    ).length;
+    console.log('TEXT -> definedImagesCount', definedImagesCount);
+    console.log('TEXT -> definedContentCount', definedContentCount);
+
+    if (definedContentCount === 0) {
+      return true;
+    }
+
+    if (
+      definedImagesCount === definedContentCount &&
+      definedContentCount <= 10 &&
+      contentImages[definedImagesCount - 1]?.url != ' '
+    ) {
+      return true;
+    }
+
+    // Define your condition here
+    return false; // Example condition
+  };
+
+  const shouldAddEmptyContentImage = () => {
+    const definedImagesCount = contentImages.filter(
+      (item) => item !== undefined
+    ).length;
+    const definedContentCount = contentText.filter(
+      (item) => item !== undefined
+    ).length;
+    console.log('IMAGE -> definedImagesCount', definedImagesCount);
+    console.log('IMAGE -> definedContentCount', definedContentCount);
+
+    if (definedImagesCount === 0) {
+      return true;
+    }
+
+    if (
+      definedImagesCount < definedContentCount &&
+      definedContentCount <= 10 &&
+      contentImages?.[definedImagesCount - 1]?.url != ' ' &&
+      contentText[definedContentCount - 1] != ' '
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  // Add empty content text if conditions are met
+  useEffect(() => {
+    console.log('Images has changed', contentImages);
+    if (isEditModeOn && shouldAddEmptyContentText()) {
+      console.log('Adding new content');
+      handleAddContent();
+    }
+  }, [contentImages, isEditModeOn]);
+
+  // Add empty content image if conditions are met
+  useEffect(() => {
+    console.log('Text has changed', contentText);
+    if (isEditModeOn && shouldAddEmptyContentImage()) {
+      console.log('Adding new image');
+      handleAddImage();
+    }
+  }, [contentText, isEditModeOn]);
 
   return (
     <main className={style.postContent}>
-      {initialContentText?.length
-        ? initialContentText.map(
+      {contentText?.length
+        ? contentText.map(
             (item, index) =>
               item && (
                 <section
                   key={`contentItem-${index}`}
                   className={classNames(style.editorMode, 'w-full')}
                 >
-                  {initialContentText?.[index] && (
+                  {contentText?.[index] && (
                     <>
                       {!isEditModeOn ? (
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: initialContentText?.[index],
+                            __html: contentText?.[index],
                           }}
-                          className="py-4"
+                          className={classNames('py-4', style.displayText)}
                         ></div>
                       ) : (
                         <div className="relative">
                           <RTEComponent
-                            content={initialContentText?.[index]}
+                            content={contentText?.[index]}
                             updatePostData={(value) =>
                               handleUpdatePostDataContent(value, index)
                             }
+                            className={classNames(style.displayText)}
                           />
                           <div className="flex flex-col">
                             {/* Delete RTE */}
-                            {!initialContentText?.[index + 1] && (
+                            {!contentText?.[index + 1] && (
                               <button
                                 onClick={handleRemoveContent}
                                 className={classNames(style.buttonRemove, '')}
@@ -170,45 +247,42 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                 />
                               </button>
                             )}
-                            {!initialContentText?.[index + 1] &&
+                            {/* {!initialContentText?.[index + 1] &&
                               isEditModeOn &&
                               definedItemsCount < 10 &&
-                              !initialContentImages?.[index] &&
-                              initialContentImages?.[index - 1] !== ' ' && (
+                              !initialContentImages?.[index]?.url &&
+                              initialContentImages?.[index - 1]?.url !==
+                                ' ' && (
                                 <button
                                   onClick={() => handleAddImage()}
                                   className="px-2 py-2 rounded-md text-white bg-blue-600 w-40 mt-4"
                                 >
                                   Add Image
                                 </button>
-                              )}
+                              )} */}
                           </div>
                         </div>
                       )}
                     </>
                   )}
-                  {initialContentImages?.[index] && (
+                  {contentImages?.[index] && (
                     <>
                       {!isEditModeOn ? (
-                        initialContentImages?.[index] && (
+                        contentImages?.[index]?.url &&
+                        contentImages?.[index]?.url !== ' ' && (
                           <figure>
                             <Image
-                              src={
-                                getImageUrlForMedia(contentImages?.[index])
-                                  ?.url ||
-                                getImageUrlForMedia(
-                                  contentImages[index]?.url
-                                ) ||
-                                ''
-                              }
+                              src={contentImages[index].url}
                               width={600}
                               height={400}
                               className={classNames('rounded-md block mx-auto')}
-                              alt={contentImages[index].caption || 'Post Image'}
+                              alt={
+                                contentImages?.[index]?.caption || 'Post Image'
+                              }
                             />
                             {contentImages[index].caption && (
                               <figcaption className="text-center mt-2 text-sm text-gray-600">
-                                {contentImages[index].caption}
+                                {contentImages?.[index]?.caption}
                               </figcaption>
                             )}
                           </figure>
@@ -221,15 +295,15 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           )}
                         >
                           <ContentImageFileUploader
-                            currentImage={contentImages[index].url}
-                            currentCaption={contentImages[index].caption}
+                            currentImage={contentImages?.[index]?.url}
+                            currentCaption={contentImages?.[index]?.caption}
                             updatePostData={(value) =>
                               handleUpdatePostDataContentImages(value, index)
                             }
                           />
                           <div className="flex flex-col">
                             {/* Delete FIle Uploader */}
-                            {!initialContentImages?.[index + 1] && (
+                            {!contentImages?.[index + 1] && (
                               <button
                                 onClick={handleRemoveImage}
                                 className={classNames(style.buttonRemove, '')}
@@ -245,7 +319,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                 />
                               </button>
                             )}
-                            {!contentText?.[index + 1] &&
+                            {/* {!contentText?.[index + 1] &&
                               isEditModeOn &&
                               definedItemsCount < 10 &&
                               (contentImages?.[index + 1] === ' ' ||
@@ -261,7 +335,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                                 >
                                   Add Content
                                 </button>
-                              )}
+                              )} */}
                           </div>
                         </div>
                       )}
@@ -271,11 +345,11 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
               )
           )
         : ''}
-      {isEditModeOn && definedItemsCount < 10 && !initialContentText[0] && (
+      {/* {isEditModeOn && definedItemsCount < 10 && !initialContentText[0] && (
         <button onClick={() => handleAddContent()} className="">
           Add Content
         </button>
-      )}
+      )} */}
     </main>
   );
 };

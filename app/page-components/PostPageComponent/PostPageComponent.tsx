@@ -118,10 +118,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     eventSpeakers: post?.data?.speakers,
     eventModerators: post?.data?.moderators,
     eventRegistration: post?.data?.eventRegistration,
-    eventDate: {
-      start: post?.data?.eventStartDate?.['$date'],
-      end: post?.data?.eventEndDate?.['$date'],
-    },
+    eventStartDate: post?.data?.eventStartDate,
+    eventEndDate: post?.data?.eventEndDate,
     internalLinks: post?.data?.internalLinks,
     projectResultMedia: post?.data?.projectResultMedia,
     mediaFiles: post?.data?.mediaFiles,
@@ -180,8 +178,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.contentImages,
         defaultPostData.contentImages
       ) ||
-      postData.eventDate?.start !== defaultPostData.eventDate?.start ||
-      postData.eventDate?.end !== defaultPostData.eventDate?.end ||
+      postData.eventStartDate !== defaultPostData.eventStartDate ||
+      postData.eventEndDate !== defaultPostData.eventEndDate ||
       postData.eventRegistration !== defaultPostData.eventRegistration ||
       postData.projectResultMedia?.url !==
         defaultPostData.projectResultMedia?.url ||
@@ -216,8 +214,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           postImage8: postData?.contentImages[7],
           postImage9: postData?.contentImages[8],
           postImage10: postData?.contentImages[9],
-          eventStartDate: { $date: postData?.eventDate?.start },
-          eventEndDate: { $date: postData?.eventDate?.end },
+          eventStartDate: postData?.eventStartDate,
+          eventEndDate: postData?.eventEndDate,
           eventRegistration: postData?.eventRegistration,
           projectResultMedia: postData?.projectResultMedia,
           // pageTypes: postData?.pageType,
@@ -419,8 +417,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           postImage8: postData?.contentImages[7],
           postImage9: postData?.contentImages[8],
           postImage10: postData?.contentImages[9],
-          eventStartDate: { $date: postData?.eventDate?.start },
-          eventEndDate: { $date: postData?.eventDate?.end },
+          eventStartDate: postData?.eventStartDate,
+          eventEndDate: postData?.eventEndDate,
           eventRegistration: postData?.eventRegistration,
           projectResultMedia: postData?.projectResultMedia,
           slug: postData?.title.replace(/ /g, '_') + '_' + generateUniqueHash(),
@@ -640,6 +638,10 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       // }
     }
   }, [userDetails, tags]);
+
+  useEffect(() => {
+    console.log('postData', postData);
+  }, [postData]);
 
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
 

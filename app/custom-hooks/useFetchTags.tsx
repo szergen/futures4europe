@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
-import { collections, items } from '@wix/data';
+import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
+import { useAuth } from './AuthContext/AuthContext';
 // import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-const useFetchTags = (refresh: boolean) => {
+const useFetchTags = (
+  refresh: boolean,
+  setIsLoadingInProgress: (value: boolean) => void
+) => {
   const [tags, setTags] = useState<any[]>([]);
   const [tagsFetched, setTagsFetched] = useState(false);
 
@@ -12,6 +16,7 @@ const useFetchTags = (refresh: boolean) => {
 
   useEffect(() => {
     const fetchTags = async () => {
+      setIsLoadingInProgress(true);
       try {
         let allTags = [] as any[];
         let skip = 0;
@@ -36,18 +41,8 @@ const useFetchTags = (refresh: boolean) => {
       } catch (error) {
         console.error('Error fetching tags:', error);
       }
+      setIsLoadingInProgress(false);
     };
-
-    // const fetchTags = async () => {
-    //   try {
-    //     const tagsCollection = await getDataCollection('Tags');
-    //     console.log('debug2->tagsCollection', tagsCollection);
-    //     // setTags(tags.items.map((tag: any) => tag.data));
-    //     setTagsFetched(true);
-    //   } catch (error) {
-    //     console.error('Error fetching tags:', error);
-    //   }
-    // };
 
     fetchTags();
   }, [refresh]);

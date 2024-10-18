@@ -28,7 +28,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [imageCaption, setImageCaption] = useState('');
 
-  const { userDetails } = useAuth();
+  const { userDetails, setIsLoadingInProgress } = useAuth();
   const composeFilePath = `/PostPages_Images/${
     userDetails?.contactId || 'visitors'
   }/`;
@@ -37,6 +37,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
+    setIsLoadingInProgress(true);
 
     if (file && file.size > 5 * 1024 * 1024) {
       setIsValidState(false);
@@ -57,6 +58,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
           caption: imageCaption,
         });
     }
+    setIsLoadingInProgress(false);
   };
 
   {

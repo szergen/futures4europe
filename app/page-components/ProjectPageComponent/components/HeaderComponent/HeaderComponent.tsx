@@ -10,6 +10,7 @@ import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 
 export type HeaderComponentProps = {
   project: {
@@ -71,9 +72,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post "';
     }
-    const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
+    const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
     if (!validTitleRegex.test(tempName)) {
-      return 'Title can only contain small characters, capital characters, numbers, and spaces';
+      return 'Title cannot contain multiple spaces or |';
     }
 
     // const isTempTitleExisting = existingPostPagesTitles?.some(
@@ -188,7 +189,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             className={classNames(
               style.genericTextArea,
               style.textPostTitleEdit,
-              validationFunctionForName(project?.projectTag.name) &&
+              validationFunctionForName(project?.projectTag?.name) &&
                 style.InputRequired
             )}
             placeholder="Enter title"
@@ -267,22 +268,30 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             tag="p"
             className="text-gray-500 text-sm font-bold mt-2 mb-2"
           >
-            {formatDate(project?.projectStartDate)} -{' '}
-            {formatDate(project?.projectEndDate)}
+            {project?.projectStartDate
+              ? dayjs(project?.projectStartDate).format('MMMM YYYY')
+              : ''}{' '}
+            {project?.projectStartDate && project?.projectEndDate && '-'}{' '}
+            {project?.projectStartDate && project?.projectEndDate
+              ? dayjs(project?.projectEndDate).format('MMMM YYYY')
+              : ''}
           </Typography>
         ) : (
           <div className="flex items-center mt-4">
-            <span className="mr-4">Enter begin date</span>
+            {/* <span className="mr-4">Enter begin date</span> */}
             <DatePickerRangeComponentDouble
+              dateFormate="YYYY MMMM"
+              placeholderStartDate="Begin Date"
+              placeholderEndDate="End Date"
               dateStart={
                 project?.projectStartDate
                   ? new Date(project?.projectStartDate)
-                  : undefined
+                  : null
               }
               dateEnd={
                 project?.projectEndDate
                   ? new Date(project?.projectEndDate)
-                  : undefined
+                  : null
               }
               handleUpdateStartDate={(date) =>
                 updateProjectDataOnKeyValue(
@@ -297,7 +306,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 )
               }
             />
-            <span className="ml-4">Enter end date</span>
+            {/* <span className="ml-4">Enter end date</span> */}
           </div>
         )}
 

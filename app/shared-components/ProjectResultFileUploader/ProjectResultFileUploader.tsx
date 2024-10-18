@@ -24,7 +24,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
   const [imageURL, setImageURL] = useState(currentImage || '');
   const [isFileLoading, setIsFileLoading] = useState(false);
 
-  const { userDetails } = useAuth();
+  const { userDetails, setIsLoadingInProgress } = useAuth();
   const composeFilePath = `/PostPages_Results/${
     userDetails?.contactId || 'visitors'
   }/`;
@@ -36,6 +36,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
+    setIsLoadingInProgress(true);
     console.log('debug2->file', file);
     if (file && file.type !== 'application/pdf') {
       setErrorMessage('File is not a PDF. Please try again.');
@@ -125,6 +126,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
           type: 'document',
         });
     }
+    setIsLoadingInProgress(false);
   };
 
   return (

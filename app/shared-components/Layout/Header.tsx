@@ -7,15 +7,15 @@ import { SearchProvider } from '../../custom-hooks/SearchContext/SearchContext';
 import style from './Header.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
-import Image from 'next/image';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { useEffect, useState, useMemo, memo, useRef } from 'react';
-import { Avatar, Dropdown } from 'flowbite-react';
+import { Avatar, Dropdown, Modal } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { HiUserCircle, HiPlusSm } from 'react-icons/hi';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const Header = () => {
-  const { login, isLoggedIn, loading, userDetails, logout } = useAuth();
+  const { isLoggedIn, userDetails, logout, isLoadingInProgress } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -215,6 +215,15 @@ const Header = () => {
           <NavBar />
         </div> */}
         </div>
+        <Modal show={isLoadingInProgress} size="md" popup>
+          <Modal.Header />
+          <Modal.Body>
+            <div className="text-center">
+              Loading...
+              <LoadingSpinner />
+            </div>
+          </Modal.Body>
+        </Modal>
       </header>
     </>
   );
