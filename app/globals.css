@@ -689,18 +689,19 @@ textarea {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-background-brand-tag);
-  border-radius: var(--p-border-radius-200);
+  /* background-color: var(--color-background-brand-tag); */
+  /* border-radius: var(--p-border-radius-200); */
   height: calc(var(--w-space-xxxl));
-  margin-right: calc(var(--w-space-s));
+  /* margin-right: calc(var(--w-space-s)); */
 }
 
 .tagPickerPill .react-select__multi-value__label {
-  height: calc(var(--w-space-xxl));
-  background: white;
-  margin: 4px;
-  border-radius: var(--p-border-radius-tag);
-  line-height: calc(var(--w-space-xxl));
+  /* height: calc(var(--w-space-xl)); */
+  height: 48px;
+  /* background: white; */
+  /* margin: 4px; */
+  /* border-radius: var(--p-border-radius-tag); */
+  /* line-height: calc(var(--w-space-xl)); */
   vertical-align: middle;
   position: relative;
   padding: 0px var(--w-space-s);

@@ -56,7 +56,7 @@ const PopoverComponent: React.FC<PopoverProps> = ({
   );
 
   return (
-    <Popover content={content} trigger={trigger} placement="top">
+    <Popover content={content} trigger={trigger} placement="top" >
       {children}
     </Popover>
   );

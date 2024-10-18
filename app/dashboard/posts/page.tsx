@@ -15,6 +15,7 @@ import style from '../pageDashboard.module.css';
 import { Button, Badge } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -236,67 +237,38 @@ export default function DashboardProjects() {
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
                           <div className="flex flex-wrap flex-start text-left">
-                            <Tag
+                            {/* <Tag
                               className="flex-grow basis-full"
                               name={postPage?.data?.title}
                               tagPageLink={`/post/${postPage.data.slug}`}
                               popularity={
                                 postPage?.data?.pageTypes[0]?.popularity
                               }
-                            ></Tag>
-                            <Badge
-                              className="basis-auto mt-2 capitalize rounded-full"
-                              color="gray"
-                            >
-                              {postPage?.data?.pageTypes[0]?.name}
-                            </Badge>
-                          </div>
-                          <div className={'flex flex-row'}>
+                            ></Tag> */}
                             <Link href={`/post/${postPage.data.slug}`}>
-                              <Button
-                                size={'sm'}
-                                color={'gray'}
-                                className={classNames(
-                                  style.buttonAddDashboard,
-                                  'block mr-2'
-                                )}
-                                pill
+                              <Badge
+                                className="w-fit mt-2 capitalize rounded-full"
+                                color="gray"
                               >
-                                {/* <SpriteSvg.AccountTrashIcon 
-                              className={'mr-2'}
-                              sizeH={16}
-                              sizeW={16}
-                              viewBox={'0 0 16 16'}
-                              strokeWidth={0}
-                              fill={'currentColor'}
-                            /> */}
-                                <span className="text-md">View</span>
-                              </Button>
+                                {postPage?.data?.pageTypes[0]?.name}
+                              </Badge>
+                              <MiniPagePost
+                                key={index}
+                                title={postPage?.data?.title}
+                                date={postPage?.data?._updatedDate?.$date}
+                                image={
+                                  postPage?.data?.projectResultMedia
+                                    ?.thumbnail ||
+                                  postPage?.data?.postImage1?.url ||
+                                  'https://placehold.co/600x400?text=placeholder'
+                                }
+                                text={postPage?.data?.postContentRIch1}
+                                tags={[
+                                  ...(postPage?.data?.domains ?? []),
+                                  ...(postPage?.data?.methods ?? []),
+                                ]}
+                              />
                             </Link>
-
-                            {/* // TODO- Visible if admin user WIX */}
-                            {/* <Button
-                            onClick={() =>
-                              handleDeletePostPage(postPage.data._id)
-                            }
-                            size={'sm'}
-                            color={''}
-                            className={classNames(
-                              style.buttonAddDashboard,
-                              'block border-0'
-                            )}
-                            pill
-                          >
-                            <SpriteSvg.AccountTrashIcon
-                              className={'mr-2'}
-                              sizeH={16}
-                              sizeW={16}
-                              viewBox={'0 0 16 16'}
-                              strokeWidth={0}
-                              fill={'currentColor'}
-                            />
-                            <span className="text-md">Delete</span>
-                          </Button> */}
                           </div>
 
                           {isLoadingDeletePostPage &&

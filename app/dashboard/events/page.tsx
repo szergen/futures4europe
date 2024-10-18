@@ -15,6 +15,7 @@ import style from '../pageDashboard.module.css';
 import { Button, Badge } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -232,31 +233,30 @@ export default function DashboardProjects() {
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
                           <div className="flex flex-wrap flex-start text-left">
-                            <Tag
-                              className="flex-grow basis-full cursor-default"
-                              disableTooltip={true}
-                              name={postPage?.data?.title}
-                              popularity={
-                                postPage?.data?.pageTypes[0]?.popularity
-                              }
-                            ></Tag>
-                          </div>
-                          <div className={'flex flex-row'}>
                             <Link href={`/post/${postPage.data.slug}`}>
-                              <Button
-                                size={'sm'}
-                                color={'gray'}
-                                className={classNames(
-                                  style.buttonAddDashboard,
-                                  'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
-                                )}
-                                pill
+                              <Badge
+                                className="w-fit mt-2 capitalize rounded-full"
+                                color="gray"
                               >
-                                <span className="text-md">View</span>
-                              </Button>
+                                {postPage?.data?.pageTypes[0]?.name}
+                              </Badge>
+                              <MiniPagePost
+                                key={index}
+                                title={postPage?.data?.title}
+                                date={postPage?.data?._updatedDate?.$date}
+                                image={
+                                  postPage?.data?.projectResultMedia
+                                    ?.thumbnail ||
+                                  postPage?.data?.postImage1?.url ||
+                                  'https://placehold.co/600x400?text=placeholder'
+                                }
+                                text={postPage?.data?.postContentRIch1}
+                                tags={[
+                                  ...(postPage?.data?.domains ?? []),
+                                  ...(postPage?.data?.methods ?? []),
+                                ]}
+                              />
                             </Link>
-                            {/* // TODO- Visible if admin user WIX */}
-                            {/* // TODO- Transform the List in a component */}
                           </div>
 
                           {isLoadingDeletePostPage &&

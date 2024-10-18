@@ -20,6 +20,7 @@ export type TagProps = {
   tagType?: string;
   tagLine?: string;
   disableTooltip?: boolean;
+  disableLink?: boolean;
 };
 
 export const Tag: React.FC<TagProps> = ({
@@ -34,6 +35,7 @@ export const Tag: React.FC<TagProps> = ({
   enableLabel,
   tagType,
   disableTooltip,
+  disableLink,
 }) => {
   if (!name) return null;
   return (
@@ -42,7 +44,7 @@ export const Tag: React.FC<TagProps> = ({
         <span className={style.tagLabel}>{TagCategories?.[tagCategory]}: </span>
       )}
       <div className={classNames('my-1', style.tagContainer, className)}>
-        {tagPageLink ? (
+        {tagPageLink && !disableLink ? (
           <Link href={tagPageLink} className={style.tagLink}>
             <TagContainer
               name={name}
@@ -59,7 +61,10 @@ export const Tag: React.FC<TagProps> = ({
         ) : (
           <TagContainer
             name={name}
-            className={className}
+            className={classNames(
+              disableLink && tagPageLink && style.tagLink,
+              className
+            )}
             tagCategory={tagCategory}
             popularity={popularity}
             tagTrend={tagTrend}

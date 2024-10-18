@@ -162,3 +162,48 @@
   line-height: var(--w-space-xxl);
   letter-spacing: var(--p-font-letter-spacing-tag);
 }
+
+.tagPickerPill {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  /* background-color: var(--color-background-brand-tag); */
+  /* border-radius: var(--p-border-radius-200); */
+  height: 100%;
+  margin-right: calc(var(--w-space-s));
+}
+
+.tagPickerPill .react-select__multi-value__label {
+  height: calc(var(--w-space-xxl));
+  background: white;
+  margin: 4px;
+  border-radius: var(--p-border-radius-tag);
+  line-height: calc(var(--w-space-xxl));
+  vertical-align: middle;
+  position: relative;
+  padding: 0px var(--w-space-s);
+  display: inline-block;
+  text-wrap: nowrap;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--w-font-size-tag);
+  line-height: var(--w-space-xxl);
+  letter-spacing: var(--p-font-letter-spacing-tag);
+}
+.tagPickerPill .react-select__multi-value__remove {
+  position: absolute;
+  right: 8px;
+  width: var(--w-space-l);
+  height: var(--w-space-l);
+  border-radius: var(--p-border-radius-full);
+  opacity: 0;
+}
+.tagPickerPill:hover {
+  cursor: grab;
+}
+.tagPickerPill:hover.tagPickerPill .react-select__multi-value__remove {
+  background: var(--color-background-destructive-weaker);
+  opacity: 1;
+}

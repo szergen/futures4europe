@@ -15,6 +15,7 @@ import style from '../pageDashboard.module.css';
 import { Avatar, Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -232,24 +233,27 @@ export default function DashboardProjects() {
                           key={infoPage.data.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
-                          <span>{infoPage.data.title}</span>
+                          {/* <span>{infoPage.data.title}</span> */}
                           <div className={'flex flex-row'}>
                             <Link
                               href={`/${extractInfoPageTypeBasedOnTag(
                                 infoPage?.data?.pageTypes[0]
                               )}/${infoPage.data.slug}`}
                             >
-                              <Button
-                                size={'sm'}
-                                color={'gray'}
-                                className={classNames(
-                                  style.buttonAddDashboard,
-                                  'block mr-2 focus:ring-purple-300'
-                                )}
-                                pill
-                              >
-                                <span className="text-md">View</span>
-                              </Button>
+                              <MiniPagePost
+                                key={index}
+                                title={infoPage?.data.title}
+                                date={infoPage.data._updatedDate?.$date}
+                                image={
+                                  infoPage.data.Project?.[0]?.picture ||
+                                  'https://placehold.co/600x400?text=placeholder'
+                                }
+                                text={infoPage.data.postContentRIch1}
+                                tags={[
+                                  ...(infoPage.data.domains ?? []),
+                                  ...(infoPage.data.methods ?? []),
+                                ]}
+                              />
                             </Link>
                           </div>
 
