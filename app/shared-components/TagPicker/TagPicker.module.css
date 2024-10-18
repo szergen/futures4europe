@@ -88,6 +88,20 @@
   line-height: var(--w-space-xxl);
   letter-spacing: var(--p-font-letter-spacing-tag);
 }
+
+.tagPickerValueContainerSingle {
+  cursor: pointer;
+  border-radius: var(--p-border-radius-tag);
+  /* line-height: calc(var(--w-space-xxl)); */
+  padding: 0px var(--w-space-s);
+  font-size: var(--w-font-size-tag);
+  letter-spacing: var(--p-font-letter-spacing-tag);
+}
+
+.tagPickerValueContainerSingle .Input {
+  box-shadow: unset;
+}
+
 .tagPickerValueContainer input {
   outline: 0 !important;
   border: none !important;

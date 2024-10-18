@@ -306,6 +306,18 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         ''
       );
     },
+    // SingleValue: (props: any) => {
+    //   const correspondingTag = tags?.find(
+    //     (tag) => tag.name === props.data.label
+    //   );
+    //   return correspondingTag ? (
+    //     <components.SingleValue {...props}>
+    //       <Tag {...correspondingTag} disableTooltip={true} disableLink={true} />
+    //     </components.SingleValue>
+    //   ) : (
+    //     ''
+    //   );
+    // },
   };
 
   const validationForTagName = (tagName: string) => {
@@ -355,12 +367,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             multiValue: () =>
               classNames(
                 // styles.tagPickerPill,
-                'tagPickerPill  z-5 cursor-pointer',
-                styles.tagPickerPillMultiModule
+                'tagPickerPill tagPickerPillRemove  z-100 cursor-pointer'
+                // styles.tagPickerPillMultiModule
               ),
             singleValue: () =>
               classNames(
-                'tagPickerPillSingle tagPickerPillRemove cursor-pointer z-5',
+                'tagPickerPillSingle cursor-pointer z-10',
                 styles.tagPickerPillSingleModule
               ),
             menu: () => classNames('', styles.tagPickerMenu),
