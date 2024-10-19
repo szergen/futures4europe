@@ -12,15 +12,14 @@ import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 import DisplayProjectResultMedia from '@app/page-components/shared-page-components/DisplayProjectResultMedia/DisplayProjectResultMedia';
 import ProjectResultHeaderImage from '@app/shared-components/ProjectResultHeaderImage/ProjectResultHeaderImage';
+import dayjs from 'dayjs';
 
 export type HeaderComponentProps = {
   post: {
     title: string;
     pageType: TagProps[];
-    eventDate?: {
-      start: string;
-      end: string;
-    };
+    eventStartDate: string;
+    eventEndDate: string;
     registrationLink: string;
     subtitle: string;
     countryTag: {
@@ -73,9 +72,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
+    const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
     if (!validTitleRegex.test(tempTitle)) {
-      return 'Title can only contain small characters, capital characters, numbers, and spaces';
+      return 'Title cannot contain multiple spaces or |';
     }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>
@@ -237,49 +236,52 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           />
         )}
         {/* Event Date */}
-        {post.pageType?.[0]?.name?.toLowerCase() === 'event' &&
-          post?.eventDate && (
-            <div>
-              {!isEditModeOn ? (
-                <Typography
-                  tag="p"
-                  className="text-gray-500 text-sm font-bold mt-3"
-                >
-                  {formatDate(post?.eventDate?.start)} -{' '}
-                  {formatDate(post?.eventDate?.end)}
-                </Typography>
-              ) : (
-                <div className="flex items-center mt-4">
-                  <span className="mr-4">Start Date</span>
-                  <DatePickerRangeComponentDouble
-                    dateStart={
-                      post?.eventDate?.start
-                        ? new Date(post.eventDate.start)
-                        : undefined
-                    }
-                    dateEnd={
-                      post?.eventDate?.end
-                        ? new Date(post.eventDate.end)
-                        : undefined
-                    }
-                    handleUpdateStartDate={(date) =>
-                      updatePostDataBasedOnKeyValue('eventDate', {
-                        ...post.eventDate,
-                        start: date.toISOString(),
-                      })
-                    }
-                    handleUpdateEndDate={(date) =>
-                      updatePostDataBasedOnKeyValue('eventDate', {
-                        ...post.eventDate,
-                        end: date.toISOString(),
-                      })
-                    }
-                  />
-                  <span className="ml-4">End Date</span>
-                </div>
-              )}
-            </div>
-          )}
+        {post.pageType?.[0]?.name?.toLowerCase() === 'event' && (
+          <div>
+            {!isEditModeOn ? (
+              <Typography
+                tag="p"
+                className="text-gray-500 text-sm font-bold mt-3"
+              >
+                {post?.eventStartDate
+                  ? dayjs(post?.eventStartDate).format('YYYY-MM-DD HH:mm')
+                  : ''}{' '}
+                {post?.eventStartDate && post?.eventEndDate && '-'}{' '}
+                {post?.eventStartDate && post?.eventEndDate
+                  ? dayjs(post?.eventEndDate).format('YYYY-MM-DD HH:mm')
+                  : ''}
+              </Typography>
+            ) : (
+              <div className="flex items-center mt-4">
+                {/* <span className="mr-4">Start Date</span> */}
+                <DatePickerRangeComponentDouble
+                  dateFormate="YYYY-MM-DD HH:mm"
+                  placeholderStartDate="Start Date"
+                  placeholderEndDate="End Date"
+                  dateStart={
+                    post?.eventStartDate ? new Date(post.eventStartDate) : null
+                  }
+                  dateEnd={
+                    post?.eventEndDate ? new Date(post.eventEndDate) : null
+                  }
+                  handleUpdateStartDate={(date) =>
+                    updatePostDataBasedOnKeyValue(
+                      'eventStartDate',
+                      date.toISOString()
+                    )
+                  }
+                  handleUpdateEndDate={(date) =>
+                    updatePostDataBasedOnKeyValue(
+                      'eventEndDate',
+                      date.toISOString()
+                    )
+                  }
+                />
+                {/* <span className="ml-4">End Date</span> */}
+              </div>
+            )}
+          </div>
+        )}
         {/* Registration Link */}
         {post.pageType?.[0]?.name?.toLowerCase() === 'event' &&
           post?.eventRegistration && (

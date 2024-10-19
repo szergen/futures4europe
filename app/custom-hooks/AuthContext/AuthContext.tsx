@@ -51,6 +51,8 @@ interface AuthContextType {
   infoPages: any[];
   infoPagesFetched: boolean;
   handleInfoPageCreated: () => void;
+  isLoadingInProgress: boolean;
+  setIsLoadingInProgress: (value: boolean) => void;
   // existingPostPagesTitles: string[];
 }
 
@@ -77,6 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(initialState);
+  const [isLoadingInProgress, setIsLoadingInProgress] = useState(false);
 
   const { setTokens: wixSetTokens, loggedIn: wixLoggedIn } =
     useWixAuth() as unknown as IOAuthStrategy;
@@ -88,7 +91,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // #region Fetch tags and refresh based on tag creation
   const [refreshTags, setRefreshTags] = useState(false);
-  const { tags, tagsFetched } = useFetchTags(refreshTags);
+  const { tags, tagsFetched } = useFetchTags(
+    refreshTags,
+    setIsLoadingInProgress
+  );
   console.log('debu10->tags', tags);
 
   // console.log('Context -> userTag', getUserTag());
@@ -173,7 +179,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     ownedInfoPages,
     ownedPostPagesFetched,
     ownedInfoPagesFetched,
-  } = useFetchUserData(isLoggedIn, userDetails, refreshUserData);
+  } = useFetchUserData(
+    isLoggedIn,
+    userDetails,
+    refreshUserData,
+    setIsLoadingInProgress
+  );
   const handleUserDataRefresh = () => {
     setRefreshUserData((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
@@ -189,7 +200,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // #region Fetch post pages
   const [refreshPostPages, setRefreshPostPages] = useState(false);
-  const { postPages, postPagesFetched } = useFetchPostPages(refreshPostPages);
+  const { postPages, postPagesFetched } = useFetchPostPages(
+    refreshPostPages,
+    setIsLoadingInProgress
+  );
 
   const handlePostPageCreated = () => {
     setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
@@ -200,7 +214,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // #region Fetch info pages
   const [refreshInfoPages, setRefreshInfoPages] = useState(false);
-  const { infoPages, infoPagesFetched } = useFetchInfoPages(refreshInfoPages);
+  const { infoPages, infoPagesFetched } = useFetchInfoPages(
+    refreshInfoPages,
+    setIsLoadingInProgress
+  );
   console.log('debug1->infoPages', infoPages);
 
   const handleInfoPageCreated = () => {
@@ -235,6 +252,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         infoPages,
         infoPagesFetched,
         handleInfoPageCreated,
+        isLoadingInProgress,
+        setIsLoadingInProgress,
         // existingPostPagesTitles,
       }}
     >

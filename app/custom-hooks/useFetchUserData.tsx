@@ -7,7 +7,8 @@ import { referencedItemOptions } from '@app/wixUtils/server-side';
 const useFetchUserData = (
   isLoggedIn: boolean,
   userDetails: any,
-  refresh: boolean
+  refresh: boolean,
+  setIsLoadingInProgress: (value: boolean) => void
 ) => {
   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
@@ -25,6 +26,7 @@ const useFetchUserData = (
       ids: string[],
       setterFetched: (value: boolean) => void
     ) => {
+      setIsLoadingInProgress(true);
       try {
         const { _items: result } = await queryDataItems({
           dataCollectionId: dataCollectionId,
@@ -38,6 +40,7 @@ const useFetchUserData = (
       } catch (error) {
         console.error('Error fetching data:', error);
       }
+      setIsLoadingInProgress(false);
     };
 
     const idsToFetch = userDetails.accountId

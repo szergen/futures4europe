@@ -15,6 +15,7 @@ import style from '../pageDashboard.module.css';
 import { Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -156,14 +157,15 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* NOTE: Removed afer 15.10 discussions*/}
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My projects
-        </h1>
-        <p className="text-base text-[#606b85]">
+        </h1> */}
+        {/* <p className="text-base text-[#606b85]">
           Would you like to showcase your foresight project and share insights
           from your work? You can upload your project here and add outputs and
           team members.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -176,7 +178,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountProjectIcon
+            {/* <SpriteSvg.AccountProjectIcon
               className="text-color-white mb-6"
               sizeW={24}
               sizeH={24}
@@ -185,20 +187,26 @@ export default function DashboardProjects() {
               stroke={'#fff'}
               strokeWidth={2}
               inline={false}
-            />
+            /> */}
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Project
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your project. Include its objectives,
                 scope, key activities, and any significant outcomes or findings.
+                <Link
+                  href="/project/Project_X_vyc86"
+                  className="ml-4 underline"
+                >
+                  View Example Project
+                </Link>
               </p>
             </div>
 
@@ -261,24 +269,27 @@ export default function DashboardProjects() {
                           key={infoPage.data.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
-                          <span>{infoPage.data.title}</span>
+                          {/* <span>{infoPage.data.title}</span> */}
                           <div className={'flex flex-row'}>
                             <Link
                               href={`/${extractInfoPageTypeBasedOnTag(
                                 infoPage?.data?.pageTypes[0]
                               )}/${infoPage.data.slug}`}
                             >
-                              <Button
-                                size={'sm'}
-                                color={'gray'}
-                                className={classNames(
-                                  style.buttonAddDashboard,
-                                  'block mr-2'
-                                )}
-                                pill
-                              >
-                                <span className="text-md">View</span>
-                              </Button>
+                              <MiniPagePost
+                                key={index}
+                                title={infoPage?.data.title}
+                                date={infoPage.data._updatedDate?.$date}
+                                image={
+                                  infoPage.data.Project?.[0]?.picture ||
+                                  'https://placehold.co/600x400?text=placeholder'
+                                }
+                                text={infoPage.data.postContentRIch1}
+                                tags={[
+                                  ...(infoPage.data.domains ?? []),
+                                  ...(infoPage.data.methods ?? []),
+                                ]}
+                              />
                             </Link>
                           </div>
 

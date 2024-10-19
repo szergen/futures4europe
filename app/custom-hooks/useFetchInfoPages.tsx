@@ -3,7 +3,10 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-const useFetchInfoPages = (refresh: boolean) => {
+const useFetchInfoPages = (
+  refresh: boolean,
+  setIsLoadingInProgress: (value: boolean) => undefined
+) => {
   const [infoPages, setInfoPages] = useState<any[]>([]);
   const [infoPagesFetched, setInfoPagesFetched] = useState(false);
 
@@ -11,6 +14,7 @@ const useFetchInfoPages = (refresh: boolean) => {
 
   useEffect(() => {
     const fetchInfoPages = async () => {
+      setIsLoadingInProgress(true);
       try {
         let allInfoPages = [] as any[];
         let skip = 0;
@@ -35,6 +39,7 @@ const useFetchInfoPages = (refresh: boolean) => {
       } catch (error) {
         console.error('Error fetching info pages:', error);
       }
+      setIsLoadingInProgress(false);
     };
 
     fetchInfoPages();

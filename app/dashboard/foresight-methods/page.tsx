@@ -12,9 +12,10 @@ import { members } from '@wix/members';
 import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from '../pageDashboard.module.css';
-import { Avatar, Button } from 'flowbite-react';
+import { Avatar, Badge, Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -120,14 +121,14 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My Foresight Methods
         </h1>
         <p className="text-base text-[#606b85]">
           This is your dashboard for managing all the foresight methods. You can
           showcase your foresight methods and share insights. Access your
           methods to manage all details and much more.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -151,18 +152,24 @@ export default function DashboardProjects() {
             />
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Foresight Method
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your foresigh method. Include how the
                 method was implemented and any particular information you
                 consider insightful.
+                <Link
+                  href="/post/New_Post?pageType=event"
+                  className="ml-4 underline"
+                >
+                  View Example Foresight Method
+                </Link>
               </p>
             </div>
 
@@ -227,28 +234,29 @@ export default function DashboardProjects() {
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
                           <div className="flex flex-wrap flex-start text-left">
-                            <Tag
-                              className="flex-grow basis-full"
-                              name={postPage?.data?.title}
-                              tagPageLink={`/post/${postPage.data.slug}`}
-                              popularity={
-                                postPage?.data?.pageTypes[0]?.popularity
-                              }
-                            ></Tag>
-                          </div>
-                          <div className={'flex flex-row'}>
                             <Link href={`/post/${postPage.data.slug}`}>
-                              <Button
-                                size={'sm'}
-                                color={'gray'}
-                                className={classNames(
-                                  style.buttonAddDashboard,
-                                  'block mr-2'
-                                )}
-                                pill
+                              <Badge
+                                className="w-fit mt-2 capitalize rounded-full"
+                                color="gray"
                               >
-                                <span className="text-md">View</span>
-                              </Button>
+                                {postPage?.data?.pageTypes[0]?.name}
+                              </Badge>
+                              <MiniPagePost
+                                key={index}
+                                title={postPage?.data?.title}
+                                date={postPage?.data?._updatedDate?.$date}
+                                image={
+                                  postPage?.data?.projectResultMedia
+                                    ?.thumbnail ||
+                                  postPage?.data?.postImage1?.url ||
+                                  'https://placehold.co/600x400?text=placeholder'
+                                }
+                                text={postPage?.data?.postContentRIch1}
+                                tags={[
+                                  ...(postPage?.data?.domains ?? []),
+                                  ...(postPage?.data?.methods ?? []),
+                                ]}
+                              />
                             </Link>
                           </div>
 

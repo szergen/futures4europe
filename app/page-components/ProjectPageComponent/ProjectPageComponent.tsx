@@ -73,8 +73,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     projectTag: project?.data?.Project[0], //done
     description: project?.data?.description, //done
     contentText: [
-      project?.data?.postContentRIch2,
       project?.data?.postContentRIch1,
+      project?.data?.postContentRIch2,
       project?.data?.postContentRIch3,
       project?.data?.postContentRIch4,
       project?.data?.postContentRIch5,
@@ -186,8 +186,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.contentText,
         projectData.contentText
       ) ||
-      !projectData.contentText[0] ||
-      !projectData.contentText[1] ||
+      checkIfArrayNeedsUpdate(
+        projectData.contentImages,
+        projectData.contentImages
+      ) ||
+      projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
       projectData.projectTag.name !== defaultProjectData.projectTag.name
@@ -584,6 +587,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
+              console.log('projectData', projectData);
               setIsEditModeOn(!isEditModeOn);
               setDefaultProjectData(projectData);
             }}
@@ -646,18 +650,18 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       /> */}
       {/* Content Component replaces Description */}
       <ContentComponent
-        contentText={project.contentText}
-        contentImages={project.contentImages}
+        contentText={projectData.contentText}
+        contentImages={projectData.contentImages}
         isEditModeOn={isEditModeOn}
         updatePostDataContent={(value, index) => {
-          const newContentText = [...project.contentText];
+          const newContentText = [...projectData.contentText];
           newContentText[index] = value;
           return updateProjectnData({
             contentText: newContentText,
           });
         }}
         updatePostDataContentImages={(value, index) => {
-          const newContentImages = [...project.contentImages];
+          const newContentImages = [...projectData.contentImages];
           newContentImages[index] = value;
           return updateProjectnData({
             contentImages: newContentImages,

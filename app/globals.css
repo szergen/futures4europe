@@ -142,11 +142,11 @@
     --color-text-brand-tag: rgb(0, 0, 0);
     --color-background-brand-tag: rgb(234, 233, 236);
     --color-border-brand-separator: rgb(195, 196, 194, 0.5);
-    --primary-color:rgb(234, 233, 236);
-    --primary-white:rgb(255, 255, 255);
-    --primary-black:rgb(0, 0, 0);
-    --primary-brand:rgb(119, 85, 204);
-    --primary-green:rgb(47, 148, 97);    
+    --primary-color: rgb(234, 233, 236);
+    --primary-white: rgb(255, 255, 255);
+    --primary-black: rgb(0, 0, 0);
+    --primary-brand: rgb(119, 85, 204);
+    --primary-green: rgb(47, 148, 97);
 
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
@@ -602,10 +602,9 @@ select:focus {
   border-color: var(--primary-color);
 }
 
-
 /* tag  react-select */
 .react-select__placeholder {
-  z-index: 3!important;
+  z-index: 3 !important;
 }
 textarea {
   background: transparent;
@@ -690,19 +689,20 @@ textarea {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-background-brand-tag);
-  border-radius: var(--p-border-radius-200);
+  /* background-color: var(--color-background-brand-tag); */
+  /* border-radius: var(--p-border-radius-200); */
   height: calc(var(--w-space-xxxl));
   margin-right: calc(var(--w-space-s));
   color: var(--primary-black);
 }
 
 .tagPickerPill .react-select__multi-value__label {
-  height: calc(var(--w-space-xxl));
-  background: white;
-  margin: 4px;
-  border-radius: var(--p-border-radius-tag);
-  line-height: calc(var(--w-space-xxl));
+  /* height: calc(var(--w-space-xl)); */
+  height: 48px;
+  /* background: white; */
+  /* margin: 4px; */
+  /* border-radius: var(--p-border-radius-tag); */
+  /* line-height: calc(var(--w-space-xl)); */
   vertical-align: middle;
   position: relative;
   padding: 0px var(--w-space-s);
@@ -731,7 +731,7 @@ textarea {
   opacity: 1;
 }
 .react-select__multi-value__remove:hover {
-  background-color: var(--color-background-destructive)!important;
+  background-color: var(--color-background-destructive) !important;
 }
 .react-select__multi-value__remove svg {
   fill: var(--color-text-weakest);
@@ -749,14 +749,14 @@ textarea {
   background: var(--primary-white);
   margin: 4px;
   border-radius: var(--p-border-radius-tag);
-  line-height: calc(var(--w-space-xxl))!important;
+  line-height: calc(var(--w-space-xxl)) !important;
   vertical-align: middle;
   position: relative;
   padding: 0px var(--w-space-s);
   display: inline-block;
-  text-wrap: nowrap!important;
-  max-width: 300px!important;
-  overflow: hidden!important;
+  text-wrap: nowrap !important;
+  max-width: 300px !important;
+  overflow: hidden !important;
   text-overflow: ellipsis;
   font-size: var(--w-font-size-tag);
   line-height: var(--w-space-xxl);
@@ -774,16 +774,18 @@ textarea {
 .react-select__control:hover {
   cursor: grab;
 }
-.react-select__control:hover.react-select__control .react-select__clear-indicator {
+.react-select__control:hover.react-select__control
+  .react-select__clear-indicator {
   background: var(--color-background-destructive-weaker);
   opacity: 1;
 }
-.react-select__control:hover.react-select__control .react-select__clear-indicator {
+.react-select__control:hover.react-select__control
+  .react-select__clear-indicator {
   background: var(--color-background-destructive-weaker);
   opacity: 1;
 }
 .react-select__clear-indicator:hover {
-  background-color: var(--color-background-destructive)!important;
+  background-color: var(--color-background-destructive) !important;
 }
 .react-select__clear-indicator svg {
   fill: var(--color-text-weakest);
@@ -807,14 +809,14 @@ textarea {
   padding: 0px var(--w-space-xs);
 
   div {
-    margin:4px 0px;
+    margin: 4px 0px;
   }
 }
 
 /* important in editor rdw */
 /* Initially hide the toolbar */
 .editor-container {
-  display: table!important;
+  display: table !important;
   width: 100%;
 }
 .editor-content {
@@ -827,7 +829,7 @@ textarea {
   transition: opacity 0.3s ease;
   width: 100%;
   padding: 6px 5px 0;
-  border-radius: var(--p-border-radius-200)!important;
+  border-radius: var(--p-border-radius-200) !important;
   border: 1px solid #e3e3e3;
   display: flex;
   justify-content: flex-start;
@@ -838,14 +840,14 @@ textarea {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  box-shadow: 0px 1px 13px 3px #0000000f;  
+  box-shadow: 0px 1px 13px 3px #0000000f;
 }
 
 /* Show toolbar when editor-wrapper is hovered */
 .editor-container:hover .editor-toolbar {
   visibility: visible !important;
 }
-.editor-container:hover button{
+.editor-container:hover button {
   visibility: visible !important;
 }
 
@@ -859,7 +861,7 @@ textarea {
   position: relative;
   padding: 0;
   transition: border-color 0.3s ease;
-} 
+}
 .editor-wrapper:hover {
   border-color: #888; /* Optional: Change border color on hover */
 }
@@ -867,13 +869,12 @@ textarea {
   font-size: var(--w-font-size-section-heading);
 }
 .rdw-option-wrapper {
-  border-radius: var(--p-border-radius-150)!important;
+  border-radius: var(--p-border-radius-150) !important;
 }
 .rdw-option-wrapper:hover {
-  filter: invert(1)!important;
-  box-shadow:none!important;
+  filter: invert(1) !important;
+  box-shadow: none !important;
 }
-
 
 /* footer */
 
@@ -882,8 +883,8 @@ footer.footerLayout {
 }
 
 /* TODO: Movo to header css, for some reasons it dose not register the css there */
-.avatarUserHeader.active{
+.avatarUserHeader.active {
   border-radius: var(--p-border-radius-full);
   box-shadow: 0 0 0px 3px var(--color-border-weak);
-  transition: box-shadow .13s ease-out;
+  transition: box-shadow 0.13s ease-out;
 }

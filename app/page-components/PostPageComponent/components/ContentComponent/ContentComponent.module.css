@@ -11,8 +11,9 @@
 
   p {
     margin-bottom: var(--w-space-xl);
-  }  
-  ul, ol {
+  }
+  ul,
+  ol {
     margin-left: var(--w-space-xl);
     margin-bottom: var(--w-space-xxxl);
   }
@@ -30,8 +31,15 @@
   }
 }
 
+.displayText {
+  a {
+    color: var(--color-text-brand-tag);
+    text-decoration: underline;
+  }
+}
+
 .editorMode {
-  :hover .buttonRemove{
+  :hover .buttonRemove {
     visibility: visible;
   }
   label{

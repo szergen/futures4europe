@@ -15,6 +15,7 @@ import style from '../pageDashboard.module.css';
 import { Button, Badge } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
+import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -111,6 +112,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
+        activeItem="/dashboard/events"
       />
 
       <div
@@ -119,14 +121,14 @@ export default function DashboardProjects() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+        {/* <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           My events
         </h1>
         <p className="text-base text-[#606b85]">
           Would you like to showcase your events and share insights from your
           work? You can upload your events here and add outputs, speakers and
           participants.
-        </p>
+        </p> */}
 
         <div
           className={classNames(
@@ -139,7 +141,7 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            <SpriteSvg.AccountParticipationIcon
+            {/* <SpriteSvg.AccountParticipationIcon
               className="text-color-white mb-6"
               sizeW={34}
               sizeH={24}
@@ -147,21 +149,27 @@ export default function DashboardProjects() {
               fill={'#fff'}
               strokeWidth={0}
               inline={false}
-            />
+            /> */}
 
             <div className="flex flex-col justify-between">
-              <h2
+              {/* <h2
                 className={classNames(
                   style.headingDashboardh1,
                   'mt-0 mb-0 flex flex-row items-center'
                 )}
               >
                 Event
-              </h2>
+              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your event. Include the type of
                 event, a brief description, the organizers. Give the location
                 date and time, and any significant information.
+                <Link
+                  href="/post/New_Post?pageType=event"
+                  className="ml-4 underline"
+                >
+                  View Example Event
+                </Link>
               </p>
             </div>
 
@@ -225,31 +233,30 @@ export default function DashboardProjects() {
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
                           <div className="flex flex-wrap flex-start text-left">
-                            <Tag
-                              className="flex-grow basis-full cursor-default"
-                              disableTooltip={true}
-                              name={postPage?.data?.title}
-                              popularity={
-                                postPage?.data?.pageTypes[0]?.popularity
-                              }
-                            ></Tag>
-                          </div>
-                          <div className={'flex flex-row'}>
                             <Link href={`/post/${postPage.data.slug}`}>
-                              <Button
-                                size={'sm'}
-                                color={'gray'}
-                                className={classNames(
-                                  style.buttonAddDashboard,
-                                  'block mr-2 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 focus:ring-4 focus:ring-gray-200'
-                                )}
-                                pill
+                              <Badge
+                                className="w-fit mt-2 capitalize rounded-full"
+                                color="gray"
                               >
-                                <span className="text-md">View</span>
-                              </Button>
+                                {postPage?.data?.pageTypes[0]?.name}
+                              </Badge>
+                              <MiniPagePost
+                                key={index}
+                                title={postPage?.data?.title}
+                                date={postPage?.data?._updatedDate?.$date}
+                                image={
+                                  postPage?.data?.projectResultMedia
+                                    ?.thumbnail ||
+                                  postPage?.data?.postImage1?.url ||
+                                  'https://placehold.co/600x400?text=placeholder'
+                                }
+                                text={postPage?.data?.postContentRIch1}
+                                tags={[
+                                  ...(postPage?.data?.domains ?? []),
+                                  ...(postPage?.data?.methods ?? []),
+                                ]}
+                              />
                             </Link>
-                            {/* // TODO- Visible if admin user WIX */}
-                            {/* // TODO- Transform the List in a component */}
                           </div>
 
                           {isLoadingDeletePostPage &&

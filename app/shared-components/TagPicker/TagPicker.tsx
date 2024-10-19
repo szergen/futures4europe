@@ -3,11 +3,13 @@ import { items } from '@wix/data';
 import CreatableSelect from 'react-select/creatable';
 import Select, { components } from 'react-select';
 import classNames from 'classnames';
-import { TagProps } from '../Tag/Tag';
+import Tag, { TagProps } from '../Tag/Tag';
 import { Modal, Button, TextInput, Label } from 'flowbite-react';
 import { useWixModules } from '@wix/sdk-react';
 import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+// import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
   isMulti?: boolean;
@@ -62,6 +64,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   const [tagName, setTagName] = useState('');
   const [tagTagline, setTagTagline] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { tags: allTags } = useAuth();
   // #endregion
 
   // #region Tag picker state
@@ -272,7 +275,61 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   // components
   const customComponents = {
     ClearIndicator: customClearIndicator,
+    Option: (props: any) => {
+      const correspondingTag = tags?.find(
+        (tag) => tag.name === props.data.label
+      );
+      return (
+        // <components.Option {...props}>
+        correspondingTag ? (
+          <components.Option {...props}>
+            <Tag
+              {...correspondingTag}
+              disableTooltip={true}
+              disableLink={true}
+            />
+          </components.Option>
+        ) : (
+          ''
+        )
+        // </components.Option>
+      );
+    },
+    MultiValue: (props: any) => {
+      const correspondingTag = tags?.find(
+        (tag) => tag.name === props.data.label
+      );
+      return correspondingTag ? (
+        <components.MultiValue {...props}>
+          <Tag {...correspondingTag} disableTooltip={true} disableLink={true} />
+        </components.MultiValue>
+      ) : (
+        ''
+      );
+    },
+    // SingleValue: (props: any) => {
+    //   const correspondingTag = tags?.find(
+    //     (tag) => tag.name === props.data.label
+    //   );
+    //   return correspondingTag ? (
+    //     <components.SingleValue {...props}>
+    //       <Tag {...correspondingTag} disableTooltip={true} disableLink={true} />
+    //     </components.SingleValue>
+    //   ) : (
+    //     ''
+    //   );
+    // },
   };
+
+  const validationForTagName = (tagName: string) => {
+    return allTags?.find((tag) => tag.name === tagName);
+  };
+
+  const [isTagNameValid, setIsTagNameValid] = useState(true);
+
+  useEffect(() => {
+    setIsTagNameValid(!validationForTagName(tagName));
+  }, [tagName]);
 
   return (
     <>
@@ -309,12 +366,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                 state.isFocused ? styles.TagCursor : 'text-gray-site' // Proper ternary expression
               ),
             multiValue: () =>
-              'tagPickerPill tagPickerPillRemove z-5 my-1 cursor-pointer',
+              classNames(
+                // styles.tagPickerPill,
+                'tagPickerPill tagPickerPillRemove  z-100 cursor-pointer'
+                // styles.tagPickerPillMultiModule
+              ),
             singleValue: () =>
-              'tagPickerPillSingle tagPickerPillRemove cursor-pointer z-5',
+              classNames(
+                'tagPickerPillSingle cursor-pointer z-10',
+                styles.tagPickerPillSingleModule
+              ),
             menu: () => classNames('', styles.tagPickerMenu),
             menuList: () => classNames('', styles.tagPickerMenuList),
-            option: () => classNames('', styles.option),
+            // option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
                 'text-gray-400 rounded-lg ', // bg-slate-100
@@ -328,12 +392,21 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
-                  <Label htmlFor="tagName">Name</Label>
+                  <Label htmlFor="tagName" className="relative">
+                    Project Name
+                  </Label>
                   <TextInput
                     id="tagName"
                     value={tagName}
                     onChange={(e) => setTagName(e.target.value)}
                     required
+                    helperText={
+                      !isTagNameValid && (
+                        <span className="text-red-600 relative -top-3">
+                          TagName already exists in a different tag type
+                        </span>
+                      )
+                    }
                   />
                 </div>
                 <div className="mb-4">
@@ -344,7 +417,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     onChange={(e) => setTagTagline(e.target.value)}
                   />
                 </div>
-                <Button type="submit" disabled={isLoading}>
+                <Button
+                  disabled={!isTagNameValid || isLoading}
+                  type="submit"
+                  // disabled={isLoading}
+                >
                   Submit
                 </Button>
               </form>

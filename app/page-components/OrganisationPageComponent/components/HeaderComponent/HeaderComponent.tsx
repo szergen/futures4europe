@@ -11,6 +11,7 @@ import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerComponent from '@app/shared-components/DatePickerComponent/DatePickerComponent';
 import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import dayjs from 'dayjs';
 
 export type HeaderComponentProps = {
   organisation: {
@@ -240,19 +241,23 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
 
           {!isEditModeOn ? (
-            <Typography
-              tag="span"
-              className="text-greyShade text-stroke-gray font-medium text-14 ml-2"
-            >
-              {organisation?.organisationEstablishedDate &&
-                // TODO: Show year
-                formatDate(organisation?.organisationEstablishedDate)}
-            </Typography>
+            organisation?.organisationEstablishedDate && (
+              <Typography
+                tag="span"
+                className="text-greyShade text-stroke-gray font-medium text-14 ml-2"
+              >
+                {dayjs(organisation?.organisationEstablishedDate).format(
+                  'YYYY'
+                )}
+              </Typography>
+            )
           ) : (
             <DatePickerComponent
+              placeholder="Established Year"
+              dateFormate="YYYY"
               date={
                 isNewPage || !organisation?.organisationEstablishedDate
-                  ? new Date(Date.now())
+                  ? null
                   : new Date(organisation?.organisationEstablishedDate)
               }
               pickerType="month-year"
