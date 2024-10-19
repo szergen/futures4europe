@@ -11,6 +11,7 @@ export type DatePickerComponentProps = {
   date: Date;
   onChange?: (date: Date) => void;
   className?: string;
+  pickerType?: 'day' | 'month-year' | 'year'; // new prop to define the picker type
 };
 
 export const dateHelper = (date: Date) =>
@@ -118,6 +119,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
   date,
   onChange,
   className,
+  pickerType = 'day',
 }) => {
   const [dateState, setDateState] = useState(date || Date.now());
   const ref = useRef();
@@ -126,6 +128,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
     setDateState(date);
   }, [date]);
 
+  
   return (
     <DatePicker
       customInput={
@@ -135,12 +138,23 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
           className={classNames(className)}
         />
       }
+      showIcon
+      toggleCalendarOnIconClick
       selected={dateState}
       onChange={(date) => {
         onChange && onChange(date as Date);
         return setDateState(date as Date);
       }}
-      dateFormat="yyyy-MM-dd"
+      withPortal
+      dateFormat={
+        pickerType === 'year'
+          ? 'yyyy'
+          : pickerType === 'month-year'
+          ? 'MM/yyyy'
+          : 'yyyy-MM-dd'
+      }
+      showYearPicker={pickerType === 'year'}
+      showMonthYearPicker={pickerType === 'month-year'}
       preventOpenOnFocus
       placeholderText="Select a date"
       name="Start Date"

@@ -55,10 +55,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   isNewPage,
 }) => {
   const validationFunctionForName = (tempName: string) => {
-    if (tempName.length < 5) {
+    if (tempName?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName.length > 50) {
+    if (tempName?.length > 50) {
       return 'Title should be at most 50 characters long';
     }
     if (tempName === 'New Post') {
@@ -255,6 +255,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   ? new Date(Date.now())
                   : new Date(organisation?.organisationEstablishedDate)
               }
+              pickerType="month-year"
               onChange={(value) =>
                 updateOrganisationDataOnKeyValue(
                   'organisationEstablishedDate',

@@ -190,7 +190,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  / * catalin */;
+  // / * catalin */;
 
   // Define the custom animated Input component
   const AnimatedInput = (props) => {
@@ -324,11 +324,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         />
         {showCreateForm && (
           <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-            <Modal.Header>Add project title</Modal.Header>
+            <Modal.Header>Add tag element</Modal.Header>
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
-                  <Label htmlFor="tagName">Project Name</Label>
+                  <Label htmlFor="tagName">Name</Label>
                   <TextInput
                     id="tagName"
                     value={tagName}
@@ -337,7 +337,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                   />
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="tagTagline">Project Tagline</Label>
+                  <Label htmlFor="tagTagline">Tagline</Label>
                   <TextInput
                     id="tagTagline"
                     value={tagTagline}

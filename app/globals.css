@@ -694,6 +694,7 @@ textarea {
   border-radius: var(--p-border-radius-200);
   height: calc(var(--w-space-xxxl));
   margin-right: calc(var(--w-space-s));
+  color: var(--primary-black);
 }
 
 .tagPickerPill .react-select__multi-value__label {
