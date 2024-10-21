@@ -758,7 +758,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         // events={events}
       />
       {/* Files */}
-      <FilesComponent files={person.files} />
+      {/* <FilesComponent files={person.files} /> */}
       {/* External Links */}
       {/* <ExternalLinksComponent links={person.links} /> */}
       <Modal show={isSaveInProgress} size="md" popup>
