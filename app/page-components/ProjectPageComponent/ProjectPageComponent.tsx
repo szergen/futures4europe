@@ -20,7 +20,8 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import {
-  checkIfArrayNeedsUpdate,
+  checkIfArrayNeedsUpdateForStrings,
+  checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
 } from '../PostPageComponent/PostPageComponent.utils';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
@@ -182,13 +183,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.organisations,
         defaultProjectData.organisations
       ) ||
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForStrings(
         projectData.contentText,
-        projectData.contentText
+        defaultProjectData.contentText
       ) ||
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         projectData.contentImages,
-        projectData.contentImages
+        defaultProjectData.contentImages
+      ) ||
+      checkIfArrayNeedsUpdateForStrings(
+        projectData.contentImages,
+        defaultProjectData.contentImages
       ) ||
       projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
@@ -240,7 +245,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // Update projectOrganisation
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         projectData.organisations,
         defaultProjectData.organisations
       )
@@ -282,7 +287,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // Update Foresight Methods
     if (
-      checkIfArrayNeedsUpdate(projectData.methods, defaultProjectData.methods)
+      checkIfArrayNeedsUpdateForTags(
+        projectData.methods,
+        defaultProjectData.methods
+      )
     ) {
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
@@ -294,7 +302,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
     // Update Domains
     if (
-      checkIfArrayNeedsUpdate(projectData.domains, defaultProjectData.domains)
+      checkIfArrayNeedsUpdateForTags(
+        projectData.domains,
+        defaultProjectData.domains
+      )
     ) {
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
@@ -307,7 +318,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // Update Coordinators
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         projectData.coordinators,
         defaultProjectData.coordinators
       )
@@ -323,7 +334,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // Update Participants
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         projectData.participants,
         defaultProjectData.participants
       )
