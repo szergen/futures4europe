@@ -25,6 +25,7 @@ import {
   checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
   checkIfArrayNeedsUpdateForStrings,
+  areArraysEqualForMediaFiles,
 } from './PostPageComponent.utils';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
 import { useRouter } from 'next/navigation';
@@ -183,6 +184,10 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.contentImages,
         defaultPostData.contentImages
       ) ||
+      areArraysEqualForMediaFiles(
+        postData.mediaFiles,
+        defaultPostData.mediaFiles
+      ) ||
       postData.eventStartDate !== defaultPostData.eventStartDate ||
       postData.eventEndDate !== defaultPostData.eventEndDate ||
       postData.eventRegistration !== defaultPostData.eventRegistration ||
@@ -224,6 +229,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           eventEndDate: postData?.eventEndDate,
           eventRegistration: postData?.eventRegistration,
           projectResultMedia: postData?.projectResultMedia,
+          mediaFiles: postData?.mediaFiles,
           // pageTypes: postData?.pageType,
         }
       );
@@ -438,6 +444,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           eventEndDate: postData?.eventEndDate,
           eventRegistration: postData?.eventRegistration,
           projectResultMedia: postData?.projectResultMedia,
+          mediaFiles: postData?.mediaFiles,
           slug: postData?.title.replace(/ /g, '_') + '_' + generateUniqueHash(),
         },
       },

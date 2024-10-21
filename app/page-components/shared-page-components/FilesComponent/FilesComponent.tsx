@@ -6,6 +6,8 @@ import DisplayProjectResultMedia from '../DisplayProjectResultMedia/DisplayProje
 import ProjectResultHeaderImage from '@app/shared-components/ProjectResultHeaderImage/ProjectResultHeaderImage';
 import { useEffect, useState } from 'react';
 import InputText from '@app/shared-components/InputText/InputText';
+import Button from '@app/shared-components/Button/Button';
+import Link from 'next/link';
 
 export type FilesComponentProps = {
   files: Array<{
@@ -116,11 +118,27 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
         {currentFiles?.map((media, index) => (
           <div key={`${media?.thumbnail}-${index}`} className="mr-4">
             {!isEditModeOn ? (
-              media && (
-                <DisplayProjectResultMedia
-                  projectResultMedia={media || {}}
-                  key={'files-component-' + index}
-                />
+              media.thumbnail && (
+                <>
+                  <DisplayProjectResultMedia
+                    projectResultMedia={media || {}}
+                    key={'files-component-' + index}
+                  />
+                  {media.type !== 'video' && (
+                    <Link href={media.url} target="_blank">
+                      <Button>
+                        Download File (
+                        {(Number(media.sizeInBytes) / 1024)
+                          ?.toString()
+                          ?.split('.')?.[0] + 'kb'}
+                        ){' '}
+                        <span className="rounded-lg bg-white text-blue-500 p-1 font-bold">
+                          {media?.url?.split('.')?.pop()?.toUpperCase()}
+                        </span>
+                      </Button>
+                    </Link>
+                  )}
+                </>
               )
             ) : (
               <ProjectResultHeaderImage
@@ -151,6 +169,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                   };
                   updatePostDataBasedOnKeyValue &&
                     updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
+                  setCurrentFiles(newMediaFiles);
                 }}
                 updatePostDataForVideoImage={(value) => {
                   // updatePostData({
@@ -175,6 +194,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                   };
                   updatePostDataBasedOnKeyValue &&
                     updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
+                  setCurrentFiles(newMediaFiles);
                 }}
               />
             )}
