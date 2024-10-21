@@ -19,7 +19,7 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import {
-  checkIfArrayNeedsUpdate,
+  checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
 } from '../PostPageComponent/PostPageComponent.utils';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
@@ -215,7 +215,7 @@ function OrganisationPageComponent({
 
     // Update projects
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         organisationData.projects,
         defaultOrganisationData.projects
       )
@@ -233,7 +233,7 @@ function OrganisationPageComponent({
 
     // Update people
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         organisationData.people,
         defaultOrganisationData.people
       )
