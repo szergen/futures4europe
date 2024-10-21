@@ -75,30 +75,46 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     });
   };
 
-  const handleRemoveContent = () => {
+  // const handleRemoveContent = () => {
+  //   setContentText((prevContentText) => {
+  //     const newContentText = [...prevContentText];
+  //     for (let i = 9; i >= 0; i--) {
+  //       if (newContentText[i] !== undefined) {
+  //         newContentText[i] = undefined;
+  //         updatePostDataContent(undefined, i);
+  //         break;
+  //       }
+  //     }
+  //     return newContentText;
+  //   });
+  // };
+  const handleRemoveContent = (index: number) => {
     setContentText((prevContentText) => {
       const newContentText = [...prevContentText];
-      for (let i = 9; i >= 0; i--) {
-        if (newContentText[i] !== undefined) {
-          newContentText[i] = undefined;
-          updatePostDataContent(undefined, i);
-          break;
-        }
-      }
+      newContentText[index] = undefined;
+      updatePostDataContent(undefined, index);
       return newContentText;
     });
   };
 
-  const handleRemoveImage = () => {
+  // const handleRemoveImage = () => {
+  //   setContentImages((prevContentImages) => {
+  //     const newContentImages = [...prevContentImages];
+  //     for (let i = 9; i >= 0; i--) {
+  //       if (newContentImages[i] !== undefined) {
+  //         newContentImages[i] = undefined;
+  //         updatePostDataContentImages(undefined, i);
+  //         break;
+  //       }
+  //     }
+  //     return newContentImages;
+  //   });
+  // };
+  const handleRemoveImage = (index: number) => {
     setContentImages((prevContentImages) => {
       const newContentImages = [...prevContentImages];
-      for (let i = 9; i >= 0; i--) {
-        if (newContentImages[i] !== undefined) {
-          newContentImages[i] = undefined;
-          updatePostDataContentImages(undefined, i);
-          break;
-        }
-      }
+      newContentImages[index] = undefined;
+      updatePostDataContentImages(undefined, index);
       return newContentImages;
     });
   };
@@ -147,8 +163,12 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
 
     if (
       definedImagesCount === definedContentCount &&
-      definedContentCount <= 10 &&
-      contentImages[definedImagesCount - 1]?.url != ' '
+      definedContentCount <= 10
+      // &&
+      // contentImages?.[definedImagesCount - 1]?.url != ' ' &&
+      // contentText[definedContentCount - 1] != ' '
+      // &&
+      // contentImages[definedImagesCount - 1]?.url != ' '
     ) {
       return true;
     }
@@ -231,22 +251,22 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           />
                           <div className="flex flex-col">
                             {/* Delete RTE */}
-                            {!contentText?.[index + 1] && (
-                              <button
-                                onClick={handleRemoveContent}
-                                className={classNames(style.buttonRemove, '')}
-                              >
-                                <SpriteSvg.EditCloseIcon
-                                  className="text-site-black mt-1"
-                                  sizeW={24}
-                                  sizeH={24}
-                                  viewBox={'0 0 32 32'}
-                                  fill={'currentColor'}
-                                  strokeWidth={0}
-                                  inline={false}
-                                />
-                              </button>
-                            )}
+                            {/* {!contentText?.[index + 1] && ( */}
+                            <button
+                              onClick={() => handleRemoveContent(index)}
+                              className={classNames(style.buttonRemove, '')}
+                            >
+                              <SpriteSvg.EditCloseIcon
+                                className="text-site-black mt-1"
+                                sizeW={24}
+                                sizeH={24}
+                                viewBox={'0 0 32 32'}
+                                fill={'currentColor'}
+                                strokeWidth={0}
+                                inline={false}
+                              />
+                            </button>
+                            {/* )} */}
                             {/* {!initialContentText?.[index + 1] &&
                               isEditModeOn &&
                               definedItemsCount < 10 &&
@@ -303,22 +323,22 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           />
                           <div className="flex flex-col">
                             {/* Delete FIle Uploader */}
-                            {!contentImages?.[index + 1] && (
-                              <button
-                                onClick={handleRemoveImage}
-                                className={classNames(style.buttonRemove, '')}
-                              >
-                                <SpriteSvg.EditCloseIcon
-                                  className="text-site-black mt-1"
-                                  sizeW={24}
-                                  sizeH={24}
-                                  viewBox={'0 0 32 32'}
-                                  fill={'currentColor'}
-                                  strokeWidth={0}
-                                  inline={false}
-                                />
-                              </button>
-                            )}
+                            {/* {!contentImages?.[index + 1] && ( */}
+                            <button
+                              onClick={() => handleRemoveImage(index)}
+                              className={classNames(style.buttonRemove, '')}
+                            >
+                              <SpriteSvg.EditCloseIcon
+                                className="text-site-black mt-1"
+                                sizeW={24}
+                                sizeH={24}
+                                viewBox={'0 0 32 32'}
+                                fill={'currentColor'}
+                                strokeWidth={0}
+                                inline={false}
+                              />
+                            </button>
+                            {/* )} */}
                             {/* {!contentText?.[index + 1] &&
                               isEditModeOn &&
                               definedItemsCount < 10 &&
