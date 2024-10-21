@@ -898,14 +898,14 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         }
       />
       {/* Files */}
-      {postData?.pageType?.[0]?.name?.toLowerCase() !== 'project result' && (
-        <FilesComponent
-          files={postData.files}
-          isEditModeOn={isEditModeOn}
-          mediaFiles={postData.mediaFiles}
-          updatePostDataBasedOnKeyValue={updatePostDataBasedOnKeyValue}
-        />
-      )}
+      {/* {postData?.pageType?.[0]?.name?.toLowerCase() !== 'project result' && ( */}
+      <FilesComponent
+        files={postData.files}
+        isEditModeOn={isEditModeOn}
+        mediaFiles={postData.mediaFiles}
+        updatePostDataBasedOnKeyValue={updatePostDataBasedOnKeyValue}
+      />
+      {/* )} */}
       {/* External Links */}
       {/* <ExternalLinksComponent links={postData.links} /> */}
       {/* Saving modal */}

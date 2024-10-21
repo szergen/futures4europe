@@ -120,9 +120,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     updatePostDataContentImages(value, index);
   };
 
-  const definedItemsCount = contentText.filter(
-    (item) => item !== undefined
-  ).length;
+  // const definedItemsCount = contentText.filter(
+  //   (item) => item !== undefined
+  // ).length;
 
   useEffect(() => {
     setContentText(initialContentText);

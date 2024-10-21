@@ -2,12 +2,9 @@ import style from './FilesComponent.module.css';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Typography from '@app/shared-components/Typography/Typography';
-import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
-import Button from '@app/shared-components/Button/Button';
 import DisplayProjectResultMedia from '../DisplayProjectResultMedia/DisplayProjectResultMedia';
 import ProjectResultHeaderImage from '@app/shared-components/ProjectResultHeaderImage/ProjectResultHeaderImage';
 import { useEffect, useState } from 'react';
-import { is } from '@react-spring/shared';
 import InputText from '@app/shared-components/InputText/InputText';
 
 export type FilesComponentProps = {
@@ -36,28 +33,73 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
   updatePostDataBasedOnKeyValue,
 }) => {
   const [currentFiles, setCurrentFiles] = useState(mediaFiles);
-  const mockedFiles = [
-    {
-      displayName: 'Microbit Educational Guide',
-      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      fileName: '',
-      thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-      sizeInBytes: '',
-      type: 'video',
-    },
-  ];
+  // const mockedFiles = [
+  //   {
+  //     displayName: 'Microbit Educational Guide',
+  //     url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  //     fileName: '',
+  //     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
+  //     sizeInBytes: '',
+  //     type: 'video',
+  //   },
+  // ];
 
   // if (!mediaFiles || mediaFiles?.length === 0) {
   //   return null;
   // }
 
+  // useEffect(() => {
+  //   console.log('debug5->mediaFiles', mediaFiles);
+  //   setCurrentFiles(mediaFiles);
+  // }, [mediaFiles]);
+  // useEffect(() => {
+  //   if (isEditModeOn) {
+  //     const currentLength = currentFiles?.length;
+  //     const emptyMedia = {
+  //       thumbnail: '',
+  //       type: '',
+  //       displayName: '',
+  //       url: '',
+  //       fileName: '',
+  //       sizeInBytes: '',
+  //     };
+
+  //     if (currentLength && currentFiles[currentLength - 1]?.url) {
+  //       currentFiles.push(emptyMedia);
+  //     } else {
+  //       setCurrentFiles([emptyMedia]);
+  //     }
+  //   }
+  //   console.log('debug5->currentFiles', currentFiles);
+  // }, [isEditModeOn, currentFiles]);
+
   useEffect(() => {
-    setCurrentFiles(mediaFiles);
-  }, [mediaFiles]);
+    if (isEditModeOn) {
+      const emptyImage = {
+        thumbnail: '',
+        type: '',
+        displayName: '',
+        url: '',
+        fileName: '',
+        sizeInBytes: '',
+      };
+
+      const files = currentFiles || [];
+      const lastFile = files[files.length - 1];
+      const isLastFileEmpty = lastFile && !lastFile.url;
+
+      if (!isLastFileEmpty) {
+        setCurrentFiles([...files, emptyImage]);
+        updatePostDataBasedOnKeyValue &&
+          updatePostDataBasedOnKeyValue('mediaFiles', [...files, emptyImage]);
+      }
+    }
+    console.log('debug5->currentFiles', currentFiles);
+  }, [isEditModeOn, currentFiles]);
 
   return (
     <section>
-      {mediaFiles?.length > 0 ||
+      {currentFiles?.length > 0 ||
         (isEditModeOn && (
           <Typography
             tag="h2"
@@ -71,14 +113,19 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
         ))}
 
       <div className="flex">
-        {mediaFiles?.map((media, index) => (
+        {currentFiles?.map((media, index) => (
           <div key={`${media?.thumbnail}-${index}`} className="mr-4">
             {!isEditModeOn ? (
               media && (
-                <DisplayProjectResultMedia projectResultMedia={media || {}} />
+                <DisplayProjectResultMedia
+                  projectResultMedia={media || {}}
+                  key={'files-component-' + index}
+                />
               )
             ) : (
               <ProjectResultHeaderImage
+                key={'files-component-' + index}
+                fileIdPrefix={'files-component-prefix-' + index}
                 currentImage={media.thumbnail}
                 resultType={media.type}
                 updatePostData={(value) => {
@@ -93,7 +140,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                   //     type: value.type,
                   //   },
                   // });
-                  let newMediaFiles = [...mediaFiles];
+                  let newMediaFiles = [...currentFiles];
                   newMediaFiles[index] = {
                     ...newMediaFiles[index],
                     thumbnail: value.thumbnail,
@@ -117,7 +164,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                   //     type: 'video',
                   //   },
                   // });
-                  let newMediaFiles = [...mediaFiles];
+                  let newMediaFiles = [...currentFiles];
                   newMediaFiles[index] = {
                     ...newMediaFiles[index],
                     thumbnail: value.thumbnail,
@@ -141,7 +188,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                 placeholder="Enter display name"
                 value={media.displayName || ''}
                 onChange={(e) => {
-                  let newMediaFiles = [...mediaFiles];
+                  let newMediaFiles = [...currentFiles];
                   newMediaFiles[index] = {
                     ...newMediaFiles[index],
                     displayName: e.target.value,
@@ -160,7 +207,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
             )}
           </div>
         ))}
-        {isEditModeOn && (
+        {/* {isEditModeOn && (
           <div className="blank">
             <ProjectResultHeaderImage
               currentImage={''}
@@ -177,9 +224,11 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                 //     type: value.type,
                 //   },
                 // });
-                let newMediaFiles = mediaFiles?.length ? [...mediaFiles] : [];
-                newMediaFiles[mediaFiles?.length || 0] = {
-                  ...newMediaFiles[mediaFiles?.length || 0],
+                let newMediaFiles = currentFiles?.length
+                  ? [...currentFiles]
+                  : [];
+                newMediaFiles[currentFiles?.length || 0] = {
+                  ...newMediaFiles[currentFiles?.length || 0],
                   thumbnail: value.thumbnail,
                   sizeInBytes: value.sizeInBytes,
                   url: value.url,
@@ -201,9 +250,11 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                 //     type: 'video',
                 //   },
                 // });
-                let newMediaFiles = mediaFiles?.length ? [...mediaFiles] : [];
-                newMediaFiles[mediaFiles?.length || 0] = {
-                  ...newMediaFiles[mediaFiles?.length || 0],
+                let newMediaFiles = currentFiles?.length
+                  ? [...currentFiles]
+                  : [];
+                newMediaFiles[currentFiles?.length || 0] = {
+                  ...newMediaFiles[currentFiles?.length || 0],
                   thumbnail: value.thumbnail,
                   sizeInBytes: '',
                   url: value.url,
@@ -220,9 +271,9 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
               placeholder="Enter display name"
               value={''}
               onChange={(e) => {
-                let newMediaFiles = [...mediaFiles];
-                newMediaFiles[mediaFiles?.length] = {
-                  ...newMediaFiles[mediaFiles?.length],
+                let newMediaFiles = [...currentFiles];
+                newMediaFiles[currentFiles?.length] = {
+                  ...newMediaFiles[currentFiles?.length],
                   displayName: e.target.value,
                 };
                 updatePostDataBasedOnKeyValue &&
@@ -237,38 +288,10 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
               }}
             />
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );
 };
 
 export default FilesComponent;
-
-// Old code:
-{
-  /* <div className="flex">
-  {files.map((file, index) => (
-    <div key={file?.title + index} className={style.fileContainer}>
-      <Image
-        src="https://framerusercontent.com/images/F46jYRatmGwgDHnyDPIaUs1us.png?scale-down-to=1024"
-        width={147}
-        height={268}
-        className={classNames('rounded-full', style.filePreviewImage)}
-        alt="User Avatar - Eva Pericolini"
-      />
-      <Typography tag="p" className="text-gray-800 mt-2">
-        {file.title}
-      </Typography>
-      <div className={style.downloadButton}>
-        <Button>
-          Download file ({file.fileSize}){' '}
-          <span className="rounded-lg bg-white text-blue-500 p-1 font-bold">
-            {file.format}
-          </span>
-        </Button>
-      </div>
-    </div>
-  ))}
-</div>; */
-}

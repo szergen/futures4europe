@@ -7,6 +7,7 @@ type ProjectResultHeaderImageProps = {
   resultType?: string;
   updatePostData?: (value: any) => void;
   updatePostDataForVideoImage?: (value: any) => void;
+  fileIdPrefix?: string;
 };
 
 const ProjectResultHeaderImage: React.FC<ProjectResultHeaderImageProps> = ({
@@ -14,6 +15,7 @@ const ProjectResultHeaderImage: React.FC<ProjectResultHeaderImageProps> = ({
   resultType,
   updatePostData,
   updatePostDataForVideoImage,
+  fileIdPrefix,
 }) => {
   const [selectedOption, setSelectedOption] = useState('file');
 
@@ -59,6 +61,7 @@ const ProjectResultHeaderImage: React.FC<ProjectResultHeaderImageProps> = ({
         <ProjectResultFileUploader
           currentImage={resultType === 'document' ? currentImage : undefined}
           updatePostData={updatePostData ? updatePostData : undefined}
+          fileIdPrefix={fileIdPrefix}
         />
       ) : (
         <ProjectResultVideoImage
