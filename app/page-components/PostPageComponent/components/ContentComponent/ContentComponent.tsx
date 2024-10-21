@@ -120,9 +120,9 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     updatePostDataContentImages(value, index);
   };
 
-  const definedItemsCount = contentText.filter(
-    (item) => item !== undefined
-  ).length;
+  // const definedItemsCount = contentText.filter(
+  //   (item) => item !== undefined
+  // ).length;
 
   useEffect(() => {
     setContentText(initialContentText);
@@ -190,7 +190,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
       console.log('Adding new content');
       handleAddContent();
     }
-  }, [contentImages, isEditModeOn]);
+  }, [contentImages, isEditModeOn, contentText]);
 
   // Add empty content image if conditions are met
   useEffect(() => {
@@ -199,7 +199,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
       console.log('Adding new image');
       handleAddImage();
     }
-  }, [contentText, isEditModeOn]);
+  }, [contentText, isEditModeOn, contentImages]);
 
   return (
     <main className={style.postContent}>

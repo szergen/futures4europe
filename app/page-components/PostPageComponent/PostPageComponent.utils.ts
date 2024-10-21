@@ -38,7 +38,10 @@ export const formatDate = (dateStr: string) => {
   return `${day}${daySuffix} of ${month} ${year}`;
 };
 
-export const checkIfArrayNeedsUpdate = (newArray: any[], oldArray: any[]) => {
+export const checkIfArrayNeedsUpdateForTags = (
+  newArray: any[],
+  oldArray: any[]
+) => {
   if (!newArray || !oldArray) {
     return true;
   }
@@ -53,8 +56,25 @@ export const checkIfArrayNeedsUpdate = (newArray: any[], oldArray: any[]) => {
   return false;
 };
 
+// Compare 2 arrays strings
+export const checkIfArrayNeedsUpdateForStrings = (a: any[], b: any[]) => {
+  if (a === b) return false;
+  if (a == null || b == null) return true;
+  if (a.length !== b.length) return true;
+
+  for (let i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return true;
+  }
+
+  return false;
+};
+
 export const generateUniqueHash = () => {
   return Math.random().toString(36).substring(2, 7);
 };
 
-export default { formatDate, checkIfArrayNeedsUpdate, generateUniqueHash };
+export default {
+  formatDate,
+  checkIfArrayNeedsUpdateForTags,
+  generateUniqueHash,
+};

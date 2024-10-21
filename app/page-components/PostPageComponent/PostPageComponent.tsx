@@ -22,8 +22,9 @@ import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import {
   formatDate,
-  checkIfArrayNeedsUpdate,
+  checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
+  checkIfArrayNeedsUpdateForStrings,
 } from './PostPageComponent.utils';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
 import { useRouter } from 'next/navigation';
@@ -168,13 +169,17 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     if (
       postData.subtitle !== defaultPostData.subtitle ||
       postData.title !== defaultPostData.title ||
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForStrings(
         postData.contentText,
         defaultPostData.contentText
       ) ||
-      !postData.contentText[0] ||
-      !postData.contentText[1] ||
-      checkIfArrayNeedsUpdate(
+      // !postData.contentText[0] ||
+      // !postData.contentText[1] ||
+      checkIfArrayNeedsUpdateForTags(
+        postData.contentImages,
+        defaultPostData.contentImages
+      ) ||
+      checkIfArrayNeedsUpdateForStrings(
         postData.contentImages,
         defaultPostData.contentImages
       ) ||
@@ -186,6 +191,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       postData.projectResultMedia?.displayName !==
         defaultPostData.projectResultMedia?.displayName
     ) {
+      console.log('debug5->Updating Data');
       const updatedItem = await updateDataItem(
         postData.dataCollectionId,
         postData._id,
@@ -225,7 +231,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
     // Update Project Authors
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         postData.projectAuthors,
         defaultPostData.projectAuthors
       )
@@ -240,7 +246,12 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Update Page Type
-    if (checkIfArrayNeedsUpdate(postData.pageType, defaultPostData.pageType)) {
+    if (
+      checkIfArrayNeedsUpdateForTags(
+        postData.pageType,
+        defaultPostData.pageType
+      )
+    ) {
       const updatedPageTypes = await replaceDataItemReferences(
         'PostPages',
         postData?.pageType.map((pageType: any) => pageType._id),
@@ -260,7 +271,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       console.log('updatedCountryTag', updatedCountryTag);
     }
     // Update People Tags
-    if (checkIfArrayNeedsUpdate(postData.people, defaultPostData.people)) {
+    if (
+      checkIfArrayNeedsUpdateForTags(postData.people, defaultPostData.people)
+    ) {
       const updatedPeople = await replaceDataItemReferences(
         'PostPages',
         postData?.people.map((person: any) => person._id),
@@ -271,7 +284,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
     // Update Foresight Methods
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         postData.foreSightMethods,
         defaultPostData.foreSightMethods
       )
@@ -285,7 +298,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       console.log('updatedMethods', updatedMethods);
     }
     // Update Domains
-    if (checkIfArrayNeedsUpdate(postData.domains, defaultPostData.domains)) {
+    if (
+      checkIfArrayNeedsUpdateForTags(postData.domains, defaultPostData.domains)
+    ) {
       const updatedDomains = await replaceDataItemReferences(
         'PostPages',
         postData.domains?.map((domain: any) => domain._id),
@@ -295,7 +310,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       console.log('updatedDomains', updatedDomains);
     }
     // Update Projects
-    if (checkIfArrayNeedsUpdate(postData.project, defaultPostData.project)) {
+    if (
+      checkIfArrayNeedsUpdateForTags(postData.project, defaultPostData.project)
+    ) {
       const updatedProjects = await replaceDataItemReferences(
         'PostPages',
         postData.project?.map((project: any) => project._id),
@@ -306,7 +323,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
     // Update Organisation
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         postData.organisation,
         defaultPostData.organisation
       )
@@ -321,7 +338,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
     // Update Internal Links
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         postData.internalLinks,
         defaultPostData.internalLinks
       )
@@ -336,7 +353,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
     // Update Moderators
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         postData.eventModerators,
         defaultPostData.eventModerators
       )
@@ -352,7 +369,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
 
     // Update Speakers
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         postData?.eventSpeakers,
         defaultPostData?.eventSpeakers
       )
