@@ -18,7 +18,7 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import {
-  checkIfArrayNeedsUpdate,
+  checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
 } from '../PostPageComponent/PostPageComponent.utils';
 import { useWixModules } from '@wix/sdk-react';
@@ -218,7 +218,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Update personOrganisation
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         personData.currentAfiliations,
         defaultPersonData.currentAfiliations
       )
@@ -241,7 +241,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Update personOrganisationFormer
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         personData.formerAfiliations,
         defaultPersonData.formerAfiliations
       )
@@ -270,7 +270,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Update Foresight Methods
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         personData.foreSightMethods,
         defaultPersonData.foreSightMethods
       )
@@ -285,7 +285,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
     // Update Domains
     if (
-      checkIfArrayNeedsUpdate(personData.domains, defaultPersonData.domains)
+      checkIfArrayNeedsUpdateForTags(
+        personData.domains,
+        defaultPersonData.domains
+      )
     ) {
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
@@ -297,7 +300,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
     // Update Activity
     if (
-      checkIfArrayNeedsUpdate(personData.activity, defaultPersonData.activity)
+      checkIfArrayNeedsUpdateForTags(
+        personData.activity,
+        defaultPersonData.activity
+      )
     ) {
       const updateAcvitiy = await replaceDataItemReferences(
         'InfoPages',
@@ -310,7 +316,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Update projectsCoordindation
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         personData.projectsCoordindation,
         defaultPersonData.projectsCoordindation
       )
@@ -326,7 +332,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // Update projectsParticipation
     if (
-      checkIfArrayNeedsUpdate(
+      checkIfArrayNeedsUpdateForTags(
         personData.projectsParticipation,
         defaultPersonData.projectsParticipation
       )
@@ -758,7 +764,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         // events={events}
       />
       {/* Files */}
-      <FilesComponent files={person.files} />
+      {/* <FilesComponent files={person.files} /> */}
       {/* External Links */}
       {/* <ExternalLinksComponent links={person.links} /> */}
       <Modal show={isSaveInProgress} size="md" popup>

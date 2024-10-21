@@ -17,10 +17,10 @@
     margin-left: var(--w-space-xl);
     margin-bottom: var(--w-space-xxxl);
   }
-  li {
+  /* li {
     margin-bottom: var(--w-space-xl);
     list-style: number;
-  }
+  } */
   figcaption {
     max-width: 50%;
     margin: auto;
@@ -35,6 +35,12 @@
   a {
     color: var(--color-text-brand-tag);
     text-decoration: underline;
+  }
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
   }
 }
 
