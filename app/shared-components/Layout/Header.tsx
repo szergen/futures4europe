@@ -34,17 +34,17 @@ const Header = () => {
 
   // Handle add posts and infopages
   //
-  const handleCreateProject = async () => {
-    router.push(`/project/New_Project`);
-  };
+  // const handleCreateProject = async () => {
+  //   router.push(`/project/New_Project`);
+  // };
 
-  const handleCreatePost = async () => {
-    router.push(`/post/New_Post`);
-  };
+  // const handleCreatePost = async () => {
+  //   router.push(`/post/New_Post`);
+  // };
 
-  const handleCreateOrganisation = async () => {
-    router.push(`/organisation/New_Organisation`);
-  };
+  // const handleCreateOrganisation = async () => {
+  //   router.push(`/organisation/New_Organisation`);
+  // };
 
   // SVGs Icons
   // TODO: move to global SVG import
@@ -145,30 +145,45 @@ const Header = () => {
           <Dropdown.Item icon={HiUserCircle}>
             <Link href="/dashboard"> Dashboard </Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreateProject}>
-            {' '}
-            Add Project
+          <Dropdown.Item
+            icon={HiPlusSm}
+            // onClick={handleCreateProject}
+          >
+            <Link href="/project/New_Project"> Add Project</Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
-            {' '}
-            Add Project result
+          <Dropdown.Item
+            icon={HiPlusSm}
+            // onClick={handleCreatePost}
+          >
+            <Link href="/post/New_Post?pageType=projectResult">
+              {' '}
+              Add Project result
+            </Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreateOrganisation}>
-            {' '}
-            Add Organisation
+          <Dropdown.Item
+            icon={HiPlusSm}
+            // onClick={handleCreateOrganisation}
+          >
+            <Link href="/organisation/New_Organisation"> Add Organisation</Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
-            {' '}
-            Add Article
+          <Dropdown.Item
+            icon={HiPlusSm}
+            //  onClick={handleCreatePost}
+          >
+            <Link href="/post/New_Post"> Add Article</Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
-            {' '}
-            Add Event
+          <Dropdown.Item
+            icon={HiPlusSm}
+            // onClick={handleCreatePost}
+          >
+            <Link href="/post/New_Post?pageType=event"> Add Event</Link>
           </Dropdown.Item>
-          <Dropdown.Item icon={HiPlusSm} onClick={handleCreatePost}>
-            {' '}
-            Add Foresight method
-          </Dropdown.Item>
+          {/* <Dropdown.Item
+            icon={HiPlusSm}
+            //  onClick={handleCreatePost}
+          >
+            <Link href=''> Add Foresight method</Link>
+          </Dropdown.Item> */}
           <Dropdown.Divider />
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
             Log out

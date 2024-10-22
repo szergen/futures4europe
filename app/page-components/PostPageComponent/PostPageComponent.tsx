@@ -937,7 +937,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       {/* Files */}
       {/* {postData?.pageType?.[0]?.name?.toLowerCase() !== 'project result' && ( */}
       <FilesComponent
-        files={postData.files}
+        // files={postData.files}
         isEditModeOn={isEditModeOn}
         mediaFiles={postData.mediaFiles}
         updatePostDataBasedOnKeyValue={updatePostDataBasedOnKeyValue}

@@ -24,6 +24,7 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import {
+  areArraysEqualForMediaFiles,
   checkIfArrayNeedsUpdateForStrings,
   checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
@@ -199,6 +200,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.contentImages,
         defaultProjectData.contentImages
       ) ||
+      areArraysEqualForMediaFiles(
+        projectData.mediaFiles,
+        defaultProjectData.mediaFiles
+      ) ||
       projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
@@ -242,6 +247,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
               };
             }
           ),
+          mediaFiles: projectData?.mediaFiles,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -415,6 +421,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
               };
             }
           ),
+          mediaFiles: projectData?.mediaFiles,
           slug:
             sanitizeTitleForSlug(projectData?.projectTag?.name) +
             '-' +
@@ -760,7 +767,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       {/* Internal Links */}
       <MiniPagesListComponentPost internalLinks={internalLinks} title="Posts" />
       {/* Files */}
-      <FilesComponent files={project.files} />
+      <FilesComponent
+        isEditModeOn={isEditModeOn}
+        mediaFiles={projectData.mediaFiles}
+        updatePostDataBasedOnKeyValue={updateProjectDataOnKeyValue}
+      />
       {/* External Links */}
       {/* <ExternalLinksComponent links={project.links} /> */}
       {/* Modal for Saving page */}

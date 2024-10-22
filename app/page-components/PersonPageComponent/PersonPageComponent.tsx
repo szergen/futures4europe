@@ -104,6 +104,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     ), //done
     projectsCoordindation: person?.data?.personProjectCoordonation, // done
     projectsParticipation: person?.data?.personProjectParticipation, // done
+    mediaFiles: person?.data?.mediaFiles, // done
     slug: person?.data?.slug,
   };
   // #endregion
@@ -215,6 +216,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               };
             }
           ),
+          mediaFiles: personData.mediaFiles,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -407,6 +409,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               };
             }
           ),
+          mediaFiles: personData?.mediaFiles,
           slug:
             sanitizeTitleForSlug(personData?.personTag?.name) +
             '-' +
@@ -766,6 +769,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         title="Posts"
         // projectResults={projectResults}
         // events={events}
+      />
+      <FilesComponent
+        // files={postData.files}
+        isEditModeOn={isEditModeOn}
+        mediaFiles={personData.mediaFiles}
+        updatePostDataBasedOnKeyValue={updatePersonDataOnKeyValue}
       />
       {/* Files */}
       {/* <FilesComponent files={person.files} /> */}
