@@ -53,7 +53,10 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {/* Post Text */}
         <Typography
           tag="div"
-          className={classNames('text-gray-500 py-2 text-sm overflow-hidden', style.postInnerText)}
+          className={classNames(
+            'text-gray-500 py-2 text-sm overflow-hidden',
+            style.postInnerText
+          )}
           htmlText={text}
         ></Typography>
         {/* Post Tags */}
