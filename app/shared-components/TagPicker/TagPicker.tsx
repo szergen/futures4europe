@@ -220,7 +220,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       },
       minHeight: '5 0px',
       //height: '50px',
-      margin: '0px 0px 10px 0px'
+      margin: '0px 0px 10px 0px',
     }),
 
     input: (provided, state) => ({
@@ -283,7 +283,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         // <components.Option {...props}>
         correspondingTag ? (
           <components.Option {...props}>
-            <div className={classNames(styles.tagPickerTagline, 'flex flex-col items-left')}>
+            <div
+              className={classNames(
+                styles.tagPickerTagline,
+                'flex flex-col items-left'
+              )}
+            >
               <Tag
                 {...correspondingTag}
                 disableTooltip={true}

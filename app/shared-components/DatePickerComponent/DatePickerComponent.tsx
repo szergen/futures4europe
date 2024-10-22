@@ -151,7 +151,6 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
     setDateState(dayjs(stringDate));
   };
 
-  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       {dateFormate !== 'YYYY-MM-DD HH:mm' ? (
