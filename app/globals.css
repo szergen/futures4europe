@@ -687,27 +687,24 @@ textarea {
 .tagPickerPill {
   position: relative;
   cursor: pointer;
-  display: inline-flex;
+  display: inline-flex!important;
   align-items: center;
-  /* background-color: var(--color-background-brand-tag); */
-  /* border-radius: var(--p-border-radius-200); */
   height: calc(var(--w-space-xxxl));
-  /* margin-right: calc(var(--w-space-s)); */
+  margin-bottom: var(--w-space-s);
+  margin-top: var(--w-space-s);
+  color: var(--primary-black);
 }
 
 .tagPickerPill .react-select__multi-value__label {
-  /* height: calc(var(--w-space-xl)); */
+  height: calc(var(--w-space-xl));
   height: 48px;
-  /* background: white; */
-  /* margin: 4px; */
-  /* border-radius: var(--p-border-radius-tag); */
-  /* line-height: calc(var(--w-space-xl)); */
+  background: white; 
+  border-radius: var(--p-border-radius-tag);
+  line-height: calc(var(--w-space-xl));
   vertical-align: middle;
   position: relative;
-  padding: 0px var(--w-space-s);
   display: inline-block;
   text-wrap: nowrap;
-  max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--w-font-size-tag);
@@ -734,16 +731,9 @@ textarea {
 }
 
 .react-select__option--is-focused {
-  background: linear-gradient(
-    180deg,
-    rgba(223, 223, 223, 0) 0%,
-    rgba(236, 236, 236, 1) 40%,
-    rgba(234, 234, 234, 0) 70%,
-    rgba(226, 226, 226, 0) 255%
-  );
-  /* background-color: var(--color-background-brand-tag); */
-  /* border-radius: var(--p-border-radius-200); */
-  /* height: fit-content; */
+  background: var(--background-color);
+  border-radius: var(--p-border-radius-200);
+  height: fit-content;
 }
 
 .react-select__multi-value__remove svg {

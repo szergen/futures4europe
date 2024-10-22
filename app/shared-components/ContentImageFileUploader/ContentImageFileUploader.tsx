@@ -81,7 +81,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
         htmlFor="dropzone-file"
         className="relative flex h-12 pr-4 w-full max-w-[600px] cursor-pointer items-center rounded-lg bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
-        {/* REVIEW: Removed the text to show like teh design // Dont delete, maybe it will change in the future */}
+        {/* REVIEW: Removed the text to show like the design // Dont delete, maybe it will change in the future */}
         {/* <div className="flex items-center border-r-2  border-dashed border-gray-300 dark:border-gray-600 mr-4 px-4">
           {!imageURL || imageURL === ' ' ? '' : ''}
         </div> */}
@@ -103,12 +103,15 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
 
         <FileInput
           id="dropzone-file"
-          className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+          className={classNames(
+            style.dropzone_file,
+            'absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer'
+          )}
           onChange={handleFileChange}
         />
       </Label>
 
-      {/* REVIEW: Removed the text to show like teh design // Dont delete, maybe it will change in the future */}
+      {/* REVIEW: Removed the text to show like the design // Dont delete, maybe it will change in the future */}
       {/* <p className="text-xs w-full text-gray-500 dark:text-gray-400">
         {uploadedFile?.name || ''}
       </p> */}

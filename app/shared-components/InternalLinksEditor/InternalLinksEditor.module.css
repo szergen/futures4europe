@@ -1,6 +1,21 @@
-.title {
+.InternalLinksEditor_title {
   font-weight: bold;
   border-bottom: 1px solid #d9d9d9;
   padding-bottom: 12px;
   margin-bottom: 1em;
+}
+
+.InternalLinksEditor_input{
+  height: calc(var(--w-space-xxxl));
+  margin-right: calc(var(--w-space-s));
+  visibility: visible;
+  color: var(--primary-brand-color);
+  font-size: var(--w-font-size-tag);
+  padding: 0px var(--w-space-s);
+  background-color: var(--primary-white);
+  border-radius: var(--p-border-radius-tag);
+  margin: 8px 4px;
+  border: none;
+  outline: none;
+  box-shadow: 0px 0px 0px 3px var(--color-background-brand-tag);
 }

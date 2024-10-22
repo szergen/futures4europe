@@ -89,7 +89,10 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
     <div className="w-full">
       <Typography
         tag="h2"
-        className={classNames('text-gray-800 w-full my-4', style.title)}
+        className={classNames(
+          'text-gray-800 w-full my-4',
+          style.InternalLinksEditor_title
+        )}
       >
         Internal Links
       </Typography>
@@ -100,7 +103,10 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
           value={newLink}
           onChange={(e) => setNewLink(e.target.value)}
           placeholder="Paste a link to a related post on this site"
-          className="border p-2 mr-2"
+          className={classNames(
+            'text-gray-800 w-full my-4',
+            style.InternalLinksEditor_input
+          )}
         />
         <button type="submit" className="bg-blue-500 text-white p-2">
           Add Link

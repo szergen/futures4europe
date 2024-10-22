@@ -4,7 +4,8 @@
   left: +30px;
 }
 .tagContainer {
-  display: inline-block;
+  /* display: inline-block; */
+  cursor: pointer;
   font-family: 'Inter', Courier, monospace;
   line-height: 1;
   text-transform: capitalize;
@@ -40,7 +41,8 @@
   .tagBody {
     position: relative;
     cursor: default;
-    display: inline-flex;
+    /* display: flex; */
+    display: inline-flex!important;
     align-items: center;
     background-color: var(--color-background-brand-tag);
     border-radius: var(--p-border-radius-200);

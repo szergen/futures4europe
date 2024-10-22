@@ -193,7 +193,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  / * catalin */;
+  // / * catalin */;
 
   // Define the custom animated Input component
   const AnimatedInput = (props) => {
@@ -202,7 +202,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0 }}
       >
         {/* Spread props to include the original Input component */}
         <components.Input {...props} />
@@ -213,13 +213,14 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border: 'none', // Removes the border
-      boxShadow: 'none', // Removes the focus outline
+      border: 'none',
+      boxShadow: 'none',
       '&:hover': {
-        border: 'none', // Removes the border on hover as well
+        border: 'none',
       },
       minHeight: '5 0px',
-      height: '50px',
+      //height: '50px',
+      margin: '0px 0px 10px 0px',
     }),
 
     input: (provided, state) => ({
@@ -229,9 +230,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       padding: '0px var(--w-space-s)',
       backgroundColor: state.isFocused ? null : 'var(--primary-white)',
       borderRadius: 'var(--p-border-radius-tag)',
-      margin: '8px 0px',
+      margin: '8px 4px',
       // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',
-      transition: 'all 100ms',
+      transition: '',
       border: 'none', // Removes the border on the input field
       outline: 'none', // Removes the input outline
       boxShadow: '0px 0px 0px 3px var(--color-background-brand-tag)',
@@ -239,7 +240,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     }),
     menu: (provided) => ({
       ...provided,
-      width: '300px', // Set the desired width for the menu
+      width: '100%', // Set the desired width for the menu
       position: 'absolute', // Ensures the menu is positioned absolutely
       zIndex: 9999, // Ensures the menu is on top
     }),
@@ -282,7 +283,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         // <components.Option {...props}>
         correspondingTag ? (
           <components.Option {...props}>
-            <div className="flex items-center">
+            <div
+              className={classNames(
+                styles.tagPickerTagline,
+                'flex flex-col items-left'
+              )}
+            >
               <Tag
                 {...correspondingTag}
                 disableTooltip={true}
@@ -348,7 +354,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       <div
         className={classNames(
           styles.tagPickerWrapper,
-          'relative cursor-pointer'
+          'w-full relative cursor-pointer'
         )}
       >
         {tagTypeLabel && (
@@ -361,6 +367,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           unstyled
           // menuIsOpen={tagType === 'person'}
           components={customComponents}
+          // menuIsOpen={true}
           isClearable={true}
           isDisabled={isLoading}
           isLoading={isLoading}
@@ -393,14 +400,14 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             // option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
-                'text-gray-400 bg-slate-100 rounded-lg ',
+                'text-gray-400 rounded-lg ', // bg-slate-100
                 styles.tagPickerValueContainer
               ),
           }}
         />
         {showCreateForm && (
           <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-            <Modal.Header>Add project title</Modal.Header>
+            <Modal.Header>Add tag element</Modal.Header>
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
@@ -422,7 +429,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                   />
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="tagTagline">Project Tagline</Label>
+                  <Label htmlFor="tagTagline">Tagline</Label>
                   <TextInput
                     id="tagTagline"
                     value={tagTagline}
