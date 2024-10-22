@@ -12,11 +12,13 @@ import style from './ProjectResultFileUploader.module.css';
 export type ProjectResultFileUploaderProps = {
   currentImage?: string;
   updatePostData?: (value: any) => void;
+  fileIdPrefix?: string;
 };
 
 const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
   currentImage,
   updatePostData,
+  fileIdPrefix,
 }) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isValidState, setIsValidState] = useState(true);
@@ -42,11 +44,13 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
       setErrorMessage('File is not a PDF. Please try again.');
       setIsValidState(false);
       event.target.value = ''; // clear the selected file
+      setIsLoadingInProgress(false);
       return;
     }
     if (file && file.size > 10 * 1024 * 1024) {
       setIsValidState(false);
       event.target.value = ''; // clear the selected file
+      setIsLoadingInProgress(false);
       return;
     } else {
       // Upload file to Wix
@@ -132,7 +136,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
   return (
     <div className="flex flex-wrap items-center justify-center w-64">
       <Label
-        htmlFor="dropzone-file"
+        htmlFor={`dropzone-file-${fileIdPrefix}`}
         className={classNames(
           'relative flex flex-col h-60 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600',
           imageURL && 'h-12 flex-row'
@@ -176,7 +180,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
         </div>
 
         <FileInput
-          id="dropzone-file"
+          id={`dropzone-file-${fileIdPrefix}`}
           className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
           onChange={handleFileChange}
         />

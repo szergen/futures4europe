@@ -12,7 +12,11 @@ import FilesComponent from '../shared-page-components/FilesComponent/FilesCompon
 import { mockOrganisation } from '../../mocks/pagesMocks';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { arraysEqual, deepEqual } from '../PageComponents.utils';
+import {
+  arraysEqual,
+  deepEqual,
+  sanitizeTitleForSlug,
+} from '../PageComponents.utils';
 import {
   replaceDataItemReferences,
   revalidateDataItem,
@@ -405,8 +409,8 @@ function OrganisationPageComponent({
             }
           ),
           slug:
-            organisationData?.organisationTag?.name.replace(/ /g, '_') +
-            '_' +
+            sanitizeTitleForSlug(organisationData?.organisationTag?.name) +
+            '-' +
             generateUniqueHash(),
         },
       },

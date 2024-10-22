@@ -13,7 +13,11 @@ import { mockProject } from '../../mocks/pagesMocks';
 // import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { arraysEqual, deepEqual } from '../PageComponents.utils';
+import {
+  arraysEqual,
+  deepEqual,
+  sanitizeTitleForSlug,
+} from '../PageComponents.utils';
 import {
   replaceDataItemReferences,
   revalidateDataItem,
@@ -412,8 +416,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
             }
           ),
           slug:
-            projectData?.projectTag?.name.replace(/ /g, '_') +
-            '_' +
+            sanitizeTitleForSlug(projectData?.projectTag?.name) +
+            '-' +
             generateUniqueHash(),
         },
       },

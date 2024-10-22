@@ -51,7 +51,6 @@ const ProjectResultVideoImage: React.FC<ProjectResultVideoImageProps> = ({
   return (
     <div className="flex flex-wrap items-center justify-center w-64">
       <Label
-        htmlFor="dropzone-file"
         className={classNames(
           'relative flex flex-col h-60 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600',
           imageURL && 'h-12 flex-row'
