@@ -355,7 +355,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
         {/* Post Country */}
         {
-          <div className="flex mt-1">
+          <div className="mt-1">  {/*//REVIEW REMOVED FLEX */}
             {!isEditModeOn ? (
               post?.countryTag && <Tag {...post.countryTag} />
             ) : (

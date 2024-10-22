@@ -83,7 +83,6 @@
   cursor: pointer;
   border-radius: var(--p-border-radius-tag);
   line-height: calc(var(--w-space-xxl));
-  padding: 0px var(--w-space-s);
   font-size: var(--w-font-size-tag);
   line-height: var(--w-space-xxl);
   letter-spacing: var(--p-font-letter-spacing-tag);
@@ -135,7 +134,7 @@
   width: 20px;
 }
 .TagCursor {
-  transition: 1s all ease;
+  transition: 0s all ease;
 }
 
 .TagCursor .tagPickerPillSingle {
@@ -182,24 +181,18 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  /* background-color: var(--color-background-brand-tag); */
-  /* border-radius: var(--p-border-radius-200); */
   height: 100%;
-  margin-right: calc(var(--w-space-s));
 }
 
 .tagPickerPill .react-select__multi-value__label {
   height: calc(var(--w-space-xxl));
   background: white;
-  margin: 4px;
   border-radius: var(--p-border-radius-tag);
   line-height: calc(var(--w-space-xxl));
   vertical-align: middle;
   position: relative;
-  padding: 0px var(--w-space-s);
   display: inline-block;
   text-wrap: nowrap;
-  max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--w-font-size-tag);
@@ -220,4 +213,7 @@
 .tagPickerPill:hover.tagPickerPill .react-select__multi-value__remove {
   background: var(--color-background-destructive-weaker);
   opacity: 1;
+}
+.tagPickerTagline p{
+  margin-left: var(--w-space-s);
 }
