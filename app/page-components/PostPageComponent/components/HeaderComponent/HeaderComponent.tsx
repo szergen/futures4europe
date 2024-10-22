@@ -2,17 +2,16 @@ import style from './HeaderComponent.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
-import { formatDate } from '../../PostPageComponent.utils';
 import Divider from '@app/shared-components/Divider/Divider';
 import Link from 'next/link';
 import Button from '@app/shared-components/Button/Button';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
-import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 import DisplayProjectResultMedia from '@app/page-components/shared-page-components/DisplayProjectResultMedia/DisplayProjectResultMedia';
 import ProjectResultHeaderImage from '@app/shared-components/ProjectResultHeaderImage/ProjectResultHeaderImage';
 import dayjs from 'dayjs';
+import DatePickerComponent from '@app/shared-components/DatePickerComponent/DatePickerComponent';
 
 export type HeaderComponentProps = {
   post: {
@@ -39,6 +38,8 @@ export type HeaderComponentProps = {
       url: string;
       thumbnail: string;
     };
+    projectResultPublicationDate?: string;
+    eventRegistration?: string;
   };
   isEditModeOn: boolean;
   updatePostData: (data: any) => void;
@@ -66,15 +67,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempTitle?.length > 150) {
-      return 'Title should be at most 150 characters long';
+    if (tempTitle?.length > 70) {
+      return 'Title should be at most 70 characters long';
     }
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
-    }
-    const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
-    if (!validTitleRegex.test(tempTitle)) {
-      return 'Title cannot contain multiple spaces or |';
     }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>
@@ -282,39 +279,80 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             )}
           </div>
         )}
-        {/* Registration Link */}
-        {post.pageType?.[0]?.name?.toLowerCase() === 'event' &&
-          post?.eventRegistration && (
-            <>
-              <Divider className="mt-2" />
+        {/* Project Result Publication Date */}
+        {post.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
+          <div>
+            {!isEditModeOn ? (
               <Typography
                 tag="p"
-                className="text-primary-500 text-xs mt-2 text-gray-500"
+                className="text-gray-500 text-sm font-bold mt-3"
               >
-                Register Link:
-                {!isEditModeOn ? (
+                Publication Date:
+                {post?.projectResultPublicationDate
+                  ? dayjs(post?.projectResultPublicationDate).format(
+                      'YYYY-MM-DD'
+                    )
+                  : ''}{' '}
+              </Typography>
+            ) : (
+              <div className="flex items-center mt-4">
+                {/* <span className="mr-4">Start Date</span> */}
+                <DatePickerComponent
+                  placeholder="Publication Date"
+                  dateFormate="YYYY-MM-DD"
+                  date={
+                    !post?.projectResultPublicationDate
+                      ? null
+                      : new Date(post?.projectResultPublicationDate)
+                  }
+                  onChange={(value) => {
+                    console.log('value', value);
+                    return updatePostDataBasedOnKeyValue(
+                      'projectResultPublicationDate',
+                      value
+                    );
+                  }}
+                />
+                {/* <span className="ml-4">End Date</span> */}
+              </div>
+            )}
+          </div>
+        )}
+        {/* Registration Link */}
+        {post.pageType?.[0]?.name?.toLowerCase() === 'event' && (
+          <>
+            <Divider className="mt-2" />
+            <Typography
+              tag="p"
+              className="text-primary-500 text-xs mt-2 text-gray-500"
+            >
+              {!isEditModeOn ? (
+                post?.eventRegistration && (
                   <Link
                     href={post?.eventRegistration}
                     target="_blank"
-                    className="ml-2"
+                    className="underline text-lg font-bold"
                   >
-                    {post?.eventRegistration}
+                    Register Here
                   </Link>
-                ) : (
-                  <InputText
-                    placeholder="Paste link to the registration page"
-                    value={post?.eventRegistration || 'Enter registration link'}
-                    onChange={(e) =>
-                      updatePostData({
-                        ...post,
-                        eventRegistration: e.target.value,
-                      })
-                    }
-                  />
-                )}
-              </Typography>
-            </>
-          )}
+                )
+              ) : (
+                <InputText
+                  isHorizontal
+                  type="url"
+                  placeholder="Paste link to the registration page"
+                  value={post?.eventRegistration || ''}
+                  onChange={(e) =>
+                    updatePostData({
+                      ...post,
+                      eventRegistration: e.target.value,
+                    })
+                  }
+                />
+              )}
+            </Typography>
+          </>
+        )}
         {/* Post Country */}
         {
           <div className="flex mt-1">
@@ -352,13 +390,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </Typography>
         </div>
         {/* Views */}
-        <Typography
-          data-after="2153"
-          tag="p"
-          className="text-sm text-gray-800 my-2 after:content-[attr(data-after)]]"
-        >
-          {post.views} views
-        </Typography>
+        {!isEditModeOn && (
+          <Typography
+            data-after="2153"
+            tag="p"
+            className="text-sm text-gray-800 my-2 after:content-[attr(data-after)]]"
+          >
+            {post.views} views
+          </Typography>
+        )}
       </div>
       {!isEditModeOn && <Button className="h-9">Recommend</Button>}
     </div>

@@ -58,16 +58,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName.length > 50) {
-      return 'Title should be at most 50 characters long';
+    if (tempName.length > 70) {
+      return 'Title should be at most 70 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
-    if (!validTitleRegex.test(tempName)) {
-      return 'Title cannot contain multiple spaces or |';
-    }
+    // const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
+    // if (!validTitleRegex.test(tempName)) {
+    //   return 'Title cannot contain multiple spaces or |';
+    // }
 
     if (Array.isArray(existingPostPagesTitles) && defaultPostTitle) {
       const isTempTitleExisting = existingPostPagesTitles.some(
@@ -185,13 +185,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </svg>
         </div>
         {/* Views */}
-        <Typography
-          data-after="2153"
-          tag="p"
-          className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
-        >
-          {person.views} views
-        </Typography>
+        {!isEditModeOn && (
+          <Typography
+            data-after="2153"
+            tag="p"
+            className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
+          >
+            {person.views} views
+          </Typography>
+        )}
       </div>
       <div className={style.detailsColumn}>
         {/* Person Info Name */}

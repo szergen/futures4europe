@@ -283,14 +283,25 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         // <components.Option {...props}>
         correspondingTag ? (
           <components.Option {...props}>
-            <Tag
-              {...correspondingTag}
-              disableTooltip={true}
-              disableLink={true}
-            />
+            <div className="flex items-center">
+              <Tag
+                {...correspondingTag}
+                disableTooltip={true}
+                disableLink={true}
+              />
+              <p>{correspondingTag.tagLine}</p>
+            </div>
           </components.Option>
         ) : (
-          ''
+          <button
+            className="bg-sky-600 text-white px-4 py-2 rounded-lg"
+            onClick={() => {
+              console.log('debug1->props', props);
+              handleCreate(props.value);
+            }}
+          >
+            Create {props.value} Tag
+          </button>
         )
         // </components.Option>
       );
@@ -322,7 +333,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   };
 
   const validationForTagName = (tagName: string) => {
-    return allTags?.find((tag) => tag.name === tagName);
+    return allTags?.find(
+      (tag) => tag?.name === tagName && tag?.tagType === tagType
+    );
   };
 
   const [isTagNameValid, setIsTagNameValid] = useState(true);
@@ -347,7 +360,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         <CreatableSelect
           classNamePrefix="react-select"
           unstyled
-          // menuIsOpen={true}
+          // menuIsOpen={tagType === 'person'}
           components={customComponents}
           isClearable={true}
           isDisabled={isLoading}

@@ -59,17 +59,17 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName?.length > 50) {
-      return 'Title should be at most 50 characters long';
+    if (tempName?.length > 70) {
+      return 'Title should be at most 70 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
 
-    const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
-    if (!validTitleRegex.test(tempName)) {
-      return 'Title can only contain small characters, capital characters, numbers, and spaces';
-    }
+    // const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
+    // if (!validTitleRegex.test(tempName)) {
+    //   return 'Title can only contain small characters, capital characters, numbers, and spaces';
+    // }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>
     //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
@@ -164,13 +164,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </svg>
         </div>
         {/* Views */}
-        <Typography
-          data-after="2153"
-          tag="p"
-          className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
-        >
-          {organisation.views} views
-        </Typography>
+        {!isEditModeOn && (
+          <Typography
+            data-after="2153"
+            tag="p"
+            className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
+          >
+            {organisation.views} views
+          </Typography>
+        )}
       </div>
       <div className={style.detailsColumn}>
         {/* Organisation Info Name */}
@@ -230,6 +232,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
         {/* Founded */}
         <div className="flex items-center my-2">
+          {organisation?.organisationEstablishedDate && isEditModeOn && (
             <SpriteSvg.AccountOrg2Icon
               className="mb-4 mr-2"
               sizeW={24}
@@ -239,35 +242,40 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               stroke={'0'}
               inline={false}
             />
-
+          )}
           {!isEditModeOn ? (
-            organisation?.organisationEstablishedDate && (
+            organisation?.organisationEstablishedDate ? (
               <Typography
                 tag="span"
                 className="text-greyShade text-stroke-gray font-medium text-14 ml-2"
               >
-                {dayjs(organisation?.organisationEstablishedDate).format(
+                Founded in:
+                {/* {dayjs(organisation?.organisationEstablishedDate).format(
                   'YYYY'
-                )}
+                )} */}
+                {organisation?.organisationEstablishedDate}
               </Typography>
+            ) : (
+              ''
             )
           ) : (
-            <DatePickerComponent
-              placeholder="Established Year"
-              dateFormate="YYYY"
-              date={
-                isNewPage || !organisation?.organisationEstablishedDate
-                  ? null
-                  : new Date(organisation?.organisationEstablishedDate)
-              }
-              pickerType="month-year"
-              onChange={(value) =>
-                updateOrganisationDataOnKeyValue(
-                  'organisationEstablishedDate',
-                  value.toISOString()
-                )
-              }
-            />
+            <>
+              <DatePickerComponent
+                placeholder="Established Year"
+                dateFormate="YYYY"
+                date={
+                  !organisation?.organisationEstablishedDate
+                    ? null
+                    : new Date(organisation?.organisationEstablishedDate)
+                }
+                onChange={(value) =>
+                  updateOrganisationDataOnKeyValue(
+                    'organisationEstablishedDate',
+                    value.getFullYear().toString()
+                  )
+                }
+              />
+            </>
           )}
         </div>
         {/* Tagline */}

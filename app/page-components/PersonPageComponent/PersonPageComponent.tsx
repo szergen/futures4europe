@@ -24,7 +24,11 @@ import {
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListComponentPost/MiniPagesListComponentPost';
-import { arraysEqual, deepEqual } from '../PageComponents.utils';
+import {
+  arraysEqual,
+  deepEqual,
+  sanitizeTitleForSlug,
+} from '../PageComponents.utils';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { members } from '@wix/members';
@@ -404,8 +408,8 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
             }
           ),
           slug:
-            personData?.personTag?.name?.replace(/ /g, '_') +
-            '_' +
+            sanitizeTitleForSlug(personData?.personTag?.name) +
+            '-' +
             generateUniqueHash(),
           // subtitle: personData.personTag.tagLine,
         },
