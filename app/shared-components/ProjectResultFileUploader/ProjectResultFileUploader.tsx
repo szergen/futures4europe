@@ -44,11 +44,13 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
       setErrorMessage('File is not a PDF. Please try again.');
       setIsValidState(false);
       event.target.value = ''; // clear the selected file
+      setIsLoadingInProgress(false);
       return;
     }
     if (file && file.size > 10 * 1024 * 1024) {
       setIsValidState(false);
       event.target.value = ''; // clear the selected file
+      setIsLoadingInProgress(false);
       return;
     } else {
       // Upload file to Wix

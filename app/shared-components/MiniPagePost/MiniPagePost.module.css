@@ -21,3 +21,6 @@
   align-items: center;
   margin-top: 0.5em;
 }
+.postInnerText {
+  height: 60px;
+}

@@ -14,6 +14,14 @@ export function getImageUrlForMedia(
   }
 }
 
+const sanitizeTitleForSlug = (title: string): string => {
+  return title
+    .toLowerCase() // Convert to lowercase
+    .replace(/ /g, '-') // Replace spaces with hyphens
+    .replace(/[^a-z0-9-]/g, '') // Remove non-alphanumeric characters except hyphens
+    .replace(/-+/g, '-'); // Replace multiple hyphens with a single hyphen
+};
+
 function deepEqual(obj1: any, obj2: any): boolean {
   if (obj1 === obj2) return true;
 
@@ -53,4 +61,4 @@ function arraysEqual(arr1: any[], arr2: any[]): boolean {
   return true;
 }
 
-export { deepEqual, arraysEqual };
+export { deepEqual, arraysEqual, sanitizeTitleForSlug };

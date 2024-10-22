@@ -14,6 +14,7 @@ export type InputTextProps = {
   setValidationState?: (value: any) => void;
   shouldUpdateValueState?: boolean;
   isHorizontal?: boolean;
+  type?: string;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -27,6 +28,7 @@ export const InputText: React.FC<InputTextProps> = ({
   setValidationState,
   shouldUpdateValueState,
   isHorizontal,
+  type,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
@@ -98,7 +100,7 @@ export const InputText: React.FC<InputTextProps> = ({
       {isHorizontal ? (
         <input
           id={label?.toLowerCase()}
-          type="text"
+          type={type || 'text'}
           placeholder={placeholder ? placeholder : undefined}
           required
           helperText={helperText ? <>{helperText}</> : undefined}

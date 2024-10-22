@@ -58,17 +58,17 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName?.length > 50) {
-      return 'Title should be at most 50 characters long';
+    if (tempName?.length > 70) {
+      return 'Title should be at most 70 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
 
-    const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
-    if (!validTitleRegex.test(tempName)) {
-      return 'Title can only contain small characters, capital characters, numbers, and spaces';
-    }
+    // const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
+    // if (!validTitleRegex.test(tempName)) {
+    //   return 'Title can only contain small characters, capital characters, numbers, and spaces';
+    // }
     // const isTempTitleExisting = existingPostPagesTitles?.some(
     //   (postPageTitle) =>
     //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
@@ -163,13 +163,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </svg>
         </div>
         {/* Views */}
-        <Typography
-          data-after="2153"
-          tag="p"
-          className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
-        >
-          {organisation.views} views
-        </Typography>
+        {!isEditModeOn && (
+          <Typography
+            data-after="2153"
+            tag="p"
+            className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
+          >
+            {organisation.views} views
+          </Typography>
+        )}
       </div>
       <div className={style.detailsColumn}>
         {/* Organisation Info Name */}
@@ -229,50 +231,55 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
         {/* Founded */}
         <div className="flex items-center my-2">
-          {organisation?.organisationEstablishedDate ||
-            (isEditModeOn && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="black"
-                viewBox="0 0 16 16"
-                strokeWidth={0}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M15.2085 3.66662V6.67138H13.795V11.7597H15.2085V16H0.791504V11.7597H2.20418V6.67138H0.791504V3.66662L7.99961 0L15.2085 3.66662ZM2.20493 4.53201L7.99961 1.58605L13.795 4.53201V5.25795H2.20493V4.53201ZM12.3816 13.1731H13.795V14.5866H2.20493V13.1731H3.61836V6.67138H5.59716V13.1731H7.00983V6.67138H8.98938V13.1731H10.4021V6.67138H12.3816V13.1731Z"
-                />
-              </svg>
-            ))}
+          {organisation?.organisationEstablishedDate && isEditModeOn && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="black"
+              viewBox="0 0 16 16"
+              strokeWidth={0}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M15.2085 3.66662V6.67138H13.795V11.7597H15.2085V16H0.791504V11.7597H2.20418V6.67138H0.791504V3.66662L7.99961 0L15.2085 3.66662ZM2.20493 4.53201L7.99961 1.58605L13.795 4.53201V5.25795H2.20493V4.53201ZM12.3816 13.1731H13.795V14.5866H2.20493V13.1731H3.61836V6.67138H5.59716V13.1731H7.00983V6.67138H8.98938V13.1731H10.4021V6.67138H12.3816V13.1731Z"
+              />
+            </svg>
+          )}
           {!isEditModeOn ? (
-            organisation?.organisationEstablishedDate && (
+            organisation?.organisationEstablishedDate ? (
               <Typography
                 tag="span"
                 className="text-greyShade text-stroke-gray font-medium text-14 ml-2"
               >
-                {dayjs(organisation?.organisationEstablishedDate).format(
+                Founded in:
+                {/* {dayjs(organisation?.organisationEstablishedDate).format(
                   'YYYY'
-                )}
+                )} */}
+                {organisation?.organisationEstablishedDate}
               </Typography>
+            ) : (
+              ''
             )
           ) : (
-            <DatePickerComponent
-              placeholder="Established Year"
-              dateFormate="YYYY"
-              date={
-                isNewPage || !organisation?.organisationEstablishedDate
-                  ? null
-                  : new Date(organisation?.organisationEstablishedDate)
-              }
-              onChange={(value) =>
-                updateOrganisationDataOnKeyValue(
-                  'organisationEstablishedDate',
-                  value.toISOString()
-                )
-              }
-            />
+            <>
+              <DatePickerComponent
+                placeholder="Established Year"
+                dateFormate="YYYY"
+                date={
+                  !organisation?.organisationEstablishedDate
+                    ? null
+                    : new Date(organisation?.organisationEstablishedDate)
+                }
+                onChange={(value) =>
+                  updateOrganisationDataOnKeyValue(
+                    'organisationEstablishedDate',
+                    value.getFullYear().toString()
+                  )
+                }
+              />
+            </>
           )}
         </div>
         {/* Tagline */}

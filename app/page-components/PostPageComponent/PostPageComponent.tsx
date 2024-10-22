@@ -1,14 +1,14 @@
 'use client';
 import classNames from 'classnames';
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './PostPageComponent.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import ContentComponent from './components/ContentComponent/ContentComponent';
 import TagListComponent from '../shared-page-components/TagListComponent/TagListComponent';
-import ExternalLinksComponent from '../shared-page-components/ExternalLinksComponent/ExternalLinksComponent';
-import AuthorComponent from './components/AuthorComponent/AuthorComponent';
+// import ExternalLinksComponent from '../shared-page-components/ExternalLinksComponent/ExternalLinksComponent';
+// import AuthorComponent from './components/AuthorComponent/AuthorComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
 import { mockPost } from '../../mocks/pagesMocks';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
@@ -31,6 +31,7 @@ import MiniPagesListComponentPost from '../shared-page-components/MiniPagesListC
 import { useRouter } from 'next/navigation';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
+import { sanitizeTitleForSlug } from '../PageComponents.utils';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -125,6 +126,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     internalLinks: post?.data?.internalLinks,
     projectResultMedia: post?.data?.projectResultMedia,
     mediaFiles: post?.data?.mediaFiles,
+    projectResultPublicationDate: post?.data?.projectResultPublicationDate,
   };
   console.log('debug1-post', post);
   // set default post data and data for editing
@@ -188,6 +190,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.mediaFiles,
         defaultPostData.mediaFiles
       ) ||
+      postData.projectResultPublicationDate !==
+        defaultPostData.projectResultPublicationDate ||
       postData.eventStartDate !== defaultPostData.eventStartDate ||
       postData.eventEndDate !== defaultPostData.eventEndDate ||
       postData.eventRegistration !== defaultPostData.eventRegistration ||
@@ -230,6 +234,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           eventRegistration: postData?.eventRegistration,
           projectResultMedia: postData?.projectResultMedia,
           mediaFiles: postData?.mediaFiles,
+          projectResultPublicationDate: postData?.projectResultPublicationDate,
           // pageTypes: postData?.pageType,
         }
       );
@@ -445,7 +450,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           eventRegistration: postData?.eventRegistration,
           projectResultMedia: postData?.projectResultMedia,
           mediaFiles: postData?.mediaFiles,
-          slug: postData?.title.replace(/ /g, '_') + '_' + generateUniqueHash(),
+          projectResultPublicationDate: postData?.projectResultPublicationDate,
+          slug:
+            sanitizeTitleForSlug(postData?.title) + '-' + generateUniqueHash(),
         },
       },
     });
@@ -655,8 +662,14 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       if (postTag) {
         updatePostDataBasedOnKeyValue('pageType', [postTag]);
       }
-      const personInfoTag = tags.find((tag) => tag.name === 'person info');
-      console.log('debug1->personInfoTag', personInfoTag);
+      const defaultAuthorTag = tags.find(
+        (tag) => tag.name === userDetails?.userTag?.name
+      );
+      if (defaultAuthorTag) {
+        updatePostDataBasedOnKeyValue('authors', [defaultAuthorTag]);
+        updatePostDataBasedOnKeyValue('projectAuthors', [defaultAuthorTag]);
+      }
+      // console.log('debug1->personInfoTag', personInfoTag);
       // if (personInfoTag) {
       //   updatePostDataBasedOnKeyValue('pageType', personInfoTag);
       // }
@@ -750,28 +763,28 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         // defaultPostTitle={defaultPostData.title}
       />
       {/* Author */}
-      {postData.pageType?.[0]?.name?.toLowerCase() !== 'project result' &&
+      {/* {postData.pageType?.[0]?.name?.toLowerCase() !== 'project result' &&
         postData.pageType?.[0]?.name?.toLowerCase() !== 'event' && (
           <AuthorComponent authors={postData.authors} />
-        )}
+        )} */}
       {/* Project Result Authors */}
-      {postData.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
-        <TagListComponent
-          placeholder="Add one or more person tags"
-          tagList={postData.projectAuthors}
-          tagListTitle="Authors"
-          isEditModeOn={isEditModeOn}
-          tags={tags.filter((tag) => tag?.tagType === 'person')}
-          selectedValues={postData.projectAuthors?.map(
-            (author: any) => author?.name
-          )}
-          updatePostData={(value) =>
-            updatePostDataBasedOnKeyValue('projectAuthors', value)
-          }
-          tagType="person"
-          handleTagCreated={handleTagCreated}
-        />
-      )}
+      {/* {postData.pageType?.[0]?.name?.toLowerCase() === 'project result' && ( */}
+      <TagListComponent
+        placeholder="Add one or more person tags"
+        tagList={postData.projectAuthors}
+        tagListTitle="Authors"
+        isEditModeOn={isEditModeOn}
+        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        selectedValues={postData.projectAuthors?.map(
+          (author: any) => author?.name
+        )}
+        updatePostData={(value) =>
+          updatePostDataBasedOnKeyValue('projectAuthors', value)
+        }
+        tagType="person"
+        handleTagCreated={handleTagCreated}
+      />
+      {/* )} */}
       {/* Post Content */}
       <ContentComponent
         contentText={postData.contentText}

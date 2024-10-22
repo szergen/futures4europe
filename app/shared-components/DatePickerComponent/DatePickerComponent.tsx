@@ -18,6 +18,7 @@ export type DatePickerComponentProps = {
   placeholder?: string;
   dateFormate?:
     | 'YYYY-MM-dd'
+    | 'YYYY-MM-DD'
     | 'YYYY'
     | 'YYYY-MM'
     | 'YYYY-MMMM'
@@ -39,6 +40,7 @@ const decideViewValues = (dateFormateValue: string) => {
     case 'YYYY MMMM':
       return ['year', 'month'];
     case 'YYYY-MM-dd':
+    case 'YYYY-MM-DD':
       return ['year', 'month', 'day'];
     case 'YYYY-MM-DD HH:mm':
       return ['year', 'month', 'day', 'hours', 'minutes'];
