@@ -103,7 +103,10 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
 
         <FileInput
           id="dropzone-file"
-          className={classNames(style.dropzone_file, "absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer")}
+          className={classNames(
+            style.dropzone_file,
+            'absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer'
+          )}
           onChange={handleFileChange}
         />
       </Label>

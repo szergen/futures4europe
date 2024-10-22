@@ -59,7 +59,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   useEffect(() => {
     console.log('currentAffiliations', currentAffiliations);
     if (isEditModeOn) {
-      if (shouldAddNewAffiliation() || !currentAffiliations) {
+      if (shouldAddNewAffiliation() || !currentAffiliations?.length) {
         handleAddAffiliation(0);
       }
       setCurrentAffiliations(afiliations);
