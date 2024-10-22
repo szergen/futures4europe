@@ -103,6 +103,7 @@ function OrganisationPageComponent({
     }), //done
     memberOrganisations: organisation?.data?.organisationHasMember,
     memberOfOrganisations: organisation?.data?.organisationMemberOf,
+    mediaFiles: organisation?.data?.mediaFiles,
     slug: organisation?.data?.slug,
   };
 
@@ -212,6 +213,7 @@ function OrganisationPageComponent({
               };
             }
           ),
+          mediaFiles: organisationData.mediaFiles,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -408,6 +410,7 @@ function OrganisationPageComponent({
               };
             }
           ),
+          mediaFiles: organisationData.mediaFiles,
           slug:
             sanitizeTitleForSlug(organisationData?.organisationTag?.name) +
             '-' +
@@ -781,7 +784,11 @@ function OrganisationPageComponent({
       {/* Internal Links */}
       <MiniPagesListComponentPost internalLinks={internalLinks} />
       {/* Files */}
-      <FilesComponent files={organisation.files} />
+      <FilesComponent
+        isEditModeOn={isEditModeOn}
+        mediaFiles={organisationData.mediaFiles}
+        updatePostDataBasedOnKeyValue={updateOrganisationDataOnKeyValue}
+      />
       <Modal show={isSaveInProgress} size="md" popup>
         <Modal.Header />
         <Modal.Body>

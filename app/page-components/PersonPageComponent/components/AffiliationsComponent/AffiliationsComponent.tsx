@@ -51,7 +51,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   // );
 
   const shouldAddNewAffiliation = () => {
-    if (afiliations?.length === 0) return false;
+    if (afiliations?.length === 0) return true;
     const lastMember = afiliations?.[afiliations.length - 1];
     return lastMember?.name;
   };
