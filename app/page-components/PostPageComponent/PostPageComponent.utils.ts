@@ -74,21 +74,21 @@ export const generateUniqueHash = () => {
 };
 
 export function areArraysEqualForMediaFiles(arr1: any[], arr2: any[]): boolean {
-  if (arr1.length !== arr2.length) {
+  if (arr1?.length !== arr2?.length) {
     return false;
   }
 
-  for (let i = 0; i < arr1.length; i++) {
+  for (let i = 0; i < arr1?.length; i++) {
     const obj1 = arr1[i];
     const obj2 = arr2[i];
 
     if (
-      obj1.displayName !== obj2.displayName ||
-      obj1.url !== obj2.url ||
-      obj1.fileName !== obj2.fileName ||
-      obj1.thumbnail !== obj2.thumbnail ||
-      obj1.sizeInBytes !== obj2.sizeInBytes ||
-      obj1.type !== obj2.type
+      obj1?.displayName !== obj2?.displayName ||
+      obj1?.url !== obj2?.url ||
+      obj1?.fileName !== obj2?.fileName ||
+      obj1?.thumbnail !== obj2?.thumbnail ||
+      obj1?.sizeInBytes !== obj2?.sizeInBytes ||
+      obj1?.type !== obj2?.type
     ) {
       return false;
     }
