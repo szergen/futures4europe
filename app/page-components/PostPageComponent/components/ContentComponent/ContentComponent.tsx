@@ -238,7 +238,10 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                           dangerouslySetInnerHTML={{
                             __html: contentText?.[index],
                           }}
-                          className={classNames('py-4', style.displayText)}
+                          className={classNames(
+                            'py-4 editor-content',
+                            style.displayText
+                          )}
                         ></div>
                       ) : (
                         <div className="relative">

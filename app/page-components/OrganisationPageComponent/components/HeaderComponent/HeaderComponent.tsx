@@ -59,8 +59,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempName?.length > 70) {
-      return 'Title should be at most 70 characters long';
+    if (tempName?.length > 100) {
+      return 'Title should be at most 100 characters long';
     }
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';

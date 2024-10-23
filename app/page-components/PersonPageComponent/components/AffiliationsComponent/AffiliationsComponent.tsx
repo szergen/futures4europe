@@ -7,8 +7,9 @@ import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import { Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import { useEffect, useState } from 'react';
-import { ReactSortable } from 'react-sortablejs';
+import { useEffect, useRef, useState } from 'react';
+import { ItemInterface, ReactSortable } from 'react-sortablejs';
+// import Sortable, { Swap } from 'sortablejs';
 
 export type AffiliationsComponentProps = {
   afiliations: Array<
@@ -42,6 +43,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   const [currentAffiliations, setCurrentAffiliations] = useState(
     afiliations || []
   );
+  const inputRefs = useRef([]);
 
   // #region Initialize Sortable Array
   // const [sortableArray, setSortableArray] = useState(
@@ -111,6 +113,24 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
     return null;
   }
 
+  // const handleInputChange = (e: any, index: number) => {
+  //   const newAffiliations = [...currentAffiliations];
+  //   newAffiliations[index] = {
+  //     ...newAffiliations[index],
+  //     arole: e?.target?.value,
+  //   };
+  //   setCurrentAffiliations(newAffiliations);
+  //   updatePersonDataAffiliations &&
+  //     updatePersonDataAffiliations(newAffiliations);
+  //   console.log('debug12312312', inputRef);
+
+  //   // Adjust the width of the input based on its content
+  //   if (inputRef.current) {
+  //     console.log('inputRef.current', inputRef.current);
+  //     inputRef.current.style.width = `${inputRef.current.scrollWidth}px`;
+  //   }
+  // };
+
   // useEffect(() => {
   //   setSortableArray(
   //     currentAffiliations?.map((affiliation, index) => {
@@ -124,6 +144,8 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   //     handleAddAffiliation(0);
   //   }
   // }, [currentAffiliations]);
+
+  // Sortable.mount(new Swap());
 
   return (
     <section className={classNames(style.tagListRootContainer)}>
@@ -147,111 +169,158 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         </Typography>
       )} */}
 
-      {/* <ReactSortable
-        list={currentAffiliations}
+      <ReactSortable
+        list={currentAffiliations as unknown as ItemInterface[]}
         setList={(newState) => {
-          updatePersonDataAffiliations(newState as any);
           setCurrentAffiliations(newState as any);
+          updatePersonDataAffiliations &&
+            updatePersonDataAffiliations(newState as any);
         }}
+        sort={isEditModeOn}
         disabled={!isEditModeOn}
         className={classNames(
-          'flex w-full flex-wrap',
-          isEditModeOn && 'flex-col'
+          'flex w-fit flex-wrap z-10'
+          // isEditModeOn && 'flex-col'
         )}
         onStart={(e) => {
+          // console.log('onStart', e);
           e.item.classList.add(style.dragShadow);
         }}
-      > */}
-      {currentAffiliations?.map((affilitiation, index) => (
-        <div
-          key={`affiliation-${affilitiation.name}-${index}`}
-          className={classNames(style.tagListContainer)}
-        >
-          {!isEditModeOn ? (
-            affilitiation.arole &&
-            affilitiation.name && (
-              <Typography
-                tag="span"
-                className={classNames(
-                  'backgroundLabelAffiliation',
-                  'pr-4 pl-2'
-                )}
-              >
-                {affilitiation.arole}
-              </Typography>
-            )
-          ) : (
-            <div className={classNames(style.inputContainer)}>
-              <InputText
-                placeholder={placeholderRole}
-                key={`affiliation-${affilitiation.name}`}
-                value={affilitiation.arole || ''}
-                onChange={(e) => {
-                  console.log(e?.target?.value);
-                  const newAffiliations = [...currentAffiliations];
-                  newAffiliations[index] = {
-                    ...newAffiliations[index],
-                    arole: e?.target?.value,
-                  };
-                  setCurrentAffiliations(newAffiliations);
-                  console.log('newAffiliations', newAffiliations);
-                  updatePersonDataAffiliations &&
-                    updatePersonDataAffiliations(newAffiliations);
-                }}
-                className={classNames(
-                  // 'backgroundLabelAffiliation',
-                  // style.genericTextArea,
-                  style.roleInput
-                )}
-                isHorizontal
-              />
-            </div>
-          )}
-          {!isEditModeOn ? (
-            affilitiation.name && <Tag {...affilitiation} />
-          ) : (
-            <TagPicker
-              key={`affiliation-${affilitiation.name}-${index}`}
-              placeholder={placeholderTag}
-              tags={tags}
-              selectedValue={affilitiation?.name || undefined}
-              updatePostData={(value) => {
-                const newAffiliations = [...currentAffiliations];
-                newAffiliations[index] = {
-                  ...newAffiliations[index],
-                  ...value,
-                };
-                setCurrentAffiliations(newAffiliations);
-                console.log('newAffiliations', newAffiliations);
-                updatePersonDataAffiliations &&
-                  updatePersonDataAffiliations(newAffiliations);
-              }}
-              tagType="organisation"
-              onTagCreated={handleTagCreated}
-            />
-          )}
-          {isEditModeOn &&
-            currentAffiliations?.[index + 1] &&
-            affilitiation.arole &&
-            affilitiation.name && (
-              <button
-                onClick={() => handleRemoveAffiliation(index)}
-                className={classNames(style.affiliationRemove, '')}
-              >
-                <SpriteSvg.EditCloseIcon
-                  className="mb-0"
-                  sizeW={16}
-                  sizeH={16}
-                  viewBox={'-3 -2 22 22'}
-                  fill={'#fff'}
-                  strokeWidth={0}
-                  inline={true}
+        onUpdate={(e) => {
+          // console.log('onSelect', e);
+          // e.preventDefault();
+          e.item.classList.remove(style.dragShadow);
+        }}
+      >
+        {currentAffiliations?.map((affilitiation, index) => (
+          <div
+            key={`affiliation-${affilitiation.name}-${index}`}
+            className={classNames(style.tagListContainer)}
+          >
+            {!isEditModeOn ? (
+              affilitiation.arole &&
+              affilitiation.name && (
+                <Typography
+                  tag="span"
+                  className={classNames(
+                    'backgroundLabelAffiliation',
+                    'pr-4 pl-2'
+                  )}
+                >
+                  {affilitiation.arole}
+                </Typography>
+              )
+            ) : (
+              <div className={classNames(style.inputContainer)}>
+                <input
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  placeholder={placeholderRole}
+                  key={`affiliation-${affilitiation.name}-${index}`}
+                  value={affilitiation.arole || ''}
+                  // onChange={(e) => {
+                  //   console.log(e?.target?.value);
+                  //   const newAffiliations = [...currentAffiliations];
+                  //   newAffiliations[index] = {
+                  //     ...newAffiliations[index],
+                  //     arole: e?.target?.value,
+                  //   };
+                  //   setCurrentAffiliations(newAffiliations);
+                  //   console.log('newAffiliations', newAffiliations);
+                  //   updatePersonDataAffiliations &&
+                  //     updatePersonDataAffiliations(newAffiliations);
+                  // }}
+                  // onChange={(e) => handleInputChange(e, index)}
+                  onChange={(e) => {
+                    const newAffiliations = [...currentAffiliations];
+                    newAffiliations[index] = {
+                      ...newAffiliations[index],
+                      arole: e?.target?.value,
+                    };
+                    setCurrentAffiliations(newAffiliations);
+                    updatePersonDataAffiliations &&
+                      updatePersonDataAffiliations(newAffiliations);
+                    console.log('debug12312312', inputRef);
+
+                    // Adjust the width of the input based on its content
+                    if (inputRefs.current[index]) {
+                      inputRefs.current[
+                        index
+                      ].style.width = `${inputRefs.current[index].scrollWidth}px`;
+                    }
+                  }}
+                  className={classNames(
+                    // 'backgroundLabelAffiliation',
+                    // style.genericTextArea,
+                    style.roleInput,
+                    style.inputText
+                  )}
+                  style={{
+                    width: `${inputRefs.current?.[index]?.scrollWidth}px`,
+                  }}
+                  // isHorizontal
                 />
-              </button>
+              </div>
             )}
-        </div>
-      ))}
-      {/* </ReactSortable> */}
+            {!isEditModeOn ? (
+              affilitiation.name && <Tag {...affilitiation} />
+            ) : (
+              <>
+                <TagPicker
+                  key={`affiliation-${affilitiation.name}-${index}`}
+                  placeholder={placeholderTag}
+                  tags={tags}
+                  selectedValue={affilitiation?.name || undefined}
+                  updatePostData={(value) => {
+                    const newAffiliations = [...currentAffiliations];
+                    newAffiliations[index] = {
+                      ...newAffiliations[index],
+                      ...value,
+                    };
+                    setCurrentAffiliations(newAffiliations);
+                    console.log('newAffiliations', newAffiliations);
+                    updatePersonDataAffiliations &&
+                      updatePersonDataAffiliations(newAffiliations);
+                  }}
+                  tagType="organisation"
+                  onTagCreated={handleTagCreated}
+                />
+                <button
+                  onClick={() => handleRemoveAffiliation(index)}
+                  className={classNames(style.affiliationRemove, '')}
+                  key={`affiliation-remove-${affilitiation.name}-${index}`}
+                >
+                  <SpriteSvg.EditCloseIcon
+                    className="mb-0"
+                    sizeW={16}
+                    sizeH={16}
+                    viewBox={'-3 -2 22 22'}
+                    fill={'#fff'}
+                    strokeWidth={0}
+                    inline={true}
+                  />
+                </button>
+              </>
+            )}
+            {/* {isEditModeOn && (
+            // <button
+            //   onClick={() => handleRemoveAffiliation(index)}
+            //   className={classNames(style.affiliationRemove, '')}
+            //   key={`affiliation-remove-${affilitiation.name}-${index}`}
+            // >
+            //   <SpriteSvg.EditCloseIcon
+            //     className="mb-0"
+            //     sizeW={16}
+            //     sizeH={16}
+            //     viewBox={'-3 -2 22 22'}
+            //     fill={'#fff'}
+            //     strokeWidth={0}
+            //     inline={true}
+            //   />
+            // </button>
+          )} */}
+          </div>
+        ))}
+      </ReactSortable>
     </section>
   );
 };

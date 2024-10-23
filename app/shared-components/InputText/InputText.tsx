@@ -15,6 +15,7 @@ export type InputTextProps = {
   shouldUpdateValueState?: boolean;
   isHorizontal?: boolean;
   type?: string;
+  ref?: any;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -29,6 +30,7 @@ export const InputText: React.FC<InputTextProps> = ({
   shouldUpdateValueState,
   isHorizontal,
   type,
+  ref,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
@@ -99,6 +101,7 @@ export const InputText: React.FC<InputTextProps> = ({
       )}
       {isHorizontal ? (
         <input
+          ref={ref}
           id={label?.toLowerCase()}
           type={type || 'text'}
           placeholder={placeholder ? placeholder : undefined}
