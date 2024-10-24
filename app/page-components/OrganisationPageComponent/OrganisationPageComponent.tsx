@@ -636,7 +636,7 @@ function OrganisationPageComponent({
             }}
             disabled={isEditModeOn && checkValidationErrors()}
             className={classNames(
-              'px-2 py-2 rounded-md text-white bg-blue-600 w-40 mr-2',
+              'btn btn-save',
               isEditModeOn && checkValidationErrors() && 'bg-gray-400'
             )}
           >
@@ -653,7 +653,7 @@ function OrganisationPageComponent({
                 setIsEditModeOn(!isEditModeOn);
                 isNewPage && router.push(`/dashboard`);
               }}
-              className="px-2 py-2 rounded-md text-white bg-green-600 w-40"
+              className="btn btn-edit"
             >
               Discard Changes
             </button>
