@@ -737,7 +737,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
               onTagCreated={handleTagCreated}
               isMulti
               extraFilterTags={extraFilterTags}
-              // tagTypeLabel="Page Type"
+              // tagTypeLabel="Page Type" 
             />
           )}
         </div>
