@@ -765,7 +765,14 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         handleTagCreated={handleTagCreated}
       />
       {/* Internal Links */}
-      <MiniPagesListComponentPost internalLinks={internalLinks} title="Posts" />
+      <MiniPagesListComponentPost
+        isEditModeOn={isEditModeOn}
+        internalLinks={internalLinks}
+        handleUpdatePostData={(value) =>
+          updateProjectDataOnKeyValue('internalLinks', value)
+        }
+        title="Posts"
+      />
       {/* Files */}
       <FilesComponent
         isEditModeOn={isEditModeOn}

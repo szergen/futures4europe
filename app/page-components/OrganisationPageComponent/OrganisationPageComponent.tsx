@@ -782,7 +782,13 @@ function OrganisationPageComponent({
         handleTagCreated={handleTagCreated}
       />
       {/* Internal Links */}
-      <MiniPagesListComponentPost internalLinks={internalLinks} />
+      <MiniPagesListComponentPost
+        internalLinks={internalLinks}
+        isEditModeOn={isEditModeOn}
+        handleUpdatePostData={(value) =>
+          updateOrganisationDataOnKeyValue('internalLinks', value)
+        }
+      />
       {/* Files */}
       <FilesComponent
         isEditModeOn={isEditModeOn}
