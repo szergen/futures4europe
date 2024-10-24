@@ -181,7 +181,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
               </Typography>
             )
           ) : (
-            <div className={classNames(style.inputContainer)}>
+            <div className={classNames(style.affiliationInputContainer)}>
               <InputText
                 placeholder={placeholderRole}
                 key={`affiliation-${affilitiation.name}`}
