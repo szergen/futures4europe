@@ -6,8 +6,9 @@
 }
 .postImage {
   flex-shrink: 0;
-  height: 180px;
-  width: 180px;
+  height: 124px;
+  width: 124px;
+  border-radius: var(--p-border-radius-800);
 }
 
 .postContent {
