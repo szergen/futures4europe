@@ -39,6 +39,11 @@
   position: relative;
   left: -4px;
 }
+
+.inputContainer {
+  background: var(--color-background-brand-tag)
+}
+
 /* // TODO: redo this class */
 .roleInput {
   display: inline-block;
@@ -62,7 +67,7 @@
 .inputText {
   width: 30px; /* Initial width */
   flex-grow: 100%;
-  min-width: 30px; /* Initial width */
+  min-width: 50px; /* Initial width */
   transition: width 0.1s; /* Smooth transition */
 }
 
