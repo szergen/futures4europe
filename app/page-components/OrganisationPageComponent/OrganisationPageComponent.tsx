@@ -693,7 +693,7 @@ function OrganisationPageComponent({
       />
       {/* People */}
       <AffiliationsComponent
-        placeholderRole="Optionally prefixed by roles"
+        placeholderRole="Role"
         placeholderTag="Add one or more person tags"
         afiliations={organisationData.people}
         tagListTitle="Affiliates"
@@ -738,7 +738,7 @@ function OrganisationPageComponent({
       />
       {/* Projects */}
       <AffiliationsComponent
-        placeholderRole="Optionally prefixed by your role"
+        placeholderRole="Role"
         placeholderTag="Add one or more project tags (that the organisation is/was involved into)"
         afiliations={organisationData.projects}
         tagListTitle="Projects"

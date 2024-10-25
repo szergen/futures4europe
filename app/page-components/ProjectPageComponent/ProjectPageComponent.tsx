@@ -2,6 +2,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import style from './ProjectPageComponent.module.css';
+import styleShared from '../PageComponents.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
@@ -754,7 +755,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       />
       {/* Organization Roles */}
       <AffiliationsComponent
-        placeholderRole="Optionally prefixed by roles"
+        placeholderRole="Role"
         placeholderTag="Add one or more organisation tags"
         afiliations={projectData.organisations}
         tagListTitle="Organisations"
