@@ -91,24 +91,28 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
         tag="h2"
         className={classNames(
           'text-gray-800 w-full my-4',
-          style.InternalLinksEditor_title
+          style.tagListTitle
         )}
       >
         Internal Links
       </Typography>
       {/* Input field and submit button */}
-      <form onSubmit={handleAddLink}>
+      <form className='relative' onSubmit={handleAddLink}>
         <input
           type="text"
           value={newLink}
           onChange={(e) => setNewLink(e.target.value)}
           placeholder="Paste a link to a related post on this site"
           className={classNames(
-            'text-gray-800 w-full my-4',
+            'text-gray-400 w-full',
             style.InternalLinksEditor_input
           )}
         />
-        <button type="submit" className="bg-blue-500 text-white p-2">
+        <button type="submit"           
+            className={classNames(
+            '',
+            style.InternalLinksEditor_button
+          )}>  
           Add Link
         </button>
       </form>
