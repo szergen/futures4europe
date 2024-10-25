@@ -4,9 +4,8 @@
   left: +30px;
 }
 .tagContainer {
-  /* display: inline-block; */
+  display: flex;
   cursor: pointer;
-  font-family: 'Inter', Courier, monospace;
   line-height: 1;
   text-transform: capitalize;
   letter-spacing: -0.01em;
@@ -74,7 +73,7 @@
   }
 
   .name {
-    display: inline-block;
+    display: flex;
     text-wrap: nowrap;
     max-width: 300px;
     overflow: hidden;
@@ -112,18 +111,19 @@
 
   }
   .tagLink:hover .tagNameBody {
-    -webkit-text-stroke: 1px black;
+    font-weight: bold;
+    letter-spacing: -0.66px;
     text-decoration: none;
   }  
   .tagThumbnail {
     margin-left: 0px;
+    width: var(--w-space-xxl);
+    height: var(--w-space-xxl);
   }
   .tagThumbnail img{
     color: transparent;
     object-fit: cover;
     margin-left: 0px;    
-    width: var(--w-space-xxl);
-    height: var(--w-space-xxl);
   }  
   .tagNameBody {
     margin-left: var(--w-space-s);
