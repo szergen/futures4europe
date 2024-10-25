@@ -97,7 +97,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-
   const [showCreateForm, setShowCreateForm] = useState(false);
   const handleIconClick = () => {
     setShowCreateForm(true);
@@ -157,17 +156,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           {/* Link */}
           <i className={style.socialIcon} onClick={handleIconClick}>
             <SpriteSvg.AccountLinkGeneral
-              className={classNames(
-                style.website,
-                'white'
-              )}
+              className={classNames(style.website, 'white')}
               sizeW={24}
               sizeH={24}
               fill={'var(--primary-white)'}
               viewBox={'-4 -4 32 32'}
               strokeWidth={0}
               inline={false}
-            />   
+            />
           </i>
         </div>
         {/* Views */}
@@ -265,7 +261,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               )}
             />
           </>
-        )}        
+        )}
         {/* Founded */}
         <div className="flex items-center my-2">
           {organisation?.organisationEstablishedDate && isEditModeOn && (
@@ -293,12 +289,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   fill={'#000'}
                   stroke={'0'}
                   inline={false}
-                />  
+                />
                 Founded in&nbsp;
                 {/* {dayjs(organisation?.organisationEstablishedDate).format(
                   'YYYY'
                 )} */}
-                {new Date(organisation.organisationEstablishedDate).getFullYear()}
+                {new Date(
+                  organisation.organisationEstablishedDate
+                ).getFullYear()}
               </Typography>
             ) : (
               ''
@@ -365,45 +363,41 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           />
         )}
 
-
         {/* // TODO: Alex @modal update social links */}
-          <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-            <Modal.Header>Paste the url</Modal.Header>
-            <Modal.Body>
-              <form >
-                <div className="mb-4">
-                  <Label htmlFor="tagName" className="relative">
-                    Add link...
-                  </Label>
-                  <TextInput
-                    placeholder="Paste the url"
-                    id="tagName"
-                    onChange={(e) => setTagName(e.target.value)}
-                    required
-                    helperText={
-                      !setShowCreateForm && (
-                        <span className="text-red-600 relative -top-3">
-                          TagName already exists in a different tag type
-                        </span>
-                      )
-                    }
-                  />
-                </div>
-                <Button
-                  disabled={!setShowCreateForm || setShowCreateForm}
-                  type="submit"
-                  // disabled={isLoading}
-                >
-                  Update
-                </Button>
-              </form>
-            </Modal.Body>
-          </Modal>
-        
-
+        <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
+          <Modal.Header>Paste the url</Modal.Header>
+          <Modal.Body>
+            <form>
+              <div className="mb-4">
+                <Label htmlFor="tagName" className="relative">
+                  Add link...
+                </Label>
+                <TextInput
+                  placeholder="Paste the url"
+                  id="tagName"
+                  onChange={(e) => setTagName(e.target.value)}
+                  required
+                  helperText={
+                    !setShowCreateForm && (
+                      <span className="text-red-600 relative -top-3">
+                        TagName already exists in a different tag type
+                      </span>
+                    )
+                  }
+                />
+              </div>
+              <Button
+                disabled={!setShowCreateForm || setShowCreateForm}
+                type="submit"
+                // disabled={isLoading}
+              >
+                Update
+              </Button>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     </div>
-    
   );
 };
 

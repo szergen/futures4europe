@@ -233,7 +233,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       transition: '',
       border: 'none',
       outline: 'none',
-      backgroundColor: state.selectProps.inputValue ? 'var(--color-background-empty)' : 'var(--color-background-brand-tag)',
+      backgroundColor: state.selectProps.inputValue
+        ? 'var(--color-background-empty)'
+        : 'var(--color-background-brand-tag)',
       borderRadius: 'var(--p-border-radius-tag)',
     }),
     menu: (provided) => ({
@@ -258,7 +260,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     option: (provided) => ({
       ...provided,
       margin: '0 4px',
-    }),    
+    }),
     placeholder: (provided, state) => ({
       ...provided,
       padding: '0px var(--w-space-s)',
@@ -344,7 +346,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     //       👍 {children}
     //     </components.Control>
     //   );
-    // },       
+    // },
     // SingleValue: (props: any) => {
     //   const correspondingTag = tags?.find(
     //     (tag) => tag.name === props.data.label

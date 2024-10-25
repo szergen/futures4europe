@@ -258,10 +258,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                       ].style.width = `${inputRefs.current[index].scrollWidth}px`;
                     }
                   }}
-                  className={classNames(
-                    style.roleInput,
-                    style.inputText,
-                  )}
+                  className={classNames(style.roleInput, style.inputText)}
                   style={{
                     width: `${inputRefs.current?.[index]?.scrollWidth}px`,
                   }}
@@ -274,9 +271,8 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             ) : (
               <>
                 <div
-                className={classNames(
-                  style.affiliationTagPickerContainer
-                )}>
+                  className={classNames(style.affiliationTagPickerContainer)}
+                >
                   <TagPicker
                     key={`affiliation-${affilitiation.name}-${index}`}
                     placeholder={placeholderTag}

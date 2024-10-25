@@ -15,10 +15,7 @@ import { HiUserCircle, HiPlusSm } from 'react-icons/hi';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import GlowButton from './NavBar/GlowButton';
 
-
-
 const Header = () => {
-
   const { isLoggedIn, userDetails, logout, isLoadingInProgress } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -195,20 +192,18 @@ const Header = () => {
         </Dropdown>
       </div>
     ) : (
-      
       <>
-      <div className='flex items-center gap-4'>
-        <Link href="/dashboard">
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard">
             <p className="font-bold text-base">Login</p>
-        </Link>
+          </Link>
 
-        <Link href="/dashboard">
-          <div>
-            <GlowButton>Register</GlowButton>
-          </div>
-        </Link>
-        
-      </div>
+          <Link href="/dashboard">
+            <div>
+              <GlowButton>Register</GlowButton>
+            </div>
+          </Link>
+        </div>
       </>
     );
   }, [isLoggedIn, userDetails, isDropdownOpen]);

@@ -89,15 +89,12 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
     <div className="w-full">
       <Typography
         tag="h2"
-        className={classNames(
-          'text-gray-800 w-full my-4',
-          style.tagListTitle
-        )}
+        className={classNames('text-gray-800 w-full my-4', style.tagListTitle)}
       >
         Internal Links
       </Typography>
       {/* Input field and submit button */}
-      <form className='relative' onSubmit={handleAddLink}>
+      <form className="relative" onSubmit={handleAddLink}>
         <input
           type="text"
           value={newLink}
@@ -108,11 +105,10 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
             style.InternalLinksEditor_input
           )}
         />
-        <button type="submit"           
-            className={classNames(
-            '',
-            style.InternalLinksEditor_button
-          )}>  
+        <button
+          type="submit"
+          className={classNames('', style.InternalLinksEditor_button)}
+        >
           Add Link
         </button>
       </form>

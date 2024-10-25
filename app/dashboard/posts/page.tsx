@@ -235,7 +235,8 @@ export default function DashboardProjects() {
                       .map((postPage, index) => (
                         <div
                           key={postPage?.data?.title + index}
-                          className={classNames("")}>
+                          className={classNames('')}
+                        >
                           <div className="flex flex-wrap flex-start text-left">
                             {/* <Tag
                               className="flex-grow basis-full"
@@ -245,8 +246,13 @@ export default function DashboardProjects() {
                                 postPage?.data?.pageTypes[0]?.popularity
                               }
                             ></Tag> */}
-                            <Link href={`/post/${postPage.data.slug}`}
-                              className={classNames(style.miniPostWrapper, "w-full p-6 flex flex-col")}>
+                            <Link
+                              href={`/post/${postPage.data.slug}`}
+                              className={classNames(
+                                style.miniPostWrapper,
+                                'w-full p-6 flex flex-col'
+                              )}
+                            >
                               <Badge
                                 className="w-fit mt-2 capitalize rounded-full"
                                 color="gray"
