@@ -161,14 +161,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {tagListTitle}
         </Typography>
       </div>
-      {/* {!current && (
-        <Typography
-          tag="h2"
-          className={classNames('text-gray-800 w-full my-4', style.tagListTitle)}  
-        >
-          {title ? title : 'Former Affiliations'}
-        </Typography>
-      )} */}
 
       <ReactSortable
         list={currentAffiliations as unknown as ItemInterface[]}
@@ -177,23 +169,29 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           updatePersonDataAffiliations &&
             updatePersonDataAffiliations(newState as any);
         }}
-        sort={isEditModeOn}
-        disabled={!isEditModeOn}
+        sort={isEditModeOn && !isDisabledSorting}
+        disabled={!isEditModeOn || isDisabledSorting}
         className={classNames(
-          'flex w-fit flex-wrap z-10'
+          'flex w-fit flex-wrap z-50'
           // isEditModeOn && 'flex-col'
         )}
+        // group="shared"
         onStart={(e) => {
           // console.log('onStart', e);
           e.item.classList.add(style.dragShadow);
         }}
-        onUpdate={(e) => {
-          // console.log('onSelect', e);
-          // e.preventDefault();
-          e.item.classList.remove(style.dragShadow);
-        }}
-        disabled={isDisabledSorting}
-        // delay={400}
+        // onUpdate={(e) => {
+        //   // console.log('onSelect', e);
+        //   // e.preventDefault();
+        //   e.item.classList.remove(style.dragShadow);
+        // }}
+        // onEnd={(e) => {
+        //   // console.log('onSelect', e);
+        //   // e.preventDefault();
+        //   e.item.classList.remove(style.dragShadow);
+        // }}
+        // disabled={isDisabledSorting}
+        // delay={100}
         // delayOnTouchOnly={true}
       >
         {currentAffiliations?.map((affilitiation, index) => (
@@ -259,7 +257,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                         index
                       ].style.width = `${inputRefs.current[index].scrollWidth}px`;
                     }
-                    // setIsDisabledSorting(false);
                   }}
                   className={classNames(
                     // 'backgroundLabelAffiliation',
@@ -284,7 +281,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   tags={tags}
                   selectedValue={affilitiation?.name || undefined}
                   updatePostData={(value) => {
-                    // setIsDisabledSorting(false);
                     const newAffiliations = [...currentAffiliations];
                     newAffiliations[index] = {
                       ...newAffiliations[index],

@@ -63,6 +63,7 @@
   background-color: transparent;
   border-radius: 19px;
   overflow: hidden;
+  z-index: 999999;
   /* box-shadow: 1px 1px 1px 0; */
 }
 .tagPickerMenuList::-webkit-scrollbar {
@@ -214,6 +215,6 @@
   background: var(--color-background-destructive-weaker);
   opacity: 1;
 }
-.tagPickerTagline p{
+.tagPickerTagline p {
   margin-left: var(--w-space-s);
 }
