@@ -24,7 +24,21 @@
 
 .avatarUploadEpty {
   position: relative;
+  background: var(--color-background-brand-tag);
+  opacity: 1;
 }
+
+.avatarUploadEpty:hover {
+  cursor: pointer;
+  background: var(--color-background-offline);
+  transition: 1.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.avatarUploadEpty svg:hover path{
+  cursor: pointer;
+  background-color: var(--primary-brand);
+  fill: var(--primary-white);
+}
+
 
 .avatarUpload:hover {
   cursor: pointer;

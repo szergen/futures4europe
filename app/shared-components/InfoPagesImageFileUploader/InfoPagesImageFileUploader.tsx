@@ -62,17 +62,29 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
       >
         <div className="w-full h-full">
           <span className="top-10 relative">
-            {!imageURL || imageURL === ' ' ? 'Upload Image' : ''}
+            {!imageURL || imageURL === ' ' ? '' : ''}
           </span>
-          <SpriteSvg.AccountEdit
-            className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
-            sizeW={42}
-            sizeH={42}
-            viewBox={'0 0 24 24'}
-            stroke={'var(--color-text-brand-tag)'}
-            strokeWidth={2}
-            inline={false}
-          />
+          {!imageURL ? (
+            <SpriteSvg.AccountImageThumb
+              className="text-site-black mb-6"
+              sizeW={42}
+              sizeH={42}
+              fill={'var(--color-background-offline)'}
+              viewBox={'0 0 19 19'}
+              strokeWidth={0}
+              inline={false}
+            />
+          ) : (
+            <SpriteSvg.AccountEdit
+              className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
+              sizeW={42}
+              sizeH={42}
+              viewBox={'0 0 24 24'}
+              stroke={'var(--color-text-brand-tag)'}
+              strokeWidth={2}
+              inline={false}
+            />
+          )}
         </div>
 
         <FileInput
