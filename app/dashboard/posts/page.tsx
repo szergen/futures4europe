@@ -16,6 +16,7 @@ import { Button, Badge } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
+import { ClassNames } from '@emotion/react';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -234,8 +235,7 @@ export default function DashboardProjects() {
                       .map((postPage, index) => (
                         <div
                           key={postPage?.data?.title + index}
-                          className="pt-2 pb-2 flex flex-row items-center justify-between"
-                        >
+                          className={classNames("")}>
                           <div className="flex flex-wrap flex-start text-left">
                             {/* <Tag
                               className="flex-grow basis-full"
@@ -245,7 +245,8 @@ export default function DashboardProjects() {
                                 postPage?.data?.pageTypes[0]?.popularity
                               }
                             ></Tag> */}
-                            <Link href={`/post/${postPage.data.slug}`}>
+                            <Link href={`/post/${postPage.data.slug}`}
+                              className={classNames(style.miniPostWrapper, "w-full p-6 flex flex-col")}>
                               <Badge
                                 className="w-fit mt-2 capitalize rounded-full"
                                 color="gray"
