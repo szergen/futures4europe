@@ -10,6 +10,7 @@ import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 import { useEffect, useState } from 'react';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import dayjs from 'dayjs';
 
 export type HeaderComponentProps = {
@@ -148,21 +149,18 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
           </svg>
           {/* Link */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 rounded-full p-1"
-            style={{ backgroundColor: '#9d8fdf', color: 'white' }}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-            />
-          </svg>
+            <SpriteSvg.AccountLinkGeneral
+              className={classNames(
+                style.website,
+                'white'
+              )}
+              sizeW={24}
+              sizeH={24}
+              fill={'var(--primary-white)'}
+              viewBox={'-4 -4 32 32'}
+              strokeWidth={0}
+              inline={false}
+            />            
         </div>
         {/* Views */}
         {!isEditModeOn && (
@@ -279,7 +277,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               : ''}
           </Typography>
         ) : (
-          <div className="flex items-center mt-4">
+          <div className="flex items-center mt-4 mb-4">
             {/* <span className="mr-4">Enter begin date</span> */}
             <DatePickerRangeComponentDouble
               dateFormate="YYYY MMMM"
@@ -319,7 +317,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder="Add a project type tag"
             tags={tags?.filter((tag) => tag.tagType === 'project type')}
-            className="relative"
+            className="relative mt-2 mb-2"
             selectedValue={project.projectFunded?.name || undefined}
             updatePostData={(value) =>
               updateProjectDataOnKeyValue('projectFunded', value)
@@ -342,7 +340,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder={'Add one or more country tags relevant to the project'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
-            className="relative"
+            className="relative mt-2 mb-2"
             selectedValue={project?.countryTag?.name || undefined}
             updatePostData={(value) =>
               updateProjectDataOnKeyValue('countryTag', value)
