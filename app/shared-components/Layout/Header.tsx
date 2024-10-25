@@ -13,9 +13,18 @@ import { Avatar, Dropdown, Modal } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { HiUserCircle, HiPlusSm } from 'react-icons/hi';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import Tag from '../Tag/Tag';
+import { decidePageTypeItems } from '@app/utils/parse-utils';
 
 const Header = () => {
-  const { isLoggedIn, userDetails, logout, isLoadingInProgress } = useAuth();
+  const {
+    isLoggedIn,
+    userDetails,
+    logout,
+    isLoadingInProgress,
+    infoPages,
+    postPages,
+  } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -48,41 +57,41 @@ const Header = () => {
 
   // SVGs Icons
   // TODO: move to global SVG import
-  const DashboardIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-5 h-5"
-    >
-      <path
-        d="M17.5003 14.9999C17.5003 14.9999 16.3887 16.2869 15.1387 16.2869C13.8887 16.2869 12.8831 15.0957 11.6558 15.0957C10.4285 15.0957 9.71686 15.6549 8.95866 16.4582M14.7562 2.8808L16.2861 4.41062C16.6115 4.73605 16.6115 5.26369 16.2861 5.58913L5.2444 16.6308C5.08812 16.7871 4.87616 16.8749 4.65515 16.8749H2.29199V14.5117C2.29199 14.2907 2.37979 14.0787 2.53607 13.9225L13.5777 2.8808C13.9032 2.55536 14.4308 2.55536 14.7562 2.8808Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-  const AddPostIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      className="w-5 h-5"
-    >
-      <path d="M12.5 3a.75.75 0 0 1 .75.75v1.25a.75.75 0 0 1-1.5 0v-1.25a.75.75 0 0 1 .75-.75Z" />
-      <path d="M16.03 5.03a.75.75 0 0 0-1.06-1.06l-1 1a.75.75 0 0 0 1.06 1.06l1-1Z" />
-      <path d="M5.5 7c0-.69.56-1.25 1.25-1.25h3.25a.75.75 0 0 0 0-1.5h-3.25a2.75 2.75 0 0 0-2.75 2.75v7.25a2.75 2.75 0 0 0 2.75 2.75h6.5a2.75 2.75 0 0 0 2.75-2.75v-3.625a.75.75 0 0 0-1.5 0v3.625c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-7.25Z" />
-      <path d="M7.25 12.5a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Z" />
-      <path
-        fillRule="evenodd"
-        d="M6.25 7.25a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75v-3Zm1.5.75v1.5h4.5v-1.5h-4.5Z"
-      />
-      <path d="M16.5 8.25a.75.75 0 0 0 0-1.5h-1.25a.75.75 0 0 0 0 1.5h1.25Z" />
-    </svg>
-  );
+  // const DashboardIcon = () => (
+  //   <svg
+  //     xmlns="http://www.w3.org/2000/svg"
+  //     fill="none"
+  //     viewBox="0 0 24 24"
+  //     strokeWidth={1.5}
+  //     stroke="currentColor"
+  //     className="w-5 h-5"
+  //   >
+  //     <path
+  //       d="M17.5003 14.9999C17.5003 14.9999 16.3887 16.2869 15.1387 16.2869C13.8887 16.2869 12.8831 15.0957 11.6558 15.0957C10.4285 15.0957 9.71686 15.6549 8.95866 16.4582M14.7562 2.8808L16.2861 4.41062C16.6115 4.73605 16.6115 5.26369 16.2861 5.58913L5.2444 16.6308C5.08812 16.7871 4.87616 16.8749 4.65515 16.8749H2.29199V14.5117C2.29199 14.2907 2.37979 14.0787 2.53607 13.9225L13.5777 2.8808C13.9032 2.55536 14.4308 2.55536 14.7562 2.8808Z"
+  //       stroke="currentColor"
+  //       strokeWidth="1.5"
+  //       strokeLinecap="round"
+  //       strokeLinejoin="round"
+  //     />
+  //   </svg>
+  // );
+  // const AddPostIcon = () => (
+  //   <svg
+  //     xmlns="http://www.w3.org/2000/svg"
+  //     viewBox="0 0 24 24"
+  //     className="w-5 h-5"
+  //   >
+  //     <path d="M12.5 3a.75.75 0 0 1 .75.75v1.25a.75.75 0 0 1-1.5 0v-1.25a.75.75 0 0 1 .75-.75Z" />
+  //     <path d="M16.03 5.03a.75.75 0 0 0-1.06-1.06l-1 1a.75.75 0 0 0 1.06 1.06l1-1Z" />
+  //     <path d="M5.5 7c0-.69.56-1.25 1.25-1.25h3.25a.75.75 0 0 0 0-1.5h-3.25a2.75 2.75 0 0 0-2.75 2.75v7.25a2.75 2.75 0 0 0 2.75 2.75h6.5a2.75 2.75 0 0 0 2.75-2.75v-3.625a.75.75 0 0 0-1.5 0v3.625c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-7.25Z" />
+  //     <path d="M7.25 12.5a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Z" />
+  //     <path
+  //       fillRule="evenodd"
+  //       d="M6.25 7.25a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75v-3Zm1.5.75v1.5h4.5v-1.5h-4.5Z"
+  //     />
+  //     <path d="M16.5 8.25a.75.75 0 0 0 0-1.5h-1.25a.75.75 0 0 0 0 1.5h1.25Z" />
+  //   </svg>
+  // );
   const SignOutUser = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +121,64 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isDropdownOpen]);
+
+  // #region pageTypeCounts
+  const [pageTypeCounts, setPageTypeCounts] = useState({
+    post: 0,
+    project: 0,
+    person: 0,
+    organisation: 0,
+    event: 0,
+    projectResult: 0,
+  });
+
+  useEffect(() => {
+    if (infoPages && postPages) {
+      setPageTypeCounts((prev) => ({
+        ...prev,
+        post:
+          decidePageTypeItems(
+            'post',
+            postPages.map((item) => item.data),
+            infoPages.map((item) => item.data)
+          )?.length || 0,
+        project:
+          decidePageTypeItems(
+            'project',
+            postPages.map((item) => item.data),
+            infoPages.map((item) => item.data)
+          )?.length || 0,
+        person:
+          decidePageTypeItems(
+            'person',
+            postPages.map((item) => item.data),
+            infoPages.map((item) => item.data)
+          )?.length || 0,
+        organisation:
+          decidePageTypeItems(
+            'organisation',
+            postPages.map((item) => item.data),
+            infoPages.map((item) => item.data)
+          )?.length || 0,
+        event:
+          decidePageTypeItems(
+            'event',
+            postPages.map((item) => item.data),
+            infoPages.map((item) => item.data)
+          )?.length || 0,
+        projectResult:
+          decidePageTypeItems(
+            'project-result',
+            postPages.map((item) => item.data),
+            infoPages.map((item) => item.data)
+          )?.length || 0,
+      }));
+    }
+  }, [infoPages, postPages]);
+
+  useEffect(() => {
+    console.log('pageTypeCounts', pageTypeCounts);
+  }, [pageTypeCounts]);
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
@@ -216,12 +283,51 @@ const Header = () => {
           >
             <Logo />
           </Link>
+          {/* TODO: Temporary Removal */}
           {/* Search */}
-          <div>
+          {/* <div>
             <SearchProvider>
               <SearchComponentV1 />
             </SearchProvider>
-          </div>
+          </div> */}
+          {/* TODO: Temporary Pages */}
+          {/* Page Buttons */}
+          <Tag
+            name="Posts"
+            popularity={pageTypeCounts.post}
+            tagLine="List of Post Pages"
+            tagPageLink="/pages/post"
+          />
+          <Tag
+            name="Projects"
+            popularity={pageTypeCounts.project}
+            tagLine="List of Project Info Pages"
+            tagPageLink="/pages/project"
+          />
+          <Tag
+            name="Project Results"
+            popularity={pageTypeCounts.projectResult}
+            tagLine="List of Project Result Pages"
+            tagPageLink="/pages/project-result"
+          />
+          <Tag
+            name="Events"
+            popularity={pageTypeCounts.event}
+            tagLine="List of Event Pages"
+            tagPageLink="/pages/event"
+          />
+          <Tag
+            name="Organisations"
+            popularity={pageTypeCounts.organisation}
+            tagLine="List of Organisation Info Pages"
+            tagPageLink="/pages/organisation"
+          />
+          <Tag
+            name="People"
+            popularity={pageTypeCounts.person}
+            tagLine="List of Person Info Pages"
+            tagPageLink="/pages/person"
+          />
           {/* Account */}
           {accountSection}
 
