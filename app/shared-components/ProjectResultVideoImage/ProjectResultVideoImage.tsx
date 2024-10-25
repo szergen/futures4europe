@@ -91,7 +91,7 @@ const ProjectResultVideoImage: React.FC<ProjectResultVideoImageProps> = ({
           <div>Click to add a video url</div>
         </div>
       </Label>
-      {imageURL && imageURL !== ' ' && (
+      {imageURL && imageURL !== '' && imageURL !== ' ' && (
         <div className="relative">
           <Image
             src={imageURL}

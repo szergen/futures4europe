@@ -32,9 +32,9 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
     <div className={classNames(style.postItem)}>
       <Image
         src={
-          (image && getImageUrlForMedia(image)?.url) ||
-          (image && getImageUrlForMedia(image)) ||
-          'https://placehold.co/600x400?text=placeholder'
+          image && image !== ' '
+            ? image
+            : 'https://placehold.co/600x400?text=placeholder'
         }
         width={180}
         height={180}
