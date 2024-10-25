@@ -22,15 +22,26 @@
   width: 100%;
 }
 
-.inputContainer {
-  display: inline-flex;
+.affiliationInputContainer {
+  display: inline-block;
   flex-basis: content;
   width: fit-content;
   max-width: 100%;
   background: var(--color-background-brand-tag);
-  border-radius: 10px 0px 0px 10px;
-  left: 4px;
+  border-radius: var(--p-border-radius-tag) 0px 0px var(--p-border-radius-tag);
+  position: relative;  
+}
+.affiliationTagPickerContainer {
+  max-width: 100%;
+  background: var(--color-background-brand-tag);
+  border-radius: var(--p-border-radius-tag);
+  margin-right: var(--w-space-s);
   position: relative;
+  left: -4px;
+}
+
+.inputContainer {
+  background: var(--color-background-brand-tag)
 }
 
 /* // TODO: redo this class */
@@ -46,8 +57,9 @@
   height: var(--w-space-xl);
   line-height: var(--w-font-size-tag);
   white-space: nowrap; /* Prevent wrapping */
-  /* min-width: calc(var(--w-space-m) * 20);
-  max-width: calc(var(--w-space-m) * 20); */
+  min-width: calc(var(--w-space-m) * 17);
+  max-width: calc(var(--w-space-m) * 20);
+  width: 100%;
   padding: 0px 5px 0px 5px;
   margin: 7px 0px;
 }
@@ -55,7 +67,7 @@
 .inputText {
   width: 30px; /* Initial width */
   flex-grow: 100%;
-  min-width: 30px; /* Initial width */
+  min-width: 50px; /* Initial width */
   transition: width 0.1s; /* Smooth transition */
 }
 

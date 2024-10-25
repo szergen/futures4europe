@@ -64,9 +64,12 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
         </Typography>
       )}
 
-      <div className="flex">
+      <div className="flex flex-col">
         {currentFiles?.map((media, index) => (
-          <div key={`${media?.thumbnail}-${index}`} className="mr-4">
+          <div
+            key={`${media?.thumbnail}-${index}`}
+            className="flex flex-row mr-4"
+          >
             {!isEditModeOn ? (
               media.thumbnail && (
                 <>
@@ -132,7 +135,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
               </Typography>
             ) : (
               <InputText
-                // label="File Display Name"
+                className={style.fileTitle}
                 placeholder="Enter display name"
                 value={media.displayName || ''}
                 onChange={(e) => {

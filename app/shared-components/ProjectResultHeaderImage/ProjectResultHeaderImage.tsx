@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProjectResultFileUploader from '../ProjectResultFileUploader/ProjectResultFileUploader';
 import ProjectResultVideoImage from '../ProjectResultVideoImage/ProjectResultVideoImage';
+import style from '@app/page-components/shared-page-components/FilesComponent/FilesComponent.module.css';
+import classNames from 'classnames';
 
 type ProjectResultHeaderImageProps = {
   currentImage?: string;
@@ -33,38 +35,46 @@ const ProjectResultHeaderImage: React.FC<ProjectResultHeaderImageProps> = ({
   return (
     <div key={'ProjectResultHeaderImage' + fileIdPrefix}>
       <div className="flex">
-        <div className="flex items-center mb-4 mr-4">
-          <input
-            id={'file-option' + fileIdPrefix}
-            name={'file-option' + fileIdPrefix}
-            type="radio"
-            value="file"
-            checked={selectedOption === 'file'}
-            onChange={() => setSelectedOption('file')}
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-          />
+        <div
+          className={classNames(
+            style.checkboxes__item,
+            'flex items-center justify-center'
+          )}
+        >
           <label
+            className={classNames(style.checkbox, style.style_c)}
             htmlFor={'file-option' + fileIdPrefix}
-            className="ml-3 block text-sm font-medium text-gray-700"
           >
-            Upload PDF
+            <input
+              id={'file-option' + fileIdPrefix}
+              name={'file-option' + fileIdPrefix}
+              type="radio"
+              value="file"
+              checked={selectedOption === 'file'}
+              onChange={() => setSelectedOption('file')}
+              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+            />
+
+            <div className={classNames(style.checkbox__checkmark)}></div>
+            <div className={classNames(style.checkbox__body)}>PDF</div>
           </label>
         </div>
-        <div className="flex items-center mb-4">
-          <input
-            id={'video-option' + fileIdPrefix}
-            name={'video-option' + fileIdPrefix}
-            type="radio"
-            value="video"
-            checked={selectedOption === 'video'}
-            onChange={() => setSelectedOption('video')}
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-          />
+        <div className={classNames(style.checkboxes__item)}>
           <label
+            className={classNames(style.checkbox, style.style_c)}
             htmlFor={'video-option' + fileIdPrefix}
-            className="ml-3 block text-sm font-medium text-gray-700"
           >
-            Video URL
+            <input
+              id={'video-option' + fileIdPrefix}
+              name={'video-option' + fileIdPrefix}
+              type="radio"
+              value="video"
+              checked={selectedOption === 'video'}
+              onChange={() => setSelectedOption('video')}
+              className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+            />
+            <div className={classNames(style.checkbox__checkmark)}></div>
+            <div className={classNames(style.checkbox__body)}>Video</div>
           </label>
         </div>
       </div>

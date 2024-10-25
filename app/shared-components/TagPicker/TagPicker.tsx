@@ -221,35 +221,33 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         border: 'none',
       },
       minHeight: '5 0px',
-      //height: '50px',
-      margin: '0px 0px 10px 0px',
+      margin: '0px 0px 0px 0px',
     }),
-
     input: (provided, state) => ({
       ...provided,
       color: 'var(--primary-brand-color)',
       fontSize: 'var(--w-font-size-tag)',
       padding: '0px var(--w-space-s)',
-      backgroundColor: state.isFocused ? null : 'var(--primary-white)',
-      borderRadius: 'var(--p-border-radius-tag)',
-      margin: '8px 4px',
+      height: 'var(--w-space-xxxl)',
       // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',
       transition: '',
-      border: 'none', // Removes the border on the input field
-      outline: 'none', // Removes the input outline
-      boxShadow: '0px 0px 0px 3px var(--color-background-brand-tag)',
-      // height: 'var(--w-space-xxl)',
+      border: 'none',
+      outline: 'none',
+      backgroundColor: state.selectProps.inputValue
+        ? 'var(--color-background-empty)'
+        : 'var(--color-background-brand-tag)',
+      borderRadius: 'var(--p-border-radius-tag)',
     }),
     menu: (provided) => ({
       ...provided,
-      width: '100%', // Set the desired width for the menu
-      position: 'absolute', // Ensures the menu is positioned absolutely
-      // zIndex: 9999, // Ensures the menu is on top
+      width: '100%',
+      position: 'absolute',
+      zIndex: 9999,
     }),
     menuList: (provided) => ({
       ...provided,
-      maxHeight: '200px', // Set a max height if needed
-      padding: '10px 6px',
+      maxHeight: '200px',
+      padding: '10px',
     }),
     valueContainer: (provided) => ({
       ...provided,
@@ -257,11 +255,18 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     }),
     singleValue: (provided) => ({
       ...provided,
-      margin: '0 4px', // Adjust margin if necessary
+      position: 'relative',
     }),
-    placeholder: (provided) => ({
+    option: (provided) => ({
       ...provided,
-      padding: '0px var(--w-space-s)', // Set a max height if needed
+      margin: '0 4px',
+    }),
+    placeholder: (provided, state) => ({
+      ...provided,
+      padding: '0px var(--w-space-s)',
+      margin: '0px 4px',
+      backgroundColor: 'var(--primary-white)',
+      borderRadius: 'var(--p-border-radius-tag)',
     }),
     // indicatorSeparator: state => ({
     //   display: 'none',
@@ -288,7 +293,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             <div
               className={classNames(
                 styles.tagPickerTagline,
-                'flex flex-col items-left'
+                'p-1 ml-2 flex flex-row items-center items-left'
               )}
               // onClick={(e: any) => {
               //   console.log('eeeee onClick', e);
@@ -335,6 +340,13 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         ''
       );
     },
+    // Control: ({ children, ...props }: ControlProps<any>) => {
+    //   return (
+    //     <components.Control {...props}>
+    //       👍 {children}
+    //     </components.Control>
+    //   );
+    // },
     // SingleValue: (props: any) => {
     //   const correspondingTag = tags?.find(
     //     (tag) => tag.name === props.data.label
@@ -460,7 +472,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             // option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
-                'text-gray-400 rounded-lg ', // bg-slate-100
+                'text-gray-400', // bg-slate-100
                 styles.tagPickerValueContainer
               ),
           }}

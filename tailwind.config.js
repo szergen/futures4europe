@@ -25,6 +25,9 @@ module.exports = {
       'large': '12px',
     },    
     extend: {
+      fontFamily: {
+        roboto: ['Inter', 'sans'],
+      },
       fontSize: {
         12: '12px',
         14: '14px',

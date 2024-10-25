@@ -134,7 +134,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center w-64">
+    <div className="flex flex-wrap items-center justify-center w-64 mr-6">
       <Label
         htmlFor={`dropzone-file-${fileIdPrefix}`}
         className={classNames(
@@ -149,7 +149,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
             imageURL && 'border-r-2 mb-0 mx-1 px-1'
           )}
         >
-          {!imageURL || imageURL === ' ' ? 'Upload PDF' : 'Replace PDF'}
+          {!imageURL || imageURL === ' ' ? 'PDF' : 'Replace'}
         </div>
         <div
           className={classNames(

@@ -87,6 +87,7 @@
   font-size: var(--w-font-size-tag);
   line-height: var(--w-space-xxl);
   letter-spacing: var(--p-font-letter-spacing-tag);
+  /* padding: 0px var(--w-space-s); */
 }
 
 .tagPickerValueContainerSingle {

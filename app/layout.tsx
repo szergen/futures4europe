@@ -6,6 +6,7 @@ import Header from '@app/shared-components/Layout/Header';
 import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
 // import { channel } from 'diagnostics_channel';
 import { useEffect, useState } from 'react';
+import { inter } from '@app/ui/fonts';
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -40,7 +41,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/favicon.ico" />
       </head>
-      <body className=" bg-white">
+      <body className={`${inter.className} antialiased bg-white body`}>
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
             <WixProvider

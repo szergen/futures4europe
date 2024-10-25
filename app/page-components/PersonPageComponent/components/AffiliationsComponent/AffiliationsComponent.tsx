@@ -37,7 +37,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   tags,
   handleTagCreated,
   title,
-  placeholderRole = 'Optionally prefixed by your position',
+  placeholderRole = 'Role',
   placeholderTag = 'Add one or more organisation tags',
 }) => {
   const [currentAffiliations, setCurrentAffiliations] = useState(
@@ -221,7 +221,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                 </Typography>
               )
             ) : (
-              <div className={classNames(style.inputContainer)}>
+              <div className={classNames(style.affiliationInputContainer)}>
                 <input
                   ref={(el) => (inputRefs.current[index] = el)}
                   placeholder={placeholderRole}
@@ -258,12 +258,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                       ].style.width = `${inputRefs.current[index].scrollWidth}px`;
                     }
                   }}
-                  className={classNames(
-                    // 'backgroundLabelAffiliation',
-                    // style.genericTextArea,
-                    style.roleInput,
-                    style.inputText
-                  )}
+                  className={classNames(style.roleInput, style.inputText)}
                   style={{
                     width: `${inputRefs.current?.[index]?.scrollWidth}px`,
                   }}
@@ -275,41 +270,45 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
               affilitiation.name && <Tag {...affilitiation} />
             ) : (
               <>
-                <TagPicker
-                  key={`affiliation-${affilitiation.name}-${index}`}
-                  placeholder={placeholderTag}
-                  tags={tags}
-                  selectedValue={affilitiation?.name || undefined}
-                  updatePostData={(value) => {
-                    const newAffiliations = [...currentAffiliations];
-                    newAffiliations[index] = {
-                      ...newAffiliations[index],
-                      ...value,
-                    };
-                    setCurrentAffiliations(newAffiliations);
-                    console.log('newAffiliations', newAffiliations);
-                    updatePersonDataAffiliations &&
-                      updatePersonDataAffiliations(newAffiliations);
-                  }}
-                  setIsDisabledSorting={setIsDisabledSorting}
-                  tagType="organisation"
-                  onTagCreated={handleTagCreated}
-                />
-                <button
-                  onClick={() => handleRemoveAffiliation(index)}
-                  className={classNames(style.affiliationRemove, '')}
-                  key={`affiliation-remove-${affilitiation.name}-${index}`}
+                <div
+                  className={classNames(style.affiliationTagPickerContainer)}
                 >
-                  <SpriteSvg.EditCloseIcon
-                    className="mb-0"
-                    sizeW={16}
-                    sizeH={16}
-                    viewBox={'-3 -2 22 22'}
-                    fill={'#fff'}
-                    strokeWidth={0}
-                    inline={true}
+                  <TagPicker
+                    key={`affiliation-${affilitiation.name}-${index}`}
+                    placeholder={placeholderTag}
+                    tags={tags}
+                    selectedValue={affilitiation?.name || undefined}
+                    updatePostData={(value) => {
+                      const newAffiliations = [...currentAffiliations];
+                      newAffiliations[index] = {
+                        ...newAffiliations[index],
+                        ...value,
+                      };
+                      setCurrentAffiliations(newAffiliations);
+                      console.log('newAffiliations', newAffiliations);
+                      updatePersonDataAffiliations &&
+                        updatePersonDataAffiliations(newAffiliations);
+                    }}
+                    setIsDisabledSorting={setIsDisabledSorting}
+                    tagType="organisation"
+                    onTagCreated={handleTagCreated}
                   />
-                </button>
+                  <button
+                    onClick={() => handleRemoveAffiliation(index)}
+                    className={classNames(style.affiliationRemove, '')}
+                    key={`affiliation-remove-${affilitiation.name}-${index}`}
+                  >
+                    <SpriteSvg.EditCloseIcon
+                      className="mb-0"
+                      sizeW={16}
+                      sizeH={16}
+                      viewBox={'-3 -2 22 22'}
+                      fill={'#fff'}
+                      strokeWidth={0}
+                      inline={true}
+                    />
+                  </button>
+                </div>
               </>
             )}
             {/* {isEditModeOn && (

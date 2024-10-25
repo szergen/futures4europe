@@ -15,6 +15,7 @@ import { HiUserCircle, HiPlusSm } from 'react-icons/hi';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Tag from '../Tag/Tag';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
+import GlowButton from './NavBar/GlowButton';
 
 const Header = () => {
   const {
@@ -258,9 +259,19 @@ const Header = () => {
         </Dropdown>
       </div>
     ) : (
-      <Link href="/dashboard" className="">
-        Login
-      </Link>
+      <>
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard">
+            <p className="font-bold text-base">Login</p>
+          </Link>
+
+          <Link href="/dashboard">
+            <div>
+              <GlowButton>Register</GlowButton>
+            </div>
+          </Link>
+        </div>
+      </>
     );
   }, [isLoggedIn, userDetails, isDropdownOpen]);
 

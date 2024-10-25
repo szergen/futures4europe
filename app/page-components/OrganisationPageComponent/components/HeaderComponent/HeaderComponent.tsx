@@ -11,6 +11,7 @@ import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerComponent from '@app/shared-components/DatePickerComponent/DatePickerComponent';
 import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
 
 export type HeaderComponentProps = {
@@ -96,6 +97,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const handleIconClick = () => {
+    setShowCreateForm(true);
+  };
+
   console.log('organisation', organisation);
 
   return (
@@ -128,40 +134,37 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </div>
         )}
         {/* Social Icons */}
-        {/* Social Icons */}
         <div className={style.socialIcons}>
           {/* Linkedin */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className=" rounded-full"
-            fill="currentColor"
-            width={24}
-            height={24}
-            style={{
-              color: '#fff',
-              backgroundColor: '#0077b5',
-              padding: '5px',
-            }}
-            viewBox="0 -7 23 40"
-          >
-            <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-          </svg>
+          <i className={style.socialIcon} onClick={handleIconClick}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className=" rounded-full"
+              fill="currentColor"
+              width={24}
+              height={24}
+              style={{
+                color: '#fff',
+                backgroundColor: '#0077b5',
+                padding: '5px',
+              }}
+              viewBox="0 -7 23 40"
+            >
+              <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+            </svg>
+          </i>
           {/* Link */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 rounded-full p-1"
-            style={{ backgroundColor: '#9d8fdf', color: 'white' }}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+          <i className={style.socialIcon} onClick={handleIconClick}>
+            <SpriteSvg.AccountLinkGeneral
+              className={classNames(style.website, 'white')}
+              sizeW={24}
+              sizeH={24}
+              fill={'var(--primary-white)'}
+              viewBox={'-4 -4 32 32'}
+              strokeWidth={0}
+              inline={false}
             />
-          </svg>
+          </i>
         </div>
         {/* Views */}
         {!isEditModeOn && (
@@ -230,6 +233,35 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             onTagCreated={handleTagCreated}
           />
         )}
+        {/* Tagline */}
+        {!isEditModeOn ? (
+          <Typography tag="h3" className="text-gray-800 italic">
+            {tagLine}
+          </Typography>
+        ) : (
+          <>
+            <InputText
+              placeholder="Enter a tagline (slogan, acronym, English translation, ...)"
+              value={tagLine}
+              onChange={(e) => {
+                updateOrganisationData({
+                  ...organisation,
+                  organisationTag: {
+                    ...organisation.organisationTag,
+                    tagLine: e.target.value,
+                  },
+                });
+                setTagLine(e.target.value);
+              }}
+              shouldUpdateValueState={isNewPage}
+              className={classNames(
+                '',
+                style.genericTextArea,
+                style.textPostSubtitle
+              )}
+            />
+          </>
+        )}
         {/* Founded */}
         <div className="flex items-center my-2">
           {organisation?.organisationEstablishedDate && isEditModeOn && (
@@ -247,13 +279,24 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             organisation?.organisationEstablishedDate ? (
               <Typography
                 tag="span"
-                className="text-greyShade text-stroke-gray font-medium text-14 ml-2"
+                className="flex align-center text-greyShade text-stroke-gray text-14 ml-2"
               >
-                Founded in:
+                <SpriteSvg.AccountOrg2Icon
+                  className="mb-4 mr-2"
+                  sizeW={24}
+                  sizeH={24}
+                  viewBox={'0 0 18 18'}
+                  fill={'#000'}
+                  stroke={'0'}
+                  inline={false}
+                />
+                Founded in&nbsp;
                 {/* {dayjs(organisation?.organisationEstablishedDate).format(
                   'YYYY'
                 )} */}
-                {organisation?.organisationEstablishedDate}
+                {new Date(
+                  organisation.organisationEstablishedDate
+                ).getFullYear()}
               </Typography>
             ) : (
               ''
@@ -278,37 +321,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             </>
           )}
         </div>
-        {/* Tagline */}
-        {!isEditModeOn ? (
-          <Typography tag="h3" className="text-gray-800 italic">
-            {tagLine}
-          </Typography>
-        ) : (
-          <>
-            <InputText
-              placeholder="Enter a tagline (slogan, acronym, English translation, ...)"
-              value={tagLine}
-              onChange={(e) => {
-                updateOrganisationData({
-                  ...organisation,
-                  organisationTag: {
-                    ...organisation.organisationTag,
-                    tagLine: e.target.value,
-                  },
-                });
-                setTagLine(e.target.value);
-              }}
-              shouldUpdateValueState={isNewPage}
-              className={classNames(
-                // 'personTaglineTitle',
-                style.genericTextArea,
-                style.textPostSubtitle
-              )}
-            />
-          </>
-        )}
         {/* Organisation domains */}
-        <div className={style.domains}>
+        <div className={classNames(style.domains, 'flex')}>
           {!isEditModeOn ? (
             organisation?.organisationType?.map((orgType) => (
               <Tag key={orgType.name} {...orgType} />
@@ -317,7 +331,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             <TagPicker
               placeholder="Add one or more organisation type tags"
               tags={tags?.filter((tag) => tag?.tagType === 'organisation type')}
-              className="w-full"
+              className="w-full mb-2"
               isMulti
               selectedValues={organisation?.organisationType?.map(
                 (orgType) => orgType?.name
@@ -348,6 +362,40 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             onTagCreated={handleTagCreated}
           />
         )}
+
+        {/* // TODO: Alex @modal update social links */}
+        <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
+          <Modal.Header>Paste the url</Modal.Header>
+          <Modal.Body>
+            <form>
+              <div className="mb-4">
+                <Label htmlFor="tagName" className="relative">
+                  Add link...
+                </Label>
+                <TextInput
+                  placeholder="Paste the url"
+                  id="tagName"
+                  onChange={(e) => setTagName(e.target.value)}
+                  required
+                  helperText={
+                    !setShowCreateForm && (
+                      <span className="text-red-600 relative -top-3">
+                        TagName already exists in a different tag type
+                      </span>
+                    )
+                  }
+                />
+              </div>
+              <Button
+                disabled={!setShowCreateForm || setShowCreateForm}
+                type="submit"
+                // disabled={isLoading}
+              >
+                Update
+              </Button>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     </div>
   );
