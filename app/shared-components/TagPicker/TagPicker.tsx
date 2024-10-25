@@ -23,6 +23,7 @@ export type TagPickerProps = {
   tagTypeLabel?: string;
   placeholder?: string;
   extraFilterTags?: (tags: TagProps[], firstTag: string) => TagProps[];
+  setIsDisabledSorting?: (value: boolean) => void;
 };
 
 interface Option {
@@ -58,6 +59,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   tagTypeLabel,
   placeholder,
   extraFilterTags,
+  setIsDisabledSorting,
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -288,6 +290,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                 styles.tagPickerTagline,
                 'flex flex-col items-left'
               )}
+              // onClick={(e: any) => {
+              //   console.log('eeeee onClick', e);
+              //   // e.preventDefault();
+              //   e.stopPropagation();
+              // }}
+              // onMouseUp={(e: any) => {
+              //   console.log('eeeee onMouseUp', e);
+              //   e.preventDefault();
+              //   // e.stopPropagation();
+              // }}
             >
               <Tag
                 {...correspondingTag}
@@ -356,6 +368,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           styles.tagPickerWrapper,
           'w-full relative cursor-pointer'
         )}
+        // onClick={(e: any) => {
+        //   console.log('eeeee onClick', e);
+        //   // e.preventDefault();
+        //   e.stopPropagation();
+        // }}
+        // onMouseUp={(e: any) => {
+        //   console.log('eeeee onMouseUp', e);
+        //   // e.preventDefault();
+        //   e.stopPropagation();
+        // }}
       >
         {tagTypeLabel && (
           <Label htmlFor="tagPicker" className="mb-20">
@@ -365,12 +387,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         <CreatableSelect
           classNamePrefix="react-select"
           unstyled
-          // menuIsOpen={tagType === 'person'}
+          // menuIsOpen={tagType === 'organisation'}
           components={customComponents}
+          // onMenuOpen={(e) => console.log('menu open', e)}
           // menuIsOpen={true}
           isClearable={true}
           isDisabled={isLoading}
           isLoading={isLoading}
+          onMenuOpen={() => {
+            setIsDisabledSorting && setIsDisabledSorting(true);
+          }}
+          onMenuClose={() => {
+            setIsDisabledSorting && setIsDisabledSorting(false);
+          }}
           onChange={handleUpdateData}
           onCreateOption={handleCreate}
           options={options}
@@ -392,7 +421,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
               ),
             singleValue: () =>
               classNames(
-                'tagPickerPillSingle cursor-pointer z-10',
+                'tagPickerPillSingle cursor-pointer z-100',
                 styles.tagPickerPillSingleModule
               ),
             menu: () => classNames('', styles.tagPickerMenu),

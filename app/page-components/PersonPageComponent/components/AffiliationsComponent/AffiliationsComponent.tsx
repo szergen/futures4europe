@@ -44,6 +44,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
     afiliations || []
   );
   const inputRefs = useRef([]);
+  const [isDisabledSorting, setIsDisabledSorting] = useState(false);
 
   // #region Initialize Sortable Array
   // const [sortableArray, setSortableArray] = useState(
@@ -191,11 +192,22 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           // e.preventDefault();
           e.item.classList.remove(style.dragShadow);
         }}
+        disabled={isDisabledSorting}
+        // delay={400}
+        // delayOnTouchOnly={true}
       >
         {currentAffiliations?.map((affilitiation, index) => (
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
             className={classNames(style.tagListContainer)}
+            // onClick={(e: any) => {
+            //   setIsDisabledSorting(true);
+            // }}
+            // onMouseUp={(e: any) => {
+            //   console.log('eeeee onMouseUp', e);
+            //   e.preventDefault();
+            //   e.stopPropagation();
+            // }}
           >
             {!isEditModeOn ? (
               affilitiation.arole &&
@@ -239,7 +251,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                     setCurrentAffiliations(newAffiliations);
                     updatePersonDataAffiliations &&
                       updatePersonDataAffiliations(newAffiliations);
-                    console.log('debug12312312', inputRef);
+                    // console.log('debug12312312', inputRef);
 
                     // Adjust the width of the input based on its content
                     if (inputRefs.current[index]) {
@@ -247,6 +259,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                         index
                       ].style.width = `${inputRefs.current[index].scrollWidth}px`;
                     }
+                    // setIsDisabledSorting(false);
                   }}
                   className={classNames(
                     // 'backgroundLabelAffiliation',
@@ -271,6 +284,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   tags={tags}
                   selectedValue={affilitiation?.name || undefined}
                   updatePostData={(value) => {
+                    // setIsDisabledSorting(false);
                     const newAffiliations = [...currentAffiliations];
                     newAffiliations[index] = {
                       ...newAffiliations[index],
@@ -281,6 +295,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                     updatePersonDataAffiliations &&
                       updatePersonDataAffiliations(newAffiliations);
                   }}
+                  setIsDisabledSorting={setIsDisabledSorting}
                   tagType="organisation"
                   onTagCreated={handleTagCreated}
                 />
