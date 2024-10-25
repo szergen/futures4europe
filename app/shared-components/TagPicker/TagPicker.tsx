@@ -233,7 +233,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       outline: 'none',
       backgroundColor: state.selectProps.inputValue ? 'var(--color-background-empty)' : 'var(--color-background-brand-tag)',
       borderRadius: 'var(--p-border-radius-tag)',
-      margin: 'var(--w-space-s) 0px',
     }),
     menu: (provided) => ({
       ...provided,
