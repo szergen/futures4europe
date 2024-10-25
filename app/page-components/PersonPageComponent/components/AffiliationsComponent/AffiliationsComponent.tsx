@@ -169,7 +169,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           updatePersonDataAffiliations &&
             updatePersonDataAffiliations(newState as any);
         }}
-        sort={isEditModeOn && !isDisabledSorting}
+        sort={isEditModeOn || !isDisabledSorting}
         disabled={!isEditModeOn || isDisabledSorting}
         className={classNames(
           'flex w-fit flex-wrap z-50'
