@@ -4,28 +4,14 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-import Link from 'next/link';
-import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
-import classNames from 'classnames';
-import { members } from '@wix/members';
-import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
-import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
-import style from '../pageDashboard.module.css';
-import { Avatar, Button } from 'flowbite-react';
-import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import Tag from '../../shared-components/Tag/Tag';
-import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import gsap from 'gsap-trial';
 import InertiaPlugin from 'gsap-trial/InertiaPlugin';
 import MotionPathPlugin from 'gsap-trial/MotionPathPlugin';
 import Draggable from 'gsap-trial/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 
-gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
-
 // Helper function to get motion path length and spacing
-function getPathProperties(pathSelector, itemCount) {
+function getPathProperties(pathSelector: any, itemCount: any) {
   const pathLength = MotionPathPlugin.getLength(pathSelector);
   const spacing = pathLength / (itemCount + 1); // Spacing between items
   return { pathLength, spacing };
@@ -33,8 +19,8 @@ function getPathProperties(pathSelector, itemCount) {
 
 // Function to animate items in along the path with a fade-in effect
 function animateListIn(
-  listSelector,
-  pathSelector,
+  listSelector: any,
+  pathSelector: any,
   delayStart = 0,
   itemSpacing = 0.2,
   alignOriginX = 1.9
@@ -135,17 +121,6 @@ function makeListDraggable(listSelector, pathSelector) {
 }
 
 export default function Home() {
-  // Example usage with outer and inner paths
-  // First animate them onto the path, then make them draggable
-  animateListIn('#tagsList', '#hidden_outer', 5, 0.1, -1.1); // Animate tags list in along the outer path
-  animateListIn('#textList', '#hidden_inner', 2, 0.1, -1.8); // Animate text list in along the inner path
-
-  // After the animation completes, make them draggable
-  setTimeout(() => {
-    makeListDraggable('#tagsList', '#hidden_outer');
-    makeListDraggable('#textList', '#hidden_inner');
-  }, 3000); // Delay to ensure animation finishes before enabling dragging
-
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
@@ -185,6 +160,20 @@ export default function Home() {
       }
     }
   }, [isLoggedIn, router, loading]);
+
+  useEffect(() => {
+    // Example usage with outer and inner paths
+    // First animate them onto the path, then make them draggable
+    gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
+    animateListIn('#tagsList', '#hidden_outer', 5, 0.1, -1.1); // Animate tags list in along the outer path
+    animateListIn('#textList', '#hidden_inner', 2, 0.1, -1.8); // Animate text list in along the inner path
+
+    // After the animation completes, make them draggable
+    setTimeout(() => {
+      makeListDraggable('#tagsList', '#hidden_outer');
+      makeListDraggable('#textList', '#hidden_inner');
+    }, 3000); // Delay to ensure animation finishes before enabling dragging
+  }, []);
 
   return (
     <div className="homeHero">
