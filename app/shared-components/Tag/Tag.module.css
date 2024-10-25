@@ -111,8 +111,6 @@
 
   }
   .tagLink:hover .tagNameBody {
-    font-weight: bold;
-    letter-spacing: -0.66px;
     text-decoration: none;
   }  
   .tagThumbnail {

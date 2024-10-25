@@ -470,7 +470,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             // option: () => classNames('', styles.option),
             valueContainer: () =>
               classNames(
-                'text-gray-400 rounded-lg ', // bg-slate-100
+                'text-gray-400', // bg-slate-100
                 styles.tagPickerValueContainer
               ),
           }}
