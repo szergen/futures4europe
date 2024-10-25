@@ -210,25 +210,27 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           {!isEditModeOn ? (
             affilitiation.name && <Tag {...affilitiation} />
           ) : (
-            <TagPicker
-              key={`affiliation-${affilitiation.name}-${index}`}
-              placeholder={placeholderTag}
-              tags={tags}
-              selectedValue={affilitiation?.name || undefined}
-              updatePostData={(value) => {
-                const newAffiliations = [...currentAffiliations];
-                newAffiliations[index] = {
-                  ...newAffiliations[index],
-                  ...value,
-                };
-                setCurrentAffiliations(newAffiliations);
-                console.log('newAffiliations', newAffiliations);
-                updatePersonDataAffiliations &&
-                  updatePersonDataAffiliations(newAffiliations);
-              }}
-              tagType="organisation"
-              onTagCreated={handleTagCreated}
-            />
+            <div className={classNames(style.affiliationTagPickerContainer)}>
+              <TagPicker
+                key={`affiliation-${affilitiation.name}-${index}`}
+                placeholder={placeholderTag}
+                tags={tags}
+                selectedValue={affilitiation?.name || undefined}
+                updatePostData={(value) => {
+                  const newAffiliations = [...currentAffiliations];
+                  newAffiliations[index] = {
+                    ...newAffiliations[index],
+                    ...value,
+                  };
+                  setCurrentAffiliations(newAffiliations);
+                  console.log('newAffiliations', newAffiliations);
+                  updatePersonDataAffiliations &&
+                    updatePersonDataAffiliations(newAffiliations);
+                }}
+                tagType="organisation"
+                onTagCreated={handleTagCreated}
+              />
+            </div>
           )}
           {isEditModeOn &&
             currentAffiliations?.[index + 1] &&
