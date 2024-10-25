@@ -17,6 +17,7 @@ export type TagContainerProps = {
   tagTrend?: number;
   tagPageLink?: string;
   disableTooltip?: boolean;
+  tagLine?: string;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -28,7 +29,8 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   picture,
   pictureAlt,
   disableTooltip,
-  tagPageLink,
+  // tagPageLink,
+  tagLine,
 }) => {
   const showThumbnail = Boolean(picture || tagCategory === 'person');
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';

@@ -2,7 +2,7 @@ import React from 'react';
 
 type LogoProps = {
   className?: string;
-  fill: string;
+  fill?: string;
 };
 
 export const Logo: React.FC<LogoProps> = ({ className }) => {

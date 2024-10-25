@@ -17,3 +17,34 @@ export const extractInfoPageTypeBasedOnTag = (tag: TagProps) => {
 export const extactOwnedPagesIds = (ownedPages: any[]) => {
   return ownedPages.map((page) => page._id);
 };
+
+export const decidePageTypeItems = (
+  type: string,
+  postPages: any,
+  infoPages: any
+) => {
+  switch (type) {
+    case 'post':
+      return postPages.filter(
+        (item: any) =>
+          item?.pageTypes?.[0]?.name !== 'event' &&
+          item?.pageTypes?.[0]?.name !== 'project result'
+      );
+    case 'event':
+      return filterPagesByType('event', postPages);
+    case 'project-result':
+      return filterPagesByType('project result', postPages);
+    case 'project':
+      return filterPagesByType('project info', infoPages);
+    case 'person':
+      return filterPagesByType('person info', infoPages);
+    case 'organisation':
+      return filterPagesByType('organisation info', infoPages);
+    default:
+      return [];
+  }
+};
+
+export const filterPagesByType = (type: string, pages: any) => {
+  return pages.filter((page: any) => page?.pageTypes?.[0]?.name === type);
+};
