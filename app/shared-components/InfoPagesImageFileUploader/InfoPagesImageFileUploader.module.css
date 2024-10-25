@@ -7,6 +7,7 @@
 .AvatarImagine img {
   width: 147px;
   height: 147px;
+  box-shadow: inset 0px 0px 0px 1px var(--color-background-brand-tag);
 }
 
 .avatarUpload {
@@ -27,8 +28,10 @@
 
 .avatarUpload:hover {
   cursor: pointer;
-  background: var(--color-background-brand-tag);
-  opacity: 0.77;
+  /* background: var(--color-background-brand-tag); */
+  backdrop-filter: blur(3px);
+  transition: 1.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 1;
 }
 
 .avatarUpload svg {
@@ -38,4 +41,15 @@
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+  padding: var(--w-space-s);
+  background-color: var(--color-background-brand-tag);
+  border-radius: var(--p-border-radius-300);
+  z-index: 1;
+  transition: 1.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+}
+.avatarUpload svg:hover {
+  cursor: pointer;
+  background-color: var(--primary-brand);
+  stroke: var(--primary-white);
 }
