@@ -311,60 +311,6 @@ setTimeout(() => {
         title="Organisations"
       />
       
-        {ownedPostPages.length || infoPages.length ? (
-                <>
-                  {infoPages.length > 0 ? (
-                    infoPages
-                      .filter(
-                        (infoPage) =>
-                          infoPage?.data?.pageTypes[0]?.name ===
-                          'organisation info'
-                      )
-                      .map((infoPage, index) => (
-                        <div
-                          key={infoPage.data.title + index}
-                          className="pt-2 pb-2 flex flex-row items-center justify-between"
-                        >
-                          {/* <span>{infoPage.data.title}</span> */}
-                          <div className={'flex flex-row'}>
-                            <Link
-                              href={`/${extractInfoPageTypeBasedOnTag(
-                                infoPage?.data?.pageTypes[0]
-                              )}/${infoPage.data.slug}`}
-                            >
-                              <MiniPagePost
-                                key={index}
-                                title={infoPage?.data.title}
-                                date={infoPage.data._updatedDate?.$date}
-                                image={
-                                  infoPage.data.Project?.[0]?.picture ||
-                                  'https://placehold.co/600x400?text=placeholder'
-                                }
-                                text={infoPage.data.postContentRIch1}
-                                tags={[
-                                  ...(infoPage.data.domains ?? []),
-                                  ...(infoPage.data.methods ?? []),
-                                ]}
-                              />
-                            </Link>
-                          </div>
-
-                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-                        </div>
-                      ))
-                  ) : (
-                    <div>No Info Pages</div>
-                  )}
-                </>
-              ) : (
-                <>
-                  {ownedPostPagesFetched && ownedInfoPagesFetched ? (
-                    <div>No Items</div>
-                  ) : (
-                    <LoadingSpinner />
-                  )}
-                </>
-              )}
               
     </div>
 
