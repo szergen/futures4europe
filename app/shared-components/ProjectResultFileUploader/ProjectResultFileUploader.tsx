@@ -198,7 +198,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
           </span>
         </Alert>
       )}
-      {imageURL && imageURL !== ' ' && (
+      {imageURL && imageURL !== '' && imageURL !== ' ' && (
         <div className="relative">
           <Image
             src={imageURL}

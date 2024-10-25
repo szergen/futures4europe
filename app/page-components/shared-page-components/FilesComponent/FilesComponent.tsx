@@ -55,18 +55,14 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
 
   return (
     <section>
-      {currentFiles?.length > 0 ||
-        (isEditModeOn && (
-          <Typography
-            tag="h2"
-            className={classNames(
-              'text-gray-800 w-full my-4',
-              style.filesTitle
-            )}
-          >
-            Files
-          </Typography>
-        ))}
+      {(currentFiles?.length > 0 || isEditModeOn) && (
+        <Typography
+          tag="h2"
+          className={classNames('text-gray-800 w-full my-4', style.filesTitle)}
+        >
+          Files
+        </Typography>
+      )}
 
       <div className="flex">
         {currentFiles?.map((media, index) => (
