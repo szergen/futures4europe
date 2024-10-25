@@ -88,3 +88,9 @@
 .listDashboard a:hover{
     color: var(--color-text-link-strongest);
 }
+.miniPostWrapper {
+    border-radius: var(--p-border-radius-800);
+}
+.miniPostWrapper:hover {
+    background-color: var(--color-background-decorative-10-weakest);
+}

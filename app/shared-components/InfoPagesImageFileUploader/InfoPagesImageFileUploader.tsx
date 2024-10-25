@@ -6,6 +6,7 @@ import { HiInformationCircle } from 'react-icons/hi';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 import classNames from 'classnames';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import style from './InfoPagesImageFileUploader.module.css';
 // import WixMediaImage from '../WixMediaImage/WixMediaImage';
 
@@ -61,11 +62,29 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
       >
         <div className="w-full h-full">
           <span className="top-10 relative">
-            {!imageURL || imageURL === ' ' ? 'Upload Image' : ''}
+            {!imageURL || imageURL === ' ' ? '' : ''}
           </span>
-          <svg width="18" height="18" viewBox="0 0 24 24" focusable="false">
-            <path d="M20.41 4.94l-1.35-1.35c-.78-.78-2.05-.78-2.83 0L3 16.82V21h4.18L20.41 7.77c.79-.78.79-2.05 0-2.83zm-14 14.12L5 19v-1.36l9.82-9.82 1.41 1.41-9.82 9.83z"></path>
-          </svg>
+          {!imageURL ? (
+            <SpriteSvg.AccountImageThumb
+              className="text-site-black mb-6"
+              sizeW={42}
+              sizeH={42}
+              fill={'var(--color-background-offline)'}
+              viewBox={'0 0 19 19'}
+              strokeWidth={0}
+              inline={false}
+            />
+          ) : (
+            <SpriteSvg.AccountEdit
+              className="text-site-black mb-6 text-[var(--color-text-icon-error)]"
+              sizeW={42}
+              sizeH={42}
+              viewBox={'0 0 24 24'}
+              stroke={'var(--color-text-brand-tag)'}
+              strokeWidth={2}
+              inline={false}
+            />
+          )}
         </div>
 
         <FileInput

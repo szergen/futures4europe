@@ -36,8 +36,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
             ? image
             : 'https://placehold.co/600x400?text=placeholder'
         }
-        width={180}
-        height={180}
+        width={124}
+        height={124}
         alt="Post Image"
         className={classNames('rounded-md', style.postImage)}
       />
@@ -60,7 +60,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           htmlText={text}
         ></Typography>
         {/* Post Tags */}
-        <div className={classNames(style.postTags)}>
+        <div className={classNames('flex flex-wrap', style.postTags)}>
           {tags?.map((tag, index) => (
             <Tag key={tag.name + '-' + index} {...tag} />
           ))}
