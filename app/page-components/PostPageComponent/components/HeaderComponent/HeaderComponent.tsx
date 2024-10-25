@@ -67,8 +67,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
-    if (tempTitle?.length > 70) {
-      return 'Title should be at most 70 characters long';
+    if (tempTitle?.length > 100) {
+      return 'Title should be at most 100 characters long';
     }
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
@@ -290,7 +290,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 Publication Date:
                 {post?.projectResultPublicationDate
                   ? dayjs(post?.projectResultPublicationDate).format(
-                      'YYYY-MM-DD'
+                      'YYYY MMMM'
                     )
                   : ''}{' '}
               </Typography>
@@ -299,7 +299,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 {/* <span className="mr-4">Start Date</span> */}
                 <DatePickerComponent
                   placeholder="Publication Date"
-                  dateFormate="YYYY-MM-DD"
+                  dateFormate="YYYY MMMM"
                   date={
                     !post?.projectResultPublicationDate
                       ? null

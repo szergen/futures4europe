@@ -23,6 +23,7 @@ export type TagPickerProps = {
   tagTypeLabel?: string;
   placeholder?: string;
   extraFilterTags?: (tags: TagProps[], firstTag: string) => TagProps[];
+  setIsDisabledSorting?: (value: boolean) => void;
 };
 
 interface Option {
@@ -58,6 +59,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   tagTypeLabel,
   placeholder,
   extraFilterTags,
+  setIsDisabledSorting,
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -291,6 +293,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                 styles.tagPickerTagline,
                 'p-1 ml-2 flex flex-row items-center items-left'
               )}
+              // onClick={(e: any) => {
+              //   console.log('eeeee onClick', e);
+              //   // e.preventDefault();
+              //   e.stopPropagation();
+              // }}
+              // onMouseUp={(e: any) => {
+              //   console.log('eeeee onMouseUp', e);
+              //   e.preventDefault();
+              //   // e.stopPropagation();
+              // }}
             >
               <Tag
                 {...correspondingTag}
@@ -353,10 +365,41 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     );
   };
 
+  const validationFunctionForTitle = (tagName: string | undefined) => {
+    if (!tagName) {
+      setIsTagNameValid(false);
+      return 'Tag Name is required';
+    }
+    if (tagName?.length < 2) {
+      setIsTagNameValid(false);
+      return 'Tag Name should be at least 2 characters long';
+    }
+    if (tagName?.length > 100) {
+      setIsTagNameValid(false);
+      return 'Tag Name should be at most 100 characters long';
+    }
+
+    if (validationForTagName(tagName)) {
+      setIsTagNameValid(false);
+      return 'Tag Name already exists in a different tag type';
+    }
+    // const isTempTitleExisting = existingPostPagesTitles?.some(
+    //   (postPageTitle) =>
+    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
+    // );
+    // if (isTempTitleExisting) {
+    //   return 'Title already exists';
+    // }
+    setIsTagNameValid(true);
+
+    return '';
+  };
+
   const [isTagNameValid, setIsTagNameValid] = useState(true);
+  const [validationMessage, setValidationMessage] = useState('');
 
   useEffect(() => {
-    setIsTagNameValid(!validationForTagName(tagName));
+    setValidationMessage(validationFunctionForTitle(tagName));
   }, [tagName]);
 
   return (
@@ -366,6 +409,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           styles.tagPickerWrapper,
           'w-full relative cursor-pointer'
         )}
+        // onClick={(e: any) => {
+        //   console.log('eeeee onClick', e);
+        //   // e.preventDefault();
+        //   e.stopPropagation();
+        // }}
+        // onMouseUp={(e: any) => {
+        //   console.log('eeeee onMouseUp', e);
+        //   // e.preventDefault();
+        //   e.stopPropagation();
+        // }}
       >
         {tagTypeLabel && (
           <Label htmlFor="tagPicker" className="mb-20">
@@ -375,12 +428,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         <CreatableSelect
           classNamePrefix="react-select"
           unstyled
-          // menuIsOpen={tagType === 'person'}
+          // menuIsOpen={tagType === 'organisation'}
           components={customComponents}
+          // onMenuOpen={(e) => console.log('menu open', e)}
           // menuIsOpen={true}
           isClearable={true}
           isDisabled={isLoading}
           isLoading={isLoading}
+          onMenuOpen={() => {
+            setIsDisabledSorting && setIsDisabledSorting(true);
+          }}
+          onMenuClose={() => {
+            setIsDisabledSorting && setIsDisabledSorting(false);
+          }}
           onChange={handleUpdateData}
           onCreateOption={handleCreate}
           options={options}
@@ -397,12 +457,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             multiValue: () =>
               classNames(
                 // styles.tagPickerPill,
-                'tagPickerPill tagPickerPillRemove  z-100 cursor-pointer'
+                'tagPickerPill tagPickerPillRemove cursor-pointer'
                 // styles.tagPickerPillMultiModule
               ),
             singleValue: () =>
               classNames(
-                'tagPickerPillSingle cursor-pointer z-10',
+                'tagPickerPillSingle cursor-pointer',
                 styles.tagPickerPillSingleModule
               ),
             menu: () => classNames('', styles.tagPickerMenu),
@@ -432,7 +492,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     helperText={
                       !isTagNameValid && (
                         <span className="text-red-600 relative -top-3">
-                          TagName already exists in a different tag type
+                          {/* TagName already exists in a different tag type */}
+                          {validationMessage}
                         </span>
                       )
                     }

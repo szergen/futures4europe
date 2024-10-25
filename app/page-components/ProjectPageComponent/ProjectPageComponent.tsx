@@ -119,6 +119,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       }; //done
     }), //done
     registrationDate: project?.data?._createdDate['$date'], //done-system field
+    mediaFiles: project?.data?.mediaFiles, //done
     slug: project?.data?.slug, //done
   };
   // #endregion

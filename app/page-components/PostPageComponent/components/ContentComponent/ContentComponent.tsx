@@ -234,12 +234,23 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
                   {contentText?.[index] && (
                     <>
                       {!isEditModeOn ? (
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: contentText?.[index],
-                          }}
-                          className={classNames('py-4', style.displayText)}
-                        ></div>
+                        contentText?.[index] &&
+                        contentText?.[index] !== '<p></p>\n' ? (
+                          <>
+                            {/* {JSON.stringify(contentText?.[index])} */}
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: contentText?.[index],
+                              }}
+                              className={classNames(
+                                'py-4 editor-content',
+                                style.displayText
+                              )}
+                            ></div>
+                          </>
+                        ) : (
+                          ''
+                        )
                       ) : (
                         <div className="relative">
                           <RTEComponent

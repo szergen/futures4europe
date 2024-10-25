@@ -25,7 +25,7 @@
 .affiliationInputContainer {
   display: inline-block;
   flex-basis: content;
-  width: auto;
+  width: fit-content;
   max-width: 100%;
   background: var(--color-background-brand-tag);
   border-radius: var(--p-border-radius-tag) 0px 0px var(--p-border-radius-tag);
@@ -42,6 +42,8 @@
 /* // TODO: redo this class */
 .roleInput {
   display: inline-block;
+  /* width: fit-content; */
+  flex-grow: 1;
   outline: none;
   box-shadow: none;
   border: none;
@@ -56,6 +58,14 @@
   padding: 0px 5px 0px 5px;
   margin: 7px 0px;
 }
+
+.inputText {
+  width: 30px; /* Initial width */
+  flex-grow: 100%;
+  min-width: 30px; /* Initial width */
+  transition: width 0.1s; /* Smooth transition */
+}
+
 .roleInput::placeholder {
   font-size: var(var(--w-font-size-tag));
 }
@@ -65,26 +75,25 @@ input.roleInput:focus {
   box-shadow: none;
   border: none;
 }
-.affiliationRemove{
+.affiliationRemove {
   position: absolute;
   right: 16px;
-  z-index: 9;
+  z-index: 99;
   width: var(--w-space-l);
   height: var(--w-space-l);
   border-radius: var(--p-border-radius-full);
   opacity: 0;
   cursor: pointer;
   background: var(--color-background-destructive-weaker);
-  z-index: 9;
 }
-.affiliationRemove:hover{
-  background: var(--color-background-destructive)!important;  
+.affiliationRemove:hover {
+  background: var(--color-background-destructive) !important;
   cursor: pointer;
   opacity: 1;
 }
 
 .tagListContainer .IndicatorsContainer {
-  display: none!important;
+  display: none !important;
 }
 
 .dragShadow {
