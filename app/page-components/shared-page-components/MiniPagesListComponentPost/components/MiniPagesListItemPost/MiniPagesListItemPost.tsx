@@ -70,9 +70,11 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
         </Typography>
       )}
       {items.map((item, index) => (
-        <Link href={`/${pageTypePath || 'post'}/${item.slug}`}>
+        <Link
+          key={item?.title + index}
+          href={`/${pageTypePath || 'post'}/${item.slug}`}
+        >
           <MiniPagePost
-            key={index}
             title={item?.title}
             date={item?._updatedDate?.$date}
             image={
