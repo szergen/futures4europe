@@ -9,6 +9,7 @@
   height: 124px;
   width: 124px;
   border-radius: var(--p-border-radius-800);
+  object-fit: cover;
 }
 
 .postContent {
