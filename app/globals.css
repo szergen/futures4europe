@@ -837,7 +837,7 @@ textarea {
 }
 .react-select__control .react-select__clear-indicator {
   position: absolute;
-  right: 16px;
+  right: -8px;
   width: var(--w-space-l);
   height: var(--w-space-l);
   border-radius: var(--p-border-radius-full);
@@ -881,7 +881,15 @@ textarea {
   /* height: calc(var(--w-space-xxxl)); */
   /* margin-right: calc(var(--w-space-s)); */
   /* padding: 0px var(--w-space-xs); */
+}
 
+.react-select__value-container--is-multi{
+  margin-bottom: var(--w-space-s);
+  margin-top: var(--w-space-s);
+}
+
+.react-select__value-container--is-multi.react-select__value-container--has-value {
+  margin: 0px;
 }
 
 /* important in editor rdw */
