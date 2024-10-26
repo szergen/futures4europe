@@ -5,7 +5,7 @@ import { useWixModules } from '@wix/sdk-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import gsap from 'gsap-trial';
-import InertiaPlugin from 'gsap-trial/InertiaPlugin';
+// import InertiaPlugin from 'gsap-trial/InertiaPlugin';
 import MotionPathPlugin from 'gsap-trial/MotionPathPlugin';
 import Draggable from 'gsap-trial/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
@@ -164,7 +164,7 @@ export default function Home() {
   useEffect(() => {
     // Example usage with outer and inner paths
     // First animate them onto the path, then make them draggable
-    gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
+    // gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
     animateListIn('#tagsList', '#hidden_outer', 5, 0.1, -1.1); // Animate tags list in along the outer path
     animateListIn('#textList', '#hidden_inner', 2, 0.1, -1.8); // Animate text list in along the inner path
 

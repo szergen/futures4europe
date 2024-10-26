@@ -1,4 +1,4 @@
-gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
+// gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
 
 // Helper function to get motion path length and spacing
 function getPathProperties(pathSelector, itemCount) {
