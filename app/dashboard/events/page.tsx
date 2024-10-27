@@ -237,6 +237,7 @@ export default function DashboardProjects() {
                           <div className="flex flex-wrap flex-start text-left">
                             <Link href={`/post/${postPage.data.slug}`}>
                               <MiniPagePost
+                                pageTypeTag={postPage.pageTypes[0]}
                                 key={index}
                                 title={postPage?.data?.title}
                                 popularity={
@@ -252,14 +253,15 @@ export default function DashboardProjects() {
                                   PLACEHOLDER_IMAGE
                                 }
                                 projects={postPage?.data?.projects}
-                                projectResultAuthor={
-                                  postPage?.data?.projectResultAuthor
-                                }
+                                projectResultAuthor={postPage?.data?.projectResultAuthor.slice(
+                                  0,
+                                  3
+                                )}
                                 text={postPage?.data?.postContentRIch1}
-                                tags={[
+                                domains={[
                                   ...(postPage?.data?.domains ?? []),
                                   ...(postPage?.data?.methods ?? []),
-                                ]}
+                                ].slice(0, 3)}
                               />
                             </Link>
                           </div>

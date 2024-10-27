@@ -17,7 +17,7 @@ export type AffiliationsComponentProps = {
       arole: string;
     }
   >;
-  tagListTitle: string;
+  tagListTitle?: string;
   current?: boolean;
   isEditModeOn?: boolean;
   updatePersonDataAffiliations?: (affiliations: any) => void;
@@ -150,17 +150,19 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   return (
     <section className={classNames(style.tagListRootContainer)}>
-      <div className={classNames('flex items-center', style.tagListTitle)}>
-        <Typography
-          tag="h2"
-          className={classNames(
-            'text-gray-800 grow'
-            //  style.tagListTitle
-          )}
-        >
-          {tagListTitle}
-        </Typography>
-      </div>
+      {tagListTitle && (
+        <div className={classNames('flex items-center', style.tagListTitle)}>
+          <Typography
+            tag="h2"
+            className={classNames(
+              'text-gray-800 grow'
+              //  style.tagListTitle
+            )}
+          >
+            {tagListTitle}
+          </Typography>
+        </div>
+      )}
 
       <ReactSortable
         list={currentAffiliations as unknown as ItemInterface[]}

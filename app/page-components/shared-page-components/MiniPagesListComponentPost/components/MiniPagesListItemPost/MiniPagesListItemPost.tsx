@@ -2,13 +2,9 @@
 import style from './MiniPagesListItemPost.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
-// import { JSXElementConstructor, useEffect, useState } from 'react';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import Link from 'next/link';
-import MiniPageEvents from '@app/shared-components/MiniPageEvents/MiniPageEvents';
-// import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-// import MiniPageProjectResults from '@app/shared-components/MiniPageProjectResults/MiniPageProjectResults';
-// import MiniPageEvents from '@app/shared-components/MiniPageEvents/MiniPageEvents';
+import { getPropsForMiniPagesListItemPost } from './MiniPagesListItemPost.utils';
 
 export type MiniPagesListItemPostProps = {
   items: any[];
@@ -23,42 +19,6 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   hideTitle,
   pageTypePath,
 }) => {
-  // console.log('debug1->items', items);
-  // const [displayCountPosts, setDisplayCountPosts] = useState(3);
-
-  // const showMorePosts = () => {
-  //   setDisplayCountPosts(items?.length);
-  // };
-  // const showFewerPosts = () => {
-  //   setDisplayCountPosts(3);
-  // };
-
-  //   #region get all pages from Wix
-
-  // const [internalLinks, setInternalLinks] = useState(items || []);
-
-  // const { postPages, postPagesFetched } = useAuth();
-  // // console.log('postPages', postPages);
-  // // console.log('internalLinks', internalLinks);
-  // const findInternalLinksInPostPages = (internalLinks: any[]) => {
-  //   return internalLinks
-  //     ?.map((link) =>
-  //       postPages?.find(
-  //         (postPage) =>
-  //           postPage?.data?.slug === link?.slug &&
-  //           postPage?.data?.title === link?.title
-  //       )
-  //     )
-  //     ?.map((link) => link?.data);
-  // };
-
-  // useEffect(() => {
-  //   if (postPagesFetched && postPages) {
-  //     const fullInternalLinks = findInternalLinksInPostPages(internalLinks);
-  //     console.log('fullInternalLinks', fullInternalLinks);
-  //     fullInternalLinks && setInternalLinks(fullInternalLinks);
-  //   }
-  // }, [postPagesFetched]);
   console.log('debug2->items', items);
 
   return (
@@ -76,40 +36,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
           key={item?.title + index}
           href={`/${pageTypePath || 'post'}/${item.slug}`}
         >
-          <MiniPagePost
-            title={item?.title}
-            date={item?._updatedDate?.$date}
-            image={
-              item?.projectResultMedia?.thumbnail ||
-              item?.postImage1?.url ||
-              'https://placehold.co/600x400?text=placeholder'
-            }
-            text={item?.postContentRIch1}
-            domains={item?.domains}
-            methods={item?.methods}
-            pageTypeTag={item.pageTypes[0]}
-            primaryTags={[
-              item.author?.[0] && item.author?.[0],
-              item.projects?.[0] && item.projects?.[0],
-            ]}
-          />
-          {/* <MiniPageEvents
-            title={item?.title}
-            date={item?._updatedDate?.$date}
-            image={
-              item?.projectResultMedia?.thumbnail ||
-              item?.postImage1?.url ||
-              'https://placehold.co/600x400?text=placeholder'
-            }
-            text={item?.postContentRIch1}
-            domains={item?.domains}
-            methods={item?.methods}
-            pageTypeTag={item.pageTypes[0]}
-            primaryTags={[
-              item.author?.[0] && item.author?.[0],
-              item.projects?.[0] && item.projects?.[0],
-            ]}
-          /> */}
+          <MiniPagePost {...getPropsForMiniPagesListItemPost(item)} />
         </Link>
       ))}
       {/* {displayCountPosts < items.length && (

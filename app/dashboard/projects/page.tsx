@@ -261,6 +261,7 @@ export default function DashboardProjects() {
                               )}/${infoPage.data.slug}`}
                             >
                               <MiniPagePost
+                                pageTypeTag={infoPage.pageTypes[0]}
                                 key={index}
                                 title={infoPage?.data.title}
                                 tagLine={infoPage?.data.Project[0].tagLine}
@@ -273,7 +274,10 @@ export default function DashboardProjects() {
                                   infoPage?.data?.projectFunded ?? []
                                 }
                                 organisationAffiliations={
-                                  infoPage?.data?.projectOrganisationRoles ?? []
+                                  infoPage?.data?.projectOrganisationRoles.slice(
+                                    0,
+                                    3
+                                  ) ?? []
                                 }
                                 date={infoPage.data._createdDate?.$date}
                                 editDate={infoPage?.data?._updatedDate?.$date}
@@ -282,10 +286,10 @@ export default function DashboardProjects() {
                                   PLACEHOLDER_IMAGE
                                 }
                                 text={infoPage.data.postContentRIch1}
-                                tags={[
+                                domains={[
                                   ...(infoPage.data.domains ?? []),
                                   ...(infoPage.data.methods ?? []),
-                                ]}
+                                ].slice(0, 3)}
                                 projectStartDate={''}
                                 projectEndDate={''}
                               />

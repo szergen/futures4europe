@@ -6,6 +6,7 @@ import Typography from '../Typography/Typography';
 import classNames from 'classnames';
 import style from './InternalLinksEditor.module.css';
 import MiniPagePost from '../MiniPagePost/MiniPagePost';
+import { getPropsForMiniPagesListItemPost } from '@app/page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost.utils';
 
 export type InternalLinksEditorProps = {
   internalLinks?: any[];
@@ -121,11 +122,7 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
           <div className="relative" key={link.title}>
             <MiniPagePost
               key={index}
-              title={link?.title}
-              date={link?._updatedDate?.$date}
-              image={link?.postImage1}
-              text={link?.postContentRIch1}
-              tags={[...(link?.domains ?? []), ...(link?.methods ?? [])]}
+              {...getPropsForMiniPagesListItemPost(link)}
             />
             <button
               onClick={() =>
