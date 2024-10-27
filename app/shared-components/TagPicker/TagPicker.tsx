@@ -9,6 +9,7 @@ import { useWixModules } from '@wix/sdk-react';
 import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import SpriteSvg from '../SpriteSvg/SpriteSvg';
 // import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
@@ -316,13 +317,25 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           </components.Option>
         ) : (
           <button
-            className="bg-sky-600 text-white px-4 py-2 rounded-lg"
+            className={classNames(styles.tagPickerCreateButton, 'flex justify-center w-full')}
             onClick={() => {
               console.log('debug1->props', props);
               handleCreate(props.value);
             }}
           >
-            Create {props.value} Tag
+          <SpriteSvg.AccountAddIcon
+              sizeH={24}
+              sizeW={24}
+              viewBox={'-6 -6 24 24'}
+              strokeWidth={1}
+            />
+            Create 
+            <span
+              className={classNames(styles.tagPickerCreateButtonText, 'font-bold')}
+              >
+              {props.value}
+            </span> 
+            tag
           </button>
         )
         // </components.Option>
