@@ -80,7 +80,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   useEffect(() => {
     if (extraFilterTags) {
       console.log('filteredTags 1st value', selectedValues);
-      const filteredTags = extraFilterTags(tags, selectedValues[0]);
+      const filteredTags = extraFilterTags(tags, selectedValues?.[0]); // TODO: Check if this is the correct value @ALEX - am adugat ?. (TypeError: Cannot read properties of undefined (reading '0'))
       console.log('filteredTags', filteredTags);
       setOptions(filteredTags?.map((tag) => createOption(tag.name)));
     }
@@ -494,7 +494,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     helperText={
                       !isTagNameValid && (
                         <span className="text-red-600 relative -top-3">
-                          {/* TagName already exists in a different tag type */}
+                          Name already exists
                           {validationMessage}
                         </span>
                       )
