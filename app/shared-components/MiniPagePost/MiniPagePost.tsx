@@ -126,7 +126,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {/* Country & Funded */}
         <div className={classNames('flex flex-wrap', style.postTags)}>
           {countryTags?.map((tag, index) => (
-            <Tag key={tag.name + '-' + index} {...tag} disableTooltip />
+            <Tag key={tag.name + '-' + index} {...tag} />
           ))}
 
           {projectFunded?.map((tag, index) => (
@@ -136,7 +136,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {/* projects */}
         <div className={classNames('flex flex-wrap', style.postTags)}>
           {projects?.map((tag, index) => (
-            <Tag key={tag.name + '-' + index} {...tag} disableTooltip />
+            <Tag key={tag.name + '-' + index} {...tag} />
           ))}
         </div>
         {/* Post Text */}
@@ -185,7 +185,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {/* projectResultAuthor */}
         <div className={classNames('flex flex-wrap', style.postTags)}>
           {projectResultAuthor?.map((tag, index) => (
-            <Tag key={tag.name + '-' + index} {...tag} disableTooltip />
+            <Tag key={tag.name + '-' + index} {...tag} />
           ))}
           {recommendations?.number && (
             <Typography tag="p" className="text-xs text-gray-400 px-4">

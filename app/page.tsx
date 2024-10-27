@@ -9,6 +9,7 @@ import gsap from 'gsap-trial';
 import MotionPathPlugin from 'gsap-trial/MotionPathPlugin';
 import Draggable from 'gsap-trial/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
+import { getCollectionItemByTitle } from './wixUtils/client-side';
 
 // Helper function to get motion path length and spacing
 function getPathProperties(pathSelector: any, itemCount: any) {
@@ -120,25 +121,34 @@ function makeListDraggable(listSelector, pathSelector) {
   });
 }
 
-export default function Home() {
-  const [userInfoPage, setUserInfoPage] = useState('');
+export const Home = () => {
+  const [homepageConfig, setHomepageConfig] = useState(null);
+  const [featuredPages, setFeaturedPages] = useState({
+    featuredPosts: [],
+    featuredProjects: [],
+    featuredProjectResults: [],
+    featuredEvents: [],
+    featuredOrganisations: [],
+    featuredPeople: [],
+  });
+  // const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
-    login,
-    isLoggedIn,
-    loading,
-    userDetails,
-    logout,
+    // login,
+    // isLoggedIn,
+    // loading,
+    // userDetails,
+    // logout,
     infoPages,
     postPages,
-    ownedInfoPages,
-    ownedPostPages,
-    ownedPostPagesFetched,
-    ownedInfoPagesFetched,
-    handleUserDataRefresh,
-    tags,
+    // ownedInfoPages,
+    // ownedPostPages,
+    // ownedPostPagesFetched,
+    // ownedInfoPagesFetched,
+    // handleUserDataRefresh,
+    // tags,
   } = useAuth();
-  console.log('ownedInfoPages', ownedInfoPages);
+  // console.log('ownedInfoPages', ownedInfoPages);
 
   // const router = useRouter();
   // const { removeDataItem } = useWixModules(items);
@@ -161,19 +171,93 @@ export default function Home() {
   //   }
   // }, [isLoggedIn, router, loading]);
 
-  useEffect(() => {
-    // Example usage with outer and inner paths
-    // First animate them onto the path, then make them draggable
-    // gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
-    animateListIn('#tagsList', '#hidden_outer', 5, 0.1, -1.1); // Animate tags list in along the outer path
-    animateListIn('#textList', '#hidden_inner', 2, 0.1, -1.8); // Animate text list in along the inner path
+  // useEffect(() => {
+  //   // Example usage with outer and inner paths
+  //   // First animate them onto the path, then make them draggable
+  //   // gsap.registerPlugin(MotionPathPlugin, Draggable, InertiaPlugin);
+  //   // animateListIn('#tagsList', '#hidden_outer', 5, 0.1, -1.1); // Animate tags list in along the outer path
+  //   // animateListIn('#textList', '#hidden_inner', 2, 0.1, -1.8); // Animate text list in along the inner path
+  //   // // After the animation completes, make them draggable
+  //   // setTimeout(() => {
+  //   //   makeListDraggable('#tagsList', '#hidden_outer');
+  //   //   makeListDraggable('#textList', '#hidden_inner');
+  //   // }, 3000); // Delay to ensure animation finishes before enabling dragging
+  // }, []);
 
-    // After the animation completes, make them draggable
-    setTimeout(() => {
-      makeListDraggable('#tagsList', '#hidden_outer');
-      makeListDraggable('#textList', '#hidden_inner');
-    }, 3000); // Delay to ensure animation finishes before enabling dragging
+  const getFeaturedPages = (
+    homepageConfig: any,
+    pages: any,
+    featuredKey: string
+  ) => {
+    const featuredIds = homepageConfig.data?.[featuredKey]?.map(
+      (project: any) => project._id
+    );
+    console.log('featuredIds', featuredIds);
+    return pages.filter((page: any) => featuredIds.includes(page.data._id));
+  };
+
+  useEffect(() => {
+    // #region get homepage config
+    const fetchHomepageConfig = async () => {
+      const config = await getCollectionItemByTitle(
+        'HomePageConfig',
+        'Homepage Config'
+      );
+
+      setHomepageConfig(config);
+    };
+
+    fetchHomepageConfig();
+    // #endregion
   }, []);
+
+  useEffect(() => {
+    if (
+      homepageConfig &&
+      postPages &&
+      infoPages &&
+      infoPages.length > 0 &&
+      postPages.length
+    ) {
+      setFeaturedPages({
+        featuredPosts: getFeaturedPages(
+          homepageConfig,
+          postPages,
+          'featuredPosts'
+        ),
+        featuredProjects: getFeaturedPages(
+          homepageConfig,
+          infoPages,
+          'featuredProjects'
+        ),
+        featuredProjectResults: getFeaturedPages(
+          homepageConfig,
+          postPages,
+          'featuredProjectResults'
+        ),
+        featuredEvents: getFeaturedPages(
+          homepageConfig,
+          postPages,
+          'featuredEvents'
+        ),
+        featuredOrganisations: getFeaturedPages(
+          homepageConfig,
+          infoPages,
+          'featuredOrganisations'
+        ),
+        featuredPeople: getFeaturedPages(
+          homepageConfig,
+          infoPages,
+          'featuredPeople'
+        ),
+      });
+    }
+  }, [homepageConfig, postPages]);
+
+  useEffect(() => {
+    console.log('homepageConfig', homepageConfig);
+    console.log('featuredPages', featuredPages);
+  }, [homepageConfig, featuredPages]);
 
   return (
     <div className="homeHero">
@@ -560,20 +644,39 @@ export default function Home() {
       </div>
 
       <div className="homeFeatured">
-        <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
+        {/* <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
           Featured Organisations
-        </h2>
+        </h2> */}
+        <MiniPagesListItemPost
+          items={featuredPages.featuredPosts.map((infoPage) => infoPage.data)}
+          title="Featured Posts"
+        />
+        <MiniPagesListItemPost
+          items={featuredPages.featuredProjects.map(
+            (infoPage) => infoPage.data
+          )}
+          title="Featured Projects"
+        />
+        <MiniPagesListItemPost
+          items={featuredPages.featuredProjectResults.map(
+            (infoPage) => infoPage.data
+          )}
+          title="Featured Project Results"
+        />
+        <MiniPagesListItemPost
+          items={featuredPages.featuredEvents.map((infoPage) => infoPage.data)}
+          title="Featured Events"
+        />
 
         <MiniPagesListItemPost
-          items={infoPages
-            .filter(
-              (infoPage) =>
-                infoPage?.data?.pageTypes[0]?.name === 'organisation info'
-            )
-            .map((infoPage) => infoPage.data)}
-          title="Organisations"
+          items={featuredPages.featuredOrganisations.map(
+            (infoPage) => infoPage.data
+          )}
+          title="Featured Organisations"
         />
       </div>
     </div>
   );
-}
+};
+
+export default Home;

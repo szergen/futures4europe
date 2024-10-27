@@ -55,7 +55,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
           item?.projectResultMedia?.thumbnail ||
           item?.postImage1?.url ||
           PLACEHOLDER_IMAGE,
-        projects: item?.projects,
+        projects: item?.projects.slice(0, 3),
         projectResultAuthor: item?.projectResultAuthor?.slice(0, 3),
         text:
           item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
