@@ -18,7 +18,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         primaryTags: [
           item.author?.[0] && item.author?.[0],
           item.projects?.[0] && item.projects?.[0],
-        ].slice(0, 3),
+        ]?.slice(0, 3),
       };
     case 'project info':
       return {
@@ -38,7 +38,10 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
 
         text:
           item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
-        domains: [...(item.domains ?? []), ...(item.methods ?? [])].slice(0, 3),
+        domains: [...(item.domains ?? []), ...(item.methods ?? [])]?.slice(
+          0,
+          3
+        ),
         projectStartDate: '',
         projectEndDate: '',
       };
@@ -55,10 +58,10 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
           item?.postImage1?.url ||
           PLACEHOLDER_IMAGE,
         projects: item?.projects,
-        projectResultAuthor: item?.projectResultAuthor.slice(0, 3),
+        projectResultAuthor: item?.projectResultAuthor?.slice(0, 3),
         text:
           item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
-        domains: [...(item?.domains ?? []), ...(item?.methods ?? [])].slice(
+        domains: [...(item?.domains ?? []), ...(item?.methods ?? [])]?.slice(
           0,
           3
         ),
@@ -80,7 +83,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         projectResultAuthor: item?.projectResultAuthor,
         text:
           item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
-        tags: [...(item?.domains ?? []), ...(item?.methods ?? [])].slice(0, 3),
+        tags: [...(item?.domains ?? []), ...(item?.methods ?? [])]?.slice(0, 3),
       };
     case 'organisation info':
       return {
@@ -93,7 +96,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         organisationEstablishedDate: item?.organisationEstablishedDate,
         projectFunded: item?.projectFunded ?? [],
         organisationAffiliations:
-          item?.projectOrganisationRoles.slice(0, 3) ?? [],
+          item?.projectOrganisationRoles?.slice(0, 3) ?? [],
         date: item._createdDate?.$date,
         editDate: item?._updatedDate?.$date,
         image: item.organisation?.[0]?.picture || PLACEHOLDER_IMAGE,
@@ -115,7 +118,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         primaryTags: [
           item.author?.[0] && item.author?.[0],
           item.projects?.[0] && item.projects?.[0],
-        ].slice(0, 3),
+        ]?.slice(0, 3),
       };
   }
 };

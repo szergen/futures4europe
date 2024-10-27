@@ -280,7 +280,7 @@ export default function DashboardProjects() {
                                 domains={[
                                   ...(postPage?.data?.domains ?? []),
                                   ...(postPage?.data?.methods ?? []),
-                                ].slice(0, 3)}
+                                ]?.slice(0, 3)}
                               />
                             </Link>
                           </div>

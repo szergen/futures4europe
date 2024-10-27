@@ -253,7 +253,7 @@ export default function DashboardProjects() {
                                   PLACEHOLDER_IMAGE
                                 }
                                 projects={postPage?.data?.projects}
-                                projectResultAuthor={postPage?.data?.projectResultAuthor.slice(
+                                projectResultAuthor={postPage?.data?.projectResultAuthor?.slice(
                                   0,
                                   3
                                 )}
@@ -261,7 +261,7 @@ export default function DashboardProjects() {
                                 domains={[
                                   ...(postPage?.data?.domains ?? []),
                                   ...(postPage?.data?.methods ?? []),
-                                ].slice(0, 3)}
+                                ]?.slice(0, 3)}
                               />
                             </Link>
                           </div>

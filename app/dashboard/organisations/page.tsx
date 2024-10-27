@@ -270,7 +270,7 @@ export default function DashboardProjects() {
                                       infoPage?.data?.projectFunded ?? []
                                     }
                                     organisationAffiliations={
-                                      infoPage?.data?.projectOrganisationRoles.slice(
+                                      infoPage?.data?.projectOrganisationRoles?.slice(
                                         0,
                                         3
                                       ) ?? []

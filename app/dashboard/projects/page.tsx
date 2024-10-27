@@ -274,7 +274,7 @@ export default function DashboardProjects() {
                                   infoPage?.data?.projectFunded ?? []
                                 }
                                 organisationAffiliations={
-                                  infoPage?.data?.projectOrganisationRoles.slice(
+                                  infoPage?.data?.projectOrganisationRoles?.slice(
                                     0,
                                     3
                                   ) ?? []
@@ -289,7 +289,7 @@ export default function DashboardProjects() {
                                 domains={[
                                   ...(infoPage.data.domains ?? []),
                                   ...(infoPage.data.methods ?? []),
-                                ].slice(0, 3)}
+                                ]?.slice(0, 3)}
                                 projectStartDate={''}
                                 projectEndDate={''}
                               />
