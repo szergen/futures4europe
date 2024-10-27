@@ -74,7 +74,7 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
     const contentState = editorState.getCurrentContent();
     const selectionState = editorState.getSelection();
 
-    const newContentState = Modifier.insertText(
+    const newContentState = Modifier?.insertText(
       contentState,
       selectionState,
       text
