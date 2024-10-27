@@ -45,7 +45,6 @@
     }   
     .headingDashboardh1 {
         font-size: var(--w-font-size-display-large);
-        margin-bottom: var(--w-space-s);
         color: var(--primary-white);
     } 
     .boxTextDashboard {
@@ -84,13 +83,4 @@
 .listItemDashboard {
     border-top: 1px solid var(--color-border-brand-separator);
     border-bottom: 1px solid var(--color-border-brand-separator);
-}
-.listDashboard a:hover{
-    color: var(--color-text-link-strongest);
-}
-.miniPostWrapper {
-    border-radius: var(--p-border-radius-800);
-}
-.miniPostWrapper:hover {
-    background-color: var(--color-background-decorative-10-weakest);
 }

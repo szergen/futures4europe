@@ -13,9 +13,11 @@ import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboar
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from '../pageDashboard.module.css';
 import { Avatar, Badge, Button } from 'flowbite-react';
+import Typography from '@app/shared-components/Typography/Typography';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
+import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -94,7 +96,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'Foresight Methods', isActive: true },
+    { href: '/dashboard/projects', text: 'All Foresight Methods', isActive: true },
   ];
 
   return (
@@ -112,7 +114,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem={'/dashboard/foresight-methods'}
+        activeItem={'/dashboard'}
       />
 
       <div
@@ -141,8 +143,9 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
+          <div className="flex items-center mb-4">
             <SpriteSvg.AccountForesightMethod2Icon
-              className="text-color-white mb-6"
+              className="text-color-white"
               sizeW={24}
               sizeH={24}
               viewBox={'0 0 28 28'}
@@ -150,6 +153,16 @@ export default function DashboardProjects() {
               stroke={'0'}
               inline={false}
             />
+              <Typography
+                  tag="h2"
+                  className={classNames(
+                    style.headingDashboardh1,
+                    'ml-2'
+                  )}
+                >
+                  Foresight Methods section
+                </Typography>            
+            </div>
 
             <div className="flex flex-col justify-between">
               {/* <h2
@@ -235,28 +248,26 @@ export default function DashboardProjects() {
                         >
                           <div className="flex flex-wrap flex-start text-left">
                             <Link href={`/post/${postPage.data.slug}`}>
-                              <Badge
-                                className="w-fit mt-2 capitalize rounded-full"
-                                color="gray"
-                              >
-                                {postPage?.data?.pageTypes[0]?.name}
-                              </Badge>
                               <MiniPagePost
-                                key={index}
-                                title={postPage?.data?.title}
-                                date={postPage?.data?._updatedDate?.$date}
-                                image={
-                                  postPage?.data?.projectResultMedia
-                                    ?.thumbnail ||
-                                  postPage?.data?.postImage1?.url ||
-                                  'https://placehold.co/600x400?text=placeholder'
-                                }
-                                text={postPage?.data?.postContentRIch1}
-                                tags={[
-                                  ...(postPage?.data?.domains ?? []),
-                                  ...(postPage?.data?.methods ?? []),
-                                ]}
-                              />
+                                  key={index}
+                                  title={postPage?.data?.title}
+                                  popularity={postPage?.data?.pageTypes[0]?.popularity}
+                                  subtitle={postPage?.data?.subtitle}
+                                  date={postPage?.data?._createdDate?.$date}
+                                  editDate={postPage?.data?._updatedDate?.$date}
+                                  image={
+                                    postPage?.data?.projectResultMedia
+                                      ?.thumbnail ||
+                                    postPage?.data?.postImage1?.url || PLACEHOLDER_IMAGE
+                                  }
+                                  projects={postPage?.data?.projects}
+                                  projectResultAuthor={postPage?.data?.projectResultAuthor}
+                                  text={postPage?.data?.postContentRIch1}
+                                  tags={[
+                                    ...(postPage?.data?.domains ?? []),
+                                    ...(postPage?.data?.methods ?? []),
+                                  ]}
+                                />
                             </Link>
                           </div>
 

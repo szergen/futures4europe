@@ -16,6 +16,8 @@ import { Avatar, Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
+import Typography from '@app/shared-components/Typography/Typography';
+import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -37,7 +39,7 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
   } = useAuth();
-  console.log('ownedInfoPages', ownedInfoPages);
+
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
@@ -94,7 +96,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'Organisations', isActive: true },
+    { href: '/dashboard/organisations', text: 'All Organisations', isActive: true },
   ];
 
   return (
@@ -112,7 +114,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem={'/dashboard/organisations'}
+        activeItem={'/dashboard'}
       />
 
       <div
@@ -141,25 +143,28 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            {/* <SpriteSvg.AccountOrg2Icon
-              className="text-color-white mb-6"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'0 0 18 18'}
-              fill={'#fff'}
-              stroke={'0'}
-              inline={false}
-            /> */}
-
-            <div className="flex flex-col justify-between">
-              {/* <h2
+            <div className="flex items-center mb-4">
+              <SpriteSvg.AccountOrg2Icon
+                className="text-color-white"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'0 0 18 18'}
+                fill={'#fff'}
+                stroke={'0'}
+                inline={false}
+              />
+              <Typography
+                tag="h2"
                 className={classNames(
                   style.headingDashboardh1,
-                  'mt-0 mb-0 flex flex-row items-center'
+                  'ml-2'
                 )}
               >
-                Organisation
-              </h2> */}
+                Organisation section
+              </Typography>  
+            </div>   
+
+            <div className="flex flex-col justify-between">
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your organisation. Include its
                 afilliates, projects, key members, and any significant outcomes
@@ -229,6 +234,7 @@ export default function DashboardProjects() {
                           'organisation info'
                       )
                       .map((infoPage, index) => (
+                        console.log('Organ', infoPage),
                         <div
                           key={infoPage.data.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
@@ -243,16 +249,17 @@ export default function DashboardProjects() {
                               <MiniPagePost
                                 key={index}
                                 title={infoPage?.data.title}
-                                date={infoPage.data._updatedDate?.$date}
-                                image={
-                                  infoPage.data.Project?.[0]?.picture ||
-                                  'https://placehold.co/600x400?text=placeholder'
-                                }
-                                text={infoPage.data.postContentRIch1}
-                                tags={[
-                                  ...(infoPage.data.domains ?? []),
-                                  ...(infoPage.data.methods ?? []),
-                                ]}
+                                tagLine={infoPage?.data.organisation?.[0]?.tagLine}
+                                popularity={infoPage?.data?.pageTypes[0]?.popularity}
+                                subtitle={infoPage?.data?.subtitle}
+                                countryTags={infoPage?.data?.countryTag ?? []}
+                                organisationEstablishedDate={infoPage?.data?.organisationEstablishedDate}
+                                projectFunded={infoPage?.data?.projectFunded ?? []}
+                                organisationAffiliations={infoPage?.data?.projectOrganisationRoles ?? []}
+                                date={infoPage.data._createdDate?.$date}
+                                editDate={infoPage?.data?._updatedDate?.$date}
+                                image={infoPage.data.organisation?.[0]?.picture || PLACEHOLDER_IMAGE }
+                                text={infoPage?.data?.description}                      
                               />
                             </Link>
                           </div>
