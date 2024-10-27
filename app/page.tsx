@@ -51,7 +51,7 @@ function animateListIn(
 }
 
 // Function to place items along the path and make them draggable
-function makeListDraggable(listSelector, pathSelector) {
+function makeListDraggable(listSelector: any, pathSelector: any) {
   const items = gsap.utils.toArray(`${listSelector} li`);
   const { pathLength, spacing } = getPathProperties(pathSelector, items.length);
   let currentOffset = 0;
@@ -252,7 +252,7 @@ export const Home = () => {
         ),
       });
     }
-  }, [homepageConfig, postPages]);
+  }, [homepageConfig, postPages, infoPages]);
 
   useEffect(() => {
     console.log('homepageConfig', homepageConfig);
@@ -310,16 +310,16 @@ export const Home = () => {
                 d="M28.8,2.8s55.8,14.2,55.8,65.7-45.3,72.5-57.3,72.5"
                 fill="none"
                 stroke="url(#gradient1)"
-                stroke-miterlimit="10"
-                stroke-width="2"
+                strokeMiterlimit="10"
+                strokeWidth="2"
               />
               <path
                 id="tag_x5F_cat_x5F_line"
                 d="M13.4,8.3s54.4,13.1,54.4,60.5S23.6,135.5,11.9,135.5"
                 fill="none"
                 stroke="url(#gradient2)"
-                stroke-miterlimit="10"
-                stroke-width="1"
+                strokeMiterlimit="10"
+                strokeWidth="1"
               />
               <g id="next_x5F_big">
                 <path
@@ -359,22 +359,22 @@ export const Home = () => {
                 />
               </g>
               <path
-                class="arrow"
+                className="arrow"
                 d="M73.3,32.5h0c0,0,.2,0,.3,0h0s1.1,1.7,1.1,1.7l.2-.8c0,0,.1-.2.2-.2h0c.1,0,.2.1.2.2h0s-.2,1.3-.2,1.3c0,.1-.1.2-.2.2l-1.3-.3c-.1,0-.2-.1-.2-.3,0,0,0,0,0,0,0-.1.1-.2.2-.2h.8c0,.1-1.1-1.5-1.1-1.5,0,0,0-.2,0-.3h0s0,0,0,0Z"
                 fill="#365695"
               />
               <path
-                class="arrow"
+                className="arrow"
                 d="M58,37.4h0c0,0,.2,0,.2,0h0s.9,1.3.9,1.3v-.6c.1,0,.2-.1.3-.1h0c0,0,.1,0,.1.2h0s-.2,1-.2,1c0,0,0,.2-.2.1l-1-.2c0,0-.1-.1-.1-.2,0,0,0,0,0,0,0,0,0-.1.2-.1h.6c0,.1-.9-1.2-.9-1.2,0,0,0-.2,0-.2h0s0,0,0,0Z"
                 fill="#365695"
               />
               <path
-                class="arrow"
+                className="arrow"
                 d="M67,25.1h0c0,0-.2,0-.3,0h0s-1.4-1.4-1.4-1.4v.8c0,0,0,.2-.2.2h0c-.1,0-.2,0-.2-.2h0s0-1.3,0-1.3c0-.1,0-.2.2-.2h1.3c.1,0,.2.1.2.2,0,0,0,0,0,0,0,.1,0,.2-.2.2h-.8s1.4,1.4,1.4,1.4c0,0,0,.2,0,.3h0s0,0,0,0Z"
                 fill="#365695"
               />
               <path
-                class="arrow"
+                className="arrow"
                 d="M54.7,33.3h0c0,0-.2,0-.2,0h0s-1-1.2-1-1.2v.6c0,0-.1.1-.2.1h0c0,0-.2,0-.2-.1h0s0-1,0-1c0,0,0-.2.2-.2h1c0,.1.2.2.1.3,0,0,0,0,0,0,0,0,0,.1-.2.1h-.6s1,1.1,1,1.1c0,0,0,.2,0,.2h0s0,0,0,0Z"
                 fill="#365695"
               />
@@ -384,20 +384,20 @@ export const Home = () => {
               <text
                 transform="translate(27.6 12.7) rotate(23.1) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
-                <tspan x="0" y="0">
+                <span x="0" y="0">
                   T
-                </tspan>
+                </span>
               </text>
               <text
                 transform="translate(29.9 13.7) rotate(24.8) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   a
@@ -406,9 +406,9 @@ export const Home = () => {
               <text
                 transform="translate(31.9 14.6) rotate(26.4) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   g
@@ -417,9 +417,9 @@ export const Home = () => {
               <text
                 transform="translate(34.1 15.7) rotate(27.6) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   {' '}
@@ -428,9 +428,9 @@ export const Home = () => {
               <text
                 transform="translate(35 16.1) rotate(28.8) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   c
@@ -439,9 +439,9 @@ export const Home = () => {
               <text
                 transform="translate(37 17.2) rotate(30.4) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   a
@@ -450,9 +450,9 @@ export const Home = () => {
               <text
                 transform="translate(38.9 18.4) rotate(31.9) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   t
@@ -461,9 +461,9 @@ export const Home = () => {
               <text
                 transform="translate(40.1 19.1) rotate(33.4) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   e
@@ -472,9 +472,9 @@ export const Home = () => {
               <text
                 transform="translate(42 20.4) rotate(35.3) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   g
@@ -483,9 +483,9 @@ export const Home = () => {
               <text
                 transform="translate(44 21.8) rotate(37.3) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   o
@@ -494,9 +494,9 @@ export const Home = () => {
               <text
                 transform="translate(45.9 23.2) rotate(39) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   r
@@ -505,9 +505,9 @@ export const Home = () => {
               <text
                 transform="translate(47 24.1) rotate(40.7) scale(1 1)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   y
@@ -516,9 +516,9 @@ export const Home = () => {
               <text
                 transform="translate(35.2 4) rotate(20.9)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   T
@@ -527,9 +527,9 @@ export const Home = () => {
               <text
                 transform="translate(37.6 4.9) rotate(22.3)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   a
@@ -538,9 +538,9 @@ export const Home = () => {
               <text
                 transform="translate(39.7 5.8) rotate(23.7)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   g
@@ -549,9 +549,9 @@ export const Home = () => {
               <text
                 transform="translate(41.9 6.8) rotate(25)"
                 fill="#7e88b6"
-                font-family="Inter-Medium, Inter"
-                font-size="4"
-                font-weight="500"
+                fontFamily="Inter-Medium, Inter"
+                fontSize="4"
+                fontWeight="500"
               >
                 <tspan x="0" y="0">
                   s
@@ -571,7 +571,7 @@ export const Home = () => {
           </g>
         </svg>
 
-        <ul class="tag_category_list" id="textList">
+        <ul className="tag_category_list" id="textList">
           <li>Persons</li>
           <li>Organisations</li>
           <li>Projects</li>
@@ -582,64 +582,64 @@ export const Home = () => {
           <li>Page types</li>
         </ul>
 
-        <ul class="tags_list" id="tagsList">
+        <ul className="tags_list" id="tagsList">
           <li>
             <i>Wind energy </i>
-            <span class="count">9</span>
+            <span className="count">9</span>
           </li>
           <li>
             <i>Forecasting </i>
-            <span class="count">9</span>
+            <span className="count">9</span>
           </li>
           <li>
             <i>Civic rights </i>
-            <span class="count">21</span>
+            <span className="count">21</span>
           </li>
           <li>
             <i>Policy </i>
-            <span class="count">23</span>
+            <span className="count">23</span>
           </li>
           <li>
             <i>Vision </i>
-            <span class="count">34</span>
+            <span className="count">34</span>
           </li>
           <li>
             <i>Social justice </i>
-            <span class="count">39</span>
+            <span className="count">39</span>
           </li>
           <li>
             <i>Fairness </i>
-            <span class="count">45</span>
+            <span className="count">45</span>
           </li>
           <li>
             <i>Seedbank </i>
-            <span class="count">61</span>
+            <span className="count">61</span>
           </li>
           <li>
             <i>Delphi </i>
-            <span class="count">91</span>
+            <span className="count">91</span>
           </li>
           <li>
             <i>AI </i>
-            <span class="count">102</span>
+            <span className="count">102</span>
           </li>
           <li>
-            <i>Renewable</i> <span class="count">191</span>
+            <i>Renewable</i> <span className="count">191</span>
           </li>
         </ul>
 
-        {/* <ul class="tags_list outerlist2" id="tagsList2">
-  <li><i>Medical</i><span class="count">9</span></li>
-  <li><i>Delphi </i><span class="count">9</span></li>
-  <li><i>Cat rights </i><span class="count">21</span></li>
-  <li><i>Policy for renewable </i><span class="count">23</span></li>
-  <li><i>Reduce </i><span class="count">34</span></li>
-  <li><i>Justice </i><span class="count">39</span></li>
-  <li><i>Foodbank </i><span class="count">45</span></li>
-  <li><i>Money </i><span class="count">61</span></li>
-  <li><i>Cyber security </i><span class="count">91</span></li>
-  <li><i>Technology </i><span class="count">102</span></li>
-  <li><i>Consortium</i> <span class="count">191</span></li>
+        {/* <ul className="tags_list outerlist2" id="tagsList2">
+  <li><i>Medical</i><span className="count">9</span></li>
+  <li><i>Delphi </i><span className="count">9</span></li>
+  <li><i>Cat rights </i><span className="count">21</span></li>
+  <li><i>Policy for renewable </i><span className="count">23</span></li>
+  <li><i>Reduce </i><span className="count">34</span></li>
+  <li><i>Justice </i><span className="count">39</span></li>
+  <li><i>Foodbank </i><span className="count">45</span></li>
+  <li><i>Money </i><span className="count">61</span></li>
+  <li><i>Cyber security </i><span className="count">91</span></li>
+  <li><i>Technology </i><span className="count">102</span></li>
+  <li><i>Consortium</i> <span className="count">191</span></li>
 </ul> */}
       </div>
 
@@ -647,33 +647,48 @@ export const Home = () => {
         {/* <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
           Featured Organisations
         </h2> */}
-        <MiniPagesListItemPost
-          items={featuredPages.featuredPosts.map((infoPage) => infoPage.data)}
-          title="Featured Posts"
-        />
-        <MiniPagesListItemPost
-          items={featuredPages.featuredProjects.map(
-            (infoPage) => infoPage.data
-          )}
-          title="Featured Projects"
-        />
-        <MiniPagesListItemPost
-          items={featuredPages.featuredProjectResults.map(
-            (infoPage) => infoPage.data
-          )}
-          title="Featured Project Results"
-        />
-        <MiniPagesListItemPost
-          items={featuredPages.featuredEvents.map((infoPage) => infoPage.data)}
-          title="Featured Events"
-        />
+        {featuredPages.featuredPosts.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredPosts.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Posts"
+          />
+        )}
+        {featuredPages.featuredProjects.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredProjects.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Projects"
+          />
+        )}
+        {featuredPages.featuredProjectResults.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredProjectResults.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Project Results"
+          />
+        )}
 
-        <MiniPagesListItemPost
-          items={featuredPages.featuredOrganisations.map(
-            (infoPage) => infoPage.data
-          )}
-          title="Featured Organisations"
-        />
+        {featuredPages.featuredEvents.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredEvents.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Events"
+          />
+        )}
+
+        {featuredPages.featuredOrganisations.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredOrganisations.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Organisations"
+          />
+        )}
       </div>
     </div>
   );
