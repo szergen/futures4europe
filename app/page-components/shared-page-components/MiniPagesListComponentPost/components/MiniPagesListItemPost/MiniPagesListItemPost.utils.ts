@@ -103,6 +103,28 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         text:
           item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
       };
+    case 'person info':
+      return {
+        title: item.title,
+        pageTypeTag: item.pageTypes[0],
+        tagLine: item.person?.[0]?.tagLine,
+        popularity: item?.pageTypes[0]?.popularity,
+        subtitle: item?.subtitle,
+        countryTags: item?.countryTag ?? [],
+        organisationAffiliations:
+          item?.personOrganisationRoles?.slice(0, 3) ?? [],
+        date: item._createdDate?.$date,
+        editDate: item?._updatedDate?.$date,
+        image: item.person?.[0]?.picture || PLACEHOLDER_IMAGE,
+        text:
+          item?.postContentRIch1 +
+          item?.postContentRIch2 +
+          item?.postContentRIch3,
+        domains: [...(item?.domains ?? []), ...(item?.methods ?? [])]?.slice(
+          0,
+          3
+        ),
+      };
     default:
       return {
         title: item?.title,
@@ -111,7 +133,8 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
           item?.projectResultMedia?.thumbnail ||
           item?.postImage1?.url ||
           'https://placehold.co/600x400?text=placeholder',
-        text: item?.postContentRIch1,
+        text:
+          item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
         domains: item?.domains,
         methods: item?.methods,
         pageTypeTag: item?.pageTypes?.[0],
