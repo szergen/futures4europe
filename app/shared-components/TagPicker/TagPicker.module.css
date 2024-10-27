@@ -219,3 +219,15 @@
 .tagPickerTagline p {
   margin-left: var(--w-space-s);
 }
+.tagPickerCreateButton {
+  padding: var(--w-space-s);
+  border-radius: var(--p-border-radius-300);
+  font-size: var(--w-font-size-tag);
+  background: var(--primary-brand);
+  color: var(--primary-white);
+  height: 100%;
+}
+.tagPickerCreateButtonText {
+  margin: 0 var(--w-space-s);
+  text-decoration: underline;
+}

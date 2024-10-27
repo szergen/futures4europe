@@ -152,7 +152,8 @@
     --primary-green: rgb(47, 148, 97);
 
     
-
+    /* Background color social links. */
+    --color-background-researchgate: rgb(167, 207, 55);
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
     /* Background color used for notifications. */
@@ -510,7 +511,7 @@
     @apply text-black;
     @apply hover:bg-gray-300;
     @apply focus:outline-none;
-    @apply focus:ring-4;
+    @apply focus:ring-2;
     @apply focus:ring-gray-300;
     @apply font-medium;
     border-radius: var(--p-border-radius-tag);
@@ -526,8 +527,8 @@
     @apply text-white;
     @apply hover:bg-purple-800;
     @apply focus:outline-none;
-    @apply focus:ring-4;
-    @apply focus:ring-gray-300;
+    @apply focus:ring-2;
+    @apply focus:ring-purple-300;
     @apply font-medium;
     border-radius: var(--p-border-radius-tag);
     padding: var(--w-space-s) var(--w-space-m);
@@ -659,6 +660,24 @@ textarea {
   background: transparent;
   border: none;
 }
+
+.textTruncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+
+  @supports (-webkit-line-clamp: 2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+
 /* de mutat in import */
 
 .backgroundLabelAffiliation {

@@ -13,9 +13,11 @@ import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboar
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from '../pageDashboard.module.css';
 import { Button, Badge } from 'flowbite-react';
+import Typography from '@app/shared-components/Typography/Typography';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
+import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -96,7 +98,7 @@ export default function DashboardProjects() {
   const subNavItems = [
     {
       href: '/dashboard/project-results',
-      text: 'Project results',
+      text: 'All Project results',
       isActive: true,
     },
   ];
@@ -116,7 +118,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem="/dashboard/project-results"
+        activeItem="/dashboard"
       />
 
       <div
@@ -145,25 +147,25 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            {/* <SpriteSvg.AccountResultsIcon
-              className="text-color-white mb-6"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'0 0 20 20'}
-              fill={'#fff'}
-              strokeWidth={0}
-              inline={false}
-            /> */}
+            <div className="flex items-center mb-4">
+              <SpriteSvg.AccountResultsIcon
+                className="text-color-white"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'0 -2 20 20'}
+                fill={'#fff'}
+                strokeWidth={0}
+                inline={false}
+              />
+              <Typography
+                tag="h2"
+                className={classNames(style.headingDashboardh1, 'ml-2')}
+              >
+                Project results section
+              </Typography>
+            </div>
 
             <div className="flex flex-col justify-between">
-              {/* <h2
-                className={classNames(
-                  style.headingDashboardh1,
-                  'mt-0 mb-0 flex flex-row items-center'
-                )}
-              >
-                Project result
-              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your project result. Include the
                 delivrable, description, authors, and any significant
@@ -239,21 +241,24 @@ export default function DashboardProjects() {
                         >
                           <div className="flex flex-wrap flex-start text-left">
                             <Link href={`/post/${postPage.data.slug}`}>
-                              <Badge
-                                className="w-fit mt-2 capitalize rounded-full"
-                                color="gray"
-                              >
-                                {postPage?.data?.pageTypes[0]?.name}
-                              </Badge>
                               <MiniPagePost
                                 key={index}
                                 title={postPage?.data?.title}
-                                date={postPage?.data?._updatedDate?.$date}
+                                popularity={
+                                  postPage?.data?.pageTypes[0]?.popularity
+                                }
+                                subtitle={postPage?.data?.subtitle}
+                                date={postPage?.data?._createdDate?.$date}
+                                editDate={postPage?.data?._updatedDate?.$date}
                                 image={
                                   postPage?.data?.projectResultMedia
                                     ?.thumbnail ||
                                   postPage?.data?.postImage1?.url ||
-                                  'https://placehold.co/600x400?text=placeholder'
+                                  PLACEHOLDER_IMAGE
+                                }
+                                projects={postPage?.data?.projects}
+                                projectResultAuthor={
+                                  postPage?.data?.projectResultAuthor
                                 }
                                 text={postPage?.data?.postContentRIch1}
                                 tags={[

@@ -13,9 +13,11 @@ import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboar
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from '../pageDashboard.module.css';
 import { Button } from 'flowbite-react';
+import Typography from '@app/shared-components/Typography/Typography';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
+import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -37,31 +39,12 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
   } = useAuth();
+
   console.log('ownedInfoPages', ownedInfoPages);
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
-
-  // const handleCreatePersonInfoPage = async () => {
-  //   if (userInfoPage) {
-  //     router.push(`/person/${userInfoPage}`);
-  //     return;
-  //   }
-  //   router.push(`/person/New_Info_Page`);
-  // };
-
-  // const handleListProfileSettings = async () => {
-  //   router.push(`/dashboard`);
-  // };
-
-  // const handleListPosts = async () => {
-  //   router.push(`/dashboard/posts`);
-  // };
-
-  // const handleCreateOrganisation = () => {
-  //   router.push(`/organisation/New_Organisation`);
-  // };
 
   // const handleDeletePostPage = async (infoPageId: string) => {
   //   setIsLoadingDeletePostPage(infoPageId);
@@ -130,7 +113,7 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'Projects', isActive: true },
+    { href: '/dashboard/projects', text: 'All Projects', isActive: true },
   ];
 
   return (
@@ -148,7 +131,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem="/dashboard/projects"
+        activeItem="/dashboard"
       />
 
       <div
@@ -178,26 +161,27 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            {/* <SpriteSvg.AccountProjectIcon
-              className="text-color-white mb-6"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'0 0 32 32'}
-              fill={'none'}
-              stroke={'#fff'}
-              strokeWidth={2}
-              inline={false}
-            /> */}
+            <div className="flex items-center mb-4">
+              <SpriteSvg.AccountProjectIcon
+                className="text-color-white"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'0 0 32 32'}
+                fill={'none'}
+                stroke={'#fff'}
+                strokeWidth={2}
+                inline={false}
+              />
+              <Typography
+                tag="h2"
+                className={classNames(style.headingDashboardh1, 'ml-2')}
+              >
+                Project section
+              </Typography>
+            </div>
+            {/*  */}
 
             <div className="flex flex-col justify-between">
-              {/* <h2
-                className={classNames(
-                  style.headingDashboardh1,
-                  'mt-0 mb-0 flex flex-row items-center'
-                )}
-              >
-                Project
-              </h2> */}
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your project. Include its objectives,
                 scope, key activities, and any significant outcomes or findings.
@@ -279,16 +263,31 @@ export default function DashboardProjects() {
                               <MiniPagePost
                                 key={index}
                                 title={infoPage?.data.title}
-                                date={infoPage.data._updatedDate?.$date}
+                                tagLine={infoPage?.data.Project[0].tagLine}
+                                popularity={
+                                  infoPage?.data?.pageTypes[0]?.popularity
+                                }
+                                subtitle={infoPage?.data?.subtitle}
+                                countryTags={infoPage?.data?.countryTag ?? []}
+                                projectFunded={
+                                  infoPage?.data?.projectFunded ?? []
+                                }
+                                organisationAffiliations={
+                                  infoPage?.data?.projectOrganisationRoles ?? []
+                                }
+                                date={infoPage.data._createdDate?.$date}
+                                editDate={infoPage?.data?._updatedDate?.$date}
                                 image={
                                   infoPage.data.Project?.[0]?.picture ||
-                                  'https://placehold.co/600x400?text=placeholder'
+                                  PLACEHOLDER_IMAGE
                                 }
                                 text={infoPage.data.postContentRIch1}
                                 tags={[
                                   ...(infoPage.data.domains ?? []),
                                   ...(infoPage.data.methods ?? []),
                                 ]}
+                                projectStartDate={''}
+                                projectEndDate={''}
                               />
                             </Link>
                           </div>

@@ -9,6 +9,7 @@ import { useWixModules } from '@wix/sdk-react';
 import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import SpriteSvg from '../SpriteSvg/SpriteSvg';
 // import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
@@ -80,7 +81,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   useEffect(() => {
     if (extraFilterTags) {
       console.log('filteredTags 1st value', selectedValues);
-      const filteredTags = extraFilterTags(tags, selectedValues[0]);
+      const filteredTags = extraFilterTags(tags, selectedValues?.[0]); // TODO: Check if this is the correct value @ALEX - am adugat ?. (TypeError: Cannot read properties of undefined (reading '0'))
       console.log('filteredTags', filteredTags);
       setOptions(filteredTags?.map((tag) => createOption(tag.name)));
     }
@@ -316,13 +317,31 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           </components.Option>
         ) : (
           <button
-            className="bg-sky-600 text-white px-4 py-2 rounded-lg"
+            className={classNames(
+              styles.tagPickerCreateButton,
+              'flex justify-center w-full'
+            )}
             onClick={() => {
               console.log('debug1->props', props);
               handleCreate(props.value);
             }}
           >
-            Create {props.value} Tag
+            <SpriteSvg.AccountAddIcon
+              sizeH={24}
+              sizeW={24}
+              viewBox={'-6 -6 24 24'}
+              strokeWidth={1}
+            />
+            Create
+            <span
+              className={classNames(
+                styles.tagPickerCreateButtonText,
+                'font-bold'
+              )}
+            >
+              {props.value}
+            </span>
+            tag
           </button>
         )
         // </components.Option>
@@ -494,7 +513,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     helperText={
                       !isTagNameValid && (
                         <span className="text-red-600 relative -top-3">
-                          {/* TagName already exists in a different tag type */}
+                          Name already exists
                           {validationMessage}
                         </span>
                       )
