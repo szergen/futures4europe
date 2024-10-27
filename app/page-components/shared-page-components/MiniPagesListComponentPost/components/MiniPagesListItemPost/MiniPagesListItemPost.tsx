@@ -5,6 +5,7 @@ import Typography from '@app/shared-components/Typography/Typography';
 // import { JSXElementConstructor, useEffect, useState } from 'react';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import Link from 'next/link';
+import MiniPageEvents from '@app/shared-components/MiniPageEvents/MiniPageEvents';
 // import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 // import MiniPageProjectResults from '@app/shared-components/MiniPageProjectResults/MiniPageProjectResults';
 // import MiniPageEvents from '@app/shared-components/MiniPageEvents/MiniPageEvents';
@@ -58,6 +59,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   //     fullInternalLinks && setInternalLinks(fullInternalLinks);
   //   }
   // }, [postPagesFetched]);
+  console.log('debug2->items', items);
 
   return (
     <section className={classNames(style.posts)}>
@@ -83,8 +85,31 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
               'https://placehold.co/600x400?text=placeholder'
             }
             text={item?.postContentRIch1}
-            tags={[...(item?.domains ?? []), ...(item?.methods ?? [])]}
+            domains={item?.domains}
+            methods={item?.methods}
+            pageTypeTag={item.pageTypes[0]}
+            primaryTags={[
+              item.author?.[0] && item.author?.[0],
+              item.projects?.[0] && item.projects?.[0],
+            ]}
           />
+          {/* <MiniPageEvents
+            title={item?.title}
+            date={item?._updatedDate?.$date}
+            image={
+              item?.projectResultMedia?.thumbnail ||
+              item?.postImage1?.url ||
+              'https://placehold.co/600x400?text=placeholder'
+            }
+            text={item?.postContentRIch1}
+            domains={item?.domains}
+            methods={item?.methods}
+            pageTypeTag={item.pageTypes[0]}
+            primaryTags={[
+              item.author?.[0] && item.author?.[0],
+              item.projects?.[0] && item.projects?.[0],
+            ]}
+          /> */}
         </Link>
       ))}
       {/* {displayCountPosts < items.length && (

@@ -140,26 +140,26 @@ export default function Home() {
   } = useAuth();
   console.log('ownedInfoPages', ownedInfoPages);
 
-  const router = useRouter();
-  const { removeDataItem } = useWixModules(items);
+  // const router = useRouter();
+  // const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  useEffect(() => {
-    // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
-    if (!loading && !isLoggedIn) {
-      router.push('/login');
-    }
-    // Get the user's tag page link
-    if (isLoggedIn && tags) {
-      const userTag = tags.find(
-        (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
-      );
-      console.log('userTag', userTag);
-      if (userTag) {
-        setUserInfoPage(userTag?.tagPageLink);
-      }
-    }
-  }, [isLoggedIn, router, loading]);
+  // useEffect(() => {
+  //   // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
+  //   // if (!loading && !isLoggedIn) {
+  //   //   router.push('/login');
+  //   // }
+  //   // Get the user's tag page link
+  //   if (isLoggedIn && tags) {
+  //     const userTag = tags.find(
+  //       (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
+  //     );
+  //     console.log('userTag', userTag);
+  //     if (userTag) {
+  //       setUserInfoPage(userTag?.tagPageLink);
+  //     }
+  //   }
+  // }, [isLoggedIn, router, loading]);
 
   useEffect(() => {
     // Example usage with outer and inner paths

@@ -1,9 +1,17 @@
 .postItem {
-  margin: 0.5em 0;
+  margin: 2em 0;
   position: relative;
   display: flex;
   width: 100%;
 }
+
+.postImageAndTagContainer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+}
+
 .postImage {
   flex-shrink: 0;
   height: 124px;
@@ -16,6 +24,7 @@
   margin-left: 2em;
   display: flex;
   flex-direction: column;
+  padding-top: 35px;
 }
 .postRecommandations {
   display: flex;
@@ -24,5 +33,5 @@
   margin-top: 0.5em;
 }
 .postInnerText {
-  height: 60px;
+  height: 40px;
 }
