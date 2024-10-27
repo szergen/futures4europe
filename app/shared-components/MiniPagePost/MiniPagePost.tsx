@@ -7,6 +7,7 @@ import Tag, { TagProps } from '../Tag/Tag';
 import dayjs from 'dayjs';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 import AffiliationsComponent from '@app/page-components/PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 export type MiniPagePostProps = {
   title: string;
@@ -65,6 +66,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   // const day = String(newDate.getDate()).padStart(2, '0'); // Add leading zero if needed
   // const month = String(newDate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
   // const formattedDate = `${day}/${month}/${year}`;
+  dayjs.extend(relativeTime);
 
   return (
     <div className={classNames(style.postItem)}>
@@ -81,7 +83,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
       <div className={classNames(style.postContent)}>
         {/* Post Date */}
         <Typography tag="p" className="text-gray-500 text-xs self-end mb-1.5">
-          Last Edited: {dayjs(date).format('MMMM DD, YYYY')}
+          Last Edited: {dayjs(date).fromNow()}
         </Typography>
         {/* Post Title */}
         <Typography
@@ -89,7 +91,13 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           className={classNames(style.MiniPagePostTitle, '')}
         >
           {title}
-          <span> {popularity} </span>
+          <span className={classNames(style.popularity)}> {popularity} </span>
+          {projectStartDate && projectEndDate && (
+            <span className={classNames(style.projectDates)}>
+              {dayjs(projectStartDate).format('MMMM YYYY')} -{' '}
+              {dayjs(projectEndDate).format('MMMM YYYY')}
+            </span>
+          )}
         </Typography>
         {/* Subtitle */}
 

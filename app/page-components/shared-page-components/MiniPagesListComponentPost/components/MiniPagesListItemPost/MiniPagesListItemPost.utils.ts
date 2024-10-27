@@ -29,21 +29,19 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         subtitle: item?.Project[0]?.subtitle,
         countryTags: item.countryTag ?? [],
         projectFunded: item?.projectFunded ?? [],
-
         organisationAffiliations:
           item?.projectOrganisationRoles?.slice(0, 3) ?? [],
         date: item._createdDate?.$date,
         editDate: item?._updatedDate?.$date,
         image: item.Project?.[0]?.picture || PLACEHOLDER_IMAGE,
-
+        projectStartDate: item?.projectStartDate,
+        projectEndDate: item?.projectEndDate,
         text:
           item.postContentRIch1 + item.postContentRIch2 + item.postContentRIch3,
         domains: [...(item.domains ?? []), ...(item.methods ?? [])]?.slice(
           0,
           3
         ),
-        projectStartDate: '',
-        projectEndDate: '',
       };
     case 'project result':
       return {

@@ -72,10 +72,17 @@
 .postItem:hover {
   background-color: var(--color-background-decorative-10-weakest);
 }
-.MiniPagePostTitle span {
+.popularity {
   font-size: var(--w-font-size-body);
   position: relative;
   top: -10px;
+}
+.projectDates {
+  font-size: var(--w-font-size-tag);
+  font-weight: var(--w-font-weight-body);
+  color: var(--color-background-offline);
+  margin-top: var(--w-space-s);
+  margin-left: 0.5em;
 }
 .MiniPagePostDate {
   font-size: var(--w-font-size-body);
