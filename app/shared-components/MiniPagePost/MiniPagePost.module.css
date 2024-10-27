@@ -1,5 +1,4 @@
 .postItem {
-  margin: 0.5em 0;
   position: relative;
   display: flex;
   width: 100%;
@@ -25,4 +24,51 @@
 }
 .postInnerText {
   height: 60px;
+}
+.MiniPagePostTitle {
+  font-size: var(--w-font-size-display-heading);
+  font-weight: var(--w-font-weight-book);
+  color: var(--color-text-primary-strongest);
+}
+.MiniPagePostSubtitle {
+  font-size: var(--w-font-size-sub-section-heading);
+  font-weight: var(--w-font-weight-emphasis);
+  font-style: italic;
+  letter-spacing: var(--p-font-letter-spacing-dense);
+}
+.MiniPagePostTagline {
+  font-size: var(--w-font-size-sub-section-heading);
+  font-weight: var(--w-font-weight-emphasis);
+  font-style: italic;
+  letter-spacing: var(--p-font-letter-spacing-dense);
+}
+.MiniPagePostDescription {
+  font-size: var(--w-font-size-sub-section-heading);
+  font-weight: var(--w-font-weight-body);
+  color: var(--color-text-brand-light);
+  line-height: var(--w-line-height-body);
+}
+.postItem:hover .MiniPagePostTitle{
+  /* text-decoration: underline; */
+  cursor: pointer;
+}
+.postItem {
+  margin: var(--w-space-s);
+  padding: var(--w-space-l);
+  border-radius: var(--p-border-radius-800);
+  color: var(--primary-black);
+}
+.postItem:hover {
+  background-color: var(--color-background-decorative-10-weakest);
+}
+.MiniPagePostTitle span {
+  font-size: var(--w-font-size-body);
+  position: relative;
+  top: -10px;
+}
+.MiniPagePostDate {
+  font-size: var(--w-font-size-body);
+  font-weight: var(--w-font-weight-body);
+  color: var(--color-background-offline);
+  margin-top: var(--w-space-s);
 }
