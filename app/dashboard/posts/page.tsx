@@ -145,33 +145,29 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-            
-          <div className="flex items-center mb-4">
-            <SpriteSvg.AccountPostIcon
-              className="text-color-white"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'-1 -4 32 32'}
-              fill={'#fff'}
-              stroke={'#fff'}
-              strokeWidth={0}
-              inline={false}
-            />
-            <Typography
-              tag="h2"
-              className={classNames(
-                style.headingDashboardh1,
-                'ml-2'
-              )}
-            >
-              Create a post
-            </Typography>            
-          </div>
+            <div className="flex items-center mb-4">
+              <SpriteSvg.AccountPostIcon
+                className="text-color-white"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'-1 -4 32 32'}
+                fill={'#fff'}
+                stroke={'#fff'}
+                strokeWidth={0}
+                inline={false}
+              />
+              <Typography
+                tag="h2"
+                className={classNames(style.headingDashboardh1, 'ml-2')}
+              >
+                Create a post
+              </Typography>
+            </div>
             <div className="flex flex-col justify-between">
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Include text content or image. Add any
-                significant outcomes or findings in the foresight community.
-                Here is an example of a post:
+                Include text content or image. Add any significant outcomes or
+                findings in the foresight community. Here is an example of a
+                post:
                 <Link
                   href="/post/Webinar_Platform_driven_horizon_scanning_in_practice_6n0a2"
                   className="ml-4 underline"
@@ -267,14 +263,17 @@ export default function DashboardProjects() {
                               <MiniPagePost
                                 key={index}
                                 title={postPage?.data?.title}
-                                popularity={postPage?.data?.pageTypes[0]?.popularity}
+                                popularity={
+                                  postPage?.data?.pageTypes[0]?.popularity
+                                }
                                 subtitle={postPage?.data?.subtitle}
                                 date={postPage?.data?._createdDate?.$date}
                                 editDate={postPage?.data?._updatedDate?.$date}
                                 image={
                                   postPage?.data?.projectResultMedia
                                     ?.thumbnail ||
-                                  postPage?.data?.postImage1?.url || PLACEHOLDER_IMAGE
+                                  postPage?.data?.postImage1?.url ||
+                                  PLACEHOLDER_IMAGE
                                 }
                                 text={postPage?.data?.postContentRIch1}
                                 tags={[

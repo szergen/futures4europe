@@ -40,7 +40,6 @@ export default function DashboardProjects() {
     tags,
   } = useAuth();
 
-
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
@@ -96,7 +95,11 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/organisations', text: 'All Organisations', isActive: true },
+    {
+      href: '/dashboard/organisations',
+      text: 'All Organisations',
+      isActive: true,
+    },
   ];
 
   return (
@@ -155,14 +158,11 @@ export default function DashboardProjects() {
               />
               <Typography
                 tag="h2"
-                className={classNames(
-                  style.headingDashboardh1,
-                  'ml-2'
-                )}
+                className={classNames(style.headingDashboardh1, 'ml-2')}
               >
                 Organisation section
-              </Typography>  
-            </div>   
+              </Typography>
+            </div>
 
             <div className="flex flex-col justify-between">
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
@@ -233,46 +233,70 @@ export default function DashboardProjects() {
                           infoPage?.data?.pageTypes[0]?.name ===
                           'organisation info'
                       )
-                      .map((infoPage, index) => (
-                        console.log('Organ', infoPage),
-                        <div
-                          key={infoPage.data.title + index}
-                          className="pt-2 pb-2 flex flex-row items-center justify-between"
-                        >
-                          {/* <span>{infoPage.data.title}</span> */}
-                          <div className={'flex flex-row'}>
-                            <Link
-                              href={`/${extractInfoPageTypeBasedOnTag(
-                                infoPage?.data?.pageTypes[0]
-                              )}/${infoPage.data.slug}`}
+                      .map(
+                        (infoPage, index) => (
+                          console.log('Organ', infoPage),
+                          (
+                            <div
+                              key={infoPage.data.title + index}
+                              className="pt-2 pb-2 flex flex-row items-center justify-between"
                             >
-                              <MiniPagePost
-                                key={index}
-                                title={infoPage?.data.title}
-                                tagLine={infoPage?.data.organisation?.[0]?.tagLine}
-                                popularity={infoPage?.data?.pageTypes[0]?.popularity}
-                                subtitle={infoPage?.data?.subtitle}
-                                countryTags={infoPage?.data?.countryTag ?? []}
-                                organisationEstablishedDate={infoPage?.data?.organisationEstablishedDate}
-                                projectFunded={infoPage?.data?.projectFunded ?? []}
-                                organisationAffiliations={infoPage?.data?.projectOrganisationRoles ?? []}
-                                date={infoPage.data._createdDate?.$date}
-                                editDate={infoPage?.data?._updatedDate?.$date}
-                                image={infoPage.data.organisation?.[0]?.picture || PLACEHOLDER_IMAGE }
-                                text={infoPage?.data?.description}                      
-                              />
-                            </Link>
-                          </div>
-
-                          {isLoadingDeletePostPage &&
-                            isLoadingDeletePostPage === infoPage?.data?._id && (
-                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                                <LoadingSpinner />
+                              {/* <span>{infoPage.data.title}</span> */}
+                              <div className={'flex flex-row'}>
+                                <Link
+                                  href={`/${extractInfoPageTypeBasedOnTag(
+                                    infoPage?.data?.pageTypes[0]
+                                  )}/${infoPage.data.slug}`}
+                                >
+                                  <MiniPagePost
+                                    key={index}
+                                    title={infoPage?.data.title}
+                                    tagLine={
+                                      infoPage?.data.organisation?.[0]?.tagLine
+                                    }
+                                    popularity={
+                                      infoPage?.data?.pageTypes[0]?.popularity
+                                    }
+                                    subtitle={infoPage?.data?.subtitle}
+                                    countryTags={
+                                      infoPage?.data?.countryTag ?? []
+                                    }
+                                    organisationEstablishedDate={
+                                      infoPage?.data
+                                        ?.organisationEstablishedDate
+                                    }
+                                    projectFunded={
+                                      infoPage?.data?.projectFunded ?? []
+                                    }
+                                    organisationAffiliations={
+                                      infoPage?.data
+                                        ?.projectOrganisationRoles ?? []
+                                    }
+                                    date={infoPage.data._createdDate?.$date}
+                                    editDate={
+                                      infoPage?.data?._updatedDate?.$date
+                                    }
+                                    image={
+                                      infoPage.data.organisation?.[0]
+                                        ?.picture || PLACEHOLDER_IMAGE
+                                    }
+                                    text={infoPage?.data?.description}
+                                  />
+                                </Link>
                               </div>
-                            )}
-                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
-                        </div>
-                      ))
+
+                              {isLoadingDeletePostPage &&
+                                isLoadingDeletePostPage ===
+                                  infoPage?.data?._id && (
+                                  <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                    <LoadingSpinner />
+                                  </div>
+                                )}
+                              {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
+                            </div>
+                          )
+                        )
+                      )
                   ) : (
                     <div>No Info Pages</div>
                   )}

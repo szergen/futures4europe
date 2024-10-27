@@ -159,13 +159,10 @@ export default function DashboardProjects() {
               />
               <Typography
                 tag="h2"
-                className={classNames(
-                  style.headingDashboardh1,
-                  'ml-2'
-                )}
+                className={classNames(style.headingDashboardh1, 'ml-2')}
               >
-                 Project results section
-              </Typography>            
+                Project results section
+              </Typography>
             </div>
 
             <div className="flex flex-col justify-between">
@@ -247,24 +244,28 @@ export default function DashboardProjects() {
                               <MiniPagePost
                                 key={index}
                                 title={postPage?.data?.title}
-                                popularity={postPage?.data?.pageTypes[0]?.popularity}
+                                popularity={
+                                  postPage?.data?.pageTypes[0]?.popularity
+                                }
                                 subtitle={postPage?.data?.subtitle}
                                 date={postPage?.data?._createdDate?.$date}
                                 editDate={postPage?.data?._updatedDate?.$date}
                                 image={
                                   postPage?.data?.projectResultMedia
                                     ?.thumbnail ||
-                                  postPage?.data?.postImage1?.url || PLACEHOLDER_IMAGE
+                                  postPage?.data?.postImage1?.url ||
+                                  PLACEHOLDER_IMAGE
                                 }
                                 projects={postPage?.data?.projects}
-                                projectResultAuthor={postPage?.data?.projectResultAuthor}
+                                projectResultAuthor={
+                                  postPage?.data?.projectResultAuthor
+                                }
                                 text={postPage?.data?.postContentRIch1}
                                 tags={[
                                   ...(postPage?.data?.domains ?? []),
                                   ...(postPage?.data?.methods ?? []),
                                 ]}
                               />
-
                             </Link>
                           </div>
 

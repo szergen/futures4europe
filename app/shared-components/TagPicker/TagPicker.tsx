@@ -317,24 +317,30 @@ export const TagPicker: React.FC<TagPickerProps> = ({
           </components.Option>
         ) : (
           <button
-            className={classNames(styles.tagPickerCreateButton, 'flex justify-center w-full')}
+            className={classNames(
+              styles.tagPickerCreateButton,
+              'flex justify-center w-full'
+            )}
             onClick={() => {
               console.log('debug1->props', props);
               handleCreate(props.value);
             }}
           >
-          <SpriteSvg.AccountAddIcon
+            <SpriteSvg.AccountAddIcon
               sizeH={24}
               sizeW={24}
               viewBox={'-6 -6 24 24'}
               strokeWidth={1}
             />
-            Create 
+            Create
             <span
-              className={classNames(styles.tagPickerCreateButtonText, 'font-bold')}
-              >
+              className={classNames(
+                styles.tagPickerCreateButtonText,
+                'font-bold'
+              )}
+            >
               {props.value}
-            </span> 
+            </span>
             tag
           </button>
         )

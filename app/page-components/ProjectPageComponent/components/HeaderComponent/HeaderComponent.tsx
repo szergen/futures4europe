@@ -14,7 +14,6 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
 
-
 export type HeaderComponentProps = {
   project: {
     projectFunded: TagProps;
@@ -88,7 +87,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     //   return 'Title already exists';
     // }
     return '';
-    
   };
 
   // if is newPage, update the projectTag with the new tag created or selected
@@ -105,13 +103,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-
-{/* // TODO: @alex update social links */}
+  {
+    /* // TODO: @alex update social links */
+  }
   const [showCreateForm, setShowCreateForm] = useState(false);
   const handleIconClick = () => {
     setShowCreateForm(true);
-};
-{/* // TODO: @alex update social links - end */}
+  };
+  {
+    /* // TODO: @alex update social links - end */
+  }
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -153,7 +154,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               sizeH={24}
               fill={'var(--primary-white)'}
               strokeWidth={0}
-              style={{ padding: 'var(--w-space-xs)', backgroundColor: 'var(--color-background-primary)' }}
+              style={{
+                padding: 'var(--w-space-xs)',
+                backgroundColor: 'var(--color-background-primary)',
+              }}
               inline={false}
             />
           </i>
@@ -392,7 +396,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             </form>
           </Modal.Body>
         </Modal>
-        {/* // TODO: Alex @modal update social links - end */}                
+        {/* // TODO: Alex @modal update social links - end */}
       </div>
     </div>
   );
