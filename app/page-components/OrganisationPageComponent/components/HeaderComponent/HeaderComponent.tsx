@@ -97,10 +97,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
+{/* // TODO: @alex update social links */}
   const [showCreateForm, setShowCreateForm] = useState(false);
   const handleIconClick = () => {
     setShowCreateForm(true);
   };
+{/* // TODO: @alex update social links - end */}
 
   console.log('organisation', organisation);
 
@@ -133,30 +135,26 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
           </div>
         )}
+        {/* // TODO: @alex update social links */}
         {/* Social Icons */}
         <div className={style.socialIcons}>
           {/* Linkedin */}
           <i className={style.socialIcon} onClick={handleIconClick}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className=" rounded-full"
-              fill="currentColor"
-              width={24}
-              height={24}
-              style={{
-                color: '#fff',
-                backgroundColor: '#0077b5',
-                padding: '5px',
-              }}
-              viewBox="0 -7 23 40"
-            >
-              <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-            </svg>
+            <SpriteSvg.AccountLinkLinkedin
+              viewBox="-4 -4 32 32"
+              className={classNames(style.website)}
+              sizeW={24}
+              sizeH={24}
+              fill={'var(--primary-white)'}
+              strokeWidth={0}
+              style={{ padding: 'var(--w-space-xs)', backgroundColor: 'var(--color-background-primary)' }}
+              inline={false}
+            />
           </i>
           {/* Link */}
           <i className={style.socialIcon} onClick={handleIconClick}>
             <SpriteSvg.AccountLinkGeneral
-              className={classNames(style.website, 'white')}
+              className={classNames(style.website)}
               sizeW={24}
               sizeH={24}
               fill={'var(--primary-white)'}
@@ -380,7 +378,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   helperText={
                     !setShowCreateForm && (
                       <span className="text-red-600 relative -top-3">
-                        TagName already exists in a different tag type
+                        Name already exists
                       </span>
                     )
                   }
@@ -396,6 +394,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             </form>
           </Modal.Body>
         </Modal>
+        {/* // TODO: Alex @modal update social links - end */}
       </div>
     </div>
   );

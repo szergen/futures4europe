@@ -11,7 +11,9 @@ import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 import { useEffect, useState } from 'react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
+
 
 export type HeaderComponentProps = {
   project: {
@@ -86,6 +88,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     //   return 'Title already exists';
     // }
     return '';
+    
   };
 
   // if is newPage, update the projectTag with the new tag created or selected
@@ -101,6 +104,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   useEffect(() => {
     console.log('tagLine', tagLine);
   }, [tagLine]);
+
+
+{/* // TODO: @alex update social links */}
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const handleIconClick = () => {
+    setShowCreateForm(true);
+};
+{/* // TODO: @alex update social links - end */}
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -130,34 +141,34 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
           </div>
         )}
+        {/* // TODO: @alex update social links */}
         {/* Social Icons */}
         <div className={style.socialIcons}>
           {/* Linkedin */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className=" rounded-full"
-            fill="currentColor"
-            width={24}
-            height={24}
-            style={{
-              color: '#fff',
-              backgroundColor: '#0077b5',
-              padding: '5px',
-            }}
-            viewBox="0 -7 23 40"
-          >
-            <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-          </svg>
+          <i className={style.socialIcon} onClick={handleIconClick}>
+            <SpriteSvg.AccountLinkLinkedin
+              viewBox="-4 -4 32 32"
+              className={classNames(style.website)}
+              sizeW={24}
+              sizeH={24}
+              fill={'var(--primary-white)'}
+              strokeWidth={0}
+              style={{ padding: 'var(--w-space-xs)', backgroundColor: 'var(--color-background-primary)' }}
+              inline={false}
+            />
+          </i>
           {/* Link */}
-          <SpriteSvg.AccountLinkGeneral
-            className={classNames(style.website, 'white')}
-            sizeW={24}
-            sizeH={24}
-            fill={'var(--primary-white)'}
-            viewBox={'-4 -4 32 32'}
-            strokeWidth={0}
-            inline={false}
-          />
+          <i className={style.socialIcon} onClick={handleIconClick}>
+            <SpriteSvg.AccountLinkGeneral
+              className={classNames(style.website)}
+              sizeW={24}
+              sizeH={24}
+              fill={'var(--primary-white)'}
+              viewBox={'-4 -4 32 32'}
+              strokeWidth={0}
+              inline={false}
+            />
+          </i>
         </div>
         {/* Views */}
         {!isEditModeOn && (
@@ -347,6 +358,41 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             // tagTypeLabel={'Country'}
           />
         )}
+
+        {/* // TODO: Alex @modal update social links */}
+        <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
+          <Modal.Header>Paste the url</Modal.Header>
+          <Modal.Body>
+            <form>
+              <div className="mb-4">
+                <Label htmlFor="tagName" className="relative">
+                  Add link...
+                </Label>
+                <TextInput
+                  placeholder="Paste the url"
+                  id="tagName"
+                  onChange={(e) => setTagName(e.target.value)}
+                  required
+                  helperText={
+                    !setShowCreateForm && (
+                      <span className="text-red-600 relative -top-3">
+                        Name already exists
+                      </span>
+                    )
+                  }
+                />
+              </div>
+              <Button
+                disabled={!setShowCreateForm || setShowCreateForm}
+                type="submit"
+                // disabled={isLoading}
+              >
+                Update
+              </Button>
+            </form>
+          </Modal.Body>
+        </Modal>
+        {/* // TODO: Alex @modal update social links - end */}                
       </div>
     </div>
   );
