@@ -4,7 +4,6 @@ import style from '../../Tag.module.css';
 import { TagCategories } from '../../Tag.utils';
 import TagThumbnail from '../TagThumbnail/TagThumbnail';
 import TagCounter from '../TagCounterContainer/TagCounter';
-import TagCloseButton from '../TagCloseButton/TagCloseButton';
 import PopoverComponent from '@app/shared-components/PopoverComponent/PopoverComponent';
 
 export type TagContainerProps = {
@@ -15,7 +14,6 @@ export type TagContainerProps = {
   pictureAlt?: string;
   popularity?: number;
   tagTrend?: number;
-  tagPageLink?: string;
   disableTooltip?: boolean;
   tagLine?: string;
 };
@@ -29,13 +27,11 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   picture,
   pictureAlt,
   disableTooltip,
-  // tagPageLink,
   tagLine,
 }) => {
   const showThumbnail = Boolean(picture || tagCategory === 'person');
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
 
-  // REVIEW: TAG CONTENT @ALEX
   const TagContent = (
     <span className={style.name}>
       {picture ? (
@@ -75,7 +71,8 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           ) : (
             <PopoverComponent
               trigger="hover"
-              popoverContent={name}
+              popoverTitle={name}
+              popoverSubtitle={tagLine}
               popoverImage={picture}
             >
               {TagContent}

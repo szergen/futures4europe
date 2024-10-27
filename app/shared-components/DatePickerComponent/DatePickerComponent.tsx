@@ -28,8 +28,8 @@ export type DatePickerComponentProps = {
 
 export const dateHelper = (date: Date) =>
   new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-    .toISOString()
-    .slice(0, 10);
+    ?.toISOString()
+    ?.slice(0, 10);
 
 const decideViewValues = (dateFormateValue: string) => {
   switch (dateFormateValue) {

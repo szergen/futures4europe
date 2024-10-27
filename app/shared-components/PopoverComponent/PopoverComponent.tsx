@@ -10,11 +10,12 @@ export type PopoverProps = {
   children?: React.ReactNode;
   triggerID?: string;
   // popoverTitle?: string;
-  popoverContent?: string;
+  popoverTitle?: string;
   className?: string;
   trigger: 'click' | 'hover';
   popoverImage?: string;
   popoverImageAlt?: string;
+  popoverSubtitle?: string;
 };
 
 const PopoverComponent: React.FC<PopoverProps> = ({
@@ -22,9 +23,10 @@ const PopoverComponent: React.FC<PopoverProps> = ({
   className,
   trigger,
   // popoverTitle,
-  popoverContent,
+  popoverTitle,
   popoverImage,
   popoverImageAlt,
+  popoverSubtitle,
 }) => {
   const content = (
     <div className="w-auto text-sm text-gray-500 dark:text-gray-400">
@@ -48,7 +50,8 @@ const PopoverComponent: React.FC<PopoverProps> = ({
         )}
         <div className="flex flex-wrap">
           <span className={classNames(popoverImage && 'px-3')}>
-            {popoverContent}
+            <p className="font-bold">{popoverTitle}</p>
+            <p>{popoverSubtitle}</p>
           </span>
         </div>
       </div>

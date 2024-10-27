@@ -250,6 +250,7 @@ export default function DashboardProjects() {
                                 >
                                   <MiniPagePost
                                     key={index}
+                                    pageTypeTag={infoPage.pageTypes[0]}
                                     title={infoPage?.data.title}
                                     tagLine={
                                       infoPage?.data.organisation?.[0]?.tagLine
@@ -269,8 +270,10 @@ export default function DashboardProjects() {
                                       infoPage?.data?.projectFunded ?? []
                                     }
                                     organisationAffiliations={
-                                      infoPage?.data
-                                        ?.projectOrganisationRoles ?? []
+                                      infoPage?.data?.projectOrganisationRoles?.slice(
+                                        0,
+                                        3
+                                      ) ?? []
                                     }
                                     date={infoPage.data._createdDate?.$date}
                                     editDate={

@@ -18,7 +18,7 @@ export type DatePickerComponentProps = {
 export const dateHelper = (date: Date) =>
   new Date(date.getTime() - date.getTimezoneOffset() * 60000)
     .toISOString()
-    .slice(0, 10);
+    ?.slice(0, 10);
 
 // eslint-disable-next-line react/display-name
 const CustomInput = React.forwardRef(

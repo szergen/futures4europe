@@ -97,7 +97,7 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
       <style jsx global>
         {`
           .public-DraftStyleDefault-block {
-            font-size: var(--w-font-size-tag);
+            fontsize: var(--w-fontSize-tag);
           }
           .editor-content .public-DraftEditorPlaceholder-hasFocus {
             display: none !important;

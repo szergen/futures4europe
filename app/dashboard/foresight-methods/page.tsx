@@ -250,6 +250,7 @@ export default function DashboardProjects() {
                           <div className="flex flex-wrap flex-start text-left">
                             <Link href={`/post/${postPage.data.slug}`}>
                               <MiniPagePost
+                                pageTypeTag={postPage.pageTypes[0]}
                                 key={index}
                                 title={postPage?.data?.title}
                                 popularity={
@@ -269,10 +270,10 @@ export default function DashboardProjects() {
                                   postPage?.data?.projectResultAuthor
                                 }
                                 text={postPage?.data?.postContentRIch1}
-                                tags={[
+                                domains={[
                                   ...(postPage?.data?.domains ?? []),
                                   ...(postPage?.data?.methods ?? []),
-                                ]}
+                                ]?.slice(0, 3)}
                               />
                             </Link>
                           </div>
