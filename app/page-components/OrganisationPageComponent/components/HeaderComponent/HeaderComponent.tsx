@@ -97,12 +97,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-{/* // TODO: @alex update social links */}
+  {
+    /* // TODO: @alex update social links */
+  }
   const [showCreateForm, setShowCreateForm] = useState(false);
   const handleIconClick = () => {
     setShowCreateForm(true);
   };
-{/* // TODO: @alex update social links - end */}
+  {
+    /* // TODO: @alex update social links - end */
+  }
 
   console.log('organisation', organisation);
 
@@ -147,7 +151,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               sizeH={24}
               fill={'var(--primary-white)'}
               strokeWidth={0}
-              style={{ padding: 'var(--w-space-xs)', backgroundColor: 'var(--color-background-primary)' }}
+              style={{
+                padding: 'var(--w-space-xs)',
+                backgroundColor: 'var(--color-background-primary)',
+              }}
               inline={false}
             />
           </i>

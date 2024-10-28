@@ -39,7 +39,7 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
   } = useAuth();
-  
+
   console.log('ownedInfoPages', ownedInfoPages);
 
   const router = useRouter();
@@ -174,14 +174,11 @@ export default function DashboardProjects() {
               />
               <Typography
                 tag="h2"
-                className={classNames(
-                  style.headingDashboardh1,
-                  'ml-2'
-                )}
+                className={classNames(style.headingDashboardh1, 'ml-2')}
               >
                 Project section
-              </Typography>            
-            </div>            
+              </Typography>
+            </div>
             {/*  */}
 
             <div className="flex flex-col justify-between">
@@ -267,19 +264,30 @@ export default function DashboardProjects() {
                                 key={index}
                                 title={infoPage?.data.title}
                                 tagLine={infoPage?.data.Project[0].tagLine}
-                                popularity={infoPage?.data?.pageTypes[0]?.popularity}
+                                popularity={
+                                  infoPage?.data?.pageTypes[0]?.popularity
+                                }
                                 subtitle={infoPage?.data?.subtitle}
                                 countryTags={infoPage?.data?.countryTag ?? []}
-                                projectFunded={infoPage?.data?.projectFunded ?? []}
-                                organisationAffiliations={infoPage?.data?.projectOrganisationRoles ?? []}
+                                projectFunded={
+                                  infoPage?.data?.projectFunded ?? []
+                                }
+                                organisationAffiliations={
+                                  infoPage?.data?.projectOrganisationRoles ?? []
+                                }
                                 date={infoPage.data._createdDate?.$date}
                                 editDate={infoPage?.data?._updatedDate?.$date}
-                                image={infoPage.data.Project?.[0]?.picture || PLACEHOLDER_IMAGE }
+                                image={
+                                  infoPage.data.Project?.[0]?.picture ||
+                                  PLACEHOLDER_IMAGE
+                                }
                                 text={infoPage.data.postContentRIch1}
                                 tags={[
                                   ...(infoPage.data.domains ?? []),
                                   ...(infoPage.data.methods ?? []),
-                                ]} projectStartDate={''} projectEndDate={''}                              
+                                ]}
+                                projectStartDate={''}
+                                projectEndDate={''}
                               />
                             </Link>
                           </div>

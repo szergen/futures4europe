@@ -85,12 +85,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     return '';
   };
 
-  {/* // TODO: @alex update social links */}
-    const [showCreateForm, setShowCreateForm] = useState(false);
-    const handleIconClick = () => {
-      setShowCreateForm(true);
+  {
+    /* // TODO: @alex update social links */
+  }
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const handleIconClick = () => {
+    setShowCreateForm(true);
   };
-  {/* // TODO: @alex update social links - end */}
+  {
+    /* // TODO: @alex update social links - end */
+  }
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -132,13 +136,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               sizeH={24}
               fill={'var(--primary-white)'}
               strokeWidth={0}
-              style={{ padding: 'var(--w-space-xs)', backgroundColor: 'var(--color-background-primary)' }}
+              style={{
+                padding: 'var(--w-space-xs)',
+                backgroundColor: 'var(--color-background-primary)',
+              }}
               inline={false}
             />
           </i>
           {/* Orcid */}
           <i className={style.socialIcon} onClick={handleIconClick}>
-          <SpriteSvg.AccountLinkOrcid
+            <SpriteSvg.AccountLinkOrcid
               viewBox="0 0 32 32"
               className={classNames(style.website)}
               sizeW={24}
@@ -148,20 +155,23 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               strokeWidth={0}
               inline={false}
             />
-          </i>   
+          </i>
           {/* ResearchGate */}
           <i className={style.socialIcon} onClick={handleIconClick}>
-          <SpriteSvg.AccountLinkResearchGate
+            <SpriteSvg.AccountLinkResearchGate
               viewBox="-4 -4 32 32"
               className={classNames(style.website)}
               sizeW={24}
               sizeH={24}
               fill={'var(--primary-white)'}
-              style={{ padding: 'var(--w-space-xs)', backgroundColor: 'var(--color-background-brand-30)' }}
+              style={{
+                padding: 'var(--w-space-xs)',
+                backgroundColor: 'var(--color-background-brand-30)',
+              }}
               strokeWidth={0}
               inline={false}
             />
-          </i>                              
+          </i>
           {/* Link */}
           <i className={style.socialIcon} onClick={handleIconClick}>
             <SpriteSvg.AccountLinkGeneral
@@ -297,7 +307,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         </div>
 
-
         {/* // TODO: Alex @modal update social links */}
         <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
           <Modal.Header>Paste the url</Modal.Header>
@@ -331,7 +340,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             </form>
           </Modal.Body>
         </Modal>
-        {/* // TODO: Alex @modal update social links - end */}        
+        {/* // TODO: Alex @modal update social links - end */}
       </div>
     </div>
   );

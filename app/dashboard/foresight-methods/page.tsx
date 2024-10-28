@@ -96,7 +96,11 @@ export default function DashboardProjects() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/projects', text: 'All Foresight Methods', isActive: true },
+    {
+      href: '/dashboard/projects',
+      text: 'All Foresight Methods',
+      isActive: true,
+    },
   ];
 
   return (
@@ -143,25 +147,22 @@ export default function DashboardProjects() {
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
-          <div className="flex items-center mb-4">
-            <SpriteSvg.AccountForesightMethod2Icon
-              className="text-color-white"
-              sizeW={24}
-              sizeH={24}
-              viewBox={'0 0 28 28'}
-              fill={'#fff'}
-              stroke={'0'}
-              inline={false}
-            />
+            <div className="flex items-center mb-4">
+              <SpriteSvg.AccountForesightMethod2Icon
+                className="text-color-white"
+                sizeW={24}
+                sizeH={24}
+                viewBox={'0 0 28 28'}
+                fill={'#fff'}
+                stroke={'0'}
+                inline={false}
+              />
               <Typography
-                  tag="h2"
-                  className={classNames(
-                    style.headingDashboardh1,
-                    'ml-2'
-                  )}
-                >
-                  Foresight Methods section
-                </Typography>            
+                tag="h2"
+                className={classNames(style.headingDashboardh1, 'ml-2')}
+              >
+                Foresight Methods section
+              </Typography>
             </div>
 
             <div className="flex flex-col justify-between">
@@ -249,25 +250,30 @@ export default function DashboardProjects() {
                           <div className="flex flex-wrap flex-start text-left">
                             <Link href={`/post/${postPage.data.slug}`}>
                               <MiniPagePost
-                                  key={index}
-                                  title={postPage?.data?.title}
-                                  popularity={postPage?.data?.pageTypes[0]?.popularity}
-                                  subtitle={postPage?.data?.subtitle}
-                                  date={postPage?.data?._createdDate?.$date}
-                                  editDate={postPage?.data?._updatedDate?.$date}
-                                  image={
-                                    postPage?.data?.projectResultMedia
-                                      ?.thumbnail ||
-                                    postPage?.data?.postImage1?.url || PLACEHOLDER_IMAGE
-                                  }
-                                  projects={postPage?.data?.projects}
-                                  projectResultAuthor={postPage?.data?.projectResultAuthor}
-                                  text={postPage?.data?.postContentRIch1}
-                                  tags={[
-                                    ...(postPage?.data?.domains ?? []),
-                                    ...(postPage?.data?.methods ?? []),
-                                  ]}
-                                />
+                                key={index}
+                                title={postPage?.data?.title}
+                                popularity={
+                                  postPage?.data?.pageTypes[0]?.popularity
+                                }
+                                subtitle={postPage?.data?.subtitle}
+                                date={postPage?.data?._createdDate?.$date}
+                                editDate={postPage?.data?._updatedDate?.$date}
+                                image={
+                                  postPage?.data?.projectResultMedia
+                                    ?.thumbnail ||
+                                  postPage?.data?.postImage1?.url ||
+                                  PLACEHOLDER_IMAGE
+                                }
+                                projects={postPage?.data?.projects}
+                                projectResultAuthor={
+                                  postPage?.data?.projectResultAuthor
+                                }
+                                text={postPage?.data?.postContentRIch1}
+                                tags={[
+                                  ...(postPage?.data?.domains ?? []),
+                                  ...(postPage?.data?.methods ?? []),
+                                ]}
+                              />
                             </Link>
                           </div>
 

@@ -13,11 +13,11 @@ export type MiniPagePostProps = {
   subtitle: string; // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine
   popularity: number; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {popularity}
   countryTags: Array<TagProps>; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {country}
-  tagLine?: string;  // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {tagline}
+  tagLine?: string; // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {tagline}
   projectFunded: Array<TagProps>; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {projectFunded}
   projectStartDate: string; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {projectStartDate}
   projectEndDate: string; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {projectEndDate}
-  organisationAffiliations: Array<{ organisation: string; role: string;}>; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {organisationTags}
+  organisationAffiliations: Array<{ organisation: string; role: string }>; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {organisationTags}
   organisationEstablishedDate: string; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {organisationEstablishedDate}
   date: string;
   editDate: string; // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {editDate}
@@ -52,7 +52,6 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   tags,
   recommendations,
 }) => {
-
   console.log('MiniPagePostTitle', subtitle);
   const formattedDate = formatDate(date);
   const formattedEditDate = formatDate(editDate);
@@ -64,11 +63,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   return (
     <div className={classNames(style.postItem)}>
       <Image
-        src={
-          image && image !== ' '
-            ? image
-            : PLACEHOLDER_IMAGE
-        }
+        src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
         width={124}
         height={124}
         alt="Post Image"
@@ -76,21 +71,30 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
       />
       <div className={classNames(style.postContent)}>
         {/* Post Title */}
-        <Typography tag="h3" className={classNames(style.MiniPagePostTitle, "")}>
+        <Typography
+          tag="h3"
+          className={classNames(style.MiniPagePostTitle, '')}
+        >
           {title}
           {/* // TODO: Refactor this to a helper function @ALEX - de verificat implementarea facuta de mine {popularity} */}
           <span> {popularity} </span>
-        </Typography>     
+        </Typography>
         {/* Subtitle */}
         {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {subtitle} */}
-        <Typography tag="h3" className={classNames(style.MiniPagePostSubtitle, "")}>   
-          {subtitle} 
-        </Typography>  
+        <Typography
+          tag="h3"
+          className={classNames(style.MiniPagePostSubtitle, '')}
+        >
+          {subtitle}
+        </Typography>
         {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {subtitle} */}
         {/* Tagline */}
-        <Typography tag="h3" className={classNames(style.MiniPagePostTagline, "")}>   
+        <Typography
+          tag="h3"
+          className={classNames(style.MiniPagePostTagline, '')}
+        >
           <span> {tagLine} </span>
-        </Typography>     
+        </Typography>
         {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {organisationEstablishedDate} */}
         {/* organisationEstablishedDate */}
         {/* <Typography tag="h3" className={classNames(style.MiniPagePostTagline, "")}>   
@@ -100,28 +104,20 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {/* Country & Funded */}
         <div className={classNames('flex flex-wrap', style.postTags)}>
           {countryTags?.map((tag, index) => (
-            <Tag 
-              key={tag.name + '-' + index} {...tag} 
-              disableTooltip 
-            />
+            <Tag key={tag.name + '-' + index} {...tag} disableTooltip />
           ))}
 
           {projectFunded?.map((tag, index) => (
-            <Tag 
-              key={tag.name + '-' + index} {...tag} 
-            />
-          ))}          
+            <Tag key={tag.name + '-' + index} {...tag} />
+          ))}
         </div>
         {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {projects} */}
         {/* projects */}
         <div className={classNames('flex flex-wrap', style.postTags)}>
           {projects?.map((tag, index) => (
-            <Tag 
-              key={tag.name + '-' + index} {...tag} 
-              disableTooltip 
-            />
-          ))}      
-        </div>           
+            <Tag key={tag.name + '-' + index} {...tag} disableTooltip />
+          ))}
+        </div>
         {/* Post Text */}
         <Typography
           tag="div"
@@ -138,59 +134,57 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           ))}
         </div>
         {/* Post recommendations */}
-        {recommendations?.images && recommendations.images.length > 0 && (  // TODO: Refactor this to a helper function @ALEX - am pus sa fie ascunse recomandarile daca nu sunt recomandari
-          <div className={classNames(style.postRecommandations)}>
-            {recommendations?.images.map((image, index) => (
-              <Image
-                src={image}
-                key={`${index} - ${image} - ${title} - `}
-                width={17}
-                height={17}
-                className={classNames('rounded-full')}
-                alt={`Recommended by Person Image ${image}`}
-              />
-            ))}
-            <Typography tag="p" className="text-xs text-gray-400 px-4">
-              Recommended by {recommendations?.number ?? 0}{' '}
-              {recommendations?.number && recommendations.number < 1
-                ? 'person'
-                : 'persons'}
-            </Typography>           
-          </div>
-        )}
+        {recommendations?.images &&
+          recommendations.images.length > 0 && ( // TODO: Refactor this to a helper function @ALEX - am pus sa fie ascunse recomandarile daca nu sunt recomandari
+            <div className={classNames(style.postRecommandations)}>
+              {recommendations?.images.map((image, index) => (
+                <Image
+                  src={image}
+                  key={`${index} - ${image} - ${title} - `}
+                  width={17}
+                  height={17}
+                  className={classNames('rounded-full')}
+                  alt={`Recommended by Person Image ${image}`}
+                />
+              ))}
+              <Typography tag="p" className="text-xs text-gray-400 px-4">
+                Recommended by {recommendations?.number ?? 0}{' '}
+                {recommendations?.number && recommendations.number < 1
+                  ? 'person'
+                  : 'persons'}
+              </Typography>
+            </div>
+          )}
 
-          {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {projectResultAuthor} */}
-          {/* projectResultAuthor */}
-          <div className={classNames('flex flex-wrap', style.postTags)}>
-            {projectResultAuthor?.map((tag, index) => (
-              <Tag 
-                key={tag.name + '-' + index} {...tag} 
-                disableTooltip 
-              />
-            ))}      
-          </div>           
-          {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {country & funded} */}
-          {/* Affiliations */}
-          <div className={classNames('flex flex-wrap', style.postTags)}>
-            {organisationAffiliations?.length > 0 && (
-              <AffiliationsComponent
-                afiliations={organisationAffiliations.map((affiliation) => ({
-                  name: affiliation.organisation,
-                  arole: affiliation.role,
-                }))}
-                isEditModeOn={false} // Assuming you don't want to edit this in MiniPagePost
-              />
-            )}   
-          </div>         
-          {/* Post Date */}
-          <Typography tag="p" className={classNames(style.MiniPagePostDate, "")}>   
-            Posted on: {formattedDate}
-          </Typography>    
+        {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {projectResultAuthor} */}
+        {/* projectResultAuthor */}
+        <div className={classNames('flex flex-wrap', style.postTags)}>
+          {projectResultAuthor?.map((tag, index) => (
+            <Tag key={tag.name + '-' + index} {...tag} disableTooltip />
+          ))}
+        </div>
+        {/* // TODO: Refactor this to a helper function @ALEX - de everificat implementarea facuta de mine {country & funded} */}
+        {/* Affiliations */}
+        <div className={classNames('flex flex-wrap', style.postTags)}>
+          {organisationAffiliations?.length > 0 && (
+            <AffiliationsComponent
+              afiliations={organisationAffiliations.map((affiliation) => ({
+                name: affiliation.organisation,
+                arole: affiliation.role,
+              }))}
+              isEditModeOn={false} // Assuming you don't want to edit this in MiniPagePost
+            />
+          )}
+        </div>
+        {/* Post Date */}
+        <Typography tag="p" className={classNames(style.MiniPagePostDate, '')}>
+          Posted on: {formattedDate}
+        </Typography>
 
-          {/* Edit Date */}
-          <Typography tag="p" className={classNames(style.MiniPagePostDate, "")}>   
-            Edited on: {formattedEditDate}
-          </Typography>              
+        {/* Edit Date */}
+        <Typography tag="p" className={classNames(style.MiniPagePostDate, '')}>
+          Edited on: {formattedEditDate}
+        </Typography>
       </div>
     </div>
   );
