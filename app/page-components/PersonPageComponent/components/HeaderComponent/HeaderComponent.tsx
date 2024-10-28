@@ -10,6 +10,7 @@ import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFil
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { useState } from 'react';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
+import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
 
 export type HeaderComponentProps = {
   person: {
@@ -31,6 +32,10 @@ export type HeaderComponentProps = {
     personRoles: Array<TagProps>;
     personTag: TagProps;
     activity: Array<TagProps>;
+    linkedinLink: string;
+    websiteLink: string;
+    researchGateLink: string;
+    orcidLink: string;
   };
   isEditModeOn: boolean;
   tags: TagProps[];
@@ -85,17 +90,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     return '';
   };
 
-  {
-    /* // TODO: @alex update social links */
-  }
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const handleIconClick = () => {
-    setShowCreateForm(true);
-  };
-  {
-    /* // TODO: @alex update social links - end */
-  }
-
   return (
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
@@ -124,67 +118,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
           </div>
         )}
-        {/* // TODO: @alex update social links */}
         {/* Social Icons */}
-        <div className={style.socialIcons}>
-          {/* Linkedin */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkLinkedin
-              viewBox="-4 -4 32 32"
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              strokeWidth={0}
-              style={{
-                padding: 'var(--w-space-xs)',
-                backgroundColor: 'var(--color-background-primary)',
-              }}
-              inline={false}
-            />
-          </i>
-          {/* Orcid */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkOrcid
-              viewBox="0 0 32 32"
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--color-background-researchgate)'}
-              style={{ backgroundColor: 'var(--primary-white)' }}
-              strokeWidth={0}
-              inline={false}
-            />
-          </i>
-          {/* ResearchGate */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkResearchGate
-              viewBox="-4 -4 32 32"
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              style={{
-                padding: 'var(--w-space-xs)',
-                backgroundColor: 'var(--color-background-brand-30)',
-              }}
-              strokeWidth={0}
-              inline={false}
-            />
-          </i>
-          {/* Link */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkGeneral
-              className={classNames(style.website, 'white')}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              viewBox={'-4 -4 32 32'}
-              strokeWidth={0}
-              inline={false}
-            />
-          </i>
-        </div>
+        <SocialLinksComponent
+          isEditModeOn={isEditModeOn}
+          linkedinLink={person?.linkedinLink}
+          websiteLink={person?.websiteLink}
+          researchGateLink={person?.researchGateLink}
+          orcidLink={person?.orcidLink}
+          handleUpdate={updatePersonDataOnKeyValue}
+          extended
+        />
         {/* Views */}
         {!isEditModeOn && (
           <Typography
@@ -306,41 +249,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
           )}
         </div>
-
-        {/* // TODO: Alex @modal update social links */}
-        <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-          <Modal.Header>Paste the url</Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="tagName" className="relative">
-                  Add link...
-                </Label>
-                <TextInput
-                  placeholder="Paste the url"
-                  id="tagName"
-                  onChange={(e) => setTagName(e.target.value)}
-                  required
-                  helperText={
-                    !setShowCreateForm && (
-                      <span className="text-red-600 relative -top-3">
-                        Name already exists
-                      </span>
-                    )
-                  }
-                />
-              </div>
-              <Button
-                disabled={!setShowCreateForm || setShowCreateForm}
-                type="submit"
-                // disabled={isLoading}
-              >
-                Update
-              </Button>
-            </form>
-          </Modal.Body>
-        </Modal>
-        {/* // TODO: Alex @modal update social links - end */}
       </div>
     </div>
   );

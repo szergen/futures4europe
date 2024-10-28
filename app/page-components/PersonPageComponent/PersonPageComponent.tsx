@@ -105,6 +105,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     projectsCoordindation: person?.data?.personProjectCoordonation, // done
     projectsParticipation: person?.data?.personProjectParticipation, // done
     mediaFiles: person?.data?.mediaFiles, // done
+    linkedinLink: person?.data?.linkedinLink,
+    websiteLink: person?.data?.websiteLink,
+    researchGateLink: person?.data?.researchGateLink,
+    orcidLink: person?.data?.orcidLink,
     slug: person?.data?.slug,
   };
   // #endregion
@@ -217,6 +221,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
             }
           ),
           mediaFiles: personData.mediaFiles,
+          linkedinLink: personData?.data?.linkedinLink,
+          websiteLink: personData?.data?.websiteLink,
+          researchGateLink: personData?.data?.researchGateLink,
+          orcidLink: personData?.data?.orcidLink,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -410,6 +418,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
             }
           ),
           mediaFiles: personData?.mediaFiles,
+          linkedinLink: personData?.data?.linkedinLink,
+          websiteLink: personData?.data?.websiteLink,
+          researchGateLink: personData?.data?.researchGateLink,
+          orcidLink: personData?.data?.orcidLink,
           slug:
             sanitizeTitleForSlug(personData?.personTag?.name) +
             '-' +

@@ -121,6 +121,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }), //done
     registrationDate: project?.data?._createdDate['$date'], //done-system field
     mediaFiles: project?.data?.mediaFiles, //done
+    linkedinLink: project?.data?.linkedinLink,
+    websiteLink: project?.data?.websiteLink,
     slug: project?.data?.slug, //done
   };
   // #endregion
@@ -250,6 +252,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
             }
           ),
           mediaFiles: projectData?.mediaFiles,
+          linkedinLink: projectData?.data?.linkedinLink,
+          websiteLink: projectData?.data?.websiteLink,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -424,6 +428,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
             }
           ),
           mediaFiles: projectData?.mediaFiles,
+          linkedinLink: projectData?.data?.linkedinLink,
+          websiteLink: projectData?.data?.websiteLink,
           slug:
             sanitizeTitleForSlug(projectData?.projectTag?.name) +
             '-' +
