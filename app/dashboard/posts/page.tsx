@@ -261,7 +261,7 @@ export default function DashboardProjects() {
                                 {postPage?.data?.pageTypes[0]?.name}
                               </Badge> */}
                               <MiniPagePost
-                                pageTypeTag={postPage.pageTypes[0]}
+                                pageTypeTag={postPage.data.pageTypes?.[0]}
                                 key={index}
                                 title={postPage?.data?.title}
                                 popularity={
