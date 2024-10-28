@@ -37,6 +37,12 @@ const referencedItemOptions = [
   { fieldName: 'organisationMemberOf' },
   { fieldName: 'internalLinks' },
   { fieldName: 'organisationType' },
+  { fieldName: 'featuredPosts' },
+  { fieldName: 'featuredProjects' },
+  { fieldName: 'featuredProjectResults' },
+  { fieldName: 'featuredEvents' },
+  { fieldName: 'featuredOrganisations' },
+  { fieldName: 'featuredPeople' },
 ];
 
 const getCollection = async (collectionName: string) => {

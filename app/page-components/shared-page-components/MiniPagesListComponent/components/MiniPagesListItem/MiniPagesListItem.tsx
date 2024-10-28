@@ -47,7 +47,7 @@ const MiniPagesListItem: React.FC<MiniPagesListItemProps> = ({
       >
         {itemTypeTitle}
       </Typography>
-      {items.slice(0, displayCountPosts).map((item, index) => {
+      {items?.slice(0, displayCountPosts).map((item, index) => {
         const Component = getComponent(itemType);
         return Component ? <Component key={index} {...item} /> : null;
       })}

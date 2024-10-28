@@ -227,7 +227,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     input: (provided, state) => ({
       ...provided,
       color: 'var(--primary-brand-color)',
-      fontSize: 'var(--w-font-size-tag)',
+      fontSize: 'var(--w-fontSize-tag)',
       padding: '0px var(--w-space-s)',
       height: 'var(--w-space-xxxl)',
       // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',

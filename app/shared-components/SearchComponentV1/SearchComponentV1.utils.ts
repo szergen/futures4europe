@@ -174,11 +174,11 @@ export const highlightMatches = (text: string, matches: any[]) => {
         // console.log('debug2->end', end);
         // console.log('debug2->highlightedText before', highlightedText);
         highlightedText =
-          highlightedText.slice(0, start) +
+          highlightedText?.slice(0, start) +
           '<mark>' +
-          highlightedText.slice(start, end) +
+          highlightedText?.slice(start, end) +
           '</mark>' +
-          highlightedText.slice(end);
+          highlightedText?.slice(end);
         // console.log('debug7->highlightedText after', highlightedText);
         // offset = offset + '<mark></mark>'.length; // Length of '<mark></mark>'
       }

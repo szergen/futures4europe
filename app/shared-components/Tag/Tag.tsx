@@ -55,7 +55,6 @@ export const Tag: React.FC<TagProps> = ({
               tagTrend={tagTrend}
               picture={picture}
               pictureAlt={pictureAlt}
-              tagPageLink={tagPageLink}
               disableTooltip={disableTooltip}
               tagLine={tagLine}
             />

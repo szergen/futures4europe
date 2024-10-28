@@ -28,7 +28,7 @@ const getCollectionItemByTitle = async (
   itemId: string
 ) => {
   try {
-    const response = await fetch('/api/getCollectionItemByTitle', {
+    const response = await fetch('/api/getCollectionItem', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
