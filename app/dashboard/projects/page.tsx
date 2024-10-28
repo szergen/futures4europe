@@ -261,7 +261,7 @@ export default function DashboardProjects() {
                               )}/${infoPage.data.slug}`}
                             >
                               <MiniPagePost
-                                pageTypeTag={infoPage.pageTypes[0]}
+                                pageTypeTag={infoPage.pageTypes?.[0]}
                                 key={index}
                                 title={infoPage?.data.title}
                                 tagLine={infoPage?.data.Project[0].tagLine}
