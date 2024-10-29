@@ -136,7 +136,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         )}
 
         {/* Social Icons */}
-      <SocialLinksComponent
+        <SocialLinksComponent
           isEditModeOn={isEditModeOn}
           linkedinLink={project.linkedinLink}
           websiteLink={project.websiteLink}
@@ -174,7 +174,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 style.InputRequired
             )}
             placeholder="Enter title"
-            value={project?.projectTag?.name || 'Enter your preffered name'}
+            value={project?.projectTag?.name}
             // className={classNames(
             //   // 'personNameTitle',
             //   style.genericTextArea,
@@ -197,6 +197,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 ? (value) => setValidationState({ title: value })
                 : undefined
             }
+            shouldUpdateValueState={true}
           />
         ) : (
           <TagPicker

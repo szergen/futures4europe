@@ -164,9 +164,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <InputText
             // label="Title"
             placeholder="Enter title"
-            value={
-              organisation?.organisationTag?.name || 'Enter your preffered name'
-            }
+            value={organisation?.organisationTag?.name}
             className={classNames(
               // 'personNameTitle',
               style.genericTextArea,
@@ -190,6 +188,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 ? (value) => setValidationState({ title: value })
                 : undefined
             }
+            shouldUpdateValueState={true}
           />
         ) : (
           <TagPicker

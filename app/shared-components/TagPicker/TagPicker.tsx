@@ -353,7 +353,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
       return correspondingTag ? (
         <components.MultiValue {...props}>
-          <Tag {...correspondingTag} disableTooltip={true} disableLink={true} />
+          <Tag
+            {...correspondingTag}
+            disableTooltip={true}
+            disableLink={true}
+            disablePopularityHover={true}
+          />
         </components.MultiValue>
       ) : (
         ''

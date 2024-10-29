@@ -179,6 +179,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 ? (value) => setValidationState({ title: value })
                 : undefined
             }
+            shouldUpdateValueState={true}
           />
         )}
         {/* Person Tagline */}
