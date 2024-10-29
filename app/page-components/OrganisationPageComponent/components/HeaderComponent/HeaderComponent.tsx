@@ -293,7 +293,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         </div>
         {/* Organisation domains */}
-        <div className={classNames(style.domains, 'flex')}>
+        <div className={classNames('flex flex-wrap', style.domains)}>
           {!isEditModeOn ? (
             organisation?.organisationType?.map((orgType) => (
               <Tag key={orgType.name} {...orgType} />

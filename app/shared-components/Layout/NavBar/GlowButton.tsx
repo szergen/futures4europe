@@ -57,7 +57,13 @@ const GlowButton = ({ children }) => {
   }, []); // Run once when the component mounts
 
   return (
-    <button ref={buttonRef} className={classNames(style.glowbutton)}>
+    <button
+      ref={buttonRef}
+      className={classNames(
+        style.glowbutton,
+        'relative inline-block p-px font-semibold leading-6 text-white bg-gray-800 shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95'
+      )}
+    >
       <div className="gradient"></div>
       <span>{children}</span>
     </button>
