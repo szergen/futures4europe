@@ -13,6 +13,7 @@ import { formatDate } from '@app/page-components/PostPageComponent/PostPageCompo
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
+import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
 
 export type HeaderComponentProps = {
   organisation: {
@@ -36,6 +37,8 @@ export type HeaderComponentProps = {
     organisationTag: TagProps & { tagLine: string };
     // activity: Array<TagProps>;
     organisationType: Array<TagProps>;
+    linkedinLink: string;
+    websiteLink: string;
   };
   isEditModeOn?: boolean;
   updateOrganisationData: (data: any) => void;
@@ -97,17 +100,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-  {
-    /* // TODO: @alex update social links */
-  }
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const handleIconClick = () => {
-    setShowCreateForm(true);
-  };
-  {
-    /* // TODO: @alex update social links - end */
-  }
-
   console.log('organisation', organisation);
 
   return (
@@ -139,38 +131,13 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
           </div>
         )}
-        {/* // TODO: @alex update social links */}
         {/* Social Icons */}
-        <div className={style.socialIcons}>
-          {/* Linkedin */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkLinkedin
-              viewBox="-4 -4 32 32"
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              strokeWidth={0}
-              style={{
-                padding: 'var(--w-space-xs)',
-                backgroundColor: 'var(--color-background-primary)',
-              }}
-              inline={false}
-            />
-          </i>
-          {/* Link */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkGeneral
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              viewBox={'-4 -4 32 32'}
-              strokeWidth={0}
-              inline={false}
-            />
-          </i>
-        </div>
+        <SocialLinksComponent
+          isEditModeOn={isEditModeOn}
+          linkedinLink={organisation?.linkedinLink}
+          websiteLink={organisation?.websiteLink}
+          handleUpdate={updateOrganisationDataOnKeyValue}
+        />
         {/* Views */}
         {!isEditModeOn && (
           <Typography
@@ -197,9 +164,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <InputText
             // label="Title"
             placeholder="Enter title"
-            value={
-              organisation?.organisationTag?.name || 'Enter your preffered name'
-            }
+            value={organisation?.organisationTag?.name}
             className={classNames(
               // 'personNameTitle',
               style.genericTextArea,
@@ -223,6 +188,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 ? (value) => setValidationState({ title: value })
                 : undefined
             }
+            shouldUpdateValueState={true}
           />
         ) : (
           <TagPicker
@@ -367,41 +333,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             onTagCreated={handleTagCreated}
           />
         )}
-
-        {/* // TODO: Alex @modal update social links */}
-        <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-          <Modal.Header>Paste the url</Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="tagName" className="relative">
-                  Add link...
-                </Label>
-                <TextInput
-                  placeholder="Paste the url"
-                  id="tagName"
-                  onChange={(e) => setTagName(e.target.value)}
-                  required
-                  helperText={
-                    !setShowCreateForm && (
-                      <span className="text-red-600 relative -top-3">
-                        Name already exists
-                      </span>
-                    )
-                  }
-                />
-              </div>
-              <Button
-                disabled={!setShowCreateForm || setShowCreateForm}
-                type="submit"
-                // disabled={isLoading}
-              >
-                Update
-              </Button>
-            </form>
-          </Modal.Body>
-        </Modal>
-        {/* // TODO: Alex @modal update social links - end */}
       </div>
     </div>
   );

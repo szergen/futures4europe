@@ -143,11 +143,12 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       [key]: value,
     }));
   };
+
+  // #region validationState
   const updateValidationState = (newData: any) => {
     setValidationState((prevData: any) => ({ ...prevData, ...newData }));
   };
 
-  // #region validationState
   const [validationState, setValidationState] = useState({
     title: '',
     subtitle: '',
