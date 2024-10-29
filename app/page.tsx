@@ -2,7 +2,7 @@
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import gsap from 'gsap-trial';
 // import InertiaPlugin from 'gsap-trial/InertiaPlugin';

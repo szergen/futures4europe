@@ -5,18 +5,20 @@ import Tooltip3 from '@app/shared-components/Tooltip3/Tooltip3';
 
 export type TagCounterProps = {
   popularity?: number;
-  tagTrend?: number;
+  // tagTrend?: number;
+  disablePopularityHover?: boolean;
 };
 
 export const popularity: React.FC<TagCounterProps> = ({
   popularity,
-  tagTrend,
+  // tagTrend,
+  disablePopularityHover,
 }) => {
   return (
     <span className={classNames(style.tagCounterBody)}>
       {popularity && (
         <Tooltip3
-          trigger="hover"
+          trigger={disablePopularityHover ? 'hover' : 'click'}
           popoverContent={`This Tag has been referenced ${popularity} times`}
         >
           <span

@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
+import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
 
 export type HeaderComponentProps = {
   project: {
@@ -41,6 +42,8 @@ export type HeaderComponentProps = {
     views: number;
     domains: Array<TagProps>;
     projectTag: TagProps & { tagLine: string };
+    linkedinLink: string;
+    websiteLink: string;
   };
   isEditModeOn?: boolean;
   updateProjectData: (data: any) => void;
@@ -103,17 +106,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-  {
-    /* // TODO: @alex update social links */
-  }
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const handleIconClick = () => {
-    setShowCreateForm(true);
-  };
-  {
-    /* // TODO: @alex update social links - end */
-  }
-
   return (
     <div className={classNames(style.personHeader)}>
       <div className={style.imageAndSocialColumn}>
@@ -142,38 +134,15 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             />
           </div>
         )}
-        {/* // TODO: @alex update social links */}
+
         {/* Social Icons */}
-        <div className={style.socialIcons}>
-          {/* Linkedin */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkLinkedin
-              viewBox="-4 -4 32 32"
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              strokeWidth={0}
-              style={{
-                padding: 'var(--w-space-xs)',
-                backgroundColor: 'var(--color-background-primary)',
-              }}
-              inline={false}
-            />
-          </i>
-          {/* Link */}
-          <i className={style.socialIcon} onClick={handleIconClick}>
-            <SpriteSvg.AccountLinkGeneral
-              className={classNames(style.website)}
-              sizeW={24}
-              sizeH={24}
-              fill={'var(--primary-white)'}
-              viewBox={'-4 -4 32 32'}
-              strokeWidth={0}
-              inline={false}
-            />
-          </i>
-        </div>
+        <SocialLinksComponent
+          isEditModeOn={isEditModeOn}
+          linkedinLink={project.linkedinLink}
+          websiteLink={project.websiteLink}
+          handleUpdate={updateProjectDataOnKeyValue}
+        />
+
         {/* Views */}
         {!isEditModeOn && (
           <Typography
@@ -205,7 +174,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 style.InputRequired
             )}
             placeholder="Enter title"
-            value={project?.projectTag?.name || 'Enter your preffered name'}
+            value={project?.projectTag?.name}
             // className={classNames(
             //   // 'personNameTitle',
             //   style.genericTextArea,
@@ -228,6 +197,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 ? (value) => setValidationState({ title: value })
                 : undefined
             }
+            shouldUpdateValueState={true}
           />
         ) : (
           <TagPicker
@@ -241,6 +211,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="project"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new project tag"
+            newTagType="Project name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
         )}
         {/* Tagline */}
@@ -336,6 +309,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="project type"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new project type tag"
+            newTagType="Project type name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
         )}
 
@@ -359,44 +335,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="country"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new country tag"
+            newTagType="Country name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
             // tagTypeLabel={'Country'}
           />
         )}
-
-        {/* // TODO: Alex @modal update social links */}
-        <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-          <Modal.Header>Paste the url</Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="mb-4">
-                <Label htmlFor="tagName" className="relative">
-                  Add link...
-                </Label>
-                <TextInput
-                  placeholder="Paste the url"
-                  id="tagName"
-                  onChange={(e) => setTagName(e.target.value)}
-                  required
-                  helperText={
-                    !setShowCreateForm && (
-                      <span className="text-red-600 relative -top-3">
-                        Name already exists
-                      </span>
-                    )
-                  }
-                />
-              </div>
-              <Button
-                disabled={!setShowCreateForm || setShowCreateForm}
-                type="submit"
-                // disabled={isLoading}
-              >
-                Update
-              </Button>
-            </form>
-          </Modal.Body>
-        </Modal>
-        {/* // TODO: Alex @modal update social links - end */}
       </div>
     </div>
   );

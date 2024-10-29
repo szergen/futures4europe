@@ -104,6 +104,8 @@ function OrganisationPageComponent({
     memberOrganisations: organisation?.data?.organisationHasMember,
     memberOfOrganisations: organisation?.data?.organisationMemberOf,
     mediaFiles: organisation?.data?.mediaFiles,
+    linkedinLink: organisation?.data?.linkedinLink,
+    websiteLink: organisation?.data?.websiteLink,
     slug: organisation?.data?.slug,
   };
 
@@ -411,6 +413,8 @@ function OrganisationPageComponent({
             }
           ),
           mediaFiles: organisationData.mediaFiles,
+          linkedinLink: organisationData?.data?.linkedinLink,
+          websiteLink: organisationData?.data?.websiteLink,
           slug:
             sanitizeTitleForSlug(organisationData?.organisationTag?.name) +
             '-' +
@@ -703,6 +707,7 @@ function OrganisationPageComponent({
         }
         tags={tags.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
+        tagType="person"
       />
       {/* Foresight Methods */}
       <TagListComponent
@@ -748,6 +753,7 @@ function OrganisationPageComponent({
         }
         tags={tags.filter((tag) => tag?.tagType === 'project')}
         handleTagCreated={handleTagCreated}
+        tagType="project"
       />
       {/* Member Organisations */}
       <TagListComponent
