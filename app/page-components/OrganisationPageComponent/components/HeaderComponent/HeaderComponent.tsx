@@ -202,6 +202,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="organisation"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new organisation"
+            newTagType="Organisation name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
         )}
         {/* Tagline */}
@@ -275,7 +278,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           ) : (
             <>
               <DatePickerComponent
-                placeholder="Established Year"
+                placeholder="Founded in"
                 dateFormate="YYYY"
                 date={
                   !organisation?.organisationEstablishedDate
@@ -312,6 +315,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               }}
               tagType={'person type'}
               onTagCreated={handleTagCreated}
+              newTagHeader="Create a new organisation type"
+              newTagType="Organisation type name"
+              newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
             />
           )}
         </div>
@@ -331,6 +337,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="country"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new country tag"
+            newTagType="Country name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
         )}
       </div>

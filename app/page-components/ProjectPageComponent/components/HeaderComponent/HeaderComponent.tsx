@@ -211,6 +211,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="project"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new project tag"
+            newTagType="Project name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
         )}
         {/* Tagline */}
@@ -306,6 +309,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="project type"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new project type tag"
+            newTagType="Project type name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
         )}
 
@@ -329,6 +335,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             tagType="country"
             onTagCreated={handleTagCreated}
+            newTagHeader="Create a new country tag"
+            newTagType="Country name"
+            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
             // tagTypeLabel={'Country'}
           />
         )}

@@ -16,6 +16,11 @@ export type TagListComponentProps = {
   placeholder?: string; // New
 };
 
+const capitalizeFirstLetter = (str: string) => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const TagListComponent: React.FC<TagListComponentProps> = ({
   tagList,
   tagListTitle,
@@ -50,6 +55,9 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
           tagType={tagType}
           onTagCreated={handleTagCreated}
           placeholder={placeholder} // New @alex
+          newTagHeader={`Create a new ${tagType}`}
+          newTagType={`${capitalizeFirstLetter(tagType || '')} name`}
+          newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
         />
       )}
     </section>

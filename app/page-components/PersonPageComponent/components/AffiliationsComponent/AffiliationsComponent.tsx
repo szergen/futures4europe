@@ -26,6 +26,12 @@ export type AffiliationsComponentProps = {
   title?: string;
   placeholderRole?: string;
   placeholderTag?: string;
+  tagType?: string;
+};
+
+const capitalizeFirstLetter = (str: string) => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
@@ -39,6 +45,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   title,
   placeholderRole = 'Role',
   placeholderTag = 'Add one or more organisation tags',
+  tagType,
 }) => {
   const [currentAffiliations, setCurrentAffiliations] = useState(
     afiliations || []
@@ -292,8 +299,11 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                         updatePersonDataAffiliations(newAffiliations);
                     }}
                     setIsDisabledSorting={setIsDisabledSorting}
-                    tagType="organisation"
+                    tagType={tagType || 'organisation'}
                     onTagCreated={handleTagCreated}
+                    newTagHeader={`Create a new ${tagType}`}
+                    newTagType={`${capitalizeFirstLetter(tagType || '')} name`}
+                    newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
                   />
                   <button
                     onClick={() => handleRemoveAffiliation(index)}
