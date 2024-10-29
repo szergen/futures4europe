@@ -265,7 +265,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           />
         )}
         {/* Person type - activity */}
-        <div className={style.domains}>
+        <div className={classNames('flex flex-wrap', style.domains)}>
           {!isEditModeOn ? (
             person.activity?.map((activity) => (
               <Tag key={activity?.name} {...activity} />
