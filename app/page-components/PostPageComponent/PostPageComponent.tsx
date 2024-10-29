@@ -738,6 +738,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
               onTagCreated={handleTagCreated}
               isMulti
               extraFilterTags={extraFilterTags}
+              newTagHeader="Create a new page type"
+              newTagType="Page type name"
+              newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
               // tagTypeLabel="Page Type"
             />
           )}

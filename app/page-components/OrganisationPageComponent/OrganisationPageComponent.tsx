@@ -707,6 +707,7 @@ function OrganisationPageComponent({
         }
         tags={tags.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
+        tagType="person"
       />
       {/* Foresight Methods */}
       <TagListComponent
@@ -752,6 +753,7 @@ function OrganisationPageComponent({
         }
         tags={tags.filter((tag) => tag?.tagType === 'project')}
         handleTagCreated={handleTagCreated}
+        tagType="project"
       />
       {/* Member Organisations */}
       <TagListComponent

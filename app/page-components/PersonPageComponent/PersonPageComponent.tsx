@@ -705,6 +705,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         }
         tags={tags.filter((tag) => tag?.tagType === 'organisation')}
         handleTagCreated={handleTagCreated}
+        tagType="organisation"
       />
       {/* Former Affiliations */}
       <section className={classNames(style.affiliations)}>
@@ -717,6 +718,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
           }
           tags={tags.filter((tag) => tag?.tagType === 'organisation')}
           handleTagCreated={handleTagCreated}
+          tagType="organisation"
         />
       </section>
       {/* Foresight Methods */}

@@ -25,6 +25,9 @@ export type TagPickerProps = {
   placeholder?: string;
   extraFilterTags?: (tags: TagProps[], firstTag: string) => TagProps[];
   setIsDisabledSorting?: (value: boolean) => void;
+  newTagHeader?: string;
+  newTagType?: string;
+  newTagTagline?: string;
 };
 
 interface Option {
@@ -61,6 +64,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   placeholder,
   extraFilterTags,
   setIsDisabledSorting,
+  newTagHeader,
+  newTagType,
+  newTagTagline,
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -503,12 +509,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         />
         {showCreateForm && (
           <Modal show={showCreateForm} onClose={() => setShowCreateForm(false)}>
-            <Modal.Header>Add tag element</Modal.Header>
+            <Modal.Header>{newTagHeader || 'Add new Tag'}</Modal.Header>
             <Modal.Body>
               <form onSubmit={handleFormSubmit}>
                 <div className="mb-4">
                   <Label htmlFor="tagName" className="relative">
-                    Project Name
+                    {newTagType || 'Tag Name'}
                   </Label>
                   <TextInput
                     id="tagName"
@@ -526,7 +532,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                   />
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="tagTagline">Tagline</Label>
+                  <Label htmlFor="tagTagline">
+                    {newTagTagline || 'Tagline'}
+                  </Label>
                   <TextInput
                     id="tagTagline"
                     value={tagTagline}

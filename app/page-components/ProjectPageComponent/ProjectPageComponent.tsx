@@ -771,6 +771,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         }
         tags={tags.filter((tag) => tag?.tagType === 'organisation')}
         handleTagCreated={handleTagCreated}
+        tagType="organisation"
       />
       {/* Internal Links */}
       <MiniPagesListComponentPost
