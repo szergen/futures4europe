@@ -194,7 +194,13 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         personData.formerAfiliations,
         defaultPersonData.formerAfiliations
       ) ||
-      personData.personTag.name !== defaultPersonData.personTag.name
+      personData.personTag.name !== defaultPersonData.personTag.name ||
+      personData?.data?.linkedinLink !==
+        defaultPersonData?.data?.linkedinLink ||
+      personData?.data?.websiteLink !== defaultPersonData?.data?.websiteLink ||
+      personData?.data?.researchGateLink !==
+        defaultPersonData?.data?.researchGateLink ||
+      personData?.data?.orcidLink !== defaultPersonData?.data?.orcidLink
     ) {
       const updatedItem = await updateDataItem(
         personData.dataCollectionId,
@@ -729,9 +735,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={personData.methods?.map((method: any) => method?.name)}
-        updatePostData={(value) =>
-          updatePersonDataOnKeyValue('foreSightMethods', value)
-        }
+        updatePostData={(value) => updatePersonDataOnKeyValue('methods', value)}
         tagType="foresight method"
         handleTagCreated={handleTagCreated}
       />

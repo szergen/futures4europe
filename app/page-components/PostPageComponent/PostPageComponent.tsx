@@ -937,6 +937,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         handleUpdatePostData={(value) =>
           updatePostDataBasedOnKeyValue('internalLinks', value)
         }
+        title="Content related to this Page"
       />
       {/* Files */}
       {/* {postData?.pageType?.[0]?.name?.toLowerCase() !== 'project result' && ( */}

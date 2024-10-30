@@ -211,7 +211,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
-      projectData.projectTag.name !== defaultProjectData.projectTag.name
+      projectData.projectTag.name !== defaultProjectData.projectTag.name ||
+      projectData?.data?.linkedinLink !==
+        defaultProjectData?.data?.linkedinLink ||
+      projectData?.data?.websiteLink !== defaultProjectData?.data?.websiteLink
     ) {
       const updatedItem = await updateDataItem(
         projectData.dataCollectionId,
@@ -780,7 +783,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         handleUpdatePostData={(value) =>
           updateProjectDataOnKeyValue('internalLinks', value)
         }
-        title="Posts"
+        title="Content related to this Project"
       />
       {/* Files */}
       <FilesComponent
