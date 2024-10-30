@@ -21,36 +21,18 @@ import { items } from '@wix/data';
 
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
 
-export default function RegisterPage() {
+export default function ForgotPassword() {
   const [error, setError] = useState('');
   // const router = useRouter();
-  const { register: wixRegister, sendSetPasswordEmail } =
-    useWixModules(authentication);
-  const { insertDataItem } = useWixModules(items);
+  const { sendSetPasswordEmail } = useWixModules(authentication);
+  // const { insertDataItem } = useWixModules(items);
 
   const [captchaToken, setCaptchaToken] = useState('');
-  const [isTagCreated, setIsTagCreated] = useState(false);
+  const [isMailSent, setIsMailSent] = useState(false);
   const [showAccountCreatedModal, setShowAccountCreatedModal] = useState(false);
 
   const handleCaptchaChange = (token: string) => {
     setCaptchaToken(token);
-  };
-
-  const uploadTag = async (tagName: string) => {
-    try {
-      const result = await insertDataItem({
-        dataCollectionId: 'Tags',
-        dataItem: {
-          data: {
-            name: tagName,
-            tagType: 'person',
-          },
-        },
-      });
-      return result;
-    } catch (error) {
-      console.error('Error uploading tag:', error);
-    }
   };
 
   const handleRegister = async (event: SubmitEvent) => {
@@ -58,38 +40,16 @@ export default function RegisterPage() {
     try {
       setShowAccountCreatedModal(true);
       const email = event?.target?.email?.value;
-      const password = event.target?.password?.value;
-      const firstName = event.target?.firstName?.value;
-      const lastName = event.target?.lastName?.value;
+
       console.log('email', email);
-      console.log('password', password);
+
       console.log('captchaToken', captchaToken);
-      const response = await wixRegister(email, password, {
-        profilePrivacyStatus: 'PUBLIC',
-        contactInfo: {
-          firstName: firstName,
-          lastName: lastName,
-        },
-      });
+      const response = await sendSetPasswordEmail(email);
       console.log('response', response);
-
-      // #region Wix upload logic
-      let tagResult;
-      if (response) {
-        tagResult = await uploadTag(firstName + ' ' + lastName);
-        console.log('tagResult', tagResult);
-        if (tagResult) {
-          setIsTagCreated(true);
-        }
-      }
-      // #endregion
-
-      // const wixClient = await getWixClientMember();
-      // await wixClient.authentication.register(email, password);
-      // router.push('/login'); // Redirect to login page after registration
+      setIsMailSent(true);
     } catch (err) {
-      setError('Registration failed. Please try again.');
-      console.error('Registration failed:', err);
+      setError('Error sending email');
+      console.error('Error:', err);
       setShowAccountCreatedModal(false);
     }
   };
@@ -115,10 +75,10 @@ export default function RegisterPage() {
                   className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl"
                 >
                   <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
-                    Register Account
+                    Forgot Password
                   </h3>
                   <p className="mb-4 text-grey-700">
-                    Enter your email, first name, last name and password
+                    Enter your email to reset your password
                   </p>
                   {/* Google */}
                   {/* <a className="btn-disabled flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-300 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">
@@ -151,58 +111,7 @@ export default function RegisterPage() {
                     icon={HiMail}
                     required
                   />
-                  {/* First Name */}
-                  <Label
-                    className="mb-2 text-sm text-start text-grey-900"
-                    htmlFor="firstName"
-                    value="First Name*"
-                  />
 
-                  <TextInput
-                    className="block relative"
-                    id="firstName"
-                    type="text"
-                    sizing="lg"
-                    shadow
-                    placeholder="First Name"
-                    icon={HiMail}
-                    required
-                  />
-                  {/* Last Name */}
-                  <Label
-                    className="mb-2 text-sm text-start text-grey-900"
-                    htmlFor="lastName"
-                    value="Last Name*"
-                  />
-
-                  <TextInput
-                    className="block relative"
-                    id="lastName"
-                    type="text"
-                    sizing="lg"
-                    shadow
-                    placeholder="Last Name"
-                    icon={HiMail}
-                    required
-                  />
-                  {/* Password */}
-
-                  <Label
-                    className="mb-2 text-sm text-start text-grey-900"
-                    htmlFor="password"
-                    value="Password*"
-                  />
-                  <TextInput
-                    id="password"
-                    className="block relative"
-                    sizing="lg"
-                    shadow
-                    placeholder="create a password"
-                    icon={HiKey}
-                    type="password"
-                    required
-                    minLength={6}
-                  />
                   <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} // Site key from Google
                     onChange={handleCaptchaChange}
@@ -215,7 +124,7 @@ export default function RegisterPage() {
                     type="submit"
                     disabled={!captchaToken}
                   >
-                    Create account
+                    Reset password
                   </Button>
                   <p className="text-sm leading-relaxed text-grey-900">
                     Are you allready a memebr?{' '}
@@ -233,9 +142,9 @@ export default function RegisterPage() {
         show={showAccountCreatedModal}
         onClose={() => setShowAccountCreatedModal(false)}
       >
-        <Modal.Header>Registering Account</Modal.Header>
+        <Modal.Header>Resetting password</Modal.Header>
         <Modal.Body>
-          {isTagCreated ? (
+          {isMailSent ? (
             <div>
               <div className="text-center m-4">
                 <div>
@@ -254,22 +163,12 @@ export default function RegisterPage() {
                     />
                   </svg>
                 </div>
-                Account successfully created. <br />
                 <span className="font-bold">
-                  An admin must approve your account before you can login.
+                  Password reset link successfully sent to your email address
                   {/* Green checkmark */}
                 </span>
               </div>
               <div className="flex flex-wrap justify-center">
-                <Link href="/">
-                  <Button
-                    color="primary"
-                    className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
-                    type="submit"
-                  >
-                    Back to Homepage
-                  </Button>
-                </Link>
                 <Link href="/login">
                   <Button
                     color="primary"
@@ -283,7 +182,7 @@ export default function RegisterPage() {
             </div>
           ) : (
             <>
-              <div className="text-center m-4">Creating Account</div>
+              <div className="text-center m-4">Resetting Password</div>
               <LoadingSpinner />
             </>
           )}
