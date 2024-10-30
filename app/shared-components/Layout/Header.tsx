@@ -265,7 +265,7 @@ const Header = () => {
             <p className="font-bold text-base">Login</p>
           </Link>
 
-          <Link href="/dashboard">
+          <Link href="/register">
             <div>
               <GlowButton>Register</GlowButton>
             </div>
