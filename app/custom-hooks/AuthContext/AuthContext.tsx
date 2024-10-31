@@ -1,4 +1,3 @@
-// AuthContext.tsx
 import {
   createContext,
   useContext,
@@ -10,11 +9,10 @@ import { getContactsItem } from '@app/wixUtils/client-side';
 import { IOAuthStrategy, useWixAuth, useWixModules } from '@wix/sdk-react';
 import { members } from '@wix/members';
 import useFetchUserData from '@app/custom-hooks/useFetchUserData';
-import useFetchTags from '../useFetchTags';
+import fetchTagsWithPopularity from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
-import { calculatePopularity } from '@app/utils/tags.utls';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -54,7 +52,7 @@ interface AuthContextType {
   handleInfoPageCreated: () => void;
   isLoadingInProgress: boolean;
   setIsLoadingInProgress: (value: boolean) => void;
-  // existingPostPagesTitles: string[];
+  userTagFetched: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -78,11 +76,10 @@ const initialState = {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [areTagsCalculatedWithPopularity, setAreTagsCalculatedWithPopularity] =
-    useState(false);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(initialState);
   const [isLoadingInProgress, setIsLoadingInProgress] = useState(false);
+  const [isUserTagAssociated, setIsUserTagAssociated] = useState(false);
 
   const { setTokens: wixSetTokens, loggedIn: wixLoggedIn } =
     useWixAuth() as unknown as IOAuthStrategy;
@@ -103,7 +100,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
 
-  // const existingPostPagesTitles = postPages?.map((link) => link.data.title);
   // #endregion
 
   // #region Fetch info pages
@@ -120,33 +116,48 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // #endregion
 
   // #region Fetch tags and refresh based on tag creation
-  const [refreshTags, setRefreshTags] = useState(false);
-  const { tags, tagsFetched } = useFetchTags(
-    refreshTags,
-    setIsLoadingInProgress,
-    infoPages.length > 0 ? infoPages : [],
-    postPages.length > 0 ? postPages : []
-  );
-  console.log('debu10->tags', tags);
+  const [tags, setTags] = useState([] as any[]);
 
-  // console.log('Context -> userTag', getUserTag());
+  const [refreshTags, setRefreshTags] = useState(false);
+  const [tagsFetched, setTagsFetched] = useState(false);
+  const [userTagFetched, setUserTagFetched] = useState(false);
+
+  useEffect(() => {
+    if (infoPages.length > 0 && postPages.length > 0) {
+      setIsLoadingInProgress(true);
+      fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
+        setTags(allTags);
+        setTagsFetched(true);
+        setIsLoadingInProgress(false);
+      });
+    }
+  }, [infoPages, postPages, refreshTags]);
+
+  const handleTagCreated = () => {
+    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
 
   const getUserTag = (userName: string) => {
     const userTag = tags.find((tag) => tag.name === userName);
     return userTag;
   };
 
-  const handleTagCreated = () => {
-    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
-  };
   useEffect(() => {
-    if (tags.length > 0 && userDetails.userName && !userDetails.userTag) {
+    if (
+      tagsFetched &&
+      tags.length > 0 &&
+      userDetails.userName &&
+      isUserTagAssociated === false
+    ) {
+      console.log('getting');
       updateUserDetails((prev: any) => ({
         ...prev,
         userTag: getUserTag(userDetails.userName),
       }));
+      setIsUserTagAssociated(true);
+      setUserTagFetched(true);
     }
-  }, [tags, userDetails.userName]);
+  }, [tagsFetched, userDetails.userName, userDetails.userTag?.name]);
   // #endregion
 
   useEffect(() => {
@@ -234,25 +245,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     console.log('debug1->userDetails', userDetails);
   }, [userDetails]);
 
-  // useEffect(() => {
-  //   if (areTagsCalculatedWithPopularity) return;
-  //   if (tags.length > 0 && infoPages.length > 0 && postPages.length > 0) {
-  //     console.log('tags->calculating popularity');
-  //     const tagsWithPopularity = calculatePopularity(
-  //       tags,
-  //       infoPages,
-  //       postPages
-  //     );
-  //     const findProjectInfoTag = tagsWithPopularity.find(
-  //       (tag) => tag.name === 'project info'
-  //     );
-  //     console.log('tag->project info', findProjectInfoTag);
-  //     setTagsFetched(true);
-  //     setTags(tagsWithPopularity);
-  //     setAreTagsCalculatedWithPopularity(true);
-  //   }
-  // }, [tags, infoPages, postPages]);
-
   return (
     <AuthContext.Provider
       value={{
@@ -278,7 +270,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         handleInfoPageCreated,
         isLoadingInProgress,
         setIsLoadingInProgress,
-        // existingPostPagesTitles,
+        userTagFetched,
       }}
     >
       {children}
