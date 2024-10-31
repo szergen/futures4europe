@@ -5,7 +5,7 @@ import { referencedItemOptions } from '@app/wixUtils/server-side';
 
 const useFetchInfoPages = (
   refresh: boolean,
-  setIsLoadingInProgress: (value: boolean) => undefined
+  setIsLoadingInProgress: (value: boolean) => void
 ) => {
   const [infoPages, setInfoPages] = useState<any[]>([]);
   const [infoPagesFetched, setInfoPagesFetched] = useState(false);
