@@ -45,6 +45,25 @@ export const decidePageTypeItems = (
   }
 };
 
+export const automaticallyDecidePathPrefixBasedOnPageType = (type: string) => {
+  switch (type) {
+    case 'post':
+      return '/post/';
+    case 'event':
+      return '/post/';
+    case 'project-result':
+      return '/post/';
+    case 'project info':
+      return '/project/';
+    case 'person info':
+      return '/person/';
+    case 'organisation info':
+      return '/organisation/';
+    default:
+      return '/post/';
+  }
+};
+
 export const filterPagesByType = (type: string, pages: any) => {
   return pages.filter((page: any) => page?.pageTypes?.[0]?.name === type);
 };

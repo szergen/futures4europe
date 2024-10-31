@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
@@ -41,8 +42,9 @@ export const Tag: React.FC<TagProps> = ({
   disableTooltip,
   disableLink,
   tagLine,
-  disablePopularityHover,
+  disablePopularityHover = false,
   hardcodedMentions,
+  _id,
 }) => {
   if (!name) return null;
 
@@ -79,6 +81,7 @@ export const Tag: React.FC<TagProps> = ({
               disableTooltip={disableTooltip}
               disablePopularityHover={disablePopularityHover}
               tagLine={tagLine}
+              _id={_id}
             />
           </Link>
         ) : (
@@ -96,7 +99,9 @@ export const Tag: React.FC<TagProps> = ({
             picture={picture}
             pictureAlt={pictureAlt}
             disableTooltip={disableTooltip}
+            disablePopularityHover={disablePopularityHover}
             tagLine={tagLine}
+            _id={_id}
           />
         )}
       </div>

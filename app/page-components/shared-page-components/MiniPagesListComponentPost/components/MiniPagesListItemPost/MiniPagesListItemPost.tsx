@@ -5,12 +5,14 @@ import Typography from '@app/shared-components/Typography/Typography';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import Link from 'next/link';
 import { getPropsForMiniPagesListItemPost } from './MiniPagesListItemPost.utils';
+import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
 
 export type MiniPagesListItemPostProps = {
   items: any[];
   title?: string;
   hideTitle?: boolean;
   pageTypePath?: 'post' | 'project' | 'person' | 'organisation';
+  automaticallyCalculatePath?: boolean;
 };
 
 const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
@@ -18,10 +20,11 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   title = 'Internal Links',
   hideTitle,
   pageTypePath,
-  postCollection,
+  automaticallyCalculatePath,
+  // postCollection,
 }) => {
   console.log('debug2->items', items);
-  console.log('postCollection', postCollection);
+  // console.log('postCollection', postCollection);
 
   return (
     <section className={classNames(style.posts)}>
@@ -36,7 +39,13 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
       {items.map((item, index) => (
         <Link
           key={item?.title + index}
-          href={`/${pageTypePath || 'post'}/${item.slug}`}
+          href={
+            automaticallyCalculatePath
+              ? `${automaticallyDecidePathPrefixBasedOnPageType(
+                  item?.pageTypes?.[0]
+                )}/${item.slug}`
+              : `/${pageTypePath || 'post'}/${item.slug}`
+          }
         >
           <MiniPagePost {...getPropsForMiniPagesListItemPost(item)} />
         </Link>

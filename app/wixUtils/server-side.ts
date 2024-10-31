@@ -83,6 +83,19 @@ const getCollectionItemByTitle = async (
   }
 };
 
+const getItemById = async (collectionName: string, itemId: string) => {
+  try {
+    const wixClient = await getWixClientData();
+    const respone = await wixClient.items.getDataItem(itemId, {
+      dataCollectionId: collectionName,
+    });
+    return respone;
+  } catch (error) {
+    console.error('Error getting Item By Id', error);
+    throw error;
+  }
+};
+
 const getCollectionItemBySlug = async (
   collectionName: string,
   slug: string
@@ -205,4 +218,5 @@ export {
   composePageWithReferencedItems,
   referencedItemOptions,
   getCollectionItemBySlug,
+  getItemById,
 };
