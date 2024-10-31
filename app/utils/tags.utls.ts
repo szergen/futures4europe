@@ -10,8 +10,6 @@ export const containsId = (obj: { [x: string]: any } | null, id: any) => {
   return false;
 };
 
-
-
 export function calculatePopularity(
   tags: Array<TagProps>,
   infoPages: any,
