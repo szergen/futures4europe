@@ -45,6 +45,7 @@ function OrganisationPageComponent({
     isLoggedIn,
     userDetails,
     tags,
+    tagsFetched,
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
@@ -57,7 +58,7 @@ function OrganisationPageComponent({
 
   // #region check if page is owned by user
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || !tagsFetched) return;
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (organisation?.data?._owner === id) {
@@ -68,7 +69,7 @@ function OrganisationPageComponent({
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, tagsFetched]);
   // #endregion
 
   organisation = {

@@ -53,6 +53,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     isLoggedIn,
     userDetails,
     tags,
+    tagsFetched,
     handleTagCreated,
     handleUserDataRefresh,
   } = useAuth();
@@ -64,7 +65,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
 
   // check if the page is owned by the user
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || !tagsFetched) return;
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (post?.data?._owner === id) {
@@ -75,7 +76,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, tagsFetched]);
   // Overwrite with Wix Data
   post = {
     ...post,

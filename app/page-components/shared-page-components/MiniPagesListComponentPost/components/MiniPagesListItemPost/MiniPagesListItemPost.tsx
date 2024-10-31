@@ -18,8 +18,10 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   title = 'Internal Links',
   hideTitle,
   pageTypePath,
+  postCollection,
 }) => {
   console.log('debug2->items', items);
+  console.log('postCollection', postCollection);
 
   return (
     <section className={classNames(style.posts)}>

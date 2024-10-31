@@ -44,6 +44,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     isLoggedIn,
     userDetails,
     tags,
+    tagsFetched,
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
@@ -55,7 +56,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   // #region check if page is owned by user
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || !tagsFetched) return;
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (person?.data?._owner === id) {
@@ -66,7 +67,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, tagsFetched]);
   // #endregion
 
   // #region Overwrite mock data with Wix data

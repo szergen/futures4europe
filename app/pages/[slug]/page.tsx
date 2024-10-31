@@ -46,6 +46,7 @@ export default async function Pages({ params }: any) {
 
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
+  // console.log('postCollection', postCollection);
 
   const postPages = postCollection.map((item) => item.data);
   const infoPages = infoPagesCollection.map((item) => item.data);
@@ -66,6 +67,7 @@ export default async function Pages({ params }: any) {
       />
       <div className={classNames(style.listContainer)}>
         <MiniPagesListItemPost
+          postCollection={postCollection}
           items={decidePageTypeItems(pageType, postPages, infoPages)}
           title={pageType}
           pageTypePath={
