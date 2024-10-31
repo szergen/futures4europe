@@ -305,37 +305,53 @@ const Header = () => {
           {/* Page Buttons */}
           <Tag
             name="Posts"
-            popularity={pageTypeCounts.post}
+            hardcodedMentions={
+              pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
+            }
             tagLine="List of Post Pages"
             tagPageLink="/pages/post"
           />
           <Tag
             name="Projects"
-            popularity={pageTypeCounts.project}
+            hardcodedMentions={
+              pageTypeCounts.project !== 0 ? pageTypeCounts.project : undefined
+            }
             tagLine="List of Project Info Pages"
             tagPageLink="/pages/project"
           />
           <Tag
             name="Project Results"
-            popularity={pageTypeCounts.projectResult}
+            hardcodedMentions={
+              pageTypeCounts.projectResult !== 0
+                ? pageTypeCounts.projectResult
+                : undefined
+            }
             tagLine="List of Project Result Pages"
             tagPageLink="/pages/project-result"
           />
           <Tag
             name="Events"
-            popularity={pageTypeCounts.event}
+            hardcodedMentions={
+              pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
+            }
             tagLine="List of Event Pages"
             tagPageLink="/pages/event"
           />
           <Tag
             name="Organisations"
-            popularity={pageTypeCounts.organisation}
+            hardcodedMentions={
+              pageTypeCounts.organisation !== 0
+                ? pageTypeCounts.organisation
+                : undefined
+            }
             tagLine="List of Organisation Info Pages"
             tagPageLink="/pages/organisation"
           />
           <Tag
             name="People"
-            popularity={pageTypeCounts.person}
+            hardcodedMentions={
+              pageTypeCounts.person !== 0 ? pageTypeCounts.person : undefined
+            }
             tagLine="List of Person Info Pages"
             tagPageLink="/pages/person"
           />

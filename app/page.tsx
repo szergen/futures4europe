@@ -647,14 +647,7 @@ export const Home = () => {
         {/* <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
           Featured Organisations
         </h2> */}
-        {featuredPages.featuredPosts.length > 0 && (
-          <MiniPagesListItemPost
-            items={featuredPages.featuredPosts.map(
-              (infoPage: any) => infoPage.data
-            )}
-            title="Featured Posts"
-          />
-        )}
+
         {featuredPages.featuredProjects.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjects.map(
@@ -678,6 +671,15 @@ export const Home = () => {
               (infoPage: any) => infoPage.data
             )}
             title="Featured Events"
+          />
+        )}
+
+        {featuredPages.featuredPosts.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredPosts.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Posts"
           />
         )}
 

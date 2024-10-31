@@ -1,0 +1,11 @@
+.listContainer {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.heroTitle {
+  font-size: 2.5rem; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 1rem; /* Margin below the title */
+  color: #4a5568;
+}

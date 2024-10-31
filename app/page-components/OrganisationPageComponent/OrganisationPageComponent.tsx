@@ -45,6 +45,7 @@ function OrganisationPageComponent({
     isLoggedIn,
     userDetails,
     tags,
+    tagsFetched,
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
@@ -57,7 +58,7 @@ function OrganisationPageComponent({
 
   // #region check if page is owned by user
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || !tagsFetched) return;
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (organisation?.data?._owner === id) {
@@ -68,7 +69,7 @@ function OrganisationPageComponent({
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, tagsFetched]);
   // #endregion
 
   organisation = {
@@ -187,7 +188,11 @@ function OrganisationPageComponent({
       organisationData?.organisationTag?.name !==
         defaultOrganisationData?.organisationTag?.name ||
       organisationData?.organisationEstablishedDate !==
-        defaultOrganisationData?.organisationEstablishedDate
+        defaultOrganisationData?.organisationEstablishedDate ||
+      organisationData?.data?.linkedinLink !==
+        defaultOrganisationData?.data?.linkedinLink ||
+      organisationData?.data?.websiteLink !==
+        defaultOrganisationData?.data?.websiteLink
     ) {
       const updatedItem = await updateDataItem(
         organisationData.dataCollectionId,
@@ -216,6 +221,8 @@ function OrganisationPageComponent({
             }
           ),
           mediaFiles: organisationData.mediaFiles,
+          linkedinLink: organisationData?.data?.linkedinLink,
+          websiteLink: organisationData?.data?.websiteLink,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -791,6 +798,7 @@ function OrganisationPageComponent({
       <MiniPagesListComponentPost
         internalLinks={internalLinks}
         isEditModeOn={isEditModeOn}
+        title="Content related to this Organisation"
         handleUpdatePostData={(value) =>
           updateOrganisationDataOnKeyValue('internalLinks', value)
         }

@@ -14,6 +14,7 @@ import useFetchTags from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
+import { calculatePopularity } from '@app/utils/tags.utls';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -77,6 +78,8 @@ const initialState = {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [areTagsCalculatedWithPopularity, setAreTagsCalculatedWithPopularity] =
+    useState(false);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(initialState);
   const [isLoadingInProgress, setIsLoadingInProgress] = useState(false);
@@ -89,11 +92,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserDetails(details);
   };
 
+  // #region Fetch post pages
+  const [refreshPostPages, setRefreshPostPages] = useState(false);
+  const { postPages, postPagesFetched } = useFetchPostPages(
+    refreshPostPages,
+    setIsLoadingInProgress
+  );
+
+  const handlePostPageCreated = () => {
+    setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+
+  // const existingPostPagesTitles = postPages?.map((link) => link.data.title);
+  // #endregion
+
+  // #region Fetch info pages
+  const [refreshInfoPages, setRefreshInfoPages] = useState(false);
+  const { infoPages, infoPagesFetched } = useFetchInfoPages(
+    refreshInfoPages,
+    setIsLoadingInProgress
+  );
+  console.log('debug1->infoPages', infoPages);
+
+  const handleInfoPageCreated = () => {
+    setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  // #endregion
+
   // #region Fetch tags and refresh based on tag creation
   const [refreshTags, setRefreshTags] = useState(false);
   const { tags, tagsFetched } = useFetchTags(
     refreshTags,
-    setIsLoadingInProgress
+    setIsLoadingInProgress,
+    infoPages.length > 0 ? infoPages : [],
+    postPages.length > 0 ? postPages : []
   );
   console.log('debu10->tags', tags);
 
@@ -198,36 +230,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   // #endregion
 
-  // #region Fetch post pages
-  const [refreshPostPages, setRefreshPostPages] = useState(false);
-  const { postPages, postPagesFetched } = useFetchPostPages(
-    refreshPostPages,
-    setIsLoadingInProgress
-  );
-
-  const handlePostPageCreated = () => {
-    setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
-  };
-
-  // const existingPostPagesTitles = postPages?.map((link) => link.data.title);
-  // #endregion
-
-  // #region Fetch info pages
-  const [refreshInfoPages, setRefreshInfoPages] = useState(false);
-  const { infoPages, infoPagesFetched } = useFetchInfoPages(
-    refreshInfoPages,
-    setIsLoadingInProgress
-  );
-  console.log('debug1->infoPages', infoPages);
-
-  const handleInfoPageCreated = () => {
-    setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
-  };
-
   useEffect(() => {
     console.log('debug1->userDetails', userDetails);
   }, [userDetails]);
-  // #endregion
+
+  // useEffect(() => {
+  //   if (areTagsCalculatedWithPopularity) return;
+  //   if (tags.length > 0 && infoPages.length > 0 && postPages.length > 0) {
+  //     console.log('tags->calculating popularity');
+  //     const tagsWithPopularity = calculatePopularity(
+  //       tags,
+  //       infoPages,
+  //       postPages
+  //     );
+  //     const findProjectInfoTag = tagsWithPopularity.find(
+  //       (tag) => tag.name === 'project info'
+  //     );
+  //     console.log('tag->project info', findProjectInfoTag);
+  //     setTagsFetched(true);
+  //     setTags(tagsWithPopularity);
+  //     setAreTagsCalculatedWithPopularity(true);
+  //   }
+  // }, [tags, infoPages, postPages]);
 
   return (
     <AuthContext.Provider

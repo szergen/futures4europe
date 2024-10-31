@@ -44,6 +44,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     isLoggedIn,
     userDetails,
     tags,
+    tagsFetched,
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
@@ -55,7 +56,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   // #region check if page is owned by user
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn || !tagsFetched) return;
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (person?.data?._owner === id) {
@@ -66,7 +67,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, tagsFetched]);
   // #endregion
 
   // #region Overwrite mock data with Wix data
@@ -194,7 +195,13 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         personData.formerAfiliations,
         defaultPersonData.formerAfiliations
       ) ||
-      personData.personTag.name !== defaultPersonData.personTag.name
+      personData.personTag.name !== defaultPersonData.personTag.name ||
+      personData?.data?.linkedinLink !==
+        defaultPersonData?.data?.linkedinLink ||
+      personData?.data?.websiteLink !== defaultPersonData?.data?.websiteLink ||
+      personData?.data?.researchGateLink !==
+        defaultPersonData?.data?.researchGateLink ||
+      personData?.data?.orcidLink !== defaultPersonData?.data?.orcidLink
     ) {
       const updatedItem = await updateDataItem(
         personData.dataCollectionId,
@@ -729,9 +736,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         isEditModeOn={isEditModeOn}
         tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={personData.methods?.map((method: any) => method?.name)}
-        updatePostData={(value) =>
-          updatePersonDataOnKeyValue('foreSightMethods', value)
-        }
+        updatePostData={(value) => updatePersonDataOnKeyValue('methods', value)}
         tagType="foresight method"
         handleTagCreated={handleTagCreated}
       />

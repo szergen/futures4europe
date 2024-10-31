@@ -25,6 +25,7 @@ const MiniPagesListComponentPost: React.FC<MiniPagesListComponentPostProps> = ({
           <InternalLinksEditor
             internalLinks={internalLinks}
             handleUpdatePostData={handleUpdatePostData}
+            title={title}
           />
         </div>
       )}
