@@ -47,6 +47,27 @@ const getCollectionItemByTitle = async (
   }
 };
 
+const getCollectionItems = async (collectionName: string) => {
+  try {
+    const response = await fetch('/api/getCollectionItems', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get collection items');
+    }
+
+    const item = await response.json();
+    return item;
+  } catch (error) {
+    console.error('Error getting collection items:', error);
+  }
+};
+
 const getCollection = async (collectionName: string) => {
   try {
     const response = await fetch('/api/getCollection', {
@@ -264,4 +285,5 @@ export {
   replaceDataItemReferences,
   generateFileUploadUrl,
   revalidateDataItem,
+  getCollectionItems,
 };

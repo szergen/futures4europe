@@ -157,7 +157,7 @@ export default function LoginPage() {
                       <p className="mb-4 text-grey-700">
                         Enter your email and password
                       </p>
-                      <a className="btn-disabled flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-300 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">
+                      {/* <a className="btn-disabled flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-300 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300">
                         <img
                           alt=""
                           className="h-5 mr-2"
@@ -169,7 +169,7 @@ export default function LoginPage() {
                         <hr className="h-0 border-b border-solid border-grey-500 grow" />
                         <p className="mx-4 text-grey-600">or</p>
                         <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                      </div>
+                      </div> */}
 
                       <Label
                         className="mb-2 text-sm text-start text-grey-900"
@@ -220,9 +220,9 @@ export default function LoginPage() {
 
                         <a
                           className="mr-4 text-sm font-medium text-purple-blue-500"
-                          href="javascript:void(0)"
+                          href="/forgot-password"
                         >
-                          Forget password?
+                          Forgot password?
                         </a>
                       </div>
                       <Button

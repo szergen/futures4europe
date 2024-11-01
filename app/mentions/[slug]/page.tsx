@@ -3,6 +3,7 @@ import React from 'react';
 // import PostPageComponent from '@app/page-components/PostPageComponent/PostPageComponent';
 import {
   getCollection,
+  getItemById,
   // getCollectionItemByTitle,
   // getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
@@ -11,6 +12,8 @@ import MiniPagesListItemPost from '@app/page-components/shared-page-components/M
 import Hero from '@app/shared-components/Hero/Hero';
 import style from './page.module.css';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
+import { containsId } from '@app/utils/tags.utls';
+import Tag from '@app/shared-components/Tag/Tag';
 // import { getCollection } from '@app/wixUtils/client-side';
 
 // Next.js will invalidate the cache when a
@@ -20,63 +23,60 @@ export const revalidate = 0;
 // We'll prerender only the params from `generateStaticParams` at build time.
 // If a request comes in for a path that hasn't been generated,
 // Next.js will server-render the page on-demand.
-export const dynamicParams = false; // or false, to 404 on unknown paths
-
-const validParams = [
-  { id: 'post' },
-  { id: 'project' },
-  { id: 'person' },
-  { id: 'organisation' },
-  { id: 'event' },
-  { id: 'project-result' },
-];
-
-// Function to generate static paths
-export async function generateStaticParams() {
-  return validParams;
-}
+export const dynamicParams = true; // or false, to 404 on unknown paths
 
 export default async function Pages({ params }: any) {
   console.log('Pages Params', params.slug);
-  const pageType = params.slug;
-
-  if (validParams.findIndex((item) => item.id === pageType) === -1) {
-    return <div>Page Type not supported...</div>;
-  }
+  const tagId = params.slug;
 
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
+  const currentTagData = await getItemById('Tags', tagId);
   // console.log('postCollection', postCollection);
 
   const postPages = postCollection.map((item) => item.data);
   const infoPages = infoPagesCollection.map((item) => item.data);
 
+  const allPages = [...postPages, ...infoPages];
+
+  console.log('tagName', currentTagData?.data?.name);
+
+  let items = allPages.filter((page: any) => {
+    return containsId(page, tagId);
+  });
+
+  // console.log('items', items);
+
   //Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
   // console.log('postItem Data', postPageItem?.data);
 
-  if (!postCollection || !infoPagesCollection) {
+  if (!postCollection || !infoPagesCollection || !currentTagData) {
     return <div>Loading...</div>; // You can also add a loading spinner here
   }
 
   return (
     <div className={classNames('w-full')}>
-      <Hero
-        title={`${pageType.toUpperCase()} Pages`}
-        subtitle={`sorted by published date`}
-      />
+      <Hero subtitle={`sorted by published date`}>
+        <div className="flex justify-center">
+          <h1
+            className={classNames(
+              'text-4xl',
+              'font-bold',
+              'mb-4',
+              style.heroTitle
+            )}
+          >
+            Mentions of
+          </h1>
+          <Tag {...currentTagData?.data} className="ml-2" />
+        </div>
+      </Hero>
       <div className={classNames(style.listContainer)}>
         <MiniPagesListItemPost
-          postCollection={postCollection}
-          items={decidePageTypeItems(pageType, postPages, infoPages)}
-          title={pageType}
-          pageTypePath={
-            ['event', 'project-result', 'post'].find(
-              (type) => type === pageType
-            )
-              ? 'post'
-              : pageType
-          }
+          // postCollection={postCollection}
+          items={items}
+          automaticallyCalculatePath={true}
           hideTitle
         />
       </div>

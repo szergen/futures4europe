@@ -17,6 +17,7 @@ export type TagContainerProps = {
   disableTooltip?: boolean;
   tagLine?: string;
   disablePopularityHover?: boolean;
+  _id?: string;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -30,6 +31,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   disableTooltip,
   tagLine,
   disablePopularityHover,
+  _id,
 }) => {
   const showThumbnail = Boolean(picture || tagCategory === 'person');
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
@@ -84,8 +86,8 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           {popularity && (
             <TagCounter
               popularity={popularity}
-              tagTrend={tagTrend}
               disablePopularityHover={disablePopularityHover}
+              _id={_id}
             />
           )}
         </span>

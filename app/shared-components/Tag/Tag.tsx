@@ -1,10 +1,12 @@
+'use client';
 import Link from 'next/link';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Tag.module.css';
 import { TagCategories } from './Tag.utils';
 import TagContainer from './components/TagContainer/TagContainer';
 import PopoverComponent from '../PopoverComponent/PopoverComponent';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export type TagProps = {
   name: string;
@@ -13,7 +15,7 @@ export type TagProps = {
   tagPageLink?: string;
   picture?: string;
   pictureAlt?: string;
-  popularity?: number;
+  // popularity?: number;
   tagTrend?: number;
   enableLabel?: boolean;
   // New changes
@@ -22,6 +24,9 @@ export type TagProps = {
   disableTooltip?: boolean;
   disableLink?: boolean;
   disablePopularityHover?: boolean;
+  _id?: string;
+  mentions?: number;
+  hardcodedMentions?: number;
 };
 
 export const Tag: React.FC<TagProps> = ({
@@ -29,7 +34,7 @@ export const Tag: React.FC<TagProps> = ({
   className,
   tagCategory,
   tagPageLink,
-  popularity,
+  mentions: popularity,
   tagTrend,
   picture,
   pictureAlt,
@@ -37,9 +42,24 @@ export const Tag: React.FC<TagProps> = ({
   disableTooltip,
   disableLink,
   tagLine,
-  disablePopularityHover,
+  disablePopularityHover = false,
+  hardcodedMentions,
+  _id,
 }) => {
   if (!name) return null;
+
+  const { tags, tagsFetched } = useAuth();
+  const [currentPopularity, setCurrentPopularity] = useState(popularity);
+
+  useEffect(() => {
+    if (!tagsFetched || currentPopularity) return;
+    const tag = tags?.find((tag) => tag?.name === name);
+    if (tag) {
+      setCurrentPopularity(tag.mentions);
+    }
+    console.log(`tag ${tag} has been referenced ${popularity} times`);
+  }, [tags, tagsFetched]);
+
   return (
     <>
       {enableLabel && tagCategory && (
@@ -52,13 +72,16 @@ export const Tag: React.FC<TagProps> = ({
               name={name}
               className={className}
               tagCategory={tagCategory}
-              popularity={popularity}
+              popularity={
+                hardcodedMentions ? hardcodedMentions : currentPopularity
+              }
               tagTrend={tagTrend}
               picture={picture}
               pictureAlt={pictureAlt}
               disableTooltip={disableTooltip}
               disablePopularityHover={disablePopularityHover}
               tagLine={tagLine}
+              _id={_id}
             />
           </Link>
         ) : (
@@ -69,12 +92,16 @@ export const Tag: React.FC<TagProps> = ({
               className
             )}
             tagCategory={tagCategory}
-            popularity={popularity}
+            popularity={
+              hardcodedMentions ? hardcodedMentions : currentPopularity
+            }
             tagTrend={tagTrend}
             picture={picture}
             pictureAlt={pictureAlt}
             disableTooltip={disableTooltip}
+            disablePopularityHover={disablePopularityHover}
             tagLine={tagLine}
+            _id={_id}
           />
         )}
       </div>

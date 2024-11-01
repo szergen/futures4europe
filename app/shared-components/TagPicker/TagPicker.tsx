@@ -317,6 +317,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                 {...correspondingTag}
                 disableTooltip={true}
                 disableLink={true}
+                disablePopularityHover={true}
               />
               <p>{correspondingTag.tagLine}</p>
             </div>

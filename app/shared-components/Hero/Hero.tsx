@@ -5,9 +5,10 @@ import style from './Hero.module.css';
 export type HeroProps = {
   title: string;
   subtitle: string;
+  children?: React.ReactNode;
 };
 
-const Hero = ({ title, subtitle }: HeroProps) => {
+const Hero = ({ title, subtitle, children }: HeroProps) => {
   return (
     <div
       className={classNames(
@@ -22,6 +23,7 @@ const Hero = ({ title, subtitle }: HeroProps) => {
       >
         {title}
       </h1>
+      {children}
       <p className={classNames('text-lg', 'text-gray-700')}>{subtitle}</p>
     </div>
   );

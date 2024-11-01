@@ -1,4 +1,3 @@
-// AuthContext.tsx
 import {
   createContext,
   useContext,
@@ -10,7 +9,7 @@ import { getContactsItem } from '@app/wixUtils/client-side';
 import { IOAuthStrategy, useWixAuth, useWixModules } from '@wix/sdk-react';
 import { members } from '@wix/members';
 import useFetchUserData from '@app/custom-hooks/useFetchUserData';
-import useFetchTags from '../useFetchTags';
+import fetchTagsWithPopularity from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
@@ -53,7 +52,7 @@ interface AuthContextType {
   handleInfoPageCreated: () => void;
   isLoadingInProgress: boolean;
   setIsLoadingInProgress: (value: boolean) => void;
-  // existingPostPagesTitles: string[];
+  userTagFetched: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -80,6 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(initialState);
   const [isLoadingInProgress, setIsLoadingInProgress] = useState(false);
+  const [isUserTagAssociated, setIsUserTagAssociated] = useState(false);
 
   const { setTokens: wixSetTokens, loggedIn: wixLoggedIn } =
     useWixAuth() as unknown as IOAuthStrategy;
@@ -89,32 +89,75 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserDetails(details);
   };
 
-  // #region Fetch tags and refresh based on tag creation
-  const [refreshTags, setRefreshTags] = useState(false);
-  const { tags, tagsFetched } = useFetchTags(
-    refreshTags,
+  // #region Fetch post pages
+  const [refreshPostPages, setRefreshPostPages] = useState(false);
+  const { postPages, postPagesFetched } = useFetchPostPages(
+    refreshPostPages,
     setIsLoadingInProgress
   );
-  console.log('debu10->tags', tags);
 
-  // console.log('Context -> userTag', getUserTag());
+  const handlePostPageCreated = () => {
+    setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+
+  // #endregion
+
+  // #region Fetch info pages
+  const [refreshInfoPages, setRefreshInfoPages] = useState(false);
+  const { infoPages, infoPagesFetched } = useFetchInfoPages(
+    refreshInfoPages,
+    setIsLoadingInProgress
+  );
+  console.log('debug1->infoPages', infoPages);
+
+  const handleInfoPageCreated = () => {
+    setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  // #endregion
+
+  // #region Fetch tags and refresh based on tag creation
+  const [tags, setTags] = useState([] as any[]);
+
+  const [refreshTags, setRefreshTags] = useState(false);
+  const [tagsFetched, setTagsFetched] = useState(false);
+  const [userTagFetched, setUserTagFetched] = useState(false);
+
+  useEffect(() => {
+    if (infoPages.length > 0 && postPages.length > 0) {
+      setIsLoadingInProgress(true);
+      fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
+        setTags(allTags);
+        setTagsFetched(true);
+        setIsLoadingInProgress(false);
+      });
+    }
+  }, [infoPages, postPages, refreshTags]);
+
+  const handleTagCreated = () => {
+    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
 
   const getUserTag = (userName: string) => {
     const userTag = tags.find((tag) => tag.name === userName);
     return userTag;
   };
 
-  const handleTagCreated = () => {
-    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
-  };
   useEffect(() => {
-    if (tags.length > 0 && userDetails.userName && !userDetails.userTag) {
+    if (
+      tagsFetched &&
+      tags.length > 0 &&
+      userDetails.userName &&
+      isUserTagAssociated === false
+    ) {
+      console.log('getting');
       updateUserDetails((prev: any) => ({
         ...prev,
         userTag: getUserTag(userDetails.userName),
       }));
+      setIsUserTagAssociated(true);
+      setUserTagFetched(true);
     }
-  }, [tags, userDetails.userName]);
+  }, [tagsFetched, userDetails.userName, userDetails.userTag?.name]);
   // #endregion
 
   useEffect(() => {
@@ -198,36 +241,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   // #endregion
 
-  // #region Fetch post pages
-  const [refreshPostPages, setRefreshPostPages] = useState(false);
-  const { postPages, postPagesFetched } = useFetchPostPages(
-    refreshPostPages,
-    setIsLoadingInProgress
-  );
-
-  const handlePostPageCreated = () => {
-    setRefreshPostPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
-  };
-
-  // const existingPostPagesTitles = postPages?.map((link) => link.data.title);
-  // #endregion
-
-  // #region Fetch info pages
-  const [refreshInfoPages, setRefreshInfoPages] = useState(false);
-  const { infoPages, infoPagesFetched } = useFetchInfoPages(
-    refreshInfoPages,
-    setIsLoadingInProgress
-  );
-  console.log('debug1->infoPages', infoPages);
-
-  const handleInfoPageCreated = () => {
-    setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
-  };
-
   useEffect(() => {
     console.log('debug1->userDetails', userDetails);
   }, [userDetails]);
-  // #endregion
 
   return (
     <AuthContext.Provider
@@ -254,7 +270,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         handleInfoPageCreated,
         isLoadingInProgress,
         setIsLoadingInProgress,
-        // existingPostPagesTitles,
+        userTagFetched,
       }}
     >
       {children}
