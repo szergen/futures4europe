@@ -62,7 +62,7 @@ export default function LoginPage() {
           process.env.NEXT_PUBLIC_WIX_API_KEY as string
         );
 
-        console.log('tempTokens', tokens);
+        // console.log('tempTokens', tokens);
 
         await wixSetTokens(tokens);
         const isUserLoggedIn = await wixLoggedIn();

@@ -13,6 +13,9 @@
   }
 }
 
+.topbarlink a{
+  text-decoration: underline;
+}
 
 .glowbutton {
   --button-background: #09041e;
