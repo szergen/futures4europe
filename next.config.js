@@ -27,7 +27,7 @@ const nextConfig = {
     return [
       {
         source: '/_api/oauth2/:path*',
-        destination: 'https://www.wixapis.com/_api/oauth2/:path*', // Proxy to Wix API
+        destination: 'https://www.wixapis.com/oauth2/:path*', // Proxy to Wix API
       },
     ];
   },
