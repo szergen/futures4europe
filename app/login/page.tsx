@@ -84,7 +84,7 @@ export default function LoginPage() {
             currentMember?.member?.contactId as string
           );
           if (contactData) {
-            console.log('contactData', contactData);
+            // console.log('contactData', contactData);
           }
 
           updateUserDetails({

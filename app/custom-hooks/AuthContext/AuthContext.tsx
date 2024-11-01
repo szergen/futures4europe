@@ -181,9 +181,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const contactData = await getContactsItem(
           currentMember?.member?.contactId || ''
         );
-        if (contactData) {
-          console.log('contactData', contactData);
-        }
+        // if (contactData) {
+        //   console.log('contactData', contactData);
+        // }
         console.log('Logged in as:', currentMember?.member?.profile?.nickname);
         console.log('currentMember', currentMember);
 
