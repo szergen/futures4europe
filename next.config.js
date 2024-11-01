@@ -23,6 +23,14 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/_api/oauth2/:path*',
+        destination: 'https://www.wixapis.com/_api/oauth2/:path*', // Proxy to Wix API
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

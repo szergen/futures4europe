@@ -18,7 +18,7 @@ const Footer = () => (
           </div>
           <div className="basis-1/3"></div>
           <div className="basis-1/2 pb-4">
-            <p className="mt-10">contact@futures4europe.eu</p>
+            <p className="mt-10">info@futures4europe.eu</p>
           </div>
         </div>
         <Logo fill={'#fff'} className="mt-4" />
