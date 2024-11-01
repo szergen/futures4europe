@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { members } from '@wix/members';
 import { useWixModules, useWixAuth, IOAuthStrategy } from '@wix/sdk-react';
@@ -19,25 +19,19 @@ import {
   Alert,
 } from 'flowbite-react';
 import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
-import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 
 export default function LoginPage() {
   const [error, setError] = useState('');
   const [isLoginProcessing, setIsLoginProcessing] = useState(false);
   const router = useRouter();
   const { login, isLoggedIn, updateUserDetails } = useAuth();
-  console.log('Login isLoggedIn', isLoggedIn);
+  // console.log('Login isLoggedIn', isLoggedIn);
 
   // #region React SDK Hooks
   const {
     login: wixLogin,
     loggedIn: wixLoggedIn,
     setTokens: wixSetTokens,
-    getMemberTokensForDirectLogin: wixGetMemberTokensForDirectLogin,
-    getMemberTokens,
-    generateOAuthData,
-    getAuthUrl,
-    parseFromUrl,
     getMemberTokensForExternalLogin,
   } = useWixAuth() as unknown as IOAuthStrategy;
 
