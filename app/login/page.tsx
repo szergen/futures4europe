@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { members } from '@wix/members';
 import { useWixModules, useWixAuth, IOAuthStrategy } from '@wix/sdk-react';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { getContactsItem } from '@app/wixUtils/client-side';
+import {
+  getContactsItem,
+  getContactsItemByEmail,
+} from '@app/wixUtils/client-side';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import {
   Button,
@@ -16,6 +19,7 @@ import {
   Alert,
 } from 'flowbite-react';
 import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
+import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 
 export default function LoginPage() {
   const [error, setError] = useState('');
@@ -31,6 +35,10 @@ export default function LoginPage() {
     setTokens: wixSetTokens,
     getMemberTokensForDirectLogin: wixGetMemberTokensForDirectLogin,
     getMemberTokens,
+    generateOAuthData,
+    getAuthUrl,
+    parseFromUrl,
+    getMemberTokensForExternalLogin,
   } = useWixAuth() as unknown as IOAuthStrategy;
 
   const { getCurrentMember: wixGetCurrentMember } = useWixModules(members);
@@ -50,10 +58,17 @@ export default function LoginPage() {
       if (response?.loginState === 'SUCCESS') {
         setIsLoginProcessing(true);
 
-        const tokens = await wixGetMemberTokensForDirectLogin(
-          response.data.sessionToken
+        const { _items } = await getContactsItemByEmail(email);
+
+        const memberId = _items[0]._id;
+        console.log('memberId', memberId);
+
+        const tokens = await getMemberTokensForExternalLogin(
+          memberId,
+          process.env.NEXT_PUBLIC_WIX_API_KEY as string
         );
-        console.log('tokens', tokens);
+
+        console.log('tempTokens', tokens);
 
         await wixSetTokens(tokens);
         const isUserLoggedIn = await wixLoggedIn();
@@ -66,7 +81,7 @@ export default function LoginPage() {
 
         if (currentMember) {
           const contactData = await getContactsItem(
-            currentMember?.member?.contactId
+            currentMember?.member?.contactId as string
           );
           if (contactData) {
             console.log('contactData', contactData);
