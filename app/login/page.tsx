@@ -1,11 +1,14 @@
 'use client';
 
-import { FormEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { members } from '@wix/members';
 import { useWixModules, useWixAuth, IOAuthStrategy } from '@wix/sdk-react';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { getContactsItem } from '@app/wixUtils/client-side';
+import {
+  getContactsItem,
+  getContactsItemByEmail,
+} from '@app/wixUtils/client-side';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import {
   Button,
@@ -22,15 +25,14 @@ export default function LoginPage() {
   const [isLoginProcessing, setIsLoginProcessing] = useState(false);
   const router = useRouter();
   const { login, isLoggedIn, updateUserDetails } = useAuth();
-  console.log('Login isLoggedIn', isLoggedIn);
+  // console.log('Login isLoggedIn', isLoggedIn);
 
   // #region React SDK Hooks
   const {
     login: wixLogin,
     loggedIn: wixLoggedIn,
     setTokens: wixSetTokens,
-    getMemberTokensForDirectLogin: wixGetMemberTokensForDirectLogin,
-    getMemberTokens,
+    getMemberTokensForExternalLogin,
   } = useWixAuth() as unknown as IOAuthStrategy;
 
   const { getCurrentMember: wixGetCurrentMember } = useWixModules(members);
@@ -50,10 +52,17 @@ export default function LoginPage() {
       if (response?.loginState === 'SUCCESS') {
         setIsLoginProcessing(true);
 
-        const tokens = await wixGetMemberTokensForDirectLogin(
-          response.data.sessionToken
+        const { _items } = await getContactsItemByEmail(email);
+
+        const memberId = _items[0]._id;
+        console.log('memberId', memberId);
+
+        const tokens = await getMemberTokensForExternalLogin(
+          memberId,
+          process.env.NEXT_PUBLIC_WIX_API_KEY as string
         );
-        console.log('tokens', tokens);
+
+        console.log('tempTokens', tokens);
 
         await wixSetTokens(tokens);
         const isUserLoggedIn = await wixLoggedIn();
@@ -66,10 +75,10 @@ export default function LoginPage() {
 
         if (currentMember) {
           const contactData = await getContactsItem(
-            currentMember?.member?.contactId
+            currentMember?.member?.contactId as string
           );
           if (contactData) {
-            console.log('contactData', contactData);
+            // console.log('contactData', contactData);
           }
 
           updateUserDetails({
