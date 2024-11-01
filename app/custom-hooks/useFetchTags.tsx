@@ -6,13 +6,13 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
 
   try {
     const allTags = await getCollectionItems('Tags');
-    console.log('allTags', allTags);
+    // console.log('allTags', allTags);
 
     const allTagsWithMentions = allTags.map((tag: any) => tag.data);
-    console.log('tags->calculating popularity');
+    // console.log('tags->calculating popularity');
     tags = calculatePopularity(allTagsWithMentions, infoPages, postPages);
     const findProjectInfoTag = tags.find((tag) => tag.name === 'project info');
-    console.log('tag->project info', findProjectInfoTag);
+    // console.log('tag->project info', findProjectInfoTag);
   } catch (error) {
     console.error('Error fetching tags:', error);
   }

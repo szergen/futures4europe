@@ -57,7 +57,7 @@ export const Tag: React.FC<TagProps> = ({
     if (tag) {
       setCurrentPopularity(tag.mentions);
     }
-    console.log(`tag ${tag} has been referenced ${popularity} times`);
+    // console.log(`tag ${tag} has been referenced ${popularity} times`);
   }, [tags, tagsFetched]);
 
   return (
