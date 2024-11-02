@@ -277,17 +277,17 @@ const Header = () => {
 
   return (
     <>
-      <div className={classNames(style.topbarlink, 'top-info-bar bg-[#75c] text-[#2674af] text-xs py-2 px-5')}> 
+      <div className={classNames(style.topbarlink, 'top-info-bar bg-gray-100 text-xs py-2 px-5')}> 
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="flex flex-row font-medium text-lg lg:text-base text-white">
+            <div className="flex flex-row font-medium text-lg lg:text-base text-[#000]">
             <Badge className='rounded-lg mr-4' color="purple" size="sm">
               BETA
             </Badge>
               Welcome to the new verison of futures4europe 
             </div>
-            <div className="font-medium text-lg lg:text-base hidden lg:block text-white">
-              If you see any problems please report them to us at <a className={classNames(style.topbarlink)} target="_blank" href="mailto:info@futures4europe.eu">info@futures4europe.eu</a>
+            <div className="font-medium text-lg lg:text-base hidden lg:block text-[#000]">
+              Share feedback and report bugs at <a className={classNames(style.topbarlink)} target="_blank" href="mailto:info@futures4europe.eu">info@futures4europe.eu</a>
             </div>
           </div>
         </div>
