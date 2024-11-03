@@ -213,6 +213,27 @@ const getContactsItem = async (itemId: string) => {
   }
 };
 
+const getContactsItemByEmail = async (itemId: string) => {
+  try {
+    const response = await fetch('/api/getContactsItemByEmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ itemId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update data item');
+    }
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    console.error(`Error getting contacts item for itemId: ${itemId}`, error);
+  }
+};
+
 const generateFileUploadUrl = async (
   mimeType: string,
   options: Record<string, any>
@@ -286,4 +307,5 @@ export {
   generateFileUploadUrl,
   revalidateDataItem,
   getCollectionItems,
+  getContactsItemByEmail,
 };

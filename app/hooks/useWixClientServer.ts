@@ -57,7 +57,7 @@ export const getWixClientServerData = async () => {
   // }
 
   const wixClientServer = createClient({
-    modules: { items, contacts, files },
+    modules: { items, contacts, files, members },
     auth: ApiKeyStrategy({
       apiKey: NEXT_PUBLIC_WIX_API_KEY,
       siteId: NEXT_PUBLIC_WIX_SITE_ID,
