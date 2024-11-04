@@ -90,3 +90,25 @@
   color: var(--color-background-offline);
   margin-top: var(--w-space-s);
 }
+.MiniPagePostEdit {
+  align-self: flex-end;
+}
+
+@media (max-width: 480px) {
+  .postItem {
+    margin: var(--w-space-s) 0;
+    padding: var(--w-space-m);
+    flex-direction: column;
+
+    border-bottom: 1px solid #8181817d;
+    border-radius: 0px;
+    align-self: flex-start;
+  }
+  .postContent {
+    text-align: left;
+    margin: 0px;
+  }
+  .MiniPagePostEdit {
+    align-self: flex-start;
+  }
+}

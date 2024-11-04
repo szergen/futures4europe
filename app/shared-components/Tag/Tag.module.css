@@ -106,9 +106,6 @@
   .tagLink .tagNameBody:before {
 
   }
-  .tagLink:hover .tagNameBody {
-    text-decoration: none;
-  }  
   .tagThumbnail {
     margin-left: 0px;
     width: var(--w-space-xxl);
