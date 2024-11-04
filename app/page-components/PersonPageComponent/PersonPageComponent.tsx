@@ -57,6 +57,22 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // #region check if page is owned by user
   useEffect(() => {
     if (!isLoggedIn || !tagsFetched) return;
+    // #region Check PageOwner property from Wix Data, hardcoding ownership
+    const permissionCondition =
+      personData.pageOwner?.length > 0 &&
+      !!userDetails?.userTag?.name &&
+      !!personData.pageOwner?.find(
+        (owner: any) => owner?._id === userDetails?.userTag?._id
+      );
+
+    console.log('debug1->permissionCondition', permissionCondition);
+
+    if (permissionCondition) {
+      setIsPageOwnedByUser(true);
+      return;
+    }
+    // #endregion
+
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (person?.data?._owner === id) {
@@ -111,6 +127,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     researchGateLink: person?.data?.researchGateLink,
     orcidLink: person?.data?.orcidLink,
     slug: person?.data?.slug,
+    pageOwner: person?.data?.pageOwner,
   };
   // #endregion
 
@@ -454,12 +471,23 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         newPersonInfoId
       );
       console.log('updatedAuthor', updatedAuthor);
+
       const updatedPersonTag = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
         'person',
         newPersonInfoId
       );
+      console.log('updatedPersonTag', updatedPersonTag);
+
+      const updatedPageOwner = await replaceDataItemReferences(
+        'InfoPages',
+        [personTag?._id],
+        'pageOwner',
+        newPersonInfoId
+      );
+      console.log('updatedPageOwner', updatedPageOwner);
+
       console.log('updatedPersonTag', updatedPersonTag);
       const nickName = updatedPersonTag?.dataItem?.data?.name;
       if (nickName !== userDetails.userName) {

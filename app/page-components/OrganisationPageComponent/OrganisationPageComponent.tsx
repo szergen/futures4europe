@@ -59,6 +59,23 @@ function OrganisationPageComponent({
   // #region check if page is owned by user
   useEffect(() => {
     if (!isLoggedIn || !tagsFetched) return;
+
+    // #region Check PageOwner property from Wix Data, hardcoding ownership
+    const permissionCondition =
+      organisationData.pageOwner?.length > 0 &&
+      !!userDetails?.userTag?.name &&
+      !!organisationData.pageOwner?.find(
+        (owner: any) => owner?._id === userDetails?.userTag?._id
+      );
+
+    console.log('debug1->permissionCondition', permissionCondition);
+
+    if (permissionCondition) {
+      setIsPageOwnedByUser(true);
+      return;
+    }
+    // #endregion
+
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (organisation?.data?._owner === id) {
@@ -108,6 +125,7 @@ function OrganisationPageComponent({
     linkedinLink: organisation?.data?.linkedinLink,
     websiteLink: organisation?.data?.websiteLink,
     slug: organisation?.data?.slug,
+    pageOwner: organisation?.data?.pageOwner,
   };
 
   // #region set default post data and data for editing
@@ -453,6 +471,14 @@ function OrganisationPageComponent({
         newOrganisationInfoId
       );
       console.log('updatedOrganisationTag', updatedOrganisationTag);
+
+      const updatedPageOwner = await replaceDataItemReferences(
+        'InfoPages',
+        [userTag?._id],
+        'pageOwner',
+        newOrganisationInfoId
+      );
+      console.log('updatedPageOwner', updatedPageOwner);
     }
     // #endregion
 

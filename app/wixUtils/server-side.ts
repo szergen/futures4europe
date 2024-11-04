@@ -43,6 +43,7 @@ const referencedItemOptions = [
   { fieldName: 'featuredEvents' },
   { fieldName: 'featuredOrganisations' },
   { fieldName: 'featuredPeople' },
+  { fieldName: 'pageOwner' },
 ];
 
 const getCollection = async (collectionName: string) => {
