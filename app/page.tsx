@@ -272,6 +272,7 @@ export const Home = () => {
               (infoPage: any) => infoPage.data
             )}
             title="Featured Projects"
+            pageTypePath="project"
           />
         )}
         {featuredPages.featuredProjectResults.length > 0 && (
