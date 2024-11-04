@@ -613,10 +613,13 @@ html,
 body {
   padding: 0;
   margin: 0;
+  text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: normal;
+  white-space-collapse: preserve;
   font-size: var(--w-font-size-body);
-  font-family: 'Inter', Arial, Helvetica, sans-serif!important;
+  font-family: 'Inter', system-ui, -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"!important;
 }
 
 a {
@@ -678,6 +681,10 @@ textarea {
   }
 }
 
+.squircle {
+  --squircle-smooth: 1;
+  --squircle-radius: 26px;
+}
 
 /* de mutat in import */
 
@@ -1228,3 +1235,5 @@ svg.homeRoata {
   margin-top: 2em;
   width: 100%;
 }
+
+
