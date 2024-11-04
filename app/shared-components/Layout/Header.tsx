@@ -260,7 +260,9 @@ const Header = () => {
       </div>
     ) : (
       <>
-        <div className="flex items-center gap-4">
+        <div className={classNames(
+          style.topbarLogin,"flex items-center gap-4")}>
+
           <Link href="/dashboard">
             <p className="font-bold text-base">Login</p>
           </Link>
@@ -284,14 +286,14 @@ const Header = () => {
         )}
       >
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="flex flex-row font-medium text-lg lg:text-base text-white">
+          <div className="flex flex-col items-center justify-between">
+            <div className="flex flex-row font-medium text-lg lg:flex hidden lg:text-base text-white">
               <Badge className="rounded-lg mr-4" color="purple" size="sm">
                 BETA
               </Badge>
-              Welcome to the new verison of futures4europe
+              Welcome to the new version of futures4europe v1.0.1
             </div>
-            <div className="font-medium text-lg lg:text-base hidden lg:block text-white">
+            <div className="font-medium text-lg lg:text-base lg:block text-white">
               If you see any problems please report them to us at{' '}
               <a
                 className={classNames(style.topbarlink)}
@@ -305,7 +307,7 @@ const Header = () => {
         </div>
       </div>
       <header
-        className="w-full my-6 px-2 sm:px-8"
+        className={classNames("flex w-full my-6 px-2", style.header)}
         data-testid={testIds.LAYOUT.HEADER}
       >
         <div
@@ -317,7 +319,10 @@ const Header = () => {
           {/* Logo */}
           <Link
             href="/"
-            className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6"
+            className={classNames(
+              'flex flex-col sm:flex-row items-center gap-2 sm:gap-6',
+              style.headerLogo
+            )}
           >
             <Logo />
           </Link>
@@ -330,6 +335,18 @@ const Header = () => {
           </div> */}
           {/* TODO: Temporary Pages */}
           {/* Page Buttons */}
+      <div
+        className={classNames(
+          'relative',
+          style.headerTagContainerOuter
+        )}
+        > 
+        <div 
+            className={classNames(
+              'flex items-center gap-4',
+              style.headerTagContainer
+            )}
+          >
           <Tag
             name="Posts"
             hardcodedMentions={
@@ -337,6 +354,7 @@ const Header = () => {
             }
             tagLine="List of Post Pages"
             tagPageLink="/pages/post"
+            disableTooltip
           />
           <Tag
             name="Projects"
@@ -345,6 +363,7 @@ const Header = () => {
             }
             tagLine="List of Project Info Pages"
             tagPageLink="/pages/project"
+            disableTooltip
           />
           <Tag
             name="Project Results"
@@ -355,6 +374,7 @@ const Header = () => {
             }
             tagLine="List of Project Result Pages"
             tagPageLink="/pages/project-result"
+            disableTooltip
           />
           <Tag
             name="Events"
@@ -363,6 +383,7 @@ const Header = () => {
             }
             tagLine="List of Event Pages"
             tagPageLink="/pages/event"
+            disableTooltip
           />
           <Tag
             name="Organisations"
@@ -373,6 +394,7 @@ const Header = () => {
             }
             tagLine="List of Organisation Info Pages"
             tagPageLink="/pages/organisation"
+            disableTooltip
           />
           <Tag
             name="People"
@@ -381,7 +403,10 @@ const Header = () => {
             }
             tagLine="List of Person Info Pages"
             tagPageLink="/pages/person"
+            disableTooltip
           />
+        </div>
+      </div>   
           {/* Account */}
           {accountSection}
 
