@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Label, TextInput, Textarea, Toast } from 'flowbite-react';
 import { title } from 'process';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 
 export type InputTextProps = {
   label?: string;
@@ -16,6 +16,7 @@ export type InputTextProps = {
   isHorizontal?: boolean;
   type?: string;
   ref?: any;
+  inputId?: string;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -31,6 +32,7 @@ export const InputText: React.FC<InputTextProps> = ({
   isHorizontal,
   type,
   ref,
+  inputId,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
@@ -51,15 +53,14 @@ export const InputText: React.FC<InputTextProps> = ({
 
   useEffect(() => {
     if (inputValue === '' && validate) {
+      console.log('This field is required');
       setError('This field is required');
     }
     if (validate) {
+      console.log('Validating');
       const errorMessage = validate(value);
       setValidationState && setValidationState(errorMessage);
       setError(errorMessage);
-    }
-    if (shouldUpdateValueState) {
-      setInputValue(value);
     }
   }, [inputValue]);
 
@@ -75,6 +76,7 @@ export const InputText: React.FC<InputTextProps> = ({
 
   // Avoid navigation on backspace
   useEffect(() => {
+    // setInputValue(value);
     const handleKeyDown = (e) => {
       if (
         e.key === 'Backspace' &&
@@ -92,6 +94,12 @@ export const InputText: React.FC<InputTextProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (shouldUpdateValueState) {
+      setInputValue(value);
+    }
+  }, [value]);
+
   return (
     <>
       {label && (
@@ -102,7 +110,7 @@ export const InputText: React.FC<InputTextProps> = ({
       {isHorizontal ? (
         <input
           ref={ref}
-          id={label?.toLowerCase()}
+          id={inputId || label?.toLowerCase()}
           type={type || 'text'}
           placeholder={placeholder ? placeholder : undefined}
           required
@@ -114,7 +122,7 @@ export const InputText: React.FC<InputTextProps> = ({
         />
       ) : (
         <Textarea
-          id={label?.toLowerCase()}
+          id={inputId || label?.toLowerCase()}
           type="text"
           placeholder={placeholder ? placeholder : undefined}
           // required
