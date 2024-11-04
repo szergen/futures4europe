@@ -53,11 +53,11 @@ export const InputText: React.FC<InputTextProps> = ({
 
   useEffect(() => {
     if (inputValue === '' && validate) {
-      console.log('This field is required');
+      // console.log('This field is required');
       setError('This field is required');
     }
     if (validate) {
-      console.log('Validating');
+      // console.log('Validating');
       const errorMessage = validate(value);
       setValidationState && setValidationState(errorMessage);
       setError(errorMessage);
