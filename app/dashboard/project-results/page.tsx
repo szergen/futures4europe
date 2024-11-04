@@ -38,6 +38,7 @@ export default function DashboardProjects() {
     ownedInfoPagesFetched,
     handleUserDataRefresh,
     tags,
+    allOwnedPages,
   } = useAuth();
   console.log('ownedPostPages', ownedPostPages);
 
@@ -225,10 +226,10 @@ export default function DashboardProjects() {
                 'flex flex-col text-base text-[#606b85]'
               )}
             >
-              {ownedPostPages.length || ownedInfoPages.length ? (
+              {allOwnedPages.length || allOwnedPages.length ? (
                 <>
-                  {ownedPostPages.length > 0 ? (
-                    ownedPostPages
+                  {allOwnedPages.length > 0 ? (
+                    allOwnedPages
                       .filter(
                         (postPage) =>
                           postPage?.data?.pageTypes[0]?.name ===

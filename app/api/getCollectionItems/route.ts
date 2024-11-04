@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientData } from '@app/hooks/useWixClientServer';
-import { referencedItemOptions } from '@app/wixUtils/server-side';
 
 export const POST = async (req: NextRequest) => {
   const { collectionName } = await req.json();

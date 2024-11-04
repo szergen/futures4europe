@@ -32,6 +32,7 @@ const useFetchUserData = (
           dataCollectionId: dataCollectionId,
           referencedItemOptions: referencedItemOptions,
         })
+          // .in('_owner', ids)
           .in('_owner', ids)
           .find();
         console.log('result', result);

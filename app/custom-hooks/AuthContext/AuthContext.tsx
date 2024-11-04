@@ -4,6 +4,7 @@ import {
   useState,
   ReactNode,
   useEffect,
+  use,
 } from 'react';
 import { getContactsItem } from '@app/wixUtils/client-side';
 import { IOAuthStrategy, useWixAuth, useWixModules } from '@wix/sdk-react';
@@ -53,6 +54,7 @@ interface AuthContextType {
   isLoadingInProgress: boolean;
   setIsLoadingInProgress: (value: boolean) => void;
   userTagFetched: boolean;
+  allOwnedPages: any[];
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -245,6 +247,54 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     console.log('debug1->userDetails', userDetails);
   }, [userDetails]);
 
+  // #region extraOwnedPages
+  const [allOwnedPages, setAllOwnedPages] = useState<any[]>([]);
+
+  useEffect(() => {
+    let tempExtraOwnedPages = [] as any[];
+    const tempExtraInfoPages = infoPages?.filter((infoPage) => {
+      console.log('infoPages', infoPage);
+      if (
+        !!infoPage?.data?.pageOwner?.find(
+          (owner: any) => owner._id === userDetails.userTag?._id
+        )
+      ) {
+        tempExtraOwnedPages.push(infoPage);
+        return false;
+      }
+    });
+    const tempExtraPostPages = postPages?.filter((postPage) => {
+      if (
+        !!postPage?.data?.pageOwner?.find(
+          (owner: any) => owner._id === userDetails.userTag?._id
+        )
+      ) {
+        tempExtraOwnedPages.push(postPage);
+        return false;
+      }
+    });
+
+    console.log('debug1->tempExtraOwnedPages', tempExtraOwnedPages);
+
+    const removeDuplicatePosts = (posts: any[]) => {
+      const uniquePosts = posts.filter(
+        (post, index, self) =>
+          index === self.findIndex((p) => p._id === post._id)
+      );
+      return uniquePosts;
+    };
+
+    const allOwnedPages = [
+      ...tempExtraOwnedPages,
+      ...ownedInfoPages,
+      ...ownedPostPages,
+    ];
+
+    const uniquePages = removeDuplicatePosts(allOwnedPages);
+    console.log('uniquePages', uniquePages);
+    setAllOwnedPages(uniquePages);
+  }, [infoPages, postPages, userDetails.userTag]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -271,6 +321,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isLoadingInProgress,
         setIsLoadingInProgress,
         userTagFetched,
+        allOwnedPages,
       }}
     >
       {children}
