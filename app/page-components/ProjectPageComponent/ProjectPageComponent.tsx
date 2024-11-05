@@ -60,6 +60,22 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   // #region check if page is owned by user
   useEffect(() => {
     if (!isLoggedIn || !tagsFetched) return;
+    // #region Check PageOwner property from Wix Data, hardcoding ownership
+    const permissionCondition =
+      projectData.pageOwner?.length > 0 &&
+      !!userDetails?.userTag?.name &&
+      !!projectData.pageOwner?.find(
+        (owner: any) => owner?._id === userDetails?.userTag?._id
+      );
+
+    console.log('debug1->permissionCondition', permissionCondition);
+
+    if (permissionCondition) {
+      setIsPageOwnedByUser(true);
+      return;
+    }
+    // #endregion
+
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (project?.data?._owner === id) {
@@ -70,7 +86,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails?.userTag]);
   // #endregion
 
   // #region Overwrite mock data with Wix data
@@ -125,6 +141,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     linkedinLink: project?.data?.linkedinLink,
     websiteLink: project?.data?.websiteLink,
     slug: project?.data?.slug, //done
+    pageOwner: project?.data?.pageOwner, //done
   };
   // #endregion
 
@@ -466,6 +483,14 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         newProjectInfoId
       );
       console.log('updatedProjectTag', updatedProjectTag);
+
+      const updatedPageOwner = await replaceDataItemReferences(
+        'InfoPages',
+        [userTag?._id],
+        'pageOwner',
+        newProjectInfoId
+      );
+      console.log('updatedPageOwner', updatedPageOwner);
     }
     // #endregion
 

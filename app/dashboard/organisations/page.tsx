@@ -38,6 +38,7 @@ export default function DashboardProjects() {
     ownedInfoPagesFetched,
     handleUserDataRefresh,
     tags,
+    allOwnedPages,
   } = useAuth();
 
   const router = useRouter();
@@ -224,10 +225,10 @@ export default function DashboardProjects() {
                 'flex flex-col text-base text-[#606b85]'
               )}
             >
-              {ownedPostPages.length || ownedInfoPages.length ? (
+              {allOwnedPages.length || allOwnedPages.length ? (
                 <>
-                  {ownedInfoPages.length > 0 ? (
-                    ownedInfoPages
+                  {allOwnedPages.length > 0 ? (
+                    allOwnedPages
                       .filter(
                         (infoPage) =>
                           infoPage?.data?.pageTypes[0]?.name ===
@@ -238,7 +239,7 @@ export default function DashboardProjects() {
                           console.log('Organ', infoPage),
                           (
                             <div
-                              key={infoPage.data.title + index}
+                              key={infoPage?.data?.title + index}
                               className="pt-2 pb-2 flex flex-row items-center justify-between"
                             >
                               {/* <span>{infoPage.data.title}</span> */}

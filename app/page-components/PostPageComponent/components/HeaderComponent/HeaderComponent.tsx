@@ -241,11 +241,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 className="text-gray-500 text-sm font-bold mt-3"
               >
                 {post?.eventStartDate
-                  ? dayjs(post?.eventStartDate).format('YYYY-MM-DD HH:mm')
+                  ? dayjs(post?.eventStartDate).format('YYYY-MM-DD HH:mm (CET)')
                   : ''}{' '}
                 {post?.eventStartDate && post?.eventEndDate && '-'}{' '}
                 {post?.eventStartDate && post?.eventEndDate
-                  ? dayjs(post?.eventEndDate).format('YYYY-MM-DD HH:mm')
+                  ? dayjs(post?.eventEndDate).format('YYYY-MM-DD HH:mm (CET)')
                   : ''}
               </Typography>
             ) : (

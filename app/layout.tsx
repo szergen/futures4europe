@@ -7,6 +7,8 @@ import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
 // import { channel } from 'diagnostics_channel';
 import { useEffect, useState } from 'react';
 import { inter } from '@app/ui/fonts';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -58,6 +60,8 @@ export default function RootLayout({
             <div className="mt-10 sm:mt-20">
               <Footer />
             </div>
+            <SpeedInsights />
+            <Analytics />
           </>
         ) : (
           <div className="bg-white min-h-[600px] max-w-5xl mx-auto p-5">

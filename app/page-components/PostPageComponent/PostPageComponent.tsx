@@ -66,6 +66,21 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   // check if the page is owned by the user
   useEffect(() => {
     if (!isLoggedIn || !tagsFetched) return;
+    // #region Check PageOwner property from Wix Data, hardcoding ownership
+    const permissionCondition =
+      postData.pageOwner?.length > 0 &&
+      !!userDetails?.userTag?.name &&
+      !!postData.pageOwner?.find(
+        (owner: any) => owner?._id === userDetails?.userTag?._id
+      );
+
+    console.log('debug1->permissionCondition', permissionCondition);
+
+    if (permissionCondition) {
+      setIsPageOwnedByUser(true);
+      return;
+    }
+    // #endregion
     const userDetailsIds = [userDetails.contactId, userDetails.accountId];
     userDetailsIds.find((id) => {
       if (post?.data?._owner === id) {
@@ -76,7 +91,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails.userTag]);
   // Overwrite with Wix Data
   post = {
     ...post,
@@ -128,6 +143,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     projectResultMedia: post?.data?.projectResultMedia,
     mediaFiles: post?.data?.mediaFiles,
     projectResultPublicationDate: post?.data?.projectResultPublicationDate,
+    pageOwner: post?.data?.pageOwner,
   };
   console.log('debug1-post', post);
   // set default post data and data for editing
@@ -476,6 +492,14 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         newPostID
       );
       console.log('updatedAuthor', updatedAuthor);
+
+      const updatedPageOwner = await replaceDataItemReferences(
+        'PostPages',
+        [userTag?._id],
+        'pageOwner',
+        newPostID
+      );
+      console.log('updatedPageOwner', updatedPageOwner);
     }
 
     // Update Project Authors

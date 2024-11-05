@@ -97,14 +97,14 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   const [tagLine, setTagLine] = useState(project?.projectTag?.tagLine || '');
 
   useEffect(() => {
-    console.log('project?.projectTag?.name', project?.projectTag);
+    // console.log('project?.projectTag?.name', project?.projectTag);
     // setProjectTag(project?.projectTag);
     setTagLine(project?.projectTag?.tagLine || '');
   }, [project?.projectTag]);
 
-  useEffect(() => {
-    console.log('tagLine', tagLine);
-  }, [tagLine]);
+  // useEffect(() => {
+  //   console.log('tagLine', tagLine);
+  // }, [tagLine]);
 
   return (
     <div className={classNames(style.personHeader)}>
