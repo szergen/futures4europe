@@ -82,7 +82,13 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
       </div>
       <div className={classNames(style.postContent)}>
         {/* Post Date */}
-        <Typography tag="p" className={classNames(style.MiniPagePostEdit, 'text-gray-500 text-xs mb-1.5')}>
+        <Typography
+          tag="p"
+          className={classNames(
+            style.MiniPagePostEdit,
+            'text-gray-500 text-xs mb-1.5'
+          )}
+        >
           Last Edited: {dayjs(date).fromNow()}
         </Typography>
         {/* Post Title */}

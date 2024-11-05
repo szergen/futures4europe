@@ -102,7 +102,6 @@ export default function Dashboard() {
           'w-full flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-
         {/* // TODO: To make component for dashbaordBoxe's */}
         <div
           className={classNames(
@@ -145,7 +144,6 @@ export default function Dashboard() {
                 Person Info
               </Typography>
             </div>
-
 
             <div className="flex flex-col justify-between">
               <Typography
@@ -195,8 +193,6 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
-        
       </div>
     </div>
   );

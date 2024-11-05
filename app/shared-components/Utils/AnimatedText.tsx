@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const AnimatedText: React.FC = () => {
-  const text = "Futures4Europe is the online home of the European foresight community!";
+  const text =
+    'Futures4Europe is the online home of the European foresight community!';
   const colors = ['#ff8787', '#3bc9db', '#ffd43b'];
 
   const [words, setWords] = useState(text.split(' '));
@@ -24,7 +25,7 @@ const AnimatedText: React.FC = () => {
       y: -10,
       rotate: -4,
     },
-    show: (color: number) => ({ 
+    show: (color: number) => ({
       opacity: 1,
       y: 0,
       rotate: 0,
@@ -43,23 +44,30 @@ const AnimatedText: React.FC = () => {
 
   useEffect(() => {
     if (!words.length) {
-      const timer = setTimeout(() => {  // Add a slight delay for the animation
+      const timer = setTimeout(() => {
+        // Add a slight delay for the animation
         setWords(text.split(' '));
-      }, 100); 
+      }, 100);
       return () => clearTimeout(timer); // Clear timeout on unmount
     }
   }, [words]);
 
   return (
-    <div style={{ display: 'inline-block', maxWidth: '100%' }}> 
+    <div style={{ display: 'inline-block', maxWidth: '100%' }}>
       <motion.div
         variants={container}
         initial="hidden"
         animate={words.length ? 'show' : 'hidden'}
-        style={{ lineHeight : '.8', display: 'flex', flexWrap: 'wrap', gap: '14px', whiteSpace: 'pre-wrap' }} 
+        style={{
+          lineHeight: '.8',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '14px',
+          whiteSpace: 'pre-wrap',
+        }}
       >
         {words.map((word, index) => (
-          <motion.span 
+          <motion.span
             key={index}
             className="word"
             variants={listItem}

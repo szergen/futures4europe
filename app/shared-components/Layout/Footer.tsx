@@ -63,7 +63,6 @@ const Footer = () => (
             Commission cannot be held responsible for any use which may be made
             of the information contained.
           </p>
-
         </div>
 
         <div className="flex w-full"></div>
