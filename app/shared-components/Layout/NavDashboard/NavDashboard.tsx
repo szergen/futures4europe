@@ -174,27 +174,27 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
           sizeH={32}
           active={activeNavItem === '/dashboard/organisations'}
         />
-        <NavItem
+        {/* <NavItem
           href="/dashboard/foresight-methods"
           icon={SpriteSvg.AccountForesightsIcon}
           text="Foresight Methods"
           sizeW={34}
           sizeH={32}
-        />
-        <NavItem
+        /> */}
+        {/* <NavItem
           href={
             !personInfoPageLink ? '/person/New_Info_Page' : personInfoPageLink
           }
           icon={SpriteSvg.AccountPersonIcon}
           text={userInfoPage ? 'Person Info' : 'Create Person Info'}
-        />
-        {/* <NavItem
+        /> */}
+        <NavItem
           href="/dashboard"
-          icon={SpriteSvg.AccountSettingsIcon}
+          icon={SpriteSvg.AccountPersonIcon}
           text="Profile settings"
           active={activeNavItem === '/dashboard'}
         />
-        <NavItem
+        {/* <NavItem
           href="#" // Or logout link if different
           icon={SpriteSvg.AccountLogoutIcon}
           text="Log Out"

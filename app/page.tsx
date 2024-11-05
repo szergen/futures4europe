@@ -4,10 +4,10 @@ import { items } from '@wix/data';
 import { useWixModules } from '@wix/sdk-react';
 // import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import gsap from 'gsap-trial';
-// import InertiaPlugin from 'gsap-trial/InertiaPlugin';
-import MotionPathPlugin from 'gsap-trial/MotionPathPlugin';
-import Draggable from 'gsap-trial/Draggable';
+import gsap from 'gsap';
+// import InertiaPlugin from 'gsap/InertiaPlugin';
+import MotionPathPlugin from 'gsap/MotionPathPlugin';
+import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
 

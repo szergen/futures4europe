@@ -192,7 +192,7 @@ const Header = () => {
               img={
                 userDetails?.userTag?.picture
                   ? userDetails?.userTag?.picture
-                  : 'https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512'
+                  : 'https://framerusercontent.com/images/NVeaM8VrCezyFEd2iOUwfmMuGCI.svg'
               }
               rounded
               className={classNames(style.avatarImage, 'avatarUserHeader', {
@@ -210,42 +210,31 @@ const Header = () => {
             </span>
             <span className="block text-sm">{userDetails?.email}</span>
           </Dropdown.Header>
-          <Dropdown.Item icon={HiUserCircle}>
-            <Link href="/dashboard"> Dashboard </Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreateProject}
-          >
-            <Link href="/project/New_Project"> Add Project</Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreatePost}
-          >
-            <Link href="/post/New_Post?pageType=projectResult">
-              {' '}
-              Add Project result
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreateOrganisation}
-          >
-            <Link href="/organisation/New_Organisation"> Add Organisation</Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            //  onClick={handleCreatePost}
-          >
-            <Link href="/post/New_Post"> Add Article</Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreatePost}
-          >
-            <Link href="/post/New_Post?pageType=event"> Add Event</Link>
-          </Dropdown.Item>
+
+          <Link href="/dashboard">
+            <Dropdown.Item icon={HiUserCircle}>Dashboard</Dropdown.Item>
+          </Link>
+
+          <Link href="/project/New_Project">
+            <Dropdown.Item icon={HiPlusSm}>Add Project</Dropdown.Item>
+          </Link>
+
+          <Link href="/post/New_Post?pageType=projectResult">
+            <Dropdown.Item icon={HiPlusSm}>Add Project result</Dropdown.Item>
+          </Link>
+
+          <Link href="/organisation/New_Organisation">
+            <Dropdown.Item icon={HiPlusSm}>Add Organisation</Dropdown.Item>
+          </Link>
+
+          <Link href="/post/New_Post">
+            <Dropdown.Item icon={HiPlusSm}>Add Article</Dropdown.Item>
+          </Link>
+
+          <Link href="/post/New_Post?pageType=event">
+            <Dropdown.Item icon={HiPlusSm}>Add Event</Dropdown.Item>
+          </Link>
+
           {/* <Dropdown.Item
             icon={HiPlusSm}
             //  onClick={handleCreatePost}
@@ -253,6 +242,7 @@ const Header = () => {
             <Link href=''> Add Foresight method</Link>
           </Dropdown.Item> */}
           <Dropdown.Divider />
+
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
             Log out
           </Dropdown.Item>
@@ -260,7 +250,9 @@ const Header = () => {
       </div>
     ) : (
       <>
-        <div className="flex items-center gap-4">
+        <div
+          className={classNames(style.topbarLogin, 'flex items-center gap-4')}
+        >
           <Link href="/dashboard">
             <p className="font-bold text-base">Login</p>
           </Link>
@@ -284,14 +276,14 @@ const Header = () => {
         )}
       >
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="flex flex-row font-medium text-lg lg:text-base text-white">
+          <div className="flex flex-col items-center justify-between">
+            <div className="flex flex-row font-medium text-lg lg:flex hidden lg:text-base text-white">
               <Badge className="rounded-lg mr-4" color="purple" size="sm">
                 BETA
               </Badge>
-              Welcome to the new verison of futures4europe
+              Welcome to the new version of futures4europe v1.0.1
             </div>
-            <div className="font-medium text-lg lg:text-base hidden lg:block text-white">
+            <div className="font-medium text-lg lg:text-base lg:block text-white">
               If you see any problems please report them to us at{' '}
               <a
                 className={classNames(style.topbarlink)}
@@ -305,7 +297,7 @@ const Header = () => {
         </div>
       </div>
       <header
-        className="w-full my-6 px-2 sm:px-8"
+        className={classNames('flex w-full my-6 px-2', style.header)}
         data-testid={testIds.LAYOUT.HEADER}
       >
         <div
@@ -317,7 +309,10 @@ const Header = () => {
           {/* Logo */}
           <Link
             href="/"
-            className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6"
+            className={classNames(
+              'flex flex-col sm:flex-row items-center gap-2 sm:gap-6',
+              style.headerLogo
+            )}
           >
             <Logo />
           </Link>
@@ -330,58 +325,79 @@ const Header = () => {
           </div> */}
           {/* TODO: Temporary Pages */}
           {/* Page Buttons */}
-          <Tag
-            name="Posts"
-            hardcodedMentions={
-              pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
-            }
-            tagLine="List of Post Pages"
-            tagPageLink="/pages/post"
-          />
-          <Tag
-            name="Projects"
-            hardcodedMentions={
-              pageTypeCounts.project !== 0 ? pageTypeCounts.project : undefined
-            }
-            tagLine="List of Project Info Pages"
-            tagPageLink="/pages/project"
-          />
-          <Tag
-            name="Project Results"
-            hardcodedMentions={
-              pageTypeCounts.projectResult !== 0
-                ? pageTypeCounts.projectResult
-                : undefined
-            }
-            tagLine="List of Project Result Pages"
-            tagPageLink="/pages/project-result"
-          />
-          <Tag
-            name="Events"
-            hardcodedMentions={
-              pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
-            }
-            tagLine="List of Event Pages"
-            tagPageLink="/pages/event"
-          />
-          <Tag
-            name="Organisations"
-            hardcodedMentions={
-              pageTypeCounts.organisation !== 0
-                ? pageTypeCounts.organisation
-                : undefined
-            }
-            tagLine="List of Organisation Info Pages"
-            tagPageLink="/pages/organisation"
-          />
-          <Tag
-            name="People"
-            hardcodedMentions={
-              pageTypeCounts.person !== 0 ? pageTypeCounts.person : undefined
-            }
-            tagLine="List of Person Info Pages"
-            tagPageLink="/pages/person"
-          />
+          <div
+            className={classNames('relative', style.headerTagContainerOuter)}
+          >
+            <div
+              className={classNames(
+                'flex items-center gap-4',
+                style.headerTagContainer
+              )}
+            >
+              <Tag
+                name="Posts"
+                hardcodedMentions={
+                  pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
+                }
+                tagLine="List of Post Pages"
+                tagPageLink="/pages/post"
+                disableTooltip
+              />
+              <Tag
+                name="Projects"
+                hardcodedMentions={
+                  pageTypeCounts.project !== 0
+                    ? pageTypeCounts.project
+                    : undefined
+                }
+                tagLine="List of Project Info Pages"
+                tagPageLink="/pages/project"
+                disableTooltip
+              />
+              <Tag
+                name="Project Results"
+                hardcodedMentions={
+                  pageTypeCounts.projectResult !== 0
+                    ? pageTypeCounts.projectResult
+                    : undefined
+                }
+                tagLine="List of Project Result Pages"
+                tagPageLink="/pages/project-result"
+                disableTooltip
+              />
+              <Tag
+                name="Events"
+                hardcodedMentions={
+                  pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
+                }
+                tagLine="List of Event Pages"
+                tagPageLink="/pages/event"
+                disableTooltip
+              />
+              <Tag
+                name="Organisations"
+                hardcodedMentions={
+                  pageTypeCounts.organisation !== 0
+                    ? pageTypeCounts.organisation
+                    : undefined
+                }
+                tagLine="List of Organisation Info Pages"
+                tagPageLink="/pages/organisation"
+                disableTooltip
+              />
+              <Tag
+                name="People"
+                hardcodedMentions={
+                  pageTypeCounts.person !== 0
+                    ? pageTypeCounts.person
+                    : undefined
+                }
+                tagLine="List of Person Info Pages"
+                tagPageLink="/pages/person"
+                disableTooltip
+              />
+            </div>
+          </div>
           {/* Account */}
           {accountSection}
 

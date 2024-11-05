@@ -29,6 +29,10 @@ const nextConfig = {
         source: '/_api/:path*',
         destination: '/temp/:path*',
       },
+      {
+        source: '/about',
+        destination: '/static-pages/about',
+      },      
     ];
   },
 };

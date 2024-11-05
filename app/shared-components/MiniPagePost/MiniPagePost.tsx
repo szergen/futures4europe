@@ -74,15 +74,21 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         {pageTypeTag && <Tag {...pageTypeTag} className="ml-1 mb-1" />}
         <Image
           src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
-          width={124}
-          height={124}
+          width={650}
+          height={650}
           alt="Post Image"
           className={classNames('rounded-md', style.postImage)}
         />
       </div>
       <div className={classNames(style.postContent)}>
         {/* Post Date */}
-        <Typography tag="p" className="text-gray-500 text-xs self-end mb-1.5">
+        <Typography
+          tag="p"
+          className={classNames(
+            style.MiniPagePostEdit,
+            'text-gray-500 text-xs mb-1.5'
+          )}
+        >
           Last Edited: {dayjs(date).fromNow()}
         </Typography>
         {/* Post Title */}

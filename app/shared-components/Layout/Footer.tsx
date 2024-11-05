@@ -1,6 +1,7 @@
 import './footer.css';
 import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
+import Link from 'next/link';
 
 const Footer = () => (
   <footer className="w-full" data-testid={testIds.LAYOUT.FOOTER}>
@@ -63,26 +64,20 @@ const Footer = () => (
             Commission cannot be held responsible for any use which may be made
             of the information contained.
           </p>
-          <a
-            href="javascript:;"
-            className="py-2.5 px-5 h-9 block w-fit bg-indigo-600 rounded-full shadow-sm text-xs text-white mx-auto transition-all  duration-500 hover:bg-indigo-700 lg:mx-0"
-          >
-            Contact us
-          </a>
         </div>
 
         <div className="flex w-full"></div>
         <div className="flex w-full"></div>
         <div className="lg:mx-auto text-left">
-          <h4 className="text-lg text-gray-900 font-medium mb-7">About Us</h4>
-          <ul className="text-sm  transition-all duration-500">
+          <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
+          <ul className="text-sm transition-all duration-500">
             <li className="mb-6">
-              <a
-                href="javascript:;"
-                className="text-gray-600 hover:text-gray-900"
+              <Link
+                href="/about"
+                className="text-gray-600 hover:text-gray-900 underline"
               >
-                Learn more
-              </a>
+                About us
+              </Link>
             </li>
           </ul>
         </div>
@@ -93,7 +88,7 @@ const Footer = () => (
             <li className="mb-6">
               <a
                 href="mailto:info@futures4europe.eu"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 underline"
               >
                 info@futures4europe.eu
               </a>

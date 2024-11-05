@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, ReactNode } from 'react';
-import gsap from 'gsap-trial';
+import gsap from 'gsap';
 import chroma from 'chroma-js';
 import style from '../Header.module.css';
 import classNames from 'classnames';
