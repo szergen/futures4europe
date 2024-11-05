@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import Typography from '@app/shared-components/Typography/Typography';
 import Label from '@app/shared-components/Label/Label';
-import style from './about.module.css';
+import style from '../about/about.module.css';
 import Image from 'next/image';
 import AnimatedText from '@app/shared-components/Utils/AnimatedText';
 
