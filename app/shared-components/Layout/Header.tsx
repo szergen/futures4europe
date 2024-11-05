@@ -192,7 +192,7 @@ const Header = () => {
               img={
                 userDetails?.userTag?.picture
                   ? userDetails?.userTag?.picture
-                  : 'https://framerusercontent.com/images/DSOrm9QuNc3pr6AeQanHcDmlc.png?scale-down-to=512'
+                  : 'https://framerusercontent.com/images/NVeaM8VrCezyFEd2iOUwfmMuGCI.svg'
               }
               rounded
               className={classNames(style.avatarImage, 'avatarUserHeader', {
@@ -210,42 +210,53 @@ const Header = () => {
             </span>
             <span className="block text-sm">{userDetails?.email}</span>
           </Dropdown.Header>
-          <Dropdown.Item icon={HiUserCircle}>
-            <Link href="/dashboard"> Dashboard </Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreateProject}
-          >
-            <Link href="/project/New_Project"> Add Project</Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreatePost}
-          >
-            <Link href="/post/New_Post?pageType=projectResult">
-              {' '}
-              Add Project result
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreateOrganisation}
-          >
-            <Link href="/organisation/New_Organisation"> Add Organisation</Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            //  onClick={handleCreatePost}
-          >
-            <Link href="/post/New_Post"> Add Article</Link>
-          </Dropdown.Item>
-          <Dropdown.Item
-            icon={HiPlusSm}
-            // onClick={handleCreatePost}
-          >
-            <Link href="/post/New_Post?pageType=event"> Add Event</Link>
-          </Dropdown.Item>
+
+          <Link href="/dashboard">
+            <Dropdown.Item icon={HiUserCircle}>
+              Dashboard 
+            </Dropdown.Item>
+          </Link>
+
+          <Link href="/project/New_Project">
+            <Dropdown.Item
+              icon={HiPlusSm}
+            >
+              Add Project
+            </Dropdown.Item>
+          </Link>
+
+          <Link href="/post/New_Post?pageType=projectResult">
+            <Dropdown.Item
+              icon={HiPlusSm}
+            >
+                Add Project result
+            </Dropdown.Item>
+          </Link>
+
+          <Link href="/organisation/New_Organisation">
+            <Dropdown.Item
+              icon={HiPlusSm}
+            >
+              Add Organisation
+            </Dropdown.Item>
+          </Link>
+
+          <Link href="/post/New_Post">
+            <Dropdown.Item
+              icon={HiPlusSm}
+            >
+              Add Article
+            </Dropdown.Item>
+          </Link>
+
+          <Link href="/post/New_Post?pageType=event">
+            <Dropdown.Item
+              icon={HiPlusSm}
+            >
+              Add Event
+            </Dropdown.Item>
+          </Link>
+
           {/* <Dropdown.Item
             icon={HiPlusSm}
             //  onClick={handleCreatePost}
@@ -253,6 +264,7 @@ const Header = () => {
             <Link href=''> Add Foresight method</Link>
           </Dropdown.Item> */}
           <Dropdown.Divider />
+          
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
             Log out
           </Dropdown.Item>

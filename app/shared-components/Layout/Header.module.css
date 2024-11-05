@@ -111,7 +111,7 @@
 
 /* media query */
 
-@media (max-width: 480px) {
+@media (max-width: 860px) {
   .headerContainer {
     display: flex;
     flex-wrap: wrap;

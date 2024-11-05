@@ -69,14 +69,14 @@ const Footer = () => (
         <div className="flex w-full"></div>
         <div className="flex w-full"></div>
         <div className="lg:mx-auto text-left">
-          <h4 className="text-lg text-gray-900 font-medium mb-7">About Us</h4>
-          <ul className="text-sm  transition-all duration-500">
+          <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
+          <ul className="text-sm transition-all duration-500">
             <li className="mb-6">
               <a
                 href="/about"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 underline"
               >
-                Learn more
+                About us
               </a>
             </li>
           </ul>
@@ -88,7 +88,7 @@ const Footer = () => (
             <li className="mb-6">
               <a
                 href="mailto:info@futures4europe.eu"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 underline"
               >
                 info@futures4europe.eu
               </a>
