@@ -3745,10 +3745,15 @@
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.3.tgz"
   integrity sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==
 
-"@types/yargs@^16.0.0", "@types/yargs@^17.0.8":
+"@types/yargs@^16.0.0":
   version "16.0.9"
   resolved "https://registry.npmjs.org/@types/yargs/-/yargs-16.0.9.tgz"
   integrity sha512-tHhzvkFXZQeTECenFoRljLBYPZJ7jAVxqqtEI0qTLOmuultnFp4I9yKE17vTuhf7BkhCu7I4XuemPgikDVuYqA==
+  dependencies:
+    "@types/yargs-parser" "*"
+
+"@types/yargs@^17.0.8":
+  version "17.0.33"
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -8570,10 +8575,10 @@ graphemer@^1.4.0:
   resolved "https://registry.npmjs.org/graphql/-/graphql-16.8.1.tgz"
   integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
 
-gsap-trial@^3.12.5:
+"gsap@npm:@gsap/shockingly@^3.12.5":
   version "3.12.5"
-  resolved "https://registry.npmjs.org/gsap-trial/-/gsap-trial-3.12.5.tgz"
-  integrity sha512-Mdq2sLBq6rt9qje/MoF/hRa/xKfvKOUdllPouU2Fhz1K6mpCk0SOGBDhxCrOrJXZ4O7YFFRFVADKIJVeHdKA8A==
+  resolved "https://npm.greensock.com/@gsap%2fshockingly/-/shockingly-3.12.5.tgz"
+  integrity sha512-JoZp6iYvOC+wkwl8zfXSqSrYCcuzTntaULCL08YMa1vonrYcr9D0K3EUe9PNpw7FYK1chjSwjjgcw3zS/O2SWg==
 
 gunzip-maybe@^1.4.2:
   version "1.4.2"
@@ -10869,9 +10874,6 @@ napi-build-utils@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/napi-build-utils/-/napi-build-utils-1.0.2.tgz"
   integrity sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==
-
-napi-wasm@^1.1.0:
-  version "1.1.0"
 
 natural-compare-lite@^1.4.0:
   version "1.4.0"
