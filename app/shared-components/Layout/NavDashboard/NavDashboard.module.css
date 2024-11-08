@@ -58,3 +58,18 @@
     font-weight: var(--w-font-weight-heading);
     border-bottom: 1px solid var(--primary-brand);
 }
+
+
+
+/* media query */
+
+@media (max-width: 860px) {
+    .UserDashboardWrapper{
+      overflow: scroll;
+      max-width: 100%;
+      width: 100vw;
+    }
+    .UserDashboardNavItem {
+        height: 120px;
+    }
+  }

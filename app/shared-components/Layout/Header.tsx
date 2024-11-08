@@ -183,7 +183,7 @@ const Header = () => {
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
-      <div ref={dropdownRef}>
+      <div className={classNames(style.avatarImageHeader)} ref={dropdownRef}>
         <Dropdown
           className="rounded-lg shadow-sm"
           label={

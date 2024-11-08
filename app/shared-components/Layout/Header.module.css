@@ -153,11 +153,23 @@
   .headerLogo {
     order: -1;
     flex-grow: 1;
+    align-items: flex-start;
+    padding: var(--w-space-xl);
   }
   .headerLogo svg{ 
     width: 80px;
   }
   .header{
     padding: 0px;
+  }
+  .avatarImageHeader {
+    order: -1;
+    padding: var(--w-space-xl);
+  }
+  
+  .UserDashboardWrapper{
+    overflow: hidden;
+    max-width: 100%;
+    width: 100vw;
   }
 }
