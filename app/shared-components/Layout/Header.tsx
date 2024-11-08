@@ -197,8 +197,8 @@ const Header = () => {
               rounded
               className={classNames(style.avatarImage, 'avatarUserHeader', {
                 active: isDropdownOpen,
-              })} // Conditionally add "active" class
-              onClick={toggleDropdown} // Toggle dropdown state on click
+              })} 
+              onClick={toggleDropdown}
             />
           }
           arrowIcon={false}
