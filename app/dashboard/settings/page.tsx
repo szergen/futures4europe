@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import { members } from '@wix/members';
 import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
-import style from './pageDashboard.module.css';
+import style from '../pageDashboard.module.css';
 import { Avatar, Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Typography from '@app/shared-components/Typography/Typography';
@@ -163,7 +163,6 @@ export default function Dashboard() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-
         {/* // TODO: To make component for dashbaordBoxe's */}
         <div
           className={classNames(
@@ -414,7 +413,6 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   );

@@ -212,49 +212,27 @@ const Header = () => {
           </Dropdown.Header>
 
           <Link href="/dashboard">
-            <Dropdown.Item icon={HiUserCircle}>
-              Dashboard 
-            </Dropdown.Item>
+            <Dropdown.Item icon={HiUserCircle}>Dashboard</Dropdown.Item>
           </Link>
 
           <Link href="/project/New_Project">
-            <Dropdown.Item
-              icon={HiPlusSm}
-            >
-              Add Project
-            </Dropdown.Item>
+            <Dropdown.Item icon={HiPlusSm}>Add Project</Dropdown.Item>
           </Link>
 
           <Link href="/post/New_Post?pageType=projectResult">
-            <Dropdown.Item
-              icon={HiPlusSm}
-            >
-                Add Project result
-            </Dropdown.Item>
+            <Dropdown.Item icon={HiPlusSm}>Add Project result</Dropdown.Item>
           </Link>
 
           <Link href="/organisation/New_Organisation">
-            <Dropdown.Item
-              icon={HiPlusSm}
-            >
-              Add Organisation
-            </Dropdown.Item>
+            <Dropdown.Item icon={HiPlusSm}>Add Organisation</Dropdown.Item>
           </Link>
 
           <Link href="/post/New_Post">
-            <Dropdown.Item
-              icon={HiPlusSm}
-            >
-              Add Article
-            </Dropdown.Item>
+            <Dropdown.Item icon={HiPlusSm}>Add Article</Dropdown.Item>
           </Link>
 
           <Link href="/post/New_Post?pageType=event">
-            <Dropdown.Item
-              icon={HiPlusSm}
-            >
-              Add Event
-            </Dropdown.Item>
+            <Dropdown.Item icon={HiPlusSm}>Add Event</Dropdown.Item>
           </Link>
 
           {/* <Dropdown.Item
@@ -264,7 +242,7 @@ const Header = () => {
             <Link href=''> Add Foresight method</Link>
           </Dropdown.Item> */}
           <Dropdown.Divider />
-          
+
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>
             Log out
           </Dropdown.Item>
@@ -272,9 +250,9 @@ const Header = () => {
       </div>
     ) : (
       <>
-        <div className={classNames(
-          style.topbarLogin,"flex items-center gap-4")}>
-
+        <div
+          className={classNames(style.topbarLogin, 'flex items-center gap-4')}
+        >
           <Link href="/dashboard">
             <p className="font-bold text-base">Login</p>
           </Link>
@@ -319,7 +297,7 @@ const Header = () => {
         </div>
       </div>
       <header
-        className={classNames("flex w-full my-6 px-2", style.header)}
+        className={classNames('flex w-full my-6 px-2', style.header)}
         data-testid={testIds.LAYOUT.HEADER}
       >
         <div
@@ -347,78 +325,79 @@ const Header = () => {
           </div> */}
           {/* TODO: Temporary Pages */}
           {/* Page Buttons */}
-      <div
-        className={classNames(
-          'relative',
-          style.headerTagContainerOuter
-        )}
-        > 
-        <div 
-            className={classNames(
-              'flex items-center gap-4',
-              style.headerTagContainer
-            )}
+          <div
+            className={classNames('relative', style.headerTagContainerOuter)}
           >
-          <Tag
-            name="Posts"
-            hardcodedMentions={
-              pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
-            }
-            tagLine="List of Post Pages"
-            tagPageLink="/pages/post"
-            disableTooltip
-          />
-          <Tag
-            name="Projects"
-            hardcodedMentions={
-              pageTypeCounts.project !== 0 ? pageTypeCounts.project : undefined
-            }
-            tagLine="List of Project Info Pages"
-            tagPageLink="/pages/project"
-            disableTooltip
-          />
-          <Tag
-            name="Project Results"
-            hardcodedMentions={
-              pageTypeCounts.projectResult !== 0
-                ? pageTypeCounts.projectResult
-                : undefined
-            }
-            tagLine="List of Project Result Pages"
-            tagPageLink="/pages/project-result"
-            disableTooltip
-          />
-          <Tag
-            name="Events"
-            hardcodedMentions={
-              pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
-            }
-            tagLine="List of Event Pages"
-            tagPageLink="/pages/event"
-            disableTooltip
-          />
-          <Tag
-            name="Organisations"
-            hardcodedMentions={
-              pageTypeCounts.organisation !== 0
-                ? pageTypeCounts.organisation
-                : undefined
-            }
-            tagLine="List of Organisation Info Pages"
-            tagPageLink="/pages/organisation"
-            disableTooltip
-          />
-          <Tag
-            name="People"
-            hardcodedMentions={
-              pageTypeCounts.person !== 0 ? pageTypeCounts.person : undefined
-            }
-            tagLine="List of Person Info Pages"
-            tagPageLink="/pages/person"
-            disableTooltip
-          />
-        </div>
-      </div>   
+            <div
+              className={classNames(
+                'flex items-center gap-4',
+                style.headerTagContainer
+              )}
+            >
+              <Tag
+                name="Posts"
+                hardcodedMentions={
+                  pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
+                }
+                tagLine="List of Post Pages"
+                tagPageLink="/pages/post"
+                disableTooltip
+              />
+              <Tag
+                name="Projects"
+                hardcodedMentions={
+                  pageTypeCounts.project !== 0
+                    ? pageTypeCounts.project
+                    : undefined
+                }
+                tagLine="List of Project Info Pages"
+                tagPageLink="/pages/project"
+                disableTooltip
+              />
+              <Tag
+                name="Project Results"
+                hardcodedMentions={
+                  pageTypeCounts.projectResult !== 0
+                    ? pageTypeCounts.projectResult
+                    : undefined
+                }
+                tagLine="List of Project Result Pages"
+                tagPageLink="/pages/project-result"
+                disableTooltip
+              />
+              <Tag
+                name="Events"
+                hardcodedMentions={
+                  pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
+                }
+                tagLine="List of Event Pages"
+                tagPageLink="/pages/event"
+                disableTooltip
+              />
+              <Tag
+                name="Organisations"
+                hardcodedMentions={
+                  pageTypeCounts.organisation !== 0
+                    ? pageTypeCounts.organisation
+                    : undefined
+                }
+                tagLine="List of Organisation Info Pages"
+                tagPageLink="/pages/organisation"
+                disableTooltip
+              />
+              <Tag
+                name="People"
+                hardcodedMentions={
+                  pageTypeCounts.person !== 0
+                    ? pageTypeCounts.person
+                    : undefined
+                }
+                tagLine="List of Person Info Pages"
+                tagPageLink="/pages/person"
+                disableTooltip
+              />
+            </div>
+          </div>
           {/* Account */}
           {accountSection}
 

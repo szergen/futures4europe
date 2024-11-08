@@ -38,7 +38,7 @@
     "flowbite-react": "0.7.3",
     "framer-motion": "^11.11.8",
     "fuse.js": "^7.0.0",
-    "gsap": "npm:@gsap/shockingly",
+    "gsap": "^3.12.5",
     "html-to-draftjs": "^1.5.0",
     "mongodb": "^6.8.1",
     "next": "^13.4.9",

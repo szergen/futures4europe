@@ -1,6 +1,7 @@
 import './footer.css';
 import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
+import Link from 'next/link';
 
 const Footer = () => (
   <footer className="w-full" data-testid={testIds.LAYOUT.FOOTER}>
@@ -63,7 +64,6 @@ const Footer = () => (
             Commission cannot be held responsible for any use which may be made
             of the information contained.
           </p>
-
         </div>
 
         <div className="flex w-full"></div>
@@ -72,12 +72,12 @@ const Footer = () => (
           <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
           <ul className="text-sm transition-all duration-500">
             <li className="mb-6">
-              <a
+              <Link
                 href="/about"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
                 About us
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
