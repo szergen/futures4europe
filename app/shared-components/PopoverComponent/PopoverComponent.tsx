@@ -1,67 +1,92 @@
+// TODO @ALEX verificat new prop
+
 import React from 'react';
 import style from './PopoverComponent.module.css';
 import classNames from 'classnames';
 import { Popover } from 'flowbite-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type PopoverProps = {
   children?: React.ReactNode;
   triggerID?: string;
-  // popoverTitle?: string;
   popoverTitle?: string;
   className?: string;
   trigger: 'click' | 'hover';
   popoverImage?: string;
   popoverImageAlt?: string;
   popoverSubtitle?: string;
+  alwaysVisible?: boolean; // New prop to control visibility
 };
 
 const PopoverComponent: React.FC<PopoverProps> = ({
   children,
   className,
   trigger,
-  // popoverTitle,
   popoverTitle,
   popoverImage,
   popoverImageAlt,
   popoverSubtitle,
+  alwaysVisible, // Destructure the new prop // TODO @ALEX verificat new prop
 }) => {
   const content = (
-    <div className="w-auto text-sm text-gray-500 dark:text-gray-400">
-      {/* <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-        <h3 className="font-semibold text-gray-900 dark:text-white">
-          {popoverTitle}
-        </h3>
-      </div> */}
-      <div className="px-3 py-2 flex">
+    <div
+      className={classNames(
+        style.popOverTooltip, // Corrected class name
+        'w-auto bg-transparent overflow-visible'
+      )}
+    >
+      <div className="flex">
         {popoverImage && (
           <Image
             src={
               getImageUrlForMedia(popoverImage)?.url ||
               getImageUrlForMedia(popoverImage) ||
-              'https://placehold.co/147x147?text=Profile Image'
+              'https://placehold.co/147x147?text=Profile+Image'
             }
             alt={popoverImageAlt || 'Image picture'}
-            width={100}
-            height={100}
+            width={200}
+            height={200}
+            className="object-cover rounded" // Optional: Enhance styling
           />
         )}
         <div className="flex flex-wrap">
-          <span className={classNames(popoverImage && 'px-3')}>
-            <p className="font-bold">{popoverTitle}</p>
-            <p>{popoverSubtitle}</p>
+          <span className={classNames(popoverImage && 'p-2')}>
+            <p className={classNames(style.popOverTitle, 'font-bold')}>
+              {popoverTitle}
+            </p>
+            <p className={classNames(style.popOverSubtitle, '')}>
+              {popoverSubtitle}
+            </p>
           </span>
         </div>
       </div>
     </div>
   );
 
+  // TODO @ALEX verificat new prop
+  if (alwaysVisible) {
+    // Render the popover content directly without the Popover wrapper
+    return (
+      <div className={classNames('w-auto text-sm', className)}>{content}</div>
+    );
+  }
+
+  // Render the Popover component as usual
   return (
-    <Popover content={content} trigger={trigger} placement="top">
+    <Popover
+      className={classNames(
+        style.contentOverflowVisible,
+        'absolute z-20 inline-block w-max max-w-[100vw] rounded-2xl overflow-visible bg-transparent outline-none border-0 shadow-non'
+      )}
+      content={content}
+      trigger={trigger}
+      placement="top"
+      arrow={false}
+    >
       {children}
     </Popover>
   );
 };
+
 export default PopoverComponent;

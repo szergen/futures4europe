@@ -191,7 +191,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
         <NavItem
           href="/dashboard"
           icon={SpriteSvg.AccountPersonIcon}
-          text="Profile settings"
+          text="Personal Info"
           active={activeNavItem === '/dashboard'}
         />
         {/* <NavItem

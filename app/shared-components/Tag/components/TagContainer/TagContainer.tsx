@@ -74,6 +74,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
             TagContent
           ) : (
             <PopoverComponent
+              alwaysVisible={false} // Set the new prop to true
               trigger="hover"
               popoverTitle={name}
               popoverSubtitle={tagLine}

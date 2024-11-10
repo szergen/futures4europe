@@ -5,13 +5,13 @@
   transform: translate(-50%, -50%);
 }
 .imageContent ::placeholder {
-  text-align: center; 
+  text-align: center;
 }
 .imageContent textarea:focus::placeholder {
   opacity: 0;
 }
-.imageContent textarea{
-  text-align: center; 
+.imageContent textarea {
+  text-align: center;
 }
 .imageEditor {
   border: 1px solid #fff;

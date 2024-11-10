@@ -183,7 +183,7 @@ const Header = () => {
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
-      <div ref={dropdownRef}>
+      <div className={classNames(style.avatarImageHeader)} ref={dropdownRef}>
         <Dropdown
           className="rounded-lg shadow-sm"
           label={
@@ -197,8 +197,8 @@ const Header = () => {
               rounded
               className={classNames(style.avatarImage, 'avatarUserHeader', {
                 active: isDropdownOpen,
-              })} // Conditionally add "active" class
-              onClick={toggleDropdown} // Toggle dropdown state on click
+              })}
+              onClick={toggleDropdown}
             />
           }
           arrowIcon={false}
@@ -281,7 +281,7 @@ const Header = () => {
               <Badge className="rounded-lg mr-4" color="purple" size="sm">
                 BETA
               </Badge>
-              Welcome to the new version of futures4europe v1.0.1
+              Welcome to the new version of futures4europe
             </div>
             <div className="font-medium text-lg lg:text-base lg:block text-white">
               If you see any problems please report them to us at{' '}

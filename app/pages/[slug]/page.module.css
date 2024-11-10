@@ -5,6 +5,6 @@
   overflow-x: hidden;
 }
 
-.listContainer .postItem{
+.listContainer .postItem {
   border-bottom: 1px solid var(--primary-brand);
 }
