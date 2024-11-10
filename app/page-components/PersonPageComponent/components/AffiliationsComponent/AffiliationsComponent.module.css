@@ -29,7 +29,7 @@
   max-width: 100%;
   background: var(--color-background-brand-tag);
   border-radius: var(--p-border-radius-tag) 0px 0px var(--p-border-radius-tag);
-  position: relative;  
+  position: relative;
 }
 .affiliationTagPickerContainer {
   max-width: 100%;
@@ -41,7 +41,7 @@
 }
 
 .inputContainer {
-  background: var(--color-background-brand-tag)
+  background: var(--color-background-brand-tag);
 }
 
 /* // TODO: redo this class */

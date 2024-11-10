@@ -10,6 +10,8 @@ import MotionPathPlugin from 'gsap/MotionPathPlugin';
 import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
+import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
+// import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
 
 // Helper function to get motion path length and spacing
 function getPathProperties(pathSelector: any, itemCount: any) {
@@ -146,9 +148,9 @@ export const Home = () => {
     // ownedPostPagesFetched,
     // ownedInfoPagesFetched,
     // handleUserDataRefresh,
-    // tags,
+    tags,
   } = useAuth();
-  // console.log('ownedInfoPages', ownedInfoPages);
+  console.log('ownedpostPages', postPages);
 
   // const router = useRouter();
   // const { removeDataItem } = useWixModules(items);
@@ -261,6 +263,196 @@ export const Home = () => {
 
   return (
     <div className="homeHero">
+      {/* <pre>{JSON.stringify(infoPages.data, null, 2)}</pre>  */}
+
+      <div className="flex mx-auto relative sm:px-20 py-5 homeHero">
+        <div className="flex flex-col min-w-[420px] items-center justify-center homeTitleContainer">
+          <h2 className="homeTitle">
+            The online home of the European foresight community
+          </h2>
+          <p className="homeSubtitle">
+            Join our community to share, discover, and stay up-to-date on all
+            the latest foresight activities in and about Europe. We bring
+            together futurists and foresight community members with EU
+            policy-makers and citizens.
+          </p>
+        </div>
+
+        <div className="w-full w-fit Container_wrapper index_customers">
+          <div className="index_customerGroups">
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="person info" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="person info" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="person info" // Pass the desired info page type
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="person info" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="index_customerGroupWrapper">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="organisation info" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="organisation info" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="organisation info" // Pass the desired info page type
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="organisation info" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="project info" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="project info" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="project info" // Pass the desired info page type
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="project info" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="index_customerGroupWrapper">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="project result" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="project result" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="project result" // Pass the desired info page type
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="project result" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="event" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="event" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="event" // Pass the desired info page type
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="event" // Pass the desired info page type
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="homeFeatured">
         {/* <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
           Featured Organisations

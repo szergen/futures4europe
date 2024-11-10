@@ -1,9 +1,6 @@
 .tagListContainer {
   display: flex;
   align-items: center;
-  margin-top: 1em;
-  flex-wrap: wrap;
-  margin-bottom: 1em;
 }
 .tagListTitle {
   font-weight: var(--w-font-weight-book);

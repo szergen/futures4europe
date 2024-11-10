@@ -18,9 +18,9 @@
 }
 
 .textSearchTips {
-  border-bottom: .76px solid var(--color-background-primary-weaker);
-  padding-bottom:var(--w-space-s);
-  padding-top:var(--w-space-s);
+  border-bottom: 0.76px solid var(--color-background-primary-weaker);
+  padding-bottom: var(--w-space-s);
+  padding-top: var(--w-space-s);
   font-size: var(--w-font-size-body);
   font-weight: var(--w-font-weight-body);
 }

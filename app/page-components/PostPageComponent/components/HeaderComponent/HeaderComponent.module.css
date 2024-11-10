@@ -54,7 +54,6 @@
   line-height: 1em;
 }
 
-
 /* TODO: Movo all header component css in one file */
 .textPostTitleEdit {
   font-size: var(--w-font-size-xxl);
@@ -77,14 +76,15 @@
   transform: translateY(0.55em);
   background: var(--primary-white);
   box-shadow: inset 0px 0px 0px 4px var(--color-background-brand-tag);
-  border-radius: var(--p-border-radius-tag);  
+  border-radius: var(--p-border-radius-tag);
   margin-bottom: 8px;
 }
 
-.textPostTitleEdit:focus, .textPostSubtitle:focus {
+.textPostTitleEdit:focus,
+.textPostSubtitle:focus {
   background: var(--primary-white);
   box-shadow: inset 0px 0px 0px 4px var(--color-background-brand-tag);
-  border-radius: var(--p-border-radius-tag);  
+  border-radius: var(--p-border-radius-tag);
 }
 
 .website {
