@@ -11,6 +11,7 @@ import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
 import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
+import LoadingSpinner from './shared-components/LoadingSpinner/LoadingSpinner';
 // import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
 
 // Helper function to get motion path length and spacing
@@ -149,6 +150,7 @@ export const Home = () => {
     // ownedInfoPagesFetched,
     // handleUserDataRefresh,
     tags,
+    tagsFetched,
   } = useAuth();
   console.log('ownedpostPages', postPages);
 
@@ -261,6 +263,14 @@ export const Home = () => {
     console.log('featuredPages', featuredPages);
   }, [homepageConfig, featuredPages]);
 
+  const [isFinishedLoading, setIsFinishedLoading] = useState(false);
+
+  useEffect(() => {
+    if (tagsFetched) {
+      setIsFinishedLoading(true);
+    }
+  }, [tagsFetched]);
+
   return (
     <div className="homeHero">
       {/* <pre>{JSON.stringify(infoPages.data, null, 2)}</pre>  */}
@@ -277,180 +287,183 @@ export const Home = () => {
             policy-makers and citizens.
           </p>
         </div>
-
-        <div className="w-full w-fit Container_wrapper index_customers">
-          <div className="index_customerGroups">
-            <div className="index_customerGroupWrapper index_reverse">
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  {/* <ErrorBoundary> */}
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="person info" // Pass the desired info page type
-                  />
-                  {/* </ErrorBoundary> */}
+        {isFinishedLoading ? (
+          <div className="w-full w-fit Container_wrapper index_customers">
+            <div className="index_customerGroups">
+              <div className="index_customerGroupWrapper index_reverse">
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    {/* <ErrorBoundary> */}
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="person info" // Pass the desired info page type
+                    />
+                    {/* </ErrorBoundary> */}
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="person info" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="person info" // Pass the desired info page type
-                  />
+
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="person info" // Pass the desired info page type
+                    />
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="person info" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="person info" // Pass the desired info page type
-                  />
+              <div className="index_customerGroupWrapper">
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    {/* <ErrorBoundary> */}
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="organisation info" // Pass the desired info page type
+                    />
+                    {/* </ErrorBoundary> */}
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="organisation info" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="person info" // Pass the desired info page type
-                  />
-                </div>
-              </div>
-            </div>
 
-            <div className="index_customerGroupWrapper">
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  {/* <ErrorBoundary> */}
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="organisation info" // Pass the desired info page type
-                  />
-                  {/* </ErrorBoundary> */}
-                </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="organisation info" // Pass the desired info page type
-                  />
-                </div>
-              </div>
-
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="organisation info" // Pass the desired info page type
-                  />
-                </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="organisation info" // Pass the desired info page type
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="index_customerGroupWrapper index_reverse">
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  {/* <ErrorBoundary> */}
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="project info" // Pass the desired info page type
-                  />
-                  {/* </ErrorBoundary> */}
-                </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="project info" // Pass the desired info page type
-                  />
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="organisation info" // Pass the desired info page type
+                    />
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="organisation info" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="project info" // Pass the desired info page type
-                  />
+              <div className="index_customerGroupWrapper index_reverse">
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    {/* <ErrorBoundary> */}
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="project info" // Pass the desired info page type
+                    />
+                    {/* </ErrorBoundary> */}
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="project info" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    infoPages={infoPages}
-                    infoPageType="project info" // Pass the desired info page type
-                  />
-                </div>
-              </div>
-            </div>
 
-            <div className="index_customerGroupWrapper">
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  {/* <ErrorBoundary> */}
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="project result" // Pass the desired info page type
-                  />
-                  {/* </ErrorBoundary> */}
-                </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="project result" // Pass the desired info page type
-                  />
-                </div>
-              </div>
-
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="project result" // Pass the desired info page type
-                  />
-                </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="project result" // Pass the desired info page type
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="index_customerGroupWrapper index_reverse">
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  {/* <ErrorBoundary> */}
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="event" // Pass the desired info page type
-                  />
-                  {/* </ErrorBoundary> */}
-                </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="event" // Pass the desired info page type
-                  />
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="project info" // Pass the desired info page type
+                    />
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      infoPages={infoPages}
+                      infoPageType="project info" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="index_customerGroup">
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="event" // Pass the desired info page type
-                  />
+              <div className="index_customerGroupWrapper">
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    {/* <ErrorBoundary> */}
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="project result" // Pass the desired info page type
+                    />
+                    {/* </ErrorBoundary> */}
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="project result" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
-                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <TagLisInlineComponent
-                    postPages={postPages}
-                    postPageTypes="event" // Pass the desired info page type
-                  />
+
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="project result" // Pass the desired info page type
+                    />
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="project result" // Pass the desired info page type
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="index_customerGroupWrapper index_reverse">
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    {/* <ErrorBoundary> */}
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="event" // Pass the desired info page type
+                    />
+                    {/* </ErrorBoundary> */}
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="event" // Pass the desired info page type
+                    />
+                  </div>
+                </div>
+
+                <div className="index_customerGroup">
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="event" // Pass the desired info page type
+                    />
+                  </div>
+                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                    <TagLisInlineComponent
+                      postPages={postPages}
+                      postPageTypes="event" // Pass the desired info page type
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <LoadingSpinner classNames="w-full w-fit Container_wrapper index_customers" />
+        )}
       </div>
 
       <div className="homeFeatured">

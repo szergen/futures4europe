@@ -1,8 +1,12 @@
 import React from 'react';
 
-const LoadingSpinner: React.FC = () => {
+type LoadingSpinnerProps = {
+  classNames?: string;
+};
+
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ classNames }) => {
   return (
-    <div className="text-center">
+    <div className={'text-center' + classNames}>
       <div role="status">
         <svg
           aria-hidden="true"

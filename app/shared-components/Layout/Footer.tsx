@@ -4,16 +4,12 @@ import testIds from '@app/utils/test-ids';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useWixModules } from '@wix/sdk-react';
-import { marketingConsent } from '@wix/marketing';
 import { subscribeToNewsletter } from '@app/wixUtils/client-side';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [submitState, setSubmitState] = useState('idle');
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
-
-  const { upsertMarketingConsent } = useWixModules(marketingConsent);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
