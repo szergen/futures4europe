@@ -6101,6 +6101,58 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wix/marketing@npm:^1.0.75":
+  version: 1.0.75
+  resolution: "@wix/marketing@npm:1.0.75"
+  dependencies:
+    "@wix/marketing_ads-txt": 1.0.21
+    "@wix/marketing_coupons": 1.0.32
+    "@wix/marketing_marketing-consent": 1.0.16
+    "@wix/marketing_seo-keyword-suggestions": 1.0.19
+  checksum: e9aedff21a1a849425f431420cd44fa9cdf5d21c3a438353bf45c4e692e15d8eecc8b5950618b353eecf84014a3f622890d0577fdcf7adbcfc886b054bc89fb3
+  languageName: node
+  linkType: hard
+
+"@wix/marketing_ads-txt@npm:1.0.21":
+  version: 1.0.21
+  resolution: "@wix/marketing_ads-txt@npm:1.0.21"
+  dependencies:
+    "@wix/sdk-runtime": ^0.3.22
+    "@wix/sdk-types": ^1.12.4
+  checksum: 671ced4dddef0eb9f65d250b95a404ef689faadda683096c80587609eaff47bc07b8f0f442eeb102c43564bb53b5116b193cc163fed6156882d1a8b0b47678c4
+  languageName: node
+  linkType: hard
+
+"@wix/marketing_coupons@npm:1.0.32":
+  version: 1.0.32
+  resolution: "@wix/marketing_coupons@npm:1.0.32"
+  dependencies:
+    "@wix/sdk-runtime": ^0.3.22
+    "@wix/sdk-types": ^1.12.4
+  checksum: f08ad6254cbf97ea94409b0601114fc23fdb66e8fd1ba26546101140f790dc4d4751e9a102defad224ac56235e46379f286a3042cc515a98e208374c5b9e6f24
+  languageName: node
+  linkType: hard
+
+"@wix/marketing_marketing-consent@npm:1.0.16":
+  version: 1.0.16
+  resolution: "@wix/marketing_marketing-consent@npm:1.0.16"
+  dependencies:
+    "@wix/sdk-runtime": ^0.3.22
+    "@wix/sdk-types": ^1.12.4
+  checksum: 7a5c416660a417fe07ae5df87b5e4c1457c2ed439d7191dfa43cea73bc17a960898635d3ddf148f03009ee8843fc03157863a0fde6bfbeea8c6fb970c854cf17
+  languageName: node
+  linkType: hard
+
+"@wix/marketing_seo-keyword-suggestions@npm:1.0.19":
+  version: 1.0.19
+  resolution: "@wix/marketing_seo-keyword-suggestions@npm:1.0.19"
+  dependencies:
+    "@wix/sdk-runtime": ^0.3.22
+    "@wix/sdk-types": ^1.12.4
+  checksum: 4fa3741c7a0be91543c8e6fb679837b2168f1446e8389fa61535aa4b626b75bf1f3d6e6440fd0c64c2c66d5b0879ce478dda7f4cad2a32549c8f2fe5880f9626
+  languageName: node
+  linkType: hard
+
 "@wix/media@npm:^1.0.117":
   version: 1.0.117
   resolution: "@wix/media@npm:1.0.117"
@@ -6484,20 +6536,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/sdk-runtime@npm:^0.3.11, @wix/sdk-runtime@npm:^0.3.14":
-  version: 0.3.18
-  resolution: "@wix/sdk-runtime@npm:0.3.18"
+"@wix/sdk-runtime@npm:^0.3.11, @wix/sdk-runtime@npm:^0.3.14, @wix/sdk-runtime@npm:^0.3.22":
+  version: 0.3.23
+  resolution: "@wix/sdk-runtime@npm:0.3.23"
   dependencies:
     "@wix/sdk-context": ^0.0.1
-    "@wix/sdk-types": ^1.10.0
-  checksum: 9cb13bb83a912f15ff70f1d45c5f15e61298b58ef4d5b67744eadb3c5d605d6bf134b9cdfb8813e4c7b44baed0fbf486428764911a70741e3cc1b58ed2f8de1a
+    "@wix/sdk-types": ^1.12.4
+  checksum: a85110a92315436e7b385c10c8ffd0d060933b8047888b6c2ae5a75ce1e87d96155c610cefeec3ad683246d53909db2b05171fdab0af058f95a20cc8033ef8c2
   languageName: node
   linkType: hard
 
-"@wix/sdk-types@npm:^1.10.0, @wix/sdk-types@npm:^1.5.11, @wix/sdk-types@npm:^1.7.0, @wix/sdk-types@npm:^1.9.2, @wix/sdk-types@npm:^1.9.3":
-  version: 1.10.0
-  resolution: "@wix/sdk-types@npm:1.10.0"
-  checksum: ff1084eed2d386a80874392121346c312cd9808b3a582e54215046e8f068b506865bfccb43816d99825bfe3a4bdedbf384ffab108b1335a171c48ae2afe4c44b
+"@wix/sdk-types@npm:^1.12.4, @wix/sdk-types@npm:^1.5.11, @wix/sdk-types@npm:^1.7.0, @wix/sdk-types@npm:^1.9.2, @wix/sdk-types@npm:^1.9.3":
+  version: 1.12.4
+  resolution: "@wix/sdk-types@npm:1.12.4"
+  checksum: 31969ee9526c2e6a526cd1cebc21628e70e0b309c186ca2fc6dca0155090f0a721483426fac6b0d50365704637ebe13bd838df67c3b7986e6f06e5b061de2905
   languageName: node
   linkType: hard
 
@@ -20569,6 +20621,7 @@ __metadata:
     "@wix/crm": ^1.0.126
     "@wix/data": ^1.0.148
     "@wix/loyalty": ^1.0.201
+    "@wix/marketing": ^1.0.75
     "@wix/media": ^1.0.117
     "@wix/members": ^1.0.95
     "@wix/sdk": ^1.12.0

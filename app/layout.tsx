@@ -55,11 +55,12 @@ export default function RootLayout({
               <AuthProvider>
                 <Header />
                 <main className="bg-white min-h-[600px]">{children}</main>
+                <div className="mt-10 sm:mt-20">
+                  <Footer />
+                </div>
               </AuthProvider>
             </WixProvider>
-            <div className="mt-10 sm:mt-20">
-              <Footer />
-            </div>
+
             <SpeedInsights />
             <Analytics />
           </>
