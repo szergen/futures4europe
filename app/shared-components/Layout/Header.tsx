@@ -197,7 +197,7 @@ const Header = () => {
               rounded
               className={classNames(style.avatarImage, 'avatarUserHeader', {
                 active: isDropdownOpen,
-              })} 
+              })}
               onClick={toggleDropdown}
             />
           }
