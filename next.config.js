@@ -32,7 +32,7 @@ const nextConfig = {
       {
         source: '/about',
         destination: '/static-pages/about',
-      },      
+      },
     ];
   },
 };

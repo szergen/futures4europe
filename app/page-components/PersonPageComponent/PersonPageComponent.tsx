@@ -130,6 +130,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     pageOwner: person?.data?.pageOwner,
   };
   // #endregion
+  console.log('PersonPageComponent personData', person);
 
   // #region set default post data and data for editing
   const [defaultPersonData, setDefaultPersonData] = useState(person);
