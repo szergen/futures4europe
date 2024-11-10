@@ -11,7 +11,7 @@ import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
 import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
-import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
+// import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
 
 // Helper function to get motion path length and spacing
 function getPathProperties(pathSelector: any, itemCount: any) {
@@ -283,12 +283,12 @@ export const Home = () => {
             <div className="index_customerGroupWrapper index_reverse">
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <ErrorBoundary>
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="person info" // Pass the desired info page type
-                    />
-                  </ErrorBoundary>
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="person info" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagLisInlineComponent
@@ -317,12 +317,12 @@ export const Home = () => {
             <div className="index_customerGroupWrapper">
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <ErrorBoundary>
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="organisation info" // Pass the desired info page type
-                    />
-                  </ErrorBoundary>
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="organisation info" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagLisInlineComponent
@@ -351,12 +351,12 @@ export const Home = () => {
             <div className="index_customerGroupWrapper index_reverse">
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <ErrorBoundary>
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="project info" // Pass the desired info page type
-                    />
-                  </ErrorBoundary>
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    infoPages={infoPages}
+                    infoPageType="project info" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagLisInlineComponent
@@ -385,12 +385,12 @@ export const Home = () => {
             <div className="index_customerGroupWrapper">
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <ErrorBoundary>
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="project result" // Pass the desired info page type
-                    />
-                  </ErrorBoundary>
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="project result" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagLisInlineComponent
@@ -419,12 +419,12 @@ export const Home = () => {
             <div className="index_customerGroupWrapper index_reverse">
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                  <ErrorBoundary>
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="event" // Pass the desired info page type
-                    />
-                  </ErrorBoundary>
+                  {/* <ErrorBoundary> */}
+                  <TagLisInlineComponent
+                    postPages={postPages}
+                    postPageTypes="event" // Pass the desired info page type
+                  />
+                  {/* </ErrorBoundary> */}
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagLisInlineComponent

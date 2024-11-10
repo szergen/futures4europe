@@ -50,6 +50,7 @@ export default async function Pages({ params }: any) {
 
   const postPages = postCollection.map((item) => item.data);
   const infoPages = infoPagesCollection.map((item) => item.data);
+  console.log('infoPages', infoPages);
 
   //Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);

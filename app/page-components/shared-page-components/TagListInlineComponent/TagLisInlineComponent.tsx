@@ -4,6 +4,7 @@ import React from 'react';
 import style from './TagLisInlineComponent.module.css';
 import Tag from '@app/shared-components/Tag/Tag';
 import PropTypes from 'prop-types'; // For prop type validation
+import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
 
 const TagLisInlineComponent = ({
   infoPages,
@@ -83,7 +84,10 @@ const TagLisInlineComponent = ({
                         picture={item.picture}
                         disableTooltip={item.disableTooltip}
                         disablePopularityHover={item.disablePopularityHover}
-                        mentions={item.popularity} // Pass 'popularity' as 'mentions'
+                        tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
+                          infoPage.data.pageTypes?.[0]?.name
+                        )}${infoPage.data.slug}`}
+                        // mentions={item.popularity} // Pass 'popularity' as 'mentions'
                       />
                     ) : null
                   )}
@@ -114,9 +118,10 @@ const TagLisInlineComponent = ({
                         <Tag
                           key={`${postPage.data.title}-${item._id || idx}`}
                           name={item.name}
-                          mentions={item.popularity} // Pass 'popularity' as 'mentions'
+                          // mentions={item.popularity} // Pass 'popularity' as 'mentions'
                           disableTooltip
                           disablePopularityHover
+                          tagPageLink={`/post/${postPage.data.slug}`}
                         />
                       ) : null;
                     })
