@@ -35,75 +35,9 @@ export default function aboutPage() {
 
   return (
     <div className="max-w-[1336px] m-auto">
-      {/* <div className={classNames(style.carousel)}>
-  <div className={classNames(style.track)}>
-  <ul className={classNames(style.list)}>
-<li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1508185159346-bb1c5e93ebb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55cf14db6ed80a0410e229368963e9d8&auto=format&fit=crop&w=1900&q=80"/>
-  </li>
-  <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1495480393121-409eb65c7fbe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=05ea43dbe96aba57d48b792c93752068&auto=format&fit=crop&w=1351&q=80"/>
-  </li>
-  <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1501611724492-c09bebdba1ac?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebdb0480ffed49bd075fd85c54dd3317&auto=format&fit=crop&w=1491&q=80"/>
-  </li>
-  <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1417106338293-88a3c25ea0be?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d1565ecb73a2b38784db60c3b68ab3b8&auto=format&fit=crop&w=1352&q=80"/>
-  </li>
-    <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1508185159346-bb1c5e93ebb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55cf14db6ed80a0410e229368963e9d8&auto=format&fit=crop&w=1900&q=80"/>
-  </li>
-    <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1495480393121-409eb65c7fbe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=05ea43dbe96aba57d48b792c93752068&auto=format&fit=crop&w=1351&q=80"/>
-  </li>
-  <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1501611724492-c09bebdba1ac?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebdb0480ffed49bd075fd85c54dd3317&auto=format&fit=crop&w=1491&q=80"/>
-  </li>
-      <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1501611724492-c09bebdba1ac?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebdb0480ffed49bd075fd85c54dd3317&auto=format&fit=crop&w=1491&q=80"/>
-  </li>
-  <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1417106338293-88a3c25ea0be?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d1565ecb73a2b38784db60c3b68ab3b8&auto=format&fit=crop&w=1352&q=80"/>
-  </li>
-    <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1508185159346-bb1c5e93ebb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55cf14db6ed80a0410e229368963e9d8&auto=format&fit=crop&w=1900&q=80"/>
-  </li>
-    <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1495480393121-409eb65c7fbe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=05ea43dbe96aba57d48b792c93752068&auto=format&fit=crop&w=1351&q=80"/>
-  </li>
-  <li className={classNames(style.slide)}>
-    <img src="https://images.unsplash.com/photo-1501611724492-c09bebdba1ac?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebdb0480ffed49bd075fd85c54dd3317&auto=format&fit=crop&w=1491&q=80"/>
-  </li>
-  </ul>
-  </div>
-</div> */}
-      {/* <section className={classNames('relative', style.aboutUsSection)}>
-        <div className={classNames('flex flex-row items-center justify-center w-11/12 m-auto', style.aboutUsHero)}>
-            <div className={classNames('w-3/6 pr-20 flex justify-end', style.aboutUsHeroTitle)}>
-                <Typography tag="h1" className="">
-                    About Us
-                </Typography>
-            </div>
-
-            <div className={classNames('w-3/6 flex pt-10 pb-10', style.aboutUsHeroImage)}>
-                <Image
-                    src={
-                    '/images/tags.png'
-                    }
-                    className={classNames('p-12 rounded-[40px]', style.aboutUsHeroImage)}
-                    width={2816}
-                    height={1572}
-                    alt={`Futures for Europe`}
-                />
-            </div>
-        
-        </div>
-
-    </section> */}
-
       <div
         className={classNames(
-          'flex flex-col flex-wrap xs:p-8 md:p-20 md:mx-14 xs:mx-14 mt-24 mb-14 bg-[linear-gradient(#c1a9fe,_#f7cbfe)] rounded-[44px]',
+          'flex flex-col flex-wrap xs:p-8 md:p-20 md:mx-14 xs:mx-6 mt-24 mb-14 bg-[linear-gradient(#c1a9fe,_#f7cbfe)] rounded-[44px]',
           style.staticLayout
         )}
       >
@@ -123,7 +57,7 @@ export default function aboutPage() {
       >
         <div
           className={classNames(
-            'sm:w-4/5 xs:w-full m-auto px-20 pt-20 px-14',
+            'sm:w-4/5 xs:w-full m-auto px-20 pt-20 px-14 xs:px-10',
             style.staticLayoutPadding
           )}
         >
@@ -147,7 +81,7 @@ export default function aboutPage() {
 
       <div
         className={classNames(
-          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
+          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] xs:grid-cols-[1fr_min(84rem,_100%_-_0rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
           style.staticLayout
         )}
       >
@@ -177,7 +111,7 @@ export default function aboutPage() {
 
       <div
         className={classNames(
-          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
+          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] xs:grid-cols-[1fr_min(84rem,_100%_-_0rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
           style.staticLayout
         )}
       >
@@ -207,7 +141,7 @@ export default function aboutPage() {
 
       <div
         className={classNames(
-          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
+          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] xs:grid-cols-[1fr_min(84rem,_100%_-_0rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
           style.staticLayout
         )}
       >
@@ -237,7 +171,7 @@ export default function aboutPage() {
 
       <div
         className={classNames(
-          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
+          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] xs:grid-cols-[1fr_min(84rem,_100%_-_0rem)_1fr] border-t-[1px] border-t-[solid] border-gray-300 border-b-[none]',
           style.staticLayout
         )}
       >
@@ -268,7 +202,7 @@ export default function aboutPage() {
 
       <div
         className={classNames(
-          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] border-[1px] border-[solid] border-gray-300',
+          'grid grid-cols-[1fr_min(84rem,_100%_-_7rem)_1fr] xs:grid-cols-[1fr_min(84rem,_100%_-_0rem)_1fr] border-[1px] border-[solid] border-gray-300',
           style.staticLayout
         )}
       >
@@ -329,7 +263,7 @@ export default function aboutPage() {
             </a>{' '}
             on the top right corner and set up your account. Then login and
             share with the world - your own profile or your organization’s,
-            foresight projects, results, events - do you thing!
+            foresight projects, results, events - Do your thing!
           </Typography>
         </div>
       </section>

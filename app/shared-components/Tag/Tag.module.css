@@ -26,7 +26,7 @@
     cursor: pointer;
   }
   .tagCounterBody:hover .Tag_popularity {
-    background: var(--primary-color)!important;
+    background: var(--primary-color) !important;
   }
   .popularity {
     background-color: white;
@@ -41,7 +41,7 @@
     position: relative;
     cursor: default;
     /* display: flex; */
-    display: inline-flex!important;
+    display: inline-flex !important;
     align-items: center;
     background-color: var(--color-background-brand-tag);
     border-radius: var(--p-border-radius-200);
@@ -98,26 +98,25 @@
   }
 
   .tagLink {
-    cursor: pointer!important;
+    cursor: pointer !important;
   }
-  .tagLink .tagNameBody{
+  .tagLink .tagNameBody {
     text-decoration: underline;
   }
   .tagLink .tagNameBody:before {
-
   }
   .tagThumbnail {
     margin-left: 0px;
     width: var(--w-space-xxl);
     height: var(--w-space-xxl);
   }
-  .tagThumbnail img{
+  .tagThumbnail img {
     color: transparent;
     /* // fill sau cover */
     /* // FIXME @catalin */
-    object-fit: cover; 
-    margin-left: 0px;    
-  }  
+    object-fit: cover;
+    margin-left: 0px;
+  }
   .tagNameBody {
     margin-left: var(--w-space-s);
     color: var(--color-text-brand-tag);

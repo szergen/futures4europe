@@ -39,7 +39,6 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
   } = useAuth();
-  console.log('ownedPostPages', ownedPostPages);
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);

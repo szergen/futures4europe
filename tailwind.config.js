@@ -14,7 +14,7 @@ module.exports = {
       md: '1024px',
       lg: '1280px',
       xl: '1920px',
-      xxl: '2560px'
+      xxl: '2560px',
     },
     borderRadius: {
       none: '0',
