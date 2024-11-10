@@ -189,7 +189,9 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         )}
 
         {/* projectResultAuthor */}
-        <div className={classNames('flex flex-wrap', style.postTagsResultAuthor)}>
+        <div
+          className={classNames('flex flex-wrap', style.postTagsResultAuthor)}
+        >
           {projectResultAuthor?.map((tag, index) => (
             <Tag key={tag.name + '-' + index} {...tag} />
           ))}
@@ -203,7 +205,9 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           )}
         </div>
         {/* Affiliations */}
-        <div className={classNames('flex flex-wrap', style.postTagsOrganisation)}>
+        <div
+          className={classNames('flex flex-wrap', style.postTagsOrganisation)}
+        >
           {organisationAffiliations && organisationAffiliations?.length > 0 && (
             <AffiliationsComponent
               afiliations={organisationAffiliations.map((affiliation) => ({

@@ -52,16 +52,12 @@ const PopoverComponent: React.FC<PopoverProps> = ({
         )}
         <div className="flex flex-wrap">
           <span className={classNames(popoverImage && 'p-2')}>
-            <p className={classNames(
-              style.popOverTitle,
-              'font-bold'
-            )}>
-            {popoverTitle}</p>
-            <p className={classNames(
-              style.popOverSubtitle,
-              ''
-            )}>
-            {popoverSubtitle}</p>
+            <p className={classNames(style.popOverTitle, 'font-bold')}>
+              {popoverTitle}
+            </p>
+            <p className={classNames(style.popOverSubtitle, '')}>
+              {popoverSubtitle}
+            </p>
           </span>
         </div>
       </div>
@@ -72,21 +68,22 @@ const PopoverComponent: React.FC<PopoverProps> = ({
   if (alwaysVisible) {
     // Render the popover content directly without the Popover wrapper
     return (
-      <div
-        className={classNames(
-          'w-auto text-sm',
-          className
-        )}
-      >
-        {content}
-      </div>
+      <div className={classNames('w-auto text-sm', className)}>{content}</div>
     );
   }
 
-
   // Render the Popover component as usual
   return (
-    <Popover className={classNames(style.contentOverflowVisible, "absolute z-20 inline-block w-max max-w-[100vw] rounded-2xl overflow-visible bg-transparent outline-none border-0 shadow-non")} content={content} trigger={trigger} placement="top" arrow={false}>
+    <Popover
+      className={classNames(
+        style.contentOverflowVisible,
+        'absolute z-20 inline-block w-max max-w-[100vw] rounded-2xl overflow-visible bg-transparent outline-none border-0 shadow-non'
+      )}
+      content={content}
+      trigger={trigger}
+      placement="top"
+      arrow={false}
+    >
       {children}
     </Popover>
   );

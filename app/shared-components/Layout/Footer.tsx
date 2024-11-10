@@ -5,116 +5,180 @@ import Link from 'next/link';
 
 const Footer = () => (
   <footer className="w-full" data-testid={testIds.LAYOUT.FOOTER}>
-
-<div className="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
-  <div className="mx-auto max-w-7xl px-6 lg:px-8">
-    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-      <div className="max-w-xl lg:max-w-lg">
-        <h2 className="text-4xl font-semibold tracking-tight text-white">Subscribe to our newsletter</h2>
-        <p className="mt-4 text-lg text-gray-300">Want the latest updates from futures4europe and Eye of Europe in your inbox? Our newsletter is a free quarterly summary of our top updates about the future in Europe.</p>
-        <div className="mt-6 flex max-w-md gap-x-4">
-          <label htmlFor="email-address" className="sr-only">Email address</label>
-          <input id="email-address" name="email" type="email" autoComplete="email" required className="mb-0 min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6" placeholder="Enter your email" />
-          <button type="submit" className="flex-none rounded-md bg-[#75c] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Subscribe</button>
-        </div>
-        {/*
+    <div className="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+          <div className="max-w-xl lg:max-w-lg">
+            <h2 className="text-4xl font-semibold tracking-tight text-white">
+              Subscribe to our newsletter
+            </h2>
+            <p className="mt-4 text-lg text-gray-300">
+              Want the latest updates from futures4europe and Eye of Europe in
+              your inbox? Our newsletter is a free quarterly summary of our top
+              updates about the future in Europe.
+            </p>
+            <div className="mt-6 flex max-w-md gap-x-4">
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="mb-0 min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
+                placeholder="Enter your email"
+              />
+              <button
+                type="submit"
+                className="flex-none rounded-md bg-[#75c] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              >
+                Subscribe
+              </button>
+            </div>
+            {/*
   Heads up! 👋
 
   Plugins:
     - @tailwindcss/forms
 */}
 
-<fieldset>
-  <legend className="sr-only">Checkboxes</legend>
+            <fieldset>
+              <legend className="sr-only">Checkboxes</legend>
 
-  <div className="divide-y divide-gray-200">
-    <label htmlFor="Option1" className="flex cursor-pointer items-start gap-4 py-4">
-      <div className="flex items-center">
-        &#8203;
-        <input type="checkbox" className="size-4 rounded border-gray-300" id="Option1" />
-      </div>
+              <div className="divide-y divide-gray-200">
+                <label
+                  htmlFor="Option1"
+                  className="flex cursor-pointer items-start gap-4 py-4"
+                >
+                  <div className="flex items-center">
+                    &#8203;
+                    <input
+                      type="checkbox"
+                      className="size-4 rounded border-gray-300"
+                      id="Option1"
+                    />
+                  </div>
 
-      <div>
-        <strong className="font-medium text-white">
-          I agree my information will be processed in accordance with the Future4Europe and Eye of Europe <a href='#' className="text-blue-600">Privacy Policy</a>.
-        </strong>
+                  <div>
+                    <strong className="font-medium text-white">
+                      I agree my information will be processed in accordance
+                      with the Future4Europe and Eye of Europe{' '}
+                      <a href="#" className="text-blue-600">
+                        Privacy Policy
+                      </a>
+                      .
+                    </strong>
 
-<span
-  className="inline-flex items-center mt-4 justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-    stroke="currentColor"
-    className="-ms-1 me-1.5 size-4"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-    />
-  </svg>
+                    <span className="inline-flex items-center mt-4 justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        className="-ms-1 me-1.5 size-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
 
-  <p className="whitespace-nowrap text-sm">Thanks for your interest! You will be hearing from us soon.</p>
-</span>
+                      <p className="whitespace-nowrap text-sm">
+                        Thanks for your interest! You will be hearing from us
+                        soon.
+                      </p>
+                    </span>
 
+                    <span className="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        className="-ms-1 me-1.5 size-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                        />
+                      </svg>
 
-<span
-  className="inline-flex items-center justify-center rounded-full bg-red-100 px-2.5 py-0.5 text-red-700"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-    stroke="currentColor"
-    className="-ms-1 me-1.5 size-4"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-    />
-  </svg>
-
-  <p className="whitespace-nowrap text-sm">Something went wrong with your subscription.</p>
-</span>
-
-
-      </div>
-    </label>
-  </div>
-</fieldset>
-
-      </div>
-      <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
-        <div className="flex flex-col items-start">
-          <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
-            <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-            </svg>
+                      <p className="whitespace-nowrap text-sm">
+                        Something went wrong with your subscription.
+                      </p>
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </fieldset>
           </div>
-          <dt className="mt-4 text-base font-semibold text-white">Foresight news</dt>
-          <dd className="mt-2 text-base/7 text-gray-400">Join our mailing list by confirming your subscription and receive all the latest updates in Foresight.</dd>
+          <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
+            <div className="flex flex-col items-start">
+              <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                <svg
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  data-slot="icon"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+                  />
+                </svg>
+              </div>
+              <dt className="mt-4 text-base font-semibold text-white">
+                Foresight news
+              </dt>
+              <dd className="mt-2 text-base/7 text-gray-400">
+                Join our mailing list by confirming your subscription and
+                receive all the latest updates in Foresight.
+              </dd>
+            </div>
+            <div className="flex flex-col items-start">
+              <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                <svg
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  data-slot="icon"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002"
+                  />
+                </svg>
+              </div>
+              <dt className="mt-4 text-base font-semibold text-white">
+                No spam
+              </dt>
+              <dd className="mt-2 text-base/7 text-gray-400">
+                Your email address is safe with us. We do not share your email
+                address with anyone.
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div className="flex flex-col items-start">
-          <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
-            <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002" />
-            </svg>
-          </div>
-          <dt className="mt-4 text-base font-semibold text-white">No spam</dt>
-          <dd className="mt-2 text-base/7 text-gray-400">Your email address is safe with us. We do not share your email address with anyone.</dd>
-        </div>
-      </dl>
+      </div>
+      <div
+        className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+        aria-hidden="true"
+      ></div>
     </div>
-  </div>
-  <div className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6" aria-hidden="true">
-  </div>
-</div>
-
 
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-8 py-10 max-sm:max-w-sm max-sm:mx-auto gap-y-8">
@@ -187,77 +251,74 @@ const Footer = () => (
                 href="https://shoutout.wix.com/so/09P91vhnQ?languageTag=en&cid=f677c1bb-4334-4039-a211-fdd89e013a3c"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               October 2024
+                October 2024
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
                 href="https://shoutout.wix.com/so/ffO-UPJK0?languageTag=en"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               June 2024
+                June 2024
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
-                href={"https://shoutout.wix.com/so/86OraMfaB?languageTag=en"}
+                href={'https://shoutout.wix.com/so/86OraMfaB?languageTag=en'}
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               March 2024
+                March 2024
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
                 href="https://shoutout.wix.com/so/c7OmbGwaG?languageTag=en"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               December 2023
+                December 2023
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
                 href="https://shoutout.wix.com/so/2aOj30qog?languageTag=en"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               October 2023
+                October 2023
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
                 href="https://shoutout.wix.com/so/8dObK5FTY?languageTag=en"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               July 2023
+                July 2023
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
                 href="https://shoutout.wix.com/so/9fOY_LOAg?languageTag=en"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               June 2023
+                June 2023
               </Link>
-              </li>
-              <li className="mb-2">
+            </li>
+            <li className="mb-2">
               <Link
                 target="_blank"
                 href="https://shoutout.wix.com/so/6dOWaRTan?languageTag=en"
                 className="text-gray-600 hover:text-gray-900 underline"
               >
-               May 2023
+                May 2023
               </Link>
-              </li>              
-
-              
-           
+            </li>
           </ul>
-        </div>        
+        </div>
         <div className="lg:mx-auto text-left">
           <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
           <ul className="text-sm transition-all duration-500">
