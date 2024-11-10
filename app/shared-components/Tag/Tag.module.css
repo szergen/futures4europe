@@ -48,12 +48,13 @@
     height: calc(var(--w-space-xxxl));
     margin-right: calc(var(--w-space-s));
   }
-  :not(.tagLink) {
+  /* :not(.tagLink) {
     cursor: pointer;
-  }
+  } */
 
-  .tagBody:hover {
+  .tagLink .tagBody:hover {
     background-color: #9c8af1;
+    cursor: pointer;
   }
 
   .tagBodyText {
@@ -120,6 +121,11 @@
   .tagNameBody {
     margin-left: var(--w-space-s);
     color: var(--color-text-brand-tag);
+    text-overflow: ellipsis;
+    max-width: 14em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .detailsColumn textarea {
     all: unset;

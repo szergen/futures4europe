@@ -82,8 +82,8 @@ const TagLisInlineComponent = ({
                         key={`${infoPage.data.title}-${item._id || idx}`}
                         name={item.name}
                         picture={item.picture}
-                        disableTooltip={item.disableTooltip}
-                        disablePopularityHover={item.disablePopularityHover}
+                        disableTooltip
+                        disablePopularityHover
                         tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
                           infoPage.data.pageTypes?.[0]?.name
                         )}${infoPage.data.slug}`}
@@ -126,13 +126,13 @@ const TagLisInlineComponent = ({
                       ) : null;
                     })
                   ) : (
-                    <p>No tags found for this post.</p>
+                    <p></p>
                   )}
                 </div>
               );
             })
           ) : (
-            <p>No post pages found for the specified postPageTypes.</p>
+            <p></p>
           )}
         </>
       )}

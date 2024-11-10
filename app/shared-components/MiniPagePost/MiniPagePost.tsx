@@ -130,7 +130,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           <span> {organisationEstablishedDate} </span>
         </Typography>*/}
         {/* Country & Funded */}
-        <div className={classNames('flex flex-wrap', style.postTags)}>
+        <div className={classNames('flex flex-wrap', style.postTagsCountry)}>
           {countryTags?.map((tag, index) => (
             <Tag key={tag.name + '-' + index} {...tag} />
           ))}
@@ -140,7 +140,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           ))}
         </div>
         {/* projects */}
-        <div className={classNames('flex flex-wrap', style.postTags)}>
+        <div className={classNames('flex flex-wrap', style.postTagsProjects)}>
           {projects?.map((tag, index) => (
             <Tag key={tag.name + '-' + index} {...tag} />
           ))}
@@ -161,7 +161,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           ))}
         </div>
         {/* Method Tags */}
-        <div className={classNames('flex flex-wrap', style.postTags)}>
+        <div className={classNames('flex flex-wrap', style.postTagsMethods)}>
           {methods?.map((tag, index) => (
             <Tag key={tag?.name + '-' + index} {...tag} />
           ))}
@@ -189,7 +189,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         )}
 
         {/* projectResultAuthor */}
-        <div className={classNames('flex flex-wrap', style.postTags)}>
+        <div className={classNames('flex flex-wrap', style.postTagsResultAuthor)}>
           {projectResultAuthor?.map((tag, index) => (
             <Tag key={tag.name + '-' + index} {...tag} />
           ))}
@@ -203,7 +203,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           )}
         </div>
         {/* Affiliations */}
-        <div className={classNames('flex flex-wrap', style.postTags)}>
+        <div className={classNames('flex flex-wrap', style.postTagsOrganisation)}>
           {organisationAffiliations && organisationAffiliations?.length > 0 && (
             <AffiliationsComponent
               afiliations={organisationAffiliations.map((affiliation) => ({

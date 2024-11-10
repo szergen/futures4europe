@@ -695,6 +695,7 @@ textarea {
   line-height: calc(var(--w-space-xxxl));
   margin-right: calc(var(--w-space-s) * -1);
   font-size: var(--w-font-size-tag);
+  cursor: default;
 }
 
 .InputRequired textarea {
@@ -1207,6 +1208,9 @@ ul#tagsList li {
   max-width: 850px;
   margin: 0 auto;
   margin-top: 5vw;
+}
+.postTagsOrganisation .tagListContainer {
+  margin-top: 0px!important;
 }
 
 svg.homeRoata {
