@@ -68,6 +68,27 @@ const getCollectionItems = async (collectionName: string) => {
   }
 };
 
+const subscribeToNewsletter = async (email: string) => {
+  try {
+    const response = await fetch('/api/subscribeToNewsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to subscribeToNewsletter');
+    }
+
+    const item = await response.json();
+    return item;
+  } catch (error) {
+    console.error('Error getting collection items:', error);
+  }
+};
+
 const getCollection = async (collectionName: string) => {
   try {
     const response = await fetch('/api/getCollection', {
@@ -308,4 +329,5 @@ export {
   revalidateDataItem,
   getCollectionItems,
   getContactsItemByEmail,
+  subscribeToNewsletter,
 };

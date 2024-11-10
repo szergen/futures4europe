@@ -5,6 +5,7 @@ import { currentMember, authentication } from '@wix/site-members';
 import { contacts } from '@wix/crm';
 import { site } from '@wix/site';
 import { files } from '@wix/media';
+import { marketingConsent } from '@wix/marketing';
 
 export const getWixClientData = async () => {
   const { NEXT_PUBLIC_WIX_CLIENT_ID } = process.env;
@@ -18,6 +19,28 @@ export const getWixClientData = async () => {
   const wixClient = createClient({
     modules: { items },
     auth: OAuthStrategy({ clientId: NEXT_PUBLIC_WIX_CLIENT_ID }),
+  });
+
+  // const tokens = await wixClient.auth.generateVisitorTokens();
+  // wixClient.auth.setTokens(tokens);
+
+  return wixClient;
+};
+
+export const getWixClientMarketing = async () => {
+  const {
+    NEXT_PUBLIC_WIX_API_KEY,
+    NEXT_PUBLIC_WIX_SITE_ID,
+    NEXT_PUBLIC_WIX_ACCOUNT_ID,
+  } = process.env;
+
+  const wixClient = createClient({
+    modules: { marketingConsent },
+    auth: ApiKeyStrategy({
+      apiKey: NEXT_PUBLIC_WIX_API_KEY,
+      siteId: NEXT_PUBLIC_WIX_SITE_ID,
+      // accountId: NEXT_PUBLIC_WIX_ACCOUNT_ID,
+    }),
   });
 
   // const tokens = await wixClient.auth.generateVisitorTokens();
