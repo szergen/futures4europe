@@ -101,7 +101,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     .map((item: any) => item?.projectTag);
 
   const currentAfiliations = person?.affiliationsItems
-    .filter((item: any) => item?.extraIdentifier === 'current')
+    ?.filter((item: any) => item?.extraIdentifier === 'current')
     .map((item: any) => {
       return {
         ...item?.organisationTag,
@@ -110,7 +110,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     });
 
   const formerAfiliations = person?.affiliationsItems
-    .filter((item: any) => item?.extraIdentifier === 'former')
+    ?.filter((item: any) => item?.extraIdentifier === 'former')
     .map((item: any) => {
       return {
         ...item?.organisationTag,
@@ -318,7 +318,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'current'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -326,29 +326,31 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.currentAfiliations
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              organisationTag: item,
-              role: item.arole,
-              extraIdentifier: 'current',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedOrganisationsCurrent = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.currentAfiliations?.length > 0) {
+        const newAffiliationsObject = personData.currentAfiliations
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                organisationTag: item,
+                role: item.arole,
+                extraIdentifier: 'current',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsCurrent = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedOrganisationsCurrent',
-        updatedOrganisationsCurrent
-      );
+        console.log(
+          'debug111->updatedOrganisationsCurrent',
+          updatedOrganisationsCurrent
+        );
+      }
     }
 
     // Update personOrganisationFormer
@@ -371,7 +373,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'former'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -379,29 +381,31 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.formerAfiliations
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              organisationTag: item,
-              role: item.arole,
-              extraIdentifier: 'former',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedOrganisationsFormer = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.formerAfiliations?.length > 0) {
+        const newAffiliationsObject = personData.formerAfiliations
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                organisationTag: item,
+                role: item.arole,
+                extraIdentifier: 'former',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsFormer = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedOrganisationsFormer',
-        updatedOrganisationsFormer
-      );
+        console.log(
+          'debug111->updatedOrganisationsFormer',
+          updatedOrganisationsFormer
+        );
+      }
     }
 
     // Update Country Tag
@@ -480,7 +484,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'coordination'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -488,28 +492,30 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.projectsCoordindation
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              projectTag: item,
-              extraIdentifier: 'coordination',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.projectTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedProjectsCoordonation = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.projectsCoordindation?.length > 0) {
+        const newAffiliationsObject = personData.projectsCoordindation
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                projectTag: item,
+                extraIdentifier: 'coordination',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedProjectsCoordonation = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedProjectsCoordonation',
-        updatedProjectsCoordonation
-      );
+        console.log(
+          'debug111->updatedProjectsCoordonation',
+          updatedProjectsCoordonation
+        );
+      }
     }
 
     // Update projectsParticipation
@@ -531,7 +537,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'participation'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -539,28 +545,30 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.projectsCoordindation
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              projectTag: item,
-              extraIdentifier: 'participation',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.projectTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedProjectsParticipation = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.projectsParticipation?.length > 0) {
+        const newAffiliationsObject = personData.projectsCoordindation
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                projectTag: item,
+                extraIdentifier: 'participation',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedProjectsParticipation = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedProjectsParticipation',
-        updatedProjectsParticipation
-      );
+        console.log(
+          'debug111->updatedProjectsParticipation',
+          updatedProjectsParticipation
+        );
+      }
     }
 
     // Revalidate the cache for the page
@@ -708,7 +716,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'current'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -716,29 +724,31 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.currentAfiliations
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              organisationTag: item,
-              role: item.arole,
-              extraIdentifier: 'current',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedOrganisationsCurrent = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.currentAfiliations?.length > 0) {
+        const newAffiliationsObject = personData.currentAfiliations
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                organisationTag: item,
+                role: item.arole,
+                extraIdentifier: 'current',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsCurrent = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedOrganisationsCurrent',
-        updatedOrganisationsCurrent
-      );
+        console.log(
+          'debug111->updatedOrganisationsCurrent',
+          updatedOrganisationsCurrent
+        );
+      }
     }
     // #endregion
 
@@ -758,7 +768,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'former'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -766,29 +776,31 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.formerAfiliations
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              organisationTag: item,
-              role: item.arole,
-              extraIdentifier: 'former',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedOrganisationsFormer = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.formerAfiliations?.length > 0) {
+        const newAffiliationsObject = personData.formerAfiliations
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                organisationTag: item,
+                role: item.arole,
+                extraIdentifier: 'former',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsFormer = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedOrganisationsFormer',
-        updatedOrganisationsFormer
-      );
+        console.log(
+          'debug111->updatedOrganisationsFormer',
+          updatedOrganisationsFormer
+        );
+      }
     }
     // #endregion
 
@@ -854,7 +866,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'coordination'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -862,28 +874,30 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.projectsCoordindation
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              projectTag: item,
-              extraIdentifier: 'coordination',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.projectTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedProjectsCoordonation = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.projectsCoordindation?.length > 0) {
+        const newAffiliationsObject = personData.projectsCoordindation
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                projectTag: item,
+                extraIdentifier: 'coordination',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedProjectsCoordonation = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedProjectsCoordonation',
-        updatedProjectsCoordonation
-      );
+        console.log(
+          'debug111->updatedProjectsCoordonation',
+          updatedProjectsCoordonation
+        );
+      }
     }
     // #endregion
 
@@ -901,7 +915,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'participation'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -909,28 +923,30 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = personData.projectsCoordindation
-        ?.map((item: any) => {
-          return {
-            data: {
-              personTag: personData.personTag,
-              projectTag: item,
-              extraIdentifier: 'participation',
-              title: `${personData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.projectTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedProjectsParticipation = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (personData.projectsParticipation?.length > 0) {
+        const newAffiliationsObject = personData.projectsCoordindation
+          ?.map((item: any) => {
+            return {
+              data: {
+                personTag: personData.personTag,
+                projectTag: item,
+                extraIdentifier: 'participation',
+                title: `${personData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedProjectsParticipation = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedProjectsParticipation',
-        updatedProjectsParticipation
-      );
+        console.log(
+          'debug111->updatedProjectsParticipation',
+          updatedProjectsParticipation
+        );
+      }
     }
     // #endregion
 

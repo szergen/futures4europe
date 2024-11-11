@@ -42,15 +42,20 @@ export default async function PersonPage({ params }: any) {
   // Grab specific Person by slug
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
   const tagIdForPersonPage = infoPageItem?.data?.person?.[0]._id;
-  const affiliations = await getAffiliationsCollectionItemsByTag(
-    tagIdForPersonPage,
-    'personTag'
-  );
+  let affiliations = [] as any[];
+  if (tagIdForPersonPage) {
+    affiliations = await getAffiliationsCollectionItemsByTag(
+      tagIdForPersonPage,
+      'personTag'
+    );
+  }
 
   console.log('Affiliations', affiliations);
   const infoPageItemWithAffiliations = {
     ...infoPageItem,
-    affiliationsItems: affiliations.map((affiliation: any) => affiliation.data),
+    affiliationsItems: affiliations?.map(
+      (affiliation: any) => affiliation.data
+    ),
   };
 
   if (!infoPageItem) {

@@ -67,3 +67,48 @@ export const automaticallyDecidePathPrefixBasedOnPageType = (type: string) => {
 export const filterPagesByType = (type: string, pages: any) => {
   return pages.filter((page: any) => page?.pageTypes?.[0]?.name === type);
 };
+
+export const filterDuplicateAffiliations = (affiliations: any[]): any[] => {
+  const seen = new Map();
+
+  function areTagsSimilar(tags1: string[], tags2: string[]): boolean {
+    // Count matching tags (only comparing the 3 tag names)
+    let matchCount = 0;
+    for (let i = 0; i < 3; i++) {
+      if (tags1[i] === tags2[i]) matchCount++;
+    }
+    return matchCount >= 2;
+  }
+
+  return affiliations.filter((affiliation) => {
+    const currentTags = [
+      affiliation.organisationTag?.name,
+      affiliation.projectTag?.name,
+      affiliation.personTag?.name,
+    ];
+
+    // Check if we've seen similar entries before
+    for (const [key, seenEntry] of seen.entries()) {
+      const [seenId, seenRole, seenTags] = JSON.parse(key);
+
+      // Check if extraIdentifier AND role match exactly
+      // AND at least 2 tags match
+      if (
+        affiliation.extraIdentifier === seenId &&
+        affiliation.role === seenRole &&
+        areTagsSimilar(currentTags, seenTags)
+      ) {
+        return false;
+      }
+    }
+
+    // Add this combination to our seen map
+    const key = JSON.stringify([
+      affiliation.extraIdentifier,
+      affiliation.role,
+      currentTags,
+    ]);
+    seen.set(key, true);
+    return true;
+  });
+};
