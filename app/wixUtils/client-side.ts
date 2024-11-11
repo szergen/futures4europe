@@ -134,6 +134,30 @@ const bulkInsertItems = async (
   }
 };
 
+const bulkRemoveItems = async (
+  collectionName: string,
+  dataItems: Record<string, any>[]
+) => {
+  try {
+    const response = await fetch('/api/bulkRemoveItems', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName, dataItems }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to remove bulk data items');
+    }
+
+    const updatedItems = await response.json();
+    return updatedItems;
+  } catch (error) {
+    console.error('Error removing bulk items', error);
+  }
+};
+
 const bulkInsertDataItemReferences = async (
   collectionName: string,
   dataItemReferences: Record<string, any>[]
@@ -330,4 +354,5 @@ export {
   getCollectionItems,
   getContactsItemByEmail,
   subscribeToNewsletter,
+  bulkRemoveItems,
 };

@@ -119,6 +119,30 @@ const getCollectionItemBySlug = async (
   }
 };
 
+const getAffiliationsCollectionItemsByTag = async (
+  tagId: string,
+  fieldId: string
+) => {
+  try {
+    const wixClient = await getWixClientData();
+    const { items } = await wixClient.items
+      .queryDataItems({
+        dataCollectionId: 'Affiliations',
+        referencedItemOptions: [
+          { fieldName: 'personTag' },
+          { fieldName: 'organisationTag' },
+          { fieldName: 'projectTag' },
+        ],
+      })
+      .in(fieldId, [tagId])
+      .find();
+    return items;
+  } catch (error) {
+    console.error('Error getting collection item:', error);
+    throw error;
+  }
+};
+
 const composeReferencedItemTitlesForInfoPages = (
   referencedPagesKeys: Array<string>,
   dataItem: Record<string, any>
@@ -220,4 +244,5 @@ export {
   referencedItemOptions,
   getCollectionItemBySlug,
   getItemById,
+  getAffiliationsCollectionItemsByTag,
 };

@@ -7,13 +7,13 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const wixClientServer = await getWixClientServerData();
-    const insertedItems = await wixClientServer.items.bulkSaveDataItems({
+    const removedItems = await wixClientServer.items.bulkRemoveDataItems({
       dataCollectionId: collectionName,
-      dataItems: dataItems,
+      dataItemIds: dataItems,
     });
-    return NextResponse.json(insertedItems, { status: 200 });
+    return NextResponse.json(removedItems, { status: 200 });
   } catch (error) {
-    console.error('Error saving bulk dataItems', error);
+    console.error('Error removing bulk dataItems', error);
     return NextResponse.json(
       { message: 'Internal server error' },
       { status: 500 }
