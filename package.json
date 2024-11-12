@@ -24,6 +24,7 @@
     "@wix/crm": "^1.0.126",
     "@wix/data": "^1.0.148",
     "@wix/loyalty": "^1.0.201",
+    "@wix/marketing": "^1.0.75",
     "@wix/media": "^1.0.117",
     "@wix/members": "^1.0.95",
     "@wix/sdk": "^1.12.0",

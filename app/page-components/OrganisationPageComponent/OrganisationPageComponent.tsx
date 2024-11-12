@@ -18,6 +18,8 @@ import {
   sanitizeTitleForSlug,
 } from '../PageComponents.utils';
 import {
+  bulkInsertItems,
+  bulkRemoveItems,
   replaceDataItemReferences,
   revalidateDataItem,
   updateDataItem,
@@ -89,6 +91,32 @@ function OrganisationPageComponent({
   }, [isLoggedIn, tagsFetched]);
   // #endregion
 
+  // #region Handle affiliations
+  console.log(
+    'debug111->person.affiliationsItems',
+    organisation?.affiliationsItems
+  );
+
+  const projects = organisation?.affiliationsItems
+    ?.filter((item: any) => item?.extraIdentifier === 'projectOrganisationRole')
+    .map((item: any) => {
+      return {
+        ...item?.projectTag,
+        arole: item?.role,
+      };
+    });
+
+  const people = organisation?.affiliationsItems
+    ?.filter((item: any) => item?.extraIdentifier === 'current')
+    .map((item: any) => {
+      return {
+        ...item?.personTag,
+        arole: item?.role,
+      };
+    });
+
+  // #endregion
+
   organisation = {
     ...organisation,
     title: organisation?.data?.title, // done
@@ -103,22 +131,24 @@ function OrganisationPageComponent({
     description: organisation?.data?.description, //done
     methods: organisation?.data?.methods, //done
     domains: organisation?.data?.domains, //done
-    projects: organisation?.data?.organisationProjectRoles?.map((item: any) => {
-      return {
-        ...organisation?.data?.organisationProject?.find(
-          (org: any) => org?.name === item?.project
-        ),
-        arole: item?.role,
-      };
-    }), //done
-    people: organisation?.data?.organisationPeopleRoles?.map((item: any) => {
-      return {
-        ...organisation?.data?.organisationPeople?.find(
-          (org: any) => org?.name === item?.person
-        ),
-        arole: item?.role,
-      };
-    }), //done
+    // projects: organisation?.data?.organisationProjectRoles?.map((item: any) => {
+    //   return {
+    //     ...organisation?.data?.organisationProject?.find(
+    //       (org: any) => org?.name === item?.project
+    //     ),
+    //     arole: item?.role,
+    //   };
+    // }), //done
+    projects: projects,
+    // people: organisation?.data?.organisationPeopleRoles?.map((item: any) => {
+    //   return {
+    //     ...organisation?.data?.organisationPeople?.find(
+    //       (org: any) => org?.name === item?.person
+    //     ),
+    //     arole: item?.role,
+    //   };
+    // }), //done
+    people: people,
     memberOrganisations: organisation?.data?.organisationHasMember,
     memberOfOrganisations: organisation?.data?.organisationMemberOf,
     mediaFiles: organisation?.data?.mediaFiles,
@@ -222,22 +252,22 @@ function OrganisationPageComponent({
           description: organisationData?.description,
           organisationEstablishedDate:
             organisationData?.organisationEstablishedDate,
-          organisationProjectRoles: organisationData.projects.map(
-            (project: any) => {
-              return {
-                project: project.name,
-                role: project.arole,
-              };
-            }
-          ),
-          organisationPeopleRoles: organisationData.people.map(
-            (person: any) => {
-              return {
-                person: person.name,
-                role: person.arole,
-              };
-            }
-          ),
+          // organisationProjectRoles: organisationData.projects.map(
+          //   (project: any) => {
+          //     return {
+          //       project: project.name,
+          //       role: project.arole,
+          //     };
+          //   }
+          // ),
+          // organisationPeopleRoles: organisationData.people.map(
+          //   (person: any) => {
+          //     return {
+          //       person: person.name,
+          //       role: person.arole,
+          //     };
+          //   }
+          // ),
           mediaFiles: organisationData.mediaFiles,
           linkedinLink: organisationData?.data?.linkedinLink,
           websiteLink: organisationData?.data?.websiteLink,
@@ -253,15 +283,53 @@ function OrganisationPageComponent({
         defaultOrganisationData.projects
       )
     ) {
-      const updatedProjects = await replaceDataItemReferences(
-        'InfoPages',
-        organisationData.projects
-          ?.map((proj: any) => proj._id)
-          .filter((id: any) => id),
-        'organisationProject',
-        organisationData._id
+      // const updatedProjects = await replaceDataItemReferences(
+      //   'InfoPages',
+      //   organisationData.projects
+      //     ?.map((proj: any) => proj._id)
+      //     .filter((id: any) => id),
+      //   'organisationProject',
+      //   organisationData._id
+      // );
+      // console.log('updated organisationProject', updatedProjects);
+      console.log('debug111-> updating projects');
+      const oldAffiliations = organisation?.affiliationsItems?.filter(
+        (item: any) => item?.extraIdentifier === 'projectOrganisationRole'
       );
-      console.log('updated organisationProject', updatedProjects);
+      console.log('debug111->oldAffiliation', oldAffiliations);
+      if (oldAffiliations && oldAffiliations?.length > 0) {
+        const removeOldAffiliations = await bulkRemoveItems(
+          'Affiliations',
+          oldAffiliations?.map((item: any) => item._id)
+        );
+        console.log('debug111->removeOldAffiliations', removeOldAffiliations);
+      }
+
+      if (organisationData.projects?.length > 0) {
+        const newAffiliationsObject = organisationData.projects
+          ?.map((item: any) => {
+            return {
+              data: {
+                organisationTag: organisationData.organisationTag,
+                projectTag: item,
+                role: item.arole,
+                extraIdentifier: 'projectOrganisationRole',
+                title: `${organisationData?.organisationTag?.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsProjects = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
+
+        console.log(
+          'debug111->updatedOrganisationsProjects',
+          updatedOrganisationsProjects
+        );
+      }
     }
 
     // Update people
@@ -271,15 +339,53 @@ function OrganisationPageComponent({
         defaultOrganisationData.people
       )
     ) {
-      const updatedPeople = await replaceDataItemReferences(
-        'InfoPages',
-        organisationData.people
-          ?.map((person: any) => person._id)
-          .filter((id: any) => id),
-        'organisationPeople',
-        organisationData._id
+      // const updatedPeople = await replaceDataItemReferences(
+      //   'InfoPages',
+      //   organisationData.people
+      //     ?.map((person: any) => person._id)
+      //     .filter((id: any) => id),
+      //   'organisationPeople',
+      //   organisationData._id
+      // );
+      // console.log('updated organisationPeople', updatedPeople);
+      console.log('debug111-> updating people');
+      const oldAffiliations = organisation?.affiliationsItems?.filter(
+        (item: any) => item?.extraIdentifier === 'current'
       );
-      console.log('updated organisationPeople', updatedPeople);
+      console.log('debug111->oldAffiliation', oldAffiliations);
+      if (oldAffiliations && oldAffiliations?.length > 0) {
+        const removeOldAffiliations = await bulkRemoveItems(
+          'Affiliations',
+          oldAffiliations?.map((item: any) => item._id)
+        );
+        console.log('debug111->removeOldAffiliations', removeOldAffiliations);
+      }
+
+      if (organisationData.people?.length > 0) {
+        const newAffiliationsObject = organisationData.people
+          ?.map((item: any) => {
+            return {
+              data: {
+                organisationTag: organisationData.organisationTag,
+                personTag: item,
+                role: item.arole,
+                extraIdentifier: 'current',
+                title: `${organisationData?.organisationTag?.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsPeople = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
+
+        console.log(
+          'debug111->updatedOrganisationsPeople',
+          updatedOrganisationsPeople
+        );
+      }
     }
 
     // Update Organisation Type
@@ -421,22 +527,22 @@ function OrganisationPageComponent({
           description: organisationData?.description,
           organisationEstablishedDate:
             organisationData?.organisationEstablishedDate,
-          organisationProjectRoles: organisationData.projects.map(
-            (project: any) => {
-              return {
-                project: project.name,
-                role: project.arole,
-              };
-            }
-          ),
-          organisationPeopleRoles: organisationData.people.map(
-            (person: any) => {
-              return {
-                person: person.name,
-                role: person.arole,
-              };
-            }
-          ),
+          // organisationProjectRoles: organisationData.projects.map(
+          //   (project: any) => {
+          //     return {
+          //       project: project.name,
+          //       role: project.arole,
+          //     };
+          //   }
+          // ),
+          // organisationPeopleRoles: organisationData.people.map(
+          //   (person: any) => {
+          //     return {
+          //       person: person.name,
+          //       role: person.arole,
+          //     };
+          //   }
+          // ),
           mediaFiles: organisationData.mediaFiles,
           linkedinLink: organisationData?.data?.linkedinLink,
           websiteLink: organisationData?.data?.websiteLink,
@@ -557,29 +663,105 @@ function OrganisationPageComponent({
     // #region Update Projects
 
     if (organisationData.projects && newOrganisationInfoId) {
-      const updatedProjects = await replaceDataItemReferences(
-        'InfoPages',
-        organisationData.projects
-          ?.map((org: any) => org._id)
-          .filter((id: any) => id),
-        'organisationProject',
-        newOrganisationInfoId
+      // const updatedProjects = await replaceDataItemReferences(
+      //   'InfoPages',
+      //   organisationData.projects
+      //     ?.map((org: any) => org._id)
+      //     .filter((id: any) => id),
+      //   'organisationProject',
+      //   newOrganisationInfoId
+      // );
+      // console.log('updatedProjects', updatedProjects);
+      console.log('debug111-> updating projects');
+      const oldAffiliations = organisation?.affiliationsItems?.filter(
+        (item: any) => item?.extraIdentifier === 'projectOrganisationRole'
       );
-      console.log('updatedProjects', updatedProjects);
+      console.log('debug111->oldAffiliation', oldAffiliations);
+      if (oldAffiliations && oldAffiliations?.length > 0) {
+        const removeOldAffiliations = await bulkRemoveItems(
+          'Affiliations',
+          oldAffiliations?.map((item: any) => item._id)
+        );
+        console.log('debug111->removeOldAffiliations', removeOldAffiliations);
+      }
+
+      if (organisationData.projects?.length > 0) {
+        const newAffiliationsObject = organisationData.projects
+          ?.map((item: any) => {
+            return {
+              data: {
+                organisationTag: organisationData.organisationTag,
+                projectTag: item,
+                role: item.arole,
+                extraIdentifier: 'projectOrganisationRole',
+                title: `${organisationData?.organisationTag?.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsProjects = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
+
+        console.log(
+          'debug111->updatedOrganisationsProjects',
+          updatedOrganisationsProjects
+        );
+      }
     }
     // #endregion
 
     // #region Update People
     if (organisationData.people && newOrganisationInfoId) {
-      const updatedPeople = await replaceDataItemReferences(
-        'InfoPages',
-        organisationData.people
-          ?.map((org: any) => org._id)
-          .filter((id: any) => id),
-        'organisationPeople',
-        newOrganisationInfoId
+      // const updatedPeople = await replaceDataItemReferences(
+      //   'InfoPages',
+      //   organisationData.people
+      //     ?.map((org: any) => org._id)
+      //     .filter((id: any) => id),
+      //   'organisationPeople',
+      //   newOrganisationInfoId
+      // );
+      // console.log('updatedPeople', updatedPeople);
+      console.log('debug111-> updating people');
+      const oldAffiliations = organisation?.affiliationsItems?.filter(
+        (item: any) => item?.extraIdentifier === 'current'
       );
-      console.log('updatedPeople', updatedPeople);
+      console.log('debug111->oldAffiliation', oldAffiliations);
+      if (oldAffiliations && oldAffiliations?.length > 0) {
+        const removeOldAffiliations = await bulkRemoveItems(
+          'Affiliations',
+          oldAffiliations?.map((item: any) => item._id)
+        );
+        console.log('debug111->removeOldAffiliations', removeOldAffiliations);
+      }
+
+      if (organisationData.people?.length > 0) {
+        const newAffiliationsObject = organisationData.people
+          ?.map((item: any) => {
+            return {
+              data: {
+                organisationTag: organisationData.organisationTag,
+                personTag: item,
+                role: item.arole,
+                extraIdentifier: 'current',
+                title: `${organisationData?.organisationTag?.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedOrganisationsPeople = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
+
+        console.log(
+          'debug111->updatedOrganisationsPeople',
+          updatedOrganisationsPeople
+        );
+      }
     }
     // #endregion
 

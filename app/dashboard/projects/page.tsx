@@ -6,7 +6,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import Link from 'next/link';
-import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
+import {
+  extractInfoPageTypeBasedOnTag,
+  filterDuplicateAffiliations,
+} from '@app/utils/parse-utils';
 import classNames from 'classnames';
 import { members } from '@wix/members';
 import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
@@ -18,6 +21,7 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
+import { bulkInsertItems } from '@app/wixUtils/client-side';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -39,6 +43,7 @@ export default function DashboardProjects() {
     handleUserDataRefresh,
     tags,
     allOwnedPages,
+    infoPages,
   } = useAuth();
 
   console.log('ownedInfoPages', ownedInfoPages);
@@ -116,6 +121,332 @@ export default function DashboardProjects() {
   const subNavItems = [
     { href: '/dashboard/projects', text: 'All Projects', isActive: true },
   ];
+
+  const handleCreateAffiliations = async () => {
+    console.log('debug222->infoPages', infoPages);
+    const projectInfoPages = infoPages
+      .filter(
+        (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'project info'
+      )
+      .map((infoPage) => infoPage.data);
+    console.log('debug222->projectInfoPages', projectInfoPages);
+
+    let allProjectOrganisationRolesAffiliations: any[] = [];
+
+    for (let i = 0; i < projectInfoPages.length; i++) {
+      const projectOrganisationRolesAffiliations = projectInfoPages[
+        i
+      ]?.projectOrganisationRoles
+        ?.map((role: any, index: number) => {
+          return {
+            data: {
+              projectTag: projectInfoPages[i]?.Project?.[0],
+              organisationTag:
+                projectInfoPages[i]?.projectOrganisation?.[index],
+              role: role.role,
+              extraIdentifier: 'projectOrganisationRole',
+              title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${projectInfoPages[i]?.projectOrganisation?.[index]?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.organisationTag?.name);
+      allProjectOrganisationRolesAffiliations = [
+        ...allProjectOrganisationRolesAffiliations,
+        ...projectOrganisationRolesAffiliations,
+      ];
+    }
+
+    // console.log(
+    //   'debug222->allProjectOrganisationRolesAffiliations',
+    //   allProjectOrganisationRolesAffiliations
+    // );
+
+    let allProjectCoordinators: any[] = [];
+
+    for (let i = 0; i < projectInfoPages.length; i++) {
+      const projectCoordinators = projectInfoPages[i]?.projectCoordinator
+        ?.map((coordinator: any) => {
+          return {
+            data: {
+              projectTag: projectInfoPages[i]?.Project?.[0],
+              personTag: coordinator,
+              extraIdentifier: 'coordination',
+              title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${coordinator?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.personTag?.name);
+      allProjectCoordinators = [
+        ...allProjectCoordinators,
+        ...projectCoordinators,
+      ];
+    }
+
+    console.log('debug222->allProjectCoordinators', allProjectCoordinators);
+
+    let allProjectParticipantTeam: any[] = [];
+
+    for (let i = 0; i < projectInfoPages.length; i++) {
+      const projectParticipantTeam = projectInfoPages[i]?.projectParticipantTeam
+        ?.map((participant: any) => {
+          return {
+            data: {
+              projectTag: projectInfoPages[i]?.Project?.[0],
+              personTag: participant,
+              extraIdentifier: 'participation',
+              title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${participant?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.personTag?.name);
+      allProjectParticipantTeam = [
+        ...allProjectParticipantTeam,
+        ...projectParticipantTeam,
+      ];
+    }
+    console.log(
+      'debug222->allProjectParticipantTeam',
+      allProjectParticipantTeam
+    );
+
+    const allProjectAffiliations = [
+      ...allProjectOrganisationRolesAffiliations,
+      ...allProjectCoordinators,
+      ...allProjectParticipantTeam,
+    ];
+    console.log('debug222->allProjectAffiliations', allProjectAffiliations);
+
+    const personInfoPages = infoPages
+      .filter(
+        (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'person info'
+      )
+      .map((infoPage) => infoPage.data);
+    console.log('debug222->personInfoPages', personInfoPages);
+
+    let currentPersonAffiliations: any[] = [];
+    let formerPersonAffiliations: any[] = [];
+
+    let personProjectCoordonation: any[] = [];
+    let personProjectParticipation: any[] = [];
+
+    for (let i = 0; i < personInfoPages.length; i++) {
+      const personAffiliations = personInfoPages?.[i]?.personOrganisationRoles
+        ?.map((affiliation: any, index: number) => {
+          return {
+            data: {
+              personTag: personInfoPages[i]?.person?.[0],
+              organisationTag: personInfoPages[i]?.personOrganisation?.[index],
+              role: affiliation.role,
+              extraIdentifier: 'current',
+              title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.organisationTag?.name);
+      currentPersonAffiliations = [
+        ...currentPersonAffiliations,
+        ...personAffiliations,
+      ];
+    }
+
+    console.log(
+      'debug222->currentPersonAffiliations',
+      currentPersonAffiliations
+    );
+
+    for (let i = 0; i < personInfoPages.length; i++) {
+      const personAffiliations = personInfoPages?.[
+        i
+      ]?.personOrganisationRolesFormer
+        ?.map((affiliation: any, index: number) => {
+          return {
+            data: {
+              personTag: personInfoPages[i]?.person?.[0],
+              organisationTag: personInfoPages[i]?.personOrganisation?.[index],
+              role: affiliation.role,
+              extraIdentifier: 'former',
+              title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.organisationTag?.name);
+      formerPersonAffiliations = [
+        ...formerPersonAffiliations,
+        ...personAffiliations,
+      ];
+    }
+
+    console.log('debug222->formerPersonAffiliations', formerPersonAffiliations);
+
+    for (let i = 0; i < personInfoPages.length; i++) {
+      const projectCoordinators = personInfoPages[i]?.personProjectCoordonation
+        ?.map((coordinator: any) => {
+          return {
+            data: {
+              personTag: personInfoPages[i]?.person?.[0],
+              projectTag: coordinator,
+              extraIdentifier: 'coordination',
+              title: `${personInfoPages[i]?.person?.[0].name} -to- ${coordinator?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.personTag?.name);
+      personProjectCoordonation = [
+        ...personProjectCoordonation,
+        ...projectCoordinators,
+      ];
+    }
+
+    console.log(
+      'debug222->personProjectCoordonation',
+      personProjectCoordonation
+    );
+
+    for (let i = 0; i < personInfoPages.length; i++) {
+      const projectParticipants = personInfoPages[i]?.personProjectParticipation
+        ?.map((participant: any) => {
+          return {
+            data: {
+              personTag: personInfoPages[i]?.person?.[0],
+              projectTag: participant,
+              extraIdentifier: 'participation',
+              title: `${personInfoPages[i]?.person?.[0].name} -to- ${participant?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.personTag?.name);
+      personProjectParticipation = [
+        ...personProjectParticipation,
+        ...projectParticipants,
+      ];
+    }
+
+    console.log(
+      'debug222->personProjectParticipation',
+      personProjectParticipation
+    );
+
+    const allPersonAffiliations = [
+      ...currentPersonAffiliations,
+      ...formerPersonAffiliations,
+      ...personProjectCoordonation,
+      ...personProjectParticipation,
+    ];
+
+    console.log('debug222->allPersonAffiliations', allPersonAffiliations);
+
+    const organisationInfoPages = infoPages
+      .filter(
+        (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'organisation info'
+      )
+      .map((infoPage) => infoPage.data);
+
+    console.log('debug222->organisationInfoPages', organisationInfoPages);
+
+    let currentOrganisationPerson: any[] = [];
+    let organisationProjectAffiliations: any[] = [];
+
+    for (let i = 0; i < organisationInfoPages.length; i++) {
+      const peopleOrganisationRolesAffiliations = organisationInfoPages[
+        i
+      ]?.organisationPeopleRoles
+        ?.map((role: any, index: number) => {
+          return {
+            data: {
+              organisationTag: organisationInfoPages[i]?.organisation?.[0],
+              personTag: organisationInfoPages[i]?.organisationPeople?.[index],
+              role: role.role,
+              extraIdentifier: 'current',
+              title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationPeople?.[index]?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.personTag?.name);
+      currentOrganisationPerson = [
+        ...currentOrganisationPerson,
+        ...peopleOrganisationRolesAffiliations,
+      ];
+    }
+
+    console.log(
+      'debug222->currentOrganisationPerson',
+      currentOrganisationPerson
+    );
+
+    for (let i = 0; i < organisationInfoPages.length; i++) {
+      const projectOrganisationRolesAffiliations = organisationInfoPages[
+        i
+      ]?.organisationProjectRoles
+        ?.map((role: any, index: number) => {
+          return {
+            data: {
+              organisationTag: organisationInfoPages[i]?.organisation?.[0],
+              projectTag:
+                organisationInfoPages[i]?.organisationProject?.[index],
+              role: role.role,
+              extraIdentifier: 'projectOrganisationRole',
+              title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationProject?.[index]?.name}`,
+            },
+          };
+        })
+        ?.filter((item: any) => item?.data?.projectTag?.name);
+      organisationProjectAffiliations = [
+        ...organisationProjectAffiliations,
+        ...projectOrganisationRolesAffiliations,
+      ];
+    }
+
+    console.log(
+      'debug222->organisationProjectAffiliations',
+      organisationProjectAffiliations
+    );
+
+    const allOrganisationAffiliations = [
+      ...currentOrganisationPerson,
+      ...organisationProjectAffiliations,
+    ];
+
+    const allAffiliations = [
+      ...allProjectAffiliations,
+      ...allPersonAffiliations,
+      ...allOrganisationAffiliations,
+    ];
+
+    console.log('debug222->allAffiliations', allAffiliations);
+
+    // const filteredDuplicateAffiliations =
+    //   filterDuplicateAffiliations(allAffiliations);
+    // console.log(
+    //   'debug222->filteredDuplicateAffiliations',
+    //   filteredDuplicateAffiliations
+    // );
+    const allAffiliationsUpload = await bulkInsertItems(
+      'Affiliations',
+      allAffiliations
+    );
+
+    console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
+
+    // const projectOrganisationRolesAffiliations =
+    //   projectInfoPages[0]?.projectOrganisationRoles
+    //     ?.map((role: any, index: number) => {
+    //       return {
+    //         data: {
+    //           projectTag: projectInfoPages[0]?.Project?.[0],
+    //           organisationTag:
+    //             projectInfoPages[0]?.projectOrganisation?.[index],
+    //           role: role.role,
+    //           extraIdentifier: 'projectOrganisationRole',
+    //           title: `${projectInfoPages[0]?.Project?.[0]?.name} -to- ${projectInfoPages[0]?.projectOrganisation?.[index]?.name}`,
+    //         },
+    //       };
+    //     })
+    //     .filter((item: any) => item?.data?.organisationTag?.name);
+    // console.log(
+    //   'debug222->projectOrganisationRolesAffiliations',
+    //   projectOrganisationRolesAffiliations
+    // );
+  };
 
   return (
     <div
@@ -215,6 +546,18 @@ export default function DashboardProjects() {
                   <span className="text-lg">Add project</span>
                 </Button>
               </Link>
+              {/* <Button
+                size={'md'}
+                color={'light'}
+                className={classNames(
+                  style.buttonAddDashboard,
+                  'block border-0 mr-4 focus:ring-purple-300'
+                )}
+                pill
+                onClick={handleCreateAffiliations}
+              >
+                Create Affiliations
+              </Button> */}
             </div>
           </div>
         </div>

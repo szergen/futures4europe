@@ -68,6 +68,27 @@ const getCollectionItems = async (collectionName: string) => {
   }
 };
 
+const subscribeToNewsletter = async (email: string) => {
+  try {
+    const response = await fetch('/api/subscribeToNewsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to subscribeToNewsletter');
+    }
+
+    const item = await response.json();
+    return item;
+  } catch (error) {
+    console.error('Error getting collection items:', error);
+  }
+};
+
 const getCollection = async (collectionName: string) => {
   try {
     const response = await fetch('/api/getCollection', {
@@ -110,6 +131,30 @@ const bulkInsertItems = async (
     return updatedItems;
   } catch (error) {
     console.error('Error inserting bulk items', error);
+  }
+};
+
+const bulkRemoveItems = async (
+  collectionName: string,
+  dataItems: Record<string, any>[]
+) => {
+  try {
+    const response = await fetch('/api/bulkRemoveItems', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ collectionName, dataItems }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to remove bulk data items');
+    }
+
+    const updatedItems = await response.json();
+    return updatedItems;
+  } catch (error) {
+    console.error('Error removing bulk items', error);
   }
 };
 
@@ -308,4 +353,6 @@ export {
   revalidateDataItem,
   getCollectionItems,
   getContactsItemByEmail,
+  subscribeToNewsletter,
+  bulkRemoveItems,
 };

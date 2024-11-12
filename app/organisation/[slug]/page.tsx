@@ -5,6 +5,7 @@ import OrganisationPageComponent from '@app/page-components/OrganisationPageComp
 import {
   getCollectionItemBySlug,
   getCollection,
+  getAffiliationsCollectionItemsByTag,
 } from '@app/wixUtils/server-side';
 
 // Next.js will invalidate the cache when a
@@ -37,13 +38,27 @@ export default async function OrganisationPage({ params }: any) {
 
   // Grab specific Project by slug
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
-  // console.log('infoPageItem Data', infoPageItem?.data);
+  const tagIdForOrganisationPage = infoPageItem?.data?.organisation?.[0]._id;
+  const affiliations = await getAffiliationsCollectionItemsByTag(
+    tagIdForOrganisationPage,
+    'organisationTag'
+  );
+
+  console.log('Affiliations', affiliations);
+  const infoPageItemWithAffiliations = {
+    ...infoPageItem,
+    affiliationsItems: affiliations.map((affiliation: any) => affiliation.data),
+  };
+
+  if (!infoPageItem) {
+    return <div>Loading...</div>; // You can also add a loading spinner here
+  }
 
   return (
     <div className={classNames('w-full')}>
       <OrganisationPageComponent
         pageTitle={params.slug}
-        organisation={infoPageItem}
+        organisation={infoPageItemWithAffiliations}
       />
     </div>
   );

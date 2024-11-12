@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 import ProjectPageComponent from '@app/page-components/ProjectPageComponent/ProjectPageComponent';
 import {
+  getAffiliationsCollectionItemsByTag,
   getCollection,
   getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
@@ -37,37 +38,30 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectPage({ params }: any) {
-  // console.log('Project Page Params', params.slug);
-
-  // const referencedKeys = [
-  //   'projectCoordinator',
-  //   'projectParticipantTeam',
-  //   'projectOrganisation',
-  // ];
-
-  // Grab specific Project by slug
+  console.log('Person Project Params', params.slug);
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
-  // console.log('infoPageItem Data', infoPageItem?.data);
-  // const referencedTitles = composeReferencedItemTitlesForInfoPages(
-  //   referencedKeys,
-  //   infoPageItem?.data || {}
-  // );
 
-  // const infoPageWithReferencedItems = await getAllReferencedItemsByTitle(
-  //   'InfoPages',
-  //   referencedTitles
-  // );
+  const tagIdForProjectPage = infoPageItem?.data?.Project?.[0]._id;
+  const affiliations = await getAffiliationsCollectionItemsByTag(
+    tagIdForProjectPage,
+    'projectTag'
+  );
 
-  // const newPage = await composePageWithReferencedItems(
-  //   infoPageItem?.data || {},
-  //   referencedKeys,
-  //   infoPageWithReferencedItems
-  // );
+  console.log('Affiliations', affiliations);
+  const infoPageItemWithAffiliations = {
+    ...infoPageItem,
+    affiliationsItems: affiliations.map((affiliation: any) => affiliation.data),
+  };
 
-  console.log('ProjectPage', infoPageItem);
+  if (!infoPageItem) {
+    return <div>Loading...</div>; // You can also add a loading spinner here
+  }
   return (
     <div className={classNames('w-full')}>
-      <ProjectPageComponent pageTitle={params.slug} project={infoPageItem} />
+      <ProjectPageComponent
+        pageTitle={params.slug}
+        project={infoPageItemWithAffiliations}
+      />
     </div>
   );
 }

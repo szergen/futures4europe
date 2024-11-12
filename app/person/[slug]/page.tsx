@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import {
+  getAffiliationsCollectionItemsByTag,
   getCollection,
   getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
@@ -40,38 +41,33 @@ export default async function PersonPage({ params }: any) {
 
   // Grab specific Person by slug
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
-  // console.log('infoPageItem Data', infoPageItem.data);
-  // const referencedTitles = composeReferencedItemTitlesForInfoPages(
-  //   ['personOrganisation'],
-  //   infoPageItem?.data || {}
-  // );
+  const tagIdForPersonPage = infoPageItem?.data?.person?.[0]._id;
+  let affiliations = [] as any[];
+  if (tagIdForPersonPage) {
+    affiliations = await getAffiliationsCollectionItemsByTag(
+      tagIdForPersonPage,
+      'personTag'
+    );
+  }
 
-  // console.log('referencedIDs', referencedTitles);
+  console.log('Affiliations', affiliations);
+  const infoPageItemWithAffiliations = {
+    ...infoPageItem,
+    affiliationsItems: affiliations?.map(
+      (affiliation: any) => affiliation.data
+    ),
+  };
 
-  // const infoPageWithReferencedItems = await getAllReferencedItemsByTitle(
-  //   'InfoPages',
-  //   referencedTitles
-  // );
-
-  // console.log('infoPageWithReferencedItems', infoPageWithReferencedItems);
-
-  // const newPage = await composePageWithReferencedItems(
-  //   infoPageItem?.data || {},
-  //   ['personOrganisation'],
-  //   infoPageWithReferencedItems
-  // );
-
-  // console.log('newPage', newPage);
-
-  // const member = await getMemberById(infoPageItem.data._owner);
-  // console.log('member', member);
   if (!infoPageItem) {
     return <div>Loading...</div>; // You can also add a loading spinner here
   }
 
   return (
     <div className={classNames('w-full')}>
-      <PersonPageComponent pageTitle={params.slug} person={infoPageItem} />
+      <PersonPageComponent
+        pageTitle={params.slug}
+        person={infoPageItemWithAffiliations}
+      />
     </div>
   );
 }
