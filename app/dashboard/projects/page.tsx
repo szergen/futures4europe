@@ -546,7 +546,7 @@ export default function DashboardProjects() {
                   <span className="text-lg">Add project</span>
                 </Button>
               </Link>
-              <Button
+              {/* <Button
                 size={'md'}
                 color={'light'}
                 className={classNames(
@@ -557,7 +557,7 @@ export default function DashboardProjects() {
                 onClick={handleCreateAffiliations}
               >
                 Create Affiliations
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
