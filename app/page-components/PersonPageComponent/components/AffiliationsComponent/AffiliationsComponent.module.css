@@ -82,8 +82,9 @@ input.roleInput:focus {
 }
 .affiliationRemove {
   position: absolute;
-  right: 16px;
-  z-index: 99;
+  right: -8px;
+  top: 11px;
+  z-index: 999;
   width: var(--w-space-l);
   height: var(--w-space-l);
   border-radius: var(--p-border-radius-full);
@@ -95,6 +96,13 @@ input.roleInput:focus {
   background: var(--color-background-destructive) !important;
   cursor: pointer;
   opacity: 1;
+}
+.affiliationRemove svg{
+  fill: var(--color-text-weakest);
+  text-align: center;
+  margin: 0 auto;
+  transform: scale(1);
+  width: 14px;
 }
 
 .tagListContainer .IndicatorsContainer {

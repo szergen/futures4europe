@@ -135,7 +135,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             tag="p"
             className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
           >
-            {person.views} views
+            {/* {person.views} views */}
           </Typography>
         )}
       </div>
@@ -227,7 +227,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               }}
               tagType={'person type'}
               onTagCreated={handleTagCreated}
-              placeholder="Select Activity Interests"
+              placeholder="Type of expertise"
               newTagHeader="Create a new activity"
               newTagType="Activity name"
               newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"

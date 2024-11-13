@@ -166,12 +166,6 @@ export default function DashboardProjects() {
                 Add a detailed overview of your event. Include the type of
                 event, a brief description, the organizers. Give the location
                 date and time, and any significant information.
-                <Link
-                  href="/post/New_Post?pageType=event"
-                  className="ml-4 underline"
-                >
-                  View Example Event
-                </Link>
               </p>
             </div>
 

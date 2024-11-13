@@ -168,12 +168,6 @@ export default function DashboardProjects() {
                 Include text content or image. Add any significant outcomes or
                 findings in the foresight community. Here is an example of a
                 post:
-                <Link
-                  href="/post/Webinar_Platform_driven_horizon_scanning_in_practice_6n0a2"
-                  className="ml-4 underline"
-                >
-                  View Example Post
-                </Link>
               </p>
             </div>
 

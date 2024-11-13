@@ -170,12 +170,6 @@ export default function DashboardProjects() {
                 Add a detailed overview of your project result. Include the
                 delivrable, description, authors, and any significant
                 information of the project result.
-                <Link
-                  href="/post/New_Post?pageType=projectResult"
-                  className="ml-4 underline"
-                >
-                  View Example Project Result
-                </Link>
               </p>
             </div>
 

@@ -115,7 +115,7 @@
     color: transparent;
     /* // fill sau cover */
     /* // FIXME @catalin */
-    object-fit: cover;
+    object-fit: contain;
     margin-left: 0px;
   }
   .tagNameBody {

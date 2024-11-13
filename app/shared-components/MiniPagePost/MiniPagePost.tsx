@@ -59,7 +59,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   primaryTags,
   methods,
 }) => {
-  console.log('MiniPagePostTitle', subtitle);
+  console.log('MiniPagePost' + JSON.stringify(title));
+
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   // const year = new Date(newDate).getFullYear();
@@ -97,7 +98,10 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           className={classNames(style.MiniPagePostTitle, '')}
         >
           {title}
-          <span className={classNames(style.popularity)}> {popularity} </span>
+          <span className={classNames(style.popularity)}>
+            {' '}
+            {/*popularity*/}{' '}
+          </span>
           {projectStartDate && projectEndDate && (
             <span className={classNames(style.projectDates)}>
               {dayjs(projectStartDate).format('MMMM YYYY')} -{' '}
@@ -223,11 +227,6 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         <Typography tag="p" className={classNames(style.MiniPagePostDate, '')}>
           Posted on: {formattedDate}
         </Typography>
-
-        {/* Edit Date - MOVED ON TOP OF TITLE */}
-        {/* <Typography tag="p" className={classNames(style.MiniPagePostDate, '')}>
-          Edited on: {formattedEditDate}
-        </Typography> */}
       </div>
     </div>
   );

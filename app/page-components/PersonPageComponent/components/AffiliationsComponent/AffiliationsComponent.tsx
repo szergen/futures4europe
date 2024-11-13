@@ -312,9 +312,9 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   >
                     <SpriteSvg.EditCloseIcon
                       className="mb-0"
-                      sizeW={16}
-                      sizeH={16}
-                      viewBox={'-3 -2 22 22'}
+                      sizeW={20}
+                      sizeH={20}
+                      viewBox={'0 0 20 20'}
                       fill={'#fff'}
                       strokeWidth={0}
                       inline={true}
