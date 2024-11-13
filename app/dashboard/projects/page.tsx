@@ -413,6 +413,12 @@ export default function DashboardProjects() {
     ];
 
     console.log('debug222->allAffiliations', allAffiliations);
+    const filteredAffiliations = allAffiliations.filter(
+      (item) => item.data._id === 'e54a578c-d299-4ee5-991c-3fba5f1cdbfc'
+    );
+
+    console.log('debug222->filteredAffiliations', filteredAffiliations);
+    
 
     // const filteredDuplicateAffiliations =
     //   filterDuplicateAffiliations(allAffiliations);
@@ -420,12 +426,16 @@ export default function DashboardProjects() {
     //   'debug222->filteredDuplicateAffiliations',
     //   filteredDuplicateAffiliations
     // );
-    const allAffiliationsUpload = await bulkInsertItems(
-      'Affiliations',
-      allAffiliations
-    );
 
-    console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
+    // #region bulk create affiliations
+    // const allAffiliationsUpload = await bulkInsertItems(
+    //   'Affiliations',
+    //   allAffiliations
+    // );
+
+    // console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
+
+    // #endregion
 
     // const projectOrganisationRolesAffiliations =
     //   projectInfoPages[0]?.projectOrganisationRoles
