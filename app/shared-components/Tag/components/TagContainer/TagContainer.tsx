@@ -84,12 +84,12 @@ export const TagContainer: React.FC<TagContainerProps> = ({
             </PopoverComponent>
           )}
           {/* Tag Counter and Trend */}
-          {popularity && (
-            <TagCounter
-              popularity={popularity}
-              disablePopularityHover={disablePopularityHover}
-              _id={_id}
-            />
+          {popularity > 0 && ( // Add the condition here
+              <TagCounter
+                popularity={popularity}
+                disablePopularityHover={disablePopularityHover}
+                _id={_id}
+              />
           )}
         </span>
       </span>
