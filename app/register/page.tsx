@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import classNames from 'classnames';
 // import { useRouter } from 'next/navigation';
 // import { getWixClientMember } from '@app/hooks/useWixClientServer';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
@@ -19,6 +20,9 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import Link from 'next/link';
 import { items } from '@wix/data';
 
+// TODO @alex adaugat consent newsletter
+import { subscribeToNewsletter } from '@app/wixUtils/client-side';
+
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
 
 export default function RegisterPage() {
@@ -35,6 +39,10 @@ export default function RegisterPage() {
   const handleCaptchaChange = (token: string) => {
     setCaptchaToken(token);
   };
+
+  const [email, setEmail] = useState('');
+  const [submitState, setSubmitState] = useState('idle');
+  const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
 
   const uploadTag = async (tagName: string) => {
     try {
@@ -73,6 +81,11 @@ export default function RegisterPage() {
       });
       console.log('response', response);
 
+      // TODO @alex adaugat consent newsletter
+      const marketingConsent = await subscribeToNewsletter(email);
+      console.log('marketingConsent', marketingConsent);
+      setSubmitState('success');
+
       // #region Wix upload logic
       let tagResult;
       if (response) {
@@ -81,6 +94,7 @@ export default function RegisterPage() {
         if (tagResult) {
           setIsTagCreated(true);
         }
+        
       }
       // #endregion
 
@@ -91,12 +105,21 @@ export default function RegisterPage() {
       setError('Registration failed. Please try again.');
       console.error('Registration failed:', err);
       setShowAccountCreatedModal(false);
+
+      // TODO @alex adaugat consent newsletter
+      console.error('Error upserting email consent:', error);
+      setSubmitState('error');
     }
+
+    // Add your submission logic here
+    console.log('Submitting email:', email);    
   };
+
+
 
   return (
     <div className="flex items-center justify-center w-full lg:p-12r min-h-[70vh]">
-      <Card className="w-6w-2/3 rounded-xxl shadow-sm	">
+      <Card className="w-6w-2/3 rounded-xxl shadow-sm	border-0">
         <div className="container flex flex-col mx-auto bg-white pt-2">
           <div className="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
             <div className="flex items-center justify-center w-full">
@@ -128,12 +151,12 @@ export default function RegisterPage() {
                       src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
                     />
                     Sign in with Google
-                  </a>
+                  </a> */}
                   <div className="flex items-center mb-3">
                     <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                    <p className="mx-4 text-grey-600">or</p>
+                    <p className="mx-4 text-grey-600">{' '}</p>
                     <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                  </div> */}
+                  </div> 
                   {/* Email */}
                   <Label
                     className="mb-2 text-sm text-start text-grey-900"
@@ -194,7 +217,7 @@ export default function RegisterPage() {
                   />
                   <TextInput
                     id="password"
-                    className="block relative"
+                    className="block relative focus:border-2 text-grey-900"
                     sizing="lg"
                     shadow
                     placeholder="create a password"
@@ -211,24 +234,80 @@ export default function RegisterPage() {
 
                   <Button
                     color="primary"
-                    className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
+                    className="w-full border-0 border-lg btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 hover:bg-blue-600 focus:ring-4 bg-blue-500"
                     type="submit"
-                    disabled={!captchaToken}
+                    disabled={
+                      process.env.NODE_ENV === 'production'  // Check if it's production environment
+                        ? !captchaToken || !isPrivacyChecked  // Use combined condition in production
+                        : !isPrivacyChecked  // Use only captchaToken condition in development
+                    }
                   >
                     Create account
                   </Button>
                   <p className="text-sm leading-relaxed text-grey-900">
-                    Are you allready a memebr?{' '}
+                      Are you already a member?{' '}
                     <a className="font-bold text-grey-700" href="/login">
                       Log in
                     </a>
                   </p>
                 </form>
+
+              <div className="flex flex-col justify-items-start w-full h-full pb-6 bg-white rounded-3xl max-w-96">
+                <fieldset>
+                  <legend className="sr-only">Checkboxes</legend>
+                  <div className="divide-y divide-gray-200">
+                    <label
+                      htmlFor="Option1"
+                      className="flex cursor-pointer items-start gap-2 py-2"
+                    >
+                      <div className="flex justify-items-start pt-1">
+                        &#8203;
+                        <input
+                          type="checkbox"
+                          onChange={() => setIsPrivacyChecked(!isPrivacyChecked)}
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          id="Option1"
+                        />
+                      </div>
+
+                      <div>
+                      <strong className="font-medium text-black relative">
+                        By registering, you agree to the 
+                        <a href="#" className="text-blue-600"> Terms of Service </a> 
+                        and 
+                        <a href="#" className="text-blue-600"> Privacy Policy</a>.
+                      </strong>
+                        </div>
+                    </label>
+                  </div>
+                </fieldset>      
+                    
+                <div className="flex">
+                    <div className="flex justify-items-start pt-1">
+                        <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    </div>
+                    <div className="ms-2 text-sm">
+                        <label htmlFor="helper-checkbox" className="font-medium cursor-pointer dark:text-gray-300">Newsletter subscription</label>
+                        <p id="helper-checkbox-text" className="font-normal text-gray-500 dark:text-gray-300"> 
+                          I agree my information will be processed in accordance
+                          with the Future4Europe and Eye of Europe{' '}
+                          <a href="#" className="text-blue-600">
+                          Privacy Policy
+                          </a>
+                          .          
+                          </p>
+                    </div>
+                </div>
+              </div>              
+
               </div>
             </div>
           </div>
         </div>
       </Card>
+
+
+
       <Modal
         show={showAccountCreatedModal}
         onClose={() => setShowAccountCreatedModal(false)}
