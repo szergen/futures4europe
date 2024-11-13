@@ -39,11 +39,11 @@ const nextConfig = {
     return [
       {
         source: '/ourfutures',
-        destination: '/project/OurFutures_wgft5',
+        destination: '/project/OurFutures',
         permanent: true,
-      }
+      },
     ];
-  },  
+  },
 };
 
 module.exports = nextConfig;

@@ -126,7 +126,9 @@ export default function DashboardProjects() {
     console.log('debug222->infoPages', infoPages);
     const projectInfoPages = infoPages
       .filter(
-        (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'project info'
+        (infoPage) =>
+          infoPage?.data?.pageTypes[0]?.name === 'project info' &&
+          infoPage?.data?.Project?.[0]?.name === 'CROSSEU'
       )
       .map((infoPage) => infoPage.data);
     console.log('debug222->projectInfoPages', projectInfoPages);
@@ -216,200 +218,200 @@ export default function DashboardProjects() {
     ];
     console.log('debug222->allProjectAffiliations', allProjectAffiliations);
 
-    const personInfoPages = infoPages
-      .filter(
-        (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'person info'
-      )
-      .map((infoPage) => infoPage.data);
-    console.log('debug222->personInfoPages', personInfoPages);
+    // const personInfoPages = infoPages
+    //   .filter(
+    //     (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'person info'
+    //   )
+    //   .map((infoPage) => infoPage.data);
+    // console.log('debug222->personInfoPages', personInfoPages);
 
-    let currentPersonAffiliations: any[] = [];
-    let formerPersonAffiliations: any[] = [];
+    // let currentPersonAffiliations: any[] = [];
+    // let formerPersonAffiliations: any[] = [];
 
-    let personProjectCoordonation: any[] = [];
-    let personProjectParticipation: any[] = [];
+    // let personProjectCoordonation: any[] = [];
+    // let personProjectParticipation: any[] = [];
 
-    for (let i = 0; i < personInfoPages.length; i++) {
-      const personAffiliations = personInfoPages?.[i]?.personOrganisationRoles
-        ?.map((affiliation: any, index: number) => {
-          return {
-            data: {
-              personTag: personInfoPages[i]?.person?.[0],
-              organisationTag: personInfoPages[i]?.personOrganisation?.[index],
-              role: affiliation.role,
-              extraIdentifier: 'current',
-              title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name);
-      currentPersonAffiliations = [
-        ...currentPersonAffiliations,
-        ...personAffiliations,
-      ];
-    }
+    // for (let i = 0; i < personInfoPages.length; i++) {
+    //   const personAffiliations = personInfoPages?.[i]?.personOrganisationRoles
+    //     ?.map((affiliation: any, index: number) => {
+    //       return {
+    //         data: {
+    //           personTag: personInfoPages[i]?.person?.[0],
+    //           organisationTag: personInfoPages[i]?.personOrganisation?.[index],
+    //           role: affiliation.role,
+    //           extraIdentifier: 'current',
+    //           title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
+    //         },
+    //       };
+    //     })
+    //     ?.filter((item: any) => item?.data?.organisationTag?.name);
+    //   currentPersonAffiliations = [
+    //     ...currentPersonAffiliations,
+    //     ...personAffiliations,
+    //   ];
+    // }
 
-    console.log(
-      'debug222->currentPersonAffiliations',
-      currentPersonAffiliations
-    );
+    // console.log(
+    //   'debug222->currentPersonAffiliations',
+    //   currentPersonAffiliations
+    // );
 
-    for (let i = 0; i < personInfoPages.length; i++) {
-      const personAffiliations = personInfoPages?.[
-        i
-      ]?.personOrganisationRolesFormer
-        ?.map((affiliation: any, index: number) => {
-          return {
-            data: {
-              personTag: personInfoPages[i]?.person?.[0],
-              organisationTag: personInfoPages[i]?.personOrganisation?.[index],
-              role: affiliation.role,
-              extraIdentifier: 'former',
-              title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name);
-      formerPersonAffiliations = [
-        ...formerPersonAffiliations,
-        ...personAffiliations,
-      ];
-    }
+    // for (let i = 0; i < personInfoPages.length; i++) {
+    //   const personAffiliations = personInfoPages?.[
+    //     i
+    //   ]?.personOrganisationRolesFormer
+    //     ?.map((affiliation: any, index: number) => {
+    //       return {
+    //         data: {
+    //           personTag: personInfoPages[i]?.person?.[0],
+    //           organisationTag: personInfoPages[i]?.personOrganisation?.[index],
+    //           role: affiliation.role,
+    //           extraIdentifier: 'former',
+    //           title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
+    //         },
+    //       };
+    //     })
+    //     ?.filter((item: any) => item?.data?.organisationTag?.name);
+    //   formerPersonAffiliations = [
+    //     ...formerPersonAffiliations,
+    //     ...personAffiliations,
+    //   ];
+    // }
 
-    console.log('debug222->formerPersonAffiliations', formerPersonAffiliations);
+    // console.log('debug222->formerPersonAffiliations', formerPersonAffiliations);
 
-    for (let i = 0; i < personInfoPages.length; i++) {
-      const projectCoordinators = personInfoPages[i]?.personProjectCoordonation
-        ?.map((coordinator: any) => {
-          return {
-            data: {
-              personTag: personInfoPages[i]?.person?.[0],
-              projectTag: coordinator,
-              extraIdentifier: 'coordination',
-              title: `${personInfoPages[i]?.person?.[0].name} -to- ${coordinator?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name);
-      personProjectCoordonation = [
-        ...personProjectCoordonation,
-        ...projectCoordinators,
-      ];
-    }
+    // for (let i = 0; i < personInfoPages.length; i++) {
+    //   const projectCoordinators = personInfoPages[i]?.personProjectCoordonation
+    //     ?.map((coordinator: any) => {
+    //       return {
+    //         data: {
+    //           personTag: personInfoPages[i]?.person?.[0],
+    //           projectTag: coordinator,
+    //           extraIdentifier: 'coordination',
+    //           title: `${personInfoPages[i]?.person?.[0].name} -to- ${coordinator?.name}`,
+    //         },
+    //       };
+    //     })
+    //     ?.filter((item: any) => item?.data?.personTag?.name);
+    //   personProjectCoordonation = [
+    //     ...personProjectCoordonation,
+    //     ...projectCoordinators,
+    //   ];
+    // }
 
-    console.log(
-      'debug222->personProjectCoordonation',
-      personProjectCoordonation
-    );
+    // console.log(
+    //   'debug222->personProjectCoordonation',
+    //   personProjectCoordonation
+    // );
 
-    for (let i = 0; i < personInfoPages.length; i++) {
-      const projectParticipants = personInfoPages[i]?.personProjectParticipation
-        ?.map((participant: any) => {
-          return {
-            data: {
-              personTag: personInfoPages[i]?.person?.[0],
-              projectTag: participant,
-              extraIdentifier: 'participation',
-              title: `${personInfoPages[i]?.person?.[0].name} -to- ${participant?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name);
-      personProjectParticipation = [
-        ...personProjectParticipation,
-        ...projectParticipants,
-      ];
-    }
+    // for (let i = 0; i < personInfoPages.length; i++) {
+    //   const projectParticipants = personInfoPages[i]?.personProjectParticipation
+    //     ?.map((participant: any) => {
+    //       return {
+    //         data: {
+    //           personTag: personInfoPages[i]?.person?.[0],
+    //           projectTag: participant,
+    //           extraIdentifier: 'participation',
+    //           title: `${personInfoPages[i]?.person?.[0].name} -to- ${participant?.name}`,
+    //         },
+    //       };
+    //     })
+    //     ?.filter((item: any) => item?.data?.personTag?.name);
+    //   personProjectParticipation = [
+    //     ...personProjectParticipation,
+    //     ...projectParticipants,
+    //   ];
+    // }
 
-    console.log(
-      'debug222->personProjectParticipation',
-      personProjectParticipation
-    );
+    // console.log(
+    //   'debug222->personProjectParticipation',
+    //   personProjectParticipation
+    // );
 
-    const allPersonAffiliations = [
-      ...currentPersonAffiliations,
-      ...formerPersonAffiliations,
-      ...personProjectCoordonation,
-      ...personProjectParticipation,
-    ];
+    // const allPersonAffiliations = [
+    //   ...currentPersonAffiliations,
+    //   ...formerPersonAffiliations,
+    //   ...personProjectCoordonation,
+    //   ...personProjectParticipation,
+    // ];
 
-    console.log('debug222->allPersonAffiliations', allPersonAffiliations);
+    // console.log('debug222->allPersonAffiliations', allPersonAffiliations);
 
-    const organisationInfoPages = infoPages
-      .filter(
-        (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'organisation info'
-      )
-      .map((infoPage) => infoPage.data);
+    // const organisationInfoPages = infoPages
+    //   .filter(
+    //     (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'organisation info'
+    //   )
+    //   .map((infoPage) => infoPage.data);
 
-    console.log('debug222->organisationInfoPages', organisationInfoPages);
+    // console.log('debug222->organisationInfoPages', organisationInfoPages);
 
-    let currentOrganisationPerson: any[] = [];
-    let organisationProjectAffiliations: any[] = [];
+    // let currentOrganisationPerson: any[] = [];
+    // let organisationProjectAffiliations: any[] = [];
 
-    for (let i = 0; i < organisationInfoPages.length; i++) {
-      const peopleOrganisationRolesAffiliations = organisationInfoPages[
-        i
-      ]?.organisationPeopleRoles
-        ?.map((role: any, index: number) => {
-          return {
-            data: {
-              organisationTag: organisationInfoPages[i]?.organisation?.[0],
-              personTag: organisationInfoPages[i]?.organisationPeople?.[index],
-              role: role.role,
-              extraIdentifier: 'current',
-              title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationPeople?.[index]?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name);
-      currentOrganisationPerson = [
-        ...currentOrganisationPerson,
-        ...peopleOrganisationRolesAffiliations,
-      ];
-    }
+    // for (let i = 0; i < organisationInfoPages.length; i++) {
+    //   const peopleOrganisationRolesAffiliations = organisationInfoPages[
+    //     i
+    //   ]?.organisationPeopleRoles
+    //     ?.map((role: any, index: number) => {
+    //       return {
+    //         data: {
+    //           organisationTag: organisationInfoPages[i]?.organisation?.[0],
+    //           personTag: organisationInfoPages[i]?.organisationPeople?.[index],
+    //           role: role.role,
+    //           extraIdentifier: 'current',
+    //           title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationPeople?.[index]?.name}`,
+    //         },
+    //       };
+    //     })
+    //     ?.filter((item: any) => item?.data?.personTag?.name);
+    //   currentOrganisationPerson = [
+    //     ...currentOrganisationPerson,
+    //     ...peopleOrganisationRolesAffiliations,
+    //   ];
+    // }
 
-    console.log(
-      'debug222->currentOrganisationPerson',
-      currentOrganisationPerson
-    );
+    // console.log(
+    //   'debug222->currentOrganisationPerson',
+    //   currentOrganisationPerson
+    // );
 
-    for (let i = 0; i < organisationInfoPages.length; i++) {
-      const projectOrganisationRolesAffiliations = organisationInfoPages[
-        i
-      ]?.organisationProjectRoles
-        ?.map((role: any, index: number) => {
-          return {
-            data: {
-              organisationTag: organisationInfoPages[i]?.organisation?.[0],
-              projectTag:
-                organisationInfoPages[i]?.organisationProject?.[index],
-              role: role.role,
-              extraIdentifier: 'projectOrganisationRole',
-              title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationProject?.[index]?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.projectTag?.name);
-      organisationProjectAffiliations = [
-        ...organisationProjectAffiliations,
-        ...projectOrganisationRolesAffiliations,
-      ];
-    }
+    // for (let i = 0; i < organisationInfoPages.length; i++) {
+    //   const projectOrganisationRolesAffiliations = organisationInfoPages[
+    //     i
+    //   ]?.organisationProjectRoles
+    //     ?.map((role: any, index: number) => {
+    //       return {
+    //         data: {
+    //           organisationTag: organisationInfoPages[i]?.organisation?.[0],
+    //           projectTag:
+    //             organisationInfoPages[i]?.organisationProject?.[index],
+    //           role: role.role,
+    //           extraIdentifier: 'projectOrganisationRole',
+    //           title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationProject?.[index]?.name}`,
+    //         },
+    //       };
+    //     })
+    //     ?.filter((item: any) => item?.data?.projectTag?.name);
+    //   organisationProjectAffiliations = [
+    //     ...organisationProjectAffiliations,
+    //     ...projectOrganisationRolesAffiliations,
+    //   ];
+    // }
 
-    console.log(
-      'debug222->organisationProjectAffiliations',
-      organisationProjectAffiliations
-    );
+    // console.log(
+    //   'debug222->organisationProjectAffiliations',
+    //   organisationProjectAffiliations
+    // );
 
-    const allOrganisationAffiliations = [
-      ...currentOrganisationPerson,
-      ...organisationProjectAffiliations,
-    ];
+    // const allOrganisationAffiliations = [
+    //   ...currentOrganisationPerson,
+    //   ...organisationProjectAffiliations,
+    // ];
 
     const allAffiliations = [
       ...allProjectAffiliations,
-      ...allPersonAffiliations,
-      ...allOrganisationAffiliations,
+      // ...allPersonAffiliations,
+      // ...allOrganisationAffiliations,
     ];
 
     console.log('debug222->allAffiliations', allAffiliations);
@@ -420,12 +422,16 @@ export default function DashboardProjects() {
     //   'debug222->filteredDuplicateAffiliations',
     //   filteredDuplicateAffiliations
     // );
+
+    // #region bulk create affiliations
     const allAffiliationsUpload = await bulkInsertItems(
       'Affiliations',
       allAffiliations
     );
 
     console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
+
+    // #endregion
 
     // const projectOrganisationRolesAffiliations =
     //   projectInfoPages[0]?.projectOrganisationRoles

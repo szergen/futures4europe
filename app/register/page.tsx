@@ -28,8 +28,7 @@ import { subscribeToNewsletter } from '@app/wixUtils/client-side';
 export default function RegisterPage() {
   const [error, setError] = useState('');
   // const router = useRouter();
-  const { register: wixRegister, sendSetPasswordEmail } =
-    useWixModules(authentication);
+  const { register: wixRegister } = useWixModules(authentication);
   const { insertDataItem } = useWixModules(items);
 
   const [captchaToken, setCaptchaToken] = useState('');
