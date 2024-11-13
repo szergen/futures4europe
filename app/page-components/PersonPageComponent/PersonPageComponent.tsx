@@ -86,7 +86,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails?.userTag]);
   // #endregion
 
   // #region Handle affiliations

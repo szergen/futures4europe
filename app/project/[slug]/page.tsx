@@ -41,7 +41,7 @@ export default async function ProjectPage({ params }: any) {
   console.log('Person Project Params', params.slug);
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
 
-  const tagIdForProjectPage = infoPageItem?.data?.Project?.[0]._id;
+  const tagIdForProjectPage = infoPageItem?.data?.Project?.[0]?._id;
   const affiliations = await getAffiliationsCollectionItemsByTag(
     tagIdForProjectPage,
     'projectTag'
