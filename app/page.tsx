@@ -281,29 +281,27 @@ export const Home = () => {
             The online home of the European foresight community
           </h2>
           <p className="homeSubtitle">
-            Join our community to share, discover, and stay up-to-date on all
-            the latest foresight activities in and about Europe. We bring
-            together futurists and foresight community members with EU
-            policy-makers and citizens.
+            Explore a rich collection of foresight projects, showcase your own work, and participate in upcoming events.
           </p>
         </div>
         {isFinishedLoading ? (
           <div className="w-full w-fit Container_wrapper index_customers">
             <div className="index_customerGroups">
+              
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    {/* <ErrorBoundary> */}
+                    
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="person info" // Pass the desired info page type
+                      infoPageType="project info"
                     />
-                    {/* </ErrorBoundary> */}
+                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="person info" // Pass the desired info page type
+                      infoPageType="project info"
                     />
                   </div>
                 </div>
@@ -312,13 +310,13 @@ export const Home = () => {
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="person info" // Pass the desired info page type
+                      infoPageType="project info"
                     />
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="person info" // Pass the desired info page type
+                      infoPageType="project info"
                     />
                   </div>
                 </div>
@@ -327,17 +325,17 @@ export const Home = () => {
               <div className="index_customerGroupWrapper">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    {/* <ErrorBoundary> */}
+                    
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="organisation info" // Pass the desired info page type
+                      infoPageType="organisation info"
                     />
-                    {/* </ErrorBoundary> */}
+                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="organisation info" // Pass the desired info page type
+                      infoPageType="organisation info"
                     />
                   </div>
                 </div>
@@ -346,13 +344,13 @@ export const Home = () => {
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="organisation info" // Pass the desired info page type
+                      infoPageType="organisation info"
                     />
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="organisation info" // Pass the desired info page type
+                      infoPageType="organisation info"
                     />
                   </div>
                 </div>
@@ -361,17 +359,17 @@ export const Home = () => {
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    {/* <ErrorBoundary> */}
+                    
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="project info" // Pass the desired info page type
+                      infoPageType="person info"
                     />
-                    {/* </ErrorBoundary> */}
+                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="project info" // Pass the desired info page type
+                      infoPageType="person info"
                     />
                   </div>
                 </div>
@@ -380,32 +378,33 @@ export const Home = () => {
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="project info" // Pass the desired info page type
+                      infoPageType="person info"
                     />
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       infoPages={infoPages}
-                      infoPageType="project info" // Pass the desired info page type
+                      infoPageType="person info"
                     />
                   </div>
                 </div>
               </div>
+
 
               <div className="index_customerGroupWrapper">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    {/* <ErrorBoundary> */}
+                    
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="project result" // Pass the desired info page type
+                      postPageTypes="domains"
                     />
-                    {/* </ErrorBoundary> */}
+                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="project result" // Pass the desired info page type
+                      postPageTypes="domains"
                     />
                   </div>
                 </div>
@@ -414,13 +413,13 @@ export const Home = () => {
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="project result" // Pass the desired info page type
+                      postPageTypes="domains"
                     />
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="project result" // Pass the desired info page type
+                      postPageTypes="domains"
                     />
                   </div>
                 </div>
@@ -429,17 +428,17 @@ export const Home = () => {
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    {/* <ErrorBoundary> */}
+                    
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="event" // Pass the desired info page type
+                      postPageTypes="methods"
                     />
-                    {/* </ErrorBoundary> */}
+                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="event" // Pass the desired info page type
+                      postPageTypes="methods"
                     />
                   </div>
                 </div>
@@ -448,13 +447,13 @@ export const Home = () => {
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="event" // Pass the desired info page type
+                      postPageTypes="methods"
                     />
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
                       postPages={postPages}
-                      postPageTypes="event" // Pass the desired info page type
+                      postPageTypes="methods"
                     />
                   </div>
                 </div>
