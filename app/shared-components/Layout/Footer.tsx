@@ -36,8 +36,8 @@ const Footer = () => {
               </h2>
               <p className="mt-4 text-lg text-gray-300">
                 Want the latest updates from futures4europe and Eye of Europe in
-                your inbox? Join our mailing list by confirming your subscription and
-                receive all the latest updates in Foresight.
+                your inbox? Join our mailing list by confirming your
+                subscription and receive all the latest updates in Foresight.
               </p>
               <div className="mt-6 flex max-w-md gap-x-4">
                 <form onSubmit={handleSubmit} className="flex gap-x-4">
@@ -180,47 +180,48 @@ const Footer = () => {
                   Recent newsletters
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-400">
-                <ul className="text-sm transition-all duration-500">
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/09P91vhnQ?languageTag=en&cid=f677c1bb-4334-4039-a211-fdd89e013a3c"
-                  className="text-gray-400 hover:text-gray-500 underline"
-                >
-                  October 2024
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/ffO-UPJK0?languageTag=en"
-                  className="text-gray-400 hover:text-gray-500 underline"
-                >
-                  June 2024
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href={'https://shoutout.wix.com/so/86OraMfaB?languageTag=en'}
-                  className="text-gray-400 hover:text-gray-500 underline"
-                >
-                  March 2024
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/c7OmbGwaG?languageTag=en"
-                  className="text-gray-400 hover:text-gray-500 underline"
-                >
-                  December 2023
-                </Link>
-              </li>
-            </ul>
+                  <ul className="text-sm transition-all duration-500">
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://shoutout.wix.com/so/09P91vhnQ?languageTag=en&cid=f677c1bb-4334-4039-a211-fdd89e013a3c"
+                        className="text-gray-400 hover:text-gray-500 underline"
+                      >
+                        October 2024
+                      </Link>
+                    </li>
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://shoutout.wix.com/so/ffO-UPJK0?languageTag=en"
+                        className="text-gray-400 hover:text-gray-500 underline"
+                      >
+                        June 2024
+                      </Link>
+                    </li>
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href={
+                          'https://shoutout.wix.com/so/86OraMfaB?languageTag=en'
+                        }
+                        className="text-gray-400 hover:text-gray-500 underline"
+                      >
+                        March 2024
+                      </Link>
+                    </li>
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://shoutout.wix.com/so/c7OmbGwaG?languageTag=en"
+                        className="text-gray-400 hover:text-gray-500 underline"
+                      >
+                        December 2023
+                      </Link>
+                    </li>
+                  </ul>
                 </dd>
               </div>
-              
             </dl>
           </div>
         </div>
@@ -292,10 +293,7 @@ const Footer = () => {
           </div>
 
           <div className="flex w-full"></div>
-          <div className="lg:mx-auto text-left">
-            
-            
-          </div>
+          <div className="lg:mx-auto text-left"></div>
           <div className="lg:mx-auto text-left">
             <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
             <ul className="text-sm transition-all duration-500">

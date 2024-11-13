@@ -281,22 +281,20 @@ export const Home = () => {
             The online home of the European foresight community
           </h2>
           <p className="homeSubtitle">
-            Explore a rich collection of foresight projects, showcase your own work, and participate in upcoming events.
+            Explore a rich collection of foresight projects, showcase your own
+            work, and participate in upcoming events.
           </p>
         </div>
         {isFinishedLoading ? (
           <div className="w-full w-fit Container_wrapper index_customers">
             <div className="index_customerGroups">
-              
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    
                     <TagLisInlineComponent
                       infoPages={infoPages}
                       infoPageType="project info"
                     />
-                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
@@ -325,12 +323,10 @@ export const Home = () => {
               <div className="index_customerGroupWrapper">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    
                     <TagLisInlineComponent
                       infoPages={infoPages}
                       infoPageType="organisation info"
                     />
-                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
@@ -359,12 +355,10 @@ export const Home = () => {
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    
                     <TagLisInlineComponent
                       infoPages={infoPages}
                       infoPageType="person info"
                     />
-                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
@@ -389,17 +383,14 @@ export const Home = () => {
                   </div>
                 </div>
               </div>
-
 
               <div className="index_customerGroupWrapper">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    
                     <TagLisInlineComponent
                       postPages={postPages}
                       postPageTypes="domains"
                     />
-                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
@@ -428,12 +419,10 @@ export const Home = () => {
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    
                     <TagLisInlineComponent
                       postPages={postPages}
                       postPageTypes="methods"
                     />
-                    
                   </div>
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                     <TagLisInlineComponent
