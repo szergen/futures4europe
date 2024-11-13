@@ -150,7 +150,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             tag="p"
             className="text-sm text-gray-800 my-3 after:content-[attr(data-after)]]"
           >
-            {project.views} views
+            {/* {project.views} views */}
           </Typography>
         )}
       </div>
