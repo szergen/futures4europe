@@ -177,12 +177,6 @@ export default function DashboardProjects() {
                 Add a detailed overview of your foresigh method. Include how the
                 method was implemented and any particular information you
                 consider insightful.
-                <Link
-                  href="/post/New_Post?pageType=event"
-                  className="ml-4 underline"
-                >
-                  View Example Foresight Method
-                </Link>
               </p>
             </div>
 

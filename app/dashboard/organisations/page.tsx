@@ -170,12 +170,6 @@ export default function DashboardProjects() {
                 Add a detailed overview of your organisation. Include its
                 afilliates, projects, key members, and any significant outcomes
                 or findings.
-                <Link
-                  href="/organisation/New_Organisation"
-                  className="ml-4 underline"
-                >
-                  View Example Organisation
-                </Link>
               </p>
             </div>
 

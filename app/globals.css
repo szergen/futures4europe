@@ -653,7 +653,7 @@ select:focus {
   --tw-ring-color: var(--primary-color);
   border-color: var(--primary-color);
   outline: 0 !important;
-  border: 0px !important;
+  /* border: 0px !important; */
   box-shadow: none;
 }
 
@@ -807,6 +807,7 @@ textarea {
   background: var(--background-color);
   border-radius: var(--p-border-radius-200);
   height: fit-content;
+  position: relative;
 }
 
 .react-select__option--is-focused:after {
@@ -819,7 +820,7 @@ textarea {
   width: 24px;
   height: 24px;
   right: 20px;
-  top: 29px;
+  top: 17px;
   opacity: 0.45;
   background-color: var(--color-background-offline);
   border-radius: var(--p-border-radius-150);
@@ -830,7 +831,7 @@ textarea {
   width: 24px;
   height: 24px;
   right: 64px;
-  top: 31px;
+  top: 20px;
   color: var(--color-text-icon-offline);
 }
 

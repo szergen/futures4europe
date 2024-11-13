@@ -35,6 +35,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/ourfutures',
+        destination: '/project/OurFutures_wgft5',
+        permanent: true,
+      }
+    ];
+  },  
 };
 
 module.exports = nextConfig;
