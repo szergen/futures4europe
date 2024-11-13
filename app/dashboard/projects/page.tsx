@@ -517,12 +517,6 @@ export default function DashboardProjects() {
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
                 Add a detailed overview of your project. Include its objectives,
                 scope, key activities, and any significant outcomes or findings.
-                <Link
-                  href="/project/Project_X_vyc86"
-                  className="ml-4 underline"
-                >
-                  View Example Project
-                </Link>
               </p>
             </div>
 
