@@ -36,15 +36,15 @@ const Footer = () => {
               </h2>
               <p className="mt-4 text-lg text-gray-300">
                 Want the latest updates from futures4europe and Eye of Europe in
-                your inbox? Our newsletter is a free quarterly summary of our
-                top updates about the future in Europe.
+                your inbox? Join our mailing list by confirming your subscription and
+                receive all the latest updates in Foresight.
               </p>
               <div className="mt-6 flex max-w-md gap-x-4">
                 <form onSubmit={handleSubmit} className="flex gap-x-4">
                   <label htmlFor="email-address" className="sr-only">
                     Email address
                   </label>
-                  <div className="flex-auto">
+                  <div className="flex-auto w-full ">
                     <input
                       id="email-address"
                       name="email"
@@ -53,7 +53,7 @@ const Footer = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="mb-0 min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
+                      className="w-full mb-0 min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -177,39 +177,50 @@ const Footer = () => {
                   </svg>
                 </div>
                 <dt className="mt-4 text-base font-semibold text-white">
-                  Foresight news
+                  Recent newsletters
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-400">
-                  Join our mailing list by confirming your subscription and
-                  receive all the latest updates in Foresight.
+                <ul className="text-sm transition-all duration-500">
+              <li className="mb-2">
+                <Link
+                  target="_blank"
+                  href="https://shoutout.wix.com/so/09P91vhnQ?languageTag=en&cid=f677c1bb-4334-4039-a211-fdd89e013a3c"
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  October 2024
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link
+                  target="_blank"
+                  href="https://shoutout.wix.com/so/ffO-UPJK0?languageTag=en"
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  June 2024
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link
+                  target="_blank"
+                  href={'https://shoutout.wix.com/so/86OraMfaB?languageTag=en'}
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  March 2024
+                </Link>
+              </li>
+              <li className="mb-2">
+                <Link
+                  target="_blank"
+                  href="https://shoutout.wix.com/so/c7OmbGwaG?languageTag=en"
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  December 2023
+                </Link>
+              </li>
+            </ul>
                 </dd>
               </div>
-              <div className="flex flex-col items-start">
-                <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
-                  <svg
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    data-slot="icon"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002"
-                    />
-                  </svg>
-                </div>
-                <dt className="mt-4 text-base font-semibold text-white">
-                  No spam
-                </dt>
-                <dd className="mt-2 text-base/7 text-gray-400">
-                  Your email address is safe with us. We do not share your email
-                  address with anyone.
-                </dd>
-              </div>
+              
             </dl>
           </div>
         </div>
@@ -282,83 +293,8 @@ const Footer = () => {
 
           <div className="flex w-full"></div>
           <div className="lg:mx-auto text-left">
-            <h4 className="text-lg text-gray-900 font-medium mb-7">
-              Newsletter
-            </h4>
-            <ul className="text-sm transition-all duration-500">
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/09P91vhnQ?languageTag=en&cid=f677c1bb-4334-4039-a211-fdd89e013a3c"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  October 2024
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/ffO-UPJK0?languageTag=en"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  June 2024
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href={'https://shoutout.wix.com/so/86OraMfaB?languageTag=en'}
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  March 2024
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/c7OmbGwaG?languageTag=en"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  December 2023
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/2aOj30qog?languageTag=en"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  October 2023
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/8dObK5FTY?languageTag=en"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  July 2023
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/9fOY_LOAg?languageTag=en"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  June 2023
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  target="_blank"
-                  href="https://shoutout.wix.com/so/6dOWaRTan?languageTag=en"
-                  className="text-gray-600 hover:text-gray-900 underline"
-                >
-                  May 2023
-                </Link>
-              </li>
-            </ul>
+            
+            
           </div>
           <div className="lg:mx-auto text-left">
             <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
@@ -366,7 +302,7 @@ const Footer = () => {
               <li className="mb-6">
                 <Link
                   href="/about"
-                  className="text-gray-600 hover:text-gray-900 underline"
+                  className="text-gray-400 hover:text-gray-500 underline"
                 >
                   About us
                 </Link>
@@ -382,7 +318,7 @@ const Footer = () => {
               <li className="mb-6">
                 <a
                   href="mailto:info@futures4europe.eu"
-                  className="text-gray-600 hover:text-gray-900 underline"
+                  className="text-gray-400 hover:text-gray-500 underline"
                 >
                   info@futures4europe.eu
                 </a>
