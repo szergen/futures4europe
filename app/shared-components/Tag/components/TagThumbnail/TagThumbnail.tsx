@@ -9,14 +9,12 @@ export type TagThumbnailProps = {
   picture?: string;
   pictureAlt?: string;
   tagCategory?: TagCategories;
-  tagName?: string;
 };
 
 export const TagThumbnail: React.FC<TagThumbnailProps> = ({
   picture,
   pictureAlt,
   tagCategory,
-  tagName,
 }) => {
   return (
     <div className={classNames(style.tagThumbnail, 'flex')}>
@@ -42,10 +40,7 @@ export const TagThumbnail: React.FC<TagThumbnailProps> = ({
           src={
             getImageUrlForMedia(picture)?.url ||
             getImageUrlForMedia(picture) ||
-            `https://avatar.iran.liara.run/username?color=333&background=E5E4E2&username=${tagName?.replace(
-              ' ',
-              '+'
-            )}`
+            'https://placehold.co/147x147?text=Profile Image'
           }
           width={147}
           height={147}
