@@ -17,6 +17,7 @@ const nextConfig = {
       'uefiscdi.gov.ro',
       '0bbe2e34-e503-441a-af9e-4fc70c17e6af.usrfiles.com',
       'img.youtube.com',
+      'avatar.iran.liara.run',
     ],
     formats: ['image/webp'],
   },
