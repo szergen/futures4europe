@@ -18,6 +18,7 @@ export type TagContainerProps = {
   tagLine?: string;
   disablePopularityHover?: boolean;
   _id?: string;
+  tagType?: string;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -32,8 +33,9 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   tagLine,
   disablePopularityHover,
   _id,
+  tagType,
 }) => {
-  const showThumbnail = Boolean(picture || tagCategory === 'person');
+  const showThumbnail = Boolean(picture || tagType === 'person');
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
 
   const TagContent = (

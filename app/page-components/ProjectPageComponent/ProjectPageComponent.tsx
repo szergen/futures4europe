@@ -706,7 +706,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'coordination'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
@@ -714,28 +714,30 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
 
-      const newAffiliationsObject = projectData.coordinators
-        ?.map((item: any) => {
-          return {
-            data: {
-              projectTag: projectData.projectTag,
-              personTag: item,
-              extraIdentifier: 'coordination',
-              title: `${projectData.personTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedProjectsCoordonation = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
+      if (projectData.coordinators?.length > 0) {
+        const newAffiliationsObject = projectData.coordinators
+          ?.map((item: any) => {
+            return {
+              data: {
+                projectTag: projectData.projectTag,
+                personTag: item,
+                extraIdentifier: 'coordination',
+                title: `${projectData.personTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedProjectsCoordonation = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      console.log(
-        'debug111->updatedProjectsCoordonation',
-        updatedProjectsCoordonation
-      );
+        console.log(
+          'debug111->updatedProjectsCoordonation',
+          updatedProjectsCoordonation
+        );
+      }
     }
     // #endregion
 
@@ -753,36 +755,37 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         (item: any) => item?.extraIdentifier === 'participation'
       );
       console.log('debug111->oldAffiliation', oldAffiliations);
-      if (oldAffiliations) {
+      if (oldAffiliations && oldAffiliations?.length > 0) {
         const removeOldAffiliations = await bulkRemoveItems(
           'Affiliations',
           oldAffiliations?.map((item: any) => item._id)
         );
         console.log('debug111->removeOldAffiliations', removeOldAffiliations);
       }
+      if (projectData.participants?.length > 0) {
+        const newAffiliationsObject = projectData.participants
+          ?.map((item: any) => {
+            return {
+              data: {
+                projectTag: projectData.projectTag,
+                personTag: item,
+                extraIdentifier: 'participation',
+                title: `${projectData.projectTag.name} -to- ${item.name}`,
+              },
+            };
+          })
+          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+        console.log('debug111->newAffiliationsObject', newAffiliationsObject);
+        const updatedProjectsParticipation = await bulkInsertItems(
+          'Affiliations',
+          newAffiliationsObject
+        );
 
-      const newAffiliationsObject = projectData.participants
-        ?.map((item: any) => {
-          return {
-            data: {
-              projectTag: projectData.projectTag,
-              personTag: item,
-              extraIdentifier: 'participation',
-              title: `${projectData.projectTag.name} -to- ${item.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name !== '');
-      console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-      const updatedProjectsParticipation = await bulkInsertItems(
-        'Affiliations',
-        newAffiliationsObject
-      );
-
-      console.log(
-        'debug111->updatedProjectsParticipation',
-        updatedProjectsParticipation
-      );
+        console.log(
+          'debug111->updatedProjectsParticipation',
+          updatedProjectsParticipation
+        );
+      }
     }
     // #endregion
 
