@@ -44,6 +44,7 @@ export const Tag: React.FC<TagProps> = ({
   tagLine,
   disablePopularityHover = false,
   hardcodedMentions,
+  tagType,
   _id,
 }) => {
   if (!name) return null;
@@ -82,6 +83,7 @@ export const Tag: React.FC<TagProps> = ({
               disablePopularityHover={disablePopularityHover}
               tagLine={tagLine}
               _id={_id}
+              tagType={tagType}
             />
           </Link>
         ) : (
@@ -102,6 +104,7 @@ export const Tag: React.FC<TagProps> = ({
             disablePopularityHover={disablePopularityHover}
             tagLine={tagLine}
             _id={_id}
+            tagType={tagType}
           />
         )}
       </div>
