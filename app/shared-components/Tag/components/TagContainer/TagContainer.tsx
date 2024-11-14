@@ -35,12 +35,13 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   _id,
   tagType,
 }) => {
-  const showThumbnail = Boolean(
-    picture ||
-      tagType === 'person' ||
-      tagType === 'organisation' ||
-      tagType === 'project'
-  );
+  const showThumbnail = Boolean(picture);
+  // const showThumbnail = Boolean(
+  //   picture ||
+  //     tagType === 'person' ||
+  //     tagType === 'organisation' ||
+  //     tagType === 'project'
+  // );
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
 
   const TagContent = (
@@ -87,13 +88,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
               trigger="hover"
               popoverTitle={name}
               popoverSubtitle={tagLine}
-              popoverImage={
-                picture ||
-                `https://avatar.iran.liara.run/username?color=333&background=E5E4E2&username=${name?.replace(
-                  ' ',
-                  '+'
-                )}`
-              }
+              popoverImage={picture}
             >
               {TagContent}
             </PopoverComponent>
