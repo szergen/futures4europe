@@ -546,7 +546,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       }
 
       if (personData.projectsParticipation?.length > 0) {
-        const newAffiliationsObject = personData.projectsCoordindation
+        const newAffiliationsObject = personData.projectsParticipation
           ?.map((item: any) => {
             return {
               data: {
