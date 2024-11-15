@@ -104,6 +104,9 @@
   .tagLink .tagNameBody {
     text-decoration: underline;
   }
+  .tagLink.disableUnderline .tagNameBody {
+    text-decoration: none;
+  }
   .tagLink .tagNameBody:before {
   }
   .tagThumbnail {
