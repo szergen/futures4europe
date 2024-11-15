@@ -18,6 +18,7 @@ export type TagContainerProps = {
   tagLine?: string;
   disablePopularityHover?: boolean;
   _id?: string;
+  tagType?: string;
 };
 
 export const TagContainer: React.FC<TagContainerProps> = ({
@@ -32,19 +33,27 @@ export const TagContainer: React.FC<TagContainerProps> = ({
   tagLine,
   disablePopularityHover,
   _id,
+  tagType,
 }) => {
-  const showThumbnail = Boolean(picture || tagCategory === 'person');
+  const showThumbnail = Boolean(picture);
+  // const showThumbnail = Boolean(
+  //   picture ||
+  //     tagType === 'person' ||
+  //     tagType === 'organisation' ||
+  //     tagType === 'project'
+  // );
   const thumbnailClass = showThumbnail ? style.hasThumbnail : '';
 
   const TagContent = (
     <span className={style.name}>
-      {picture ? (
+      {showThumbnail ? (
         <span className={style.name}>
           {showThumbnail && (
             <TagThumbnail
               picture={picture || undefined}
               pictureAlt={pictureAlt}
               tagCategory={tagCategory}
+              tagName={name}
             />
           )}
           <span className={style.tagNameBody}>{name}</span>
@@ -56,6 +65,7 @@ export const TagContainer: React.FC<TagContainerProps> = ({
               picture={picture || undefined}
               pictureAlt={pictureAlt}
               tagCategory={tagCategory}
+              tagName={name}
             />
           )}
           <span className={style.tagNameBody}>{name}</span>
@@ -85,11 +95,11 @@ export const TagContainer: React.FC<TagContainerProps> = ({
           )}
           {/* Tag Counter and Trend */}
           {popularity > 0 && ( // Add the condition here
-              <TagCounter
-                popularity={popularity}
-                disablePopularityHover={disablePopularityHover}
-                _id={_id}
-              />
+            <TagCounter
+              popularity={popularity}
+              disablePopularityHover={disablePopularityHover}
+              _id={_id}
+            />
           )}
         </span>
       </span>

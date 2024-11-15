@@ -41,7 +41,7 @@ export default async function PersonPage({ params }: any) {
 
   // Grab specific Person by slug
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
-  const tagIdForPersonPage = infoPageItem?.data?.person?.[0]._id;
+  const tagIdForPersonPage = infoPageItem?.data?.person?.[0]?._id;
   let affiliations = [] as any[];
   if (tagIdForPersonPage) {
     affiliations = await getAffiliationsCollectionItemsByTag(

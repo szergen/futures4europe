@@ -23,7 +23,6 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   automaticallyCalculatePath,
   // postCollection,
 }) => {
-
   return (
     <section className={classNames(style.posts)}>
       {!hideTitle && (

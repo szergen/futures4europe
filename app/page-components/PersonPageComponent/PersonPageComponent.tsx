@@ -86,7 +86,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails?.userTag]);
   // #endregion
 
   // #region Handle affiliations
@@ -546,7 +546,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       }
 
       if (personData.projectsParticipation?.length > 0) {
-        const newAffiliationsObject = personData.projectsCoordindation
+        const newAffiliationsObject = personData.projectsParticipation
           ?.map((item: any) => {
             return {
               data: {
@@ -924,7 +924,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       }
 
       if (personData.projectsParticipation?.length > 0) {
-        const newAffiliationsObject = personData.projectsCoordindation
+        const newAffiliationsObject = personData.projectsParticipation
           ?.map((item: any) => {
             return {
               data: {

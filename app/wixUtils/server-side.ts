@@ -49,13 +49,34 @@ const referencedItemOptions = [
 const getCollection = async (collectionName: string) => {
   try {
     const wixClient = await getWixClientServerData();
-    const { items } = await wixClient.items
-      .queryDataItems({
-        dataCollectionId: collectionName,
-        referencedItemOptions: referencedItemOptions,
-      })
-      .find();
-    return items;
+    // const { items } = await wixClient.items
+    //   .queryDataItems({
+    //     dataCollectionId: collectionName,
+    //     referencedItemOptions: referencedItemOptions,
+    //   })
+    //   .find();
+
+    let allTags = [] as any[];
+    let skip = 0;
+    const limit = 1000;
+    let totalCount = 0;
+
+    do {
+      const result = await wixClient.items
+        .queryDataItems({
+          dataCollectionId: collectionName,
+          referencedItemOptions: referencedItemOptions,
+          returnTotalCount: true,
+        })
+        .skip(skip)
+        .limit(limit)
+        .find();
+      allTags = [...allTags, ...result?._items];
+      totalCount = result?._totalCount;
+      skip = limit + skip;
+    } while (skip < totalCount);
+
+    return allTags;
   } catch (error) {
     console.error('Error getting collection:', error);
     throw error;

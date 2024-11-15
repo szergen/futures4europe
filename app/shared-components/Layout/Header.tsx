@@ -342,6 +342,7 @@ const Header = () => {
                 tagLine="List of Post Pages"
                 tagPageLink="/pages/post"
                 disableTooltip
+                disableUnderline
               />
               <Tag
                 name="Projects"
@@ -353,6 +354,7 @@ const Header = () => {
                 tagLine="List of Project Info Pages"
                 tagPageLink="/pages/project"
                 disableTooltip
+                disableUnderline
               />
               <Tag
                 name="Project Results"
@@ -364,6 +366,7 @@ const Header = () => {
                 tagLine="List of Project Result Pages"
                 tagPageLink="/pages/project-result"
                 disableTooltip
+                disableUnderline
               />
               <Tag
                 name="Events"
@@ -373,6 +376,7 @@ const Header = () => {
                 tagLine="List of Event Pages"
                 tagPageLink="/pages/event"
                 disableTooltip
+                disableUnderline
               />
               <Tag
                 name="Organisations"
@@ -384,6 +388,7 @@ const Header = () => {
                 tagLine="List of Organisation Info Pages"
                 tagPageLink="/pages/organisation"
                 disableTooltip
+                disableUnderline
               />
               <Tag
                 name="People"
@@ -395,6 +400,7 @@ const Header = () => {
                 tagLine="List of Person Info Pages"
                 tagPageLink="/pages/person"
                 disableTooltip
+                disableUnderline
               />
             </div>
           </div>

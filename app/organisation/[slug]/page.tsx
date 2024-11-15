@@ -38,7 +38,7 @@ export default async function OrganisationPage({ params }: any) {
 
   // Grab specific Project by slug
   const infoPageItem = await getCollectionItemBySlug('InfoPages', params.slug);
-  const tagIdForOrganisationPage = infoPageItem?.data?.organisation?.[0]._id;
+  const tagIdForOrganisationPage = infoPageItem?.data?.organisation?.[0]?._id;
   const affiliations = await getAffiliationsCollectionItemsByTag(
     tagIdForOrganisationPage,
     'organisationTag'

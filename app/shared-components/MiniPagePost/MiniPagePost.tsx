@@ -59,7 +59,6 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   primaryTags,
   methods,
 }) => {
- 
   console.log('MiniPagePost' + JSON.stringify(title));
 
   const formattedDate = date ? formatDate(date) : '';
@@ -99,7 +98,10 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
           className={classNames(style.MiniPagePostTitle, '')}
         >
           {title}
-          <span className={classNames(style.popularity)}> {/*popularity*/} </span>
+          <span className={classNames(style.popularity)}>
+            {' '}
+            {/*popularity*/}{' '}
+          </span>
           {projectStartDate && projectEndDate && (
             <span className={classNames(style.projectDates)}>
               {dayjs(projectStartDate).format('MMMM YYYY')} -{' '}
