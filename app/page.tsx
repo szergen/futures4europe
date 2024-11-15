@@ -288,7 +288,6 @@ export const Home = () => {
         {isFinishedLoading ? (
           <div className="w-full w-fit Container_wrapper index_customers">
             <div className="index_customerGroups">
-              
               <div className="index_customerGroupWrapper index_reverse">
                 <div className="index_customerGroup">
                   <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
@@ -384,7 +383,6 @@ export const Home = () => {
                   </div>
                 </div>
               </div>
-
 
               <div className="index_customerGroupWrapper">
                 <div className="index_customerGroup">

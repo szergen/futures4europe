@@ -222,7 +222,6 @@ const Footer = () => {
                   </ul>
                 </dd>
               </div>
-              
             </dl>
           </div>
         </div>

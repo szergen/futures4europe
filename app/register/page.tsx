@@ -93,7 +93,6 @@ export default function RegisterPage() {
         if (tagResult) {
           setIsTagCreated(true);
         }
-        
       }
       // #endregion
 
@@ -113,8 +112,6 @@ export default function RegisterPage() {
     // Add your submission logic here
     console.log('Submitting email:', email);
   };
-
-
 
   return (
     <div className="flex items-center justify-center w-full lg:p-12r min-h-[70vh]">
