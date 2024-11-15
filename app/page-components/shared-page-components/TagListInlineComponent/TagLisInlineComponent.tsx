@@ -87,6 +87,7 @@ const TagLisInlineComponent = ({
                         tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
                           infoPage.data.pageTypes?.[0]?.name
                         )}${infoPage.data.slug}`}
+                        tagType={item.tagType}
                         // mentions={item.popularity} // Pass 'popularity' as 'mentions'
                       />
                     ) : null
@@ -122,6 +123,7 @@ const TagLisInlineComponent = ({
                           disableTooltip
                           disablePopularityHover
                           tagPageLink={`/post/${postPage.data.slug}`}
+                          tagType={item.tagType}
                         />
                       ) : null;
                     })

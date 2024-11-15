@@ -27,6 +27,7 @@ export type TagProps = {
   _id?: string;
   mentions?: number;
   hardcodedMentions?: number;
+  disableUnderline?: boolean;
 };
 
 export const Tag: React.FC<TagProps> = ({
@@ -46,11 +47,20 @@ export const Tag: React.FC<TagProps> = ({
   hardcodedMentions,
   tagType,
   _id,
+  disableUnderline,
 }) => {
   if (!name) return null;
 
   const { tags, tagsFetched } = useAuth();
   const [currentPopularity, setCurrentPopularity] = useState(popularity);
+  const tagPageLinkOrMentionsLink = tagPageLink
+    ? tagPageLink
+    : _id
+    ? `/mentions/${_id}`
+    : null;
+
+  const shouldDisableUnderLine =
+    !['person', 'organisation', 'project'].includes(tagType) || !tagPageLink;
 
   useEffect(() => {
     if (!tagsFetched || currentPopularity) return;
@@ -67,8 +77,15 @@ export const Tag: React.FC<TagProps> = ({
         <span className={style.tagLabel}>{TagCategories?.[tagCategory]}: </span>
       )}
       <div className={classNames('my-1', style.tagContainer, className)}>
-        {tagPageLink && !disableLink ? (
-          <Link href={tagPageLink} className={style.tagLink}>
+        {tagPageLinkOrMentionsLink && !disableLink ? (
+          <Link
+            href={tagPageLinkOrMentionsLink}
+            className={classNames(
+              style.tagLink,
+              (disableUnderline || shouldDisableUnderLine) &&
+                style.disableUnderline
+            )}
+          >
             <TagContainer
               name={name}
               className={className}
