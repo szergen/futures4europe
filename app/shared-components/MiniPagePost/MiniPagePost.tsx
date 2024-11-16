@@ -59,28 +59,32 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   primaryTags,
   methods,
 }) => {
-  console.log('MiniPagePost' + JSON.stringify(title));
-
+  // console.log('MiniPagePost' + JSON.stringify(projectStartDate));
+  // TODO @alex de verificat
+  console.log('pageTypeTag' + JSON.stringify(pageTypeTag));
+  // console.log('pageType', pageTypeTag);
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
-  // const year = new Date(newDate).getFullYear();
-  // const day = String(newDate.getDate()).padStart(2, '0'); // Add leading zero if needed
-  // const month = String(newDate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-  // const formattedDate = `${day}/${month}/${year}`;
   dayjs.extend(relativeTime);
+  console.log(pageTypeTag?.name.replace(/\s+/g, '') + '_TypeTagImage'); // Log the generated key
 
   return (
     <div className={classNames(style.postItem)}>
-      <div className={classNames(style.postImageAndTagContainer)}>
-        {pageTypeTag && <Tag {...pageTypeTag} className="ml-1 mb-1" />}
-        <Image
-          src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
-          width={650}
-          height={650}
-          alt="Post Image"
-          className={classNames('rounded-md', style.postImage)}
-        />
-      </div>
+        <div
+          className={classNames(
+            style.postImageAndTagContainer,
+            pageTypeTag?.name && style[pageTypeTag.name.replace(/\s+/g, '') + '_TypeTagImage']
+          )}
+          >            
+          {pageTypeTag && <Tag {...pageTypeTag} className="ml-1 mb-1" />}
+            <Image
+              src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
+              width={650}
+              height={650}
+              alt="Post Image"
+              className={classNames('rounded-md', style.postImage)}
+            />
+        </div>
       <div className={classNames(style.postContent)}>
         {/* Post Date */}
         <Typography
