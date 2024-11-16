@@ -110,7 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     refreshInfoPages,
     setIsLoadingInProgress
   );
-  console.log('debug1->infoPages', infoPages);
+  // console.log('debug1->infoPages', infoPages);
 
   const handleInfoPageCreated = () => {
     setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
@@ -244,7 +244,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // #endregion
 
   useEffect(() => {
-    console.log('debug1->userDetails', userDetails);
+    // console.log('debug1->userDetails', userDetails);
   }, [userDetails]);
 
   // #region extraOwnedPages
@@ -274,7 +274,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    console.log('debug1->tempExtraOwnedPages', tempExtraOwnedPages);
+    // console.log('debug1->tempExtraOwnedPages', tempExtraOwnedPages);
 
     const removeDuplicatePosts = (posts: any[]) => {
       const uniquePosts = posts.filter(

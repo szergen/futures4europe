@@ -37,7 +37,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Pages({ params }: any) {
-  console.log('Pages Params', params.slug);
   const pageType = params.slug;
 
   if (validParams.findIndex((item) => item.id === pageType) === -1) {
@@ -46,11 +45,9 @@ export default async function Pages({ params }: any) {
 
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
-  // console.log('postCollection', postCollection);
 
   const postPages = postCollection.map((item) => item.data);
   const infoPages = infoPagesCollection.map((item) => item.data);
-  console.log('infoPages', infoPages);
 
   //Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
@@ -59,7 +56,8 @@ export default async function Pages({ params }: any) {
   if (!postCollection || !infoPagesCollection) {
     return <div>Loading...</div>; // You can also add a loading spinner here
   }
-
+  
+  
   return (
     <div className={classNames('w-full')}>
       <Hero
