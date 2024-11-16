@@ -22,7 +22,13 @@ export const popularity: React.FC<TagCounterProps> = ({
       {popularity && (
         <Tooltip3
           trigger={disablePopularityHover ? 'click' : 'hover'}
-          popoverContent={`This Tag has been referenced ${popularity} times`}
+          popoverContent={
+            <>
+              {`this tag is used ${popularity} times`}
+              <br />
+              {`(click to see where)`}
+            </>
+          }
         >
           {_id ? (
             <Link href={`/mentions/${_id}`}>

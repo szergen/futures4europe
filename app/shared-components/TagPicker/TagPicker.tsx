@@ -234,16 +234,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       ...provided,
       color: 'var(--primary-brand-color)',
       fontSize: 'var(--w-fontSize-tag)',
-      padding: '0px var(--w-space-s)',
+      paddingLeft: 'var(--w-space-s)',
       height: 'var(--w-space-xxxl)',
       // minHeight: state.isFocused ? null : 'var(--w-space-xxl)',
       transition: '',
-      border: 'none',
+      //border: 'none',
       outline: 'none',
       backgroundColor: state.selectProps.inputValue
-        ? 'var(--color-background-empty)'
+        ? 'var(--primary-white)'
         : 'var(--color-background-brand-tag)',
-      borderRadius: 'var(--p-border-radius-tag)',
+      borderRadius: 'var(--p-border-radius-tag)!important',
+      border: state.selectProps.inputValue 
+      ? '4px solid var(--color-background-brand-tag)'
+      : '4px solid var(--color-background-brand-tag)',
     }),
     menu: (provided) => ({
       ...provided,
@@ -273,7 +276,10 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       padding: '0px var(--w-space-s)',
       margin: '0px 4px',
       backgroundColor: 'var(--primary-white)',
-      borderRadius: 'var(--p-border-radius-tag)',
+      ':hover': { // Add this :hover selector
+        boxShadow: '0px 0px 0px 4px #cfcfcf;', // Change the background color on hover
+      },      
+      borderRadius: 'var(--p-border-radius-tag)!important',
     }),
     // indicatorSeparator: state => ({
     //   display: 'none',
@@ -283,8 +289,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     //   height: '30px',
     // }),
   };
-
-  // REVIEW catalin
 
   // components
   const customComponents = {
