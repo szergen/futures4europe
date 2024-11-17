@@ -105,11 +105,13 @@
 
 .tagPickerValueContainer input {
   outline: 0 !important;
-  border: none !important;
+  /* border: none !important; */
+  z-index: var(--w-z-index-sticky);
 }
-.tagPickerValueContainer .Input {
+/* .tagPickerValueContainer .Input {
   box-shadow: 0px 0px 0px 3px var(--color-background-brand-tag);
-}
+} */
+
 .option {
   height: calc(var(--w-space-xxl));
   background: var(--p-border-radius-tag);

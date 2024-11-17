@@ -13,24 +13,11 @@ import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDa
 import Icon from '@app/shared-components/Icon/Icon';
 import style from '../pageDashboard.module.css';
 import stylefile from './pageDashboardChangePassword.module.css';
-import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-
-import {
-  Button,
-  Card,
-  Checkbox,
-  Label,
-  TextInput,
-  Alert,
-  Avatar,
-} from 'flowbite-react';
-import { HiFingerPrint, HiLockOpen } from 'react-icons/hi';
+import { Button, Label, TextInput } from 'flowbite-react';
+import { HiLockOpen } from 'react-icons/hi';
 
 export default function DashboardChangePassword() {
-  //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
@@ -129,10 +116,6 @@ export default function DashboardChangePassword() {
     }
   }, [isLoggedIn, router, loading]);
 
-  if (!isLoggedIn) {
-    //Loading Spinner
-    return <LoadingSpinner />;
-  }
   const handleLogOut = async () => {
     logout();
     router.push('/login');
@@ -146,7 +129,7 @@ export default function DashboardChangePassword() {
   };
 
   const subNavItems = [
-    { href: '/dashboard', text: 'Profile information', isActive: true },
+    { href: '/dashboard', text: 'Account', isActive: true },
     { href: '/dashboard/security', text: 'Security' },
     { href: '/dashboard/change-password', text: 'Password' },
   ];

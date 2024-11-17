@@ -24,9 +24,6 @@ import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as neede
 import { bulkInsertItems } from '@app/wixUtils/client-side';
 
 export default function DashboardProjects() {
-  //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
@@ -46,46 +43,47 @@ export default function DashboardProjects() {
     infoPages,
   } = useAuth();
 
-  console.log('ownedInfoPages', ownedInfoPages);
-
+  const wixModules = useWixModules(items);
   const router = useRouter();
-  const { removeDataItem } = useWixModules(items);
-  // const { updateMember } = useWixModules(members);
 
-  // const handleDeletePostPage = async (infoPageId: string) => {
-  //   setIsLoadingDeletePostPage(infoPageId);
-  //   try {
-  //     // Replace with your actual delete logic
-  //     await removeDataItem(infoPageId, {
-  //       dataCollectionId: 'PostPages',
-  //     });
-  //     // TODO: Refresh Owned Pages
-  //   } catch (error) {
-  //     console.error('Failed to delete info page:', error);
-  //   } finally {
-  //     setIsLoadingDeletePostPage('');
-  //     handleUserDataRefresh();
-  //   }
-  // };
+  interface UserDetails {
+    contactId: string;
+    isAdmin: boolean;
+  }
 
-  const handleDeleteInfoPage = async (infoPageId: string) => {
+  interface InfoPage {
+    _id: string;
+    _owner: string;
+  }
+
+  async function handleDeleteInfoPage(infoPageId: InfoPage['_id']) {
     setIsLoadingDeletePostPage(infoPageId);
+
     try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
+      const userId = userDetails?.contactId;
+
+      if (userDetails?.isAdmin !== true && infoPageId?._owner !== userId) {
+        console.error('debug2->Unauthorized to delete info page');
+        return;
+      }
+
+      console.log(
+        'debug2->Proceeding with info page delete for ID:',
+        infoPageId
+      );
+      await wixModules.removeDataItem(infoPageId, {
         dataCollectionId: 'InfoPages',
       });
-      // TODO: Refresh Owned Pages
+      console.log('debug2->Delete info page successful');
     } catch (error) {
-      console.error('Failed to delete info page:', error);
+      console.error('debug2->Failed to delete info page:', error);
     } finally {
       setIsLoadingDeletePostPage('');
       handleUserDataRefresh();
     }
-  };
+  }
 
   useEffect(() => {
-    // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
@@ -94,17 +92,11 @@ export default function DashboardProjects() {
       const userTag = tags.find(
         (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
       );
-      console.log('userTag', userTag);
       if (userTag) {
-        setUserInfoPage(userTag?.tagPageLink);
+        setUserInfoPage(userTag?.tagPageLink || '');
       }
     }
   }, [isLoggedIn, router, loading]);
-
-  if (!isLoggedIn) {
-    //Loading Spinner
-    return <LoadingSpinner />;
-  }
 
   const handleLogOut = async () => {
     logout();
@@ -216,197 +208,7 @@ export default function DashboardProjects() {
       ...allProjectCoordinators,
       ...allProjectParticipantTeam,
     ];
-    console.log('debug222->allProjectAffiliations', allProjectAffiliations);
-
-    // const personInfoPages = infoPages
-    //   .filter(
-    //     (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'person info'
-    //   )
-    //   .map((infoPage) => infoPage.data);
-    // console.log('debug222->personInfoPages', personInfoPages);
-
-    // let currentPersonAffiliations: any[] = [];
-    // let formerPersonAffiliations: any[] = [];
-
-    // let personProjectCoordonation: any[] = [];
-    // let personProjectParticipation: any[] = [];
-
-    // for (let i = 0; i < personInfoPages.length; i++) {
-    //   const personAffiliations = personInfoPages?.[i]?.personOrganisationRoles
-    //     ?.map((affiliation: any, index: number) => {
-    //       return {
-    //         data: {
-    //           personTag: personInfoPages[i]?.person?.[0],
-    //           organisationTag: personInfoPages[i]?.personOrganisation?.[index],
-    //           role: affiliation.role,
-    //           extraIdentifier: 'current',
-    //           title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
-    //         },
-    //       };
-    //     })
-    //     ?.filter((item: any) => item?.data?.organisationTag?.name);
-    //   currentPersonAffiliations = [
-    //     ...currentPersonAffiliations,
-    //     ...personAffiliations,
-    //   ];
-    // }
-
-    // console.log(
-    //   'debug222->currentPersonAffiliations',
-    //   currentPersonAffiliations
-    // );
-
-    // for (let i = 0; i < personInfoPages.length; i++) {
-    //   const personAffiliations = personInfoPages?.[
-    //     i
-    //   ]?.personOrganisationRolesFormer
-    //     ?.map((affiliation: any, index: number) => {
-    //       return {
-    //         data: {
-    //           personTag: personInfoPages[i]?.person?.[0],
-    //           organisationTag: personInfoPages[i]?.personOrganisation?.[index],
-    //           role: affiliation.role,
-    //           extraIdentifier: 'former',
-    //           title: `${personInfoPages[i]?.personTag?.name} -to- ${personInfoPages[i]?.personOrganisation?.[index]?.name}`,
-    //         },
-    //       };
-    //     })
-    //     ?.filter((item: any) => item?.data?.organisationTag?.name);
-    //   formerPersonAffiliations = [
-    //     ...formerPersonAffiliations,
-    //     ...personAffiliations,
-    //   ];
-    // }
-
-    // console.log('debug222->formerPersonAffiliations', formerPersonAffiliations);
-
-    // for (let i = 0; i < personInfoPages.length; i++) {
-    //   const projectCoordinators = personInfoPages[i]?.personProjectCoordonation
-    //     ?.map((coordinator: any) => {
-    //       return {
-    //         data: {
-    //           personTag: personInfoPages[i]?.person?.[0],
-    //           projectTag: coordinator,
-    //           extraIdentifier: 'coordination',
-    //           title: `${personInfoPages[i]?.person?.[0].name} -to- ${coordinator?.name}`,
-    //         },
-    //       };
-    //     })
-    //     ?.filter((item: any) => item?.data?.personTag?.name);
-    //   personProjectCoordonation = [
-    //     ...personProjectCoordonation,
-    //     ...projectCoordinators,
-    //   ];
-    // }
-
-    // console.log(
-    //   'debug222->personProjectCoordonation',
-    //   personProjectCoordonation
-    // );
-
-    // for (let i = 0; i < personInfoPages.length; i++) {
-    //   const projectParticipants = personInfoPages[i]?.personProjectParticipation
-    //     ?.map((participant: any) => {
-    //       return {
-    //         data: {
-    //           personTag: personInfoPages[i]?.person?.[0],
-    //           projectTag: participant,
-    //           extraIdentifier: 'participation',
-    //           title: `${personInfoPages[i]?.person?.[0].name} -to- ${participant?.name}`,
-    //         },
-    //       };
-    //     })
-    //     ?.filter((item: any) => item?.data?.personTag?.name);
-    //   personProjectParticipation = [
-    //     ...personProjectParticipation,
-    //     ...projectParticipants,
-    //   ];
-    // }
-
-    // console.log(
-    //   'debug222->personProjectParticipation',
-    //   personProjectParticipation
-    // );
-
-    // const allPersonAffiliations = [
-    //   ...currentPersonAffiliations,
-    //   ...formerPersonAffiliations,
-    //   ...personProjectCoordonation,
-    //   ...personProjectParticipation,
-    // ];
-
-    // console.log('debug222->allPersonAffiliations', allPersonAffiliations);
-
-    // const organisationInfoPages = infoPages
-    //   .filter(
-    //     (infoPage) => infoPage?.data?.pageTypes[0]?.name === 'organisation info'
-    //   )
-    //   .map((infoPage) => infoPage.data);
-
-    // console.log('debug222->organisationInfoPages', organisationInfoPages);
-
-    // let currentOrganisationPerson: any[] = [];
-    // let organisationProjectAffiliations: any[] = [];
-
-    // for (let i = 0; i < organisationInfoPages.length; i++) {
-    //   const peopleOrganisationRolesAffiliations = organisationInfoPages[
-    //     i
-    //   ]?.organisationPeopleRoles
-    //     ?.map((role: any, index: number) => {
-    //       return {
-    //         data: {
-    //           organisationTag: organisationInfoPages[i]?.organisation?.[0],
-    //           personTag: organisationInfoPages[i]?.organisationPeople?.[index],
-    //           role: role.role,
-    //           extraIdentifier: 'current',
-    //           title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationPeople?.[index]?.name}`,
-    //         },
-    //       };
-    //     })
-    //     ?.filter((item: any) => item?.data?.personTag?.name);
-    //   currentOrganisationPerson = [
-    //     ...currentOrganisationPerson,
-    //     ...peopleOrganisationRolesAffiliations,
-    //   ];
-    // }
-
-    // console.log(
-    //   'debug222->currentOrganisationPerson',
-    //   currentOrganisationPerson
-    // );
-
-    // for (let i = 0; i < organisationInfoPages.length; i++) {
-    //   const projectOrganisationRolesAffiliations = organisationInfoPages[
-    //     i
-    //   ]?.organisationProjectRoles
-    //     ?.map((role: any, index: number) => {
-    //       return {
-    //         data: {
-    //           organisationTag: organisationInfoPages[i]?.organisation?.[0],
-    //           projectTag:
-    //             organisationInfoPages[i]?.organisationProject?.[index],
-    //           role: role.role,
-    //           extraIdentifier: 'projectOrganisationRole',
-    //           title: `${organisationInfoPages[i]?.organisation?.[0]?.name} -to- ${organisationInfoPages[i]?.organisationProject?.[index]?.name}`,
-    //         },
-    //       };
-    //     })
-    //     ?.filter((item: any) => item?.data?.projectTag?.name);
-    //   organisationProjectAffiliations = [
-    //     ...organisationProjectAffiliations,
-    //     ...projectOrganisationRolesAffiliations,
-    //   ];
-    // }
-
-    // console.log(
-    //   'debug222->organisationProjectAffiliations',
-    //   organisationProjectAffiliations
-    // );
-
-    // const allOrganisationAffiliations = [
-    //   ...currentOrganisationPerson,
-    //   ...organisationProjectAffiliations,
-    // ];
+    //console.log('debug222->allProjectAffiliations', allProjectAffiliations);
 
     const allAffiliations = [
       ...allProjectAffiliations,
@@ -414,7 +216,7 @@ export default function DashboardProjects() {
       // ...allOrganisationAffiliations,
     ];
 
-    console.log('debug222->allAffiliations', allAffiliations);
+    //  console.log('debug222->allAffiliations', allAffiliations);
 
     // const filteredDuplicateAffiliations =
     //   filterDuplicateAffiliations(allAffiliations);
@@ -469,7 +271,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem="/dashboard"
+        activeItem="/dashboard/projects"
       />
 
       <div
@@ -490,9 +292,9 @@ export default function DashboardProjects() {
 
         <div
           className={classNames(
-            style.dashboardBox, // CSS Module class
-            style.dashboardBoxAddWrap, // Another CSS Module class
-            'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
+            style.dashboardBox,
+            style.dashboardBoxAddWrap,
+            'mt-14',
             'mb-10',
             'p-8',
             'bg-purple-site'
@@ -597,9 +399,9 @@ export default function DashboardProjects() {
                           key={infoPage.data.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
-                          {/* <span>{infoPage.data.title}</span> */}
-                          <div className={'flex flex-row'}>
+                          <div className={'w-full flex flex-row'}>
                             <Link
+                              className={'w-full'}
                               href={`/${extractInfoPageTypeBasedOnTag(
                                 infoPage?.data?.pageTypes[0]
                               )}/${infoPage.data.slug}`}
@@ -638,15 +440,33 @@ export default function DashboardProjects() {
                                 projectEndDate={''}
                               />
                             </Link>
-                          </div>
-
-                          {isLoadingDeletePostPage &&
-                            isLoadingDeletePostPage === infoPage?.data?._id && (
-                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                                <LoadingSpinner />
-                              </div>
+                            {/* Only show delete button for admins */}
+                            {(userDetails?.isAdmin === true ||
+                              infoPage?.data?._owner ===
+                                userDetails?.contactId) && (
+                              <Button
+                                size="sm"
+                                color="danger"
+                                onClick={() =>
+                                  handleDeleteInfoPage(infoPage?.data?._id)
+                                }
+                                disabled={
+                                  isLoadingDeletePostPage ===
+                                  infoPage?.data?._id
+                                }
+                              >
+                                Delete
+                              </Button>
                             )}
-                          {/* <pre>{JSON.stringify(infoPage.data, null, 2)}</pre> */}
+
+                            {isLoadingDeletePostPage &&
+                              isLoadingDeletePostPage ===
+                                infoPage?.data?._id && (
+                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                  <LoadingSpinner />
+                                </div>
+                              )}
+                          </div>
                         </div>
                       ))
                   ) : (

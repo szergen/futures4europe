@@ -16,9 +16,6 @@ import style from '../pageDashboard.module.css';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 
 export default function DashboardSecurity() {
-  // const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  // const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
@@ -137,7 +134,7 @@ export default function DashboardSecurity() {
   };
 
   const subNavItems = [
-    { href: '/dashboard', text: 'Profile information', isActive: true },
+    { href: '/dashboard', text: 'Account', isActive: true },
     { href: '/dashboard/security', text: 'Security' },
     { href: '/dashboard/change-password', text: 'Password' },
   ];
@@ -224,12 +221,12 @@ export default function DashboardSecurity() {
                   )}
                 >
                   <span className="">Recovery email</span>
-                  <span className="ml-4">
+                  <span className="ml-1">
                     <SpriteSvg.AccountLockedIcon
                       strokeWidth={0}
                       viewBox={'0 -4 38 38'}
                     />
-                    <span className="ml-4">{userDetails?.email}</span>
+                    <span className="ml-1">{userDetails?.email}</span>
                   </span>
                 </Link>
               </div>
@@ -266,18 +263,21 @@ export default function DashboardSecurity() {
                     'pt-2 pb-2 flex flex-row grow items-center justify-between'
                   )}
                 >
-                  <span className="">Change password</span>
-                  <span className="ml-4">
-                    <SpriteSvg.AccountPasswordIcon
-                      className="text-color-white"
-                      sizeW={28}
-                      sizeH={28}
-                      viewBox={'0 0 28 14'}
-                      fill={'none'}
-                      strokeWidth={1}
-                      inline={false}
-                    />
-                  </span>
+                  <span className="">Reset password</span>
+                  <div className="flex items-center ml-4">
+                    <span className="ml-1">
+                      <SpriteSvg.AccountPasswordIcon
+                        className="text-color-white"
+                        sizeW={28}
+                        sizeH={28}
+                        viewBox={'0 0 28 14'}
+                        fill={'none'}
+                        strokeWidth={1}
+                        inline={false}
+                      />
+                    </span>
+                    <span className="">Change</span>
+                  </div>
                 </Link>
               </div>
             </div>
@@ -314,9 +314,8 @@ export default function DashboardSecurity() {
                 Contact information
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Your contact information is important for enabling to reach you.
-                It includes details like your email address, phone number, and
-                possibly a mailing address.
+                Your contact information is important for reaching to you. It
+                includes details like your email addres and account status.
               </p>
             </div>
 
@@ -342,30 +341,6 @@ export default function DashboardSecurity() {
               >
                 <span className="">Account status</span>
                 <span className="ml-4">{userDetails?.activityStatus}</span>
-              </div>
-
-              <div className={'flex'}>
-                <Link
-                  href={`/change-password`}
-                  className={classNames(
-                    style.active,
-                    'pt-2 pb-2 flex flex-row grow items-center justify-between'
-                  )}
-                >
-                  <span className="">Change Privacy Status</span>
-                  <span className="flex flex-row items-center ml-4">
-                    {userDetails?.privacyStatus}
-                    <SpriteSvg.AccountPasswordIcon
-                      className="text-color-white ml-2"
-                      sizeW={28}
-                      sizeH={28}
-                      viewBox={'0 0 28 14'}
-                      fill={'none'}
-                      strokeWidth={1}
-                      inline={false}
-                    />
-                  </span>
-                </Link>
               </div>
             </div>
           </div>

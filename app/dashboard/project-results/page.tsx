@@ -20,9 +20,6 @@ import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 
 export default function DashboardProjects() {
-  //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
@@ -118,7 +115,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem="/dashboard"
+        activeItem="/dashboard/project-results"
       />
 
       <div
@@ -138,9 +135,9 @@ export default function DashboardProjects() {
 
         <div
           className={classNames(
-            style.dashboardBox, // CSS Module class
-            style.dashboardBoxAddWrap, // Another CSS Module class
-            'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
+            style.dashboardBox,
+            style.dashboardBoxAddWrap,
+            'mt-14',
             'mb-10',
             'p-8',
             'bg-purple-site'

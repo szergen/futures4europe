@@ -97,6 +97,13 @@
   align-self: flex-end;
 }
 
+.event_TypeTagImage img,
+.post_TypeTagImage img,
+.projectresult_TypeTagImage img, 
+.personinfo_TypeTagImage img {
+  object-fit: cover;
+}
+
 @media (max-width: 480px) {
   .postItem {
     margin: var(--w-space-s) 0;

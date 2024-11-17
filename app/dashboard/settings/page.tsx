@@ -39,63 +39,6 @@ export default function Dashboard() {
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
-  // const { updateMember } = useWixModules(members);
-
-  // const handleCreatePost = async () => {
-  //   router.push(`/post/New_Post`);
-  // };
-
-  // const handleListProjects = async () => {
-  //   router.push(`/dashboard/projects`);
-  // };
-
-  // const handleCreatePersonInfoPage = async () => {
-  //   if (userInfoPage) {
-  //     router.push(`/person/${userInfoPage}`);
-  //     return;
-  //   }
-  //   router.push(`/person/New_Info_Page`);
-  // };
-
-  // const handleListPosts = async () => {
-  //   router.push(`/dashboard/posts`);
-  // };
-
-  // const handleCreateOrganisation = async () => {
-  //   router.push(`/organisation/New_Organisation`);
-  // };
-
-  // const handleDeletePostPage = async (infoPageId: string) => {
-  //   setIsLoadingDeletePostPage(infoPageId);
-  //   try {
-  //     // Replace with your actual delete logic
-  //     await removeDataItem(infoPageId, {
-  //       dataCollectionId: 'PostPages',
-  //     });
-  //     // TODO: Refresh Owned Pages
-  //   } catch (error) {
-  //     console.error('Failed to delete info page:', error);
-  //   } finally {
-  //     setIsLoadingDeletePostPage('');
-  //     handleUserDataRefresh();
-  //   }
-  // };
-
-  // const handleDeleteInfoPage = async (infoPageId: string) => {
-  //   setIsLoadingDeletePostPage(infoPageId);
-  //   try {
-  //     // Replace with your actual delete logic
-  //     await removeDataItem(infoPageId, {
-  //       dataCollectionId: 'InfoPages',
-  //     });
-  //     handleUserDataRefresh();
-  //   } catch (error) {
-  //     console.error('Failed to delete info page:', error);
-  //   } finally {
-  //     setIsLoadingDeletePostPage('');
-  //     handleUserDataRefresh();
-  //   }
-  // };
 
   // #region Check if user info page is ready
   const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
@@ -106,16 +49,7 @@ export default function Dashboard() {
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
-    // Get the user's tag page link
-    // if (isLoggedIn && tags) {
-    //   const userTag = tags.find(
-    //     (tag: any) => tag.name === userDetails.userName && tag.tagPageLink
-    //   );
-    //   console.log('userTag', userTag);
-    //   if (userTag) {
-    //     setUserInfoPage(userTag?.tagPageLink);
-    //   }
-    // }
+
     if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
       setIsPersonInfoPageReady(true);
       setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
@@ -140,7 +74,7 @@ export default function Dashboard() {
   };
 
   const subNavItems = [
-    { href: '/dashboard', text: 'Profile information', isActive: true },
+    { href: '/dashboard', text: 'Account', isActive: true },
     { href: '/dashboard/security', text: 'Security' },
     { href: '/dashboard/change-password', text: 'Password' },
   ];
@@ -154,7 +88,7 @@ export default function Dashboard() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem={'/dashboard'}
+        activeItem={'/dashboard/settings'}
       />
 
       <div
