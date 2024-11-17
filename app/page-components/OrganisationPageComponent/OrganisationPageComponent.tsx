@@ -33,6 +33,7 @@ import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
+import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
 
 function OrganisationPageComponent({
   pageTitle,
@@ -493,6 +494,8 @@ function OrganisationPageComponent({
 
     // Revalidate the cache for the page
     await revalidateDataItem(`/organisation/${organisationData.slug}`);
+    await refetchInfoPages();
+    await refetchTags();
 
     setIsSaveInProgress(false);
   };
@@ -813,6 +816,8 @@ function OrganisationPageComponent({
 
     // #region Revalidate the cache for the page
     await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
+    await refetchInfoPages();
+    await refetchTags();
     handleUserDataRefresh();
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);
