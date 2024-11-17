@@ -71,7 +71,7 @@ export const POST = async (req: NextRequest) => {
       totalCount = result?._totalCount;
       skip = limit + skip;
     } while (skip < totalCount);
-    // console.log('allItems', allItems);
+    console.log('allItems', allItems);
 
     await saveToCache(cacheKey, allItems);
     return new Response(
