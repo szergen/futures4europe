@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint --fix",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "clean:cache": "rm -rf ./cache/*"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
