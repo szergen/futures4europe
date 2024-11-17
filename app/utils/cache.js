@@ -13,7 +13,9 @@ export async function saveToCache(filename, data) {
     console.log('cacheDir:', cacheDir);
     fs.writeFileSync(path.join(cacheDir, filename), JSON.stringify(data));
   } else {
-    await set(filename?.replace('.json', ''), data);
+    const keyname = filename?.replace('.json', '');
+    console.log('Saving to cache:', keyname);
+    await set(keyname, data);
   }
 }
 
@@ -28,6 +30,8 @@ export async function getFromCache(filename) {
     }
     return null;
   } else {
-    return await get(filename?.replace('.json', ''));
+    const keyname = filename?.replace('.json', '');
+    console.log('Getting from cache:', keyname);
+    return await get(keyname);
   }
 }
