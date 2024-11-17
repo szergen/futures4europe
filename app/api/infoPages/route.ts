@@ -5,7 +5,7 @@ import { referencedItemOptions } from '@app/wixUtils/server-side';
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'infoPages.json';
-  const cachedData = getFromCache(cacheKey);
+  const cachedData = await getFromCache(cacheKey);
 
   if (cachedData) {
     return new Response(JSON.stringify(cachedData), { status: 200 });
@@ -35,7 +35,7 @@ export const GET = async (req: NextRequest) => {
     } while (skip < totalCount);
     // console.log('allItems', allItems);
 
-    saveToCache(cacheKey, allItems);
+    await saveToCache(cacheKey, allItems);
     return NextResponse.json(allItems, { status: 200 });
   } catch (error) {
     console.error('Error fetching infoPages:', error);
@@ -73,7 +73,7 @@ export const POST = async (req: NextRequest) => {
     } while (skip < totalCount);
     // console.log('allItems', allItems);
 
-    saveToCache(cacheKey, allItems);
+    await saveToCache(cacheKey, allItems);
     return new Response(
       JSON.stringify({ message: 'Cache updated successfully.' }),
       { status: 200 }
