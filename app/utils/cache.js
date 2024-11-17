@@ -5,7 +5,7 @@ import { set, get } from '@vercel/edge-config';
 const cacheDir = path.join(process.cwd(), 'cache');
 
 export async function saveToCache(filename, data) {
-  if (process.env.NODE_ENV === 'localhost') {
+  if (process.env.NEXT_PUBLIC_NODE_ENV === 'localhost') {
     if (!fs.existsSync(cacheDir)) {
       fs.mkdirSync(cacheDir);
     }
@@ -13,12 +13,12 @@ export async function saveToCache(filename, data) {
     console.log('cacheDir:', cacheDir);
     fs.writeFileSync(path.join(cacheDir, filename), JSON.stringify(data));
   } else {
-    await set(key, data);
+    await set(filename?.replace('.json', ''), data);
   }
 }
 
 export async function getFromCache(filename) {
-  if (process.env.NODE_ENV === 'localhost') {
+  if (process.env.NEXT_PUBLIC_NODE_ENV === 'localhost') {
     const filePath = path.join(cacheDir, filename);
     if (fs.existsSync(filePath)) {
       const fileData = fs.readFileSync(filePath, 'utf8');
@@ -28,6 +28,6 @@ export async function getFromCache(filename) {
     }
     return null;
   } else {
-    return await get(key);
+    return await get(filename?.replace('.json', ''));
   }
 }
