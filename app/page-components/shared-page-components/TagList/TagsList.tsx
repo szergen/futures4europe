@@ -48,9 +48,15 @@ const TagsList = ({
                 picture={tag.picture}
                 disableTooltip={disableTooltip}
                 disablePopularityHover={disablePopularityHover}
-                tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                  tag.tagType
-                )}${tag.slug || ''}`}
+                tagPageLink={
+                  ['person', 'project', 'organisation'].find(
+                    (item) => item === tag?.tagType
+                  )
+                    ? `${automaticallyDecidePathPrefixBasedOnPageType(
+                        tag.tagType
+                      )}${tag.slug || ''}`
+                    : `/mentions/${tag._id}`
+                }
                 tagType={tag.tagType}
                 mentions={tag.popularity}
               />
