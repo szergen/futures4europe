@@ -21,7 +21,7 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
-import { bulkInsertItems } from '@app/wixUtils/client-side';
+import { bulkInsertItems, getAllContacts } from '@app/wixUtils/client-side';
 
 export default function DashboardProjects() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
@@ -454,6 +454,28 @@ export default function DashboardProjects() {
     // );
   };
 
+  const handleCreateAccounts = async () => {
+    const allMembers = await getAllContacts();
+    console.log('debug222->allMembers', allMembers);
+
+    const filteredMembers = allMembers.filter(
+      (member: any) => member?.profile?.nickname && member?.profile?.photo?.url
+      // ||
+      // member?.contact?.customFields?.['custom.linkedin']?.value ||
+      // member?.contact?.customFields?.['custom.website-link']?.value ||
+      // member?.contact?.customFields?.['custom.your-country']?.value
+      // ||
+      // member?.contact?.customFields?.['custom.expertise']?.value ||
+      // member?.contact?.customFields?.['custom.organisation']?.value ||
+      // member?.contact?.jobTitle
+    );
+    console.log('debug222->filteredMembers', filteredMembers);
+
+    
+
+
+  };
+
   return (
     <div
       className={classNames(
@@ -546,7 +568,7 @@ export default function DashboardProjects() {
                   <span className="text-lg">Add project</span>
                 </Button>
               </Link>
-              {/* <Button
+              <Button
                 size={'md'}
                 color={'light'}
                 className={classNames(
@@ -554,10 +576,10 @@ export default function DashboardProjects() {
                   'block border-0 mr-4 focus:ring-purple-300'
                 )}
                 pill
-                onClick={handleCreateAffiliations}
+                onClick={handleCreateAccounts}
               >
-                Create Affiliations
-              </Button> */}
+                Create Accounts
+              </Button>
             </div>
           </div>
         </div>

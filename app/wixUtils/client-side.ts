@@ -258,6 +258,26 @@ const getContactsItem = async (itemId: string) => {
   }
 };
 
+const getAllContacts = async () => {
+  try {
+    const response = await fetch('/api/getAllContacts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get contacts');
+    }
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    console.error(`Error getting contacts:`, error);
+  }
+};
+
 const getContactsItemByEmail = async (itemId: string) => {
   try {
     const response = await fetch('/api/getContactsItemByEmail', {
@@ -355,4 +375,5 @@ export {
   getContactsItemByEmail,
   subscribeToNewsletter,
   bulkRemoveItems,
+  getAllContacts,
 };
