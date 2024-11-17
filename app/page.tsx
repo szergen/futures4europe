@@ -11,7 +11,7 @@ import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
 import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
-import LoadingSpinner from './shared-components/LoadingSpinner/LoadingSpinner';
+import TagsList from './page-components/shared-page-components/TagList/TagsList';
 // import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
 
 // Helper function to get motion path length and spacing
@@ -152,7 +152,7 @@ export const Home = () => {
     tags,
     tagsFetched,
   } = useAuth();
-  console.log('ownedpostPages', postPages);
+
 
   // const router = useRouter();
   // const { removeDataItem } = useWixModules(items);
@@ -265,11 +265,37 @@ export const Home = () => {
 
   const [isFinishedLoading, setIsFinishedLoading] = useState(false);
 
+  // Update loading states based on data availability
   useEffect(() => {
-    if (tagsFetched) {
-      setIsFinishedLoading(true);
+    // Update projects, organisations, and persons loading states based on infoPages
+    if (infoPages && infoPages.length > 0) {
+      setLoadingStates(prev => ({
+        ...prev,
+        projects: false,
+        organisations: false,
+        persons: false
+      }));
     }
-  }, [tagsFetched]);
+
+    // Update domains and methods loading states based on tagsFetched
+    if (tagsFetched) {
+      setLoadingStates(prev => ({
+        ...prev,
+        domains: false,
+        methods: false
+      }));
+    }
+  }, [infoPages, tagsFetched]);
+
+
+  // Loading states for different sections
+  const [loadingStates, setLoadingStates] = useState({
+    projects: true,
+    organisations: true,
+    persons: true,
+    domains: true,
+    methods: true
+  });
 
   return (
     <div className="homeHero">
@@ -285,173 +311,173 @@ export const Home = () => {
             work, and participate in upcoming events.
           </p>
         </div>
-        {isFinishedLoading ? (
-          <div className="w-full w-fit Container_wrapper index_customers">
-            <div className="index_customerGroups">
-              <div className="index_customerGroupWrapper index_reverse">
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="project info"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="project info"
-                    />
-                  </div>
-                </div>
 
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="project info"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="project info"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="index_customerGroupWrapper">
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="organisation info"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="organisation info"
-                    />
-                  </div>
-                </div>
-
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="organisation info"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="organisation info"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="index_customerGroupWrapper index_reverse">
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="person info"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="person info"
-                    />
-                  </div>
-                </div>
-
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="person info"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      infoPages={infoPages}
-                      infoPageType="person info"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="index_customerGroupWrapper">
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="domains"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="domains"
-                    />
-                  </div>
-                </div>
-
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="domains"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="domains"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="index_customerGroupWrapper index_reverse">
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="methods"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="methods"
-                    />
-                  </div>
-                </div>
-
-                <div className="index_customerGroup">
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="methods"
-                    />
-                  </div>
-                  <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-                    <TagLisInlineComponent
-                      postPages={postPages}
-                      postPageTypes="methods"
-                    />
-                  </div>
-                </div>
-              </div>
+   
+          
+        <div className="w-full w-fit Container_wrapper index_customers">
+      <div className="index_customerGroups">
+        {/* Projects Section */}
+        <div className="index_customerGroupWrapper index_reverse">
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="project info"
+                isLoading={loadingStates.projects}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="project info"
+                isLoading={loadingStates.projects}
+              />
             </div>
           </div>
-        ) : (
-          <LoadingSpinner classNames="w-full w-fit Container_wrapper index_customers" />
-        )}
+
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="project info"
+                isLoading={loadingStates.projects}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="project info"
+                isLoading={loadingStates.projects}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Organizations Section */}
+        <div className="index_customerGroupWrapper">
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="organisation info"
+                isLoading={loadingStates.organisations}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="organisation info"
+                isLoading={loadingStates.organisations}
+              />
+            </div>
+          </div>
+
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="organisation info"
+                isLoading={loadingStates.organisations}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="organisation info"
+                isLoading={loadingStates.organisations}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Persons Section */}
+        <div className="index_customerGroupWrapper index_reverse">
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="person info"
+                isLoading={loadingStates.persons}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="person info"
+                isLoading={loadingStates.persons}
+              />
+            </div>
+          </div>
+
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="person info"
+                isLoading={loadingStates.persons}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagLisInlineComponent
+                infoPages={infoPages}
+                infoPageType="person info"
+                isLoading={loadingStates.persons}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Domains Section */}
+        <div className="index_customerGroupWrapper">
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagsList 
+                tagType="domains"
+                limit={25}
+                offset={0}
+                disableTooltip={true}
+                disablePopularityHover={true}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagsList 
+                tagType="domains"
+                limit={25}
+                offset={25}
+                disableTooltip={true}
+                disablePopularityHover={true}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Foresight Methods Section */}
+        <div className="index_customerGroupWrapper index_reverse">
+          <div className="index_customerGroup">
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagsList 
+                tagType="foresight methods"
+                limit={25}
+                offset={0}
+                disableTooltip={true}
+                disablePopularityHover={true}
+              />
+            </div>
+            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+              <TagsList 
+                tagType="foresight methods"
+                limit={25}
+                offset={25}
+                disableTooltip={true}
+                disablePopularityHover={true}
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+      
       </div>
 
       <div className="homeFeatured">
