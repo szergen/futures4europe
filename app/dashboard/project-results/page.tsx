@@ -136,7 +136,7 @@ export default function DashboardProjects() {
         <div
           className={classNames(
             style.dashboardBox,
-            style.dashboardBoxAddWrap, 
+            style.dashboardBoxAddWrap,
             'mt-14',
             'mb-10',
             'p-8',

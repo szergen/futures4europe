@@ -244,9 +244,9 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         ? 'var(--primary-white)'
         : 'var(--color-background-brand-tag)',
       borderRadius: 'var(--p-border-radius-tag)!important',
-      border: state.selectProps.inputValue 
-      ? '4px solid var(--color-background-brand-tag)'
-      : '4px solid var(--color-background-brand-tag)',
+      border: state.selectProps.inputValue
+        ? '4px solid var(--color-background-brand-tag)'
+        : '4px solid var(--color-background-brand-tag)',
     }),
     menu: (provided) => ({
       ...provided,
@@ -276,9 +276,10 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       padding: '0px var(--w-space-s)',
       margin: '0px 4px',
       backgroundColor: 'var(--primary-white)',
-      ':hover': { // Add this :hover selector
+      ':hover': {
+        // Add this :hover selector
         boxShadow: '0px 0px 0px 4px #cfcfcf;', // Change the background color on hover
-      },      
+      },
       borderRadius: 'var(--p-border-radius-tag)!important',
     }),
     // indicatorSeparator: state => ({

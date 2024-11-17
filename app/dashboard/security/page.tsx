@@ -244,7 +244,7 @@ export default function DashboardSecurity() {
                 className={
                   'pt-2 pb-2 flex flex-row items-center justify-between'
                 }
-                >
+              >
                 <span className="">Google login</span>
                 <span className="ml-4">
                   <img
@@ -275,7 +275,7 @@ export default function DashboardSecurity() {
                         strokeWidth={1}
                         inline={false}
                       />
-                    </span>                    
+                    </span>
                     <span className="">Change</span>
                   </div>
                 </Link>
@@ -314,8 +314,8 @@ export default function DashboardSecurity() {
                 Contact information
               </h2>
               <p className={classNames(style.boxTextDashboard, 'mb-8')}>
-                Your contact information is important for reaching to you.
-                It includes details like your email addres and account status.
+                Your contact information is important for reaching to you. It
+                includes details like your email addres and account status.
               </p>
             </div>
 
@@ -342,7 +342,6 @@ export default function DashboardSecurity() {
                 <span className="">Account status</span>
                 <span className="ml-4">{userDetails?.activityStatus}</span>
               </div>
-
             </div>
           </div>
         </div>

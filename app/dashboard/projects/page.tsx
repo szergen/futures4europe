@@ -46,10 +46,10 @@ export default function DashboardProjects() {
   const wixModules = useWixModules(items);
   const router = useRouter();
 
-    interface UserDetails {
-      contactId: string;
-      isAdmin: boolean;
-    }
+  interface UserDetails {
+    contactId: string;
+    isAdmin: boolean;
+  }
 
   interface InfoPage {
     _id: string;
@@ -67,12 +67,14 @@ export default function DashboardProjects() {
         return;
       }
 
-      console.log('debug2->Proceeding with info page delete for ID:', infoPageId);
-      await wixModules.removeDataItem(infoPageId, { 
-        dataCollectionId: 'InfoPages', 
+      console.log(
+        'debug2->Proceeding with info page delete for ID:',
+        infoPageId
+      );
+      await wixModules.removeDataItem(infoPageId, {
+        dataCollectionId: 'InfoPages',
       });
       console.log('debug2->Delete info page successful');
-
     } catch (error) {
       console.error('debug2->Failed to delete info page:', error);
     } finally {
@@ -81,7 +83,6 @@ export default function DashboardProjects() {
     }
   }
 
-  
   useEffect(() => {
     if (!loading && !isLoggedIn) {
       router.push('/login');
@@ -215,7 +216,7 @@ export default function DashboardProjects() {
       // ...allOrganisationAffiliations,
     ];
 
-  //  console.log('debug222->allAffiliations', allAffiliations);
+    //  console.log('debug222->allAffiliations', allAffiliations);
 
     // const filteredDuplicateAffiliations =
     //   filterDuplicateAffiliations(allAffiliations);
@@ -291,8 +292,8 @@ export default function DashboardProjects() {
 
         <div
           className={classNames(
-            style.dashboardBox, 
-            style.dashboardBoxAddWrap, 
+            style.dashboardBox,
+            style.dashboardBoxAddWrap,
             'mt-14',
             'mb-10',
             'p-8',
@@ -440,24 +441,31 @@ export default function DashboardProjects() {
                               />
                             </Link>
                             {/* Only show delete button for admins */}
-                            {
-                              (userDetails?.isAdmin === true || infoPage?.data?._owner === userDetails?.contactId) && (
-                                <Button
-                                  size="sm"
-                                  color="danger"
-                                  onClick={() => handleDeleteInfoPage(infoPage?.data?._id)}
-                                  disabled={isLoadingDeletePostPage === infoPage?.data?._id}
-                                >
-                                  Delete
-                                </Button>
-                              )
-                            }
-
-                            {isLoadingDeletePostPage && isLoadingDeletePostPage === infoPage?.data?._id && (
-                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                                <LoadingSpinner />
-                              </div>
+                            {(userDetails?.isAdmin === true ||
+                              infoPage?.data?._owner ===
+                                userDetails?.contactId) && (
+                              <Button
+                                size="sm"
+                                color="danger"
+                                onClick={() =>
+                                  handleDeleteInfoPage(infoPage?.data?._id)
+                                }
+                                disabled={
+                                  isLoadingDeletePostPage ===
+                                  infoPage?.data?._id
+                                }
+                              >
+                                Delete
+                              </Button>
                             )}
+
+                            {isLoadingDeletePostPage &&
+                              isLoadingDeletePostPage ===
+                                infoPage?.data?._id && (
+                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                  <LoadingSpinner />
+                                </div>
+                              )}
                           </div>
                         </div>
                       ))

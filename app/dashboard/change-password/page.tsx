@@ -14,7 +14,7 @@ import Icon from '@app/shared-components/Icon/Icon';
 import style from '../pageDashboard.module.css';
 import stylefile from './pageDashboardChangePassword.module.css';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import { Button, Label, TextInput} from 'flowbite-react';
+import { Button, Label, TextInput } from 'flowbite-react';
 import { HiLockOpen } from 'react-icons/hi';
 
 export default function DashboardChangePassword() {
@@ -115,7 +115,7 @@ export default function DashboardChangePassword() {
       }
     }
   }, [isLoggedIn, router, loading]);
- 
+
   const handleLogOut = async () => {
     logout();
     router.push('/login');

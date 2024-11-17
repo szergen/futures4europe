@@ -13,11 +13,11 @@ const TagLisInlineComponent = ({
   isLoading,
 }) => {
   // Add debug logs
-  console.log('debug6->Props received:', { 
+  console.log('debug6->Props received:', {
     infoPageType,
     isLoading,
     infoPageCount: infoPages?.length,
-    postPagesCount: postPages?.length
+    postPagesCount: postPages?.length,
   });
 
   const getTagsByType = (postPage) => {
@@ -67,13 +67,15 @@ const TagLisInlineComponent = ({
   }
 
   // Filter and log info pages
-  const filteredInfoPages = infoPages
-    ?.filter((infoPage) => infoPage?.data?.pageTypes?.[0]?.name === infoPageType) || [];
-  
+  const filteredInfoPages =
+    infoPages?.filter(
+      (infoPage) => infoPage?.data?.pageTypes?.[0]?.name === infoPageType
+    ) || [];
+
   console.log('debug6->Filtered info pages:', {
     infoPageType,
     filteredCount: filteredInfoPages.length,
-    firstPage: filteredInfoPages[0]?.data
+    firstPage: filteredInfoPages[0]?.data,
   });
 
   return (
@@ -89,12 +91,12 @@ const TagLisInlineComponent = ({
             };
 
             const tagsToRender = tagTypeMap[infoPageType] || [];
-            
+
             console.log('debug6->Tags to render:', {
               infoPageType,
               pageTitle: infoPage.data.title,
               tagsCount: tagsToRender.length,
-              tags: tagsToRender
+              tags: tagsToRender,
             });
 
             return (
@@ -126,9 +128,9 @@ const TagLisInlineComponent = ({
         <>
           {filteredPostPages.map((postPage, index) => {
             const tags = getTagsByType(postPage);
-            console.log('debug6->Post tags:', { 
-              postTitle: postPage.data.title, 
-              tags 
+            console.log('debug6->Post tags:', {
+              postTitle: postPage.data.title,
+              tags,
             });
 
             return (
@@ -136,20 +138,20 @@ const TagLisInlineComponent = ({
                 key={`${postPage.data.title}-${postPage._id || index}`}
                 className="flex flex-wrap gap-2"
               >
-                {tags.length > 0 ? (
-                  tags.map((item, idx) => (
-                    item && item.name ? (
-                      <Tag
-                        key={`${postPage.data.title}-${item._id || idx}`}
-                        name={item.name}
-                        disableTooltip
-                        disablePopularityHover
-                        tagPageLink={`/post/${postPage.data.slug}`}
-                        tagType={item.tagType}
-                      />
-                    ) : null
-                  ))
-                ) : null}
+                {tags.length > 0
+                  ? tags.map((item, idx) =>
+                      item && item.name ? (
+                        <Tag
+                          key={`${postPage.data.title}-${item._id || idx}`}
+                          name={item.name}
+                          disableTooltip
+                          disablePopularityHover
+                          tagPageLink={`/post/${postPage.data.slug}`}
+                          tagType={item.tagType}
+                        />
+                      ) : null
+                    )
+                  : null}
               </div>
             );
           })}
