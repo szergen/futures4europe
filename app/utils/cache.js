@@ -14,6 +14,7 @@ export async function saveToCache(filename, data) {
     fs.writeFileSync(path.join(cacheDir, filename), JSON.stringify(data));
   } else {
     const keyname = filename?.replace('.json', '');
+    console.log('Saving to cache:', keyname);
     await set(keyname, data);
   }
 }
@@ -30,6 +31,7 @@ export async function getFromCache(filename) {
     return null;
   } else {
     const keyname = filename?.replace('.json', '');
+    console.log('Getting from cache:', keyname);
     return await get(keyname);
   }
 }
