@@ -14,7 +14,6 @@ import fetchTagsWithPopularity from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
-import { refetchTags } from '@app/utils/refetch-utils';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -95,8 +94,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // #region Fetch post pages
   const [refreshPostPages, setRefreshPostPages] = useState(false);
   const { postPages, postPagesFetched } = useFetchPostPages(
-    refreshPostPages
-    // setIsLoadingInProgress
+    refreshPostPages,
+    setIsLoadingInProgress
   );
 
   const handlePostPageCreated = () => {
@@ -108,8 +107,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // #region Fetch info pages
   const [refreshInfoPages, setRefreshInfoPages] = useState(false);
   const { infoPages, infoPagesFetched } = useFetchInfoPages(
-    refreshInfoPages
-    // setIsLoadingInProgress
+    refreshInfoPages,
+    setIsLoadingInProgress
   );
   // console.log('debug1->infoPages', infoPages);
 
@@ -127,21 +126,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (infoPages.length > 0 && postPages.length > 0) {
-      // setIsLoadingInProgress(true);
+      setIsLoadingInProgress(true);
       fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
         setTags(allTags);
         setTagsFetched(true);
-        // setIsLoadingInProgress(false);
+        setIsLoadingInProgress(false);
       });
     }
   }, [infoPages, postPages, refreshTags]);
 
   const handleTagCreated = () => {
-    const refetchNewTags = refetchTags().then(() => {
-      console.log('refetchNewTags');
-      setRefreshTags((prev) => !prev);
-    });
-    // Toggle the refresh state to trigger re-fetch
+    setRefreshTags((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
 
   const getUserTag = (userName: string) => {

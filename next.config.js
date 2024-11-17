@@ -1,12 +1,6 @@
 /** @type {import('next').NextConfig} */
-const scheduleCronJobs = require('./cron');
-
 const nextConfig = {
   env: {},
-  webpack(config) {
-    scheduleCronJobs();
-    return config;
-  },
   reactStrictMode: false,
   swcMinify: true,
   eslint: {
