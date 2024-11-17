@@ -15,7 +15,22 @@ export async function saveToCache(filename, data) {
   } else {
     const keyname = filename?.replace('.json', '');
     console.log('Saving to cache:', keyname);
-    await set(keyname, data);
+    const url = `https://api.vercel.com/v1/edge-config/ecfg_faraqet1nujluabkyo1rvv4cbcn0/items`;
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer b537b555-86c5-42d4-b0ce-4ef2e8792134`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        slug: keyname,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update Edge Config: ${response.statusText}`);
+    }
   }
 }
 
