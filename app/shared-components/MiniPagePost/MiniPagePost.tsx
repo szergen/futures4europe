@@ -61,12 +61,12 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
 }) => {
   // console.log('MiniPagePost' + JSON.stringify(projectStartDate));
   // TODO @alex de verificat
-  console.log('pageTypeTag' + JSON.stringify(pageTypeTag));
+  // console.log('pageTypeTag' + JSON.stringify(pageTypeTag));
   // console.log('pageType', pageTypeTag);
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   dayjs.extend(relativeTime);
-  console.log(pageTypeTag?.name.replace(/\s+/g, '') + '_TypeTagImage'); // Log the generated key
+  // console.log(pageTypeTag?.name.replace(/\s+/g, '') + '_TypeTagImage'); // Log the generated key
 
   return (
     <div className={classNames(style.postItem)}>
