@@ -114,14 +114,13 @@ export const Home = () => {
   }, [homepageConfig, postPages, infoPages]);
 
 
-
   // Loading states for different sections
   const [loadingStates, setLoadingStates] = useState({
     projects: true,
     organisations: true,
     persons: true,
     domains: true,
-    methods: true
+    methods: true,
   });
   
   // Modified useEffect to handle loading states
@@ -168,8 +167,6 @@ export const Home = () => {
           </p>
         </div>
 
-   
-          
         <div className="w-full w-fit Container_wrapper index_customers">
       <div className="index_customerGroups">
         {/* Projects Section */}

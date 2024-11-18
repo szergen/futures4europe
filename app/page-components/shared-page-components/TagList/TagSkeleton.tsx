@@ -8,6 +8,6 @@ const TagSkeleton = () => (
         <div className="h-3 bg-gray-200 rounded w-[80px]"></div>
       </div>
     </div>
-  );
-  
-  export default TagSkeleton;
+);
+
+export default TagSkeleton;

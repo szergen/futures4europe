@@ -23,7 +23,7 @@ const TagsList = ({
   offset = 0,
   title,
   disableTooltip = false,
-  disablePopularityHover = false 
+  disablePopularityHover = false,
 }: TagsListProps) => {
   const [isLoading, setIsLoading] = useState(true);
   
@@ -80,13 +80,14 @@ const TagsList = ({
     .slice(offset, offset + limit);
 
   const getTagsForInfoPage = (infoPage: any) => {
-    const tagTypeMap = {
+    const tagTypeMap: { [key: string]: any[] } = {
       'person info': infoPage.data.person || [],
       'organisation info': infoPage.data.organisation || [],
       'project info': infoPage.data.Project || [],
     };
 
-    const tagsForType = tagTypeMap[infoPage?.data?.pageTypes?.[0]?.name] || [];
+    const pageTypeName = infoPage?.data?.pageTypes?.[0]?.name as string;
+    const tagsForType = tagTypeMap[pageTypeName] || [];
     return tagsForType.map((tag: any) => ({
       ...tag,
       tagPageLink: `${automaticallyDecidePathPrefixBasedOnPageType(

@@ -49,7 +49,7 @@ export default function Dashboard() {
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
-    
+
     if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
       setIsPersonInfoPageReady(true);
       setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');

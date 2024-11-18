@@ -70,21 +70,22 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
 
   return (
     <div className={classNames(style.postItem)}>
-        <div
-          className={classNames(
-            style.postImageAndTagContainer,
-            pageTypeTag?.name && style[pageTypeTag.name.replace(/\s+/g, '') + '_TypeTagImage']
-          )}
-          >            
-          {pageTypeTag && <Tag {...pageTypeTag} className="ml-1 mb-1" />}
-            <Image
-              src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
-              width={650}
-              height={650}
-              alt="Post Image"
-              className={classNames('rounded-md', style.postImage)}
-            />
-        </div>
+      <div
+        className={classNames(
+          style.postImageAndTagContainer,
+          pageTypeTag?.name &&
+            style[pageTypeTag.name.replace(/\s+/g, '') + '_TypeTagImage']
+        )}
+      >
+        {pageTypeTag && <Tag {...pageTypeTag} className="ml-1 mb-1" />}
+        <Image
+          src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
+          width={650}
+          height={650}
+          alt="Post Image"
+          className={classNames('rounded-md', style.postImage)}
+        />
+      </div>
       <div className={classNames(style.postContent)}>
         {/* Post Date */}
         <Typography

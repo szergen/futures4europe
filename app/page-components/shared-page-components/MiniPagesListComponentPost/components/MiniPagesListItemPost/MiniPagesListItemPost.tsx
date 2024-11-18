@@ -47,7 +47,7 @@ const isValidDate = (date: Date): boolean => {
 
 const parseDate = (value: unknown): Date | null => {
   if (!value) return null;
-  
+
   try {
     if (typeof value === 'object' && value !== null && '$date' in value) {
       const dateStr = (value as { $date?: string }).$date;
@@ -55,12 +55,12 @@ const parseDate = (value: unknown): Date | null => {
       const date = new Date(dateStr);
       return isValidDate(date) ? date : null;
     }
-    
+
     if (typeof value === 'string') {
       const date = new Date(value);
       return isValidDate(date) ? date : null;
     }
-    
+
     return null;
   } catch {
     return null;
@@ -68,34 +68,68 @@ const parseDate = (value: unknown): Date | null => {
 };
 
 const PAGE_TYPE_SORT_CONFIG: Record<SortConfigKey, PageTypeSortConfig> = {
-  [PageType.ProjectInfo]: { sortField: 'projectStartDate', fallbackField: '_createdDate', priority: 3 },
-  [PageType.Event]: { sortField: 'eventStartDate', fallbackField: '_createdDate', priority: 3 },
-  [PageType.ProjectResult]: { sortField: 'publicationDate', fallbackField: '_createdDate', priority: 3 },
-  [PageType.OrganisationInfo]: { sortField: '_createdDate', fallbackField: '_createdDate', priority: 1 },
-  [PageType.PersonInfo]: { sortField: '_createdDate', fallbackField: '_createdDate', priority: 1 },
-  [PageType.Post]: { sortField: '_createdDate', fallbackField: '_createdDate', priority: 1 },
-  'default': { sortField: '_createdDate', fallbackField: '_createdDate', priority: 0 },
+  [PageType.ProjectInfo]: {
+    sortField: 'projectStartDate',
+    fallbackField: '_createdDate',
+    priority: 3,
+  },
+  [PageType.Event]: {
+    sortField: 'eventStartDate',
+    fallbackField: '_createdDate',
+    priority: 3,
+  },
+  [PageType.ProjectResult]: {
+    sortField: 'publicationDate',
+    fallbackField: '_createdDate',
+    priority: 3,
+  },
+  [PageType.OrganisationInfo]: {
+    sortField: '_createdDate',
+    fallbackField: '_createdDate',
+    priority: 1,
+  },
+  [PageType.PersonInfo]: {
+    sortField: '_createdDate',
+    fallbackField: '_createdDate',
+    priority: 1,
+  },
+  [PageType.Post]: {
+    sortField: '_createdDate',
+    fallbackField: '_createdDate',
+    priority: 1,
+  },
+  default: {
+    sortField: '_createdDate',
+    fallbackField: '_createdDate',
+    priority: 0,
+  },
 };
 
 const memoizedGetSortConfig = (() => {
   const cache = new Map<string, PageTypeSortConfig>();
-  
+
   return (pageTypeTag: PageTypeTag | undefined): PageTypeSortConfig => {
     const key = pageTypeTag?.name?.toLowerCase() ?? 'default';
     if (!cache.has(key)) {
-      cache.set(key, PAGE_TYPE_SORT_CONFIG[key as PageType] || PAGE_TYPE_SORT_CONFIG['default']);
+      cache.set(
+        key,
+        PAGE_TYPE_SORT_CONFIG[key as PageType] ||
+          PAGE_TYPE_SORT_CONFIG['default']
+      );
     }
     return cache.get(key)!;
   };
 })();
 
-const getHighestPriorityConfig = (pageTypes: PageTypeTag[] | undefined): PageTypeSortConfig => {
+const getHighestPriorityConfig = (
+  pageTypes: PageTypeTag[] | undefined
+): PageTypeSortConfig => {
   if (!pageTypes?.length) return PAGE_TYPE_SORT_CONFIG['default'];
-  
+
   return pageTypes
-    .map(pt => memoizedGetSortConfig(pt))
-    .reduce((prev, current) => 
-      current.priority > prev.priority ? current : prev,
+    .map((pt) => memoizedGetSortConfig(pt))
+    .reduce(
+      (prev, current) => (current.priority > prev.priority ? current : prev),
       PAGE_TYPE_SORT_CONFIG['default']
     );
 };
@@ -109,18 +143,18 @@ interface SortableItem extends Item {
 }
 
 const prepareSortableItems = (items: Item[]): SortableItem[] => {
-  return items.map(item => {
+  return items.map((item) => {
     const config = getHighestPriorityConfig(item.pageTypes);
     const pageType = item.pageTypes?.[0]?.name?.toLowerCase() ?? 'default';
-    
+
     // Check for primary date
     const primaryDate = parseDate(item[config.sortField]);
     const hasPrimaryDate = primaryDate !== null;
-    
+
     // Check for fallback date
     const fallbackDate = parseDate(item[config.fallbackField]);
     const hasFallbackDate = fallbackDate !== null;
-    
+
     // Determine final sort date
     const sortDate = (primaryDate || fallbackDate || new Date(0)).getTime();
 
@@ -145,31 +179,31 @@ const stableSort = <T,>(array: T[], compare: (a: T, b: T) => number): T[] => {
 const sortItemsByPageType = (items: Item[]): Item[] => {
   try {
     const sortableItems = prepareSortableItems(items);
-    
+
     return stableSort(sortableItems, (a, b) => {
       // First, compare page types if they're different
       if (a.pageType !== b.pageType) {
         return b.sortPriority - a.sortPriority;
       }
-      
+
       // For items of the same page type:
-      
+
       // 1. Items with primary dates come first
       if (a.hasPrimaryDate !== b.hasPrimaryDate) {
         return a.hasPrimaryDate ? -1 : 1;
       }
-      
+
       // 2. For items that both have or both don't have primary dates,
       // sort by the actual date (whether primary or fallback)
       if (a.hasPrimaryDate === b.hasPrimaryDate) {
         return b.sortDate - a.sortDate;
       }
-      
+
       // 3. If neither has a primary date, fall back to created date
       if (!a.hasPrimaryDate && !b.hasPrimaryDate) {
         return b.sortDate - a.sortDate;
       }
-      
+
       return 0;
     });
   } catch (error) {
@@ -216,9 +250,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
               : `/${pageTypePath || 'post'}/${item.slug}`
           }
         >
-          <MiniPagePost 
-            {...getPropsForMiniPagesListItemPost(item)}
-          />
+          <MiniPagePost {...getPropsForMiniPagesListItemPost(item)} />
         </Link>
       ))}
     </section>
