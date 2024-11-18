@@ -5126,6 +5126,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@upstash/redis@npm:^1.34.3":
+  version: 1.34.3
+  resolution: "@upstash/redis@npm:1.34.3"
+  dependencies:
+    crypto-js: ^4.2.0
+  checksum: 4c738eb82e3d8906999345379ff0c96913627cdf96ec54b6880fa8fb5616331a92228b889c076b4a93bee4bb31324f5afa68aa927fb751d308fc83464de68e79
+  languageName: node
+  linkType: hard
+
 "@vercel/analytics@npm:^1.3.2":
   version: 1.3.2
   resolution: "@vercel/analytics@npm:1.3.2"
@@ -8089,6 +8098,13 @@ __metadata:
     randombytes: ^2.0.0
     randomfill: ^1.0.3
   checksum: c1609af82605474262f3eaa07daa0b2140026bd264ab316d4bf1170272570dbe02f0c49e29407fe0d3634f96c507c27a19a6765fb856fed854a625f9d15618e2
+  languageName: node
+  linkType: hard
+
+"crypto-js@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "crypto-js@npm:4.2.0"
+  checksum: f051666dbc077c8324777f44fbd3aaea2986f198fe85092535130d17026c7c2ccf2d23ee5b29b36f7a4a07312db2fae23c9094b644cc35f7858b1b4fcaf27774
   languageName: node
   linkType: hard
 
@@ -13898,6 +13914,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-cron@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "node-cron@npm:3.0.3"
+  dependencies:
+    uuid: 8.3.2
+  checksum: 351c37491ebf717d0ae69cc941465de118e5c2ef5d48bc3f87c98556241b060f100402c8a618c7b86f9f626b44756b20d8b5385b70e52f80716f21e55db0f1c5
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:^2.0.0, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
@@ -18792,7 +18817,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.2":
+"uuid@npm:8.3.2, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
@@ -19327,6 +19352,7 @@ __metadata:
     "@types/react-dom": 18.0.8
     "@types/react-draft-wysiwyg": ^1.13.8
     "@types/sortablejs": ^1.15.8
+    "@upstash/redis": ^1.34.3
     "@vercel/analytics": ^1.3.2
     "@vercel/blob": ^0.26.0
     "@vercel/edge-config": ^1.4.0
@@ -19360,6 +19386,7 @@ __metadata:
     html-to-draftjs: ^1.5.0
     mongodb: ^6.8.1
     next: ^13.4.9
+    node-cron: ^3.0.3
     pdfjs-dist: ^4.6.82
     postcss: ^8.4.19
     prettier: ^2.8.0
