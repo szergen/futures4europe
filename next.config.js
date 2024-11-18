@@ -24,6 +24,8 @@ const nextConfig = {
       '0bbe2e34-e503-441a-af9e-4fc70c17e6af.usrfiles.com',
       'img.youtube.com',
       'avatar.iran.liara.run',
+      'graph.facebook.com',
+      'lh3.googleusercontent.com',
     ],
     formats: ['image/webp'],
   },
