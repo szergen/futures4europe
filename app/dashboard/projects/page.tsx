@@ -22,6 +22,8 @@ import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 import { bulkInsertItems, getAllContacts } from '@app/wixUtils/client-side';
+import { sanitizeTitleForSlug } from '@app/page-components/PageComponents.utils';
+import { generateUniqueHash } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 
 export default function DashboardProjects() {
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
@@ -261,21 +263,96 @@ export default function DashboardProjects() {
     console.log('debug222->allMembers', allMembers);
 
     const filteredMembers = allMembers.filter(
-      (member: any) => member?.profile?.nickname && member?.profile?.photo?.url
-      // ||
-      // member?.contact?.customFields?.['custom.linkedin']?.value ||
-      // member?.contact?.customFields?.['custom.website-link']?.value ||
-      // member?.contact?.customFields?.['custom.your-country']?.value
-      // ||
-      // member?.contact?.customFields?.['custom.expertise']?.value ||
-      // member?.contact?.customFields?.['custom.organisation']?.value ||
-      // member?.contact?.jobTitle
+      (member: any) =>
+        member?.profile?.nickname &&
+        member?.privacyStatus === 'PUBLIC' &&
+        (member?.profile?.photo?.url ||
+          member?.contact?.customFields?.['custom.linkedin']?.value ||
+          member?.contact?.customFields?.['custom.website-link']?.value ||
+          member?.contact?.customFields?.['custom.your-country']?.value ||
+          member?.contact?.customFields?.['custom.expertise']?.value ||
+          member?.contact?.customFields?.['custom.organisation']?.value ||
+          member?.contact?.jobTitle) &&
+        ![
+          'Bianca Dragomir',
+          'Radu Gheorghiu',
+          'Ioana Spanache',
+          'Mikkel Knudsen',
+        ].find((item) => item === member?.profile?.nickname)
     );
     console.log('debug222->filteredMembers', filteredMembers);
 
-    
+    const membersWithTags = filteredMembers?.filter((member: any) =>
+      tags.find((tag) => tag.name === member?.profile?.nickname)
+    );
 
+    console.log('debug222->membersWithTags', membersWithTags);
+    let infoPagesToCreate = [];
 
+    for (let i = 0; i < 1; i++) {
+      const member = membersWithTags[i];
+      const memberTag = tags.find(
+        (tag) => tag.name === member?.profile?.nickname
+      );
+      const memberTagId = memberTag?._id;
+      const cristinaMemberTagId = 'd5357589-65fd-456f-a506-7a4d1275451c';
+      const raduMemberTagId = '79e69062-1f22-4acd-bd5c-b4b0f17a3dad';
+      console.log('debug222->memberTag', memberTag);
+
+      const countryTag = tags.find(
+        (tag) =>
+          tag.name ===
+          member?.contact?.customFields?.['custom.your-country']?.value
+      );
+      const countryTagId = countryTag?._id;
+
+      console.log('debug222->countryTag', countryTag);
+
+      const slug =
+        sanitizeTitleForSlug(member?.profile?.nickname) +
+        '-' +
+        generateUniqueHash();
+      const memberInfoPage = {
+        data: {
+          title: member?.profile?.nickname,
+          websiteLink:
+            member?.contact?.customFields?.['custom.website-link']?.value || '',
+          linkedinLink:
+            member?.contact?.customFields?.['custom.linkedin']?.value || '',
+          slug: slug,
+        },
+      };
+      // #region upload member info page
+      // const uploadedMemberInfoPage = await bulkInsertItems('InfoPages', [
+      //   memberInfoPage,
+      // ]);
+
+      // console.log('debug222->uploadedMemberInfoPage', uploadedMemberInfoPage);
+      // const infoPageId =
+      //   uploadedMemberInfoPage?.results?.[0]?.itemMetadata?._id;
+      // console.log('debug222->infoPageId', infoPageId);
+      // #endregion
+
+      // #region updateAuthor
+
+      // #endregion
+
+      // #region update Person tag
+      // #endregion
+
+      // #region update pageOwners user and Cristina
+      // #endregion
+
+      // #region update Country tag
+      // #endregion
+
+      // #region update slug in tag
+      // #endregion
+
+      infoPagesToCreate.push(memberInfoPage);
+    }
+
+    console.log('debug222->infoPagesToCreate', infoPagesToCreate);
   };
 
   return (
