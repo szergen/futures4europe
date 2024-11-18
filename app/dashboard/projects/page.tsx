@@ -21,7 +21,12 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
-import { bulkInsertItems, getAllContacts } from '@app/wixUtils/client-side';
+import {
+  bulkInsertItems,
+  getAllContacts,
+  replaceDataItemReferences,
+  updateDataItem,
+} from '@app/wixUtils/client-side';
 import { sanitizeTitleForSlug } from '@app/page-components/PageComponents.utils';
 import { generateUniqueHash } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 
@@ -289,7 +294,9 @@ export default function DashboardProjects() {
     console.log('debug222->membersWithTags', membersWithTags);
     let infoPagesToCreate = [];
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 2; i < membersWithTags.length; i++) {
+      console.log('debug222->Migrating Item', i);
+      console.log('debug222->membersWithTags[i]', membersWithTags[i]);
       const member = membersWithTags[i];
       const memberTag = tags.find(
         (tag) => tag.name === member?.profile?.nickname
@@ -297,6 +304,7 @@ export default function DashboardProjects() {
       const memberTagId = memberTag?._id;
       const cristinaMemberTagId = 'd5357589-65fd-456f-a506-7a4d1275451c';
       const raduMemberTagId = '79e69062-1f22-4acd-bd5c-b4b0f17a3dad';
+      const personInfoTagId = 'ff988067-2fee-41f2-9b33-7eb14d282b17';
       console.log('debug222->memberTag', memberTag);
 
       const countryTag = tags.find(
@@ -323,33 +331,91 @@ export default function DashboardProjects() {
         },
       };
       // #region upload member info page
-      // const uploadedMemberInfoPage = await bulkInsertItems('InfoPages', [
-      //   memberInfoPage,
-      // ]);
+      const uploadedMemberInfoPage = await bulkInsertItems('InfoPages', [
+        memberInfoPage,
+      ]);
 
-      // console.log('debug222->uploadedMemberInfoPage', uploadedMemberInfoPage);
-      // const infoPageId =
-      //   uploadedMemberInfoPage?.results?.[0]?.itemMetadata?._id;
-      // console.log('debug222->infoPageId', infoPageId);
+      console.log('debug222->uploadedMemberInfoPage', uploadedMemberInfoPage);
+      const infoPageId =
+        uploadedMemberInfoPage?.results?.[0]?.itemMetadata?._id;
+      console.log('debug222->infoPageId', infoPageId);
       // #endregion
 
       // #region updateAuthor
-
+      if (memberTagId && infoPageId) {
+        const updatedAuthor = await replaceDataItemReferences(
+          'InfoPages',
+          [memberTagId],
+          'Author',
+          infoPageId
+        );
+        console.log('debug222->updatedAuthor', updatedAuthor);
+      }
       // #endregion
 
       // #region update Person tag
+      if (memberTagId && infoPageId) {
+        const updatedPersonTag = await replaceDataItemReferences(
+          'InfoPages',
+          [memberTagId],
+          'person',
+          infoPageId
+        );
+        console.log('updatedPersonTag', updatedPersonTag);
+      }
       // #endregion
 
-      // #region update pageOwners user and Cristina
+      // #region update pageOwners user and Cristina and Radu
+      if (memberTagId && infoPageId && cristinaMemberTagId && raduMemberTagId) {
+        const updatedPageOwner = await replaceDataItemReferences(
+          'InfoPages',
+          [memberTagId, cristinaMemberTagId, raduMemberTagId],
+          'pageOwner',
+          infoPageId
+        );
+        console.log('updatedPageOwner', updatedPageOwner);
+      }
+      // #endregion
+
+      // #region update pageType
+      if (personInfoTagId && infoPageId) {
+        const updatedPageType = await replaceDataItemReferences(
+          'InfoPages',
+          [personInfoTagId],
+          'pageTypes',
+          infoPageId
+        );
+        console.log('updatedPageType', updatedPageType);
+      }
+
       // #endregion
 
       // #region update Country tag
+      if (countryTagId && infoPageId) {
+        const updatedCountryTag = await replaceDataItemReferences(
+          'InfoPages',
+          [countryTagId],
+          'countryTag',
+          infoPageId
+        );
+        console.log('updatedCountryTag', updatedCountryTag);
+      }
       // #endregion
 
-      // #region update slug in tag
+      // #region update slug and picture in tag
+      if (infoPageId && memberTagId) {
+        const updatedPersonTag = await updateDataItem('Tags', memberTagId, {
+          // _id: memberTagId,
+          ...memberTag,
+          tagPageLink: '/person/' + slug,
+          picture: member?.profile?.photo?.url || '',
+        });
+        console.log('updatedPersonTag', updatedPersonTag);
+      }
       // #endregion
 
       infoPagesToCreate.push(memberInfoPage);
+      console.log('debug222->Finished Item', i);
     }
 
     console.log('debug222->infoPagesToCreate', infoPagesToCreate);
