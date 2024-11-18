@@ -8,7 +8,7 @@ export const GET = async (req: NextRequest) => {
   const cachedData = await getFromCache(cacheKey);
 
   if (cachedData) {
-    return new NextResponse(JSON.stringify(cachedData), { status: 200 });
+    return NextResponse.json(cachedData, { status: 200 });
   }
 
   try {
@@ -74,14 +74,14 @@ export const POST = async (req: NextRequest) => {
     // // console.log('allItems', allItems);
 
     await saveToCache(cacheKey, allItems);
-    return new NextResponse(
-      JSON.stringify({ message: 'Cache updated successfully.' }),
+    return NextResponse.json(
+      { message: 'Cache updated successfully.' },
       { status: 200 }
     );
   } catch (error) {
     console.error('Error updating cache:', error);
-    return new NextResponse(
-      JSON.stringify({ error: 'Failed to update cache' }),
+    return NextResponse.json(
+      { message: 'Failed to update cache' },
       {
         status: 500,
       }

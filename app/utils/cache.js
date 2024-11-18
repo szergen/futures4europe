@@ -26,7 +26,7 @@ export async function saveToCache(filename, data) {
   const result = await redis.set(keyname, JSON.stringify(data));
   console.log('result:', result);
 
-  if (!response.ok) {
+  if (result !== 'OK') {
     throw new Error(`Failed to update Edge Config: ${response.statusText}`);
   }
   // }
