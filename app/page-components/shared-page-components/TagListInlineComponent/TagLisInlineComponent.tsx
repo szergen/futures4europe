@@ -1,148 +1,166 @@
-// TagLisInlineComponent.jsx
-
 import React from 'react';
 import style from './TagLisInlineComponent.module.css';
 import Tag from '@app/shared-components/Tag/Tag';
-import PropTypes from 'prop-types'; // For prop type validation
+import PropTypes from 'prop-types';
 import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
+import TagSkeleton from '../TagList/TagSkeleton';
 
 const TagLisInlineComponent = ({
   infoPages,
   postPages,
   infoPageType,
-  postPageTypes, // Accept multiple types
+  postPageTypes,
+  isLoading,
 }) => {
-  /**
-   * Extracts relevant tags based on the post's type.
-   */
+  // Add debug logs
+  console.log('debug6->Props received:', {
+    infoPageType,
+    isLoading,
+    infoPageCount: infoPages?.length,
+    postPagesCount: postPages?.length,
+  });
+
   const getTagsByType = (postPage) => {
     const firstPageType = postPage.data.pageTypes?.[0];
-    console.log(`Processing PostPage ID: ${postPage._id}`);
-    console.log('First Page Type:', firstPageType);
-
     if (firstPageType && postPage.data.title) {
       const tag = {
         name: postPage.data.title,
         popularity: firstPageType.popularity,
         _id: postPage._id,
-        picture: '/images/default.png', // Ensure this path is correct
+        picture: '/images/default.png',
       };
-      console.log('Extracted Tag:', tag);
       return [tag];
     }
     return [];
   };
 
-  /**
-   * Filters postPages based on the provided postPageTypes.
-   * If postPageTypes is empty or not provided, includes all postPages.
-   */
   const filteredPostPages = postPages
     ? postPages.filter((postPage) => {
         const pageTypeName = postPage.data.pageTypes?.[0]?.name;
         if (postPageTypes && postPageTypes.length > 0) {
           return postPageTypes.includes(pageTypeName);
         }
-        return true; // Include all if no filter is applied
+        return true;
       })
     : [];
 
-  console.log('Filtered Post Pages:', filteredPostPages);
+  if (isLoading) {
+    return (
+      <section className={style.tagListContainer}>
+        {infoPageType && (
+          <>
+            {Array.from({ length: 2 }).map((_, index) => (
+              <TagSkeleton key={`info-skeleton-${index}`} count={3} />
+            ))}
+          </>
+        )}
+
+        {postPageTypes && (
+          <>
+            {Array.from({ length: 2 }).map((_, index) => (
+              <TagSkeleton key={`post-skeleton-${index}`} count={2} />
+            ))}
+          </>
+        )}
+      </section>
+    );
+  }
+
+  // Filter and log info pages
+  const filteredInfoPages =
+    infoPages?.filter(
+      (infoPage) => infoPage?.data?.pageTypes?.[0]?.name === infoPageType
+    ) || [];
+
+  console.log('debug6->Filtered info pages:', {
+    infoPageType,
+    filteredCount: filteredInfoPages.length,
+    firstPage: filteredInfoPages[0]?.data,
+  });
 
   return (
     <section className={style.tagListContainer}>
       {/* Info Pages Rendering Logic */}
       {infoPages && infoPageType && (
         <>
-          {infoPages
-            .filter(
-              (infoPage) =>
-                infoPage?.data?.pageTypes?.[0]?.name === infoPageType
-            )
-            .map((infoPage, index) => {
-              const tagTypeMap = {
-                'person info': infoPage.data.person || [],
-                'organisation info': infoPage.data.organisation || [],
-                'project info': infoPage.data.Project || [],
-                // Add more mappings as needed
-              };
+          {filteredInfoPages.map((infoPage, index) => {
+            const tagTypeMap = {
+              'person info': infoPage.data.person || [],
+              'organisation info': infoPage.data.organisation || [],
+              'project info': infoPage.data.Project || [],
+            };
 
-              const tagsToRender = tagTypeMap[infoPageType] || [];
+            const tagsToRender = tagTypeMap[infoPageType] || [];
 
-              console.log(
-                `Tags for InfoPage "${infoPage.data.title}":`,
-                tagsToRender
-              );
+            console.log('debug6->Tags to render:', {
+              infoPageType,
+              pageTitle: infoPage.data.title,
+              tagsCount: tagsToRender.length,
+              tags: tagsToRender,
+            });
 
-              return (
-                <div key={`${infoPage.data.title}-${index}`} className="flex">
-                  {tagsToRender.map((item, idx) =>
-                    item && item.name && item.picture ? (
-                      <Tag
-                        key={`${infoPage.data.title}-${item._id || idx}`}
-                        name={item.name}
-                        picture={item.picture}
-                        disableTooltip
-                        disablePopularityHover
-                        tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                          infoPage.data.pageTypes?.[0]?.name
-                        )}${infoPage.data.slug}`}
-                        tagType={item.tagType}
-                        // mentions={item.popularity} // Pass 'popularity' as 'mentions'
-                      />
-                    ) : null
-                  )}
-                </div>
-              );
-            })}
+            return (
+              <div key={`${infoPage.data.title}-${index}`} className="flex">
+                {tagsToRender.map((item, idx) => {
+                  console.log('debug6->Rendering tag:', { item });
+                  return item && item.name && item.picture ? (
+                    <Tag
+                      key={`${infoPage.data.title}-${item._id || idx}`}
+                      name={item.name}
+                      picture={item.picture}
+                      disableTooltip
+                      disablePopularityHover
+                      tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
+                        infoPage.data.pageTypes?.[0]?.name
+                      )}${infoPage.data.slug}`}
+                      tagType={item.tagType}
+                    />
+                  ) : null;
+                })}
+              </div>
+            );
+          })}
         </>
       )}
 
       {/* Post Pages Rendering Logic */}
-      {filteredPostPages && (
+      {filteredPostPages && filteredPostPages.length > 0 && (
         <>
-          {filteredPostPages.length > 0 ? (
-            filteredPostPages.map((postPage, index) => {
-              const tags = getTagsByType(postPage);
+          {filteredPostPages.map((postPage, index) => {
+            const tags = getTagsByType(postPage);
+            console.log('debug6->Post tags:', {
+              postTitle: postPage.data.title,
+              tags,
+            });
 
-              console.log(`Tags for PostPage "${postPage.data.title}":`, tags);
-
-              return (
-                <div
-                  key={`${postPage.data.title}-${postPage._id || index}`}
-                  className="flex flex-wrap gap-2"
-                >
-                  {tags.length > 0 ? (
-                    tags.map((item, idx) => {
-                      console.log('Rendering Tag:', item);
-                      return item && item.name ? (
+            return (
+              <div
+                key={`${postPage.data.title}-${postPage._id || index}`}
+                className="flex flex-wrap gap-2"
+              >
+                {tags.length > 0
+                  ? tags.map((item, idx) =>
+                      item && item.name ? (
                         <Tag
                           key={`${postPage.data.title}-${item._id || idx}`}
                           name={item.name}
-                          // mentions={item.popularity} // Pass 'popularity' as 'mentions'
                           disableTooltip
                           disablePopularityHover
                           tagPageLink={`/post/${postPage.data.slug}`}
                           tagType={item.tagType}
                         />
-                      ) : null;
-                    })
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-              );
-            })
-          ) : (
-            <p></p>
-          )}
+                      ) : null
+                    )
+                  : null}
+              </div>
+            );
+          })}
         </>
       )}
     </section>
   );
 };
 
-// Define prop types for better validation and developer experience
 TagLisInlineComponent.propTypes = {
   infoPages: PropTypes.array,
   postPages: PropTypes.array,
@@ -151,6 +169,7 @@ TagLisInlineComponent.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
+  isLoading: PropTypes.bool,
 };
 
 export default TagLisInlineComponent;

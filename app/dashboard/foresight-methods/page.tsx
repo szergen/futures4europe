@@ -20,9 +20,6 @@ import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 
 export default function DashboardProjects() {
-  //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
@@ -117,7 +114,7 @@ export default function DashboardProjects() {
         }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
-        activeItem={'/dashboard'}
+        activeItem={'/dashboard/forsight-methods'}
       />
 
       <div

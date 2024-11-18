@@ -32,6 +32,7 @@ import { useRouter } from 'next/navigation';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { sanitizeTitleForSlug } from '../PageComponents.utils';
+import { refetchPosts, refetchTags } from '@app/utils/refetch-utils';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -424,6 +425,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     // Revalidate the cache for the page
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
+    await refetchPosts();
+    await refetchTags();
 
     setIsSaveInProgress(false);
   };
@@ -625,6 +628,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
 
     // Revalidate the cache for the page
     await revalidateDataItem(`/post/${newPostSlug}`);
+    await refetchPosts();
+    await refetchTags();
+
     handleUserDataRefresh();
 
     setIsSaveInProgress(false);

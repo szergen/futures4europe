@@ -9,6 +9,7 @@
   line-height: 1;
   text-transform: capitalize;
   letter-spacing: -0.01em;
+  position: relative;
 
   .tagPicture {
     border-radius: 0.45em;
@@ -19,16 +20,20 @@
   .tagCounterBody {
     border-radius: 0.01em;
     position: absolute;
-    top: -15px;
-    right: -10px;
+    top: -2px;
+    right: 2px;
   }
   .tagCounterBody:hover {
     cursor: pointer;
   }
-  .tagCounterBody:hover .Tag_popularity {
-    background: var(--primary-color) !important;
+  .tagCounterBody:hover .popularity {
+    background: #9c8af1!important;
+    color: var(--primary-white);
+    text-decoration-color: var(--primary-white);
+    border-radius: var(--p-border-radius-100);
   }
   .popularity {
+    border-radius: var(--p-border-radius-100);
     background-color: white;
     font-size: 10px;
     font-weight: 500;
@@ -100,6 +105,7 @@
 
   .tagLink {
     cursor: pointer !important;
+    position: relative;
   }
   .tagLink .tagNameBody {
     text-decoration: underline;

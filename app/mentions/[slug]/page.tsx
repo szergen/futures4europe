@@ -26,28 +26,22 @@ export const revalidate = 0;
 export const dynamicParams = true; // or false, to 404 on unknown paths
 
 export default async function Pages({ params }: any) {
-  console.log('Pages Params', params.slug);
   const tagId = params.slug;
 
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
   const currentTagData = await getItemById('Tags', tagId);
-  // console.log('postCollection', postCollection);
 
   const postPages = postCollection.map((item) => item.data);
   const infoPages = infoPagesCollection.map((item) => item.data);
 
   const allPages = [...postPages, ...infoPages];
 
-  console.log('tagName', currentTagData?.data?.name);
-
   let items = allPages.filter((page: any) => {
     return containsId(page, tagId);
   });
 
-  // console.log('items', items);
-
-  //Get specific Post by slug
+  // Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
   // console.log('postItem Data', postPageItem?.data);
 
@@ -57,7 +51,7 @@ export default async function Pages({ params }: any) {
 
   return (
     <div className={classNames('w-full')}>
-      <Hero subtitle={`sorted by published date`}>
+      <Hero subtitle={`sorted by published dates`}>
         <div className="flex justify-center">
           <h1
             className={classNames(
