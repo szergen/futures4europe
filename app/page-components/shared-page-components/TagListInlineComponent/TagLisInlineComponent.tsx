@@ -77,7 +77,7 @@ const TagLisInlineComponent = ({
                 'project info': infoPage.data.Project || [],
               };
 
-              const tagsToRender = tagTypeMap[infoPageType] || [];
+            const tagsToRender = tagTypeMap[infoPageType] || [];
 
               return (
                 <div key={`${infoPage.data.title}-${index}`} className="flex">
@@ -103,11 +103,14 @@ const TagLisInlineComponent = ({
       )}
 
       {/* Post Pages Rendering Logic */}
-      {filteredPostPages && (
+      {filteredPostPages && filteredPostPages.length > 0 && (
         <>
-          {filteredPostPages.length > 0 ? (
-            filteredPostPages.map((postPage, index) => {
-              const tags = getTagsByType(postPage);
+          {filteredPostPages.map((postPage, index) => {
+            const tags = getTagsByType(postPage);
+            console.log('debug6->Post tags:', {
+              postTitle: postPage.data.title,
+              tags,
+            });
 
               return (
                 <div
