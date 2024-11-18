@@ -699,7 +699,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       );
       if (defaultAuthorTag) {
         updatePostDataBasedOnKeyValue('authors', [defaultAuthorTag]);
-        updatePostDataBasedOnKeyValue('projectAuthors', [defaultAuthorTag]);
+        // updatePostDataBasedOnKeyValue('projectAuthors', [defaultAuthorTag]);
       }
       // console.log('debug1->personInfoTag', personInfoTag);
       // if (personInfoTag) {
