@@ -573,8 +573,9 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${personData.slug}`);
+    await refetchTags();
     await refetchInfoPages();
+    await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
   };
@@ -970,10 +971,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #endregion
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
-    await refetchInfoPages();
     await refetchTags();
+    await refetchInfoPages();
     handleUserDataRefresh();
+    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);

@@ -423,10 +423,10 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
+    await refetchTags();
+    await refetchPosts();
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
-    await refetchPosts();
-    await refetchTags();
 
     setIsSaveInProgress(false);
   };
@@ -627,9 +627,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/post/${newPostSlug}`);
-    await refetchPosts();
     await refetchTags();
+    await refetchPosts();
+    await revalidateDataItem(`/post/${newPostSlug}`);
 
     handleUserDataRefresh();
 

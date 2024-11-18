@@ -525,9 +525,9 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/project/${projectData.slug}`);
-    await refetchInfoPages();
     await refetchTags();
+    await refetchInfoPages();
+    await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
   };
@@ -862,9 +862,9 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // #endregion
 
     // #region Revalidate the cache for the page
-    await revalidateDataItem(`/project/${newProjectInfoSlug}`);
-    await refetchInfoPages();
     await refetchTags();
+    await refetchInfoPages();
+    await revalidateDataItem(`/project/${newProjectInfoSlug}`);
     handleUserDataRefresh();
 
     router.push(`/project/${newProjectInfoSlug}`);

@@ -493,9 +493,9 @@ function OrganisationPageComponent({
     }
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/organisation/${organisationData.slug}`);
-    await refetchInfoPages();
     await refetchTags();
+    await refetchInfoPages();
+    await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
     setIsSaveInProgress(false);
   };
@@ -815,9 +815,9 @@ function OrganisationPageComponent({
     // #endregion
 
     // #region Revalidate the cache for the page
-    await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
     await refetchInfoPages();
     await refetchTags();
+    await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
     handleUserDataRefresh();
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);
