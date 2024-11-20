@@ -24,6 +24,8 @@ import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as neede
 import {
   bulkInsertItems,
   getAllContacts,
+  getCollectionItems,
+  getContactsItem,
   replaceDataItemReferences,
   updateDataItem,
 } from '@app/wixUtils/client-side';
@@ -420,6 +422,55 @@ export default function DashboardProjects() {
 
     console.log('debug222->infoPagesToCreate', infoPagesToCreate);
   };
+  const handleCreatePosts = async () => {
+    const allPosts = await getCollectionItems('contact117');
+    console.log('debug222->allPosts', allPosts);
+
+    const publishedPosts = allPosts.filter(
+      (post: any) => post?.data?.publish === true
+    );
+
+    console.log('debug222->publishedPosts', publishedPosts);
+
+    for (let i = 0; i < 1; i++) {
+      console.log('debug222->Migrating Item', i);
+      console.log('debug222->item=', publishedPosts[i]);
+
+      const authorId = publishedPosts?.[i]?.data?.author;
+
+      const authorContactItem = await getContactsItem(authorId);
+      console.log('debug222->authorContactItem', authorContactItem);
+
+      const authorTag = tags.find(
+        (tag) =>
+          tag.name ===
+          authorContactItem?.info?.name?.first +
+            ' ' +
+            authorContactItem?.info?.name?.last
+      );
+      console.log('debug222->authorTag', authorTag);
+
+      const authorTagId = authorTag?._id;
+      console.log('debug222->authorTagId', authorTagId);
+
+      const postPageToMigrate = {
+        data: {
+          title: publishedPosts?.[i]?.lastName2
+          websiteLink:
+            member?.contact?.customFields?.['custom.website-link']?.value || '',
+          linkedinLink:
+            member?.contact?.customFields?.['custom.linkedin']?.value || '',
+          slug: slug,
+        },
+      };
+    }
+
+    // console.log('debug222->filteredMembers', filteredMembers);
+
+    // let infoPagesToCreate = [];
+
+    // console.log('debug222->infoPagesToCreate', infoPagesToCreate);
+  };
 
   return (
     <div
@@ -521,9 +572,9 @@ export default function DashboardProjects() {
                   'block border-0 mr-4 focus:ring-purple-300'
                 )}
                 pill
-                onClick={handleCreateAccounts}
+                onClick={handleCreatePosts}
               >
-                Create Accounts
+                Create Posts
               </Button>
             </div>
           </div>
