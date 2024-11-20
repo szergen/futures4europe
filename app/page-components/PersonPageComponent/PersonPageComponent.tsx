@@ -593,8 +593,13 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // console.log('postPages', postPages);
   const internalLinks = postPages
     ?.filter((page) => {
-      return page?.data?.author?.find(
-        (item: TagProps) => item?.name === personData?.personTag?.name
+      return (
+        page?.data?.author?.find(
+          (item: TagProps) => item?.name === personData?.personTag?.name
+        ) ||
+        page?.data?.projectResultAuthor?.find(
+          (item: TagProps) => item?.name === personData?.personTag?.name
+        )
       );
     })
     ?.map((link) => link?.data);
