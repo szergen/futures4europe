@@ -13,11 +13,8 @@ import {
   Modal,
 } from 'flowbite-react';
 import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
-import { useWixModules } from '@wix/sdk-react';
-import { authentication } from '@wix/members';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Link from 'next/link';
-import { items } from '@wix/data';
 import { triggerForgotPasswordMail } from '@app/wixUtils/client-side';
 
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
