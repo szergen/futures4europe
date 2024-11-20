@@ -258,7 +258,7 @@ const getContactsItem = async (itemId: string) => {
   }
 };
 
-const getContactsItemByEmail = async (itemId: string) => {
+const getContactsItemByEmail = async (email: string) => {
   try {
     const response = await fetch('/api/getContactsItemByEmail', {
       method: 'POST',
@@ -276,6 +276,30 @@ const getContactsItemByEmail = async (itemId: string) => {
     return updatedItem;
   } catch (error) {
     console.error(`Error getting contacts item for itemId: ${itemId}`, error);
+  }
+};
+
+const triggerForgotPasswordMail = async (
+  email: string,
+  redirectUrl: string
+) => {
+  try {
+    const response = await fetch('/api/forgotPassword', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, redirectUrl }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to sendPassword Reset Mail');
+    }
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    console.error(`Error sedinding password reset mail for : ${email}`, error);
   }
 };
 
@@ -355,4 +379,5 @@ export {
   getContactsItemByEmail,
   subscribeToNewsletter,
   bulkRemoveItems,
+  triggerForgotPasswordMail,
 };

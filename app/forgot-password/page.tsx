@@ -18,13 +18,14 @@ import { authentication } from '@wix/members';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Link from 'next/link';
 import { items } from '@wix/data';
+import { triggerForgotPasswordMail } from '@app/wixUtils/client-side';
 
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
 
 export default function ForgotPassword() {
   const [error, setError] = useState('');
   // const router = useRouter();
-  const { sendSetPasswordEmail } = useWixModules(authentication);
+  // const { sendSetPasswordEmail,  } = useWixModules(authentication);
   // const { insertDataItem } = useWixModules(items);
 
   const [captchaToken, setCaptchaToken] = useState('');
@@ -40,11 +41,13 @@ export default function ForgotPassword() {
     try {
       setShowAccountCreatedModal(true);
       const email = event?.target?.email?.value;
+      const redirectUrl = window.location.origin + '/login';
+      console.log('redirectUrl', redirectUrl);
 
       console.log('email', email);
 
       console.log('captchaToken', captchaToken);
-      const response = await sendSetPasswordEmail(email);
+      const response = await triggerForgotPasswordMail(email, redirectUrl);
       console.log('response', response);
       setIsMailSent(true);
     } catch (err) {
