@@ -51,6 +51,18 @@ const nextConfig = {
         destination: '/project/OurFutures',
         permanent: true,
       },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'redirectUrl',
+          },
+        ],
+        destination: 'https://legacy.futures4europe.eu/:path*',
+        permanent: false,
+        statusCode: 302,
+      },
     ];
   },
 };
