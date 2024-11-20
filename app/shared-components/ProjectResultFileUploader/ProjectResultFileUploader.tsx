@@ -47,7 +47,7 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
       setIsLoadingInProgress(false);
       return;
     }
-    if (file && file.size > 10 * 1024 * 1024) {
+    if (file && file.size > 30 * 1024 * 1024) {
       setIsValidState(false);
       event.target.value = ''; // clear the selected file
       setIsLoadingInProgress(false);
@@ -189,12 +189,12 @@ const ProjectResultFileUploader: React.FC<ProjectResultFileUploaderProps> = ({
         {uploadedFile?.name || 'No file selected'}
       </p>
       <p className="text-xs w-full text-gray-500 dark:text-gray-400">
-        PDF (MAX. 10MB)
+        PDF (MAX. 30MB)
       </p>
       {!isValidState && (
         <Alert color="failure" icon={HiInformationCircle} className="my-2">
           <span className="font-small">
-            {errorMessage || 'File is larger than 10MB. Please try again.'}
+            {errorMessage || 'File is larger than 30MB. Please try again.'}
           </span>
         </Alert>
       )}
