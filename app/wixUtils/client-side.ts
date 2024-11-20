@@ -258,7 +258,7 @@ const getContactsItem = async (itemId: string) => {
   }
 };
 
-const getContactsItemByEmail = async (email: string) => {
+const getContactsItemByEmail = async (itemId: string) => {
   try {
     const response = await fetch('/api/getContactsItemByEmail', {
       method: 'POST',
