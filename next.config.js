@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
+const scheduleCronJobs = require('./cron');
+
 const nextConfig = {
   env: {},
+  webpack(config) {
+    scheduleCronJobs();
+    return config;
+  },
   reactStrictMode: false,
   swcMinify: true,
   eslint: {
@@ -18,6 +24,8 @@ const nextConfig = {
       '0bbe2e34-e503-441a-af9e-4fc70c17e6af.usrfiles.com',
       'img.youtube.com',
       'avatar.iran.liara.run',
+      'graph.facebook.com',
+      'lh3.googleusercontent.com',
     ],
     formats: ['image/webp'],
   },
@@ -42,6 +50,18 @@ const nextConfig = {
         source: '/ourfutures',
         destination: '/project/OurFutures',
         permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'redirectUrl',
+          },
+        ],
+        destination: 'https://legacy.futures4europe.eu/:path*',
+        permanent: false,
+        statusCode: 302,
       },
     ];
   },

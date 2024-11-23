@@ -35,6 +35,7 @@ import {
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { members } from '@wix/members';
+import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -572,6 +573,8 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
+    await refetchTags();
+    await refetchInfoPages();
     await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
@@ -590,8 +593,13 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // console.log('postPages', postPages);
   const internalLinks = postPages
     ?.filter((page) => {
-      return page?.data?.author?.find(
-        (item: TagProps) => item?.name === personData?.personTag?.name
+      return (
+        page?.data?.author?.find(
+          (item: TagProps) => item?.name === personData?.personTag?.name
+        ) ||
+        page?.data?.projectResultAuthor?.find(
+          (item: TagProps) => item?.name === personData?.personTag?.name
+        )
       );
     })
     ?.map((link) => link?.data);
@@ -968,8 +976,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #endregion
 
     // Revalidate the cache for the page
-    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
+    await refetchTags();
+    await refetchInfoPages();
     handleUserDataRefresh();
+    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);

@@ -32,6 +32,7 @@ import { useRouter } from 'next/navigation';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { sanitizeTitleForSlug } from '../PageComponents.utils';
+import { refetchPosts, refetchTags } from '@app/utils/refetch-utils';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -422,6 +423,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
+    await refetchTags();
+    await refetchPosts();
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
 
@@ -624,7 +627,10 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
+    await refetchTags();
+    await refetchPosts();
     await revalidateDataItem(`/post/${newPostSlug}`);
+
     handleUserDataRefresh();
 
     setIsSaveInProgress(false);
@@ -693,7 +699,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       );
       if (defaultAuthorTag) {
         updatePostDataBasedOnKeyValue('authors', [defaultAuthorTag]);
-        updatePostDataBasedOnKeyValue('projectAuthors', [defaultAuthorTag]);
+        // updatePostDataBasedOnKeyValue('projectAuthors', [defaultAuthorTag]);
       }
       // console.log('debug1->personInfoTag', personInfoTag);
       // if (personInfoTag) {
