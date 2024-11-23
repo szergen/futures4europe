@@ -18,6 +18,8 @@ export type MiniPagePostProps = {
   projectFunded?: Array<TagProps>;
   projectStartDate?: string;
   projectEndDate?: string;
+  eventStartDate?: string;
+  eventEndDate?: string;  
   organisationAffiliations?: Array<{ organisation: string; role: string }>;
   organisationEstablishedDate?: string;
   date?: string;
@@ -45,6 +47,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   projectFunded,
   projectStartDate,
   projectEndDate,
+  eventStartDate,
+  eventEndDate,
   organisationAffiliations,
   organisationEstablishedDate,
   date,
@@ -63,6 +67,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
   // TODO @alex de verificat
   // console.log('pageTypeTag' + JSON.stringify(pageTypeTag));
   // console.log('pageType', pageTypeTag);
+  console.log('eventType', JSON.stringify(eventStartDate));  
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   dayjs.extend(relativeTime);
@@ -111,6 +116,12 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
             <span className={classNames(style.projectDates)}>
               {dayjs(projectStartDate).format('MMMM YYYY')} -{' '}
               {dayjs(projectEndDate).format('MMMM YYYY')}
+            </span>
+          )}
+          {eventStartDate && eventEndDate && (
+            <span className={classNames(style.projectDates)}>
+              {dayjs(eventStartDate).format('MMMM YYYY')} -{' '}
+              {dayjs(eventEndDate).format('MMMM YYYY')}
             </span>
           )}
         </Typography>
