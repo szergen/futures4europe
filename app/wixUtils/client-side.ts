@@ -299,6 +299,30 @@ const getContactsItemByEmail = async (itemId: string) => {
   }
 };
 
+const triggerForgotPasswordMail = async (
+  email: string,
+  redirectUrl: string
+) => {
+  try {
+    const response = await fetch('/api/forgotPassword', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, redirectUrl }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to sendPassword Reset Mail');
+    }
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    console.error(`Error sedinding password reset mail for : ${email}`, error);
+  }
+};
+
 const generateFileUploadUrl = async (
   mimeType: string,
   options: Record<string, any>
@@ -376,4 +400,5 @@ export {
   subscribeToNewsletter,
   bulkRemoveItems,
   getAllContacts,
+  triggerForgotPasswordMail,
 };
