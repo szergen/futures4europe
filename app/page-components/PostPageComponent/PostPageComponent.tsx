@@ -99,7 +99,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     title: post?.data?.title,
     pageType: post?.data?.pageTypes,
     subtitle: post?.data?.subtitle,
-    updatedDate: post?.data?._updatedDate,
+    updatedDate:
+      post?.data?.postPublicationDate || post?.data?._updatedDate?.['$date'],
     countryTag: post?.data?.countryTag[0],
     recommendations: {
       number: post?.data?.recomendations,
@@ -780,8 +781,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         {!isEditModeOn && (
           <section className="post-meta">
             <Typography tag="p" className="text-sm text-gray-400">
-              Edited{' '}
-              {formatDate(postData?.updatedDate?.['$date']?.toLocaleString())}
+              Published: {formatDate(postData?.updatedDate?.toLocaleString())}
             </Typography>
           </section>
         )}
