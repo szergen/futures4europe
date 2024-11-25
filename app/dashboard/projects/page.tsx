@@ -455,7 +455,7 @@ export default function DashboardProjects() {
 
       const postPageToMigrate = {
         data: {
-          title: publishedPosts?.[i]?.lastName2
+          title: publishedPosts?.[i]?.lastName2,
           websiteLink:
             member?.contact?.customFields?.['custom.website-link']?.value || '',
           linkedinLink:
