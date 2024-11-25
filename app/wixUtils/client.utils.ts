@@ -44,4 +44,53 @@ async function uploadFileToWix(
   }
 }
 
-export { uploadFileToWix };
+function createElementFromNode(node) {
+  switch (node.type) {
+    case 'PARAGRAPH': {
+      const textContent = node.nodes
+        .map((childNode) =>
+          childNode.type === 'TEXT' ? childNode.textData.text : ''
+        )
+        .join('');
+      return `<p>${textContent}</p>`;
+    }
+    case 'BULLETED_LIST': {
+      const listItems = node.nodes
+        .map((listItem) =>
+          listItem.nodes
+            .map((paragraph) =>
+              paragraph.type === 'PARAGRAPH'
+                ? createElementFromNode(paragraph)
+                : ''
+            )
+            .join('')
+        )
+        .map((content) => `<li>${content}</li>`)
+        .join('');
+      return `<ul>${listItems}</ul>`;
+    }
+    case 'ORDERED_LIST': {
+      const listItems = node.nodes
+        .map((listItem) =>
+          listItem.nodes
+            .map((paragraph) =>
+              paragraph.type === 'PARAGRAPH'
+                ? createElementFromNode(paragraph)
+                : ''
+            )
+            .join('')
+        )
+        .map((content) => `<li>${content}</li>`)
+        .join('');
+      return `<ol>${listItems}</ol>`;
+    }
+    default:
+      return '';
+  }
+}
+
+function generateHtmlFromRichContent(richContent) {
+  return richContent.nodes.map(createElementFromNode).join('');
+}
+
+export { uploadFileToWix, generateHtmlFromRichContent };
