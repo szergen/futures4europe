@@ -6,7 +6,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
     case 'post':
       return {
         title: item?.title,
-        date: item?._updatedDate?.$date,
+        date: item?.postPublicationDate || item?._createdDate?.['$date'],
         image:
           item?.projectResultMedia?.thumbnail ||
           item?.postImage1?.url ||
@@ -49,7 +49,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         pageTypeTag: item.pageTypes[0],
         popularity: item?.pageTypes[0]?.popularity,
         subtitle: item?.subtitle,
-        date: item?._createdDate?.$date,
+        date: item?.postPublicationDate || item?._createdDate?.['$date'],
         editDate: item?._updatedDate?.$date,
         image:
           item?.projectResultMedia?.thumbnail ||
@@ -71,7 +71,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
         pageTypeTag: item.pageTypes[0],
         popularity: item?.pageTypes[0]?.popularity,
         subtitle: item?.subtitle,
-        date: item?._createdDate?.$date,
+        date: item?.postPublicationDate || item?._createdDate?.['$date'],
         editDate: item?._updatedDate?.$date,
         image:
           item?.projectResultMedia?.thumbnail ||
@@ -126,7 +126,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
     default:
       return {
         title: item?.title,
-        date: item?._updatedDate?.$date,
+        date: item?.postPublicationDate || item?._createdDate?.['$date'],
         image:
           item?.projectResultMedia?.thumbnail ||
           item?.postImage1?.url ||
