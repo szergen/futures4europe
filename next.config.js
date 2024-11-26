@@ -634,6 +634,89 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/projects/the-future-of-luxembourgs-economy-by-2050',
+        destination:
+          '/post/vision-eco2050-the-future-of-the-economy-by-2050-following-the-example-of-luxembourg-xtb7n',
+        permanent: true,
+      },
+      {
+        source:
+          '/projects/anticipinnov-anticipation-and-monitoring-of-emerging-technologies-and-disruptive-innovation',
+        destination: '/post/everybody-is-looking-into-the-future-rj8pw',
+        permanent: true,
+      },
+      {
+        source:
+          '/projects/longterm-implications-of-the-digital-transition-for-farmers-and-rural-communities',
+        destination: '/post/digital-transition-u3r3n',
+        permanent: true,
+      },
+      {
+        source:
+          '/projects/reschape-reshaping-supply-chains-for-a-positive-social-impact',
+        destination:
+          '/project/reshaping-supply-chains-for-a-positive-social-impact-nn65i',
+        permanent: true,
+      },
+      {
+        source: '/projects/futures-garden',
+        destination: '/project/Futures_Garden_bzm8d',
+        permanent: true,
+      },
+      {
+        source: '/projects/euarenas',
+        destination: '/project/euarenas-vi8id',
+        permanent: true,
+      },
+      {
+        source: '/projects/futures-consciousness-scale',
+        destination: '/project/futures-consciousness-scale-dmghg',
+        permanent: true,
+      },
+      {
+        source: '/projects/futures-of-innovation-and-ip-regulation',
+        destination:
+          '/post/horizon-futures-watch-workshop-7-futures-of-innovation-and-ip-regulation-w2qss',
+        permanent: true,
+      },
+      {
+        source: '/projects/futures-of-green-skills-and-jobs-in-europe-2050',
+        destination:
+          '/post/futures-of-green-skills-and-jobs-in-europe-in-2050-8phsp',
+        permanent: true,
+      },
+      {
+        source: '/projects/global-futures-of-climate-online-course',
+        destination: '/post/global-futures-of-climate-vv1f2',
+        permanent: true,
+      },
+      {
+        source:
+          '/projects/iportunus-houses-kickstart-a-local-mobility-host-network-for-artists-cultural-professionals-in-allcreative-europe-countries',
+        destination: '/project/i-portunus-houses-h3g35',
+        permanent: true,
+      },
+      {
+        source: '/projects/fedora',
+        destination: '/project/fedora-jyedo',
+        permanent: true,
+      },
+      {
+        source: '/projects/future-forward',
+        destination: '/project/future-forward-akc5m',
+        permanent: true,
+      },
+      {
+        source: '/projects/organictargets4eu',
+        destination: '/project/organictargets4eu-0ai6d',
+        permanent: true,
+      },
+      {
+        source: '/projects/musae',
+        destination: '/project/musae-8xmvc',
+        permanent: true,
+      },
+      {
         source: '/:path*',
         has: [
           {

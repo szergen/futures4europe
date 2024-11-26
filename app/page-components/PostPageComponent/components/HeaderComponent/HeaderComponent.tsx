@@ -386,16 +386,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           </div>
         }
         {/* Recommandations */}
-        <div className={classNames(style.recommandations)}>
+        {/* <div className={classNames(style.recommandations)}>
           <Typography tag="p" className="text-xs text-gray-400">
             Recommended by {post.recommendations?.number ?? 0}{' '}
             {post.recommendations?.number && post.recommendations.number < 1
               ? 'person'
               : 'persons'}
           </Typography>
-        </div>
+        </div> */}
         {/* Views */}
-        {!isEditModeOn && (
+        {/* {!isEditModeOn && (
           <Typography
             data-after="2153"
             tag="p"
@@ -403,9 +403,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           >
             {post.views} views
           </Typography>
-        )}
+        )} */}
       </div>
-      {!isEditModeOn && <Button className="h-9">Recommend</Button>}
+      {/* {!isEditModeOn && <Button className="h-9">Recommend</Button>} */}
     </div>
   );
 };

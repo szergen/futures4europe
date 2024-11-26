@@ -781,7 +781,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         {!isEditModeOn && (
           <section className="post-meta">
             <Typography tag="p" className="text-sm text-gray-400">
-              Published: {formatDate(postData?.updatedDate?.toLocaleString())}
+              Page creation date:{' '}
+              {formatDate(postData?.updatedDate?.toLocaleString())}
             </Typography>
           </section>
         )}
