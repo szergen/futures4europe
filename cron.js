@@ -23,12 +23,12 @@ const scheduleCronJobs = () => {
           'Content-Type': 'application/json',
         },
       });
-      await fetch('http://localhost:3000/api/affiliations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      //   await fetch('http://localhost:3000/api/affiliations', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   });
       //   await fetch('http://localhost:3000/api/tags');
       //   await fetch('http://localhost:3000/api/affiliations');
       console.log('Collections fetched and cached successfully.');
