@@ -728,6 +728,11 @@ const nextConfig = {
         permanent: false,
         statusCode: 302,
       },
+      {
+        source: '/so/tr/:path*',
+        destination: 'https://legacy.futures4europe.eu/so/tr/:path*',
+        permanent: true,
+      },
     ];
   },
 };
