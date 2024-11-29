@@ -435,7 +435,7 @@ export default function DashboardProjects() {
   };
 
   const handleCreatePosts = async () => {
-    const allPosts = await getCollectionItems('contact117');
+    const allPosts = await getCollectionItems('contact116');
     console.log('debug222->allPosts', allPosts);
 
     const publishedPosts = await allPosts.filter(
@@ -443,13 +443,15 @@ export default function DashboardProjects() {
     );
 
     console.log('debug222->publishedPosts', publishedPosts);
-    let extractedRedirects = [];
+    // let extractedRedirects = [];
+    let extractedPagesWithOwnerTags = [];
 
     for (let i = 0; i < publishedPosts.length; i++) {
+      // for (let i = 0; i < 4; i++) {
       console.log('debug222->Migrating Item', i);
       console.log('debug222->item=', publishedPosts[i]);
 
-      const authorId = publishedPosts?.[i]?.data?.author;
+      const authorId = publishedPosts?.[i]?.data?._owner;
 
       const authorContactItem = await getContactsItem(authorId);
       console.log('debug222->authorContactItem', authorContactItem);
@@ -463,130 +465,140 @@ export default function DashboardProjects() {
       );
       console.log('debug222->authorTag', authorTag);
 
-      const authorTagId = authorTag?._id;
-      console.log('debug222->authorTagId', authorTagId);
-      const cristinaMemberTagId = 'd5357589-65fd-456f-a506-7a4d1275451c';
-      const raduMemberTagId = '79e69062-1f22-4acd-bd5c-b4b0f17a3dad';
-      const postPageTypeTagId = 'cc31afc1-a304-465a-be3e-a887b68884f3';
-
-      const slug =
-        sanitizeTitleForSlug(publishedPosts?.[i]?.data.lastName2) +
-        '-' +
-        generateUniqueHash();
-
-      console.log(' ->slug', slug);
-
-      // #region upload post page
-
-      const html = publishedPosts?.[i]?.data?.['feldFurLangeAntwort']
-        ? sanitizeHtml(
-            publishedPosts?.[i]?.data?.['feldFurLangeAntwort']
-          )?.replace(/<p>\s*<br\s*\/?>\s*<\/p>/g, '')
-        : '';
-
-      const html2 = publishedPosts?.[i]?.data?.['blogTextRichContent2']
-        ? sanitizeHtml(
-            generateHtmlFromRichContent(
-              publishedPosts?.[i]?.data?.['blogTextRichContent2']
-            )?.toString()
-          )?.replace(/<p[^>]*>\s*<\/p>/g, '')
-        : '';
-      // console.log(
-      //   'html2 before',
-      //   publishedPosts?.[i]?.data?.['blogTextRichContent2']
-      // );
-
-      // console.log('html2', html2);
-
-      const postPageToMigrate = {
-        data: {
-          title: publishedPosts?.[i]?.data?.lastName2,
-          postPublicationDate: publishedPosts?.[
-            i
-          ]?.data?._createdDate?.$date?.slice(0, 10),
-          slug: slug,
-          postContentRIch1: publishedPosts?.[i]?.data?.['copyOfProjectTitle']
-            ? '<p>' + publishedPosts?.[i]?.data?.['copyOfProjectTitle'] + '</p>'
-            : '<p></p>\n',
-          postImage1: getImageUrlForMedia(
-            publishedPosts?.[i]?.data?.['fileUploadField']
-          ),
-          // postContentRIch2: publishedPosts?.[i]?.data?.['feldFurLangeAntwort']
-          //   ?.replace(`<p class=\"font_8\"><br></p>\n`, '')
-          //   ?.replace(`<p class=\"font_8\"><br></p>`, '')
-          //   ?.replace('<p class="font_8"><br></p>', ''),
-          postContentRIch2: html + html2,
-        },
-      };
-
-      console.log('debug222->postPageToMigrate', postPageToMigrate);
-
-      const uploadedPostPage = await bulkInsertItems('PostPages', [
-        postPageToMigrate,
-      ]);
-
-      console.log('debug222->uploadedPostPage', uploadedPostPage);
-      const postPageId = uploadedPostPage?.results?.[0]?.itemMetadata?._id;
-      console.log('debug222->infoPageId', postPageId);
-
-      // // #endregion
-
-      // // #region extract redirect for the page
-      extractedRedirects.push({
-        source: publishedPosts?.[i]?.data?.['link-blogs-1-lastName2'],
-        destination: '/post/' + slug,
-        permanent: true,
+      const authorTagName = authorTag?.name;
+      console.log('debug222->authorTagName', authorTagName);
+      extractedPagesWithOwnerTags.push({
+        title: publishedPosts[i]?.data?.lastName2,
+        ownerId: authorId,
+        ownerTagName: authorTagName,
       });
-      // // #endregion
+      // const cristinaMemberTagId = 'd5357589-65fd-456f-a506-7a4d1275451c';
+      // const raduMemberTagId = '79e69062-1f22-4acd-bd5c-b4b0f17a3dad';
+      // const postPageTypeTagId = 'cc31afc1-a304-465a-be3e-a887b68884f3';
 
-      // // #region page type tag - Post
-      if (postPageId && postPageTypeTagId) {
-        const updatedPageType = await replaceDataItemReferences(
-          'PostPages',
-          [postPageTypeTagId],
-          'pageTypes',
-          postPageId
-        );
-        console.log('updatedPageType', updatedPageType);
-      }
-      // // #endregion
+      // const slug =
+      //   sanitizeTitleForSlug(publishedPosts?.[i]?.data.lastName2) +
+      //   '-' +
+      //   generateUniqueHash();
 
-      // // #region author tag - authorTagId
-      if (postPageId && authorTagId) {
-        const updatedPageType = await replaceDataItemReferences(
-          'PostPages',
-          [authorTagId],
-          'author',
-          postPageId
-        );
-        console.log('updatedPageType', updatedPageType);
-      }
+      // console.log(' ->slug', slug);
 
-      // // #endregion
+      // // #region upload post page
 
-      // // #region page owner - authorTagId, Cristina, Radu TODO: add Cristina and Radu fallback
-      if (postPageId && authorTagId) {
-        const updatedPageType = await replaceDataItemReferences(
-          'PostPages',
-          [authorTagId, cristinaMemberTagId, raduMemberTagId],
-          'pageOwner',
-          postPageId
-        );
-        console.log('updatedPageType', updatedPageType);
-      } else {
-        const updatedPageType = await replaceDataItemReferences(
-          'PostPages',
-          [cristinaMemberTagId, raduMemberTagId],
-          'pageOwner',
-          postPageId
-        );
-        console.log('updatedPageType', updatedPageType);
-      }
+      // const html = publishedPosts?.[i]?.data?.['feldFurLangeAntwort']
+      //   ? sanitizeHtml(
+      //       publishedPosts?.[i]?.data?.['feldFurLangeAntwort']
+      //     )?.replace(/<p>\s*<br\s*\/?>\s*<\/p>/g, '')
+      //   : '';
+
+      // const html2 = publishedPosts?.[i]?.data?.['blogTextRichContent2']
+      //   ? sanitizeHtml(
+      //       generateHtmlFromRichContent(
+      //         publishedPosts?.[i]?.data?.['blogTextRichContent2']
+      //       )?.toString()
+      //     )?.replace(/<p[^>]*>\s*<\/p>/g, '')
+      //   : '';
+      // // console.log(
+      // //   'html2 before',
+      // //   publishedPosts?.[i]?.data?.['blogTextRichContent2']
+      // // );
+
+      // // console.log('html2', html2);
+
+      // const postPageToMigrate = {
+      //   data: {
+      //     title: publishedPosts?.[i]?.data?.lastName2,
+      //     postPublicationDate: publishedPosts?.[
+      //       i
+      //     ]?.data?._createdDate?.$date?.slice(0, 10),
+      //     slug: slug,
+      //     postContentRIch1: publishedPosts?.[i]?.data?.['copyOfProjectTitle']
+      //       ? '<p>' + publishedPosts?.[i]?.data?.['copyOfProjectTitle'] + '</p>'
+      //       : '<p></p>\n',
+      //     postImage1: getImageUrlForMedia(
+      //       publishedPosts?.[i]?.data?.['fileUploadField']
+      //     ),
+      //     // postContentRIch2: publishedPosts?.[i]?.data?.['feldFurLangeAntwort']
+      //     //   ?.replace(`<p class=\"font_8\"><br></p>\n`, '')
+      //     //   ?.replace(`<p class=\"font_8\"><br></p>`, '')
+      //     //   ?.replace('<p class="font_8"><br></p>', ''),
+      //     postContentRIch2: html + html2,
+      //   },
+      // };
+
+      // console.log('debug222->postPageToMigrate', postPageToMigrate);
+
+      // const uploadedPostPage = await bulkInsertItems('PostPages', [
+      //   postPageToMigrate,
+      // ]);
+
+      // console.log('debug222->uploadedPostPage', uploadedPostPage);
+      // const postPageId = uploadedPostPage?.results?.[0]?.itemMetadata?._id;
+      // console.log('debug222->infoPageId', postPageId);
+
+      // // // #endregion
+
+      // // // #region extract redirect for the page
+      // extractedRedirects.push({
+      //   source: publishedPosts?.[i]?.data?.['link-blogs-1-lastName2'],
+      //   destination: '/post/' + slug,
+      //   permanent: true,
+      // });
+      // // // #endregion
+
+      // // // #region page type tag - Post
+      // if (postPageId && postPageTypeTagId) {
+      //   const updatedPageType = await replaceDataItemReferences(
+      //     'PostPages',
+      //     [postPageTypeTagId],
+      //     'pageTypes',
+      //     postPageId
+      //   );
+      //   console.log('updatedPageType', updatedPageType);
+      // }
+      // // // #endregion
+
+      // // // #region author tag - authorTagId
+      // if (postPageId && authorTagId) {
+      //   const updatedPageType = await replaceDataItemReferences(
+      //     'PostPages',
+      //     [authorTagId],
+      //     'author',
+      //     postPageId
+      //   );
+      //   console.log('updatedPageType', updatedPageType);
+      // }
+
+      // // // #endregion
+
+      // // // #region page owner - authorTagId, Cristina, Radu TODO: add Cristina and Radu fallback
+      // if (postPageId && authorTagId) {
+      //   const updatedPageType = await replaceDataItemReferences(
+      //     'PostPages',
+      //     [authorTagId, cristinaMemberTagId, raduMemberTagId],
+      //     'pageOwner',
+      //     postPageId
+      //   );
+      //   console.log('updatedPageType', updatedPageType);
+      // } else {
+      //   const updatedPageType = await replaceDataItemReferences(
+      //     'PostPages',
+      //     [cristinaMemberTagId, raduMemberTagId],
+      //     'pageOwner',
+      //     postPageId
+      //   );
+      //   console.log('updatedPageType', updatedPageType);
+      // }
 
       // // #endregion
 
       // console.log('debug222->postPageToMigrate', postPageToMigrate);
     }
+
+    console.log(
+      'debug222->extractedPagesWithOwnerTags',
+      extractedPagesWithOwnerTags
+    );
 
     // console.log('debug222->extractedRedirects', extractedRedirects);
 
