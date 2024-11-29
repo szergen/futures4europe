@@ -6,7 +6,7 @@ import {
   // getCollectionItemByTitle,
   // getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
-import MiniPagesListComponent from '@app/page-components/shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
+// import MiniPagesListComponent from '@app/page-components/shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 import MiniPagesListItemPost from '@app/page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import Hero from '@app/shared-components/Hero/Hero';
 import style from './page.module.css';
@@ -46,8 +46,8 @@ export default async function Pages({ params }: any) {
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
 
-  const postPages = postCollection.map((item) => item.data);
-  const infoPages = infoPagesCollection.map((item) => item.data);
+  const postPages = postCollection?.map((item) => item.data);
+  const infoPages = infoPagesCollection?.map((item) => item.data);
 
   //Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
