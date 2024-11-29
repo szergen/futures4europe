@@ -938,7 +938,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Registration Date{' '}
+            Page creation date:{' '}
             {new Date(project?.registrationDate)?.toLocaleString()}
           </Typography>
         </section>
