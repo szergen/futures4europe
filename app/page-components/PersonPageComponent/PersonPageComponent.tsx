@@ -77,12 +77,15 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
     // #endregion
 
-    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    const userDetailsIds = userDetails?.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
     userDetailsIds.find((id) => {
       if (person?.data?._owner === id) {
         setIsPageOwnedByUser(true);
       }
     });
+
     if (isNewPage && isLoggedIn) {
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);

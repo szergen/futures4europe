@@ -79,7 +79,9 @@ function OrganisationPageComponent({
     }
     // #endregion
 
-    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    const userDetailsIds = userDetails?.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
     userDetailsIds.find((id) => {
       if (organisation?.data?._owner === id) {
         setIsPageOwnedByUser(true);
