@@ -82,7 +82,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // #endregion
-    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    const userDetailsIds = userDetails?.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
     userDetailsIds.find((id) => {
       if (post?.data?._owner === id) {
         setIsPageOwnedByUser(true);

@@ -79,7 +79,9 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
     // #endregion
 
-    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    const userDetailsIds = userDetails?.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
     userDetailsIds.find((id) => {
       if (project?.data?._owner === id) {
         setIsPageOwnedByUser(true);
