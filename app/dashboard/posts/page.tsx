@@ -25,13 +25,10 @@ export default function DashboardProjects() {
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
-    login,
     isLoggedIn,
     loading,
     userDetails,
     logout,
-    ownedInfoPages,
-    ownedPostPages,
     ownedPostPagesFetched,
     ownedInfoPagesFetched,
     handleUserDataRefresh,
@@ -220,9 +217,7 @@ export default function DashboardProjects() {
                     allOwnedPages
                       .filter(
                         (postPage) =>
-                          postPage?.data?.pageTypes[0]?.name !==
-                            'project result' &&
-                          postPage?.data?.pageTypes[0]?.name !== 'event'
+                          postPage?.data?.pageTypes[0]?.name === 'post'
                       )
                       .map((postPage, index) => (
                         <div

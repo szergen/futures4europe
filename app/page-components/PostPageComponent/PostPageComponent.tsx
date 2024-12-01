@@ -130,7 +130,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       post?.data?.postImage9,
       post?.data?.postImage10,
     ],
-    projectAuthors: post?.data?.projectResultAuthor,
+    projectAuthors: post?.data?.projectResultAuthor.length
+      ? post?.data?.projectResultAuthor
+      : post?.data?.author,
     people: post?.data?.people,
     foreSightMethods: post?.data?.methods,
     domains: post?.data?.domains,

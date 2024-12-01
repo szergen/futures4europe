@@ -94,7 +94,7 @@ const PAGE_TYPE_SORT_CONFIG: Record<SortConfigKey, PageTypeSortConfig> = {
     priority: 1,
   },
   [PageType.Post]: {
-    sortField: '_createdDate',
+    sortField: 'postPublicationDate',
     fallbackField: '_createdDate',
     priority: 1,
   },
