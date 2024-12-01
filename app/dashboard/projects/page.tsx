@@ -435,7 +435,7 @@ export default function DashboardProjects() {
   };
 
   const handleCreatePosts = async () => {
-    const allPosts = await getCollectionItems('contact116');
+    const allPosts = await getCollectionItems('contact117');
     console.log('debug222->allPosts', allPosts);
 
     const publishedPosts = await allPosts.filter(
