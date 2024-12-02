@@ -82,7 +82,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // #endregion
-    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    const userDetailsIds = userDetails?.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
     userDetailsIds.find((id) => {
       if (post?.data?._owner === id) {
         setIsPageOwnedByUser(true);
@@ -99,7 +101,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     title: post?.data?.title,
     pageType: post?.data?.pageTypes,
     subtitle: post?.data?.subtitle,
-    updatedDate: post?.data?._updatedDate,
+    updatedDate:
+      post?.data?.postPublicationDate || post?.data?._updatedDate?.['$date'],
     countryTag: post?.data?.countryTag[0],
     recommendations: {
       number: post?.data?.recomendations,
@@ -129,7 +132,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       post?.data?.postImage9,
       post?.data?.postImage10,
     ],
-    projectAuthors: post?.data?.projectResultAuthor,
+    projectAuthors: post?.data?.projectResultAuthor.length
+      ? post?.data?.projectResultAuthor
+      : post?.data?.author,
     people: post?.data?.people,
     foreSightMethods: post?.data?.methods,
     domains: post?.data?.domains,
@@ -780,8 +785,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         {!isEditModeOn && (
           <section className="post-meta">
             <Typography tag="p" className="text-sm text-gray-400">
-              Edited{' '}
-              {formatDate(postData?.updatedDate?.['$date']?.toLocaleString())}
+              Page creation date:{' '}
+              {formatDate(postData?.updatedDate?.toLocaleString())}
             </Typography>
           </section>
         )}

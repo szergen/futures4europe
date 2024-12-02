@@ -79,7 +79,9 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
     // #endregion
 
-    const userDetailsIds = [userDetails.contactId, userDetails.accountId];
+    const userDetailsIds = userDetails?.accountId
+      ? [userDetails.contactId, userDetails.accountId]
+      : [userDetails.contactId];
     userDetailsIds.find((id) => {
       if (project?.data?._owner === id) {
         setIsPageOwnedByUser(true);
@@ -938,7 +940,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         {/* Timestamp */}
         <section className="post-meta">
           <Typography tag="p" className="text-sm text-gray-400">
-            Registration Date{' '}
+            Page creation date:{' '}
             {new Date(project?.registrationDate)?.toLocaleString()}
           </Typography>
         </section>

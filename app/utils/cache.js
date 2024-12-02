@@ -11,40 +11,65 @@ const cacheDir = path.join(process.cwd(), 'cache');
 //       })
 //     : Redis.fromEnv();
 const redis = Redis.fromEnv();
+const CHUNK_SIZE = 100;
+
+// export async function saveToCache(filename, data) {
+//   const keyBase = filename.replace('.json', '');
+//   const chunks = [];
+
+//   const keyname = filename?.replace('.json', '');
+//   console.log('Saving to cache:', keyname);
+//   const result = await redis.set(keyname, JSON.stringify(data));
+//   console.log('result:', result);
+
+//   if (result !== 'OK') {
+//     throw new Error(`Failed to update Edge Config: ${response.statusText}`);
+//   }
+//   // }
+// }
 
 export async function saveToCache(filename, data) {
-  // if (process.env.NEXT_PUBLIC_NODE_ENV === 'localhost') {
-  //   if (!fs.existsSync(cacheDir)) {
-  //     fs.mkdirSync(cacheDir);
-  //   }
-  //   console.log('Saving to cache:', filename);
-  //   console.log('cacheDir:', cacheDir);
-  //   fs.writeFileSync(path.join(cacheDir, filename), JSON.stringify(data));
-  // } else {
-  const keyname = filename?.replace('.json', '');
-  console.log('Saving to cache:', keyname);
-  const result = await redis.set(keyname, JSON.stringify(data));
-  console.log('result:', result);
+  const keyBase = filename.replace('.json', '');
+  const chunks = [];
+  console.log('Saving to cache: ', keyBase);
 
-  if (result !== 'OK') {
-    throw new Error(`Failed to update Edge Config: ${response.statusText}`);
+  for (let i = 0; i < data.length; i += CHUNK_SIZE) {
+    chunks.push(data.slice(i, i + CHUNK_SIZE));
   }
-  // }
+
+  for (let index = 0; index < chunks.length; index++) {
+    const chunkKey = `${keyBase}_chunk_${index}`;
+    const result = await redis.set(chunkKey, JSON.stringify(chunks[index]));
+    if (result !== 'OK') {
+      throw new Error(`Failed to save chunk ${index}: ${result}`);
+    }
+  }
+
+  // Save metadata about the number of chunks
+  await redis.set(`${keyBase}_chunks`, chunks.length.toString());
 }
 
+// export async function getFromCache(filename) {
+//   const keyname = filename?.replace('.json', '');
+//   console.log('Getting from cache:', keyname);
+//   return await redis.get(keyname);
+//   // }
+// }
 export async function getFromCache(filename) {
-  // if (process.env.NEXT_PUBLIC_NODE_ENV === 'localhost') {
-  //   const filePath = path.join(cacheDir, filename);
-  //   if (fs.existsSync(filePath)) {
-  //     const fileData = fs.readFileSync(filePath, 'utf8');
-  //     console.log('Getting from cache:', filename);
-  //     console.log('cacheDir:', cacheDir);
-  //     return JSON.parse(fileData);
-  //   }
-  //   return null;
-  // } else {
-  const keyname = filename?.replace('.json', '');
-  console.log('Getting from cache:', keyname);
-  return await redis.get(keyname);
-  // }
+  const keyBase = filename.replace('.json', '');
+  console.log('Getting from cache:', keyBase);
+  const chunkCount = parseInt(await redis.get(`${keyBase}_chunks`), 10);
+  const data = [];
+  // console.log('chunkCount:', chunkCount);
+
+  for (let index = 0; index < chunkCount; index++) {
+    const chunkKey = `${keyBase}_chunk_${index}`;
+    // console.log('chunkKey:', chunkKey);
+    const chunkData = await redis.get(chunkKey);
+    if (chunkData) {
+      data.push(...chunkData);
+    }
+  }
+
+  return data;
 }

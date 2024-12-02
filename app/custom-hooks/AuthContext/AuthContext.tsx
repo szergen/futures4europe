@@ -257,27 +257,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     let tempExtraOwnedPages = [] as any[];
-    const tempExtraInfoPages = infoPages?.filter((infoPage) => {
-      console.log('infoPages', infoPage);
-      if (
-        !!infoPage?.data?.pageOwner?.find(
-          (owner: any) => owner._id === userDetails.userTag?._id
-        )
-      ) {
-        tempExtraOwnedPages.push(infoPage);
-        return false;
-      }
-    });
-    const tempExtraPostPages = postPages?.filter((postPage) => {
-      if (
-        !!postPage?.data?.pageOwner?.find(
-          (owner: any) => owner._id === userDetails.userTag?._id
-        )
-      ) {
-        tempExtraOwnedPages.push(postPage);
-        return false;
-      }
-    });
+    // const tempExtraInfoPages = infoPages?.filter((infoPage) => {
+    //   // console.log('infoPages', infoPage);
+    //   if (
+    //     !!infoPage?.data?.pageOwner?.find(
+    //       (owner: any) => owner._id === userDetails.userTag?._id
+    //     )
+    //   ) {
+    //     tempExtraOwnedPages.push(infoPage);
+    //     return false;
+    //   }
+    // });
+    // const tempExtraPostPages = postPages?.filter((postPage) => {
+    //   if (
+    //     !!postPage?.data?.pageOwner?.find(
+    //       (owner: any) => owner._id === userDetails.userTag?._id
+    //     )
+    //   ) {
+    //     tempExtraOwnedPages.push(postPage);
+    //     return false;
+    //   }
+    // });
 
     // console.log('debug1->tempExtraOwnedPages', tempExtraOwnedPages);
 

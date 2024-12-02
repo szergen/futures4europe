@@ -25,13 +25,10 @@ export default function DashboardProjects() {
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
-    login,
     isLoggedIn,
     loading,
     userDetails,
     logout,
-    ownedInfoPages,
-    ownedPostPages,
     ownedPostPagesFetched,
     ownedInfoPagesFetched,
     handleUserDataRefresh,
@@ -220,9 +217,7 @@ export default function DashboardProjects() {
                     allOwnedPages
                       .filter(
                         (postPage) =>
-                          postPage?.data?.pageTypes[0]?.name !==
-                            'project result' &&
-                          postPage?.data?.pageTypes[0]?.name !== 'event'
+                          postPage?.data?.pageTypes[0]?.name === 'post'
                       )
                       .map((postPage, index) => (
                         <div
@@ -259,7 +254,10 @@ export default function DashboardProjects() {
                                   postPage?.data?.pageTypes[0]?.popularity
                                 }
                                 subtitle={postPage?.data?.subtitle}
-                                date={postPage?.data?._createdDate?.$date}
+                                date={
+                                  postPage?.data?.postPublicationDate ||
+                                  postPage?.data?._createdDate?.['$date']
+                                }
                                 editDate={postPage?.data?._updatedDate?.$date}
                                 image={
                                   postPage?.data?.projectResultMedia

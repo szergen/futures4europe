@@ -12,6 +12,14 @@ const TagLisInlineComponent = ({
   postPageTypes,
   isLoading,
 }) => {
+  // Add debug logs
+  // console.log('debug6->Props received:', {
+  //   infoPageType,
+  //   isLoading,
+  //   infoPageCount: infoPages?.length,
+  //   postPagesCount: postPages?.length,
+  // });
+
   const getTagsByType = (postPage) => {
     const firstPageType = postPage.data.pageTypes?.[0];
     if (firstPageType && postPage.data.title) {
@@ -60,6 +68,18 @@ const TagLisInlineComponent = ({
     );
   }
 
+  // Filter and log info pages
+  const filteredInfoPages =
+    infoPages?.filter(
+      (infoPage) => infoPage?.data?.pageTypes?.[0]?.name === infoPageType
+    ) || [];
+
+  // console.log('debug6->Filtered info pages:', {
+  //   infoPageType,
+  //   filteredCount: filteredInfoPages.length,
+  //   firstPage: filteredInfoPages[0]?.data,
+  // });
+
   return (
     <section className={style.tagListContainer}>
       {/* Info Pages Rendering Logic */}
@@ -79,26 +99,34 @@ const TagLisInlineComponent = ({
 
             const tagsToRender = tagTypeMap[infoPageType] || [];
 
-              return (
-                <div key={`${infoPage.data.title}-${index}`} className="flex">
-                  {tagsToRender.map((item, idx) =>
-                    item && item.name && item.picture ? (
-                      <Tag
-                        key={`${infoPage.data.title}-${item._id || idx}`}
-                        name={item.name}
-                        picture={item.picture}
-                        disableTooltip
-                        disablePopularityHover
-                        tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                          infoPage.data.pageTypes?.[0]?.name
-                        )}${infoPage.data.slug}`}
-                        tagType={item.tagType}
-                      />
-                    ) : null
-                  )}
-                </div>
-              );
-            })}
+            // console.log('debug6->Tags to render:', {
+            //   infoPageType,
+            //   pageTitle: infoPage.data.title,
+            //   tagsCount: tagsToRender.length,
+            //   tags: tagsToRender,
+            // });
+
+            return (
+              <div key={`${infoPage.data.title}-${index}`} className="flex">
+                {tagsToRender.map((item, idx) => {
+                  // console.log('debug6->Rendering tag:', { item });
+                  return item && item.name && item.picture ? (
+                    <Tag
+                      key={`${infoPage.data.title}-${item._id || idx}`}
+                      name={item.name}
+                      picture={item.picture}
+                      disableTooltip
+                      disablePopularityHover
+                      tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
+                        infoPage.data.pageTypes?.[0]?.name
+                      )}${infoPage.data.slug}`}
+                      tagType={item.tagType}
+                    />
+                  ) : null;
+                })}
+              </div>
+            );
+          })}
         </>
       )}
 
@@ -107,10 +135,10 @@ const TagLisInlineComponent = ({
         <>
           {filteredPostPages.map((postPage, index) => {
             const tags = getTagsByType(postPage);
-            console.log('debug6->Post tags:', {
-              postTitle: postPage.data.title,
-              tags,
-            });
+            // console.log('debug6->Post tags:', {
+            //   postTitle: postPage.data.title,
+            //   tags,
+            // });
 
               return (
                 <div
