@@ -428,7 +428,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
-    await refetchTags();
+    // await refetchTags();
     await refetchPosts();
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
