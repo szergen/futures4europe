@@ -320,7 +320,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 value
                   ? updateProjectDataOnKeyValue(
                       'projectFunded',
-                      tags?.filter((tag) => tag.name === 'EU funded')
+                      tags?.filter((tag) => tag.name === 'EU funded')[0]
                     )
                   : updateProjectDataOnKeyValue('projectFunded', []);
               }}
@@ -331,7 +331,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               {...tags?.filter((tag) => tag.name === 'EU funded')[0]}
               className="mb-1 ml-2"
             />
-            <span className="text-2xl">?</span>
+            {/* <span className="text-2xl">?</span> */}
           </div>
         )}
 
