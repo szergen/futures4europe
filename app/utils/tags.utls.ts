@@ -3,6 +3,7 @@ import { TagProps } from '@app/shared-components/Tag/Tag';
 export const containsId = (obj: { [x: string]: any } | null, id: any) => {
   if (typeof obj === 'object' && obj !== null) {
     for (const key in obj) {
+      if (key === 'pageOwner') return false;
       if (obj[key] === id) return true;
       if (containsId(obj[key], id)) return true;
     }
