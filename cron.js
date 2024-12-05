@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const fetch = require('node-fetch');
 
 const scheduleCronJobs = () => {
-  cron.schedule('*/15 * * * *', async () => {
+  cron.schedule('*/20 * * * *', async () => {
     try {
       console.log('Cron job running...');
       await fetch('http://localhost:3000/api/posts', {
