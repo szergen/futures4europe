@@ -4,16 +4,27 @@ export type CheckboxComponentProps = {
   id: string;
   defaultChecked?: boolean;
   label?: string;
+  onChangeHandler?: (checked: boolean) => void;
+  classNames?: string;
 };
 
 export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({
   defaultChecked,
   label,
+  onChangeHandler,
+  classNames,
 }) => {
   return (
     <div className="flex max-w-md flex-col gap-4" id="checkbox">
       <div className="flex items-center gap-2">
-        <Checkbox id="accept" defaultChecked={defaultChecked} />
+        <Checkbox
+          id="accept"
+          defaultChecked={defaultChecked}
+          onChange={(e) => {
+            onChangeHandler && onChangeHandler(e.target.checked);
+          }}
+          className={classNames}
+        />
         {label && (
           <Label htmlFor="accept" className="flex">
             {label}

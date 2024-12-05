@@ -14,6 +14,7 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
+import CheckboxComponent from '@app/shared-components/CheckboxComponent/CheckboxComponent';
 
 export type HeaderComponentProps = {
   project: {
@@ -299,20 +300,39 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Tag {...project.projectFunded} className="mb-1" />
         ) : (
-          <TagPicker
-            placeholder="Add a project type tag"
-            tags={tags?.filter((tag) => tag.tagType === 'project type')}
-            className="relative mt-2 mb-2"
-            selectedValue={project.projectFunded?.name || undefined}
-            updatePostData={(value) =>
-              updateProjectDataOnKeyValue('projectFunded', value)
-            }
-            tagType="project type"
-            onTagCreated={handleTagCreated}
-            newTagHeader="Create a new project type tag"
-            newTagType="Project type name"
-            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
-          />
+          // <TagPicker
+          //   placeholder="Add a project type tag"
+          //   tags={tags?.filter((tag) => tag.tagType === 'project type')}
+          //   className="relative mt-2 mb-2"
+          //   selectedValue={project.projectFunded?.name || undefined}
+          //   updatePostData={(value) =>
+          //     updateProjectDataOnKeyValue('projectFunded', value)
+          //   }
+          //   tagType="project type"
+          //   onTagCreated={handleTagCreated}
+          //   newTagHeader="Create a new project type tag"
+          //   newTagType="Project type name"
+          //   newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+          // />
+          <div className="flex items-center">
+            <CheckboxComponent
+              onChangeHandler={(value) => {
+                value
+                  ? updateProjectDataOnKeyValue(
+                      'projectFunded',
+                      tags?.filter((tag) => tag.name === 'EU funded')[0]
+                    )
+                  : updateProjectDataOnKeyValue('projectFunded', []);
+              }}
+              id="euFunded"
+              classNames="w-6 h-6 relative top-1"
+            />
+            <Tag
+              {...tags?.filter((tag) => tag.name === 'EU funded')[0]}
+              className="mb-1 ml-2"
+            />
+            {/* <span className="text-2xl">?</span> */}
+          </div>
         )}
 
         {/* Person domains */}
