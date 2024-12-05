@@ -632,7 +632,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
+    // await refetchTags();
     await refetchPosts();
     await revalidateDataItem(`/post/${newPostSlug}`);
 
