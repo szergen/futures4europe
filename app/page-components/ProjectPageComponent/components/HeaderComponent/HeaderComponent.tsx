@@ -14,6 +14,7 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
+import { useTagPopularity } from '@app/hooks/useTagPopularity';
 
 export type HeaderComponentProps = {
   project: {
@@ -77,20 +78,32 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post "';
     }
-    // const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
-    // if (!validTitleRegex.test(tempName)) {
-    //   return 'Title cannot contain multiple spaces or |';
-    // }
 
-    // const isTempTitleExisting = existingPostPagesTitles?.some(
-    //   (postPageTitle) =>
-    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    // );
-    // if (isTempTitleExisting) {
-    //   return 'Title already exists';
-    // }
+    const trimmedTitle = tempName.trim();
+    // Empty after trimming
+    if (trimmedTitle.length === 0) {
+      return 'Title cannot be only whitespace';
+    }
+    // Check if title starts or ends with space
+    if (trimmedTitle !== tempName) {
+      return 'Title cannot start or end with spaces';
+    }
+    // Check for excessive spaces
+    if (/\s{2,}/.test(trimmedTitle)) {
+      return 'Title cannot contain multiple consecutive spaces';
+    }
+    // Special characters check
+    const specialCharsRegex = /[<>{}[\]\\\/]/;
+    if (specialCharsRegex.test(trimmedTitle)) {
+      return 'Title cannot contain special characters like < > { } [ ] \\ /';
+    }
     return '';
   };
+
+    //TODO @ALEX de verificat currentTagPopularity 
+    const { getPopularity } = useTagPopularity();
+    const currentTagPopularity = getPopularity(project?.projectTag?.name);
+      
 
   // if is newPage, update the projectTag with the new tag created or selected
   // const [projectTag, setProjectTag] = useState(project?.projectTag);
@@ -161,7 +174,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             {project?.projectTag?.name}
             {/* Person Popularity */}
             <span
-              data-after={project?.projectTag?.popularity}
+              data-after={currentTagPopularity || ''}
               className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
             ></span>
           </Typography>

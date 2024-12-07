@@ -900,7 +900,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
-        <div>
+        <div className="flex justify-between">
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
@@ -925,13 +925,25 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
               onClick={() => {
                 setProjectData(defaultProjectData);
                 setIsEditModeOn(!isEditModeOn);
-                isNewPage && router.push(`/dashboard`);
+                isNewPage && router.push(`/dashboard/projects`);
               }}
               className="btn btn-edit"
             >
               Discard Changes
             </button>
           )}
+
+          {!isEditModeOn && (
+            <button
+              onClick={() => {
+                setIsEditModeOn(!isEditModeOn);
+                router.push(`/dashboard/projects`);
+              }}
+              className="btn btn-edit flex-end align-right"
+            >
+              Go back to dashboard
+            </button>
+          )}          
         </div>
       )}
       {/* Page Type Tag */}
