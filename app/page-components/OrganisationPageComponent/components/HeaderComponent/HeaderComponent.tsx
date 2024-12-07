@@ -14,6 +14,7 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
+import { useTagPopularity } from '@app/hooks/useTagPopularity';
 
 export type HeaderComponentProps = {
   organisation: {
@@ -70,17 +71,24 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       return 'Title cannot be "New Post"';
     }
 
-    // const validTitleRegex = /^[a-zA-Z0-9 ]+$/;
-    // if (!validTitleRegex.test(tempName)) {
-    //   return 'Title can only contain small characters, capital characters, numbers, and spaces';
-    // }
-    // const isTempTitleExisting = existingPostPagesTitles?.some(
-    //   (postPageTitle) =>
-    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    // );
-    // if (isTempTitleExisting) {
-    //   return 'Title already exists';
-    // }
+    const trimmedTitle = tempName.trim();
+    // Empty after trimming
+    if (trimmedTitle.length === 0) {
+      return 'Title cannot be only whitespace';
+    }
+    // Check if title starts or ends with space
+    if (trimmedTitle !== tempName) {
+      return 'Title cannot start or end with spaces';
+    }
+    // Check for excessive spaces
+    if (/\s{2,}/.test(trimmedTitle)) {
+      return 'Title cannot contain multiple consecutive spaces';
+    }
+    // Special characters check
+    const specialCharsRegex = /[<>{}[\]\\\/]/;
+    if (specialCharsRegex.test(trimmedTitle)) {
+      return 'Title cannot contain special characters like < > { } [ ] \\ /';
+    }
     return '';
   };
 
@@ -91,7 +99,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   );
 
   useEffect(() => {
-    console.log('project?.projectTag?.name', organisation?.organisationTag);
+    // console.log('project?.projectTag?.name', organisation?.organisationTag);
     // setProjectTag(project?.projectTag);
     setTagLine(organisation?.organisationTag?.tagLine || '');
   }, [organisation?.organisationTag]);
@@ -100,7 +108,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-  console.log('organisation', organisation);
+  //TODO @ALEX de verificat currentTagPopularity 
+  const { getPopularity } = useTagPopularity();
+  const currentTagPopularity = getPopularity(organisation?.organisationTag?.name);
+  
+
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -156,7 +168,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             {organisation?.organisationTag?.name}
             {/* Organisation Popularity */}
             <span
-              data-after={organisation?.organisationTag?.popularity}
+              data-after={currentTagPopularity || ''}
               className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
             ></span>
           </Typography>

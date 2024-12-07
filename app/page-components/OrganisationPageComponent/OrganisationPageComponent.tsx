@@ -71,7 +71,8 @@ function OrganisationPageComponent({
         (owner: any) => owner?._id === userDetails?.userTag?._id
       );
 
-    console.log('debug1->permissionCondition', permissionCondition);
+   // console.log('debug1->permissionCondition', permissionCondition);
+   //console.log('debug1->organisationData.pageOwner' + JSON.stringify(organisationData));
 
     if (permissionCondition) {
       setIsPageOwnedByUser(true);
@@ -853,7 +854,7 @@ function OrganisationPageComponent({
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
-        <div>
+        <div className="flex justify-between">
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
@@ -877,13 +878,26 @@ function OrganisationPageComponent({
               onClick={() => {
                 setOrganisationData(defaultOrganisationData);
                 setIsEditModeOn(!isEditModeOn);
-                isNewPage && router.push(`/dashboard`);
+                isNewPage && router.push(`/dashboard/organisations`);
               }}
               className="btn btn-edit"
             >
               Discard Changes
             </button>
           )}
+
+          {!isEditModeOn && (
+            <button
+              onClick={() => {
+                setIsEditModeOn(!isEditModeOn);
+                router.push(`/dashboard/projects`);
+              }}
+              className="btn btn-edit flex-end align-right"
+            >
+              Go back to dashboard
+            </button>
+          )}
+
         </div>
       )}
       {/* Page Type Tag */}
