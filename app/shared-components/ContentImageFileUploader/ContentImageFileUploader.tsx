@@ -79,7 +79,7 @@ const ContentImageFileUploader: React.FC<FileUploaderProps> = ({
     >
       <Label
         htmlFor="dropzone-file"
-        className="relative flex h-12 pr-4 w-full max-w-[600px] cursor-pointer items-center rounded-lg bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        className="relative flex h-12 pr-4 w-full max-w-[600px] cursor-pointer items-center rounded-lg bg-gray-200 hover:bg-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
       >
         {/* REVIEW: Removed the text to show like the design // Dont delete, maybe it will change in the future */}
         {/* <div className="flex items-center border-r-2  border-dashed border-gray-300 dark:border-gray-600 mr-4 px-4">
