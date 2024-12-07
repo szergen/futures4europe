@@ -28,6 +28,7 @@ export type TagPickerProps = {
   newTagHeader?: string;
   newTagType?: string;
   newTagTagline?: string;
+  showTagTagline?: boolean;
 };
 
 interface Option {
@@ -67,6 +68,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   newTagHeader,
   newTagType,
   newTagTagline,
+  showTagTagline = true
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -538,14 +540,17 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                   />
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="tagTagline">
+
+                  <Label htmlFor="tagTagline" style={{ display: showTagTagline ? 'block' : 'none' }}>
                     {newTagTagline || 'Tagline'}
                   </Label>
                   <TextInput
                     id="tagTagline"
                     value={tagTagline}
                     onChange={(e) => setTagTagline(e.target.value)}
+                    style={{ display: showTagTagline ? 'block' : 'none' }}
                   />
+                  
                 </div>
                 <Button
                   disabled={!isTagNameValid || isLoading}
