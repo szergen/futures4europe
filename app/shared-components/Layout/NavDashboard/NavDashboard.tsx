@@ -71,7 +71,7 @@ const NAV_ITEMS: NavConfig[] = [
   {
     href: '/dashboard',
     icon: SpriteSvg.AccountPersonIcon,
-    text: 'Personal Info',
+    text: 'My Info Page',
   },
 ];
 

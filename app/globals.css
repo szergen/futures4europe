@@ -959,8 +959,8 @@ textarea {
   visibility: visible !important;
 }
 
-.editor-content.rdw-editor-main:hover {
-  border: 1px solid #a103ff38;
+.editor-content.rdw-editor-main {
+  border: 1px solid #00000038;
   border-radius: var(--p-border-radius-200);
 }
 
