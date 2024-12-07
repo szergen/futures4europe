@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import style from './MiniPagePost.module.css';
 import Image from 'next/image';
@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
 import AffiliationsComponent from '@app/page-components/PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useTagPopularity } from '@app/hooks/useTagPopularity';
 
 export type MiniPagePostProps = {
   title: string;
@@ -20,6 +21,7 @@ export type MiniPagePostProps = {
   projectEndDate?: string;
   eventStartDate?: string;
   eventEndDate?: string;  
+  projectResultPublicationDate?: string;
   organisationAffiliations?: Array<{ organisation: string; role: string }>;
   organisationEstablishedDate?: string;
   date?: string;
@@ -38,40 +40,97 @@ export type MiniPagePostProps = {
   primaryTags?: Array<TagProps>;
 };
 
-export const MiniPagePost: React.FC<MiniPagePostProps> = ({
-  title,
-  subtitle,
-  popularity,
-  countryTags,
-  tagLine,
-  projectFunded,
-  projectStartDate,
-  projectEndDate,
-  eventStartDate,
-  eventEndDate,
-  organisationAffiliations,
-  organisationEstablishedDate,
-  date,
-  editDate,
-  projects,
-  projectResultAuthor,
-  image,
-  text,
-  domains,
-  recommendations,
-  pageTypeTag,
-  primaryTags,
-  methods,
-}) => {
-  // console.log('MiniPagePost' + JSON.stringify(projectStartDate));
-  // TODO @alex de verificat
-  // console.log('pageTypeTag' + JSON.stringify(pageTypeTag));
-  // console.log('pageType', pageTypeTag);
-  console.log('eventType', JSON.stringify(eventStartDate));  
+export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
+  // Log all props at once
+  console.log('All Props:', props);
+  
+  // Or log individual props
+  const {
+    title,
+    subtitle,
+    popularity,
+    countryTags,
+    tagLine,
+    projectFunded,
+    projectStartDate,
+    projectEndDate,
+    eventStartDate,
+    eventEndDate,
+    projectResultPublicationDate,
+    organisationAffiliations,
+    organisationEstablishedDate,
+    date,
+    editDate,
+    projects,
+    projectResultAuthor,
+    image,
+    text,
+    domains,
+    recommendations,
+    pageTypeTag,
+    primaryTags,
+    methods,
+  } = props;
+
+  console.log({
+    title,
+    subtitle,
+    popularity,
+    countryTags,
+    tagLine,
+    projectFunded,
+    projectStartDate,
+    projectEndDate,
+    eventStartDate,
+    eventEndDate,
+    projectResultPublicationDate,
+    organisationAffiliations,
+    organisationEstablishedDate,
+    date,
+    editDate,
+    projects,
+    projectResultAuthor,
+    image,
+    text,
+    domains,
+    recommendations,
+    pageTypeTag,
+    primaryTags,
+    methods,
+  });
+
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   dayjs.extend(relativeTime);
-  // console.log(pageTypeTag?.name.replace(/\s+/g, '') + '_TypeTagImage'); // Log the generated key
+  
+  //TODO @ALEX de verificat currentTagPopularity 
+  const { getPopularity } = useTagPopularity();
+  // Get the correct tag name for popularity based on the type
+  const getCorrectTagName = () => {
+    // If primaryTags exist and have a first item, use that
+    if (primaryTags?.[0]?.name) {
+      return primaryTags[0].name;
+    }
+    // Fallback to title
+    return title;
+  };
+
+  const tagName = getCorrectTagName();
+  const currentTagPopularity = tagName ? getPopularity(tagName) : undefined;
+
+  // Only show popularity if the tag type is NOT 'post'
+  const shouldShowPopularity = primaryTags?.[0]?.tagType !== 'post';
+    
+  // //Debugging
+  useEffect(() => {
+    console.log({
+      itemName: getCorrectTagName(),
+      popularity: currentTagPopularity,
+      primaryTags,
+      projects,
+      projectResultAuthor
+    });
+  }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
 
   return (
     <div className={classNames(style.postItem)}>
@@ -102,28 +161,36 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = ({
         >
           Last Edited: {dayjs(date).fromNow()}
         </Typography>
-        {/* Post Title */}
+        {/* MiniPage Title */}
         <Typography
           tag="h3"
           className={classNames(style.MiniPagePostTitle, '')}
         >
           {title}
-          <span className={classNames(style.popularity)}>
-            {' '}
-            {/*popularity*/}{' '}
-          </span>
+          {shouldShowPopularity && (
+            <span className={classNames(style.popularity)}>
+              {/* Popularity */}            
+              {currentTagPopularity || ''}
+            </span>
+          )}
           {projectStartDate && projectEndDate && (
             <span className={classNames(style.projectDates)}>
               {dayjs(projectStartDate).format('MMMM YYYY')} -{' '}
               {dayjs(projectEndDate).format('MMMM YYYY')}
             </span>
           )}
-          {eventStartDate && eventEndDate && (
+          {eventStartDate && (
             <span className={classNames(style.projectDates)}>
               {dayjs(eventStartDate).format('MMMM YYYY')} -{' '}
               {dayjs(eventEndDate).format('MMMM YYYY')}
             </span>
           )}
+          {projectResultPublicationDate && (
+            <span className={classNames(style.projectDates)}>
+              {dayjs(projectResultPublicationDate).format('MMMM YYYY')}
+            </span>
+          )}
+
         </Typography>
         {/* Subtitle */}
 
