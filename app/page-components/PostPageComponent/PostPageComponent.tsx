@@ -428,7 +428,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
-    await refetchTags();
+    // await refetchTags();
     await refetchPosts();
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
@@ -632,7 +632,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
+    // await refetchTags();
     await refetchPosts();
     await revalidateDataItem(`/post/${newPostSlug}`);
 
@@ -822,21 +822,25 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         )} */}
       {/* Project Result Authors */}
       {/* {postData.pageType?.[0]?.name?.toLowerCase() === 'project result' && ( */}
-      <TagListComponent
-        placeholder="Add one or more person tags"
-        tagList={postData.projectAuthors}
-        tagListTitle="Authors"
-        isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
-        selectedValues={postData.projectAuthors?.map(
-          (author: any) => author?.name
-        )}
-        updatePostData={(value) =>
-          updatePostDataBasedOnKeyValue('projectAuthors', value)
-        }
-        tagType="person"
-        handleTagCreated={handleTagCreated}
-      />
+      {postData?.pageType?.[0]?.name?.toLowerCase() !== 'event' ? (
+        <TagListComponent
+          placeholder="Add one or more person tags"
+          tagList={postData.projectAuthors}
+          tagListTitle="Authors"
+          isEditModeOn={isEditModeOn}
+          tags={tags.filter((tag) => tag?.tagType === 'person')}
+          selectedValues={postData.projectAuthors?.map(
+            (author: any) => author?.name
+          )}
+          updatePostData={(value) =>
+            updatePostDataBasedOnKeyValue('projectAuthors', value)
+          }
+          tagType="person"
+          handleTagCreated={handleTagCreated}
+        />
+      ) : (
+        ''
+      )}
       {/* )} */}
       {/* Post Content */}
       <ContentComponent
@@ -897,23 +901,27 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         </>
       )}
       {/* Post People */}
-      <TagListComponent
-        tagList={postData.people}
-        tagListTitle={
-          postData?.pageType?.[0]?.name?.toLowerCase() !== 'event'
-            ? 'People'
-            : 'Participants'
-        }
-        placeholder="Add one or more person tags relevant to your post"
-        isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
-        selectedValues={postData.people?.map((person: any) => person?.name)}
-        updatePostData={(value) =>
-          updatePostDataBasedOnKeyValue('people', value)
-        }
-        tagType="person"
-        handleTagCreated={handleTagCreated}
-      />
+      {postData?.pageType?.[0]?.name?.toLowerCase() !== 'post' ? (
+        <TagListComponent
+          tagList={postData.people}
+          tagListTitle={
+            postData?.pageType?.[0]?.name?.toLowerCase() !== 'event'
+              ? 'People'
+              : 'Participants'
+          }
+          placeholder="Add one or more person tags relevant to your post"
+          isEditModeOn={isEditModeOn}
+          tags={tags.filter((tag) => tag?.tagType === 'person')}
+          selectedValues={postData.people?.map((person: any) => person?.name)}
+          updatePostData={(value) =>
+            updatePostDataBasedOnKeyValue('people', value)
+          }
+          tagType="person"
+          handleTagCreated={handleTagCreated}
+        />
+      ) : (
+        ''
+      )}
       {/* Foresight Methods */}
       <TagListComponent
         tagList={postData.foreSightMethods}

@@ -1,7 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import { items } from '@wix/data';
 import CreatableSelect from 'react-select/creatable';
-import Select, { components } from 'react-select';
+import { components } from 'react-select';
 import classNames from 'classnames';
 import Tag, { TagProps } from '../Tag/Tag';
 import { Modal, Button, TextInput, Label } from 'flowbite-react';
@@ -79,8 +79,13 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   // #endregion
 
   // #region Tag picker state
+  // const sortedTags = tags?.sort(
+  //   (a, b) => b?.mentions || 0 - (a?.mentions || 0)
+  // );
+  // console.log('sortedTags', sortedTags);
   const tagOptions =
     tags?.map((tag) => createOption(tag.name)) || defaultOptions;
+  // console.log('tagOptions', tagOptions);
   const [options, setOptions] = useState(tagOptions);
   const [value, setValue] = useState<Option | Array<Option> | null>();
   // #endregion
@@ -144,7 +149,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
 
       // #region Extra logic to update the post data
       // Single tag picker
-      tags.push(uploadedTag?.dataItem?.data);
+      tags?.push(uploadedTag?.dataItem?.data);
       updatePostData &&
         !isMulti &&
         updatePostData(tags?.find((tag) => tag?.name === newOption?.label));
@@ -206,20 +211,20 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   };
   // / * catalin */;
 
-  // Define the custom animated Input component
-  const AnimatedInput = (props) => {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0 }}
-      >
-        {/* Spread props to include the original Input component */}
-        <components.Input {...props} />
-      </motion.div>
-    );
-  };
+  // // Define the custom animated Input component
+  // const AnimatedInput = (props) => {
+  //   return (
+  //     <motion.div
+  //       initial={{ opacity: 0, scale: 0.9 }}
+  //       animate={{ opacity: 1, scale: 1 }}
+  //       exit={{ opacity: 0, scale: 0.9 }}
+  //       transition={{ duration: 0 }}
+  //     >
+  //       {/* Spread props to include the original Input component */}
+  //       <components.Input {...props} />
+  //     </motion.div>
+  //   );
+  // };
 
   const customStyles = {
     control: (provided, state) => ({
