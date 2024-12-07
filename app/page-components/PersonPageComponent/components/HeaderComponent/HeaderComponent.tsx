@@ -8,9 +8,10 @@ import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFileUploader/InfoPagesImageFileUploader';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
+import { useTagPopularity } from '@app/hooks/useTagPopularity';
 
 export type HeaderComponentProps = {
   person: {
@@ -63,6 +64,25 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       return 'Title is required';
     }
 
+    const trimmedTitle = tempName.trim();
+    // Empty after trimming
+    if (trimmedTitle.length === 0) {
+      return 'Title cannot be only whitespace';
+    }
+    // Check if title starts or ends with space
+    if (trimmedTitle !== tempName) {
+      return 'Title cannot start or end with spaces';
+    }
+    // Check for excessive spaces
+    if (/\s{2,}/.test(trimmedTitle)) {
+      return 'Title cannot contain multiple consecutive spaces';
+    }
+    // Special characters check
+    const specialCharsRegex = /[<>{}[\]\\\/]/;
+    if (specialCharsRegex.test(trimmedTitle)) {
+      return 'Title cannot contain special characters like < > { } [ ] \\ /';
+    }    
+
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
     }
@@ -72,11 +92,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempName === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    // const validTitleRegex = /^(?!.*\s{2,})(?!.*\|).*$/;
-    // if (!validTitleRegex.test(tempName)) {
-    //   return 'Title cannot contain multiple spaces or |';
-    // }
-
     if (Array.isArray(existingPostPagesTitles) && defaultPostTitle) {
       const isTempTitleExisting = existingPostPagesTitles.some(
         (postPageTitle) =>
@@ -89,6 +104,20 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
 
     return '';
   };
+
+  //TODO @ALEX de verificat currentTagPopularity 
+  const { getPopularity } = useTagPopularity();
+  const currentTagPopularity = getPopularity(person?.personTag?.name);
+    
+  //Debugging
+  // useEffect(() => {
+  //   console.log({
+  //     personTagName: person?.personTag?.name,
+  //     popularity: currentTagPopularity
+  //   });
+  // }, [person?.personTag?.name, currentTagPopularity]);
+    
+  // console.log('person', JSON.stringify(person, null, 2));
 
   return (
     <div className={classNames(style.personHeader)}>
@@ -146,7 +175,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             {person?.personTag?.name}
             {/* Person Popularity */}
             <span
-              data-after={person?.personTag?.popularity || ''}
+              data-after={currentTagPopularity || ''}
               className={classNames(
                 style.personTagPopularity,
                 'after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400'
