@@ -58,12 +58,31 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   handleTagCreated,
   setValidationState,
 }) => {
-  // const { existingPostPagesTitles } = useAuth();
 
   const validationFunctionForTitle = (tempTitle: string | undefined) => {
+
     if (!tempTitle) {
       return 'Title is required';
     }
+
+    const trimmedTitle = tempTitle.trim();
+    // Empty after trimming
+    if (trimmedTitle.length === 0) {
+      return 'Title cannot be only whitespace';
+    }
+    // Check if title starts or ends with space
+    if (trimmedTitle !== tempTitle) {
+      return 'Title cannot start or end with spaces';
+    }
+    // Check for excessive spaces
+    if (/\s{2,}/.test(trimmedTitle)) {
+      return 'Title cannot contain multiple consecutive spaces';
+    }
+    // Special characters check
+    const specialCharsRegex = /[<>{}[\]\\\/]/;
+    if (specialCharsRegex.test(trimmedTitle)) {
+      return 'Title cannot contain special characters like < > { } [ ] \\ /';
+    }    
     if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
@@ -73,13 +92,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (tempTitle === 'New Post') {
       return 'Title cannot be "New Post"';
     }
-    // const isTempTitleExisting = existingPostPagesTitles?.some(
-    //   (postPageTitle) =>
-    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    // );
-    // if (isTempTitleExisting) {
-    //   return 'Title already exists';
-    // }
     return '';
   };
 
@@ -179,11 +191,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Typography tag="h1" className=" text-gray-800">
             {post?.title?.replace(/_/g, ' ')}
-            {/* Post Popularity */}
-            {/* <span
-            data-after="320"
-            className="after:content-[attr(data-after)] text-lg relative top-[-30px] ml-1 text-gray-500 dark:text-gray-400"
-          ></span> */}
           </Typography>
         ) : (
           <InputText
