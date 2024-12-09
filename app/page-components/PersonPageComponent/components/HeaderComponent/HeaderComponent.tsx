@@ -116,7 +116,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   //     popularity: currentTagPopularity
   //   });
   // }, [person?.personTag?.name, currentTagPopularity]);
-
   // console.log('person', JSON.stringify(person, null, 2));
 
   return (

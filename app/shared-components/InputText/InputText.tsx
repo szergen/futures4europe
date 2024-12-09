@@ -17,6 +17,7 @@ export type InputTextProps = {
   type?: string;
   ref?: any;
   inputId?: string;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 };
 
 export const InputText: React.FC<InputTextProps> = ({
@@ -33,6 +34,7 @@ export const InputText: React.FC<InputTextProps> = ({
   type,
   ref,
   inputId,
+  onKeyDown,
 }) => {
   // Handle on change
   const [inputValue, setInputValue] = useState(value);
@@ -131,6 +133,7 @@ export const InputText: React.FC<InputTextProps> = ({
           value={inputValue}
           onChange={handleChange}
           onInput={autoResize}
+          onKeyDown={onKeyDown}
         />
       )}
       {/* <TextInput

@@ -40,6 +40,9 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
+  // Add check for admin status
+  const isWixAdmin = userDetails?.isAdmin || false;
+
   const handleDeletePostPage = async (infoPageId: string) => {
     setIsLoadingDeletePostPage(infoPageId);
     try {
@@ -225,14 +228,6 @@ export default function DashboardProjects() {
                           className={classNames('')}
                         >
                           <div className="flex flex-wrap flex-start text-left">
-                            {/* <Tag
-                              className="flex-grow basis-full"
-                              name={postPage?.data?.title}
-                              tagPageLink={`/post/${postPage.data.slug}`}
-                              popularity={
-                                postPage?.data?.pageTypes[0]?.popularity
-                              }
-                            ></Tag> */}
                             <Link
                               href={`/post/${postPage.data.slug}`}
                               className={classNames(
@@ -240,12 +235,6 @@ export default function DashboardProjects() {
                                 'w-full p-4 flex flex-col'
                               )}
                             >
-                              {/* <Badge
-                                className="w-fit mt-2 capitalize rounded-full"
-                                color="gray"
-                              >
-                                {postPage?.data?.pageTypes[0]?.name}
-                              </Badge> */}
                               <MiniPagePost
                                 pageTypeTag={postPage.data.pageTypes?.[0]}
                                 key={index}
@@ -272,6 +261,38 @@ export default function DashboardProjects() {
                                 ]?.slice(0, 3)}
                               />
                             </Link>
+                            {/* Admin Delete Button */}
+                            {isWixAdmin && (
+                              <div className="">
+                                <Button
+                                  size="sm"
+                                  color="failure"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    if (
+                                      window.confirm(
+                                        'Are you sure you want to delete this post?'
+                                      )
+                                    ) {
+                                      handleDeletePostPage(postPage?.data?._id);
+                                    }
+                                  }}
+                                  disabled={
+                                    isLoadingDeletePostPage ===
+                                    postPage?.data?._id
+                                  }
+                                  className="rounded-full p-2 h-8 w-8 flex items-center justify-center"
+                                >
+                                  <SpriteSvg.AccountTrashIcon
+                                    sizeH={16}
+                                    sizeW={16}
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                    strokeWidth={0}
+                                  />
+                                </Button>
+                              </div>
+                            )}
                           </div>
 
                           {isLoadingDeletePostPage &&

@@ -13,7 +13,7 @@ import { mockPerson } from '@app/mocks/pagesMocks';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import {
-  bulkInsertDataItemReferences,
+  // bulkInsertDataItemReferences,
   bulkInsertItems,
   bulkRemoveItems,
   replaceDataItemReferences,

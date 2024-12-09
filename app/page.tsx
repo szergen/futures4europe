@@ -1,16 +1,16 @@
 'use client';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { items } from '@wix/data';
-import { useWixModules } from '@wix/sdk-react';
+// import { items } from '@wix/data';
+// import { useWixModules } from '@wix/sdk-react';
 // import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import gsap from 'gsap';
+// import gsap from 'gsap';
 // import InertiaPlugin from 'gsap/InertiaPlugin';
-import MotionPathPlugin from 'gsap/MotionPathPlugin';
-import Draggable from 'gsap/Draggable';
+// import MotionPathPlugin from 'gsap/MotionPathPlugin';
+// import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
-import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
+// import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
 import TagsList from './page-components/shared-page-components/TagList/TagsList';
 // import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
 
@@ -39,7 +39,7 @@ export const Home = () => {
     // ownedPostPagesFetched,
     // ownedInfoPagesFetched,
     // handleUserDataRefresh,
-    tags,
+    // tags,
     tagsFetched,
   } = useAuth();
 
@@ -121,6 +121,34 @@ export const Home = () => {
     domains: true,
     methods: true,
   });
+
+  // Modified useEffect to handle loading states
+  useEffect(() => {
+    console.log('debug8->Data status:', {
+      hasInfoPages: !!infoPages,
+      infoPagesLength: infoPages?.length,
+      isTagsFetched: tagsFetched,
+    });
+
+    if (infoPages && Array.isArray(infoPages)) {
+      // Update all info page related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        projects: false,
+        organisations: false,
+        persons: false,
+      }));
+    }
+
+    if (tagsFetched) {
+      // Update tag-related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        domains: false,
+        methods: false,
+      }));
+    }
+  }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
 
   // Modified useEffect to handle loading states
   useEffect(() => {

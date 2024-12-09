@@ -59,10 +59,7 @@ export default async function Pages({ params }: any) {
 
   return (
     <div className={classNames('w-full')}>
-      <Hero
-        title={`${pageType.toUpperCase()} Pages`}
-        subtitle={`sorted by published date`}
-      />
+      <Hero title={`${pageType.toUpperCase()} Pages`} pageType={pageType} />
       <div className={classNames(style.listContainer)}>
         <MiniPagesListItemPost
           postCollection={postCollection}

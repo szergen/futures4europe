@@ -45,7 +45,6 @@ export default function Dashboard() {
   const [personInfoPageLink, setPersonInfoPageLink] = useState('');
 
   useEffect(() => {
-    // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
@@ -74,8 +73,8 @@ export default function Dashboard() {
 
   const subNavItems = [
     { href: '/dashboard', text: 'Account', isActive: true },
-    { href: '/dashboard/security', text: 'Security' },
-    { href: '/dashboard/change-password', text: 'Password' },
+    // { href: '/dashboard/security', text: 'Security' },
+    // { href: '/dashboard/change-password', text: 'Password' },
   ];
 
   return (
@@ -154,7 +153,7 @@ export default function Dashboard() {
                 )}
               >
                 {!personInfoPageLink
-                  ? 'Your profile dose not have a Person Info page or you did not claim it. Create now a person page to be visible to all members of futures4europe platform.'
+                  ? 'You dont have a Person Info page or you did not claim it. Create now a Person Info page to be visible to all members of futures4europe platform.'
                   : 'Edit your Person Info page to be visible to all members of futures4europe platform.'}
               </Typography>
             </div>
@@ -185,8 +184,8 @@ export default function Dashboard() {
                   {/* // TODO: Must show claim Person Info Page if it allready exists */}
                   <span className="text-lg">
                     {personInfoPageLink
-                      ? 'View Person Info page'
-                      : 'Create Person Info page'}
+                      ? 'Edit My Person Info page'
+                      : 'Create My Person Info page'}
                   </span>
                 </Button>
               </Link>

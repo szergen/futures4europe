@@ -28,10 +28,7 @@ const TagsList = ({
   const [isLoading, setIsLoading] = useState(true);
 
   // Use appropriate hook based on whether we're fetching info pages or regular tags
-  const { infoPages, infoPagesFetched } = useFetchInfoPages(
-    false,
-    setIsLoading
-  );
+  const { infoPages, infoPagesFetched } = useFetchInfoPages(false);
   const { tags: regularTags, loading: tagsLoading } = useTags({
     tagType,
     limit,

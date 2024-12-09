@@ -3,7 +3,6 @@ import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export const useTagPopularity = () => {
   const { tags: authTags, tagsFetched } = useAuth();
-
   const tagsMap = useMemo(() => {
     if (!authTags) return new Map();
     // Also store titles with normalized formatting
