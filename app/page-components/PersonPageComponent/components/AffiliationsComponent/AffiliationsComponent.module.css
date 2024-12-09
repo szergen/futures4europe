@@ -114,3 +114,28 @@ input.roleInput:focus {
   background: var(--color-background-brand-tag);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.dragItem {
+  opacity: 0.8;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.ghostItem {
+  opacity: 0.4;
+  background-color: #f0f0f0;
+}
+
+.chosenItem {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.dragShadow {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.tagListContainer {
+  cursor: move;
+  user-select: none;
+}

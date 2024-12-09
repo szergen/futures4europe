@@ -179,34 +179,35 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             updatePersonDataAffiliations(newState as any);
         }}
         sort={isEditModeOn || !isDisabledSorting}
+        animation={150}
+        swapThreshold={0.65}
+        direction="horizontal"
+        dragClass={style.dragItem}
+        ghostClass={style.ghostItem}
+        chosenClass={style.chosenItem}
+        easing="cubic-bezier(1, 0, 0, 1)"
+        delay={50}
+        delayOnTouchOnly={true}
+        touchStartThreshold={5}
         disabled={!isEditModeOn || isDisabledSorting}
         className={classNames(
-          'flex w-fit flex-wrap z-50'
-          // isEditModeOn && 'flex-col'
+          'flex w-fit flex-wrap z-50',
+          isEditModeOn && 'hover:border-gray-300 transition-colors'
         )}
-        // group="shared"
-        onStart={(e) => {
-          // console.log('onStart', e);
-          e.item.classList.add(style.dragShadow);
+        onStart={(evt) => {
+          evt.item.classList.add(style.dragShadow);
         }}
-        // onUpdate={(e) => {
-        //   // console.log('onSelect', e);
-        //   // e.preventDefault();
-        //   e.item.classList.remove(style.dragShadow);
-        // }}
-        // onEnd={(e) => {
-        //   // console.log('onSelect', e);
-        //   // e.preventDefault();
-        //   e.item.classList.remove(style.dragShadow);
-        // }}
-        // disabled={isDisabledSorting}
-        // delay={100}
-        // delayOnTouchOnly={true}
+        onEnd={(evt) => {
+          evt.item.classList.remove(style.dragShadow);
+        }}
       >
         {currentAffiliations?.map((affilitiation, index) => (
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
-            className={classNames(style.tagListContainer)}
+            className={classNames(
+              style.tagListContainer,
+              isEditModeOn && 'cursor-move hover:bg-gray-50 rounded transition-colors transition-transform duration-150'
+            )}
             // onClick={(e: any) => {
             //   setIsDisabledSorting(true);
             // }}
@@ -216,6 +217,11 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             //   e.stopPropagation();
             // }}
           >
+            {isEditModeOn && (
+              <div className="drag-handle p-1 cursor-move opacity-50 hover:opacity-100">
+                ⋮⋮
+              </div>
+            )}            
             {!isEditModeOn ? (
               affilitiation.arole &&
               affilitiation.name && (
