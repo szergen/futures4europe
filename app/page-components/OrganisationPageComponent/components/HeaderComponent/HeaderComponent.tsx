@@ -9,10 +9,10 @@ import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFil
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerComponent from '@app/shared-components/DatePickerComponent/DatePickerComponent';
-import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
+// import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import { Modal, Label, TextInput, Button } from 'flowbite-react';
-import dayjs from 'dayjs';
+// import { Modal, Label, TextInput, Button } from 'flowbite-react';
+// import dayjs from 'dayjs';
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
 import { useTagPopularity } from '@app/hooks/useTagPopularity';
 
@@ -108,11 +108,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-  //TODO @ALEX de verificat currentTagPopularity 
+  //TODO @ALEX de verificat currentTagPopularity
   const { getPopularity } = useTagPopularity();
-  const currentTagPopularity = getPopularity(organisation?.organisationTag?.name);
-  
-
+  const currentTagPopularity = getPopularity(
+    organisation?.organisationTag?.name
+  );
 
   return (
     <div className={classNames(style.personHeader)}>

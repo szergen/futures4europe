@@ -58,9 +58,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   handleTagCreated,
   setValidationState,
 }) => {
-
   const validationFunctionForTitle = (tempTitle: string | undefined) => {
-
     if (!tempTitle) {
       return 'Title is required';
     }
@@ -82,7 +80,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     const specialCharsRegex = /[<>{}[\]\\\/]/;
     if (specialCharsRegex.test(trimmedTitle)) {
       return 'Title cannot contain special characters like < > { } [ ] \\ /';
-    }    
+    }
     if (tempTitle?.length < 5) {
       return 'Title should be at least 5 characters long';
     }
@@ -99,7 +97,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (e.key === 'Enter') {
       e.preventDefault();
     }
-  };  
+  };
 
   return (
     <div className={classNames(style.postHeader)}>
