@@ -1014,7 +1014,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
-        <div>
+        <div className="flex justify-between">
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
@@ -1038,11 +1038,23 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               onClick={() => {
                 setPersonData(defaultPersonData);
                 setIsEditModeOn(!isEditModeOn);
-                isNewPage && router.push(`/dashboard`);
+                isNewPage && router.push(`/dashboard/projects`);
               }}
               className="btn btn-edit"
             >
               Discard changes
+            </button>
+          )}
+
+          {!isEditModeOn && (
+            <button
+              onClick={() => {
+                setIsEditModeOn(!isEditModeOn);
+                router.push(`/dashboard/projects`);
+              }}
+              className="btn btn-edit flex-end align-right"
+            >
+              Go back to dashboard
             </button>
           )}
         </div>

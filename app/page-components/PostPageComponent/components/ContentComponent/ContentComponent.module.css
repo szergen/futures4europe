@@ -35,7 +35,7 @@
   line-height: var(--w-line-height-tag);
 
   p {
-    margin: 1em 0;
+    margin:0;
   }
 
   a {

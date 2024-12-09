@@ -304,6 +304,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                     newTagHeader={`Create a new ${tagType}`}
                     newTagType={`${capitalizeFirstLetter(tagType || '')} name`}
                     newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+                    showTagTagline={false}
                   />
                   <button
                     onClick={() => handleRemoveAffiliation(index)}

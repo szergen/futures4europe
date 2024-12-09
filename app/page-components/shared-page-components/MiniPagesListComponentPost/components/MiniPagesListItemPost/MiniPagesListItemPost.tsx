@@ -79,7 +79,7 @@ const PAGE_TYPE_SORT_CONFIG: Record<SortConfigKey, PageTypeSortConfig> = {
     priority: 3,
   },
   [PageType.ProjectResult]: {
-    sortField: 'publicationDate',
+    sortField: 'projectResultPublicationDate',
     fallbackField: '_createdDate',
     priority: 3,
   },

@@ -723,7 +723,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     <div className={classNames(style.postContainer)}>
       {/* Edit buttons */}
       {isPageOwnedByUser && (
-        <div>
+        <div className="flex justify-between">
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
@@ -743,11 +743,23 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
               onClick={() => {
                 setPostData(defaultPostData);
                 setIsEditModeOn(!isEditModeOn);
-                isNewPost && router.push(`/dashboard`);
+                isNewPost && router.push(`/dashboard/posts`);
               }}
               className="btn btn-edit"
             >
               Discard Changes
+            </button>
+          )}
+
+          {!isEditModeOn && (
+            <button
+              onClick={() => {
+                setIsEditModeOn(!isEditModeOn);
+                router.push(`/dashboard/projects`);
+              }}
+              className="btn btn-edit flex-end align-right"
+            >
+              Go back to dashboard
             </button>
           )}
         </div>
