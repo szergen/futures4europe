@@ -209,8 +209,6 @@ export const Home = () => {
 
   return (
     <div className="homeHero">
-      {/* <pre>{JSON.stringify(infoPages.data, null, 2)}</pre>  */}
-
       <div className="flex mx-auto relative sm:px-20 py-5 homeHero">
         <div className="flex flex-col min-w-[420px] items-center justify-center homeTitleContainer">
           <h2 className="homeTitle">
@@ -318,95 +316,9 @@ export const Home = () => {
             </div>
           </div>
         </div>
-
-        {/* Organizations Section */}
-        <div className="index_customerGroupWrapper">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                infoPageType="organisation info"
-                limit={25}
-                offset={0}
-                disableTooltip={true}
-                disablePopularityHover={true}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Persons Section */}
-        <div className="index_customerGroupWrapper index_reverse">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-            <TagsList 
-              infoPageType="person info"
-              limit={25}
-              offset={0}
-              disableTooltip={true}
-              disablePopularityHover={true}
-            />
-            </div>
-          </div>
-        </div>
-
-        {/* Domains Section */}
-        <div className="index_customerGroupWrapper">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="domains"
-                limit={25}
-                offset={0}
-                disableTooltip={true}
-                disablePopularityHover={true}              
-              />
-            </div>
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="domains"
-                limit={25}
-                offset={25}
-                disableTooltip={true}
-                disablePopularityHover={true}              
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Foresight Methods Section */}
-        <div className="index_customerGroupWrapper index_reverse">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="foresight methods"
-                limit={25}
-                offset={0}
-                disableTooltip={true}
-                disablePopularityHover={true}
-              />
-            </div>
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="foresight methods"
-                limit={25}
-                offset={25}
-                disableTooltip={true}
-                disablePopularityHover={true}
-              />
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-      
       </div>
 
       <div className="homeFeatured">
-        {/* <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
-          Featured Organisations
-        </h2> */}
-
         {featuredPages.featuredProjects.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjects.map(
@@ -416,6 +328,7 @@ export const Home = () => {
             pageTypePath="project"
           />
         )}
+        
         {featuredPages.featuredProjectResults.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjectResults.map(
