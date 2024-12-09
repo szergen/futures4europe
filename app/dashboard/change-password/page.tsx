@@ -18,86 +18,17 @@ import { Button, Label, TextInput } from 'flowbite-react';
 import { HiLockOpen } from 'react-icons/hi';
 
 export default function DashboardChangePassword() {
-  const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
-    login,
     isLoggedIn,
     loading,
     userDetails,
     logout,
-    ownedInfoPages,
-    ownedPostPages,
-    ownedPostPagesFetched,
-    ownedInfoPagesFetched,
-    handleUserDataRefresh,
     tags,
   } = useAuth();
 
   const router = useRouter();
-  const { removeDataItem } = useWixModules(items);
-  // const { updateMember } = useWixModules(members);
-
-  const handleCreatePost = async () => {
-    router.push(`/post/New_Post`);
-  };
-
-  const handleListProjects = async () => {
-    router.push(`/dashboard/projects`);
-  };
-
-  const handleCreatePersonInfoPage = async () => {
-    if (userInfoPage) {
-      router.push(`/person/${userInfoPage}`);
-      return;
-    }
-    router.push(`/person/New_Info_Page`);
-  };
-
-  const handleListProfileSettings = async () => {
-    router.push(`/dashboard`);
-  };
-
-  const handleListPosts = async () => {
-    router.push(`/dashboard/posts`);
-  };
-
-  const handleCreateOrganisation = async () => {
-    router.push(`/organisation/New_Organisation`);
-  };
-
-  const handleDeletePostPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'PostPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
-    }
-  };
-
-  const handleDeleteInfoPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'InfoPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
-    }
-  };
 
   useEffect(() => {
     // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
@@ -129,9 +60,7 @@ export default function DashboardChangePassword() {
   };
 
   const subNavItems = [
-    { href: '/dashboard', text: 'Account', isActive: true },
-    { href: '/dashboard/security', text: 'Security' },
-    { href: '/dashboard/change-password', text: 'Password' },
+    { href: '/dashboard/change-password', text: 'Account security', isActive: true },
   ];
 
   return (
@@ -152,6 +81,7 @@ export default function DashboardChangePassword() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
+        
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           Change Password
         </h1>
@@ -238,11 +168,176 @@ export default function DashboardChangePassword() {
                 className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 rounded-10 hover:bg-purple-600 focus:ring-4 bg-purple-500"
                 type="submit"
               >
-                Reset account
+                Save new password
               </Button>
             </form>
           </div>
         </div>
+
+        <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
+          Keep account safe
+        </h1>
+        <p className="text-base text-[#606b85]">
+          Info about your security preferences across futures4europe services.
+          Manage all your security information and options to help you keep your
+          account secure.
+        </p>
+
+        <div className={classNames(style.dashboardBox, 'mt-14 mb-10 p-8')}>
+          <div className="flex flex-col">
+            <div className="flex justify-between">
+              <h3
+                className={classNames(
+                  style.headingDashboardh3,
+                  'mr-4 flex flex-row items-center'
+                )}
+              >
+                <SpriteSvg.AccountLockIcon
+                  className="mb-0"
+                  sizeW={38}
+                  sizeH={38}
+                  fill={'currentColor'}
+                  strokeWidth={0}
+                  inline={true}
+                />
+              </h3>
+            </div>
+
+            <div className="flex flex-col justify-between">
+              <h2
+                className={classNames(
+                  style.headingDashboardh1,
+                  'mt-8 mb-0 flex flex-row items-center'
+                )}
+              >
+                Basic security information
+              </h2>
+              <p className={classNames(style.boxTextDashboard, 'mb-8')}>
+                Make sure you can always access your Account by keeping this
+                information up to date.
+              </p>
+            </div>
+
+            <div
+              className={classNames(
+                style.listDashboard,
+                'flex flex-col text-base text-[#606b85]'
+              )}
+            >
+              {/* // TODO BUTTON CHANGE EMAIL @alex */}
+              <div
+                className={
+                  'pt-2 pb-2 flex flex-row items-center justify-between'
+                }
+              >
+                <Link
+                  href={`/change-password`}
+                  className={classNames(
+                    style.active,
+                    'pt-2 pb-2 flex flex-row grow items-center justify-between'
+                  )}
+                >
+                  <span className="">Recovery email</span>
+                  <span className="ml-1">
+                    <SpriteSvg.AccountLockedIcon
+                      strokeWidth={0}
+                      viewBox={'0 -4 38 38'}
+                    />
+                    <span className="ml-1">{userDetails?.email}</span>
+                  </span>
+                </Link>
+              </div>
+
+              <div
+                className={
+                  'pt-2 pb-2 flex flex-row items-center justify-between'
+                }
+              >
+                <span className="">Last login</span>
+                <span className="ml-4">{userDetails?.lastLoginDate}</span>
+              </div>
+
+              {/* <div
+                className={
+                  'pt-2 pb-2 flex flex-row items-center justify-between'
+                }
+              >
+                <span className="">Google login</span>
+                <span className="ml-4">
+                  <img
+                    alt=""
+                    className="h-5 mr-2"
+                    src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
+                  />
+                </span>
+              </div> */}
+
+            </div>
+          </div>
+        </div>
+
+        <div className={classNames(style.dashboardBox, 'mt-14 mb-10 p-8')}>
+          <div className="flex flex-col">
+            <div className="flex justify-between">
+              <h3
+                className={classNames(
+                  style.headingDashboardh3,
+                  'mr-4 flex flex-row items-center'
+                )}
+              >
+                <SpriteSvg.AccountHumanIcon
+                  className="mb-0"
+                  sizeW={38}
+                  sizeH={38}
+                  fill={'currentColor'}
+                  strokeWidth={0}
+                  inline={true}
+                />
+              </h3>
+            </div>
+
+            <div className="flex flex-col justify-between">
+              <h2
+                className={classNames(
+                  style.headingDashboardh1,
+                  'mt-8 mb-0 flex flex-row items-center'
+                )}
+              >
+                Contact information
+              </h2>
+              <p className={classNames(style.boxTextDashboard, 'mb-8')}>
+                Your contact information is important for reaching to you. It
+                includes details like your email addres and account status.
+              </p>
+            </div>
+
+            <div
+              className={classNames(
+                style.listDashboard,
+                'flex flex-col text-base text-[#606b85]'
+              )}
+            >
+              <div
+                className={
+                  'pt-2 pb-2 flex flex-row items-center justify-between'
+                }
+              >
+                <span className="">Contact email</span>
+                <span className="ml-4">{userDetails?.email}</span>
+              </div>
+
+              <div
+                className={
+                  'pt-2 pb-2 flex flex-row items-center justify-between'
+                }
+              >
+                <span className="">Account status</span>
+                <span className="ml-4">{userDetails?.activityStatus}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
