@@ -42,7 +42,7 @@ export type MiniPagePostProps = {
 
 export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   // Log all props at once
-  console.log('All Props:', props);
+  // console.log('All Props:', props);
   
   // Or log individual props
   const {
@@ -72,32 +72,32 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
     methods,
   } = props;
 
-  console.log({
-    title,
-    subtitle,
-    popularity,
-    countryTags,
-    tagLine,
-    projectFunded,
-    projectStartDate,
-    projectEndDate,
-    eventStartDate,
-    eventEndDate,
-    projectResultPublicationDate,
-    organisationAffiliations,
-    organisationEstablishedDate,
-    date,
-    editDate,
-    projects,
-    projectResultAuthor,
-    image,
-    text,
-    domains,
-    recommendations,
-    pageTypeTag,
-    primaryTags,
-    methods,
-  });
+  // console.log({
+  //   title,
+  //   subtitle,
+  //   popularity,
+  //   countryTags,
+  //   tagLine,
+  //   projectFunded,
+  //   projectStartDate,
+  //   projectEndDate,
+  //   eventStartDate,
+  //   eventEndDate,
+  //   projectResultPublicationDate,
+  //   organisationAffiliations,
+  //   organisationEstablishedDate,
+  //   date,
+  //   editDate,
+  //   projects,
+  //   projectResultAuthor,
+  //   image,
+  //   text,
+  //   domains,
+  //   recommendations,
+  //   pageTypeTag,
+  //   primaryTags,
+  //   methods,
+  // });
 
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
@@ -127,7 +127,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
       itemName: getCorrectTagName(),
       popularity: currentTagPopularity,
       primaryTags,
-      projects,
+      projectResultPublicationDate,
       projectResultAuthor
     });
   }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
