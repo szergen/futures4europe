@@ -943,7 +943,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
             >
               Go back to dashboard
             </button>
-          )}          
+          )}
         </div>
       )}
       {/* Page Type Tag */}

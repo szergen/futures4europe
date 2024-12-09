@@ -13,7 +13,7 @@ import { mockPerson } from '@app/mocks/pagesMocks';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import {
-  bulkInsertDataItemReferences,
+  // bulkInsertDataItemReferences,
   bulkInsertItems,
   bulkRemoveItems,
   replaceDataItemReferences,
@@ -1057,7 +1057,6 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               Go back to dashboard
             </button>
           )}
-
         </div>
       )}
       {/* Page Type Tag NON editable*/}

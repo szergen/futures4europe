@@ -206,7 +206,8 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             key={`affiliation-${affilitiation.name}-${index}`}
             className={classNames(
               style.tagListContainer,
-              isEditModeOn && 'cursor-move hover:bg-gray-50 rounded transition-colors transition-transform duration-150'
+              isEditModeOn &&
+                'cursor-move hover:bg-gray-50 rounded transition-colors transition-transform duration-150'
             )}
             // onClick={(e: any) => {
             //   setIsDisabledSorting(true);
@@ -221,7 +222,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
               <div className="drag-handle p-1 cursor-move opacity-50 hover:opacity-100">
                 ⋮⋮
               </div>
-            )}            
+            )}
             {!isEditModeOn ? (
               affilitiation.arole &&
               affilitiation.name && (

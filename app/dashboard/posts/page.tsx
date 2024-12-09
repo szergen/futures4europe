@@ -269,11 +269,18 @@ export default function DashboardProjects() {
                                   color="failure"
                                   onClick={(e) => {
                                     e.preventDefault();
-                                    if (window.confirm('Are you sure you want to delete this post?')) {
+                                    if (
+                                      window.confirm(
+                                        'Are you sure you want to delete this post?'
+                                      )
+                                    ) {
                                       handleDeletePostPage(postPage?.data?._id);
                                     }
                                   }}
-                                  disabled={isLoadingDeletePostPage === postPage?.data?._id}
+                                  disabled={
+                                    isLoadingDeletePostPage ===
+                                    postPage?.data?._id
+                                  }
                                   className="rounded-full p-2 h-8 w-8 flex items-center justify-center"
                                 >
                                   <SpriteSvg.AccountTrashIcon

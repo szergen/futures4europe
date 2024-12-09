@@ -3,15 +3,15 @@ import style from './HeaderComponent.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
-import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
+// import { formatDate } from '@app/page-components/PostPageComponent/PostPageComponent.utils';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFileUploader/InfoPagesImageFileUploader';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import DatePickerRangeComponentDouble from '@app/shared-components/DatePickerRangeComponentDouble/DatePickerRangeComponentDouble';
 import { useEffect, useState } from 'react';
-import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import { Modal, Label, TextInput, Button } from 'flowbite-react';
+// import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+// import { Modal, Label, TextInput, Button } from 'flowbite-react';
 import dayjs from 'dayjs';
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
 import { useTagPopularity } from '@app/hooks/useTagPopularity';
@@ -101,10 +101,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     return '';
   };
 
-    //TODO @ALEX de verificat currentTagPopularity 
-    const { getPopularity } = useTagPopularity();
-    const currentTagPopularity = getPopularity(project?.projectTag?.name);
-      
+  //TODO @ALEX de verificat currentTagPopularity
+  const { getPopularity } = useTagPopularity();
+  const currentTagPopularity = getPopularity(project?.projectTag?.name);
 
   // if is newPage, update the projectTag with the new tag created or selected
   // const [projectTag, setProjectTag] = useState(project?.projectTag);

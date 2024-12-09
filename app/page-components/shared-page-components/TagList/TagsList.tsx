@@ -8,7 +8,7 @@ import TagSkeleton from './TagSkeleton';
 
 interface TagsListProps {
   infoPageType?: string;
-  tagType?: string;  // For domains, foresight methods, etc.
+  tagType?: string; // For domains, foresight methods, etc.
   limit?: number;
   offset?: number;
   title?: string;
@@ -16,23 +16,23 @@ interface TagsListProps {
   disablePopularityHover?: boolean;
 }
 
-const TagsList = ({ 
+const TagsList = ({
   infoPageType,
-  tagType, 
-  limit = 25, 
+  tagType,
+  limit = 25,
   offset = 0,
   title,
   disableTooltip = false,
   disablePopularityHover = false,
 }: TagsListProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // Use appropriate hook based on whether we're fetching info pages or regular tags
-  const { infoPages, infoPagesFetched } = useFetchInfoPages(false, setIsLoading);
-  const { tags: regularTags, loading: tagsLoading } = useTags({ 
-    tagType, 
-    limit, 
-    offset 
+  const { infoPages, infoPagesFetched } = useFetchInfoPages(false);
+  const { tags: regularTags, loading: tagsLoading } = useTags({
+    tagType,
+    limit,
+    offset,
   });
 
   // If tagType is provided, use regular tags
@@ -52,7 +52,7 @@ const TagsList = ({
               ))}
             </>
           ) : (
-            regularTags.map((tag, idx) => (
+            regularTags.map((tag, idx) =>
               tag && tag.name ? (
                 <Tag
                   key={`${tag._id || tag.id || idx}`}
@@ -60,12 +60,14 @@ const TagsList = ({
                   picture={tag.picture}
                   disableTooltip={disableTooltip}
                   disablePopularityHover={disablePopularityHover}
-                  tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(tag.tagType)}${tag.slug || ''}`}
+                  tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
+                    tag.tagType
+                  )}${tag.slug || ''}`}
                   tagType={tag.tagType}
                   mentions={tag.popularity}
                 />
               ) : null
-            ))
+            )
           )}
         </div>
       </div>
@@ -74,8 +76,9 @@ const TagsList = ({
 
   // Handle info pages
   const filteredPages = infoPages
-    .filter(page => 
-      !infoPageType || page?.data?.pageTypes?.[0]?.name === infoPageType
+    .filter(
+      (page) =>
+        !infoPageType || page?.data?.pageTypes?.[0]?.name === infoPageType
     )
     .slice(offset, offset + limit);
 
@@ -92,14 +95,14 @@ const TagsList = ({
       ...tag,
       tagPageLink: `${automaticallyDecidePathPrefixBasedOnPageType(
         infoPage.data.pageTypes?.[0]?.name
-      )}${infoPage.data.slug}`
+      )}${infoPage.data.slug}`,
     }));
   };
 
   const tags = filteredPages
     .map(getTagsForInfoPage)
     .flat()
-    .filter(tag => tag?.name && tag?.picture);
+    .filter((tag) => tag?.name && tag?.picture);
 
   return (
     <div>

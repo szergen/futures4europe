@@ -717,6 +717,142 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/so/09P91vhnQ/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'Jw-KzBKcACjY_eY8MWq-3v6Q-rSoCxUU_e0FQKUj7r0.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZXllLW9mLWV1cm9wZS10b3BpY3MtZm9yLXBpbG90LXdvcmtzaG9wcy1kZWZpbmVkIiwiciI6Ijg5NDM5OGY4LWQ1NDctNGYxZi0yMjVlLWEyNzQ5MDY3ODA4NiIsIm0iOiJtYWlsX2xwIiwiYyI6ImY2NzdjMWJiLTQzMzQtNDAzOS1hMjExLWZkZDg5ZTAxM2EzYyJ9',
+          },
+        ],
+        destination:
+          '/post/eye-of-europe-topics-for-pilot-workshops-defined-bvd41',
+        permanent: true,
+      },
+      {
+        source: '/so/09P91vhnQ/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'prLZF26Z0CLeB1CQcLNQ-NfWF6MqSxm5i_HqWW4BWZg.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZnV0dXJlcy1vZi1uYXR1cmFsLXJlc291cmNlcy10aGUtMjR0aC1pbnRlcm5hdGlvbmFsLWZ1dHVyZXMtY29uZmVyZW5jZS1vZi1maW5sYW5kLWZ1dHVyZXMtcmVzZWFyY2gtY2VudHJlIiwiciI6IjY4NzYwMmQ5LWVmZjYtNGI0ZS1iN2IzLTRhMjRiNWQ4YmRhNiIsIm0iOiJtYWlsX2xwIiwiYyI6ImY2NzdjMWJiLTQzMzQtNDAzOS1hMjExLWZkZDg5ZTAxM2EzYyJ9',
+          },
+        ],
+        destination:
+          '/post/futures-of-natural-resources-the-24th-international-futures-conference-of-finland-futures-research-centre-wrk47',
+        permanent: true,
+      },
+      {
+        source: '/so/09P91vhnQ/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'RdtdKkV4QxnzCbqsrPw2Y197hLsR-FpoKIUESgc3Xpc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZm9yZXNpZ2h0LWF0LWVhc3N0NHMtMjAyNC1jb25mZXJlbmNlLWluLWFtc3RlcmRhbSIsInIiOiJlMGQ2ZmNiMy03MDQ0LTQzYzUtMDM2OS1lZjI2YWM0NWJjZDciLCJtIjoibWFpbF9scCIsImMiOiJmNjc3YzFiYi00MzM0LTQwMzktYTIxMS1mZGQ4OWUwMTNhM2MifQ',
+          },
+        ],
+        destination:
+          '/post/foresight-at-easst-4s-2024-conference-in-amsterdam--ipl1m',
+        permanent: true,
+      },
+      {
+        source: '/so/ffO-UPJK0/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '09otHdmNDbWAljfuD9KEbdBvcWYRvBjA5U-s54-MaMY.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZXNwYXMtcmVwb3J0LTIwMjQtdGhlLXRyZW5kcy10aGUtdW5jZXJ0YWludGllcy1hbmQtY2hhbGxlbmdlcy1mb3ItY2hvb3NpbmctZXVyb3Blcy1mdXR1cmUiLCJyIjoiODk0Mzk4ZjgtZDU0Ny00ZjFmLTIyNWUtYTI3NDkwNjc4MDg2IiwibSI6ImxwIn0',
+          },
+        ],
+        destination:
+          '/post/espas-global-trends-report-2024-the-trends-the-uncertainties-and-challenges-for-choosing-europes-future-38hce',
+        permanent: true,
+      },
+      {
+        source: '/so/86OraMfaB/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '667Xj12KpqjXv-hPpfPrRHA5oFzYS9YYD9k7Z6okMGc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3Mvb3Jpb24tbWVldC15b3VyLWNvcGlsb3QtaW4taG9yaXpvbi1zY2FubmluZyIsInIiOiI4OTQzOThmOC1kNTQ3LTRmMWYtMjI1ZS1hMjc0OTA2NzgwODYiLCJtIjoibHAifQ',
+          },
+        ],
+        destination: '/post/orion-meet-your-co-pilot-in-horizon-scanning-8j1yx',
+        permanent: true,
+      },
+      {
+        source: '/so/86OraMfaB/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'azx1PxC8W-e9TcR_xCfPQAQO9a7W9pAgNgCndj5cOm8.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcHJvamVjdHMvaGFydmVzdGluZy1jaGFuZ2UtaGFybmVzc2luZy1lbWVyZ2luZy10ZWNobm9sb2dpZXMtYW5kLWlubm92YXRpb25zLWZvci1hZ3JpZm9vZC1zeXN0ZW0tdHJhbnNmb3JtYXRpb24iLCJyIjoiNDM3ZWE5NjYtZGNjYy00MmFmLWNiZDUtYzJjMWY0ZTU4MDllIiwibSI6ImxwIn0',
+          },
+        ],
+        destination:
+          '/post/harvesting-hope-future-proofing-plants-for-bountiful-2050-crop-yields-k2wtr',
+        permanent: true,
+      },
+      {
+        source: '/so/c7OmbGwaG/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'Bj0Lf1H4BXnq4voILfhMPYVBQJXodZWPYAGMzaCJhZc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvdGhlLXdvcmQtb24tdGhlLXR3ZWV0LXNvY2lhbC1tZWRpYS1zaWduYWxzLW9uLXRoZS1mdXR1cmUtb2YtZGVtb2NyYWN5IiwiciI6IjQyOWViZGMxLTRhYjQtNDZkOC04NmUxLTRkZjgzNjRmMDM5YiIsIm0iOiJscCJ9',
+          },
+        ],
+        destination:
+          '/post/the-word-on-the-tweet-social-media-signals-on-the-future-of-democracy-psvg2',
+        permanent: true,
+      },
+      {
+        source: '/so/c7OmbGwaG/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'ZFSlWCXMpS3q3LfvDSLvgyxeydQoKcbv-t9MXD-RVoE.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3Mvcmlza3MtYW5kLW1lcml0cy1vZi1kZWNvbG9uaXNpbmctZnV0dXJlcyIsInIiOiI0MjllYmRjMS00YWI0LTQ2ZDgtODZlMS00ZGY4MzY0ZjAzOWIiLCJtIjoibHAifQ',
+          },
+        ],
+        destination: '/post/risks-and-merits-of-decolonising-futures-0se5m',
+        permanent: true,
+      },
+      {
+        source: '/so/c7OmbGwaG/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'popHa7OCjQGQyl7c2n7qeWB9cmXtX2MY9mJ3_gpLINc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MiLCJyIjoiNTRiNDA5N2MtOGYyMS00OGE0LTgxYmUtNWI2NDk3YTk3ZmZlIiwibSI6ImxwIn0',
+          },
+        ],
+        destination: '/pages/post',
+        permanent: true,
+      },
+      {
+        source: '/so/c7OmbGwaG/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'popHa7OCjQGQyl7c2n7qeWB9cmXtX2MY9mJ3_gpLINc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MiLCJyIjoiNTRiNDA5N2MtOGYyMS00OGE0LTgxYmUtNWI2NDk3YTk3ZmZlIiwibSI6ImxwIn0',
+          },
+        ],
+        destination: '/pages/post',
+        permanent: true,
+      },
+      {
         source: '/:path*',
         has: [
           {

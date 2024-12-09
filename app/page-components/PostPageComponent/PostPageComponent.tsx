@@ -762,7 +762,6 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
               Go back to dashboard
             </button>
           )}
-
         </div>
       )}
       {/* Page Type Tag */}

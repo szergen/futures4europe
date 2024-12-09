@@ -1,16 +1,16 @@
 'use client';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { items } from '@wix/data';
-import { useWixModules } from '@wix/sdk-react';
+// import { items } from '@wix/data';
+// import { useWixModules } from '@wix/sdk-react';
 // import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import gsap from 'gsap';
+// import gsap from 'gsap';
 // import InertiaPlugin from 'gsap/InertiaPlugin';
-import MotionPathPlugin from 'gsap/MotionPathPlugin';
-import Draggable from 'gsap/Draggable';
+// import MotionPathPlugin from 'gsap/MotionPathPlugin';
+// import Draggable from 'gsap/Draggable';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
-import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
+// import TagLisInlineComponent from './page-components/shared-page-components/TagListInlineComponent/TagLisInlineComponent';
 import TagsList from './page-components/shared-page-components/TagList/TagsList';
 // import ErrorBoundary from './page-components/shared-page-components/TagListInlineComponent/ErrorBoundary';
 
@@ -39,7 +39,7 @@ export const Home = () => {
     // ownedPostPagesFetched,
     // ownedInfoPagesFetched,
     // handleUserDataRefresh,
-    tags,
+    // tags,
     tagsFetched,
   } = useAuth();
 
@@ -113,7 +113,6 @@ export const Home = () => {
     }
   }, [homepageConfig, postPages, infoPages]);
 
-
   // Loading states for different sections
   const [loadingStates, setLoadingStates] = useState({
     projects: true,
@@ -152,6 +151,62 @@ export const Home = () => {
   }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
 
 
+  // Modified useEffect to handle loading states
+  useEffect(() => {
+    console.log('debug8->Data status:', {
+      hasInfoPages: !!infoPages,
+      infoPagesLength: infoPages?.length,
+      isTagsFetched: tagsFetched,
+    });
+
+    if (infoPages && Array.isArray(infoPages)) {
+      // Update all info page related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        projects: false,
+        organisations: false,
+        persons: false,
+      }));
+    }
+
+    if (tagsFetched) {
+      // Update tag-related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        domains: false,
+        methods: false,
+      }));
+    }
+  }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
+
+  // Modified useEffect to handle loading states
+  useEffect(() => {
+    console.log('debug8->Data status:', {
+      hasInfoPages: !!infoPages,
+      infoPagesLength: infoPages?.length,
+      isTagsFetched: tagsFetched,
+    });
+
+    if (infoPages && Array.isArray(infoPages)) {
+      // Update all info page related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        projects: false,
+        organisations: false,
+        persons: false,
+      }));
+    }
+
+    if (tagsFetched) {
+      // Update tag-related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        domains: false,
+        methods: false,
+      }));
+    }
+  }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
+
   return (
     <div className="homeHero">
       {/* <pre>{JSON.stringify(infoPages.data, null, 2)}</pre>  */}
@@ -168,18 +223,98 @@ export const Home = () => {
         </div>
 
         <div className="w-full w-fit Container_wrapper index_customers">
-      <div className="index_customerGroups">
-        {/* Projects Section */}
-        <div className="index_customerGroupWrapper index_reverse">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-            <TagsList 
-              infoPageType="project info"
-              limit={25}
-              offset={0}
-              disableTooltip={true}
-              disablePopularityHover={true}
-            />
+          <div className="index_customerGroups">
+            {/* Projects Section */}
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    infoPageType="project info"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Organizations Section */}
+            <div className="index_customerGroupWrapper">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    infoPageType="organisation info"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Persons Section */}
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    infoPageType="person info"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Domains Section */}
+            <div className="index_customerGroupWrapper">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="domains"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="domains"
+                    limit={25}
+                    offset={25}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Foresight Methods Section */}
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="foresight methods"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="foresight methods"
+                    limit={25}
+                    offset={25}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
