@@ -11,7 +11,12 @@ import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { useEffect, useState, useMemo, memo, useRef } from 'react';
 import { Avatar, Dropdown, Modal, Badge } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
-import { HiUserCircle, HiPlusSm, HiShieldExclamation, HiUser } from 'react-icons/hi';
+import {
+  HiUserCircle,
+  HiPlusSm,
+  HiShieldExclamation,
+  HiUser,
+} from 'react-icons/hi';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Tag from '../Tag/Tag';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
@@ -181,19 +186,19 @@ const Header = () => {
     console.log('pageTypeCounts', pageTypeCounts);
   }, [pageTypeCounts]);
 
-
   // #region Check if user info page is ready
   const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
   const [personInfoPageLink, setPersonInfoPageLink] = useState('');
 
-  {/*TODO: @Alex de verificat implementarea*/}
+  {
+    /*TODO: @Alex de verificat implementarea*/
+  }
   useEffect(() => {
     if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
       setIsPersonInfoPageReady(true);
       setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
     }
   }, [isLoggedIn, router, userDetails]);
-
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
@@ -226,17 +231,15 @@ const Header = () => {
 
             {/*TODO: @Alex de verificat implementarea*/}
             {personInfoPageLink ? (
-            <Link href={personInfoPageLink}>
-              <Dropdown.Item icon={HiUser}>My info page</Dropdown.Item>
-            </Link>
+              <Link href={personInfoPageLink}>
+                <Dropdown.Item icon={HiUser}>My info page</Dropdown.Item>
+              </Link>
             ) : (
               <Dropdown.Item icon={HiUser}>
                 <Link href="/person/New_Info_Page">Dashboard</Link>
               </Dropdown.Item>
             )}
-
           </Dropdown.Header>
-
 
           <Link href="/dashboard">
             <Dropdown.Item icon={HiUserCircle}>Dashboard</Dropdown.Item>
@@ -271,7 +274,9 @@ const Header = () => {
           <Dropdown.Divider />
 
           <Link href="/dashboard/change-password">
-            <Dropdown.Item icon={HiShieldExclamation}>Account security</Dropdown.Item>
+            <Dropdown.Item icon={HiShieldExclamation}>
+              Account security
+            </Dropdown.Item>
           </Link>
 
           <Dropdown.Divider />

@@ -20,13 +20,7 @@ import { HiLockOpen } from 'react-icons/hi';
 export default function DashboardChangePassword() {
   const [userInfoPage, setUserInfoPage] = useState('');
 
-  const {
-    isLoggedIn,
-    loading,
-    userDetails,
-    logout,
-    tags,
-  } = useAuth();
+  const { isLoggedIn, loading, userDetails, logout, tags } = useAuth();
 
   const router = useRouter();
 
@@ -60,7 +54,11 @@ export default function DashboardChangePassword() {
   };
 
   const subNavItems = [
-    { href: '/dashboard/change-password', text: 'Account security', isActive: true },
+    {
+      href: '/dashboard/change-password',
+      text: 'Account security',
+      isActive: true,
+    },
   ];
 
   return (
@@ -81,7 +79,6 @@ export default function DashboardChangePassword() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           Change Password
         </h1>
@@ -271,7 +268,6 @@ export default function DashboardChangePassword() {
                   />
                 </span>
               </div> */}
-
             </div>
           </div>
         </div>
@@ -337,7 +333,6 @@ export default function DashboardChangePassword() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
