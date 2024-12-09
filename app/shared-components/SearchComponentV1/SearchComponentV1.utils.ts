@@ -245,26 +245,26 @@ export const updateFilteredDataBasedOnClickedTag = (
   //     );
   //     return matchingPage || assignment;
   //   });
-  const matchingTagIds = filteredData.assignments
+  const matchingTagIds = filteredData?.assignments
     .filter((assignment) => assignment.tagName === clickedTag)
     .map((assignment) => assignment.pageId);
 
   // console.log('debug3->matchingTagIds', matchingTagIds);
 
-  const matchedPages = filteredData.pages.filter((page) =>
-    matchingTagIds.includes(page.pageId)
+  const matchedPages = filteredData?.pages?.filter((page) =>
+    matchingTagIds?.includes(page.pageId)
   );
   // .sort((a, b) => a.id - b.id);
 
   return {
-    matchedPages: matchedPages.map((page) => ({ item: page })),
+    matchedPages: matchedPages?.map((page) => ({ item: page })),
     // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
     // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
   };
 };
 
 export const uniqueResults = (results: Array<any>) =>
-  results.filter(
+  results?.filter(
     (result, index, self) =>
       index === self.findIndex((t) => t.item.pageId === result.item.pageId)
   );

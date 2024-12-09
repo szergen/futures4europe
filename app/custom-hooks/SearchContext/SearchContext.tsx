@@ -4,6 +4,8 @@ import { mockedAssignments } from './mockedAssignments';
 import { mockedPages } from './mockedPages';
 // import { mockedTags } from './mockedTags';
 import { mockedTags, sortTags } from './SearchContext.utils';
+import { useAuth } from '../AuthContext/AuthContext';
+import { init } from 'next/dist/compiled/@vercel/og/satori';
 
 // Mocked Data
 const mockedInitialData = {
@@ -488,7 +490,15 @@ const SearchContext = createContext<{
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
-  const [searchState, setSearchState] = useState(initialState);
+  const { tags, infoPages, postPages } = useAuth();
+  const initialData = {
+    tags: tags,
+    pages: [...infoPages, ...postPages],
+    assignments: initialState.initialData.assignments,
+    sortTags: sortTags,
+  };
+  initialData.filteredData = initialData;
+  const [searchState, setSearchState] = useState(initialData);
 
   return (
     <SearchContext.Provider value={{ searchState, setSearchState }}>

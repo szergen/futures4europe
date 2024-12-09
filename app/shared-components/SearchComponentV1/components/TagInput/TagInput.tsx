@@ -153,7 +153,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       }));
     } else if (
       (event.key === 'Delete' || event.key === 'Backspace') &&
-      searchState.searchedItems.length > 0 &&
+      searchState?.searchedItems?.length > 0 &&
       !input
     ) {
       if (searchState.selectedSearchedItemIndex === -1) {
@@ -244,19 +244,19 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       // Word by word search
       const pageSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.pages,
+        filteredData?.pages,
         ['title', 'subtitle', 'description']
       );
 
       const fieldSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.tags.filter((tag) => tag.tagType === 'field'),
+        filteredData?.tags?.filter((tag) => tag.tagType === 'field'),
         ['name', 'tagLine']
       );
 
       const tagSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.tags.filter(
+        filteredData?.tags?.filter(
           (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
         ),
         ['name', 'tagLine']
@@ -265,7 +265,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       // if (searchState.searchedItems.length) {
       sortTagsSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.sortTags,
+        filteredData?.sortTags,
         ['name']
       );
       console.log(
@@ -483,7 +483,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     //   )
     // );
     setResultsToShow(
-      uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
+      uniqueResults(filteredData?.pages?.map((page) => ({ item: page })))?.map(
         (result) => result.item
       )
     );

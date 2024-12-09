@@ -356,14 +356,16 @@ const Header = () => {
           </Link>
           {/* TODO: Temporary Removal */}
           {/* Search */}
-          {/* <div>
+          <div
+            className={classNames('relative', style.headerWithSearchContainer)}
+          >
             <SearchProvider>
               <SearchComponentV1 />
             </SearchProvider>
-          </div> */}
+          </div>
           {/* TODO: Temporary Pages */}
           {/* Page Buttons */}
-          <div
+          {/* <div
             className={classNames('relative', style.headerTagContainerOuter)}
           >
             <div
@@ -441,7 +443,7 @@ const Header = () => {
                 disableUnderline
               />
             </div>
-          </div>
+          </div> */}
           {/* Account */}
           {accountSection}
 

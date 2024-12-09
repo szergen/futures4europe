@@ -1,6 +1,6 @@
 .SearchInputContainer {
   input {
-    width: 400px;
+    width: 600px;
     height: 40px;
     transition: width 0.2s;
     border-radius: 8px;
@@ -10,9 +10,9 @@
     margin: var(--w-space-none);
     border-radius: var(--p-border-radius-400);
   }
-  input:focus {
+  /* input:focus {
     width: 700px;
-  }
+  } */
 }
 
 .SearchInputButton {

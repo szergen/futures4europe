@@ -181,7 +181,7 @@ const SearchComponentV1 = () => {
   useEffect(() => {
     setSearchState((prevState) => ({
       ...prevState,
-      pageSuggestions: results.map((page) => ({ item: page })),
+      pageSuggestions: results?.map((page) => ({ item: page })),
     }));
   }, [results]);
 
@@ -191,7 +191,7 @@ const SearchComponentV1 = () => {
         <SearchedItems
           searchedItems={searchedItems}
           handleRemoveSearchedItem={handleRemoveSearchedItem}
-          tags={filteredData.tags}
+          tags={filteredData?.tags}
           selectedSearchedItemIndex={selectedSearchedItemIndex}
           selectedSortTag={selectedSortTag}
         />

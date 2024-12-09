@@ -79,7 +79,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
 
   // Sort by tags logic
   useEffect(() => {
-    if (searchedItems.length > 0) {
+    if (searchedItems && searchedItems?.length > 0) {
       searchedItems.forEach((searchedItem: any) => {
         if (searchedItem.searchItemType === 'tag') {
           setAvailableSortTags(
