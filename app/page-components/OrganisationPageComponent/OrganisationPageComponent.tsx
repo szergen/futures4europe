@@ -71,8 +71,8 @@ function OrganisationPageComponent({
         (owner: any) => owner?._id === userDetails?.userTag?._id
       );
 
-   // console.log('debug1->permissionCondition', permissionCondition);
-   //console.log('debug1->organisationData.pageOwner' + JSON.stringify(organisationData));
+    // console.log('debug1->permissionCondition', permissionCondition);
+    //console.log('debug1->organisationData.pageOwner' + JSON.stringify(organisationData));
 
     if (permissionCondition) {
       setIsPageOwnedByUser(true);
@@ -897,7 +897,6 @@ function OrganisationPageComponent({
               Go back to dashboard
             </button>
           )}
-
         </div>
       )}
       {/* Page Type Tag */}

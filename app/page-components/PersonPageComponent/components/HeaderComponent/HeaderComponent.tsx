@@ -81,7 +81,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     const specialCharsRegex = /[<>{}[\]\\\/]/;
     if (specialCharsRegex.test(trimmedTitle)) {
       return 'Title cannot contain special characters like < > { } [ ] \\ /';
-    }    
+    }
 
     if (tempName.length < 5) {
       return 'Title should be at least 5 characters long';
@@ -105,10 +105,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     return '';
   };
 
-  //TODO @ALEX de verificat currentTagPopularity 
+  //TODO @ALEX de verificat currentTagPopularity
   const { getPopularity } = useTagPopularity();
   const currentTagPopularity = getPopularity(person?.personTag?.name);
-    
+
   //Debugging
   // useEffect(() => {
   //   console.log({
@@ -116,7 +116,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   //     popularity: currentTagPopularity
   //   });
   // }, [person?.personTag?.name, currentTagPopularity]);
-    
+
   // console.log('person', JSON.stringify(person, null, 2));
 
   return (

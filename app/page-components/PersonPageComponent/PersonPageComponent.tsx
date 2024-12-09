@@ -1057,7 +1057,6 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
               Go back to dashboard
             </button>
           )}
-
         </div>
       )}
       {/* Page Type Tag NON editable*/}

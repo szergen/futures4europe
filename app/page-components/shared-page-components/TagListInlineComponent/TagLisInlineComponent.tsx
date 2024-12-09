@@ -69,10 +69,10 @@ const TagLisInlineComponent = ({
   }
 
   // Filter and log info pages
-  const filteredInfoPages =
-    infoPages?.filter(
-      (infoPage) => infoPage?.data?.pageTypes?.[0]?.name === infoPageType
-    ) || [];
+  // const filteredInfoPages =
+  //   infoPages?.filter(
+  //     (infoPage) => infoPage?.data?.pageTypes?.[0]?.name === infoPageType
+  //   ) || [];
 
   // console.log('debug6->Filtered info pages:', {
   //   infoPageType,
@@ -97,76 +97,73 @@ const TagLisInlineComponent = ({
                 'project info': infoPage.data.Project || [],
               };
 
-            const tagsToRender = tagTypeMap[infoPageType] || [];
+              const tagsToRender = tagTypeMap[infoPageType] || [];
 
-            // console.log('debug6->Tags to render:', {
-            //   infoPageType,
-            //   pageTitle: infoPage.data.title,
-            //   tagsCount: tagsToRender.length,
-            //   tags: tagsToRender,
-            // });
+              // console.log('debug6->Tags to render:', {
+              //   infoPageType,
+              //   pageTitle: infoPage.data.title,
+              //   tagsCount: tagsToRender.length,
+              //   tags: tagsToRender,
+              // });
 
-            return (
-              <div key={`${infoPage.data.title}-${index}`} className="flex">
-                {tagsToRender.map((item, idx) => {
-                  // console.log('debug6->Rendering tag:', { item });
-                  return item && item.name && item.picture ? (
-                    <Tag
-                      key={`${infoPage.data.title}-${item._id || idx}`}
-                      name={item.name}
-                      picture={item.picture}
-                      disableTooltip
-                      disablePopularityHover
-                      tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                        infoPage.data.pageTypes?.[0]?.name
-                      )}${infoPage.data.slug}`}
-                      tagType={item.tagType}
-                    />
-                  ) : null;
-                })}
-              </div>
-            );
-          })}
+              return (
+                <div key={`${infoPage.data.title}-${index}`} className="flex">
+                  {tagsToRender.map((item, idx) => {
+                    // console.log('debug6->Rendering tag:', { item });
+                    return item && item.name && item.picture ? (
+                      <Tag
+                        key={`${infoPage.data.title}-${item._id || idx}`}
+                        name={item.name}
+                        picture={item.picture}
+                        disableTooltip
+                        disablePopularityHover
+                        tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
+                          infoPage.data.pageTypes?.[0]?.name
+                        )}${infoPage.data.slug}`}
+                        tagType={item.tagType}
+                      />
+                    ) : null;
+                  })}
+                </div>
+              );
+            })}
         </>
       )}
 
       {/* Post Pages Rendering Logic */}
       {filteredPostPages && filteredPostPages.length > 0 && (
         <>
-          {filteredPostPages.map((postPage, index) => {
+          {filteredPostPages?.map((postPage, index) => {
             const tags = getTagsByType(postPage);
             // console.log('debug6->Post tags:', {
             //   postTitle: postPage.data.title,
             //   tags,
             // });
 
-              return (
-                <div
-                  key={`${postPage.data.title}-${postPage._id || index}`}
-                  className="flex flex-wrap gap-2"
-                >
-                  {tags.length > 0 ? (
-                    tags.map((item, idx) => (
-                      item && item.name ? (
-                        <Tag
-                          key={`${postPage.data.title}-${item._id || idx}`}
-                          name={item.name}
-                          disableTooltip
-                          disablePopularityHover
-                          tagPageLink={`/post/${postPage.data.slug}`}
-                          tagType={item.tagType}
-                        />
-                      ) : null
-                    ))
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-              );
-            })
-          ) : (
-            <p></p>
-          )}
+            return (
+              <div
+                key={`${postPage.data.title}-${postPage._id || index}`}
+                className="flex flex-wrap gap-2"
+              >
+                {tags.length > 0 ? (
+                  tags.map((item, idx) =>
+                    item && item.name ? (
+                      <Tag
+                        key={`${postPage.data.title}-${item._id || idx}`}
+                        name={item.name}
+                        disableTooltip
+                        disablePopularityHover
+                        tagPageLink={`/post/${postPage.data.slug}`}
+                        tagType={item.tagType}
+                      />
+                    ) : null
+                  )
+                ) : (
+                  <p></p>
+                )}
+              </div>
+            );
+          })}
         </>
       )}
     </section>

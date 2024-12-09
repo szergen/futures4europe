@@ -20,7 +20,7 @@ export type MiniPagePostProps = {
   projectStartDate?: string;
   projectEndDate?: string;
   eventStartDate?: string;
-  eventEndDate?: string;  
+  eventEndDate?: string;
   projectResultPublicationDate?: string;
   organisationAffiliations?: Array<{ organisation: string; role: string }>;
   organisationEstablishedDate?: string;
@@ -43,7 +43,7 @@ export type MiniPagePostProps = {
 export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   // Log all props at once
   console.log('All Props:', props);
-  
+
   // Or log individual props
   const {
     title,
@@ -102,8 +102,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   const formattedDate = date ? formatDate(date) : '';
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   dayjs.extend(relativeTime);
-  
-  //TODO @ALEX de verificat currentTagPopularity 
+
+  //TODO @ALEX de verificat currentTagPopularity
   const { getPopularity } = useTagPopularity();
   // Get the correct tag name for popularity based on the type
   const getCorrectTagName = () => {
@@ -120,7 +120,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
 
   // Only show popularity if the tag type is NOT 'post'
   const shouldShowPopularity = primaryTags?.[0]?.tagType !== 'post';
-    
+
   // //Debugging
   useEffect(() => {
     console.log({
@@ -128,7 +128,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
       popularity: currentTagPopularity,
       primaryTags,
       projects,
-      projectResultAuthor
+      projectResultAuthor,
     });
   }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
 
@@ -169,7 +169,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
           {title}
           {shouldShowPopularity && (
             <span className={classNames(style.popularity)}>
-              {/* Popularity */}            
+              {/* Popularity */}
               {currentTagPopularity || ''}
             </span>
           )}
@@ -190,7 +190,6 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
               {dayjs(projectResultPublicationDate).format('MMMM YYYY')}
             </span>
           )}
-
         </Typography>
         {/* Subtitle */}
 

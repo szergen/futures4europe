@@ -113,7 +113,6 @@ export const Home = () => {
     }
   }, [homepageConfig, postPages, infoPages]);
 
-
   // Loading states for different sections
   const [loadingStates, setLoadingStates] = useState({
     projects: true,
@@ -122,7 +121,7 @@ export const Home = () => {
     domains: true,
     methods: true,
   });
-  
+
   // Modified useEffect to handle loading states
   useEffect(() => {
     console.log('debug8->Data status:', {
@@ -133,24 +132,23 @@ export const Home = () => {
 
     if (infoPages && Array.isArray(infoPages)) {
       // Update all info page related loading states
-      setLoadingStates(prev => ({
+      setLoadingStates((prev) => ({
         ...prev,
         projects: false,
         organisations: false,
-        persons: false
+        persons: false,
       }));
     }
 
     if (tagsFetched) {
       // Update tag-related loading states
-      setLoadingStates(prev => ({
+      setLoadingStates((prev) => ({
         ...prev,
         domains: false,
-        methods: false
+        methods: false,
       }));
     }
   }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
-
 
   return (
     <div className="homeHero">
@@ -168,103 +166,101 @@ export const Home = () => {
         </div>
 
         <div className="w-full w-fit Container_wrapper index_customers">
-      <div className="index_customerGroups">
-        {/* Projects Section */}
-        <div className="index_customerGroupWrapper index_reverse">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-            <TagsList 
-              infoPageType="project info"
-              limit={25}
-              offset={0}
-              disableTooltip={true}
-              disablePopularityHover={true}
-            />
+          <div className="index_customerGroups">
+            {/* Projects Section */}
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    infoPageType="project info"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Organizations Section */}
+            <div className="index_customerGroupWrapper">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    infoPageType="organisation info"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Persons Section */}
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    infoPageType="person info"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Domains Section */}
+            <div className="index_customerGroupWrapper">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="domains"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="domains"
+                    limit={25}
+                    offset={25}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Foresight Methods Section */}
+            <div className="index_customerGroupWrapper index_reverse">
+              <div className="index_customerGroup">
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="foresight methods"
+                    limit={25}
+                    offset={0}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+                <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
+                  <TagsList
+                    tagType="foresight methods"
+                    limit={25}
+                    offset={25}
+                    disableTooltip={true}
+                    disablePopularityHover={true}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Organizations Section */}
-        <div className="index_customerGroupWrapper">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                infoPageType="organisation info"
-                limit={25}
-                offset={0}
-                disableTooltip={true}
-                disablePopularityHover={true}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Persons Section */}
-        <div className="index_customerGroupWrapper index_reverse">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-            <TagsList 
-              infoPageType="person info"
-              limit={25}
-              offset={0}
-              disableTooltip={true}
-              disablePopularityHover={true}
-            />
-            </div>
-          </div>
-        </div>
-
-        {/* Domains Section */}
-        <div className="index_customerGroupWrapper">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="domains"
-                limit={25}
-                offset={0}
-                disableTooltip={true}
-                disablePopularityHover={true}              
-              />
-            </div>
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="domains"
-                limit={25}
-                offset={25}
-                disableTooltip={true}
-                disablePopularityHover={true}              
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Foresight Methods Section */}
-        <div className="index_customerGroupWrapper index_reverse">
-          <div className="index_customerGroup">
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="foresight methods"
-                limit={25}
-                offset={0}
-                disableTooltip={true}
-                disablePopularityHover={true}
-              />
-            </div>
-            <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
-              <TagsList 
-                tagType="foresight methods"
-                limit={25}
-                offset={25}
-                disableTooltip={true}
-                disablePopularityHover={true}
-              />
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-      
       </div>
 
       <div className="homeFeatured">

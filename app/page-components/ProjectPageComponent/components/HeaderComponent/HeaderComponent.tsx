@@ -101,10 +101,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     return '';
   };
 
-    //TODO @ALEX de verificat currentTagPopularity 
-    const { getPopularity } = useTagPopularity();
-    const currentTagPopularity = getPopularity(project?.projectTag?.name);
-      
+  //TODO @ALEX de verificat currentTagPopularity
+  const { getPopularity } = useTagPopularity();
+  const currentTagPopularity = getPopularity(project?.projectTag?.name);
 
   // if is newPage, update the projectTag with the new tag created or selected
   // const [projectTag, setProjectTag] = useState(project?.projectTag);
