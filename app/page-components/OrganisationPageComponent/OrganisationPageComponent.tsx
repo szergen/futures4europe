@@ -1100,7 +1100,7 @@ function OrganisationPageComponent({
         updatePostData={(value) =>
           updateOrganisationDataOnKeyValue('memberOrganisations', value)
         }
-        tagType="domain"
+        tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
       {/* Member of Organisations */}
@@ -1116,7 +1116,7 @@ function OrganisationPageComponent({
         updatePostData={(value) =>
           updateOrganisationDataOnKeyValue('memberOfOrganisations', value)
         }
-        tagType="domain"
+        tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
       {/* Internal Links */}
