@@ -155,6 +155,12 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   // Sortable.mount(new Swap());
 
+
+    // Function to determine if tagline should be shown
+  const shouldShowTagline = (type: string = '') => {
+    const typeToCheck = type.toLowerCase();
+    return !(typeToCheck === 'person');
+  };
   return (
     <section className={classNames(style.tagListRootContainer)}>
       {tagListTitle && (
@@ -192,7 +198,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         disabled={!isEditModeOn || isDisabledSorting}
         className={classNames(
           'flex w-fit flex-wrap z-50',
-          isEditModeOn && 'hover:border-gray-300 transition-colors'
         )}
         onStart={(evt) => {
           evt.item.classList.add(style.dragShadow);
@@ -207,7 +212,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             className={classNames(
               style.tagListContainer,
               isEditModeOn &&
-                'cursor-move hover:bg-gray-50 rounded transition-colors transition-transform duration-150'
+                ''
             )}
             // onClick={(e: any) => {
             //   setIsDisabledSorting(true);
@@ -311,7 +316,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                     newTagHeader={`Create a new ${tagType}`}
                     newTagType={`${capitalizeFirstLetter(tagType || '')} name`}
                     newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
-                    showTagTagline={false}
+                    showTagTagline={shouldShowTagline(tagType?.toLowerCase())}
                   />
                   <button
                     onClick={() => handleRemoveAffiliation(index)}
