@@ -43,6 +43,8 @@ export default async function Pages({ params }: any) {
     return <div>Page Type not supported...</div>;
   }
 
+
+
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
 
@@ -57,11 +59,12 @@ export default async function Pages({ params }: any) {
     return <div>Loading...</div>; // You can also add a loading spinner here
   }
 
+
   return (
     <div className={classNames('w-full')}>
       <Hero
         title={`${pageType.toUpperCase()} Pages`}
-        subtitle={`sorted by published date`}
+        pageType={pageType}
       />
       <div className={classNames(style.listContainer)}>
         <MiniPagesListItemPost

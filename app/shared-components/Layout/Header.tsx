@@ -11,7 +11,7 @@ import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { useEffect, useState, useMemo, memo, useRef } from 'react';
 import { Avatar, Dropdown, Modal, Badge } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
-import { HiUserCircle, HiPlusSm } from 'react-icons/hi';
+import { HiUserCircle, HiPlusSm, HiShieldExclamation, HiUser } from 'react-icons/hi';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Tag from '../Tag/Tag';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
@@ -181,6 +181,20 @@ const Header = () => {
     console.log('pageTypeCounts', pageTypeCounts);
   }, [pageTypeCounts]);
 
+
+  // #region Check if user info page is ready
+  const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
+  const [personInfoPageLink, setPersonInfoPageLink] = useState('');
+
+  {/*TODO: @Alex de verificat implementarea*/}
+  useEffect(() => {
+    if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
+      setIsPersonInfoPageReady(true);
+      setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
+    }
+  }, [isLoggedIn, router, userDetails]);
+
+
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
       <div className={classNames(style.avatarImageHeader)} ref={dropdownRef}>
@@ -209,7 +223,20 @@ const Header = () => {
               {userDetails?.userName}
             </span>
             <span className="block text-sm">{userDetails?.email}</span>
+
+            {/*TODO: @Alex de verificat implementarea*/}
+            {personInfoPageLink ? (
+            <Link href={personInfoPageLink}>
+              <Dropdown.Item icon={HiUser}>My info page</Dropdown.Item>
+            </Link>
+            ) : (
+              <Dropdown.Item icon={HiUser}>
+                <Link href="/person/New_Info_Page">Dashboard</Link>
+              </Dropdown.Item>
+            )}
+
           </Dropdown.Header>
+
 
           <Link href="/dashboard">
             <Dropdown.Item icon={HiUserCircle}>Dashboard</Dropdown.Item>
@@ -241,6 +268,12 @@ const Header = () => {
           >
             <Link href=''> Add Foresight method</Link>
           </Dropdown.Item> */}
+          <Dropdown.Divider />
+
+          <Link href="/dashboard/change-password">
+            <Dropdown.Item icon={HiShieldExclamation}>Account security</Dropdown.Item>
+          </Link>
+
           <Dropdown.Divider />
 
           <Dropdown.Item onClick={handleLogOut} icon={SignOutUser}>

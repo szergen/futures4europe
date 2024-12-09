@@ -95,6 +95,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     return '';
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };  
+
   return (
     <div className={classNames(style.postHeader)}>
       {post.pageType?.[0]?.name?.toLowerCase() === 'project result' && (
@@ -214,6 +220,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 : undefined
             }
             shouldUpdateValueState={true}
+            onKeyDown={handleKeyDown}
           />
         )}
         {/* Post Subtitle */}
@@ -237,6 +244,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               style.genericTextArea,
               style.textPostSubtitle
             )}
+            onKeyDown={handleKeyDown}
           />
         )}
         {/* Event Date */}
