@@ -351,12 +351,12 @@ export default function RegisterPage() {
                 </div>
                 Account successfully created. <br />
                 <span className="font-bold">
-                  An admin must approve your account before you can login.
+                  {/* An admin must approve your account before you can login. */}
                   {/* Green checkmark */}
                 </span>
               </div>
               <div className="flex flex-wrap justify-center">
-                <Link href="/">
+                {/* <Link href="/">
                   <Button
                     color="primary"
                     className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
@@ -364,7 +364,7 @@ export default function RegisterPage() {
                   >
                     Back to Homepage
                   </Button>
-                </Link>
+                </Link> */}
                 <Link href="/login">
                   <Button
                     color="primary"
