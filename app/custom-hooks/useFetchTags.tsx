@@ -9,9 +9,9 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
     const allTagsRespone = await fetch('/api/tags');
     const allTags = await allTagsRespone.json();
     // const allTags = await fetch('/api/tags');
-    console.log('allTags', allTags);
+    // console.log('allTags', allTags);
 
-    const allTagsWithMentions = allTags.map((tag: any) => tag.data);
+    const allTagsWithMentions = await allTags.map((tag: any) => tag.data);
     // console.log('tags->calculating popularity');
     tags = calculatePopularity(allTagsWithMentions, infoPages, postPages);
     // console.log('tags->popularity calculated', tags);

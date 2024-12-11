@@ -1,16 +1,17 @@
-// 'use client';
+'use client';
 import classNames from 'classnames';
 import React from 'react';
-import {
-  getCollection,
-  // getCollectionItemByTitle,
-  getMemberById,
-  updateDataItem,
-  composeReferencedItemTitlesForInfoPages,
-  getAllReferencedItemsByTitle,
-  composePageWithReferencedItems,
-} from '@app/wixUtils/server-side';
+// import {
+//   getCollection,
+//   // getCollectionItemByTitle,
+//   getMemberById,
+//   updateDataItem,
+//   composeReferencedItemTitlesForInfoPages,
+//   getAllReferencedItemsByTitle,
+//   composePageWithReferencedItems,
+// } from '@app/wixUtils/server-side';
 import PersonPageComponent from '@app/page-components/PersonPageComponent/PersonPageComponent';
+// import { revalidate } from '@app/layout';
 
 export default async function PersonPage({ params }: any) {
   console.log('Person Page Params', params.slug);

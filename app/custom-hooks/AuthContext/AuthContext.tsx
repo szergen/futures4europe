@@ -127,20 +127,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (infoPages.length > 0 && postPages.length > 0) {
-      // setIsLoadingInProgress(true);
+      setIsLoadingInProgress(true);
       fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
         setTags(allTags);
         setTagsFetched(true);
-        // setIsLoadingInProgress(false);
+        setIsLoadingInProgress(false);
       });
     }
   }, [infoPages, postPages, refreshTags]);
 
   const handleTagCreated = () => {
-    const refetchNewTags = refetchTags().then(() => {
-      console.log('refetchNewTags');
-      setRefreshTags((prev) => !prev);
-    });
+    // const refetchNewTags = refetchTags().then(() => {
+    //   console.log('refetchNewTags');
+    //   setRefreshTags((prev) => !prev);
+    // });
+    setRefreshTags((prev) => !prev);
     // Toggle the refresh state to trigger re-fetch
   };
 
