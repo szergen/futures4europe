@@ -211,7 +211,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -312,8 +312,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             </div>
           </components.Option>
         );
-      }  
-      
+      }
+
       // Only show create button if showCreateTagButton is true
       if (showCreateTagButton) {
         return (
@@ -348,11 +348,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       }
 
       // If no matching tag and create button is hidden, show empty option
-      return (
-          <div className="p-1 ml-2">
-            No matching tag found
-          </div>
-      );      
+      return <div className="p-1 ml-2">No matching tag found</div>;
     },
     MultiValue: (props: any) => {
       const correspondingTag = tags?.find(
@@ -545,7 +541,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     onChange={(e) => setTagTagline(e.target.value)}
                     style={{ display: showTagTagline ? 'block' : 'none' }}
                   />
-                  
                 </div>
                 <Button
                   disabled={!isTagNameValid || isLoading}

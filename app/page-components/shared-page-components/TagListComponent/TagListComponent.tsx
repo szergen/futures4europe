@@ -22,7 +22,13 @@ const capitalizeFirstLetter = (str: string) => {
 };
 
 // Define which tag types should show the tagline
-const tagTypesWithTagline = ['project', 'organisation', 'project-result', 'domain', 'foresight method'];
+const tagTypesWithTagline = [
+  'project',
+  'organisation',
+  'project-result',
+  'domain',
+  'foresight method',
+];
 
 const TagListComponent: React.FC<TagListComponentProps> = ({
   tagList,
@@ -40,7 +46,9 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
   }
 
   // Determine if tagline should be shown based on tag type
-  const shouldShowTagline = tagType ? tagTypesWithTagline.includes(tagType.toLowerCase()) : true;
+  const shouldShowTagline = tagType
+    ? tagTypesWithTagline.includes(tagType.toLowerCase())
+    : true;
 
   return (
     <section className={classNames(style.tagListContainer)}>
