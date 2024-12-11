@@ -10,6 +10,7 @@ import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import SpriteSvg from '../SpriteSvg/SpriteSvg';
+import { refetchTags } from '@app/utils/refetch-utils';
 // import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
@@ -133,6 +134,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     try {
       // #region Logic for creating Tag in Wix
       const uploadedTag = await uploadTag(tagName, tagTagline);
+      await refetchTags();
+      onTagCreated && onTagCreated();
+
+      // #region tags should be refetched here
+
+      // #endregion
       console.log('uploadedTag', uploadedTag);
       // #endregion
 
@@ -143,10 +150,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       } else {
         setValue(newOption);
       }
-      // #endregion
-
-      // #region Callback for refreshing the tags
-      onTagCreated && onTagCreated();
       // #endregion
 
       // #region Extra logic to update the post data

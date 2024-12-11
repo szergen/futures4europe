@@ -714,8 +714,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   }, [userDetails, tags]);
 
   useEffect(() => {
-    console.log('postData', postData);
-  }, [postData]);
+    isNewPost && handleTagCreated();
+  }, []);
 
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
 

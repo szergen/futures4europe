@@ -22,6 +22,7 @@ import { items } from '@wix/data';
 
 // TODO @alex adaugat consent newsletter
 import { subscribeToNewsletter } from '@app/wixUtils/client-side';
+import { refetchTags } from '@app/utils/refetch-utils';
 
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
 
@@ -91,6 +92,7 @@ export default function RegisterPage() {
         tagResult = await uploadTag(firstName + ' ' + lastName);
         console.log('tagResult', tagResult);
         if (tagResult) {
+          await refetchTags();
           setIsTagCreated(true);
         }
       }
