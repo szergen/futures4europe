@@ -209,7 +209,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -541,7 +541,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     onChange={(e) => setTagTagline(e.target.value)}
                     style={{ display: showTagTagline ? 'block' : 'none' }}
                   />
-                  
                 </div>
                 <Button
                   disabled={!isTagNameValid || isLoading}

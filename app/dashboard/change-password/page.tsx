@@ -79,7 +79,6 @@ export default function DashboardChangePassword() {
           'flex flex-col relative m-auto mt-10 mb-6'
         )}
       >
-        
         <h1 className={classNames(style.headingDashboardh1, 'mt-2 mb-4 p-0')}>
           Change Password
         </h1>

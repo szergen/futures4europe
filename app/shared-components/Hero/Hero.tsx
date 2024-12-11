@@ -12,7 +12,7 @@ export type HeroProps = {
 const Hero = ({ title, subtitle, pageType, children }: HeroProps) => {
   const getSubtitle = () => {
     if (subtitle) return subtitle;
-    
+
     switch (pageType?.toLowerCase()) {
       case 'event':
         return 'sorted by event start date';
@@ -23,9 +23,9 @@ const Hero = ({ title, subtitle, pageType, children }: HeroProps) => {
       case 'organisation':
         return 'sorted by published date';
       case 'person':
-          return 'sorted by creation date';                  
+        return 'sorted by creation date';
       case 'post':
-          return 'sorted by published date';              
+        return 'sorted by published date';
       default:
         return 'sorted by published date';
     }

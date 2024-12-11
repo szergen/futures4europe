@@ -121,7 +121,7 @@ export const Home = () => {
     domains: true,
     methods: true,
   });
-  
+
   // Modified useEffect to handle loading states
   useEffect(() => {
     console.log('debug8->Data status:', {
@@ -132,24 +132,23 @@ export const Home = () => {
 
     if (infoPages && Array.isArray(infoPages)) {
       // Update all info page related loading states
-      setLoadingStates(prev => ({
+      setLoadingStates((prev) => ({
         ...prev,
         projects: false,
         organisations: false,
-        persons: false
+        persons: false,
       }));
     }
 
     if (tagsFetched) {
       // Update tag-related loading states
-      setLoadingStates(prev => ({
+      setLoadingStates((prev) => ({
         ...prev,
         domains: false,
-        methods: false
+        methods: false,
       }));
     }
   }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
-
 
   // Modified useEffect to handle loading states
   useEffect(() => {
@@ -328,7 +327,7 @@ export const Home = () => {
             pageTypePath="project"
           />
         )}
-        
+
         {featuredPages.featuredProjectResults.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjectResults.map(

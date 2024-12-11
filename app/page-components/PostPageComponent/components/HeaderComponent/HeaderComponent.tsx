@@ -59,7 +59,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   setValidationState,
 }) => {
   const validationFunctionForTitle = (tempTitle: string | undefined) => {
-
     if (!tempTitle) {
       return 'Title is required';
     }
