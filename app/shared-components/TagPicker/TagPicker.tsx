@@ -29,6 +29,7 @@ export type TagPickerProps = {
   newTagType?: string;
   newTagTagline?: string;
   showTagTagline?: boolean;
+  showCreateTagButton?: boolean; // Add this new prop catalin
 };
 
 interface Option {
@@ -69,6 +70,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   newTagType,
   newTagTagline,
   showTagTagline = true,
+  showCreateTagButton = true, // Default to true catalin
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -283,31 +285,22 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   };
 
   // components
+  // TODO @ALEX - !!!!!! important de verificat noua structura
   const customComponents = {
     ClearIndicator: customClearIndicator,
     Option: (props: any) => {
       const correspondingTag = tags?.find(
         (tag) => tag.name === props.data.label
       );
-      return (
-        // <components.Option {...props}>
-        correspondingTag ? (
+
+      if (correspondingTag) {
+        return (
           <components.Option {...props}>
             <div
               className={classNames(
                 styles.tagPickerTagline,
                 'p-1 ml-2 flex flex-row items-center items-left'
               )}
-              // onClick={(e: any) => {
-              //   console.log('eeeee onClick', e);
-              //   // e.preventDefault();
-              //   e.stopPropagation();
-              // }}
-              // onMouseUp={(e: any) => {
-              //   console.log('eeeee onMouseUp', e);
-              //   e.preventDefault();
-              //   // e.stopPropagation();
-              // }}
             >
               <Tag
                 {...correspondingTag}
@@ -318,7 +311,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
               <p>{correspondingTag.tagLine}</p>
             </div>
           </components.Option>
-        ) : (
+        );
+      }
+
+      // Only show create button if showCreateTagButton is true
+      if (showCreateTagButton) {
+        return (
           <button
             className={classNames(
               styles.tagPickerCreateButton,
@@ -346,9 +344,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             </span>
             tag
           </button>
-        )
-        // </components.Option>
-      );
+        );
+      }
+
+      // If no matching tag and create button is hidden, show empty option
+      return <div className="p-1 ml-2">No matching tag found</div>;
     },
     MultiValue: (props: any) => {
       const correspondingTag = tags?.find(

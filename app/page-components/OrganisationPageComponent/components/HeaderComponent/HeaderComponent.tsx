@@ -348,6 +348,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               updateOrganisationDataOnKeyValue('countryTag', value)
             }
             tagType="country"
+            showCreateTagButton={false}
             onTagCreated={handleTagCreated}
             newTagHeader="Create a new country tag"
             newTagType="Country name"
