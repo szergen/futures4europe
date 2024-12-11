@@ -178,10 +178,36 @@ export const Home = () => {
     }
   }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
 
+  // Modified useEffect to handle loading states
+  useEffect(() => {
+    console.log('debug8->Data status:', {
+      hasInfoPages: !!infoPages,
+      infoPagesLength: infoPages?.length,
+      isTagsFetched: tagsFetched,
+    });
+
+    if (infoPages && Array.isArray(infoPages)) {
+      // Update all info page related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        projects: false,
+        organisations: false,
+        persons: false,
+      }));
+    }
+
+    if (tagsFetched) {
+      // Update tag-related loading states
+      setLoadingStates((prev) => ({
+        ...prev,
+        domains: false,
+        methods: false,
+      }));
+    }
+  }, [infoPages, tagsFetched]); // Dependencies that trigger loading state updates
+
   return (
     <div className="homeHero">
-      {/* <pre>{JSON.stringify(infoPages.data, null, 2)}</pre>  */}
-
       <div className="flex mx-auto relative sm:px-20 py-5 homeHero">
         <div className="flex flex-col min-w-[420px] items-center justify-center homeTitleContainer">
           <h2 className="homeTitle">
@@ -292,10 +318,6 @@ export const Home = () => {
       </div>
 
       <div className="homeFeatured">
-        {/* <h2 className="homeFeaturedTitle text-gray-800 w-full my-4 tagListTitle">
-          Featured Organisations
-        </h2> */}
-
         {featuredPages.featuredProjects.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjects.map(
@@ -305,6 +327,7 @@ export const Home = () => {
             pageTypePath="project"
           />
         )}
+
         {featuredPages.featuredProjectResults.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjectResults.map(

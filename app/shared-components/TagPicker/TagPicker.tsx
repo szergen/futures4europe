@@ -209,22 +209,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  // / * catalin */;
-
-  // // Define the custom animated Input component
-  // const AnimatedInput = (props) => {
-  //   return (
-  //     <motion.div
-  //       initial={{ opacity: 0, scale: 0.9 }}
-  //       animate={{ opacity: 1, scale: 1 }}
-  //       exit={{ opacity: 0, scale: 0.9 }}
-  //       transition={{ duration: 0 }}
-  //     >
-  //       {/* Spread props to include the original Input component */}
-  //       <components.Input {...props} />
-  //     </motion.div>
-  //   );
-  // };
 
   const customStyles = {
     control: (provided, state) => ({

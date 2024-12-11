@@ -8,7 +8,7 @@ import TagSkeleton from './TagSkeleton';
 
 interface TagsListProps {
   infoPageType?: string;
-  tagType?: string; // For domains, foresight methods, etc.
+  tagType?: string;
   limit?: number;
   offset?: number;
   title?: string;
@@ -27,21 +27,24 @@ const TagsList = ({
 }: TagsListProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Use appropriate hook based on whether we're fetching info pages or regular tags
   const { infoPages, infoPagesFetched } = useFetchInfoPages(false);
-  const { tags: regularTags, loading: tagsLoading } = useTags({
+  const { tags: allTags, loading: tagsLoading } = useTags({
     tagType,
-    limit,
-    offset,
+    // Remove limit and offset from initial fetch to get all tags
   });
 
   // If tagType is provided, use regular tags
   if (tagType) {
+    // Sort all tags by popularity and then take the specified slice
+    const topTags = [...allTags]
+      .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+      .slice(offset, offset + limit);
+
     return (
       <div>
         {title && (
           <h2 className="mb-4">
-            {title} ({tagsLoading ? '...' : regularTags.length})
+            {title} ({tagsLoading ? '...' : topTags.length})
           </h2>
         )}
         <div className="flex flex-wrap gap-2">
@@ -52,7 +55,7 @@ const TagsList = ({
               ))}
             </>
           ) : (
-            regularTags.map((tag, idx) =>
+            topTags.map((tag, idx) =>
               tag && tag.name ? (
                 <Tag
                   key={`${tag._id || tag.id || idx}`}
@@ -74,13 +77,10 @@ const TagsList = ({
     );
   }
 
-  // Handle info pages
-  const filteredPages = infoPages
-    .filter(
-      (page) =>
-        !infoPageType || page?.data?.pageTypes?.[0]?.name === infoPageType
-    )
-    .slice(offset, offset + limit);
+  // Handle info pages - same logic for sorting by popularity
+  const allFilteredPages = infoPages.filter(
+    (page) => !infoPageType || page?.data?.pageTypes?.[0]?.name === infoPageType
+  );
 
   const getTagsForInfoPage = (infoPage: any) => {
     const tagTypeMap: { [key: string]: any[] } = {
@@ -99,16 +99,19 @@ const TagsList = ({
     }));
   };
 
-  const tags = filteredPages
+  // Get all tags, sort by popularity, then take the slice we want
+  const topTags = allFilteredPages
     .map(getTagsForInfoPage)
     .flat()
-    .filter((tag) => tag?.name && tag?.picture);
+    .filter((tag) => tag?.name && tag?.picture)
+    .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+    .slice(offset, offset + limit);
 
   return (
     <div>
       {title && (
         <h2 className="mb-4">
-          {title} ({isLoading ? '...' : tags.length})
+          {title} ({isLoading ? '...' : topTags.length})
         </h2>
       )}
       <div className="flex flex-wrap gap-2">
@@ -119,7 +122,7 @@ const TagsList = ({
             ))}
           </>
         ) : (
-          tags.map((tag, idx) => (
+          topTags.map((tag, idx) => (
             <Tag
               key={`${tag._id || idx}`}
               name={tag.name}

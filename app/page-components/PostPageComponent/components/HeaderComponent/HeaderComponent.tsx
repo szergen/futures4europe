@@ -391,6 +391,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 newTagHeader="Create a new country tag"
                 newTagType="Country name"
                 newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+                showTagTagline={false}
                 // tagTypeLabel={
                 //   post?.pageType?.name !== 'event' ? 'Country' : 'Location'
                 // }
