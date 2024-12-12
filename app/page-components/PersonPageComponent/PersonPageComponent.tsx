@@ -19,6 +19,7 @@ import {
   replaceDataItemReferences,
   revalidateDataItem,
   updateDataItem,
+  updateMember,
 } from '@app/wixUtils/client-side';
 import {
   checkIfArrayNeedsUpdateForTags,
@@ -206,7 +207,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   // #region handle updating data to server
   const [isSaveInProgress, setIsSaveInProgress] = useState(false);
-  const { updateMember } = useWixModules(members);
+  // const { updateMember } = useWixModules(members);
 
   const updateDataToServer = async () => {
     console.log(
@@ -688,12 +689,11 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
       console.log('updatedPersonTag', updatedPersonTag);
       const nickName = updatedPersonTag?.dataItem?.data?.name;
-      if (nickName !== userDetails.userName) {
-        const member = await updateMember(userDetails.contactId, {
-          profile: {
-            nickname: nickName,
-          },
-        });
+      if (
+        nickName !== userDetails.userName &&
+        nickName !== 'Angela Cristina Plescan'
+      ) {
+        const member = await updateMember(userDetails.contactId, nickName);
         console.log('gotMember', member);
       }
     }
