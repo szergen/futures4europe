@@ -21,7 +21,12 @@ import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Tag from '../../shared-components/Tag/Tag';
 import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as needed
-import { bulkInsertItems } from '@app/wixUtils/client-side';
+import {
+  bulkInsertItems,
+  getContactsItem,
+  getContactsItemByEmail,
+  updateMember,
+} from '@app/wixUtils/client-side';
 
 export default function DashboardProjects() {
   const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
@@ -114,147 +119,309 @@ export default function DashboardProjects() {
     { href: '/dashboard/projects', text: 'All Projects', isActive: true },
   ];
 
-  const handleCreateAffiliations = async () => {
-    console.log('debug222->infoPages', infoPages);
-    const projectInfoPages = infoPages
-      .filter(
-        (infoPage) =>
-          infoPage?.data?.pageTypes[0]?.name === 'project info' &&
-          infoPage?.data?.Project?.[0]?.name === 'CROSSEU'
-      )
-      .map((infoPage) => infoPage.data);
-    console.log('debug222->projectInfoPages', projectInfoPages);
+  // const handleCreateAffiliations = async () => {
+  //   console.log('debug222->infoPages', infoPages);
+  //   const projectInfoPages = infoPages
+  //     .filter(
+  //       (infoPage) =>
+  //         infoPage?.data?.pageTypes[0]?.name === 'project info' &&
+  //         infoPage?.data?.Project?.[0]?.name === 'CROSSEU'
+  //     )
+  //     .map((infoPage) => infoPage.data);
+  //   console.log('debug222->projectInfoPages', projectInfoPages);
 
-    let allProjectOrganisationRolesAffiliations: any[] = [];
+  //   let allProjectOrganisationRolesAffiliations: any[] = [];
 
-    for (let i = 0; i < projectInfoPages.length; i++) {
-      const projectOrganisationRolesAffiliations = projectInfoPages[
-        i
-      ]?.projectOrganisationRoles
-        ?.map((role: any, index: number) => {
-          return {
-            data: {
-              projectTag: projectInfoPages[i]?.Project?.[0],
-              organisationTag:
-                projectInfoPages[i]?.projectOrganisation?.[index],
-              role: role.role,
-              extraIdentifier: 'projectOrganisationRole',
-              title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${projectInfoPages[i]?.projectOrganisation?.[index]?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.organisationTag?.name);
-      allProjectOrganisationRolesAffiliations = [
-        ...allProjectOrganisationRolesAffiliations,
-        ...projectOrganisationRolesAffiliations,
-      ];
-    }
+  //   for (let i = 0; i < projectInfoPages.length; i++) {
+  //     const projectOrganisationRolesAffiliations = projectInfoPages[
+  //       i
+  //     ]?.projectOrganisationRoles
+  //       ?.map((role: any, index: number) => {
+  //         return {
+  //           data: {
+  //             projectTag: projectInfoPages[i]?.Project?.[0],
+  //             organisationTag:
+  //               projectInfoPages[i]?.projectOrganisation?.[index],
+  //             role: role.role,
+  //             extraIdentifier: 'projectOrganisationRole',
+  //             title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${projectInfoPages[i]?.projectOrganisation?.[index]?.name}`,
+  //           },
+  //         };
+  //       })
+  //       ?.filter((item: any) => item?.data?.organisationTag?.name);
+  //     allProjectOrganisationRolesAffiliations = [
+  //       ...allProjectOrganisationRolesAffiliations,
+  //       ...projectOrganisationRolesAffiliations,
+  //     ];
+  //   }
 
-    // console.log(
-    //   'debug222->allProjectOrganisationRolesAffiliations',
-    //   allProjectOrganisationRolesAffiliations
-    // );
+  //   // console.log(
+  //   //   'debug222->allProjectOrganisationRolesAffiliations',
+  //   //   allProjectOrganisationRolesAffiliations
+  //   // );
 
-    let allProjectCoordinators: any[] = [];
+  //   let allProjectCoordinators: any[] = [];
 
-    for (let i = 0; i < projectInfoPages.length; i++) {
-      const projectCoordinators = projectInfoPages[i]?.projectCoordinator
-        ?.map((coordinator: any) => {
-          return {
-            data: {
-              projectTag: projectInfoPages[i]?.Project?.[0],
-              personTag: coordinator,
-              extraIdentifier: 'coordination',
-              title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${coordinator?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name);
-      allProjectCoordinators = [
-        ...allProjectCoordinators,
-        ...projectCoordinators,
-      ];
-    }
+  //   for (let i = 0; i < projectInfoPages.length; i++) {
+  //     const projectCoordinators = projectInfoPages[i]?.projectCoordinator
+  //       ?.map((coordinator: any) => {
+  //         return {
+  //           data: {
+  //             projectTag: projectInfoPages[i]?.Project?.[0],
+  //             personTag: coordinator,
+  //             extraIdentifier: 'coordination',
+  //             title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${coordinator?.name}`,
+  //           },
+  //         };
+  //       })
+  //       ?.filter((item: any) => item?.data?.personTag?.name);
+  //     allProjectCoordinators = [
+  //       ...allProjectCoordinators,
+  //       ...projectCoordinators,
+  //     ];
+  //   }
 
-    console.log('debug222->allProjectCoordinators', allProjectCoordinators);
+  //   console.log('debug222->allProjectCoordinators', allProjectCoordinators);
 
-    let allProjectParticipantTeam: any[] = [];
+  //   let allProjectParticipantTeam: any[] = [];
 
-    for (let i = 0; i < projectInfoPages.length; i++) {
-      const projectParticipantTeam = projectInfoPages[i]?.projectParticipantTeam
-        ?.map((participant: any) => {
-          return {
-            data: {
-              projectTag: projectInfoPages[i]?.Project?.[0],
-              personTag: participant,
-              extraIdentifier: 'participation',
-              title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${participant?.name}`,
-            },
-          };
-        })
-        ?.filter((item: any) => item?.data?.personTag?.name);
-      allProjectParticipantTeam = [
-        ...allProjectParticipantTeam,
-        ...projectParticipantTeam,
-      ];
-    }
-    console.log(
-      'debug222->allProjectParticipantTeam',
-      allProjectParticipantTeam
-    );
+  //   for (let i = 0; i < projectInfoPages.length; i++) {
+  //     const projectParticipantTeam = projectInfoPages[i]?.projectParticipantTeam
+  //       ?.map((participant: any) => {
+  //         return {
+  //           data: {
+  //             projectTag: projectInfoPages[i]?.Project?.[0],
+  //             personTag: participant,
+  //             extraIdentifier: 'participation',
+  //             title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${participant?.name}`,
+  //           },
+  //         };
+  //       })
+  //       ?.filter((item: any) => item?.data?.personTag?.name);
+  //     allProjectParticipantTeam = [
+  //       ...allProjectParticipantTeam,
+  //       ...projectParticipantTeam,
+  //     ];
+  //   }
+  //   console.log(
+  //     'debug222->allProjectParticipantTeam',
+  //     allProjectParticipantTeam
+  //   );
 
-    const allProjectAffiliations = [
-      ...allProjectOrganisationRolesAffiliations,
-      ...allProjectCoordinators,
-      ...allProjectParticipantTeam,
-    ];
-    //console.log('debug222->allProjectAffiliations', allProjectAffiliations);
+  //   const allProjectAffiliations = [
+  //     ...allProjectOrganisationRolesAffiliations,
+  //     ...allProjectCoordinators,
+  //     ...allProjectParticipantTeam,
+  //   ];
+  //   //console.log('debug222->allProjectAffiliations', allProjectAffiliations);
 
-    const allAffiliations = [
-      ...allProjectAffiliations,
-      // ...allPersonAffiliations,
-      // ...allOrganisationAffiliations,
-    ];
+  //   const allAffiliations = [
+  //     ...allProjectAffiliations,
+  //     // ...allPersonAffiliations,
+  //     // ...allOrganisationAffiliations,
+  //   ];
 
-    //  console.log('debug222->allAffiliations', allAffiliations);
+  //   //  console.log('debug222->allAffiliations', allAffiliations);
 
-    // const filteredDuplicateAffiliations =
-    //   filterDuplicateAffiliations(allAffiliations);
-    // console.log(
-    //   'debug222->filteredDuplicateAffiliations',
-    //   filteredDuplicateAffiliations
-    // );
+  //   // const filteredDuplicateAffiliations =
+  //   //   filterDuplicateAffiliations(allAffiliations);
+  //   // console.log(
+  //   //   'debug222->filteredDuplicateAffiliations',
+  //   //   filteredDuplicateAffiliations
+  //   // );
 
-    // #region bulk create affiliations
-    const allAffiliationsUpload = await bulkInsertItems(
-      'Affiliations',
-      allAffiliations
-    );
+  //   // #region bulk create affiliations
+  //   const allAffiliationsUpload = await bulkInsertItems(
+  //     'Affiliations',
+  //     allAffiliations
+  //   );
 
-    console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
+  //   console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
 
-    // #endregion
+  //   // #endregion
 
-    // const projectOrganisationRolesAffiliations =
-    //   projectInfoPages[0]?.projectOrganisationRoles
-    //     ?.map((role: any, index: number) => {
-    //       return {
-    //         data: {
-    //           projectTag: projectInfoPages[0]?.Project?.[0],
-    //           organisationTag:
-    //             projectInfoPages[0]?.projectOrganisation?.[index],
-    //           role: role.role,
-    //           extraIdentifier: 'projectOrganisationRole',
-    //           title: `${projectInfoPages[0]?.Project?.[0]?.name} -to- ${projectInfoPages[0]?.projectOrganisation?.[index]?.name}`,
-    //         },
-    //       };
-    //     })
-    //     .filter((item: any) => item?.data?.organisationTag?.name);
-    // console.log(
-    //   'debug222->projectOrganisationRolesAffiliations',
-    //   projectOrganisationRolesAffiliations
-    // );
-  };
+  //   // const projectOrganisationRolesAffiliations =
+  //   //   projectInfoPages[0]?.projectOrganisationRoles
+  //   //     ?.map((role: any, index: number) => {
+  //   //       return {
+  //   //         data: {
+  //   //           projectTag: projectInfoPages[0]?.Project?.[0],
+  //   //           organisationTag:
+  //   //             projectInfoPages[0]?.projectOrganisation?.[index],
+  //   //           role: role.role,
+  //   //           extraIdentifier: 'projectOrganisationRole',
+  //   //           title: `${projectInfoPages[0]?.Project?.[0]?.name} -to- ${projectInfoPages[0]?.projectOrganisation?.[index]?.name}`,
+  //   //         },
+  //   //       };
+  //   //     })
+  //   //     .filter((item: any) => item?.data?.organisationTag?.name);
+  //   // console.log(
+  //   //   'debug222->projectOrganisationRolesAffiliations',
+  //   //   projectOrganisationRolesAffiliations
+  //   // );
+  // };
+
+  // const { updateMember } = useWixModules(members);
+
+  // const handleEditContact = async () => {
+  //   // console.log('debug222->infoPages', infoPages);
+  //   console.log('debug111->editing contact');
+  //   const contactsDetails = await getContactsItemByEmail(
+  //     'a.cristina.plescan@gmail.com'
+  //   );
+
+  //   console.log('debug111->contactsDetails', contactsDetails);
+  //   const userDetails = await getContactsItem(
+  //     '89c27159-d0d6-4d08-bdc0-ea92984d69a8'
+  //   );
+  //   console.log('debug111->userDetails', userDetails);
+
+  //   const member = await updateMember(
+  //     '89c27159-d0d6-4d08-bdc0-ea92984d69a8',
+  //     'Angela Cristina Plescan'
+  //   );
+
+  //   console.log('debug111->member', member);
+
+  //   // const projectInfoPages = infoPages
+  //   //   .filter(
+  //   //     (infoPage) =>
+  //   //       infoPage?.data?.pageTypes[0]?.name === 'project info' &&
+  //   //       infoPage?.data?.Project?.[0]?.name === 'CROSSEU'
+  //   //   )
+  //   //   .map((infoPage) => infoPage.data);
+  //   // console.log('debug222->projectInfoPages', projectInfoPages);
+
+  //   // let allProjectOrganisationRolesAffiliations: any[] = [];
+
+  //   // for (let i = 0; i < projectInfoPages.length; i++) {
+  //   //   const projectOrganisationRolesAffiliations = projectInfoPages[
+  //   //     i
+  //   //   ]?.projectOrganisationRoles
+  //   //     ?.map((role: any, index: number) => {
+  //   //       return {
+  //   //         data: {
+  //   //           projectTag: projectInfoPages[i]?.Project?.[0],
+  //   //           organisationTag:
+  //   //             projectInfoPages[i]?.projectOrganisation?.[index],
+  //   //           role: role.role,
+  //   //           extraIdentifier: 'projectOrganisationRole',
+  //   //           title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${projectInfoPages[i]?.projectOrganisation?.[index]?.name}`,
+  //   //         },
+  //   //       };
+  //   //     })
+  //   //     ?.filter((item: any) => item?.data?.organisationTag?.name);
+  //   //   allProjectOrganisationRolesAffiliations = [
+  //   //     ...allProjectOrganisationRolesAffiliations,
+  //   //     ...projectOrganisationRolesAffiliations,
+  //   //   ];
+  //   // }
+
+  //   // console.log(
+  //   //   'debug222->allProjectOrganisationRolesAffiliations',
+  //   //   allProjectOrganisationRolesAffiliations
+  //   // );
+
+  //   // let allProjectCoordinators: any[] = [];
+
+  //   // for (let i = 0; i < projectInfoPages.length; i++) {
+  //   //   const projectCoordinators = projectInfoPages[i]?.projectCoordinator
+  //   //     ?.map((coordinator: any) => {
+  //   //       return {
+  //   //         data: {
+  //   //           projectTag: projectInfoPages[i]?.Project?.[0],
+  //   //           personTag: coordinator,
+  //   //           extraIdentifier: 'coordination',
+  //   //           title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${coordinator?.name}`,
+  //   //         },
+  //   //       };
+  //   //     })
+  //   //     ?.filter((item: any) => item?.data?.personTag?.name);
+  //   //   allProjectCoordinators = [
+  //   //     ...allProjectCoordinators,
+  //   //     ...projectCoordinators,
+  //   //   ];
+  //   // }
+
+  //   // console.log('debug222->allProjectCoordinators', allProjectCoordinators);
+
+  //   // let allProjectParticipantTeam: any[] = [];
+
+  //   // for (let i = 0; i < projectInfoPages.length; i++) {
+  //   //   const projectParticipantTeam = projectInfoPages[i]?.projectParticipantTeam
+  //   //     ?.map((participant: any) => {
+  //   //       return {
+  //   //         data: {
+  //   //           projectTag: projectInfoPages[i]?.Project?.[0],
+  //   //           personTag: participant,
+  //   //           extraIdentifier: 'participation',
+  //   //           title: `${projectInfoPages[i]?.Project?.[0]?.name} -to- ${participant?.name}`,
+  //   //         },
+  //   //       };
+  //   //     })
+  //   //     ?.filter((item: any) => item?.data?.personTag?.name);
+  //   //   allProjectParticipantTeam = [
+  //   //     ...allProjectParticipantTeam,
+  //   //     ...projectParticipantTeam,
+  //   //   ];
+  //   // }
+  //   // console.log(
+  //   //   'debug222->allProjectParticipantTeam',
+  //   //   allProjectParticipantTeam
+  //   // );
+
+  //   // const allProjectAffiliations = [
+  //   //   ...allProjectOrganisationRolesAffiliations,
+  //   //   ...allProjectCoordinators,
+  //   //   ...allProjectParticipantTeam,
+  //   // ];
+  //   //console.log('debug222->allProjectAffiliations', allProjectAffiliations);
+
+  //   // const allAffiliations = [
+  //   //   ...allProjectAffiliations,
+  //   //   // ...allPersonAffiliations,
+  //   //   // ...allOrganisationAffiliations,
+  //   // ];
+
+  //   //  console.log('debug222->allAffiliations', allAffiliations);
+
+  //   // const filteredDuplicateAffiliations =
+  //   //   filterDuplicateAffiliations(allAffiliations);
+  //   // console.log(
+  //   //   'debug222->filteredDuplicateAffiliations',
+  //   //   filteredDuplicateAffiliations
+  //   // );
+
+  //   // #region bulk create affiliations
+  //   // const allAffiliationsUpload = await bulkInsertItems(
+  //   //   'Affiliations',
+  //   //   allAffiliations
+  //   // );
+
+  //   // console.log('debug222->allAffiliationsUpload', allAffiliationsUpload);
+
+  //   // #endregion
+
+  //   // const projectOrganisationRolesAffiliations =
+  //   //   projectInfoPages[0]?.projectOrganisationRoles
+  //   //     ?.map((role: any, index: number) => {
+  //   //       return {
+  //   //         data: {
+  //   //           projectTag: projectInfoPages[0]?.Project?.[0],
+  //   //           organisationTag:
+  //   //             projectInfoPages[0]?.projectOrganisation?.[index],
+  //   //           role: role.role,
+  //   //           extraIdentifier: 'projectOrganisationRole',
+  //   //           title: `${projectInfoPages[0]?.Project?.[0]?.name} -to- ${projectInfoPages[0]?.projectOrganisation?.[index]?.name}`,
+  //   //         },
+  //   //       };
+  //   //     })
+  //   //     .filter((item: any) => item?.data?.organisationTag?.name);
+  //   // console.log(
+  //   //   'debug222->projectOrganisationRolesAffiliations',
+  //   //   projectOrganisationRolesAffiliations
+  //   // );
+  // };
 
   return (
     <div
@@ -356,9 +523,9 @@ export default function DashboardProjects() {
                   'block border-0 mr-4 focus:ring-purple-300'
                 )}
                 pill
-                onClick={handleCreateAffiliations}
+                onClick={handleEditContact}
               >
-                Create Affiliations
+                Edit Account
               </Button> */}
             </div>
           </div>
