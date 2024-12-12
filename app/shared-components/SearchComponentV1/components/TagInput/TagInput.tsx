@@ -12,6 +12,7 @@ import {
 } from '../../SearchComponentV1.utils';
 import style from './TagInput.module.css';
 import classNames from 'classnames';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 // import SearchedItems from '../SearchedItems/SearchedItems';
 
 export type TagInputProps = {
@@ -20,6 +21,8 @@ export type TagInputProps = {
 };
 
 const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
+  const { tagsFetched } = useAuth();
+
   const [input, setInput] = useState('');
   // Needed for showing help dropdown
   const [tagWasFocused, setTagWasFocused] = useState(false);
@@ -108,6 +111,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           selectedSuggestionIndex: -1,
           // selectedSuggestionTag: '',
         }));
+        console.log('deb1>resultsBasedOnSortTag', resultsBasedOnSortTag);
+        console.log('deb1>resultsToShow', resultsToShow);
         // input[input.length - 1] !== '"' && setInput(input + '"');
         setInput('');
       } else {
@@ -245,7 +250,13 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const pageSuggestionsSearch = wordByWordSearch(
         input,
         filteredData?.pages,
-        ['title', 'subtitle', 'description']
+        [
+          'title',
+          'postContentRIch1',
+          'postContentRIch2',
+          'postContentRIch3',
+          'subtitle',
+        ]
       );
 
       const fieldSuggestionsSearch = wordByWordSearch(
@@ -492,6 +503,14 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     }
   }, [searchState.searchedItems]);
 
+  // results to be triggered each time resultsToShow changes
+  // useEffect(() => {
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     results: resultsToShow,
+  //   }));
+  // }, [resultsToShow]);
+
   // useEffect(() => {
   //   console.log(
   //     'TAG INPUT -> debug4->selectedSuggestionIndex->',
@@ -512,6 +531,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         placeholder="Search for tags, pages, or people..."
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
+        disabled={!tagsFetched}
       />
       <button
         className={classNames(style.SearchInputButton, 'rounded-md')}

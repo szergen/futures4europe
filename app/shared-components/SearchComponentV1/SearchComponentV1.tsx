@@ -9,6 +9,7 @@ import {
   sortResultBySortTags,
   updateFilteredDataBasedOnClickedTag,
 } from './SearchComponentV1.utils';
+import { Modal } from 'flowbite-react';
 import SearchedItems from './components/SearchedItems/SearchedItems';
 
 const SearchComponentV1 = () => {
@@ -185,6 +186,10 @@ const SearchComponentV1 = () => {
     }));
   }, [results]);
 
+  useEffect(() => {
+    console.log('deb1>.results', searchState.results);
+  }, [results]);
+
   return (
     <div className="searchBoxWrapper relative">
       <div className="searchBox flex">
@@ -222,11 +227,26 @@ const SearchComponentV1 = () => {
       )}
       {/* Results */}
       {showResults && (
-        <Results
-          results={results}
-          searchedItems={searchedItems}
-          assignments={initialData.assignments}
-        />
+        <Modal
+          show={showResults}
+          onClose={() =>
+            setSearchState((prevState) => ({
+              ...prevState,
+              showResults: false,
+            }))
+          }
+          size="xlg"
+          dismissible={true}
+        >
+          <Modal.Header>Search Results</Modal.Header>
+          <Modal.Body>
+            <Results
+              results={searchState.filteredData.pages}
+              searchedItems={searchedItems}
+              assignments={initialData.assignments}
+            />
+          </Modal.Body>
+        </Modal>
       )}
     </div>
   );

@@ -14,7 +14,20 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
+
+    // error repair 
+    // REVIEW @ALEX
+    // Unhandled Runtime Error
+    // Error: Invalid src prop (wix:image://v1/75407d_f4839dea5f2040e8af649eba4aef0b1f~mv2.jpeg/WhatsApp%20Image%202024-12-09%20at%2014.17.13.jpeg#originWidth=899&originHeight=1600) on next/image, hostname "" is not configured under images in your next.config.js See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static.wixstatic.com',
+        pathname: '/media/**',
+      }
+    ],   
     domains: [
+      'wix',
       'static.wixstatic.com',
       'picsum.photos',
       'placehold.co',
@@ -28,6 +41,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
     ],
     formats: ['image/webp'],
+    unoptimized: true // Add this if you still have issues
   },
   typescript: {
     ignoreBuildErrors: true,

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 // import { mockedSearch } from './mockedSearch';
 import { mockedAssignments } from './mockedAssignments';
 import { mockedPages } from './mockedPages';
@@ -490,15 +490,34 @@ const SearchContext = createContext<{
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
-  const { tags, infoPages, postPages } = useAuth();
-  const initialData = {
-    tags: tags,
-    pages: [...infoPages, ...postPages],
-    assignments: initialState.initialData.assignments,
-    sortTags: sortTags,
-  };
-  initialData.filteredData = initialData;
-  const [searchState, setSearchState] = useState(initialData);
+  const { tags, infoPages, postPages, tagsFetched } = useAuth();
+  const [searchState, setSearchState] = useState({
+    ...initialState,
+    initialData: {},
+    tags: [],
+    pages: [],
+    assignments: [],
+    sortTags: [],
+    filteredData: {},
+  } as any);
+
+  useEffect(() => {
+    if (tagsFetched) {
+      const initialData = {
+        ...searchState,
+        tags: tags,
+        pages: [...infoPages, ...postPages].map((page) => page.data),
+        assignments: initialState.initialData.assignments,
+        sortTags: sortTags,
+        filteredData: {},
+        initialData: {},
+      };
+      initialData.filteredData = { ...initialData };
+      initialData.initialData = { ...initialData };
+      console.log('deb1->', initialData);
+      setSearchState(initialData);
+    }
+  }, [tagsFetched]);
 
   return (
     <SearchContext.Provider value={{ searchState, setSearchState }}>

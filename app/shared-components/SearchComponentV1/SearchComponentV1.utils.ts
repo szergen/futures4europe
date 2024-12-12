@@ -266,7 +266,7 @@ export const updateFilteredDataBasedOnClickedTag = (
 export const uniqueResults = (results: Array<any>) =>
   results?.filter(
     (result, index, self) =>
-      index === self.findIndex((t) => t.item.pageId === result.item.pageId)
+      index === self.findIndex((t) => t.item._id === result.item._id)
   );
 
 export const extractFilterBy = (tags: Tags, clickedField: string) =>

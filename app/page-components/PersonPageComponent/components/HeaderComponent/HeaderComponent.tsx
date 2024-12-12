@@ -280,6 +280,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               newTagHeader="Create a new contry tag"
               newTagType="Country name"
               newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+              showTagTagline={false}
             />
           )}
         </div>

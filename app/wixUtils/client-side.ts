@@ -279,6 +279,30 @@ const getContactsItemByEmail = async (itemId: string) => {
   }
 };
 
+const updateMember = async (contactId: string, nickname: string) => {
+  try {
+    const response = await fetch('/api/updateMember', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ contactId, nickname }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update data item');
+    }
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    console.error(
+      `Error updating contacts item for contactId: ${contactId} and nickname: ${nickname}`,
+      error
+    );
+  }
+};
+
 const triggerForgotPasswordMail = async (
   email: string,
   redirectUrl: string
@@ -380,4 +404,5 @@ export {
   subscribeToNewsletter,
   bulkRemoveItems,
   triggerForgotPasswordMail,
+  updateMember,
 };

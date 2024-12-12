@@ -25,6 +25,7 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import {
+  checkIfArrayNeedsUpdateForStrings,
   checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
 } from '../PostPageComponent/PostPageComponent.utils';
@@ -34,6 +35,7 @@ import { items } from '@wix/data';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
+import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
 
 function OrganisationPageComponent({
   pageTitle,
@@ -135,6 +137,30 @@ function OrganisationPageComponent({
     description: organisation?.data?.description, //done
     methods: organisation?.data?.methods, //done
     domains: organisation?.data?.domains, //done
+    contentText: [
+      organisation?.data?.postContentRIch1 || organisation?.data?.description,
+      organisation?.data?.postContentRIch2,
+      organisation?.data?.postContentRIch3,
+      organisation?.data?.postContentRIch4,
+      organisation?.data?.postContentRIch5,
+      organisation?.data?.postContentRIch6,
+      organisation?.data?.postContentRIch7,
+      organisation?.data?.postContentRIch8,
+      organisation?.data?.postContentRIch9,
+      organisation?.data?.postContentRIch10,
+    ],
+    contentImages: [
+      organisation?.data?.postImage1,
+      organisation?.data?.postImage2,
+      organisation?.data?.postImage3,
+      organisation?.data?.postImage4,
+      organisation?.data?.postImage5,
+      organisation?.data?.postImage6,
+      organisation?.data?.postImage7,
+      organisation?.data?.postImage8,
+      organisation?.data?.postImage9,
+      organisation?.data?.postImage10,
+    ],
     // projects: organisation?.data?.organisationProjectRoles?.map((item: any) => {
     //   return {
     //     ...organisation?.data?.organisationProject?.find(
@@ -233,6 +259,18 @@ function OrganisationPageComponent({
         organisationData.organisationProject,
         defaultOrganisationData.organisationProject
       ) ||
+      checkIfArrayNeedsUpdateForStrings(
+        organisationData.contentText,
+        defaultOrganisationData.contentText
+      ) ||
+      checkIfArrayNeedsUpdateForTags(
+        organisationData.contentImages,
+        defaultOrganisationData.contentImages
+      ) ||
+      checkIfArrayNeedsUpdateForStrings(
+        organisationData.contentImages,
+        defaultOrganisationData.contentImages
+      ) ||
       !arraysEqual(
         organisationData.organisationPeople,
         defaultOrganisationData.organisationPeople
@@ -256,6 +294,26 @@ function OrganisationPageComponent({
           description: organisationData?.description,
           organisationEstablishedDate:
             organisationData?.organisationEstablishedDate,
+          postContentRIch1: organisationData?.contentText[0],
+          postContentRIch2: organisationData?.contentText[1],
+          postContentRIch3: organisationData?.contentText[2],
+          postContentRIch4: organisationData?.contentText[3],
+          postContentRIch5: organisationData?.contentText[4],
+          postContentRIch6: organisationData?.contentText[5],
+          postContentRIch7: organisationData?.contentText[6],
+          postContentRIch8: organisationData?.contentText[7],
+          postContentRIch9: organisationData?.contentText[8],
+          postContentRIch10: organisationData?.contentText[9],
+          postImage1: organisationData?.contentImages[0],
+          postImage2: organisationData?.contentImages[1],
+          postImage3: organisationData?.contentImages[2],
+          postImage4: organisationData?.contentImages[3],
+          postImage5: organisationData?.contentImages[4],
+          postImage6: organisationData?.contentImages[5],
+          postImage7: organisationData?.contentImages[6],
+          postImage8: organisationData?.contentImages[7],
+          postImage9: organisationData?.contentImages[8],
+          postImage10: organisationData?.contentImages[9],
           // organisationProjectRoles: organisationData.projects.map(
           //   (project: any) => {
           //     return {
@@ -549,6 +607,26 @@ function OrganisationPageComponent({
           //     };
           //   }
           // ),
+          postContentRIch1: organisationData?.contentText[0],
+          postContentRIch2: organisationData?.contentText[1],
+          postContentRIch3: organisationData?.contentText[2],
+          postContentRIch4: organisationData?.contentText[3],
+          postContentRIch5: organisationData?.contentText[4],
+          postContentRIch6: organisationData?.contentText[5],
+          postContentRIch7: organisationData?.contentText[6],
+          postContentRIch8: organisationData?.contentText[7],
+          postContentRIch9: organisationData?.contentText[8],
+          postContentRIch10: organisationData?.contentText[9],
+          postImage1: organisationData?.contentImages[0],
+          postImage2: organisationData?.contentImages[1],
+          postImage3: organisationData?.contentImages[2],
+          postImage4: organisationData?.contentImages[3],
+          postImage5: organisationData?.contentImages[4],
+          postImage6: organisationData?.contentImages[5],
+          postImage7: organisationData?.contentImages[6],
+          postImage8: organisationData?.contentImages[7],
+          postImage9: organisationData?.contentImages[8],
+          postImage10: organisationData?.contentImages[9],
           mediaFiles: organisationData.mediaFiles,
           linkedinLink: organisationData?.data?.linkedinLink,
           websiteLink: organisationData?.data?.websiteLink,
@@ -850,6 +928,10 @@ function OrganisationPageComponent({
     }
   }, [userDetails, tags]);
 
+  useEffect(() => {
+    isNewPage && handleTagCreated();
+  }, []);
+
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
@@ -922,13 +1004,32 @@ function OrganisationPageComponent({
         setValidationState={updateValidationState}
       />
       {/* Organisation Description */}
-      <PersonDescriptionComponent
+      {/* <PersonDescriptionComponent
         placeholder="Type or paste a short description"
         description={organisationData.description}
         isEditModeOn={isEditModeOn}
         handleUpdate={(value) =>
           updateOrganisationDataOnKeyValue('description', value)
         }
+      /> */}
+      <ContentComponent
+        contentText={organisationData.contentText}
+        contentImages={organisationData.contentImages}
+        isEditModeOn={isEditModeOn}
+        updatePostDataContent={(value, index) => {
+          const newContentText = [...organisationData.contentText];
+          newContentText[index] = value;
+          return updateOrganisationData({
+            contentText: newContentText,
+          });
+        }}
+        updatePostDataContentImages={(value, index) => {
+          const newContentImages = [...organisationData.contentImages];
+          newContentImages[index] = value;
+          return updateOrganisationData({
+            contentImages: newContentImages,
+          });
+        }}
       />
       {/* People */}
       <AffiliationsComponent
@@ -1003,7 +1104,7 @@ function OrganisationPageComponent({
         updatePostData={(value) =>
           updateOrganisationDataOnKeyValue('memberOrganisations', value)
         }
-        tagType="domain"
+        tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
       {/* Member of Organisations */}
@@ -1019,7 +1120,7 @@ function OrganisationPageComponent({
         updatePostData={(value) =>
           updateOrganisationDataOnKeyValue('memberOfOrganisations', value)
         }
-        tagType="domain"
+        tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
       {/* Internal Links */}

@@ -22,6 +22,7 @@ import { items } from '@wix/data';
 
 // TODO @alex adaugat consent newsletter
 import { subscribeToNewsletter } from '@app/wixUtils/client-side';
+import { refetchTags } from '@app/utils/refetch-utils';
 
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
 
@@ -91,6 +92,7 @@ export default function RegisterPage() {
         tagResult = await uploadTag(firstName + ' ' + lastName);
         console.log('tagResult', tagResult);
         if (tagResult) {
+          await refetchTags();
           setIsTagCreated(true);
         }
       }
@@ -351,12 +353,12 @@ export default function RegisterPage() {
                 </div>
                 Account successfully created. <br />
                 <span className="font-bold">
-                  An admin must approve your account before you can login.
+                  {/* An admin must approve your account before you can login. */}
                   {/* Green checkmark */}
                 </span>
               </div>
               <div className="flex flex-wrap justify-center">
-                <Link href="/">
+                {/* <Link href="/">
                   <Button
                     color="primary"
                     className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
@@ -364,7 +366,7 @@ export default function RegisterPage() {
                   >
                     Back to Homepage
                   </Button>
-                </Link>
+                </Link> */}
                 <Link href="/login">
                   <Button
                     color="primary"

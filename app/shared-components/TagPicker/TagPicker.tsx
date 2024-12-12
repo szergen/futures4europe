@@ -10,6 +10,7 @@ import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import SpriteSvg from '../SpriteSvg/SpriteSvg';
+import { refetchTags } from '@app/utils/refetch-utils';
 // import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
@@ -29,6 +30,7 @@ export type TagPickerProps = {
   newTagType?: string;
   newTagTagline?: string;
   showTagTagline?: boolean;
+  showCreateTagButton?: boolean; // Add this new prop catalin
 };
 
 interface Option {
@@ -69,6 +71,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   newTagType,
   newTagTagline,
   showTagTagline = true,
+  showCreateTagButton = true, // Default to true catalin
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -131,6 +134,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     try {
       // #region Logic for creating Tag in Wix
       const uploadedTag = await uploadTag(tagName, tagTagline);
+      await refetchTags();
+      onTagCreated && onTagCreated();
+
+      // #region tags should be refetched here
+
+      // #endregion
       console.log('uploadedTag', uploadedTag);
       // #endregion
 
@@ -141,10 +150,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       } else {
         setValue(newOption);
       }
-      // #endregion
-
-      // #region Callback for refreshing the tags
-      onTagCreated && onTagCreated();
       // #endregion
 
       // #region Extra logic to update the post data
@@ -209,22 +214,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  // / * catalin */;
-
-  // // Define the custom animated Input component
-  // const AnimatedInput = (props) => {
-  //   return (
-  //     <motion.div
-  //       initial={{ opacity: 0, scale: 0.9 }}
-  //       animate={{ opacity: 1, scale: 1 }}
-  //       exit={{ opacity: 0, scale: 0.9 }}
-  //       transition={{ duration: 0 }}
-  //     >
-  //       {/* Spread props to include the original Input component */}
-  //       <components.Input {...props} />
-  //     </motion.div>
-  //   );
-  // };
 
   const customStyles = {
     control: (provided, state) => ({
@@ -299,31 +288,22 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   };
 
   // components
+  // TODO @ALEX - !!!!!! important de verificat noua structura
   const customComponents = {
     ClearIndicator: customClearIndicator,
     Option: (props: any) => {
       const correspondingTag = tags?.find(
         (tag) => tag.name === props.data.label
       );
-      return (
-        // <components.Option {...props}>
-        correspondingTag ? (
+
+      if (correspondingTag) {
+        return (
           <components.Option {...props}>
             <div
               className={classNames(
                 styles.tagPickerTagline,
                 'p-1 ml-2 flex flex-row items-center items-left'
               )}
-              // onClick={(e: any) => {
-              //   console.log('eeeee onClick', e);
-              //   // e.preventDefault();
-              //   e.stopPropagation();
-              // }}
-              // onMouseUp={(e: any) => {
-              //   console.log('eeeee onMouseUp', e);
-              //   e.preventDefault();
-              //   // e.stopPropagation();
-              // }}
             >
               <Tag
                 {...correspondingTag}
@@ -334,7 +314,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
               <p>{correspondingTag.tagLine}</p>
             </div>
           </components.Option>
-        ) : (
+        );
+      }
+
+      // Only show create button if showCreateTagButton is true
+      if (showCreateTagButton) {
+        return (
           <button
             className={classNames(
               styles.tagPickerCreateButton,
@@ -362,9 +347,11 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             </span>
             tag
           </button>
-        )
-        // </components.Option>
-      );
+        );
+      }
+
+      // If no matching tag and create button is hidden, show empty option
+      return <div className="p-1 ml-2">No matching tag found</div>;
     },
     MultiValue: (props: any) => {
       const correspondingTag = tags?.find(

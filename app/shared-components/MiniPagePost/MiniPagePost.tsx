@@ -43,7 +43,6 @@ export type MiniPagePostProps = {
 export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   // Log all props at once
   // console.log('All Props:', props);
-
   // Or log individual props
   const {
     title,
