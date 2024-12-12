@@ -662,7 +662,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       (tag) => tag.name === personData?.personTag?.name
     );
 
-    if (newPersonInfoId && personTag) {
+    if (newPersonInfoId && personTag && personTag._id) {
       const updatedAuthor = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
