@@ -5,13 +5,13 @@ const scheduleCronJobs = () => {
   cron.schedule('*/20 * * * *', async () => {
     try {
       console.log('Cron job running...');
-      await fetch('/api/posts', {
+      await fetch('https://futures4europe.eu/api/posts', {
         method: 'POST',
       });
-      await fetch('/api/infoPages', {
+      await fetch('https://futures4europe.eu/api/infoPages', {
         method: 'POST',
       });
-      await fetch('/api/tags', {
+      await fetch('https://futures4europe.eu/api/tags', {
         method: 'POST',
       });
       //   await fetch('http://localhost:3000/api/affiliations', {
