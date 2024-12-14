@@ -233,6 +233,38 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
   };
 };
 
+// Old function
+
+// export const updateFilteredDataBasedOnClickedTag = (
+//   clickedTag: string,
+//   filteredData: InitialData
+// ) => {
+//   // const matchedPages = filteredData.assignments
+//   //   .filter((assignment) => assignment.tagName === clickedTag)
+//   //   .map((assignment) => {
+//   //     const matchingPage = filteredData.pages.find(
+//   //       (page) => page.pageId === assignment.pageId
+//   //     );
+//   //     return matchingPage || assignment;
+//   //   });
+//   const matchingTagIds = filteredData?.assignments
+//     .filter((assignment) => assignment.tagName === clickedTag)
+//     .map((assignment) => assignment.pageId);
+
+//   // console.log('debug3->matchingTagIds', matchingTagIds);
+
+//   const matchedPages = filteredData?.pages?.filter((page) =>
+//     matchingTagIds?.includes(page.pageId)
+//   );
+//   // .sort((a, b) => a.id - b.id);
+
+//   return {
+//     matchedPages: matchedPages?.map((page) => ({ item: page })),
+//     // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
+//     // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
+//   };
+// };
+
 export const updateFilteredDataBasedOnClickedTag = (
   clickedTag: string,
   filteredData: InitialData
@@ -245,19 +277,42 @@ export const updateFilteredDataBasedOnClickedTag = (
   //     );
   //     return matchingPage || assignment;
   //   });
-  const matchingTagIds = filteredData?.assignments
-    .filter((assignment) => assignment.tagName === clickedTag)
-    .map((assignment) => assignment.pageId);
+  const matchingTagIds = filteredData?.tags
+    .filter((tag) => tag.name === clickedTag)
+    .map((tag) => tag._id);
+
+  console.log('deb1->matchingTagIds', matchingTagIds);
 
   // console.log('debug3->matchingTagIds', matchingTagIds);
 
-  const matchedPages = filteredData?.pages?.filter((page) =>
-    matchingTagIds?.includes(page.pageId)
-  );
+  // const matchedPages = filteredData?.pages?.filter((page) =>
+  //   matchingTagIds?.includes(page.pageId)
+  // );
+
+  const excludeKeys = ['pageOwner'];
+
+  const matchedPages =
+    matchingTagIds?.length > 0
+      ? filteredData.pages.filter((page) =>
+          Object.entries(page).some(
+            ([key, value]) =>
+              !excludeKeys.includes(key) &&
+              Array.isArray(value) &&
+              value.some(
+                (item) => item._id && matchingTagIds.includes(item._id)
+              )
+          )
+        )
+      : [];
+
+  console.log('deb1->matchedPages', matchedPages);
   // .sort((a, b) => a.id - b.id);
 
   return {
-    matchedPages: matchedPages?.map((page) => ({ item: page })),
+    matchedPages:
+      matchedPages?.length > 0
+        ? matchedPages?.map((page: any) => ({ item: page }))
+        : [],
     // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
     // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
   };

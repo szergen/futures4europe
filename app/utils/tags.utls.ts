@@ -32,6 +32,7 @@ export function calculatePopularity(
         count += 1;
       }
     });
+    
 
     popularityResults.push({ ...tag, mentions: count });
   });

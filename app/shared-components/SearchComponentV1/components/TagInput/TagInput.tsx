@@ -437,6 +437,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         )
       );
     } else if (clickedTag && !clickedField) {
+      console.log('deb1->clickedTag', clickedTag);
       const { matchedPages } = updateFilteredDataBasedOnClickedTag(
         clickedTag,
         filteredData
