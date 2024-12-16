@@ -99,7 +99,7 @@ const PAGE_TYPE_SORT_CONFIG: Record<SortConfigKey, PageTypeSortConfig> = {
     priority: 1,
   },
   default: {
-    sortField: '_createdDate',
+    sortField: 'postPublicationDate',
     fallbackField: '_createdDate',
     priority: 0,
   },
@@ -149,12 +149,11 @@ const prepareSortableItems = (items: Item[]): SortableItem[] => {
 
     // Check for primary date
     const primaryDate = parseDate(item[config.sortField]);
-    const hasPrimaryDate = primaryDate !== null;
+    const hasPrimaryDate = primaryDate !== null && primaryDate !== undefined;
 
     // Check for fallback date
     const fallbackDate = parseDate(item[config.fallbackField]);
-    const hasFallbackDate = fallbackDate !== null;
-
+    const hasFallbackDate = fallbackDate !== null && fallbackDate !== undefined;
     // Determine final sort date
     const sortDate = (primaryDate || fallbackDate || new Date(0)).getTime();
 
@@ -196,12 +195,12 @@ const sortItemsByPageType = (items: Item[]): Item[] => {
       // 2. For items that both have or both don't have primary dates,
       // sort by the actual date (whether primary or fallback)
       if (a.hasPrimaryDate === b.hasPrimaryDate) {
-        return b.sortDate - a.sortDate;
+        return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
       }
 
       // 3. If neither has a primary date, fall back to created date
       if (!a.hasPrimaryDate && !b.hasPrimaryDate) {
-        return b.sortDate - a.sortDate;
+        return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
       }
 
       return 0;
@@ -227,7 +226,10 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   pageTypePath,
   automaticallyCalculatePath,
 }) => {
-  const sortedItems = sortItemsByPageType(items);
+  const sortedItems = sortItemsByPageType(items).sort((a, b) => {
+    return b.sortDate - a.sortDate;
+  });
+  console.log('sortedItems', sortedItems);
 
   return (
     <section className={classNames(style.posts)}>

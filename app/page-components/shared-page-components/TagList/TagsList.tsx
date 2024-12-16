@@ -78,11 +78,9 @@ const TagsList = ({
   }
 
   // Handle info pages - same logic for sorting by popularity
-  const allFilteredPages = infoPages
-    .filter(
-      (page) =>
-        !infoPageType || page?.data?.pageTypes?.[0]?.name === infoPageType
-    );
+  const allFilteredPages = infoPages.filter(
+    (page) => !infoPageType || page?.data?.pageTypes?.[0]?.name === infoPageType
+  );
 
   const getTagsForInfoPage = (infoPage: any) => {
     const tagTypeMap: { [key: string]: any[] } = {

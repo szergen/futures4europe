@@ -20,7 +20,7 @@ export default function Dashboard() {
   //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
   //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
   // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
-  const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
+  // const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {

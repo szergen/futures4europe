@@ -5,23 +5,14 @@ const scheduleCronJobs = () => {
   cron.schedule('*/20 * * * *', async () => {
     try {
       console.log('Cron job running...');
-      await fetch('http://localhost:3000/api/posts', {
+      await fetch('https://futures4europe.eu/api/posts', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
-      await fetch('http://localhost:3000/api/infoPages', {
+      await fetch('https://futures4europe.eu/api/infoPages', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
-      await fetch('http://localhost:3000/api/tags', {
+      await fetch('https://futures4europe.eu/api/tags', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
       //   await fetch('http://localhost:3000/api/affiliations', {
       //     method: 'POST',

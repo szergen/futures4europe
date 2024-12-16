@@ -896,6 +896,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
   }, [userDetails, tags]);
 
+  useEffect(() => {
+    isNewPage && handleTagCreated();
+  }, []);
+
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}

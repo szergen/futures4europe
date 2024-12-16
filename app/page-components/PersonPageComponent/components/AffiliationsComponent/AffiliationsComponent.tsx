@@ -155,8 +155,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   // Sortable.mount(new Swap());
 
-
-    // Function to determine if tagline should be shown
+  // Function to determine if tagline should be shown
   const shouldShowTagline = (type: string = '') => {
     const typeToCheck = type.toLowerCase();
     return !(typeToCheck === 'person');
@@ -196,9 +195,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         delayOnTouchOnly={true}
         touchStartThreshold={5}
         disabled={!isEditModeOn || isDisabledSorting}
-        className={classNames(
-          'flex w-fit flex-wrap z-50',
-        )}
+        className={classNames('flex w-fit flex-wrap z-50')}
         onStart={(evt) => {
           evt.item.classList.add(style.dragShadow);
         }}
@@ -209,11 +206,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         {currentAffiliations?.map((affilitiation, index) => (
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
-            className={classNames(
-              style.tagListContainer,
-              isEditModeOn &&
-                ''
-            )}
+            className={classNames(style.tagListContainer, isEditModeOn && '')}
             // onClick={(e: any) => {
             //   setIsDisabledSorting(true);
             // }}

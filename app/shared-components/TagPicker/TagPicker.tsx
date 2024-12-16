@@ -10,6 +10,7 @@ import styles from './TagPicker.module.css';
 import { motion } from 'framer-motion';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import SpriteSvg from '../SpriteSvg/SpriteSvg';
+import { refetchTags } from '@app/utils/refetch-utils';
 // import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
@@ -133,6 +134,12 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     try {
       // #region Logic for creating Tag in Wix
       const uploadedTag = await uploadTag(tagName, tagTagline);
+      await refetchTags();
+      onTagCreated && onTagCreated();
+
+      // #region tags should be refetched here
+
+      // #endregion
       console.log('uploadedTag', uploadedTag);
       // #endregion
 
@@ -143,10 +150,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       } else {
         setValue(newOption);
       }
-      // #endregion
-
-      // #region Callback for refreshing the tags
-      onTagCreated && onTagCreated();
       // #endregion
 
       // #region Extra logic to update the post data
@@ -211,7 +214,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-  
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -312,8 +314,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             </div>
           </components.Option>
         );
-      }  
-      
+      }
+
       // Only show create button if showCreateTagButton is true
       if (showCreateTagButton) {
         return (
@@ -348,11 +350,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       }
 
       // If no matching tag and create button is hidden, show empty option
-      return (
-          <div className="p-1 ml-2">
-            No matching tag found
-          </div>
-      );      
+      return <div className="p-1 ml-2">No matching tag found</div>;
     },
     MultiValue: (props: any) => {
       const correspondingTag = tags?.find(
