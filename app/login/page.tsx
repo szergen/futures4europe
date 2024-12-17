@@ -24,7 +24,8 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [isLoginProcessing, setIsLoginProcessing] = useState(false);
   const router = useRouter();
-  const { login, isLoggedIn, updateUserDetails } = useAuth();
+  const { login, isLoggedIn, updateUserDetails, handleUserDataRefresh } =
+    useAuth();
   // console.log('Login isLoggedIn', isLoggedIn);
 
   // #region React SDK Hooks
@@ -115,7 +116,7 @@ export default function LoginPage() {
           'f4e_wix_accessTokenAndRefreshToken',
           JSON.stringify(tokens)
         );
-
+        handleUserDataRefresh();
         login();
         router.push('/dashboard');
       } else if (response?.loginState === 'FAILURE') {

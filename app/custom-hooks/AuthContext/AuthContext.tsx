@@ -4,7 +4,6 @@ import {
   useState,
   ReactNode,
   useEffect,
-  use,
 } from 'react';
 import { getContactsItem } from '@app/wixUtils/client-side';
 import { IOAuthStrategy, useWixAuth, useWixModules } from '@wix/sdk-react';
@@ -14,7 +13,6 @@ import fetchTagsWithPopularity from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
-import { refetchTags } from '@app/utils/refetch-utils';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -56,6 +54,7 @@ interface AuthContextType {
   setIsLoadingInProgress: (value: boolean) => void;
   userTagFetched: boolean;
   allOwnedPages: any[];
+  setIsUserTagAssociated: (value: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -246,6 +245,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('f4e_wix_accessTokenAndRefreshToken');
     setUserDetails(initialState);
     setIsLoggedIn(false);
+    setIsUserTagAssociated(false);
   };
   // #endregion
 
@@ -315,6 +315,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         ownedPostPagesFetched,
         ownedInfoPagesFetched,
         handleUserDataRefresh,
+        setIsUserTagAssociated,
         tags,
         tagsFetched,
         handleTagCreated,
