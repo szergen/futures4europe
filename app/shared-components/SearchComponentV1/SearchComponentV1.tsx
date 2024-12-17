@@ -11,6 +11,8 @@ import {
 } from './SearchComponentV1.utils';
 import { Modal } from 'flowbite-react';
 import SearchedItems from './components/SearchedItems/SearchedItems';
+import Tag from '../Tag/Tag';
+import classNames from 'classnames';
 
 const SearchComponentV1 = () => {
   // SearchContext
@@ -235,15 +237,71 @@ const SearchComponentV1 = () => {
               showResults: false,
             }))
           }
-          size="xlg"
+          // size="xlg"
+          size="6xl"
           dismissible={true}
         >
-          <Modal.Header>Search Results</Modal.Header>
+          <Modal.Header>
+            <h2>Results for pages having:</h2>
+            <div className={classNames('flex items-center')}>
+              {searchedItems?.map((searchedItem: any, index: number) => {
+                console.log(
+                  'deb1->searchedItem.searchItemType',
+                  searchedItem.searchItemType
+                );
+                switch (searchedItem.searchItemType) {
+                  case 'tag':
+                    return (
+                      <>
+                        <div className="mr-2">
+                          <Tag
+                            {...initialData.tags?.find(
+                              (item: any) =>
+                                item.name === searchedItem.searchItem
+                            )}
+                          />
+                        </div>
+                        {index < searchedItems.length - 1 && (
+                          <div className="mr-2">,</div>
+                        )}
+                      </>
+                    );
+                  case 'field-tag':
+                    const fieldTag = searchedItem.searchItem.split(':');
+                    return (
+                      <>
+                        <div>{fieldTag[0]}:</div>
+                        <div className="mr-2">
+                          <Tag
+                            {...initialData.tags?.find(
+                              (item: any) => item.name === fieldTag[1]
+                            )}
+                          />
+                        </div>
+                        {index < searchedItems.length - 1 && (
+                          <div className="mr-2">,</div>
+                        )}
+                      </>
+                    );
+                  case 'text':
+                    return (
+                      <>
+                        <div className="mr-2 text-2xl text-black">
+                          "{searchedItem.searchItem}"
+                        </div>
+                        {index < searchedItems.length - 1 && (
+                          <div className="mr-2">,</div>
+                        )}
+                      </>
+                    );
+                }
+              })}
+            </div>
+          </Modal.Header>
           <Modal.Body>
             <Results
               results={searchState.filteredData.pages}
               searchedItems={searchedItems}
-              assignments={initialData.assignments}
             />
           </Modal.Body>
         </Modal>

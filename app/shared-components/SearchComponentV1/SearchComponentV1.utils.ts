@@ -192,44 +192,70 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
   clickedSuggestion: string,
   filteredData: InitialData
 ) => {
+  console.log('deb1-> INSIDE updateFilteredDataBasedOnClickedSuggestion');
   if (clickedSuggestion && clickedSuggestion.includes(':')) {
     const [field, tagName] = clickedSuggestion
       ?.split(':')
       .map((str) => str.trim());
 
-    const matchedPages = filteredData.assignments
-      .filter(
-        (assignment) =>
-          assignment.field === field && assignment.tagName === tagName
-      )
-      .map((assignment) => {
-        const matchingPage = filteredData.pages.find(
-          (page) => page.pageId === assignment.pageId
-        );
-        return matchingPage ? matchingPage : assignment;
-      });
+    const fieldToKeysMapping: Record<string, string[]> = {
+      author: ['author'],
+      people: ['people'],
+      activity: ['activity'],
+      participant: ['projectParticipantTeam'],
+      coordinator: ['projectCoordinator'],
+      speaker: ['speaker'],
+    };
 
-    const matchedAssignmentsBasedOnPages = filteredData.assignments.filter(
-      (assignment) =>
-        matchedPages.some((page) => page.pageId === assignment.pageId)
-    );
+    const keysToCheck = fieldToKeysMapping[field] || [];
+    console.log('deb1->keysToCheck', keysToCheck);
 
-    const matchedTagsBasedOnPages = filteredData.tags.filter((tag) =>
-      matchedAssignmentsBasedOnPages.some(
-        (assignment) => assignment.tagId === tag.tagId
-      )
-    );
+    const matchedPages =
+      keysToCheck.length > 0
+        ? filteredData.pages.filter((page: { [key: string]: any }) =>
+            keysToCheck.some(
+              (key) =>
+                Array.isArray(page?.[key]) &&
+                page?.[key]?.some((item) => item.name === tagName)
+            )
+          )
+        : [];
+
+    console.log('deb1->INSIDE matchedPages', matchedPages);
+
+    // const matchedPages = filteredData.assignments
+    //   .filter(
+    //     (assignment) =>
+    //       assignment.field === field && assignment.tagName === tagName
+    //   )
+    //   .map((assignment) => {
+    //     const matchingPage = filteredData.pages.find(
+    //       (page) => page.pageId === assignment.pageId
+    //     );
+    //     return matchingPage ? matchingPage : assignment;
+    //   });
+
+    // const matchedAssignmentsBasedOnPages = filteredData.assignments.filter(
+    //   (assignment) =>
+    //     matchedPages.some((page) => page.pageId === assignment.pageId)
+    // );
+
+    // const matchedTagsBasedOnPages = filteredData.tags.filter((tag) =>
+    //   matchedAssignmentsBasedOnPages.some(
+    //     (assignment) => assignment.tagId === tag.tagId
+    //   )
+    // );
 
     return {
       matchedPages: matchedPages,
-      matchedTagsBasedOnPages: matchedTagsBasedOnPages,
-      matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
+      // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
+      // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
     };
   }
   return {
     matchedPages: [],
-    matchedTagsBasedOnPages: [],
-    matchedAssignmentsBasedOnPages: [],
+    // matchedTagsBasedOnPages: [],
+    // matchedAssignmentsBasedOnPages: [],
   };
 };
 

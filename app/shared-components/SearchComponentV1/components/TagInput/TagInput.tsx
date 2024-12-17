@@ -331,6 +331,16 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const filteredAssignments = filteredData.assignments.filter(
         (item) => item.field === clickedField
       );
+      // const fieldToKeysMapping = {
+      //   author: ['author', 'pageOwner'],
+      //   people: ['people'],
+      //   activity: ['activity'],
+      //   participant: ['projectParticipantTeam'],
+      //   coordinator: ['projectCoordinator'],
+      //   speaker: ['speaker'],
+      // };
+      // console.log('deb1->clickedField', clickedField);
+      // console.log('deb1->filteredAssignments', filteredAssignments);
 
       const filteredPages = filteredData.pages.filter((page) =>
         filteredAssignments.some(

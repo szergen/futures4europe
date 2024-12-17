@@ -11,12 +11,12 @@ import { init } from 'next/dist/compiled/@vercel/og/satori';
 const mockedInitialData = {
   tags: [
     // Field Tags
-    { tagType: 'field', name: 'author', filter: 'person' },
-    { tagType: 'field', name: 'people', filter: 'person' },
-    { tagType: 'field', name: 'participant', filter: 'person' },
-    { tagType: 'field', name: 'speaker', filter: 'person' },
-    { tagType: 'field', name: 'coordinator', filter: 'person' },
-    { tagType: 'field', name: 'activity', filter: 'domain' },
+    { tagType: 'field', name: 'author', filter: 'person' }, // done
+    { tagType: 'field', name: 'people', filter: 'person' }, // done
+    { tagType: 'field', name: 'participant', filter: 'person' }, // done
+    { tagType: 'field', name: 'speaker', filter: 'person' }, // done
+    { tagType: 'field', name: 'coordinator', filter: 'person' }, // done
+    { tagType: 'field', name: 'activity', filter: 'domain' }, // done
     // Sort Tags
     // Page Type Tags
     { tagId: 252524, tagType: 'page type', name: 'info', popularity: 184 },
