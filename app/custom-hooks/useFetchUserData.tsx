@@ -62,8 +62,6 @@ const useFetchUserData = (
     );
   }, [isLoggedIn, userDetails, refresh]);
 
-  
-
   return {
     ownedPostPages,
     ownedInfoPages,
