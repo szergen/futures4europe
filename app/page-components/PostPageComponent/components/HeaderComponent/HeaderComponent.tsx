@@ -268,6 +268,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   dateFormate="YYYY-MM-DD HH:mm"
                   placeholderStartDate="Start Date"
                   placeholderEndDate="End Date"
+                  calendarHelperText="Please use the CET timezone to set event date"
                   dateStart={
                     post?.eventStartDate ? new Date(post.eventStartDate) : null
                   }
