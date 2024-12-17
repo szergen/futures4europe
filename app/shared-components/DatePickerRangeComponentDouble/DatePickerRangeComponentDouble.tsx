@@ -20,6 +20,8 @@ export type DatePickerRangeComponentDoubleProps = {
     | 'YYYY-MM-DD HH:mm';
   placeholderStartDate?: string;
   placeholderEndDate?: string;
+  helperText?: string;
+  calendarHelperText?: string;  
 };
 
 export const DatePickerRangeComponentDouble: React.FC<
@@ -33,6 +35,8 @@ export const DatePickerRangeComponentDouble: React.FC<
   dateFormate,
   placeholderEndDate,
   placeholderStartDate,
+  helperText,
+  calendarHelperText,
 }) => {
   const [startDate, setStartDate] = useState<Date | null>(dateStart || null);
   const [endDate, setEndDate] = useState<Date | null>(dateEnd || null);
@@ -54,7 +58,9 @@ export const DatePickerRangeComponentDouble: React.FC<
           handleUpdateStartDate && handleUpdateStartDate(value);
         }}
         dateFormate={dateFormate}
-        placeholder={placeholderStartDate}
+        placeholder={placeholderStartDate}     
+        helperText={helperText}
+        calendarHelperText={calendarHelperText}     
       />
       <span className="mx-4">-</span>
       <DatePickerComponent
@@ -64,7 +70,9 @@ export const DatePickerRangeComponentDouble: React.FC<
           handleUpdateEndDate && handleUpdateEndDate(value);
         }}
         dateFormate={dateFormate}
-        placeholder={placeholderEndDate}
+        placeholder={placeholderEndDate}     
+        helperText={helperText}
+        calendarHelperText={calendarHelperText}      
       />
     </div>
   );

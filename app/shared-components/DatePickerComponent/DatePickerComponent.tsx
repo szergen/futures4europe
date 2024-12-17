@@ -16,6 +16,8 @@ export type DatePickerComponentProps = {
   className?: string;
   title?: string;
   placeholder?: string;
+  helperText?: string;
+  calendarHelperText?: string;
   dateFormate?:
     | 'YYYY-MM-dd'
     | 'YYYY-MM-DD'
@@ -47,6 +49,29 @@ const decideViewValues = (dateFormateValue: string) => {
     default:
       return ['year', 'month', 'day'];
   }
+};
+
+interface CalendarFooterProps {
+  calendarHelperText?: string;
+}
+
+const CalendarFooter: React.FC<CalendarFooterProps> = ({ calendarHelperText }) => {
+  return (
+    <div style={{ 
+      padding: '8px 16px',
+      width: '100%',
+      textAlign: 'center',
+      borderTop: '1px solid rgba(0,0,0,0.1)',
+      marginTop: 'auto'
+    }}>
+      <span style={{ 
+        fontSize: '12px',
+        color: 'rgba(0, 0, 0, 0.6)'
+      }}>
+        {calendarHelperText}
+      </span>
+    </div>
+  );
 };
 
 // eslint-disable-next-line react/display-name
@@ -135,6 +160,8 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
   onChange,
   className,
   dateFormate = 'YYYY-MM-dd',
+  calendarHelperText,
+  helperText,
   title,
   placeholder,
 }) => {
@@ -142,33 +169,81 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
     date ? dayjs(date) : null
   );
   const decidedViewValues = decideViewValues(dateFormate);
-  console.log('debug123', date);
+  //console.log('debug123', date);
 
   const handleDateChange = (date: any) => {
     const stringDate = dayjs(date).format(dateFormate);
-    console.log('stringDate-->', stringDate);
+   //console.log('stringDate-->', stringDate);
     onChange && onChange(new Date(stringDate));
     setDateState(dayjs(stringDate));
+  };
+
+  // generate slots calendarHelperText
+  const pickerProps = {
+    value: dateState,
+    onChange: handleDateChange,
+    label: placeholder,
+    className: dateFormate === 'YYYY-MM-DD HH:mm' ? classNames('w-80', className) : className,
+    slots: {
+      actionBar: () => <CalendarFooter calendarHelperText={calendarHelperText} />
+    },
+    slotProps: {
+      textField: {
+        helperText,
+        fullWidth: true,
+        InputLabelProps: {
+          shrink: true,
+        }
+      },
+      popper: {
+        sx: {
+          '& .MuiPickersLayout-root': {
+            display: 'flex',
+            flexDirection: 'column',
+          },
+          '& .MuiDialogActions-root': {
+            order: 2
+          },
+          '& .MuiPickersCalendarHeader-root': {
+            borderBottom: '1px solid rgba(0,0,0,0.1)',
+            paddingBottom: 1
+          }
+        }
+      },
+      layout: {
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          '.MuiPickersLayout-actionBar': {
+            order: 1
+          }
+        }
+      }
+    }
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       {dateFormate !== 'YYYY-MM-DD HH:mm' ? (
         <DatePicker
+          {...pickerProps}   
           value={dateState}
           onChange={handleDateChange}
           views={decidedViewValues}
           label={placeholder}
           className={className}
+                 
           // disableOpenPicker
         />
       ) : (
         <DateTimePicker
+          {...pickerProps} 
           value={dateState}
           onChange={handleDateChange}
           views={['year', 'month', 'day', 'hours', 'minutes']}
           label={placeholder}
           className={classNames('w-80', className)}
+                  
           // disableOpenPicker
         />
       )}
