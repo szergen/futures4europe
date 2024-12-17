@@ -6,21 +6,15 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import Link from 'next/link';
-import { extractInfoPageTypeBasedOnTag } from '@app/utils/parse-utils';
 import classNames from 'classnames';
-import { members } from '@wix/members';
 import NavDashboard from '@app/shared-components/Layout/NavDashboard/NavDashboard';
 import SubNavDashboard from '@app/shared-components/Layout/NavDashboard/SubNavDashboard';
 import style from './pageDashboard.module.css';
-import { Avatar, Button } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Typography from '@app/shared-components/Typography/Typography';
 
 export default function Dashboard() {
-  //   const [ownedPostPages, setOwnedPostPages] = useState<any[]>([]);
-  //   const [ownedInfoPages, setOwnedInfoPages] = useState<any[]>([]);
-  // const [showLoadingCreatePost, setShowLoadingCreatePost] = useState(false);
-  // const [isLoadingDeletePostPage, setIsLoadingDeletePostPage] = useState('');
   const [userInfoPage, setUserInfoPage] = useState('');
 
   const {
@@ -29,6 +23,8 @@ export default function Dashboard() {
     loading,
     userDetails,
     logout,
+    userTagFetched,
+
     // ownedInfoPages,
     // ownedPostPages,
     // ownedPostPagesFetched,
@@ -48,11 +44,23 @@ export default function Dashboard() {
     if (!loading && !isLoggedIn) {
       router.push('/login');
     }
-    if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
+
+    if (
+      userTagFetched &&
+      userDetails?.userTag?.name &&
+      !isPersonInfoPageReady
+    ) {
+      // handleUserDataRefresh();
       setIsPersonInfoPageReady(true);
       setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
     }
-  }, [isLoggedIn, router, loading, userDetails]);
+  }, [
+    isLoggedIn,
+    router,
+    loading,
+    userDetails?.userTag?.tagPageLink,
+    userTagFetched,
+  ]);
 
   if (!isLoggedIn) {
     //Loading Spinner
