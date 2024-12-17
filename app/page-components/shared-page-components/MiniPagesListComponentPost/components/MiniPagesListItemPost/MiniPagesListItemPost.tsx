@@ -185,8 +185,26 @@ const sortItemsByPageType = (items: Item[]): Item[] => {
         return b.sortPriority - a.sortPriority;
       }
 
-      // For items of the same page type:
+      // Special handling for project results
+      if (a.pageType === PageType.ProjectResult.toLowerCase()) {
+        // If one has a publication date and the other doesn't, prioritize the one with publication date
+        if (a.hasPrimaryDate !== b.hasPrimaryDate) {
+          return a.hasPrimaryDate ? -1 : 1;
+        }
 
+        // If both have publication dates or both don't, sort by the respective dates
+        if (a.hasPrimaryDate && b.hasPrimaryDate) {
+          // Both have publication dates - sort by publication date
+          return b.sortDate - a.sortDate;
+        } else {
+          // Neither has publication date - sort by created date
+          const aCreatedDate = parseDate(a._createdDate)?.getTime() || 0;
+          const bCreatedDate = parseDate(b._createdDate)?.getTime() || 0;
+          return bCreatedDate - aCreatedDate;
+        }
+      }
+
+      // For other page types
       // 1. Items with primary dates come first
       if (a.hasPrimaryDate !== b.hasPrimaryDate) {
         return a.hasPrimaryDate ? -1 : 1;
@@ -226,9 +244,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   pageTypePath,
   automaticallyCalculatePath,
 }) => {
-  const sortedItems = sortItemsByPageType(items).sort((a, b) => {
-    return b.sortDate - a.sortDate;
-  });
+  const sortedItems = sortItemsByPageType(items);
   console.log('sortedItems', sortedItems);
 
   return (
