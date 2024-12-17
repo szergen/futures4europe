@@ -287,7 +287,7 @@ const SearchComponentV1 = () => {
                     return (
                       <>
                         <div className="mr-2 text-2xl text-black">
-                          "{searchedItem.searchItem}"
+                          `&quot;`{searchedItem.searchItem}`&quot;`
                         </div>
                         {index < searchedItems.length - 1 && (
                           <div className="mr-2">,</div>
