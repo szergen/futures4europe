@@ -24,6 +24,7 @@ import GlowButton from './NavBar/GlowButton';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import * as CookieConsent from "vanilla-cookieconsent";
 
+
 const Header = () => {
   const {
     isLoggedIn,
@@ -107,6 +108,21 @@ const Header = () => {
                     console.log('Youtube embeds rejected');
                   }
                 },
+                posthog: {
+                  label: 'PostHog Analytics',
+                  onAccept: () => {
+                    if (posthog.initialized) {
+                      posthog.opt_in_capturing();
+                      console.log('PostHog tracking enabled');
+                    }
+                  },
+                  onReject: () => {
+                    if (posthog.initialized) {
+                      posthog.opt_out_capturing();
+                      console.log('PostHog tracking disabled');
+                    }
+                  }     
+                },           
               }
             },
             ads: {}
@@ -176,6 +192,7 @@ const Header = () => {
       };
     }, []);
 
+    
   const SignOutUser = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
