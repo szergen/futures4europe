@@ -9,6 +9,40 @@ import { useEffect, useState } from 'react';
 import { inter } from '@app/ui/fonts';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import posthog from 'posthog-js'
+import { PostHogProvider } from 'posthog-js/react'
+
+// Initialize PostHog
+function CustomPostHogProvider({ children }) {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+        api_host: 'https://eu.i.posthog.com',
+        debug: process.env.NODE_ENV === 'development', // Debug only in development
+      });
+    }
+  }, []);
+
+  return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
+}
+
+function PostHogTest() {
+  const testPostHog = () => {
+    posthog.capture('test_event', {
+      test_property: 'test value',
+    });
+    console.log('PostHog test event sent');
+  };
+
+  return (
+    <button
+      onClick={testPostHog}
+      className="px-4 py-2 bg-blue-500 text-white rounded"
+    >
+      Test PostHog
+    </button>
+  );
+}
 
 /**
  * Using force dynamic so changes in business assets (e.g. services) are immediately reflected.
@@ -24,7 +58,7 @@ export default function RootLayout({
   const [tokens, setTokens] = useState(null);
 
   useEffect(() => {
-    if (localStorage) {
+    if (typeof window !== 'undefined' && localStorage) {
       const tokens = JSON.parse(
         localStorage.getItem('f4e_wix_accessTokenAndRefreshToken') || null
       );
@@ -44,6 +78,7 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.ico" />
       </head>
       <body className={`${inter.className} antialiased bg-white body`}>
+      <CustomPostHogProvider>
         {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
           <>
             <WixProvider
@@ -54,6 +89,7 @@ export default function RootLayout({
             >
               <AuthProvider>
                 <Header />
+                {/* <PostHogTest/> */}
                 <main className="bg-white min-h-[600px]">{children}</main>
                 <div className="mt-10 sm:mt-20">
                   <Footer />
@@ -71,6 +107,7 @@ export default function RootLayout({
             deployment provider.
           </div>
         )}
+        </CustomPostHogProvider>
       </body>
     </html>
   );
