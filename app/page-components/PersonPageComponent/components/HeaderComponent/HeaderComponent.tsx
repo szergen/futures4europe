@@ -255,10 +255,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               }}
               tagType={'person type'}
               onTagCreated={handleTagCreated}
-              placeholder="Type of expertise"
+              placeholder="Select one or more member type tags"
               newTagHeader="Create a new activity"
               newTagType="Activity name"
               newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+              showCreateTagButton={false}
             />
           )}
         </div>
@@ -281,6 +282,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               newTagType="Country name"
               newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
               showTagTagline={false}
+              showCreateTagButton={false}
             />
           )}
         </div>
