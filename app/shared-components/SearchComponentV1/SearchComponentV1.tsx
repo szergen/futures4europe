@@ -245,10 +245,6 @@ const SearchComponentV1 = () => {
             <h2>Results for pages having:</h2>
             <div className={classNames('flex items-center')}>
               {searchedItems?.map((searchedItem: any, index: number) => {
-                console.log(
-                  'deb1->searchedItem.searchItemType',
-                  searchedItem.searchItemType
-                );
                 switch (searchedItem.searchItemType) {
                   case 'tag':
                     return (
