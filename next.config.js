@@ -15,7 +15,7 @@ const nextConfig = {
   images: {
     dangerouslyAllowSVG: true,
 
-    // error repair 
+    // error repair
     // REVIEW @ALEX
     // Unhandled Runtime Error
     // Error: Invalid src prop (wix:image://v1/75407d_f4839dea5f2040e8af649eba4aef0b1f~mv2.jpeg/WhatsApp%20Image%202024-12-09%20at%2014.17.13.jpeg#originWidth=899&originHeight=1600) on next/image, hostname "" is not configured under images in your next.config.js See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
@@ -24,8 +24,8 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'static.wixstatic.com',
         pathname: '/media/**',
-      }
-    ],   
+      },
+    ],
     domains: [
       'wix',
       'static.wixstatic.com',
@@ -41,7 +41,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
     ],
     formats: ['image/webp'],
-    unoptimized: true // Add this if you still have issues
+    unoptimized: true, // Add this if you still have issues
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -866,6 +866,335 @@ const nextConfig = {
         destination: '/pages/post',
         permanent: true,
       },
+      // Newsletters Dec 24
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'NpuogOHJa5SVfEzWmlTohfjE4Srg0GIXe32opSCCgQQ.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC90aGUtdXBncmFkZWQtZnV0dXJlczRldXJvcGVldS1pcy1ub3ctbGF1bmNoZWQtOWYwcDEiLCJyIjoiODk0Mzk4ZjgtZDU0Ny00ZjFmLTIyNWUtYTI3NDkwNjc4MDg2IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination:
+          '/post/the-upgraded-futures4europeeu-is-now-launched-9f0p1',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '6i0bntX8RIE3Ujl6GCt4Jb0Og7PxDXPYbXO4hZO-cEo.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZXllLW9mLWV1cm9wZS10b3BpY3MtZm9yLXBpbG90LXdvcmtzaG9wcy1kZWZpbmVkIiwiciI6ImQyZTUzNTUzLTcyZDctNGFjZC1iZWY1LTliZWIwNTgzNzdkOSIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination:
+          '/post/the-upgraded-futures4europeeu-is-now-launched-9f0p1',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'pEFkeRVPyZORbYVr_HQB06XFCLZhoSSpeWIWO1dsBC8.eyJ1IjoiaHR0cHM6Ly8wYmJlMmUzNC1lNTAzLTQ0MWEtYWY5ZS00ZmM3MGMxN2U2YWYudXNyZmlsZXMuY29tL3VnZC80NzE5MDhfZDE0MGI4NTdiOGM2NDA4MmIwYjJlMmVmZTM3ZDdlNTQucGRmIiwiciI6IjUyNDVjYzM3LWIzODAtNDUwZi05YWZkLWIzYTM4MmYzNWYxMiIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination:
+          'https://0bbe2e34-e503-441a-af9e-4fc70c17e6af.usrfiles.com/ugd/471908_d140b857b8c64082b0b2e2efe37d7e54.pdf',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'f8DvaVEgC-wccgTALyCyYch8SHoAHQ9VC7EDqdqnwhA.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9mb2QtaWkta2ljay1vZmYtcGZteDkiLCJyIjoiNjg3NjAyZDktZWZmNi00YjRlLWI3YjMtNGEyNGI1ZDhiZGE2IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: '/post/fod-ii-kick-off-pfmx9',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'jUcQgw8j3QUDCJ3P28Zs7q1rKcCVeTQy0_E7fU9T5og.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZnV0dXJlcy1vZi1uYXR1cmFsLXJlc291cmNlcy10aGUtMjR0aC1pbnRlcm5hdGlvbmFsLWZ1dHVyZXMtY29uZmVyZW5jZS1vZi1maW5sYW5kLWZ1dHVyZXMtcmVzZWFyY2gtY2VudHJlIiwiciI6IjZiNmU3NzU2LTAwMDQtNDNjMi05MDQ2LWE3MTc5YTFkNDY4YiIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination: '/post/fod-ii-kick-off-pfmx9',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'KG49UUbyGfol9i1gbo8FjiJBJr0tlvR6UHL7YUzs_ZI.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9mb3Jlc2lnaHQtc3RhcnRlci12aWRlb3MtcHJlcGFyaW5nLXBhcnRpY2lwYW50cy1mb3ItZm9yZXNpZ2h0LXdvcmtzaG9wcy13aXRoLXNob3J0LXZpZGVvcy1lbHduZSIsInIiOiIxMzY4OTEwNi0yYmNhLTQxN2YtYjhiMC1mNzNlNGNhNzUxMjEiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination:
+          '/post/foresight-starter-videos-preparing-participants-for-foresight-workshops-with-short-videos-elwne',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'EwccOnH9yvTiWHQH0rYyKNBG0-NPVuTFBB_pE__gVhM.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZXllLW9mLWV1cm9wZS1tdXR1YWwtbGVhcm5pbmctZXZlbnQtMnBvbGljeS1vcmllbnRlZC1jb21tdW5pY2F0aW9uLW9mLWZvcmVzaWdodC1yZXN1bHRzIiwiciI6IjA5ZmEyNjY2LTg4ZTMtNDk0MC1iMDNiLTJlZTFjNjgzNjVlMyIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination:
+          '/post/foresight-starter-videos-preparing-participants-for-foresight-workshops-with-short-videos-elwne',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'zixHOjkLm-kOvB9KZK9-kJSs9bhA2bsbRSc04ibIPt8.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9mb3Jlc2lnaHQtYW5kLXNvY2lldGFsLXJlc2lsaWVuY2UtaG93LWZ1dHVyZXNpbGllbmNlLXdhbGtzLXRoZS10YWxrLXRrcnZmIiwiciI6IjMzM2IxYWVhLTgxNDktNGFhYi05MTUxLTAwZTBlNGQ2OTJiOSIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination:
+          '/post/foresight-and-societal-resilience-how-futuresilience-walks-the-talk-tkrvf',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'ApoiKiv8Ujaqfz7SIBXQeTCXOlUveB8DCipOdZb1lNQ.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZnV0dXJlcy1vZi1uYXR1cmFsLXJlc291cmNlcy10aGUtMjR0aC1pbnRlcm5hdGlvbmFsLWZ1dHVyZXMtY29uZmVyZW5jZS1vZi1maW5sYW5kLWZ1dHVyZXMtcmVzZWFyY2gtY2VudHJlIiwiciI6IjcyMGI4ODY0LWUxNTAtNGZkYy1hNzIxLTdiNGEyNjdkNTAwMSIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination:
+          '/post/foresight-and-societal-resilience-how-futuresilience-walks-the-talk-tkrvf',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '1RAfvgPnA4Iuk74Wkr5SZHqojP1DLPdBRJwcfIPbzWM.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9leWUtb2YtZXVyb3BlLW11dHVhbC1sZWFybmluZy1ldmVudC1wb2xpY3ktb3JpZW50ZWQtY29tbXVuaWNhdGlvbi1vZi1mb3Jlc2lnaHQtcmVzdWx0cy04bXJ3MCIsInIiOiJhYmQzOTQxNC01MDk0LTQ3ZjgtYmY5MC1lMjEwMDNjOTQ1ZDciLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination:
+          '/post/eye-of-europe-mutual-learning-event-policy-oriented-communication-of-foresight-results-8mrw0',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'ZmHfAJrw7Jmum7hGf4eAFJUq2QTB_5zWSqqWwZyJm9c.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZXllLW9mLWV1cm9wZS1wcm9qZWN0LWxhdW5jaGVzLXJlcG9ydC1vbi1yaS1hY3RvcnMtYW5kLWZvcmVzaWdodC1hY3Rpdml0aWVzLWluLWV1cm9wZSIsInIiOiIzNmM5YjlkYS0zYTM2LTQ5MmQtYjMyNy0xYmVjMTkyY2E1ZDgiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination:
+          '/post/eye-of-europe-mutual-learning-event-policy-oriented-communication-of-foresight-results-8mrw0',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'OQjnBq-whuTU3MHQ-1sunzcHh6GimzDJH2LH7Y9NE-A.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC91bml2ZXJzaXR5LWZ1dHVyZXMtcG9zc2liaWxpdGllcy1ob3Blcy1hbmQtZmVhcnMtaWNkZTkiLCJyIjoiNjYyMDQ2YjgtYjI2OS00YjVmLWFhZTQtYTUyYmMzMmRhMDU3IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination:
+          '/post/university-futures-possibilities-hopes-and-fears-icde9',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'FWitWfLcHg3vPgTRmh8LhxQAh6CwcdyMBskfsNwQVNc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcHJvamVjdHMvdGhlLWZ1dHVyZS1vZi1sdXhlbWJvdXJncy1lY29ub215LWJ5LTIwNTAiLCJyIjoiNWY1N2EwYTgtNGVkNy00NmFiLTg0MDMtZDYwZDViZDA3YWZkIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination:
+          '/post/university-futures-possibilities-hopes-and-fears-icde9',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'cYKShot9p2C0Y9GQoRJFAk4AGluzocaiDCHr714ZmwY.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9zaGFwaW5nLWRlbW9jcmFjeXMtZnV0dXJlcy1pbi1tb2xkb3ZhLTFncjgwIiwiciI6IjAwNzlmYzZkLTg3ZjMtNDVmYy05NGQ2LTFiMjQ2Y2Q4NzY5NiIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination: '/post/shaping-democracys-futures-in-moldova-1gr80',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'TEbn6eOfWiJtN-_CWAvEDJCyaKU8XgnP9sbnxWAheJ0.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcHJvamVjdHMvdGhlLWZ1dHVyZS1vZi1sdXhlbWJvdXJncy1lY29ub215LWJ5LTIwNTAiLCJyIjoiYzBlMzk1ODUtYmZmMy00YzlkLWIzZmItOGI2ODc3NTZkMGQ2IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: '/post/shaping-democracys-futures-in-moldova-1gr80',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'O_xC9tCQdLbv_X5D06BSwPiMaE04WzFujndSQnr7BK0.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9pbnRlcnZpZXctd2l0aC1leWUtb2YtZXVyb3Blcy1jb25zb3J0aXVtLW1lbWJlci1waWVyZnJhbmNlc2NvLW1vcmV0dGktZXh4aTgiLCJyIjoiZTBkOTE4N2UtYWEzYy00ZTAwLTg2NGEtYzkxZDY5YjE1N2UzIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination:
+          '/post/interview-with-eye-of-europes-consortium-member-pierfrancesco-moretti-exxi8',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'APU83yiWphhnooEjCUA0zAPs5Hi3725ZxAGD3M0wwdI.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcHJvamVjdHMvdGhlLWZ1dHVyZS1vZi1sdXhlbWJvdXJncy1lY29ub215LWJ5LTIwNTAiLCJyIjoiM2M0M2M1ZDgtNmYxYy00ODEwLWEwN2YtNzg1ODM5ZGU3OTExIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination:
+          '/post/interview-with-eye-of-europes-consortium-member-pierfrancesco-moretti-exxi8',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'Li10ymd6BaRwBwtBMy4dYRsWII4yC98wHbjnjnsiFW4.eyJ1IjoiaHR0cHM6Ly9ldmVudHMuZXVyYWN0aXYuY29tL2V2ZW50L2luZm8vbWVwYS10aGUtZnV0dXJlLW9mLWV1LWluZHVzdHJ5LXJlc2lsaWVuY2Utb3ItZGVwZW5kZW5jZSIsInIiOiJjNjVjMWY4Yi1kNDY2LTQxMDgtMTkwMi1jZTA2ZGRhMWRkNjUiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination: '/post/eye-of-europe-conference-foresight-and-ri-wjyxd',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'f_7R9z-CsTEmvYFhm6uzg1AQzoWwNu8L8f7xEZofOB8.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9leWUtb2YtZXVyb3BlLWNvbmZlcmVuY2UtZm9yZXNpZ2h0LWFuZC1yaS13anl4ZCIsInIiOiI3MjViOGEwNi01ZjM5LTQ0MGYtNWI4Yi1mZjk5ZDYzZGM4MWMiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination: '/post/eye-of-europe-conference-foresight-and-ri-wjyxd',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '468o-nFmhaUCOrLhli2afGN00-snmLqroTAUNiZDARg.eyJ1IjoiaHR0cHM6Ly9yZXNlYXJjaC1hbmQtaW5ub3ZhdGlvbi5lYy5ldXJvcGEuZXUvZXZlbnRzL3Jlc2VhcmNoLWFuZC1pbm5vdmF0aW9uLXdlZWtfZW4iLCJyIjoiM2U2ZWE0MmQtMjNjMi00MDlkLTJlODktZjYxZDRkZGU0YTZkIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: '/post/futures-of-technologies-1znmy',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '9FvfkFaIBkrcDykxHk9YMEfCi7KoB4kf5epBtFYT0dc.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9mdXR1cmVzLW9mLXRlY2hub2xvZ2llcy0xem5teSIsInIiOiI4YjY4ZDJlNy1iMTgwLTRjMjEtOWM2OC04ZjcyNGZjZWMyZmIiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination: '/post/futures-of-technologies-1znmy',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'rIxXM6uZuiIeShNoUNQeXjYDUkOdcQHoUO86vTH5DZ8.eyJ1IjoiaHR0cHM6Ly9hcHBsaWVkZnV0dXJlcy5pby9ldmVudHMvaW50cm9kdWN0aW9uLXRvLWFwcGxpZWQtZnV0dXJlcy1tZXRob2RvbG9neS1hbmQtdG9vbGtpdCIsInIiOiJkN2RkNTJjOS0zYTc4LTRhY2EtNTZkOS05YjgzNjhlNzU2OGEiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination:
+          '/post/futures-literacy-arts-for-transformative-climate-action-s7h59',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'sEtymNLBNRoEMuGkKqWL1XYQIabjh5sj4cJo8y_tgo8.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9mdXR1cmVzLWxpdGVyYWN5LWFydHMtZm9yLXRyYW5zZm9ybWF0aXZlLWNsaW1hdGUtYWN0aW9uLXM3aDU5IiwiciI6IjkxOWMwZmQzLTIxNjQtNDI2YS0zMTAyLTQ5NzIxNmFjNWEyZSIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination:
+          '/post/futures-literacy-arts-for-transformative-climate-action-s7h59',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'FkJ438zW4_1fqYpqga9b3byonp_7fi0R8Nles9izHds.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9ub3JkaWMtZm9yZXNpZ2h0LW5ldHdvcmsta2ljay1vZmYtZXZlbnQtM3ltbjMiLCJyIjoiZDE2NzFhODctNTBlYi00ZjNmLTY0MWEtN2QzMGNmYmIyOTkwIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: '/post/nordic-foresight-network-kick-off-event-3ymn3',
+        permanent: true,
+      },
+      // End of Newsletters Dec 24
       {
         source: '/:path*',
         has: [
