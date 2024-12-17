@@ -304,8 +304,8 @@ export const updateFilteredDataBasedOnClickedTag = (
   //     return matchingPage || assignment;
   //   });
   const matchingTagIds = filteredData?.tags
-    .filter((tag) => tag.name === clickedTag)
-    .map((tag) => tag._id);
+    ?.filter((tag) => tag.name === clickedTag)
+    ?.map((tag) => tag._id);
 
   console.log('deb1->matchingTagIds', matchingTagIds);
 

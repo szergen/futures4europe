@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { highlightMatches } from '../../SearchComponentV1.utils';
 import { HiDocumentSearch } from 'react-icons/hi';
 import { motion } from 'framer-motion';
+import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
 
 export type SuggestionsProps = {
   fieldSuggestions: any[];
@@ -69,13 +70,13 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       index === self.findIndex((t: any) => t.field === assignment.field)
   );
 
-  const resolvePageType = (pageSuggestion: { [key: string]: string }) =>
-    Array.isArray(pageSuggestion?.item?.pageType)
-      ? pageSuggestion?.item?.pageType?.filter(
-          (pageTypeItem: string) =>
-            pageTypeItem !== 'info' && pageTypeItem !== 'post'
-        ) || 'post'
-      : pageSuggestion?.item?.pageType;
+  // const resolvePageType = (pageSuggestion: { [key: string]: string }) =>
+  //   Array.isArray(pageSuggestion?.item?.pageType)
+  //     ? pageSuggestion?.item?.pageType?.filter(
+  //         (pageTypeItem: string) =>
+  //           pageTypeItem !== 'info' && pageTypeItem !== 'post'
+  //       ) || 'post'
+  //     : pageSuggestion?.item?.pageType;
 
   // Sort by tags logic
   useEffect(() => {
@@ -176,7 +177,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       'bg-gray-100'
                   )}
                 >
-                  <span className="w-20">tag:</span>
+                  <span className="w-32 shrink-0">tag:</span>
                   <span
                     // dangerouslySetInnerHTML={{ __html: sortTag?.item.name }}
                     dangerouslySetInnerHTML={{
@@ -217,7 +218,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         setHighlightedIndexWithType({ index, type: 'field' })
                       }
                     >
-                      <span className="w-20">field:</span>
+                      <span className="w-32 shrink-0">field:</span>
                       <span
                         // dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
                         dangerouslySetInnerHTML={{
@@ -276,12 +277,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     }
                   >
                     <span
-                      className="w-20"
+                      className="w-32 shrink-0"
                       // onMouseDown={handleClickedSuggestion}
                     >
                       {tagSuggestion.item?.tagType}:
                     </span>
-                    <div className="flex content-center searchTagImage">
+                    <div className="flex searchTagImage items-start">
                       <Image
                         alt={'Tag Image'}
                         src={
@@ -292,7 +293,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         height={40}
                       />
                       <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
-                        <span
+                        <div
                           // dangerouslySetInnerHTML={{
                           //   __html: tagSuggestion.name,
                           // }}
@@ -305,14 +306,15 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                           }}
                           onMouseDown={handleTagSuggestion}
                           className={classNames(
+                            'cursor-pointer',
                             tagSuggestion.item?.pageLink && 'font-bold'
                           )}
                         />
-                        <span
+                        <div
                           data-after={tagSuggestion.item?.popularity}
                           className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
-                        ></span>
-                        <span
+                        ></div>
+                        <div
                           className="w-full text-12"
                           dangerouslySetInnerHTML={{
                             __html: highlightMatches(
@@ -346,7 +348,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     index === highlightedIndexWithType.index &&
                       highlightedIndexWithType.type === 'page' &&
                       'bg-gray-200',
-                    'flex items-center'
+                    'flex items-center',
+                    style.quickResults
                   )}
                   onMouseOver={() =>
                     setHighlightedIndexWithType({ index, type: 'page' })
@@ -354,56 +357,70 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   // Prevent exiting the input field on click
                   onMouseDown={(e) => e.preventDefault()}
                 >
-                  <span className="w-20">
-                    {resolvePageType(pageSuggestion)}:
-                  </span>
-                  <div className="flex content-center searchTagImage">
-                    <Image
-                      alt={'Tag Image'}
-                      className={
-                        (classNames('inline-block mr-1 ml-4 w-10 h-10'),
-                        style.searchTagImage)
-                      }
-                      src={
-                        pageSuggestion.item?.pictures ||
-                        'https://placehold.co/600x400?text=placeholder'
-                      }
-                      width={40}
-                      height={40}
-                    />
-                    <Link
-                      className="flex flex-wrap items-center ml-2 searchTagText"
-                      href={
-                        pageSuggestion.item?.pageLink || 'https://google.com'
-                      }
-                    >
-                      <span
-                        // dangerouslySetInnerHTML={{
-                        //   __html: pageSuggestion.title,
-                        // }}
-                        dangerouslySetInnerHTML={{
-                          __html: highlightMatches(
-                            pageSuggestion?.item?.title,
-                            pageSuggestion?.matches
-                          ),
-                        }}
-                      ></span>
-                      <span
-                        className="w-full text-12"
-                        // dangerouslySetInnerHTML={{
-                        //   __html: pageSuggestion.description,
-                        // }}
-                        dangerouslySetInnerHTML={{
-                          __html: highlightMatches(
-                            pageSuggestion?.item?.description,
-                            pageSuggestion?.matches
-                          ),
-                        }}
-                      >
-                        {/* {pageSuggestion.description} */}
-                      </span>
-                    </Link>
-                  </div>
+                  <Link
+                    className={classNames(
+                      index === highlightedIndexWithType.index &&
+                        highlightedIndexWithType.type === 'page' &&
+                        'bg-gray-200',
+                      'flex items-center'
+                    )}
+                    href={`${automaticallyDecidePathPrefixBasedOnPageType(
+                      pageSuggestion.item?.pageTypes?.[0]
+                    )}${pageSuggestion.item?.slug}`}
+                    target="_blank"
+                  >
+                    <span className="w-32 shrink-0">
+                      {/* {resolvePageType(pageSuggestion)}: */}
+                      {pageSuggestion.item?.pageTypes?.[0]?.name}:
+                    </span>
+                    <div className="flex searchTagImage items-start">
+                      <Image
+                        alt={'Tag Image'}
+                        className={
+                          (classNames('inline-block mr-1 ml-4 w-10 h-10'),
+                          style.searchTagImage)
+                        }
+                        src={
+                          pageSuggestion.item?.pictures ||
+                          'https://placehold.co/600x400?text=placeholder'
+                        }
+                        width={40}
+                        height={40}
+                      />
+                      <div className="flex flex-wrap items-center ml-2 searchTagText">
+                        <div
+                          // dangerouslySetInnerHTML={{
+                          //   __html: pageSuggestion.title,
+                          // }}
+                          dangerouslySetInnerHTML={{
+                            __html: highlightMatches(
+                              pageSuggestion?.item?.title,
+                              pageSuggestion?.matches
+                            ),
+                          }}
+                        ></div>
+                        <div
+                          className={classNames(
+                            'w-full text-12 cursor-text',
+                            style.quickResultsContent
+                          )}
+                          // dangerouslySetInnerHTML={{
+                          //   __html: pageSuggestion.description,
+                          // }}
+                          dangerouslySetInnerHTML={{
+                            __html: highlightMatches(
+                              pageSuggestion?.item?.postContentRIch1 +
+                                pageSuggestion?.item?.postContentRIch2 ||
+                                pageSuggestion?.item?.description,
+                              pageSuggestion?.matches
+                            ),
+                          }}
+                        >
+                          {/* {pageSuggestion.description} */}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
                 </li>
               )
           )}

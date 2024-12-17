@@ -117,9 +117,6 @@
 /* media query */
 
 @media (max-width: 860px) {
-  /* .headerWithSearchContainer {
-    width: 800px;
-  } */
   .headerContainer {
     display: flex;
     flex-wrap: wrap;
@@ -179,4 +176,9 @@
     max-width: 100%;
     width: 100vw;
   }
+}
+
+.headerWithSearchContainer {
+  margin: 0 auto;
+  padding-left: 80px;
 }

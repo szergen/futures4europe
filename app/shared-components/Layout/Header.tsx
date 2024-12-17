@@ -335,7 +335,7 @@ const Header = () => {
         </div>
       </div>
       <header
-        className={classNames('flex w-full my-6 px-2', style.header)}
+        className={classNames('flex w-full my-6 px-2 flex-col', style.header)}
         data-testid={testIds.LAYOUT.HEADER}
       >
         <div
@@ -354,18 +354,10 @@ const Header = () => {
           >
             <Logo />
           </Link>
-          {/* TODO: Temporary Removal */}
-          {/* Search */}
-          <div
-            className={classNames('relative', style.headerWithSearchContainer)}
-          >
-            <SearchProvider>
-              <SearchComponentV1 />
-            </SearchProvider>
-          </div>
+
           {/* TODO: Temporary Pages */}
           {/* Page Buttons */}
-          {/* <div
+          <div
             className={classNames('relative', style.headerTagContainerOuter)}
           >
             <div
@@ -443,7 +435,8 @@ const Header = () => {
                 disableUnderline
               />
             </div>
-          </div> */}
+          </div>
+
           {/* Account */}
           {accountSection}
 
@@ -451,6 +444,14 @@ const Header = () => {
           {/* <div>
           <NavBar />
         </div> */}
+        </div>
+        {/* Search */}
+        <div
+          className={classNames('relative', style.headerWithSearchContainer)}
+        >
+          <SearchProvider>
+            <SearchComponentV1 />
+          </SearchProvider>
         </div>
         <Modal show={isLoadingInProgress} size="md" popup>
           <Modal.Header />
