@@ -16,7 +16,7 @@ import Typography from '@app/shared-components/Typography/Typography';
 
 const DashboardSkeleton = () => {
   return (
-    <div className="w-full flex flex-col relative m-auto mt-10 mb-6 m-auto max-w-[860px]">
+    <div className="w-full flex flex-col relative m-auto mt-10 mb-6 max-w-[860px]">
       <div className="mt-14 mb-10 p-8 bg-gray-50 rounded-[40px]">
         <div className="flex flex-col">
           {/* Header with icon and title */}
@@ -50,67 +50,60 @@ export default function Dashboard() {
   const [personInfoPageLink, setPersonInfoPageLink] = useState('');
   const [isLoadingPersonInfo, setIsLoadingPersonInfo] = useState(true);
 
-  const {
-    isLoggedIn,
-    loading,
-    userDetails,
-    logout,
-  } = useAuth();
+  const { isLoggedIn, loading, userDetails, logout } = useAuth();
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
 
-   // Combine all loading states
-   const isFullyLoaded = !loading && isLoggedIn && userDetails && 'userTag' in userDetails;
+  // Combine all loading states
+  const isFullyLoaded =
+    !loading && isLoggedIn && userDetails && 'userTag' in userDetails;
 
-   useEffect(() => {
-     if (!loading && !isLoggedIn) {
-       router.push('/login');
-       return;
-     }
- 
-     const initializePersonInfo = async () => {
-       try {
-         if (userDetails?.userTag?.name) {
-           setIsPersonInfoPageReady(true);
-           setPersonInfoPageLink(userDetails.userTag.tagPageLink || '');
-           setIsLoadingPersonInfo(false);
-         }
-       } catch (error) {
-         console.error('Error initializing person info:', error);
-         setIsLoadingPersonInfo(false);
-       }
-     };
- 
-     if (!userDetails?.userTag) {
-       setIsLoadingPersonInfo(true);
-     }
- 
-     if (userDetails) {
-       initializePersonInfo();
-     }
-   }, [isLoggedIn, router, loading, userDetails]);
- 
-   if (!isLoggedIn) {
-     return <LoadingSpinner />;
-   }
- 
-   const handleCreateOrNavigateToPersonInfoPage = () => {
-     if (userInfoPage) {
-       return `${userInfoPage}`;
-     }
-     return `/person/New_Info_Page`;
-   };
- 
-   const handleLogOut = async () => {
-     logout();
-     router.push('/login');
-   };
- 
-   const subNavItems = [
-     { href: '/dashboard', text: 'Account', isActive: true },
-   ];
+  useEffect(() => {
+    if (!loading && !isLoggedIn) {
+      router.push('/login');
+      return;
+    }
 
+    const initializePersonInfo = async () => {
+      try {
+        if (userDetails?.userTag?.name) {
+          setIsPersonInfoPageReady(true);
+          setPersonInfoPageLink(userDetails.userTag.tagPageLink || '');
+          setIsLoadingPersonInfo(false);
+        }
+      } catch (error) {
+        console.error('Error initializing person info:', error);
+        setIsLoadingPersonInfo(false);
+      }
+    };
+
+    if (!userDetails?.userTag) {
+      setIsLoadingPersonInfo(true);
+    }
+
+    if (userDetails) {
+      initializePersonInfo();
+    }
+  }, [isLoggedIn, router, loading, userDetails]);
+
+  if (!isLoggedIn) {
+    return <LoadingSpinner />;
+  }
+
+  const handleCreateOrNavigateToPersonInfoPage = () => {
+    if (userInfoPage) {
+      return `${userInfoPage}`;
+    }
+    return `/person/New_Info_Page`;
+  };
+
+  const handleLogOut = async () => {
+    logout();
+    router.push('/login');
+  };
+
+  const subNavItems = [{ href: '/dashboard', text: 'Account', isActive: true }];
   
    return (
     <div className={classNames(style.UserDashboard, style.UserDashboardProjects, 'flex flex-col')}>

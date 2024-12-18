@@ -1123,16 +1123,15 @@ function OrganisationPageComponent({
         tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
-      {/* Internal Links */}
-      {/* scos conform cerintelor din mail - Radu */}
-      {/* <MiniPagesListComponentPost
+      {/* Content related to this Info Page */}
+      <MiniPagesListComponentPost
         internalLinks={internalLinks}
         isEditModeOn={isEditModeOn}
         title="Content related to this Organisation"
         handleUpdatePostData={(value) =>
           updateOrganisationDataOnKeyValue('internalLinks', value)
         }
-      /> */}
+      />
       {/* Files */}
       <FilesComponent
         isEditModeOn={isEditModeOn}

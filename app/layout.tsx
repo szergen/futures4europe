@@ -9,8 +9,8 @@ import { useEffect, useState } from 'react';
 import { inter } from '@app/ui/fonts';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import posthog from 'posthog-js'
-import { PostHogProvider } from 'posthog-js/react'
+import posthog from 'posthog-js';
+import { PostHogProvider } from 'posthog-js/react';
 
 // Initialize PostHog
 function CustomPostHogProvider({ children }) {
@@ -78,35 +78,35 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.ico" />
       </head>
       <body className={`${inter.className} antialiased bg-white body`}>
-      <CustomPostHogProvider>
-        {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
-          <>
-            <WixProvider
-              auth={OAuthStrategy({
-                clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
-                tokens: tokens || undefined,
-              })}
-            >
-              <AuthProvider>
-                <Header />
-                {/* <PostHogTest/> */}
-                <main className="bg-white min-h-[600px]">{children}</main>
-                <div className="mt-10 sm:mt-20">
-                  <Footer />
-                </div>
-              </AuthProvider>
-            </WixProvider>
+        <CustomPostHogProvider>
+          {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
+            <>
+              <WixProvider
+                auth={OAuthStrategy({
+                  clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID,
+                  tokens: tokens || undefined,
+                })}
+              >
+                <AuthProvider>
+                  <Header />
+                  {/* <PostHogTest/> */}
+                  <main className="bg-white min-h-[600px]">{children}</main>
+                  <div className="mt-10 sm:mt-20">
+                    <Footer />
+                  </div>
+                </AuthProvider>
+              </WixProvider>
 
-            <SpeedInsights />
-            <Analytics />
-          </>
-        ) : (
-          <div className="bg-white min-h-[600px] max-w-5xl mx-auto p-5">
-            Page not available. Please add an environment variable called
-            NEXT_PUBLIC_WIX_CLIENT_ID, containing the client ID, to your
-            deployment provider.
-          </div>
-        )}
+              <SpeedInsights />
+              <Analytics />
+            </>
+          ) : (
+            <div className="bg-white min-h-[600px] max-w-5xl mx-auto p-5">
+              Page not available. Please add an environment variable called
+              NEXT_PUBLIC_WIX_CLIENT_ID, containing the client ID, to your
+              deployment provider.
+            </div>
+          )}
         </CustomPostHogProvider>
       </body>
     </html>

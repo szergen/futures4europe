@@ -127,7 +127,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
       popularity: currentTagPopularity,
       primaryTags,
       projectResultPublicationDate,
-      projectResultAuthor
+      projectResultAuthor,
     });
   }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
 
