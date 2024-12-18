@@ -1202,8 +1202,7 @@ const nextConfig = {
               'PQd6okC_9x_mRgA1w8gHk--j-hBN7cg-rwPOVhkP5aQ.eyJ1IjoiaHR0cHM6Ly9mdXR1cmVzNGV1cm9wZS5ldS9zby8wYlBFd1FpeGM_bGFuZ3VhZ2VUYWc9ZW4mc3RhdHVzPURyYWZ0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
           },
         ],
-        destination:
-          'https://legacy.futures4europe.eu/so/0bPEwQixc?languageTag=en&status=Draft&cid=00000000-0000-0000-0000-000000000000',
+        destination: 'https://shoutout.wix.com/so/0bPEwQixc',
         permanent: true,
       },
       // End of Newsletters Dec 24
