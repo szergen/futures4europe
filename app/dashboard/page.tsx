@@ -50,73 +50,74 @@ export default function Dashboard() {
   const [personInfoPageLink, setPersonInfoPageLink] = useState('');
   const [isLoadingPersonInfo, setIsLoadingPersonInfo] = useState(true);
 
-  const {
-    isLoggedIn,
-    loading,
-    userDetails,
-    logout,
-  } = useAuth();
+  const { isLoggedIn, loading, userDetails, logout } = useAuth();
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
 
-   // Combine all loading states
-   const isFullyLoaded = !loading && isLoggedIn && userDetails && 'userTag' in userDetails;
+  // Combine all loading states
+  const isFullyLoaded =
+    !loading && isLoggedIn && userDetails && 'userTag' in userDetails;
 
-   useEffect(() => {
-     if (!loading && !isLoggedIn) {
-       router.push('/login');
-       return;
-     }
- 
-     const initializePersonInfo = async () => {
-       try {
-         if (userDetails?.userTag?.name) {
-           setIsPersonInfoPageReady(true);
-           setPersonInfoPageLink(userDetails.userTag.tagPageLink || '');
-           setIsLoadingPersonInfo(false);
-         }
-       } catch (error) {
-         console.error('Error initializing person info:', error);
-         setIsLoadingPersonInfo(false);
-       }
-     };
- 
-     if (!userDetails?.userTag) {
-       setIsLoadingPersonInfo(true);
-     }
- 
-     if (userDetails) {
-       initializePersonInfo();
-     }
-   }, [isLoggedIn, router, loading, userDetails]);
- 
-   if (!isLoggedIn) {
-     return <LoadingSpinner />;
-   }
- 
-   const handleCreateOrNavigateToPersonInfoPage = () => {
-     if (userInfoPage) {
-       return `${userInfoPage}`;
-     }
-     return `/person/New_Info_Page`;
-   };
- 
-   const handleLogOut = async () => {
-     logout();
-     router.push('/login');
-   };
- 
-   const subNavItems = [
-     { href: '/dashboard', text: 'Account', isActive: true },
-   ];
+  useEffect(() => {
+    if (!loading && !isLoggedIn) {
+      router.push('/login');
+      return;
+    }
 
-  
-   return (
-    <div className={classNames(style.UserDashboard, style.UserDashboardProjects, 'flex flex-col')}>
+    const initializePersonInfo = async () => {
+      try {
+        if (userDetails?.userTag?.name) {
+          setIsPersonInfoPageReady(true);
+          setPersonInfoPageLink(userDetails.userTag.tagPageLink || '');
+          setIsLoadingPersonInfo(false);
+        }
+      } catch (error) {
+        console.error('Error initializing person info:', error);
+        setIsLoadingPersonInfo(false);
+      }
+    };
+
+    if (!userDetails?.userTag) {
+      setIsLoadingPersonInfo(true);
+    }
+
+    if (userDetails) {
+      initializePersonInfo();
+    }
+  }, [isLoggedIn, router, loading, userDetails]);
+
+  if (!isLoggedIn) {
+    return <LoadingSpinner />;
+  }
+
+  const handleCreateOrNavigateToPersonInfoPage = () => {
+    if (userInfoPage) {
+      return `${userInfoPage}`;
+    }
+    return `/person/New_Info_Page`;
+  };
+
+  const handleLogOut = async () => {
+    logout();
+    router.push('/login');
+  };
+
+  const subNavItems = [{ href: '/dashboard', text: 'Account', isActive: true }];
+
+  return (
+    <div
+      className={classNames(
+        style.UserDashboard,
+        style.UserDashboardProjects,
+        'flex flex-col'
+      )}
+    >
       <NavDashboard
         userInfoPage={true}
-        handleCreateOrNavigateToPersonInfoPage={handleCreateOrNavigateToPersonInfoPage}
+        handleCreateOrNavigateToPersonInfoPage={
+          handleCreateOrNavigateToPersonInfoPage
+        }
         handleLogOut={handleLogOut}
         SubNav={<SubNavDashboard items={subNavItems} style={style} />}
         activeItem="/dashboard"
@@ -125,7 +126,12 @@ export default function Dashboard() {
       {!isFullyLoaded ? (
         <DashboardSkeleton />
       ) : (
-        <div className={classNames(style.UserDashboardWrapper, 'w-full flex flex-col relative m-auto mt-10 mb-6')}>
+        <div
+          className={classNames(
+            style.UserDashboardWrapper,
+            'w-full flex flex-col relative m-auto mt-10 mb-6'
+          )}
+        >
           <div
             className={classNames(
               style.dashboardBox,
@@ -137,7 +143,9 @@ export default function Dashboard() {
               personInfoPageLink && 'bg-gray-100'
             )}
           >
-            <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
+            <div
+              className={classNames(style.dashboardBoxAlert, 'flex flex-col')}
+            >
               <div className="flex items-center mb-4">
                 {!personInfoPageLink ? (
                   <SpriteSvg.AccountAlertIcon
@@ -160,7 +168,10 @@ export default function Dashboard() {
                     inline={false}
                   />
                 )}
-                <Typography tag="h2" className={classNames(style.headingDashboardh1, 'ml-2')}>
+                <Typography
+                  tag="h2"
+                  className={classNames(style.headingDashboardh1, 'ml-2')}
+                >
                   Person Info
                 </Typography>
               </div>
@@ -168,7 +179,10 @@ export default function Dashboard() {
               <div className="flex flex-col justify-between">
                 <Typography
                   tag="p"
-                  className={classNames(style.boxTextDashboard, 'text-black-site mb-8')}
+                  className={classNames(
+                    style.boxTextDashboard,
+                    'text-black-site mb-8'
+                  )}
                 >
                   {!personInfoPageLink
                     ? 'You dont have a Person Info page or you did not claim it. Create now a Person Info page to be visible to all members of futures4europe platform.'
@@ -177,7 +191,13 @@ export default function Dashboard() {
               </div>
 
               <div className={classNames(style.listDashboard, 'block')}>
-                <Link href={!personInfoPageLink ? '/person/New_Info_Page' : personInfoPageLink}>
+                <Link
+                  href={
+                    !personInfoPageLink
+                      ? '/person/New_Info_Page'
+                      : personInfoPageLink
+                  }
+                >
                   <Button
                     size={'md'}
                     color={'light'}
@@ -194,7 +214,9 @@ export default function Dashboard() {
                       strokeWidth={1}
                     />
                     <span className="text-lg">
-                      {personInfoPageLink ? 'Edit My Person Info page' : 'Create My Person Info page'}
+                      {personInfoPageLink
+                        ? 'Edit My Person Info page'
+                        : 'Create My Person Info page'}
                     </span>
                   </Button>
                 </Link>

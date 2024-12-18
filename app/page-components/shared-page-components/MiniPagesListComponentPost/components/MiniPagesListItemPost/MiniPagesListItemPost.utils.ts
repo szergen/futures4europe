@@ -78,8 +78,8 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
           item?.projectResultMedia?.thumbnail ||
           item?.postImage1?.url ||
           PLACEHOLDER_IMAGE,
-        eventStartDate: item?.eventStartDate,  
-        eventEndDate: item?.eventEndDate,  
+        eventStartDate: item?.eventStartDate,
+        eventEndDate: item?.eventEndDate,
         projects: item?.projects,
         projectResultAuthor: item?.projectResultAuthor,
         text:
