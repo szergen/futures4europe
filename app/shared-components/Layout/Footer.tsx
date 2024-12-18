@@ -71,12 +71,6 @@ const Footer = () => {
                   </button>
                 </form>
               </div>
-              {/*
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
-*/}
 
               <fieldset>
                 <legend className="sr-only">Checkboxes</legend>

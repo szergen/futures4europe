@@ -1077,14 +1077,15 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         tagType="organisation"
       />
       {/* Internal Links */}
-      <MiniPagesListComponentPost
+      {/* scos conform cerintelor din mail - Radu */}
+      {/* <MiniPagesListComponentPost
         isEditModeOn={isEditModeOn}
         internalLinks={internalLinks}
         handleUpdatePostData={(value) =>
           updateProjectDataOnKeyValue('internalLinks', value)
         }
         title="Content related to this Project"
-      />
+      /> */}
       {/* Files */}
       <FilesComponent
         isEditModeOn={isEditModeOn}

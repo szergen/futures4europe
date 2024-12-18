@@ -1001,8 +1001,7 @@ const nextConfig = {
               '1RAfvgPnA4Iuk74Wkr5SZHqojP1DLPdBRJwcfIPbzWM.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9leWUtb2YtZXVyb3BlLW11dHVhbC1sZWFybmluZy1ldmVudC1wb2xpY3ktb3JpZW50ZWQtY29tbXVuaWNhdGlvbi1vZi1mb3Jlc2lnaHQtcmVzdWx0cy04bXJ3MCIsInIiOiJhYmQzOTQxNC01MDk0LTQ3ZjgtYmY5MC1lMjEwMDNjOTQ1ZDciLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
           },
         ],
-        destination:
-          '/post/eye-of-europe-mutual-learning-event-policy-oriented-communication-of-foresight-results-8mrw0',
+        destination: '/post/eye-of-europes-second-mutual-learning-event-4pzed',
         permanent: true,
       },
       {
@@ -1015,8 +1014,7 @@ const nextConfig = {
               'ZmHfAJrw7Jmum7hGf4eAFJUq2QTB_5zWSqqWwZyJm9c.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYmxvZ3MvZXllLW9mLWV1cm9wZS1wcm9qZWN0LWxhdW5jaGVzLXJlcG9ydC1vbi1yaS1hY3RvcnMtYW5kLWZvcmVzaWdodC1hY3Rpdml0aWVzLWluLWV1cm9wZSIsInIiOiIzNmM5YjlkYS0zYTM2LTQ5MmQtYjMyNy0xYmVjMTkyY2E1ZDgiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
           },
         ],
-        destination:
-          '/post/eye-of-europe-mutual-learning-event-policy-oriented-communication-of-foresight-results-8mrw0',
+        destination: '/post/eye-of-europes-second-mutual-learning-event-4pzed',
         permanent: true,
       },
       {
@@ -1192,6 +1190,20 @@ const nextConfig = {
           },
         ],
         destination: '/post/nordic-foresight-network-kick-off-event-3ymn3',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'PQd6okC_9x_mRgA1w8gHk--j-hBN7cg-rwPOVhkP5aQ.eyJ1IjoiaHR0cHM6Ly9mdXR1cmVzNGV1cm9wZS5ldS9zby8wYlBFd1FpeGM_bGFuZ3VhZ2VUYWc9ZW4mc3RhdHVzPURyYWZ0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination:
+          'https://legacy.futures4europe.eu/so/0bPEwQixc?languageTag=en&status=Draft&cid=00000000-0000-0000-0000-000000000000',
         permanent: true,
       },
       // End of Newsletters Dec 24

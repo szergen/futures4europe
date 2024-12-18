@@ -120,16 +120,16 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   // Only show popularity if the tag type is NOT 'post'
   const shouldShowPopularity = primaryTags?.[0]?.tagType !== 'post';
 
-  // //Debugging
-  // useEffect(() => {
-  //   console.log({
-  //     itemName: getCorrectTagName(),
-  //     popularity: currentTagPopularity,
-  //     primaryTags,
-  //     projectResultPublicationDate,
-  //     projectResultAuthor
-  //   });
-  // }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
+  //Debugging
+  useEffect(() => {
+    console.log({
+      itemName: getCorrectTagName(),
+      popularity: currentTagPopularity,
+      primaryTags,
+      projectResultPublicationDate,
+      projectResultAuthor,
+    });
+  }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
 
   return (
     <div className={classNames(style.postItem)}>

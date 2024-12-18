@@ -214,7 +214,6 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       );
     setValue(newValue);
   };
-
   const customStyles = {
     control: (provided, state) => ({
       ...provided,

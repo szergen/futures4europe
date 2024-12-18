@@ -14,56 +14,80 @@ import { Button } from 'flowbite-react';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import Typography from '@app/shared-components/Typography/Typography';
 
+const DashboardSkeleton = () => {
+  return (
+    <div className="w-full flex flex-col relative m-auto mt-10 mb-6 m-auto max-w-[860px]">
+      <div className="mt-14 mb-10 p-8 bg-gray-50 rounded-[40px]">
+        <div className="flex flex-col">
+          {/* Header with icon and title */}
+          <div className="flex items-center mb-4">
+            <div className="w-6 h-6 bg-gray-200 rounded-full animate-pulse" />
+            <div className="ml-2 h-7 w-32 bg-gray-200 rounded animate-pulse" />
+          </div>
+
+          {/* Description text */}
+          <div className="flex flex-col justify-between mb-8">
+            <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse mb-2" />
+            <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse" />
+          </div>
+
+          {/* Button skeleton */}
+          <div className="block">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gray-200 animate-pulse">
+              <div className="w-6 h-6 rounded-full bg-gray-300" />
+              <div className="ml-2 h-5 w-40 bg-gray-300 rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Dashboard() {
   const [userInfoPage, setUserInfoPage] = useState('');
+  const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
+  const [personInfoPageLink, setPersonInfoPageLink] = useState('');
+  const [isLoadingPersonInfo, setIsLoadingPersonInfo] = useState(true);
 
-  const {
-    // login,
-    isLoggedIn,
-    loading,
-    userDetails,
-    logout,
-    userTagFetched,
-
-    // ownedInfoPages,
-    // ownedPostPages,
-    // ownedPostPagesFetched,
-    // ownedInfoPagesFetched,
-    // handleUserDataRefresh,
-    // tags,
-  } = useAuth();
+  const { isLoggedIn, loading, userDetails, logout } = useAuth();
 
   const router = useRouter();
   const { removeDataItem } = useWixModules(items);
 
-  // #region Check if user info page is ready
-  const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
-  const [personInfoPageLink, setPersonInfoPageLink] = useState('');
+  // Combine all loading states
+  const isFullyLoaded =
+    !loading && isLoggedIn && userDetails && 'userTag' in userDetails;
 
   useEffect(() => {
     if (!loading && !isLoggedIn) {
       router.push('/login');
+      return;
     }
 
-    if (
-      userTagFetched &&
-      userDetails?.userTag?.name &&
-      !isPersonInfoPageReady
-    ) {
-      // handleUserDataRefresh();
-      setIsPersonInfoPageReady(true);
-      setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
+    const initializePersonInfo = async () => {
+      try {
+        if (userDetails?.userTag?.name) {
+          setIsPersonInfoPageReady(true);
+          setPersonInfoPageLink(userDetails.userTag.tagPageLink || '');
+          setIsLoadingPersonInfo(false);
+        }
+      } catch (error) {
+        console.error('Error initializing person info:', error);
+        setIsLoadingPersonInfo(false);
+      }
+    };
+
+    if (!userDetails?.userTag) {
+      setIsLoadingPersonInfo(true);
     }
-  }, [
-    isLoggedIn,
-    router,
-    loading,
-    userDetails?.userTag?.tagPageLink,
-    userTagFetched,
-  ]);
+
+    if (userDetails) {
+      initializePersonInfo();
+    }
+  }, [isLoggedIn, router, loading, userDetails]);
 
   if (!isLoggedIn) {
-    //Loading Spinner
     return <LoadingSpinner />;
   }
 
@@ -79,11 +103,7 @@ export default function Dashboard() {
     router.push('/login');
   };
 
-  const subNavItems = [
-    { href: '/dashboard', text: 'Account', isActive: true },
-    // { href: '/dashboard/security', text: 'Security' },
-    // { href: '/dashboard/change-password', text: 'Password' },
-  ];
+  const subNavItems = [{ href: '/dashboard', text: 'Account', isActive: true }];
 
   return (
     <div
@@ -103,104 +123,108 @@ export default function Dashboard() {
         activeItem="/dashboard"
       />
 
-      <div
-        className={classNames(
-          style.UserDashboardWrapper,
-          'w-full flex flex-col relative m-auto mt-10 mb-6'
-        )}
-      >
-        {/* // TODO: To make component for dashbaordBoxe's */}
+      {!isFullyLoaded ? (
+        <DashboardSkeleton />
+      ) : (
         <div
           className={classNames(
-            style.dashboardBox,
-            style.dashboardBoxAddWrap,
-            'mt-14',
-            'mb-10',
-            'p-8',
-            'bg-alertLight-site',
-            personInfoPageLink && 'bg-gray-100'
+            style.UserDashboardWrapper,
+            'w-full flex flex-col relative m-auto mt-10 mb-6'
           )}
         >
-          <div className={classNames(style.dashboardBoxAlert, 'flex flex-col')}>
-            <div className="flex items-center mb-4">
-              {!personInfoPageLink ? (
-                <SpriteSvg.AccountAlertIcon
-                  className="text-site-black text-[var(--color-text-icon-error)]"
-                  sizeW={24}
-                  sizeH={24}
-                  viewBox={'0 0 32 32'}
-                  fill={'currentColor'}
-                  strokeWidth={0}
-                  inline={false}
-                />
-              ) : (
-                <SpriteSvg.AccountAiIcon
-                  className="text-site-black text-[var(--color-text-icon-error)]"
-                  sizeW={24}
-                  sizeH={24}
-                  viewBox={'0 0 32 32'}
-                  fill={'var(--p-border-radius-800)'}
-                  strokeWidth={0}
-                  inline={false}
-                />
-              )}
-              <Typography
-                tag="h2"
-                className={classNames(style.headingDashboardh1, 'ml-2')}
-              >
-                Person Info
-              </Typography>
-            </div>
-
-            <div className="flex flex-col justify-between">
-              <Typography
-                tag="p"
-                className={classNames(
-                  style.boxTextDashboard,
-                  'text-black-site mb-8'
-                )}
-              >
-                {!personInfoPageLink
-                  ? 'You dont have a Person Info page or you did not claim it. Create now a Person Info page to be visible to all members of futures4europe platform.'
-                  : 'Edit your Person Info page to be visible to all members of futures4europe platform.'}
-              </Typography>
-            </div>
-
-            <div className={classNames(style.listDashboard, 'block')}>
-              <Link
-                href={
-                  !personInfoPageLink
-                    ? '/person/New_Info_Page'
-                    : personInfoPageLink
-                }
-              >
-                <Button
-                  size={'md'}
-                  color={'light'}
-                  className={classNames(
-                    style.buttonAddDashboard,
-                    'block border-0 mr-4 hover:bg-gray-300 focus:ring-purple-300'
-                  )}
-                  pill
-                >
-                  <SpriteSvg.AccountHumanIcon
-                    sizeH={24}
+          <div
+            className={classNames(
+              style.dashboardBox,
+              style.dashboardBoxAddWrap,
+              'mt-14',
+              'mb-10',
+              'p-8',
+              'bg-alertLight-site',
+              personInfoPageLink && 'bg-gray-100'
+            )}
+          >
+            <div
+              className={classNames(style.dashboardBoxAlert, 'flex flex-col')}
+            >
+              <div className="flex items-center mb-4">
+                {!personInfoPageLink ? (
+                  <SpriteSvg.AccountAlertIcon
+                    className="text-site-black text-[var(--color-text-icon-error)]"
                     sizeW={24}
-                    viewBox={'0 -1 32 32'}
-                    strokeWidth={1}
+                    sizeH={24}
+                    viewBox={'0 0 32 32'}
+                    fill={'currentColor'}
+                    strokeWidth={0}
+                    inline={false}
                   />
-                  {/* // TODO: Must show claim Person Info Page if it allready exists */}
-                  <span className="text-lg">
-                    {personInfoPageLink
-                      ? 'Edit My Person Info page'
-                      : 'Create My Person Info page'}
-                  </span>
-                </Button>
-              </Link>
+                ) : (
+                  <SpriteSvg.AccountAiIcon
+                    className="text-site-black text-[var(--color-text-icon-error)]"
+                    sizeW={24}
+                    sizeH={24}
+                    viewBox={'0 0 32 32'}
+                    fill={'var(--p-border-radius-800)'}
+                    strokeWidth={0}
+                    inline={false}
+                  />
+                )}
+                <Typography
+                  tag="h2"
+                  className={classNames(style.headingDashboardh1, 'ml-2')}
+                >
+                  Person Info
+                </Typography>
+              </div>
+
+              <div className="flex flex-col justify-between">
+                <Typography
+                  tag="p"
+                  className={classNames(
+                    style.boxTextDashboard,
+                    'text-black-site mb-8'
+                  )}
+                >
+                  {!personInfoPageLink
+                    ? 'You dont have a Person Info page or you did not claim it. Create now a Person Info page to be visible to all members of futures4europe platform.'
+                    : 'Edit your Person Info page to be visible to all members of futures4europe platform.'}
+                </Typography>
+              </div>
+
+              <div className={classNames(style.listDashboard, 'block')}>
+                <Link
+                  href={
+                    !personInfoPageLink
+                      ? '/person/New_Info_Page'
+                      : personInfoPageLink
+                  }
+                >
+                  <Button
+                    size={'md'}
+                    color={'light'}
+                    className={classNames(
+                      style.buttonAddDashboard,
+                      'block border-0 mr-4 hover:bg-gray-300 focus:ring-purple-300'
+                    )}
+                    pill
+                  >
+                    <SpriteSvg.AccountHumanIcon
+                      sizeH={24}
+                      sizeW={24}
+                      viewBox={'0 -1 32 32'}
+                      strokeWidth={1}
+                    />
+                    <span className="text-lg">
+                      {personInfoPageLink
+                        ? 'Edit My Person Info page'
+                        : 'Create My Person Info page'}
+                    </span>
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
