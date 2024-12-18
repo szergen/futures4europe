@@ -22,7 +22,7 @@ import Tag from '../Tag/Tag';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
 import GlowButton from './NavBar/GlowButton';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
-import * as CookieConsent from "vanilla-cookieconsent";
+import * as CookieConsent from 'vanilla-cookieconsent';
 
 const Header = () => {
   const {
@@ -49,132 +49,136 @@ const Header = () => {
   };
   console.log('debug2->userDetails', userDetails);
 
-    // Initialize cookie consent
-    useEffect(() => {
-      // Only initialize if it hasn't been initialized yet
-      if (!window.cc) {
-        CookieConsent.run({
-          cookie: {
-            name: 'cc_cookie',
+  // Initialize cookie consent
+  useEffect(() => {
+    // Only initialize if it hasn't been initialized yet
+    if (!window.cc) {
+      CookieConsent.run({
+        cookie: {
+          name: 'cc_cookie',
+        },
+        guiOptions: {
+          consentModal: {
+            layout: 'cloud inline',
+            position: 'bottom center',
+            equalWeightButtons: true,
+            flipButtons: false,
           },
-          guiOptions: {
-            consentModal: {
-              layout: 'cloud inline',
-              position: 'bottom center',
-              equalWeightButtons: true,
-              flipButtons: false
-            },
-            preferencesModal: {
-              layout: 'box',
-              equalWeightButtons: true,
-              flipButtons: false
-            }
+          preferencesModal: {
+            layout: 'box',
+            equalWeightButtons: true,
+            flipButtons: false,
           },
-          categories: {
-            necessary: {
-              enabled: true,
-              readOnly: true
+        },
+        categories: {
+          necessary: {
+            enabled: true,
+            readOnly: true,
+          },
+          analytics: {
+            autoClear: {
+              cookies: [
+                {
+                  name: /^_ga/,
+                },
+                {
+                  name: '_gid',
+                },
+              ],
             },
-            analytics: {
-              autoClear: {
-                cookies: [
-                  {
-                    name: /^_ga/,
-                  },
-                  {
-                    name: '_gid',
-                  }
-                ]
+            services: {
+              ga: {
+                label: 'Google Analytics',
+                onAccept: () => {
+                  // Initialize Google Analytics here if needed
+                  console.log('Google Analytics accepted');
+                },
+                onReject: () => {
+                  // Clean up Google Analytics here if needed
+                  console.log('Google Analytics rejected');
+                },
               },
-              services: {
-                ga: {
-                  label: 'Google Analytics',
-                  onAccept: () => {
-                    // Initialize Google Analytics here if needed
-                    console.log('Google Analytics accepted');
-                  },
-                  onReject: () => {
-                    // Clean up Google Analytics here if needed
-                    console.log('Google Analytics rejected');
-                  }
+              youtube: {
+                label: 'Youtube Embed',
+                onAccept: () => {
+                  console.log('Youtube embeds accepted');
                 },
-                youtube: {
-                  label: 'Youtube Embed',
-                  onAccept: () => {
-                    console.log('Youtube embeds accepted');
-                  },
-                  onReject: () => {
-                    console.log('Youtube embeds rejected');
-                  }
+                onReject: () => {
+                  console.log('Youtube embeds rejected');
                 },
-              }
+              },
             },
-            ads: {}
           },
-          language: {
-            default: 'en',
-            translations: {
-              en: {
-                consentModal: {
-                  title: 'We use cookies',
-                  description: 'We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience.',
-                  acceptAllBtn: 'Accept all',
-                  acceptNecessaryBtn: 'Reject all',
-                  showPreferencesBtn: 'Manage preferences',
-                  footer: `
+          ads: {},
+        },
+        language: {
+          default: 'en',
+          translations: {
+            en: {
+              consentModal: {
+                title: 'We use cookies',
+                description:
+                  'We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience.',
+                acceptAllBtn: 'Accept all',
+                acceptNecessaryBtn: 'Reject all',
+                showPreferencesBtn: 'Manage preferences',
+                footer: `
                     <a href="/" target="_blank">Privacy Policy</a>
                     <a href="/" target="_blank">Terms of Service</a>
-                  `
-                },
-                preferencesModal: {
-                  title: 'Privacy Preferences',
-                  acceptAllBtn: 'Accept all',
-                  acceptNecessaryBtn: 'Reject all',
-                  savePreferencesBtn: 'Save preferences',
-                  sections: [
-                    {
-                      title: 'Necessary cookies',
-                      description: 'These cookies are essential for the proper functioning of the website.',
-                      linkedCategory: 'necessary'
-                    },
-                    {
-                      title: 'Analytics cookies',
-                      description: 'These cookies help us understand how visitors interact with our website.',
-                      linkedCategory: 'analytics',
-                    },
-                    {
-                      title: 'Marketing cookies',
-                      description: 'These cookies are used to deliver relevant advertisements.',
-                      linkedCategory: 'ads',
-                    }
-                  ]
-                }
-              }
-            }
+                  `,
+              },
+              preferencesModal: {
+                title: 'Privacy Preferences',
+                acceptAllBtn: 'Accept all',
+                acceptNecessaryBtn: 'Reject all',
+                savePreferencesBtn: 'Save preferences',
+                sections: [
+                  {
+                    title: 'Necessary cookies',
+                    description:
+                      'These cookies are essential for the proper functioning of the website.',
+                    linkedCategory: 'necessary',
+                  },
+                  {
+                    title: 'Analytics cookies',
+                    description:
+                      'These cookies help us understand how visitors interact with our website.',
+                    linkedCategory: 'analytics',
+                  },
+                  {
+                    title: 'Marketing cookies',
+                    description:
+                      'These cookies are used to deliver relevant advertisements.',
+                    linkedCategory: 'ads',
+                  },
+                ],
+              },
+            },
           },
-          onFirstConsent: ({cookie}) => {
-            console.log('First consent:', cookie);
-          },
-          onConsent: ({cookie}) => {
-            console.log('Consent updated:', cookie);
-          },
-          onChange: ({changedCategories, changedServices}) => {
-            console.log('Settings changed:', changedCategories, changedServices);
-            // Handle changes to specific categories
-            if (changedCategories.includes('analytics')) {
-              // Update analytics settings
-            }
+        },
+        onFirstConsent: ({ cookie }) => {
+          console.log('First consent:', cookie);
+        },
+        onConsent: ({ cookie }) => {
+          console.log('Consent updated:', cookie);
+        },
+        onChange: ({ changedCategories, changedServices }) => {
+          console.log('Settings changed:', changedCategories, changedServices);
+          // Handle changes to specific categories
+          if (changedCategories.includes('analytics')) {
+            // Update analytics settings
           }
-        });
+        },
+      });
+    }
+
+    // Cleanup function
+    return () => {
+      if (window.cc) {
+        window.cc.destroy();
       }
-  
-      // Cleanup function
-      return () => {
-        if (window.cc) {
-          window.cc.destroy();
-        }
-      };
-    }, []);
+    };
+  }, []);
 
   const SignOutUser = () => (
     <svg
