@@ -110,14 +110,14 @@ const Header = () => {
               posthog: {
                 label: 'PostHog Analytics',
                 onAccept: () => {
-                  if (posthog.initialized) {
-                    posthog.opt_in_capturing();
+                  if (posthog?.initialized) {
+                    posthog?.opt_in_capturing();
                     console.log('PostHog tracking enabled');
                   }
                 },
                 onReject: () => {
-                  if (posthog.initialized) {
-                    posthog.opt_out_capturing();
+                  if (posthog?.initialized) {
+                    posthog?.opt_out_capturing();
                     console.log('PostHog tracking disabled');
                   }
                 },
