@@ -15652,15 +15652,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"posthog-js@npm:^1.188.0":
-  version: 1.188.0
-  resolution: "posthog-js@npm:1.188.0"
+"posthog-js@npm:^1.202.2":
+  version: 1.202.2
+  resolution: "posthog-js@npm:1.202.2"
   dependencies:
     core-js: ^3.38.1
     fflate: ^0.4.8
     preact: ^10.19.3
     web-vitals: ^4.2.0
-  checksum: 702bd8139d2f553ef4513b195eedd224e0a6bc8092beb60af1e53d0e587abb0598a76e98614e98d1f014f647bdd92f906b309d3fee7b1ccd0844c40f07a90694
+  checksum: dd381967fdc3cf2707ee1199fa18c13d2b2e35a8aac90c206d36fc2a649afbf4a84fb5d05804fe320c5b4b66839e597b62e33c00d079bb7f9150056a6a545205
   languageName: node
   linkType: hard
 
@@ -19486,7 +19486,7 @@ __metadata:
     node-cron: ^3.0.3
     pdfjs-dist: ^4.6.82
     postcss: ^8.4.19
-    posthog-js: ^1.188.0
+    posthog-js: ^1.202.2
     prettier: ^2.8.0
     prop-types: ^15.8.1
     react: ^18.2.0
