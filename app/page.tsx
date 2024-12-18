@@ -327,7 +327,6 @@ export const Home = () => {
             pageTypePath="project"
           />
         )}
-
         {featuredPages.featuredProjectResults.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjectResults.map(

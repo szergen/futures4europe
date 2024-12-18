@@ -130,7 +130,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             width={647}
             height={647}
-            className={classNames('rounded-full')}
+            className={classNames('rounded-full w-36 h-36 object-cover')}
             alt={`User Avatar - ${person.title}`}
           />
         ) : (

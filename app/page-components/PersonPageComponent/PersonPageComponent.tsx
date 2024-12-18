@@ -1179,7 +1179,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       {/* Internal Links */}
       <MiniPagesListComponentPost
         internalLinks={internalLinks}
-        title="Posts"
+        title="Content material related to this person"
         // projectResults={projectResults}
         // events={events}
       />

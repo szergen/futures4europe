@@ -21,6 +21,8 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Tag from '../Tag/Tag';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
 import GlowButton from './NavBar/GlowButton';
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
+import * as CookieConsent from 'vanilla-cookieconsent';
 
 const Header = () => {
   const {
@@ -47,57 +49,137 @@ const Header = () => {
   };
   console.log('debug2->userDetails', userDetails);
 
-  // Handle add posts and infopages
-  //
-  // const handleCreateProject = async () => {
-  //   router.push(`/project/New_Project`);
-  // };
+  // Initialize cookie consent
+  useEffect(() => {
+    // Only initialize if it hasn't been initialized yet
+    if (!window.cc) {
+      CookieConsent.run({
+        cookie: {
+          name: 'cc_cookie',
+        },
+        guiOptions: {
+          consentModal: {
+            layout: 'cloud inline',
+            position: 'bottom center',
+            equalWeightButtons: true,
+            flipButtons: false,
+          },
+          preferencesModal: {
+            layout: 'box',
+            equalWeightButtons: true,
+            flipButtons: false,
+          },
+        },
+        categories: {
+          necessary: {
+            enabled: true,
+            readOnly: true,
+          },
+          analytics: {
+            autoClear: {
+              cookies: [
+                {
+                  name: /^_ga/,
+                },
+                {
+                  name: '_gid',
+                },
+              ],
+            },
+            services: {
+              ga: {
+                label: 'Google Analytics',
+                onAccept: () => {
+                  // Initialize Google Analytics here if needed
+                  console.log('Google Analytics accepted');
+                },
+                onReject: () => {
+                  // Clean up Google Analytics here if needed
+                  console.log('Google Analytics rejected');
+                },
+              },
+              youtube: {
+                label: 'Youtube Embed',
+                onAccept: () => {
+                  console.log('Youtube embeds accepted');
+                },
+                onReject: () => {
+                  console.log('Youtube embeds rejected');
+                },
+              },
+            },
+          },
+          ads: {},
+        },
+        language: {
+          default: 'en',
+          translations: {
+            en: {
+              consentModal: {
+                title: 'We use cookies',
+                description:
+                  'We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience.',
+                acceptAllBtn: 'Accept all',
+                acceptNecessaryBtn: 'Reject all',
+                showPreferencesBtn: 'Manage preferences',
+                footer: `
+                    <a href="/" target="_blank">Privacy Policy</a>
+                    <a href="/" target="_blank">Terms of Service</a>
+                  `,
+              },
+              preferencesModal: {
+                title: 'Privacy Preferences',
+                acceptAllBtn: 'Accept all',
+                acceptNecessaryBtn: 'Reject all',
+                savePreferencesBtn: 'Save preferences',
+                sections: [
+                  {
+                    title: 'Necessary cookies',
+                    description:
+                      'These cookies are essential for the proper functioning of the website.',
+                    linkedCategory: 'necessary',
+                  },
+                  {
+                    title: 'Analytics cookies',
+                    description:
+                      'These cookies help us understand how visitors interact with our website.',
+                    linkedCategory: 'analytics',
+                  },
+                  {
+                    title: 'Marketing cookies',
+                    description:
+                      'These cookies are used to deliver relevant advertisements.',
+                    linkedCategory: 'ads',
+                  },
+                ],
+              },
+            },
+          },
+        },
+        onFirstConsent: ({ cookie }) => {
+          console.log('First consent:', cookie);
+        },
+        onConsent: ({ cookie }) => {
+          console.log('Consent updated:', cookie);
+        },
+        onChange: ({ changedCategories, changedServices }) => {
+          console.log('Settings changed:', changedCategories, changedServices);
+          // Handle changes to specific categories
+          if (changedCategories.includes('analytics')) {
+            // Update analytics settings
+          }
+        },
+      });
+    }
 
-  // const handleCreatePost = async () => {
-  //   router.push(`/post/New_Post`);
-  // };
+    // Cleanup function
+    return () => {
+      if (window.cc) {
+        window.cc.destroy();
+      }
+    };
+  }, []);
 
-  // const handleCreateOrganisation = async () => {
-  //   router.push(`/organisation/New_Organisation`);
-  // };
-
-  // SVGs Icons
-  // TODO: move to global SVG import
-  // const DashboardIcon = () => (
-  //   <svg
-  //     xmlns="http://www.w3.org/2000/svg"
-  //     fill="none"
-  //     viewBox="0 0 24 24"
-  //     strokeWidth={1.5}
-  //     stroke="currentColor"
-  //     className="w-5 h-5"
-  //   >
-  //     <path
-  //       d="M17.5003 14.9999C17.5003 14.9999 16.3887 16.2869 15.1387 16.2869C13.8887 16.2869 12.8831 15.0957 11.6558 15.0957C10.4285 15.0957 9.71686 15.6549 8.95866 16.4582M14.7562 2.8808L16.2861 4.41062C16.6115 4.73605 16.6115 5.26369 16.2861 5.58913L5.2444 16.6308C5.08812 16.7871 4.87616 16.8749 4.65515 16.8749H2.29199V14.5117C2.29199 14.2907 2.37979 14.0787 2.53607 13.9225L13.5777 2.8808C13.9032 2.55536 14.4308 2.55536 14.7562 2.8808Z"
-  //       stroke="currentColor"
-  //       strokeWidth="1.5"
-  //       strokeLinecap="round"
-  //       strokeLinejoin="round"
-  //     />
-  //   </svg>
-  // );
-  // const AddPostIcon = () => (
-  //   <svg
-  //     xmlns="http://www.w3.org/2000/svg"
-  //     viewBox="0 0 24 24"
-  //     className="w-5 h-5"
-  //   >
-  //     <path d="M12.5 3a.75.75 0 0 1 .75.75v1.25a.75.75 0 0 1-1.5 0v-1.25a.75.75 0 0 1 .75-.75Z" />
-  //     <path d="M16.03 5.03a.75.75 0 0 0-1.06-1.06l-1 1a.75.75 0 0 0 1.06 1.06l1-1Z" />
-  //     <path d="M5.5 7c0-.69.56-1.25 1.25-1.25h3.25a.75.75 0 0 0 0-1.5h-3.25a2.75 2.75 0 0 0-2.75 2.75v7.25a2.75 2.75 0 0 0 2.75 2.75h6.5a2.75 2.75 0 0 0 2.75-2.75v-3.625a.75.75 0 0 0-1.5 0v3.625c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-7.25Z" />
-  //     <path d="M7.25 12.5a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Z" />
-  //     <path
-  //       fillRule="evenodd"
-  //       d="M6.25 7.25a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75v-3Zm1.5.75v1.5h4.5v-1.5h-4.5Z"
-  //     />
-  //     <path d="M16.5 8.25a.75.75 0 0 0 0-1.5h-1.25a.75.75 0 0 0 0 1.5h1.25Z" />
-  //   </svg>
-  // );
   const SignOutUser = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -258,7 +340,7 @@ const Header = () => {
           </Link>
 
           <Link href="/post/New_Post">
-            <Dropdown.Item icon={HiPlusSm}>Add Article</Dropdown.Item>
+            <Dropdown.Item icon={HiPlusSm}>Add Post</Dropdown.Item>
           </Link>
 
           <Link href="/post/New_Post?pageType=event">
