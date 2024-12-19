@@ -943,6 +943,19 @@ const nextConfig = {
             type: 'query',
             key: 'w',
             value:
+              'O1Ky0YfxhEurNTyjohUJH3vV1pTac41rgbmiDpPJ0sI.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9leWUtb2YtZXVyb3BlLWNvbmZlcmVuY2UtZm9yZXNpZ2h0LWFuZC1yaS13anl4ZCIsInIiOiI1MjQ1Y2MzNy1iMzgwLTQ1MGYtOWFmZC1iM2EzODJmMzVmMTIiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination: '/post/eye-of-europe-conference-foresight-and-ri-wjyxd',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
               'f8DvaVEgC-wccgTALyCyYch8SHoAHQ9VC7EDqdqnwhA.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9mb2QtaWkta2ljay1vZmYtcGZteDkiLCJyIjoiNjg3NjAyZDktZWZmNi00YjRlLWI3YjMtNGEyNGI1ZDhiZGE2IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
           },
         ],
@@ -1561,6 +1574,19 @@ const nextConfig = {
             type: 'query',
             key: 'w',
             value:
+              '81TjLwqRSw-4d7oP1xikR_eM-a23zVl1wgwA62KFSG0.eyJ1IjoiaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2NvbXBhbnkvODA5OTU0MjkvYWRtaW4vZGFzaGJvYXJkLyIsInIiOiI5YTE5ZDdkMS0zMGJlLTQ4MzgtYTJjYy1hOGM4NWU1NmZhN2IiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
+          },
+        ],
+        destination: 'https://www.linkedin.com/company/futures4europe/',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
               'QRIb6IxH1D-TTOi6Q5GhFG-kq60ueUU5Et9ebGcMIrw.eyJ1IjoiaHR0cHM6Ly91cmwudWsubS5taW1lY2FzdHByb3RlY3QuY29tL3MvMnlGMkNLNjk5VDJERzVqZk1mTkk1d2NNRj9kb21haW49ZnV0dXJlczRldXJvcGUuZXUvIiwiciI6IjA0MDFjMWE5LTNiYWYtNDczMi1hZWQ0LWEwZDdkOWNmY2RjNCIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
           },
         ],
@@ -1588,6 +1614,32 @@ const nextConfig = {
             key: 'w',
             value:
               '5bQ56jIRVprCG-syRI3orjSy-kKHn0ljTZx12VHRyJI.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYWJvdXQiLCJyIjoiZWEwNTZlMDktMTMzNy00ZDM0LTg2NGEtOTMxOThhNDhhMTZlIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: 'https://www.futures4europe.eu',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '1o_VOk6KVLfjvxWQugR4DP89q4o31GGSdxQJqXXE0qw.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUiLCJyIjoiMDQwMWMxYTktM2JhZi00NzMyLWFlZDQtYTBkN2Q5Y2ZjZGM0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: 'https://www.futures4europe.eu',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'https://futures4europe.eu/so/0bPEwQixc/c?w=1o_VOk6KVLfjvxWQugR4DP89q4o31GGSdxQJqXXE0qw.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUiLCJyIjoiMDQwMWMxYTktM2JhZi00NzMyLWFlZDQtYTBkN2Q5Y2ZjZGM0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
           },
         ],
         destination: 'https://www.futures4europe.eu',
