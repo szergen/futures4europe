@@ -1204,6 +1204,58 @@ const nextConfig = {
         destination: 'https://shoutout.wix.com/so/0bPEwQixc?w=',
         permanent: true,
       },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'tAHU0QwZHhIWazeish9H8_n9s69ebWDbK-dEMIDv-wk.eyJ1IjoiaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2NvbXBhbnkvZnV0dXJlczRldXJvcGUiLCJyIjoiOWExOWQ3ZDEtMzBiZS00ODM4LWEyY2MtYThjODVlNTZmYTdiIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: 'https://www.linkedin.com/company/futures4europe/',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'QRIb6IxH1D-TTOi6Q5GhFG-kq60ueUU5Et9ebGcMIrw.eyJ1IjoiaHR0cHM6Ly91cmwudWsubS5taW1lY2FzdHByb3RlY3QuY29tL3MvMnlGMkNLNjk5VDJERzVqZk1mTkk1d2NNRj9kb21haW49ZnV0dXJlczRldXJvcGUuZXUvIiwiciI6IjA0MDFjMWE5LTNiYWYtNDczMi1hZWQ0LWEwZDdkOWNmY2RjNCIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination: 'https://www.futures4europe.eu',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'QRIb6IxH1D-TTOi6Q5GhFG-kq60ueUU5Et9ebGcMIrw.eyJ1IjoiaHR0cHM6Ly91cmwudWsubS5taW1lY2FzdHByb3RlY3QuY29tL3MvMnlGMkNLNjk5VDJERzVqZk1mTkk1d2NNRj9kb21haW49ZnV0dXJlczRldXJvcGUuZXUvIiwiciI6IjA0MDFjMWE5LTNiYWYtNDczMi1hZWQ0LWEwZDdkOWNmY2RjNCIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
+          },
+        ],
+        destination: 'https://www.futures4europe.eu',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              '5bQ56jIRVprCG-syRI3orjSy-kKHn0ljTZx12VHRyJI.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvYWJvdXQiLCJyIjoiZWEwNTZlMDktMTMzNy00ZDM0LTg2NGEtOTMxOThhNDhhMTZlIiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+          },
+        ],
+        destination: 'https://www.futures4europe.eu',
+        permanent: true,
+      },
       // End of Newsletters Dec 24
       {
         source: '/:path*',
