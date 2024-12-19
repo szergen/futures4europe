@@ -214,6 +214,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.mediaFiles,
         defaultPostData.mediaFiles
       ) ||
+      postData?.mediaFiles?.[0]?.url !==
+        defaultPostData?.mediaFiles?.[0]?.url ||
+      postData.mediaFiles?.[1]?.url !== defaultPostData?.mediaFiles?.[1]?.url ||
       postData.projectResultPublicationDate !==
         defaultPostData.projectResultPublicationDate ||
       postData.eventStartDate !== defaultPostData.eventStartDate ||

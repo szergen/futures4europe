@@ -905,8 +905,7 @@ const nextConfig = {
               'pEFkeRVPyZORbYVr_HQB06XFCLZhoSSpeWIWO1dsBC8.eyJ1IjoiaHR0cHM6Ly8wYmJlMmUzNC1lNTAzLTQ0MWEtYWY5ZS00ZmM3MGMxN2U2YWYudXNyZmlsZXMuY29tL3VnZC80NzE5MDhfZDE0MGI4NTdiOGM2NDA4MmIwYjJlMmVmZTM3ZDdlNTQucGRmIiwiciI6IjUyNDVjYzM3LWIzODAtNDUwZi05YWZkLWIzYTM4MmYzNWYxMiIsIm0iOiJtYWlsIiwiYyI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9',
           },
         ],
-        destination:
-          'https://0bbe2e34-e503-441a-af9e-4fc70c17e6af.usrfiles.com/ugd/471908_d140b857b8c64082b0b2e2efe37d7e54.pdf',
+        destination: '/post/eye-of-europe-conference-foresight-and-ri-wjyxd',
         permanent: true,
       },
       {
