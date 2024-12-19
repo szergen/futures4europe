@@ -943,6 +943,19 @@ const nextConfig = {
             type: 'query',
             key: 'w',
             value:
+              'VstBJeyweA2X0hiOr3gYJpwD6Lh5QkG7bZC1F4ssaJs.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9leWUtb2YtZXVyb3BlLWNvbmZlcmVuY2UtZm9yZXNpZ2h0LWFuZC1yaS13anl4ZCIsInIiOiI1MjQ1Y2MzNy1iMzgwLTQ1MGYtOWFmZC1iM2EzODJmMzVmMTIiLCJtIjoibHAifQ',
+          },
+        ],
+        destination: '/post/eye-of-europe-conference-foresight-and-ri-wjyxd',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
               'O1Ky0YfxhEurNTyjohUJH3vV1pTac41rgbmiDpPJ0sI.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUvcG9zdC9leWUtb2YtZXVyb3BlLWNvbmZlcmVuY2UtZm9yZXNpZ2h0LWFuZC1yaS13anl4ZCIsInIiOiI1MjQ1Y2MzNy1iMzgwLTQ1MGYtOWFmZC1iM2EzODJmMzVmMTIiLCJtIjoibWFpbCIsImMiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifQ',
           },
         ],
