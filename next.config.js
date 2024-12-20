@@ -1652,10 +1652,28 @@ const nextConfig = {
             type: 'query',
             key: 'w',
             value:
-              'https://futures4europe.eu/so/0bPEwQixc/c?w=1o_VOk6KVLfjvxWQugR4DP89q4o31GGSdxQJqXXE0qw.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUiLCJyIjoiMDQwMWMxYTktM2JhZi00NzMyLWFlZDQtYTBkN2Q5Y2ZjZGM0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+              '1o_VOk6KVLfjvxWQugR4DP89q4o31GGSdxQJqXXE0qw.eyJ1IjoiaHR0cHM6Ly93d3cuZnV0dXJlczRldXJvcGUuZXUiLCJyIjoiMDQwMWMxYTktM2JhZi00NzMyLWFlZDQtYTBkN2Q5Y2ZjZGM0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
           },
         ],
         destination: 'https://www.futures4europe.eu',
+        permanent: true,
+      },
+      // All Redirects for shoutout.wix.com
+      {
+        source: '/so/0bPEwQixc/c:path*',
+        destination: 'https://legacy.futures4europe.eu/so/0bPEwQixc/c:path*',
+        permanent: true,
+      },
+      {
+        source: '/so/0bPEwQixc',
+        has: [
+          {
+            type: 'query',
+            key: 'languageTag',
+            value: 'en',
+          },
+        ],
+        destination: 'https://shoutout.wix.com/so/0bPEwQixc?w=',
         permanent: true,
       },
       // End of Newsletters Dec 24
