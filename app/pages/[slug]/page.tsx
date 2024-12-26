@@ -62,7 +62,6 @@ export default async function Pages({ params }: any) {
       <Hero title={`${pageType.toUpperCase()} Pages`} pageType={pageType} />
       <div className={classNames(style.listContainer)}>
         <MiniPagesListItemPost
-          postCollection={postCollection}
           items={decidePageTypeItems(pageType, postPages, infoPages)}
           title={pageType}
           pageTypePath={

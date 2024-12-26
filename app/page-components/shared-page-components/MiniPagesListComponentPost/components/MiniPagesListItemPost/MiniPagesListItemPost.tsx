@@ -206,7 +206,11 @@ const sortItemsByPageType = (items: Item[]): Item[] => {
 
       // For other page types
       // 1. Items with primary dates come first
-      if (a.hasPrimaryDate !== b.hasPrimaryDate) {
+      if (
+        a.hasPrimaryDate !== b.hasPrimaryDate &&
+        (a.pageType !== 'post' || b.pageType !== 'post') &&
+        (a.pageType !== 'default' || b.pageType !== 'default')
+      ) {
         return a.hasPrimaryDate ? -1 : 1;
       }
 
@@ -216,11 +220,18 @@ const sortItemsByPageType = (items: Item[]): Item[] => {
         return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
       }
 
-      // 3. If neither has a primary date, fall back to created date
+      // // 3. If neither has a primary date, fall back to created date
       if (!a.hasPrimaryDate && !b.hasPrimaryDate) {
         return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
       }
-
+      if (
+        a.pageType === 'post' ||
+        b.pageType === 'post' ||
+        a.pageType === 'default' ||
+        b.pageType === 'default'
+      ) {
+        return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
+      }
       return 0;
     });
   } catch (error) {
