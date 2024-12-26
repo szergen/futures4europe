@@ -328,25 +328,38 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // Clicked Field effect
   useEffect(() => {
     if (clickedField) {
-      const filteredAssignments = filteredData.assignments.filter(
-        (item) => item.field === clickedField
-      );
-      // const fieldToKeysMapping = {
-      //   author: ['author', 'pageOwner'],
-      //   people: ['people'],
-      //   activity: ['activity'],
-      //   participant: ['projectParticipantTeam'],
-      //   coordinator: ['projectCoordinator'],
-      //   speaker: ['speaker'],
-      // };
+      // const filteredAssignments = filteredData.assignments.filter(
+      //   (item) => item.field === clickedField
+      // );
+      // console.log('deb1->filteredAssignments', filteredAssignments);
+      const fieldToKeysMapping: Record<string, string[]> = {
+        author: ['author'],
+        people: ['people'],
+        activity: ['activity'],
+        participant: ['projectParticipantTeam'],
+        coordinator: ['projectCoordinator'],
+        speaker: ['speaker'],
+      };
+      const keysToCheck = fieldToKeysMapping[clickedField] || [];
+
+      const matchedPages =
+        keysToCheck.length > 0
+          ? filteredData.pages.filter((page: { [key: string]: any }) =>
+              keysToCheck.some(
+                (key) => Array.isArray(page?.[key]) && page?.[key].length > 0
+              )
+            )
+          : [];
+
       // console.log('deb1->clickedField', clickedField);
       // console.log('deb1->filteredAssignments', filteredAssignments);
 
-      const filteredPages = filteredData.pages.filter((page) =>
-        filteredAssignments.some(
-          (assignment) => assignment.pageId === page.pageId
-        )
-      );
+      // const filteredPages = filteredData.pages.filter((page) =>
+      //   filteredAssignments.some(
+      //     (assignment) => assignment.pageId === page.pageId
+      //   )
+      // );
+      // console.log('deb1->filteredPages', filteredPages);
 
       const tagSuggestionsSearch = wordByWordSearch(
         ' ',
@@ -376,9 +389,9 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           },
         ],
         filteredData: {
-          pages: filteredPages,
+          pages: matchedPages,
           tags: initialData.tags,
-          assignments: filteredAssignments,
+          assignments: initialData.assignments,
           sortTags: initialData.sortTags,
         },
         fieldSuggestions: [],
@@ -386,7 +399,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         //   (tag) => tag.tagType === 'field'
         // ),
         tagSuggestions: tagSuggestionsSearch,
-        pageSuggestions: filteredPages,
+        pageSuggestions: matchedPages,
         // sortTagsSuggestions: initialData.sortTags,
         sortTagsSuggestions: [],
         inputText: '',

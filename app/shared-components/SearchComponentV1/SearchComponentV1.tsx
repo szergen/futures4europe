@@ -99,7 +99,7 @@ const SearchComponentV1 = () => {
     console.log('Clicked on tag:', e.target.innerText);
     setSearchState((prevState) => ({
       ...prevState,
-      clickedTag: e?.target?.innerText.toLowerCase(),
+      clickedTag: e?.target?.innerText,
     }));
   };
 
@@ -254,7 +254,8 @@ const SearchComponentV1 = () => {
                           <Tag
                             {...initialData.tags?.find(
                               (item: any) =>
-                                item.name === searchedItem.searchItem
+                                item.name.toLowerCase() ===
+                                searchedItem.searchItem.toLowerCase()
                             )}
                           />
                         </div>
@@ -271,7 +272,9 @@ const SearchComponentV1 = () => {
                         <div className="mr-2">
                           <Tag
                             {...initialData.tags?.find(
-                              (item: any) => item.name === fieldTag[1]
+                              (item: any) =>
+                                item.name.toLowerCase() ===
+                                fieldTag[1].toLowerCase()
                             )}
                           />
                         </div>

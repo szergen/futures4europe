@@ -209,6 +209,8 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
 
     const keysToCheck = fieldToKeysMapping[field] || [];
     console.log('deb1->keysToCheck', keysToCheck);
+    console.log('deb1->tagName', tagName.toLowerCase());
+    console.log('deb1->filteredData.pages', filteredData.pages);
 
     const matchedPages =
       keysToCheck.length > 0
@@ -216,7 +218,9 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
             keysToCheck.some(
               (key) =>
                 Array.isArray(page?.[key]) &&
-                page?.[key]?.some((item) => item.name === tagName)
+                page?.[key]?.some(
+                  (item) => item?.name?.toLowerCase() === tagName?.toLowerCase()
+                )
             )
           )
         : [];
@@ -304,7 +308,7 @@ export const updateFilteredDataBasedOnClickedTag = (
   //     return matchingPage || assignment;
   //   });
   const matchingTagIds = filteredData?.tags
-    ?.filter((tag) => tag.name === clickedTag)
+    ?.filter((tag) => tag?.name?.toLowerCase() === clickedTag?.toLowerCase())
     ?.map((tag) => tag._id);
 
   console.log('deb1->matchingTagIds', matchingTagIds);
@@ -351,7 +355,8 @@ export const uniqueResults = (results: Array<any>) =>
   );
 
 export const extractFilterBy = (tags: Tags, clickedField: string) =>
-  tags?.find((tag) => tag.name === clickedField)?.filter;
+  tags?.find((tag) => tag?.name?.toLowerCase() === clickedField?.toLowerCase())
+    ?.filter;
 
 export const removeSearchedItem = (
   initialData: InitialData,
