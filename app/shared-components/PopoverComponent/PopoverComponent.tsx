@@ -83,7 +83,6 @@ const PopoverComponent: React.FC<PopoverProps> = ({
       trigger={trigger}
       placement="top"
       arrow={false}
-      
     >
       {children}
     </Popover>
