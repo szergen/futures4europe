@@ -13,6 +13,9 @@
   border-radius: var(--p-border-radius-400);
   background-color: var(--primary-white);
 }
+.tagContainerForSuggestions:hover {
+  cursor: pointer;
+}
 
 .tagSuggestionsLabel {
   font-weight: var(--w-font-weight-heading);

@@ -95,10 +95,11 @@ const SearchComponentV1 = () => {
 
   const handleTagSuggestion = (e: any) => {
     e.preventDefault();
+    e.stopPropagation();
     console.log('Clicked on tag:', e.target.innerText);
     setSearchState((prevState) => ({
       ...prevState,
-      clickedTag: e?.target?.innerText,
+      clickedTag: e?.target?.innerText.toLowerCase(),
     }));
   };
 
@@ -207,26 +208,26 @@ const SearchComponentV1 = () => {
       </div>
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
-      {showSuggestions && (
-        <Suggestions
-          fieldSuggestions={fieldSuggestions}
-          tagSuggestions={tagSuggestions}
-          pageSuggestions={pageSuggestions}
-          sortTagsSuggestions={sortTagsSuggestions}
-          // handleClickedSuggestion={handleClickedSuggestion}
-          handleTagSuggestion={handleTagSuggestion}
-          handleFieldSelection={handleFieldSelection}
-          clickedField={clickedField}
-          handleSelectedSuggestion={handleSelectedSuggestion}
-          selectedSuggestionIndex={selectedSuggestionIndex}
-          activeSelection={activeSelection}
-          searchedItems={searchedItems}
-          // sortTags={sortTags}
-          handleSelectedSortTag={handleSelectedSortTag}
-          // inputText={inputText}
-          handleScrollForSuggestions={handleScrollForSuggestions}
-        />
-      )}
+      {/* {showSuggestions && ( */}
+      <Suggestions
+        fieldSuggestions={fieldSuggestions}
+        tagSuggestions={tagSuggestions}
+        pageSuggestions={pageSuggestions}
+        sortTagsSuggestions={sortTagsSuggestions}
+        // handleClickedSuggestion={handleClickedSuggestion}
+        handleTagSuggestion={handleTagSuggestion}
+        handleFieldSelection={handleFieldSelection}
+        clickedField={clickedField}
+        handleSelectedSuggestion={handleSelectedSuggestion}
+        selectedSuggestionIndex={selectedSuggestionIndex}
+        activeSelection={activeSelection}
+        searchedItems={searchedItems}
+        // sortTags={sortTags}
+        handleSelectedSortTag={handleSelectedSortTag}
+        // inputText={inputText}
+        handleScrollForSuggestions={handleScrollForSuggestions}
+      />
+      {/* )} */}
       {/* Results */}
       {showResults && (
         <Modal

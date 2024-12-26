@@ -8,6 +8,7 @@ import { highlightMatches } from '../../SearchComponentV1.utils';
 import { HiDocumentSearch } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
+import Tag from '@app/shared-components/Tag/Tag';
 
 export type SuggestionsProps = {
   fieldSuggestions: any[];
@@ -69,6 +70,14 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     (assignment: any, index: any, self: any) =>
       index === self.findIndex((t: any) => t.field === assignment.field)
   );
+
+  const handleTagSuggestion2 = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    console.log('deb1->Clicked on tag:', e.target.innerText);
+    // handleTagSuggestion(e);
+  };
 
   // const resolvePageType = (pageSuggestion: { [key: string]: string }) =>
   //   Array.isArray(pageSuggestion?.item?.pageType)
@@ -282,54 +291,69 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                     >
                       {tagSuggestion.item?.tagType}:
                     </span>
-                    <div className="flex searchTagImage items-start">
-                      <Image
-                        alt={'Tag Image'}
-                        src={
-                          tagSuggestion.item?.picture ||
-                          'https://placehold.co/600x400?text=placeholder'
-                        }
-                        width={40}
-                        height={40}
+                    <div
+                      onMouseDown={handleTagSuggestion}
+                      className={style.tagContainerForSuggestions}
+                    >
+                      <Tag
+                        {...tagSuggestion.item}
+                        disableLink
+                        disablePopularityHover
+                        disableTooltip
                       />
-                      <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
-                        <div
-                          // dangerouslySetInnerHTML={{
-                          //   __html: tagSuggestion.name,
-                          // }}
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              highlightMatches(
-                                tagSuggestion?.item?.name,
-                                tagSuggestion?.matches
-                              ) || tagSuggestion?.item?.name,
-                          }}
-                          onMouseDown={handleTagSuggestion}
-                          className={classNames(
-                            'cursor-pointer',
-                            tagSuggestion.item?.pageLink && 'font-bold'
-                          )}
-                        />
-                        <div
-                          data-after={tagSuggestion.item?.popularity}
-                          className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
-                        ></div>
-                        <div
-                          className="w-full text-12"
-                          dangerouslySetInnerHTML={{
-                            __html: highlightMatches(
-                              tagSuggestion?.item?.tagLine,
-                              tagSuggestion?.matches
-                            ),
-                          }}
-                          // dangerouslySetInnerHTML={{
-                          //   __html: tagSuggestion.tagLine,
-                          // }}
-                        />
-                        {/* {tagSuggestion.tagLine} */}
-                        {/* </span> */}
-                      </div>
                     </div>
+                    {/* #region Old tag suggestions */}
+                    {
+                      // <div className="flex searchTagImage items-start">
+                      //   <Image
+                      //     alt={'Tag Image'}
+                      //     src={
+                      //       tagSuggestion.item?.picture ||
+                      //       'https://placehold.co/600x400?text=placeholder'
+                      //     }
+                      //     width={40}
+                      //     height={40}
+                      //   />
+                      //   <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
+                      //     <div
+                      //       // dangerouslySetInnerHTML={{
+                      //       //   __html: tagSuggestion.name,
+                      //       // }}
+                      //       dangerouslySetInnerHTML={{
+                      //         __html:
+                      //           highlightMatches(
+                      //             tagSuggestion?.item?.name,
+                      //             tagSuggestion?.matches
+                      //           ) || tagSuggestion?.item?.name,
+                      //       }}
+                      //       onMouseDown={handleTagSuggestion}
+                      //       className={classNames(
+                      //         'cursor-pointer',
+                      //         tagSuggestion.item?.pageLink && 'font-bold'
+                      //       )}
+                      //     />
+                      //     <div
+                      //       data-after={tagSuggestion.item?.popularity}
+                      //       className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
+                      //     ></div>
+                      //     <div
+                      //       className="w-full text-12"
+                      //       dangerouslySetInnerHTML={{
+                      //         __html: highlightMatches(
+                      //           tagSuggestion?.item?.tagLine,
+                      //           tagSuggestion?.matches
+                      //         ),
+                      //       }}
+                      //       // dangerouslySetInnerHTML={{
+                      //       //   __html: tagSuggestion.tagLine,
+                      //       // }}
+                      //     />
+                      //     {/* {tagSuggestion.tagLine} */}
+                      //     {/* </span> */}
+                      //   </div>
+                      // </div>
+                    }
+                    {/* #endregion */}
                   </li>
                 );
               })}

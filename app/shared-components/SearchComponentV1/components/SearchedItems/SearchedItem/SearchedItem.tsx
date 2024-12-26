@@ -26,7 +26,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   const tagName = itemIncludesField
     ? item.searchItem.split(':')[1]
     : item.searchItem;
-  const tagData = tags.find((tag) => tag.name === tagName);
+  const tagData = tags.find((tag) => tag.name.toLowerCase() === tagName);
   console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
   console.log('debug3->', { item });
 
@@ -49,7 +49,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
             {tagData && (
               <Tag
                 name={tagData.name}
-                popularity={tagData.popularity}
+                // popularity={tagData.popularity}
                 tagPageLink={tagData.pageLink}
                 picture={tagData.picture}
               />
@@ -61,10 +61,10 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       {item.searchItemType === 'tag' && (
         <span className="" key={index}>
           <Tag
-            name={tagData.name}
-            popularity={tagData.popularity}
-            tagPageLink={tagData.pageLink}
-            picture={tagData.picture}
+            name={tagData?.name}
+            // popularity={tagData.popularity}
+            tagPageLink={tagData?.pageLink}
+            picture={tagData?.picture}
           />
         </span>
       )}
