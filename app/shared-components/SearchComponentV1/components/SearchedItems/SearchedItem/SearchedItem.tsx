@@ -56,12 +56,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
       {/* Tag */}
       {item.searchItemType === 'tag' && (
         <span className="" key={index}>
-          <Tag
-            name={tagData?.name}
-            // popularity={tagData.popularity}
-            tagPageLink={tagData?.pageLink}
-            picture={tagData?.picture}
-          />
+          <Tag {...tagData} />
         </span>
       )}
       {/* Field without Tag */}

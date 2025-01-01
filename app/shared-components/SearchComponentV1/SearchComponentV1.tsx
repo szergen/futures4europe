@@ -254,8 +254,8 @@ const SearchComponentV1 = () => {
                           <Tag
                             {...initialData.tags?.find(
                               (item: any) =>
-                                item.name.toLowerCase() ===
-                                searchedItem.searchItem.toLowerCase()
+                                item?.name?.toLowerCase() ===
+                                searchedItem?.searchItem?.toLowerCase()
                             )}
                           />
                         </div>
