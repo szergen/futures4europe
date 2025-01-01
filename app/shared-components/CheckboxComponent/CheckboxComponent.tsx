@@ -6,6 +6,7 @@ export type CheckboxComponentProps = {
   label?: string;
   onChangeHandler?: (checked: boolean) => void;
   classNames?: string;
+  checked?: boolean;
 };
 
 export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({
@@ -13,6 +14,7 @@ export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({
   label,
   onChangeHandler,
   classNames,
+  checked,
 }) => {
   return (
     <div className="flex max-w-md flex-col gap-4" id="checkbox">
@@ -24,6 +26,7 @@ export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({
             onChangeHandler && onChangeHandler(e.target.checked);
           }}
           className={classNames}
+          checked={checked}
         />
         {label && (
           <Label htmlFor="accept" className="flex">
