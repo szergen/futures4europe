@@ -338,6 +338,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               }}
               id="euFunded"
               classNames="w-6 h-6 relative top-1"
+              checked={project.projectFunded.name === 'EU funded'}
             />
             <Tag
               {...tags?.filter((tag) => tag.name === 'EU funded')[0]}
