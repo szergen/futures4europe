@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import SpriteSvg from '../SpriteSvg/SpriteSvg';
 import { refetchTags } from '@app/utils/refetch-utils';
+import { Typography } from '@mui/material';
 // import Option from 'react-select/dist/declarations/src/components/Option';
 
 export type TagPickerProps = {
@@ -414,13 +415,13 @@ export const TagPicker: React.FC<TagPickerProps> = ({
       setIsTagNameValid(false);
       return 'Tag Name already exists in a different tag type';
     }
-    // const isTempTitleExisting = existingPostPagesTitles?.some(
-    //   (postPageTitle) =>
-    //     postPageTitle !== defaultPostTitle && postPageTitle === tempTitle
-    // );
-    // if (isTempTitleExisting) {
-    //   return 'Title already exists';
-    // }
+
+    // Check for URL patterns
+    if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(tagName)) {
+      setIsTagNameValid(false);
+      return 'Tag Name cannot contain website addresses'; 
+    }    
+
     setIsTagNameValid(true);
 
     return '';
@@ -522,9 +523,19 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     required
                     helperText={
                       !isTagNameValid && (
-                        <span className="text-red-600 relative -top-3">
-                          Name already exists
-                          {validationMessage}
+                        <span className="text-red-600 inline-flex -top-3">
+                        <SpriteSvg.AccountAlertIcon
+                          className="text-site-black text-[var(--color-text-icon-error)]"
+                          sizeW={24}
+                          sizeH={24}
+                          viewBox={'0 0 32 32'}
+                          fill={'currentColor'}
+                          strokeWidth={0}
+                          inline={false}
+                        /> 
+                          <Typography tag="p">
+                              {validationMessage}
+                          </Typography>
                         </span>
                       )
                     }
