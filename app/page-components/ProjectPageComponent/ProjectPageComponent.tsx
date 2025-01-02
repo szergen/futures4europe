@@ -372,7 +372,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     ) {
       const updatedProjectFunded = await replaceDataItemReferences(
         'InfoPages',
-        [projectData.projectFunded?._id],
+        projectData.projectFunded?._id ? [projectData.projectFunded?._id] : [],
         'projectFunded',
         projectData._id
       );
