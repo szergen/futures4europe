@@ -99,11 +99,19 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
   const projectsCoordindation = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
-    .map((item: any) => item?.personTag);
+    .map((item: any) => item?.personTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const projectsParticipation = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'participation')
-    .map((item: any) => item?.personTag);
+    .map((item: any) => item?.personTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const organisations = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'projectOrganisationRole')
@@ -112,7 +120,14 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         ...item?.organisationTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   // #endregion
 

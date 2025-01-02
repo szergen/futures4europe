@@ -99,11 +99,20 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   const projectsCoordindation = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
-    .map((item: any) => item?.projectTag);
+    .map((item: any) => item?.projectTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const projectsParticipation = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'participation')
-    .map((item: any) => item?.projectTag);
+    .map((item: any) => item?.projectTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
+  console.log('debug111->projectsParticipation', projectsParticipation);
 
   const currentAfiliations = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'current')
@@ -112,7 +121,11 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         ...item?.organisationTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const formerAfiliations = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'former')
@@ -121,7 +134,14 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         ...item?.organisationTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   // #endregion
 

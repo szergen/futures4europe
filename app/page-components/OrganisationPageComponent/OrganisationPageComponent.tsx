@@ -110,7 +110,14 @@ function OrganisationPageComponent({
         ...item?.projectTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   const people = organisation?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'current')
@@ -119,7 +126,14 @@ function OrganisationPageComponent({
         ...item?.personTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   // #endregion
 
