@@ -118,7 +118,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   const currentTagPopularity = tagName ? getPopularity(tagName) : undefined;
 
   // Only show popularity if the tag type is NOT 'post'
-  const shouldShowPopularity = primaryTags?.[0]?.tagType !== 'post';
+  const shouldShowPopularity = pageTypeTag?.name !== 'post' && primaryTags?.[0]?.tagType !== 'post';
 
   //Debugging
   useEffect(() => {
@@ -180,8 +180,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
           )}
           {eventStartDate && (
             <span className={classNames(style.projectDates)}>
-              {dayjs(eventStartDate).format('MMMM YYYY')} -{' '}
-              {dayjs(eventEndDate).format('MMMM YYYY')}
+              {dayjs(eventStartDate).format('DD MMMM')} -{' '}
+              {dayjs(eventEndDate).format('DD MMMM YYYY')}
             </span>
           )}
           {projectResultPublicationDate && (

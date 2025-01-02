@@ -178,12 +178,34 @@ const stableSort = <T,>(array: T[], compare: (a: T, b: T) => number): T[] => {
 const sortItemsByPageType = (items: Item[]): Item[] => {
   try {
     const sortableItems = prepareSortableItems(items);
+    const today = new Date();
 
     return stableSort(sortableItems, (a, b) => {
       // First, compare page types if they're different
       if (a.pageType !== b.pageType) {
         return b.sortPriority - a.sortPriority;
       }
+
+      // Prioritize event sorting
+      if (a.pageType === PageType.Event.toLowerCase() && b.pageType === PageType.Event.toLowerCase()) {
+        const aDate = new Date(a.sortDate);
+        const bDate = new Date(b.sortDate);
+        
+        const aIsCurrentOrFuture = aDate >= today;
+        const bIsCurrentOrFuture = bDate >= today;
+
+        // Prioritize current and future events
+        if (aIsCurrentOrFuture && !bIsCurrentOrFuture) return -1;
+        if (!aIsCurrentOrFuture && bIsCurrentOrFuture) return 1;
+
+        // For current/future events, sort from nearest to furthest
+        if (aIsCurrentOrFuture && bIsCurrentOrFuture) {
+          return aDate.getTime() - bDate.getTime();
+        }
+
+        // For past events, sort from most recent to oldest
+        return bDate.getTime() - aDate.getTime();
+      }   
 
       // Special handling for project results
       if (a.pageType === PageType.ProjectResult.toLowerCase()) {
