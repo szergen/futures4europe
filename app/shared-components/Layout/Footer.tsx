@@ -175,6 +175,15 @@ const Footer = () => {
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-400">
                   <ul className="text-sm transition-all duration-500">
+                  <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://shoutout.wix.com/so/0bPEwQixc"
+                        className="text-gray-400 hover:text-gray-500 underline"
+                      >
+                        December 2024
+                      </Link>
+                    </li>                    
                     <li className="mb-2">
                       <Link
                         target="_blank"
