@@ -195,7 +195,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         delayOnTouchOnly={true}
         touchStartThreshold={5}
         disabled={!isEditModeOn || isDisabledSorting}
-        className={classNames('flex w-fit flex-wrap z-50')}
+        className={classNames('flex w-fit flex-wrap z-50 mt-4')}
         onStart={(evt) => {
           evt.item.classList.add(style.dragShadow);
         }}
