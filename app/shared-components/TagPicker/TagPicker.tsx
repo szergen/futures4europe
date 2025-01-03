@@ -240,6 +240,14 @@ export const TagPicker: React.FC<TagPickerProps> = ({
         ? 'var(--primary-white)'
         : 'var(--color-background-brand-tag)',
       borderRadius: 'var(--p-border-radius-tag)!important',
+      // "&:after": {
+      //   content: state.hasValue ? '"Add more"' : '""',
+      //   position: 'absolute',
+      //   opacity: 0.5,
+      //   padding: '0px var(--w-space-s)',
+      //   margin: '0px 4px',
+      //   borderRadius: 'var(--p-border-radius-tag)!important'
+      // },
       border: state.selectProps.inputValue
         ? '4px solid var(--color-background-brand-tag)'
         : '4px solid var(--color-background-brand-tag)',
