@@ -89,6 +89,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (trimmedTitle !== tempName) {
       return 'Title cannot start or end with spaces';
     }
+
+    // URL pattern check
+    if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedTitle)) {
+      return 'Title cannot contain website addresses';
+    }
+
     // Check for excessive spaces
     if (/\s{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain multiple consecutive spaces';
@@ -335,13 +341,13 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 value
                   ? updateProjectDataOnKeyValue(
                       'projectFunded',
-                      tags?.filter((tag) => tag.name === 'EU funded')[0]
+                      tags?.filter((tag) => tag?.name === 'EU funded')[0]
                     )
                   : updateProjectDataOnKeyValue('projectFunded', []);
               }}
               id="euFunded"
               classNames="w-6 h-6 relative top-1"
-              checked={project.projectFunded.name === 'EU funded'}
+              checked={project.projectFunded?.name === 'EU funded'}
             />
             <Tag
               {...tags?.filter((tag) => tag.name === 'EU funded')[0]}

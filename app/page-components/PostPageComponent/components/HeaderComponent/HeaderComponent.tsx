@@ -76,6 +76,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (/\s{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain multiple consecutive spaces';
     }
+
+    // URL pattern check
+    if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedTitle)) {
+      return 'Title cannot contain website addresses';
+    }
+
     // Special characters check
     const specialCharsRegex = /[<>{}[\]\\\/]/;
     if (specialCharsRegex.test(trimmedTitle)) {
@@ -268,7 +274,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   dateFormate="YYYY-MM-DD HH:mm"
                   placeholderStartDate="Start Date"
                   placeholderEndDate="End Date"
-                  calendarHelperText="Please use the CET timezone to set event date"
+                  calendarHelperText="Please use the CET timezone when setting the start-end date"
                   dateStart={
                     post?.eventStartDate ? new Date(post.eventStartDate) : null
                   }

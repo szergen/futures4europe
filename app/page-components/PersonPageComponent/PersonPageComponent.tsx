@@ -1202,10 +1202,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         }
         tagType="project"
       />
-      {/* Internal Links */}
+      {/* Content related to this Info Page */}
       <MiniPagesListComponentPost
         internalLinks={internalLinks}
-        title="Content material related to this person"
+        title="Content related to this Person"
         // projectResults={projectResults}
         // events={events}
       />

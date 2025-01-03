@@ -188,8 +188,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
           )}
           {eventStartDate && (
             <span className={classNames(style.projectDates)}>
-              {dayjs(eventStartDate).format('MMMM YYYY')} -{' '}
-              {dayjs(eventEndDate).format('MMMM YYYY')}
+              {dayjs(eventStartDate).format('DD MMMM')} -{' '}
+              {dayjs(eventEndDate).format('DD MMMM YYYY')}
             </span>
           )}
           {projectResultPublicationDate && (
