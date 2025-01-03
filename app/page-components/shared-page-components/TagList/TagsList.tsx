@@ -25,6 +25,9 @@ const TagsList = ({
   disableTooltip = false,
   disablePopularityHover = false,
 }: TagsListProps) => {
+
+  // console.log('debug1->', { infoPageType, tagType, limit, offset, title, disableTooltip, disablePopularityHover });
+
   const [isLoading, setIsLoading] = useState(true);
 
   const { infoPages, infoPagesFetched } = useFetchInfoPages(false);
@@ -32,6 +35,8 @@ const TagsList = ({
     tagType,
     // Remove limit and offset from initial fetch to get all tags
   });
+
+  // console.log('debug2->', { ...allTags });
 
   // If tagType is provided, use regular tags
   if (tagType) {
@@ -67,7 +72,7 @@ const TagsList = ({
                     tag.tagType
                   )}${tag.slug || ''}`}
                   tagType={tag.tagType}
-                  mentions={tag.popularity}
+                  
                 />
               ) : null
             )
@@ -131,7 +136,7 @@ const TagsList = ({
               disablePopularityHover={disablePopularityHover}
               tagPageLink={tag.tagPageLink}
               tagType={tag.tagType}
-              mentions={tag.popularity}
+              // mentions={tag.popularity}
             />
           ))
         )}
