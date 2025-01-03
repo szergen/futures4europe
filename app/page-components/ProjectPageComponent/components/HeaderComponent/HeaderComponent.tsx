@@ -94,7 +94,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain website addresses';
     }
-    
     // Check for excessive spaces
     if (/\s{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain multiple consecutive spaces';
@@ -108,8 +107,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   };
 
   //TODO @ALEX de verificat currentTagPopularity
-  const { getPopularity } = useTagPopularity();
-  const currentTagPopularity = getPopularity(project?.projectTag?.name);
+  // const { getPopularity } = useTagPopularity();
+  // const currentTagPopularity = getPopularity(project?.projectTag?.name);
+  const currentTagPopularity =
+    tags?.find((item) => item.name === project?.projectTag?.name)?.mentions ||
+    1;
 
   // if is newPage, update the projectTag with the new tag created or selected
   // const [projectTag, setProjectTag] = useState(project?.projectTag);

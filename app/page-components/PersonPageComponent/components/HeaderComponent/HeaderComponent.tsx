@@ -7,11 +7,8 @@ import { getImageUrlForMedia } from '../../../PageComponents.utils';
 import InputText from '@app/shared-components/InputText/InputText';
 import TagPicker from '@app/shared-components/TagPicker/TagPicker';
 import InfoPagesImageFileUploader from '@app/shared-components/InfoPagesImageFileUploader/InfoPagesImageFileUploader';
-import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
-import { useEffect, useState } from 'react';
-import { Modal, Label, TextInput, Button } from 'flowbite-react';
+
 import SocialLinksComponent from '@app/page-components/shared-page-components/SocialLinksComponent/SocialLinksComponent';
-import { useTagPopularity } from '@app/hooks/useTagPopularity';
 
 export type HeaderComponentProps = {
   person: {
@@ -106,8 +103,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   };
 
   //TODO @ALEX de verificat currentTagPopularity
-  const { getPopularity } = useTagPopularity();
-  const currentTagPopularity = getPopularity(person?.personTag?.name);
+  // const { getPopularity } = useTagPopularity();
+  // const currentTagPopularity = getPopularity(person?.personTag?.name);
+  const currentTagPopularity =
+    tags.find((item) => item.name === person?.personTag?.name)?.mentions || 1;
 
   //Debugging
   // useEffect(() => {
