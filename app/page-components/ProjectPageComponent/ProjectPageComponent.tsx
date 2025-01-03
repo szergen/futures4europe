@@ -38,7 +38,11 @@ import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
-import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
+import {
+  refetchAffiliations,
+  refetchInfoPages,
+  refetchTags,
+} from '@app/utils/refetch-utils';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -544,6 +548,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
@@ -881,6 +886,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // #region Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/project/${newProjectInfoSlug}`);
     handleUserDataRefresh();
 

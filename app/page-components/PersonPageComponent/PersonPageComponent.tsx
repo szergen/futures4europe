@@ -36,7 +36,11 @@ import {
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { members } from '@wix/members';
-import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
+import {
+  refetchAffiliations,
+  refetchInfoPages,
+  refetchTags,
+} from '@app/utils/refetch-utils';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -599,6 +603,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
@@ -1001,6 +1006,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     handleUserDataRefresh();
     await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
