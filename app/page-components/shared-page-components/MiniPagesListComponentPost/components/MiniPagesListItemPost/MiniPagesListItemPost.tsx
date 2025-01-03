@@ -187,10 +187,13 @@ const sortItemsByPageType = (items: Item[]): Item[] => {
       }
 
       // Prioritize event sorting
-      if (a.pageType === PageType.Event.toLowerCase() && b.pageType === PageType.Event.toLowerCase()) {
+      if (
+        a.pageType === PageType.Event.toLowerCase() &&
+        b.pageType === PageType.Event.toLowerCase()
+      ) {
         const aDate = new Date(a.sortDate);
         const bDate = new Date(b.sortDate);
-        
+
         const aIsCurrentOrFuture = aDate >= today;
         const bIsCurrentOrFuture = bDate >= today;
 
@@ -205,7 +208,7 @@ const sortItemsByPageType = (items: Item[]): Item[] => {
 
         // For past events, sort from most recent to oldest
         return bDate.getTime() - aDate.getTime();
-      }   
+      }
 
       // Special handling for project results
       if (a.pageType === PageType.ProjectResult.toLowerCase()) {

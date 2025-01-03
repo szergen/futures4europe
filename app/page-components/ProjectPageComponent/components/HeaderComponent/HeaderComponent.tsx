@@ -94,7 +94,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain website addresses';
     }
-    
+
     // Check for excessive spaces
     if (/\s{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain multiple consecutive spaces';

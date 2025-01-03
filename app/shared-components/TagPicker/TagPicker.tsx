@@ -419,8 +419,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
     // Check for URL patterns
     if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(tagName)) {
       setIsTagNameValid(false);
-      return 'Tag Name cannot contain website addresses'; 
-    }    
+      return 'Tag Name cannot contain website addresses';
+    }
 
     setIsTagNameValid(true);
 
@@ -524,18 +524,16 @@ export const TagPicker: React.FC<TagPickerProps> = ({
                     helperText={
                       !isTagNameValid && (
                         <span className="text-red-600 inline-flex -top-3">
-                        <SpriteSvg.AccountAlertIcon
-                          className="text-site-black text-[var(--color-text-icon-error)]"
-                          sizeW={24}
-                          sizeH={24}
-                          viewBox={'0 0 32 32'}
-                          fill={'currentColor'}
-                          strokeWidth={0}
-                          inline={false}
-                        /> 
-                          <Typography tag="p">
-                              {validationMessage}
-                          </Typography>
+                          <SpriteSvg.AccountAlertIcon
+                            className="text-site-black text-[var(--color-text-icon-error)]"
+                            sizeW={24}
+                            sizeH={24}
+                            viewBox={'0 0 32 32'}
+                            fill={'currentColor'}
+                            strokeWidth={0}
+                            inline={false}
+                          />
+                          <Typography tag="p">{validationMessage}</Typography>
                         </span>
                       )
                     }

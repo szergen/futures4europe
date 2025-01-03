@@ -9,7 +9,10 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { PickersCalendarHeader, ExportedPickersCalendarHeaderProps } from '@mui/x-date-pickers';
+import {
+  PickersCalendarHeader,
+  ExportedPickersCalendarHeaderProps,
+} from '@mui/x-date-pickers';
 
 export type DatePickerComponentProps = {
   date?: Date | null;
@@ -84,31 +87,35 @@ const CalendarFooter: React.FC<CalendarFooterProps> = ({
 interface CalendarHeaderProps {
   calendarHelperText?: string;
   props: ExportedPickersCalendarHeaderProps<Dayjs>;
- }
- 
- const CalendarHeader: React.FC<CalendarHeaderProps> = ({
+}
+
+const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   calendarHelperText,
-  props
- }) => (
+  props,
+}) => (
   <>
     {calendarHelperText && (
-      <div style={{
-        padding: '8px 16px',
-        width: '100%',
-        textAlign: 'center',
-        borderBottom: '1px solid rgba(0,0,0,0.1)',
-      }}>
-        <span style={{
-          fontSize: '12px',
-          color: 'rgba(0, 0, 0, 0.6)',
-        }}>
+      <div
+        style={{
+          padding: '8px 16px',
+          width: '100%',
+          textAlign: 'center',
+          borderBottom: '1px solid rgba(0,0,0,0.1)',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '12px',
+            color: 'rgba(0, 0, 0, 0.6)',
+          }}
+        >
           {calendarHelperText}
         </span>
       </div>
     )}
     <PickersCalendarHeader {...props} />
   </>
- );
+);
 
 // eslint-disable-next-line react/display-name
 // const CustomInput = React.forwardRef(
@@ -227,14 +234,19 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
       actionBar: () => (
         <CalendarFooter calendarHelperText={calendarHelperText} />
       ),
-      calendarHeader: (headerProps) => <CalendarHeader calendarHelperText={calendarHelperText} props={headerProps} />,
+      calendarHeader: (headerProps) => (
+        <CalendarHeader
+          calendarHelperText={calendarHelperText}
+          props={headerProps}
+        />
+      ),
       // switchViewButton: ({ view, onViewChange }) => {
       //   if (view === 'hours') {
       //     return (
-      //       <div style={{ 
-      //         display: 'flex', 
-      //         justifyContent: 'space-between', 
-      //         width: '100%', 
+      //       <div style={{
+      //         display: 'flex',
+      //         justifyContent: 'space-between',
+      //         width: '100%',
       //         padding: '0 16px',
       //         fontWeight: 'bold'
       //       }}>
@@ -245,7 +257,6 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
       //   }
       //   return null;
       // }
-
     },
     slotProps: {
       textField: {
@@ -254,7 +265,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
         InputLabelProps: {
           shrink: true,
         },
-      },      
+      },
       popper: {
         sx: {
           '& .MuiPickersLayout-root': {
@@ -269,7 +280,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
             paddingBottom: 1,
           },
         },
-      },      
+      },
       layout: {
         sx: {
           display: 'flex',
@@ -278,7 +289,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
             order: 1,
           },
         },
-      },     
+      },
     },
   };
 
