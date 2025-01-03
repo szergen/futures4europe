@@ -23,6 +23,7 @@ import { decidePageTypeItems } from '@app/utils/parse-utils';
 import GlowButton from './NavBar/GlowButton';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import * as CookieConsent from 'vanilla-cookieconsent';
+import posthog from 'posthog-js';
 
 const Header = () => {
   const {

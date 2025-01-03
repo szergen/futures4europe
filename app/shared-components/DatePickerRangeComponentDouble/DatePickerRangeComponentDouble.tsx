@@ -51,29 +51,39 @@ export const DatePickerRangeComponentDouble: React.FC<
 
   return (
     <div className={classNames('flex items-center', className)}>
-      <DatePickerComponent
-        date={startDate}
-        onChange={(value) => {
-          setStartDate(value);
-          handleUpdateStartDate && handleUpdateStartDate(value);
-        }}
-        dateFormate={dateFormate}
-        placeholder={placeholderStartDate}
-        helperText={helperText}
-        calendarHelperText={calendarHelperText}
-      />
+      <div>
+        {calendarHelperText && (
+          <div className="mb-2 text-sm text-gray-500">{calendarHelperText}</div>
+        )}
+        <DatePickerComponent
+          date={startDate}
+          onChange={(value) => {
+            setStartDate(value);
+            handleUpdateStartDate?.(value);
+          }}
+          dateFormate={dateFormate}
+          placeholder={placeholderStartDate}
+          helperText={helperText}
+          calendarHelperText={calendarHelperText}
+        />
+      </div>
       <span className="mx-4">-</span>
-      <DatePickerComponent
-        date={endDate}
-        onChange={(value) => {
-          setEndDate(value);
-          handleUpdateEndDate && handleUpdateEndDate(value);
-        }}
-        dateFormate={dateFormate}
-        placeholder={placeholderEndDate}
-        helperText={helperText}
-        calendarHelperText={calendarHelperText}
-      />
+      <div>
+        {calendarHelperText && (
+          <div className="mb-2 text-sm text-gray-500">{calendarHelperText}</div>
+        )}
+        <DatePickerComponent
+          date={endDate}
+          onChange={(value) => {
+            setEndDate(value);
+            handleUpdateEndDate?.(value);
+          }}
+          dateFormate={dateFormate}
+          placeholder={placeholderEndDate}
+          helperText={helperText}
+          calendarHelperText={calendarHelperText}
+        />
+      </div>
     </div>
   );
 };

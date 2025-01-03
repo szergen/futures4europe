@@ -16,7 +16,7 @@ import Typography from '@app/shared-components/Typography/Typography';
 
 const DashboardSkeleton = () => {
   return (
-    <div className="w-full flex flex-col relative m-auto mt-10 mb-6 m-auto max-w-[860px]">
+    <div className="w-full flex flex-col relative m-auto mt-10 mb-6 max-w-[860px]">
       <div className="mt-14 mb-10 p-8 bg-gray-50 rounded-[40px]">
         <div className="flex flex-col">
           {/* Header with icon and title */}

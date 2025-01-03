@@ -76,7 +76,8 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
           className={classNames(
             style.socialIcon,
             isEditModeOn && style.editIcon,
-            extended && style.extended
+            extended && style.extended,
+            isEditModeOn && !currentLinkedinLink && 'opacity-30 grayscale'
           )}
           onClick={() =>
             handleIconClick(currentLinkedinLink || '', 'linkedinLink')
@@ -103,7 +104,8 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
           className={classNames(
             style.socialIcon,
             isEditModeOn && style.editIcon,
-            extended && style.extended
+            extended && style.extended,
+            isEditModeOn && !currentOrcidLink && 'opacity-30 grayscale'
           )}
           onClick={() => handleIconClick(currentOrcidLink || '', 'orcidLink')}
         >
@@ -125,7 +127,8 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
           className={classNames(
             style.socialIcon,
             isEditModeOn && style.editIcon,
-            extended && style.extended
+            extended && style.extended,
+            isEditModeOn && !currentWebsiteLink && 'opacity-10 grayscale'
           )}
           onClick={() =>
             handleIconClick(currentWebsiteLink || '', 'websiteLink')
@@ -148,7 +151,8 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
           className={classNames(
             style.socialIcon,
             isEditModeOn && style.editIcon,
-            extended && style.extended
+            extended && style.extended,
+            isEditModeOn && !currentResearchGateLink && 'opacity-30 grayscale'
           )}
           onClick={() =>
             handleIconClick(currentResearchGateLink || '', 'researchGateLink')

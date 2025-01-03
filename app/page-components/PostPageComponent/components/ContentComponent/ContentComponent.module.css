@@ -44,7 +44,7 @@
   }
   ul {
     list-style: disc;
-    margin-left: var(--w-space-m);
+    margin-left: var(--w-space-xl);
   }
   ol {
     list-style: decimal;
