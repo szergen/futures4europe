@@ -52,7 +52,7 @@ export const Tag: React.FC<TagProps> = ({
   if (!name) return null;
 
   const { tags, tagsFetched } = useAuth();
-  const [currentPopularity, setCurrentPopularity] = useState(popularity);
+  const [currentPopularity, setCurrentPopularity] = useState();
   const tagPageLinkOrMentionsLink = tagPageLink
     ? tagPageLink
     : _id

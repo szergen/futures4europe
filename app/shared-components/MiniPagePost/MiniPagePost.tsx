@@ -9,6 +9,7 @@ import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as neede
 import AffiliationsComponent from '@app/page-components/PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTagPopularity } from '@app/hooks/useTagPopularity';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export type MiniPagePostProps = {
   title: string;
@@ -102,8 +103,10 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   dayjs.extend(relativeTime);
 
+  const { tags } = useAuth();
+
   //TODO @ALEX de verificat currentTagPopularity
-  const { getPopularity } = useTagPopularity();
+  // const { getPopularity } = useTagPopularity();
   // Get the correct tag name for popularity based on the type
   const getCorrectTagName = () => {
     // If primaryTags exist and have a first item, use that
@@ -115,11 +118,15 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   };
 
   const tagName = getCorrectTagName();
-  const currentTagPopularity = tagName ? getPopularity(tagName) : undefined;
+  const currentTagPopularity = tagName
+    ? tags.find((item) => item.name === tagName)?.mentions || 1
+    : undefined;
 
   // Only show popularity if the tag type is NOT 'post'
   const shouldShowPopularity =
-    pageTypeTag?.name !== 'post' && primaryTags?.[0]?.tagType !== 'post';
+    pageTypeTag?.name !== 'post' &&
+    pageTypeTag?.name !== 'event' &&
+    pageTypeTag?.name !== 'project result';
 
   //Debugging
   useEffect(() => {
