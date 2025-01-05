@@ -281,7 +281,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   automaticallyCalculatePath,
 }) => {
   const sortedItems = sortItemsByPageType(items);
-  console.log('sortedItems', sortedItems);
+  // console.log('sortedItems', sortedItems);
 
   return (
     <section className={classNames(style.posts)}>

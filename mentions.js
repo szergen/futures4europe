@@ -29362,7 +29362,7 @@ function calculatePopularity(tagsSample, infoPagesSample, postPagesSample) {
   const containsId = (obj, id) => {
     if (typeof obj === 'object' && obj !== null) {
       for (const key in obj) {
-        if (key === 'pageOwner' || key === 'author') return false;
+        if (key === 'pageOwner' || key === 'author') continue;
         if (obj[key] === id) return true;
         if (containsId(obj[key], id)) return true;
       }

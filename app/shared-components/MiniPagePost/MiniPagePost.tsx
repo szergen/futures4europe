@@ -129,15 +129,15 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
     pageTypeTag?.name !== 'project result';
 
   //Debugging
-  useEffect(() => {
-    console.log({
-      itemName: getCorrectTagName(),
-      popularity: currentTagPopularity,
-      primaryTags,
-      projectResultPublicationDate,
-      projectResultAuthor,
-    });
-  }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
+  // useEffect(() => {
+  //   console.log({
+  //     itemName: getCorrectTagName(),
+  //     popularity: currentTagPopularity,
+  //     primaryTags,
+  //     projectResultPublicationDate,
+  //     projectResultAuthor,
+  //   });
+  // }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
 
   return (
     <div className={classNames(style.postItem)}>
@@ -309,6 +309,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
               }))}
               isEditModeOn={false} // Assuming you don't want to edit this in MiniPagePost
               tagListTitle=""
+              tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+              tagType="organisation"
             />
           )}
         </div>
