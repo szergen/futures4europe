@@ -46,12 +46,11 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
       postPages,
       allAffiliations
     );
-    console.log('debug555->infoPages', infoPages);
     // console.log('tags->popularity calculated', tags);
     const sortedTags = tags.sort((a, b) => b.mentions - a.mentions);
     // console.log('tags->popularity calculated and sorted', sortedTags);
-    const finEuFunded = tags.find((tag) => tag.name === 'EU funded');
-    console.log('tag->finEuFunded', finEuFunded);
+    // const finEuFunded = tags.find((tag) => tag.name === 'EU funded');
+    // console.log('tag->finEuFunded', finEuFunded);
   } catch (error) {
     console.error('Error fetching tags:', error);
   }

@@ -548,8 +548,8 @@ const Header = () => {
           <NavBar />
         </div> */}
         </div>
-        <Modal show={isLoadingInProgress} size="md" popup>
-          <Modal.Header />
+        <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
+          <Modal.Header className="opacity-0" />
           <Modal.Body>
             <div className="text-center">
               Loading...

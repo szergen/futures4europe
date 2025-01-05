@@ -27,9 +27,6 @@ export function calculatePopularity(
   const popularityResults = [] as Array<TagProps> & { mentions: number }[];
 
   tags.forEach((tag) => {
-    if (tag?._id === 'f80d06e4-b326-4364-b250-0afa1fc777f3') {
-      console.log('debug5555-> tag', tag);
-    }
     let count = 0;
 
     infoPages.forEach((infoPage: { [x: string]: any } | null) => {
