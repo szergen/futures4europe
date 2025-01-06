@@ -36,7 +36,11 @@ import {
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { members } from '@wix/members';
-import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
+import {
+  refetchAffiliations,
+  refetchInfoPages,
+  refetchTags,
+} from '@app/utils/refetch-utils';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -99,11 +103,20 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
   const projectsCoordindation = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
-    .map((item: any) => item?.projectTag);
+    .map((item: any) => item?.projectTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const projectsParticipation = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'participation')
-    .map((item: any) => item?.projectTag);
+    .map((item: any) => item?.projectTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
+  console.log('debug111->projectsParticipation', projectsParticipation);
 
   const currentAfiliations = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'current')
@@ -112,7 +125,11 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         ...item?.organisationTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const formerAfiliations = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'former')
@@ -121,7 +138,14 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         ...item?.organisationTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   // #endregion
 
@@ -579,6 +603,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
@@ -981,6 +1006,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     handleUserDataRefresh();
     await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
@@ -1176,10 +1202,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         }
         tagType="project"
       />
-      {/* Internal Links */}
+      {/* Content related to this Info Page */}
       <MiniPagesListComponentPost
         internalLinks={internalLinks}
-        title="Content material related to this person"
+        title="Content related to this Person"
         // projectResults={projectResults}
         // events={events}
       />

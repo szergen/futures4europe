@@ -9,6 +9,7 @@ import { PLACEHOLDER_IMAGE } from '../../constants'; // Adjust the path as neede
 import AffiliationsComponent from '@app/page-components/PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTagPopularity } from '@app/hooks/useTagPopularity';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export type MiniPagePostProps = {
   title: string;
@@ -102,8 +103,10 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   const formattedEditDate = editDate ? formatDate(editDate) : '';
   dayjs.extend(relativeTime);
 
+  const { tags } = useAuth();
+
   //TODO @ALEX de verificat currentTagPopularity
-  const { getPopularity } = useTagPopularity();
+  // const { getPopularity } = useTagPopularity();
   // Get the correct tag name for popularity based on the type
   const getCorrectTagName = () => {
     // If primaryTags exist and have a first item, use that
@@ -115,21 +118,26 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
   };
 
   const tagName = getCorrectTagName();
-  const currentTagPopularity = tagName ? getPopularity(tagName) : undefined;
+  const currentTagPopularity = tagName
+    ? tags.find((item) => item.name === tagName)?.mentions || 1
+    : undefined;
 
   // Only show popularity if the tag type is NOT 'post'
-  const shouldShowPopularity = primaryTags?.[0]?.tagType !== 'post';
+  const shouldShowPopularity =
+    pageTypeTag?.name !== 'post' &&
+    pageTypeTag?.name !== 'event' &&
+    pageTypeTag?.name !== 'project result';
 
   //Debugging
-  useEffect(() => {
-    console.log({
-      itemName: getCorrectTagName(),
-      popularity: currentTagPopularity,
-      primaryTags,
-      projectResultPublicationDate,
-      projectResultAuthor,
-    });
-  }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
+  // useEffect(() => {
+  //   console.log({
+  //     itemName: getCorrectTagName(),
+  //     popularity: currentTagPopularity,
+  //     primaryTags,
+  //     projectResultPublicationDate,
+  //     projectResultAuthor,
+  //   });
+  // }, [currentTagPopularity, primaryTags, projects, projectResultAuthor]);
 
   return (
     <div className={classNames(style.postItem)}>
@@ -180,8 +188,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
           )}
           {eventStartDate && (
             <span className={classNames(style.projectDates)}>
-              {dayjs(eventStartDate).format('MMMM YYYY')} -{' '}
-              {dayjs(eventEndDate).format('MMMM YYYY')}
+              {dayjs(eventStartDate).format('DD MMMM')} -{' '}
+              {dayjs(eventEndDate).format('DD MMMM YYYY')}
             </span>
           )}
           {projectResultPublicationDate && (
@@ -301,6 +309,8 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
               }))}
               isEditModeOn={false} // Assuming you don't want to edit this in MiniPagePost
               tagListTitle=""
+              tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+              tagType="organisation"
             />
           )}
         </div>

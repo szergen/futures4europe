@@ -34,7 +34,11 @@ import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
+import {
+  refetchAffiliations,
+  refetchInfoPages,
+  refetchTags,
+} from '@app/utils/refetch-utils';
 import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
 
 function OrganisationPageComponent({
@@ -110,7 +114,14 @@ function OrganisationPageComponent({
         ...item?.projectTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   const people = organisation?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'current')
@@ -119,7 +130,14 @@ function OrganisationPageComponent({
         ...item?.personTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   // #endregion
 
@@ -556,6 +574,7 @@ function OrganisationPageComponent({
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
     setIsSaveInProgress(false);
@@ -898,6 +917,7 @@ function OrganisationPageComponent({
     // #region Revalidate the cache for the page
     await refetchInfoPages();
     await refetchTags();
+    await refetchAffiliations();
     await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
     handleUserDataRefresh();
     router.push(`/organisation/${newOrganisationInfoSlug}`);
@@ -1123,16 +1143,15 @@ function OrganisationPageComponent({
         tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
-      {/* Internal Links */}
-      {/* scos conform cerintelor din mail - Radu */}
-      {/* <MiniPagesListComponentPost
+      {/* Content related to this Info Page */}
+      <MiniPagesListComponentPost
         internalLinks={internalLinks}
         isEditModeOn={isEditModeOn}
         title="Content related to this Organisation"
         handleUpdatePostData={(value) =>
           updateOrganisationDataOnKeyValue('internalLinks', value)
         }
-      /> */}
+      />
       {/* Files */}
       <FilesComponent
         isEditModeOn={isEditModeOn}

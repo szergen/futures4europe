@@ -23,6 +23,7 @@ import { decidePageTypeItems } from '@app/utils/parse-utils';
 import GlowButton from './NavBar/GlowButton';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import * as CookieConsent from 'vanilla-cookieconsent';
+import posthog from 'posthog-js';
 
 const Header = () => {
   const {
@@ -550,8 +551,8 @@ const Header = () => {
             <SearchComponentV1 />
           </SearchProvider>
         </div>
-        <Modal show={isLoadingInProgress} size="md" popup>
-          <Modal.Header />
+        <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
+          <Modal.Header className="opacity-0" />
           <Modal.Body>
             <div className="text-center">
               Loading...

@@ -38,7 +38,11 @@ import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner
 import { useWixModules } from '@wix/sdk-react';
 import { items } from '@wix/data';
 import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
-import { refetchInfoPages, refetchTags } from '@app/utils/refetch-utils';
+import {
+  refetchAffiliations,
+  refetchInfoPages,
+  refetchTags,
+} from '@app/utils/refetch-utils';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -99,11 +103,19 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
   const projectsCoordindation = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
-    .map((item: any) => item?.personTag);
+    .map((item: any) => item?.personTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const projectsParticipation = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'participation')
-    .map((item: any) => item?.personTag);
+    .map((item: any) => item?.personTag)
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index === self.findIndex((pt) => pt.name === projectTag.name)
+    );
 
   const organisations = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'projectOrganisationRole')
@@ -112,7 +124,14 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         ...item?.organisationTag,
         arole: item?.role,
       };
-    });
+    })
+    .filter(
+      (projectTag: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (pt) => pt.name === projectTag.name && pt.arole === projectTag.arole
+        )
+    );
 
   // #endregion
 
@@ -372,7 +391,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     ) {
       const updatedProjectFunded = await replaceDataItemReferences(
         'InfoPages',
-        [projectData.projectFunded?._id],
+        projectData.projectFunded?._id ? [projectData.projectFunded?._id] : [],
         'projectFunded',
         projectData._id
       );
@@ -529,6 +548,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
@@ -866,6 +886,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // #region Revalidate the cache for the page
     await refetchTags();
     await refetchInfoPages();
+    await refetchAffiliations();
     await revalidateDataItem(`/project/${newProjectInfoSlug}`);
     handleUserDataRefresh();
 
@@ -1076,16 +1097,15 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         handleTagCreated={handleTagCreated}
         tagType="organisation"
       />
-      {/* Internal Links */}
-      {/* scos conform cerintelor din mail - Radu */}
-      {/* <MiniPagesListComponentPost
+      {/* Content related to this Info Page */}
+      <MiniPagesListComponentPost
         isEditModeOn={isEditModeOn}
         internalLinks={internalLinks}
         handleUpdatePostData={(value) =>
           updateProjectDataOnKeyValue('internalLinks', value)
         }
         title="Content related to this Project"
-      /> */}
+      />
       {/* Files */}
       <FilesComponent
         isEditModeOn={isEditModeOn}

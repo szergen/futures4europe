@@ -23,6 +23,7 @@ import { items } from '@wix/data';
 // TODO @alex adaugat consent newsletter
 import { subscribeToNewsletter } from '@app/wixUtils/client-side';
 import { refetchTags } from '@app/utils/refetch-utils';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 // import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
 
@@ -44,6 +45,7 @@ export default function RegisterPage() {
   const [submitState, setSubmitState] = useState('idle');
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
 
+  const { tags } = useAuth();
   const uploadTag = async (tagName: string) => {
     try {
       const result = await insertDataItem({
@@ -88,7 +90,11 @@ export default function RegisterPage() {
 
       // #region Wix upload logic
       let tagResult;
-      if (response) {
+      const tagExists = tags.find(
+        (tag) => tag.name === firstName + ' ' + lastName
+      );
+      if (response && !tagExists) {
+        console.log('Tag does not exist, uploading tag');
         tagResult = await uploadTag(firstName + ' ' + lastName);
         console.log('tagResult', tagResult);
         if (tagResult) {
@@ -96,13 +102,23 @@ export default function RegisterPage() {
           setIsTagCreated(true);
         }
       }
+      setIsTagCreated(true);
       // #endregion
 
       // const wixClient = await getWixClientMember();
       // await wixClient.authentication.register(email, password);
       // router.push('/login'); // Redirect to login page after registration
-    } catch (err) {
-      setError('Registration failed. Please try again.');
+    } catch (err: any) {
+      switch (err?.details?.applicationError?.code) {
+        case '-19995':
+          setError(
+            'Email already exists. Please try again with a different mail.'
+          );
+          break;
+        default:
+          setError('Registration failed. Please try again.');
+          break;
+      }
       console.error('Registration failed:', err);
       setShowAccountCreatedModal(false);
 
@@ -128,7 +144,7 @@ export default function RegisterPage() {
                     color="failure"
                     icon={HiInformationCircle}
                   >
-                    <span className="font-medium">Info alert!</span> {error}
+                    {error}
                   </Alert>
                 )}
                 <form

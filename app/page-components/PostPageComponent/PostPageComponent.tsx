@@ -988,8 +988,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         tagType="organisation"
         handleTagCreated={handleTagCreated}
       />
-      {/* Internal Links */}
-
+      {/* Content related to this Info Page */}
       <MiniPagesListComponentPost
         isEditModeOn={isEditModeOn}
         internalLinks={postData.internalLinks}
