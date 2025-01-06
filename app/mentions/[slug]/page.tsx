@@ -70,7 +70,7 @@ export default async function Pages({ params }: any) {
         <MiniPagesListItemPost
           // postCollection={postCollection}
           items={items}
-          automaticallyCalculatePath={true}
+          automaticallyCalculatePath
           hideTitle
         />
       </div>

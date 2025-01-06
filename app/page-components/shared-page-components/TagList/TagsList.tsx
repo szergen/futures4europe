@@ -14,6 +14,7 @@ interface TagsListProps {
   title?: string;
   disableTooltip?: boolean;
   disablePopularityHover?: boolean;
+  shouldLinkToMentions?: boolean;
 }
 
 const TagsList = ({
@@ -24,6 +25,7 @@ const TagsList = ({
   title,
   disableTooltip = false,
   disablePopularityHover = false,
+  shouldLinkToMentions,
 }: TagsListProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -63,9 +65,13 @@ const TagsList = ({
                   picture={tag.picture}
                   disableTooltip={disableTooltip}
                   disablePopularityHover={disablePopularityHover}
-                  tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                    tag.tagType
-                  )}${tag.slug || ''}`}
+                  tagPageLink={
+                    shouldLinkToMentions
+                      ? `/mentions/${tag._id}`
+                      : `${automaticallyDecidePathPrefixBasedOnPageType(
+                          tag.tagType
+                        )}${tag.slug || ''}`
+                  }
                   tagType={tag.tagType}
                   mentions={tag.popularity}
                 />

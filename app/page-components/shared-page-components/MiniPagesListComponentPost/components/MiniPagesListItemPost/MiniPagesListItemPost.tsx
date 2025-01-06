@@ -281,7 +281,7 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   automaticallyCalculatePath,
 }) => {
   const sortedItems = sortItemsByPageType(items);
-  // console.log('sortedItems', sortedItems);
+  console.log('sortedItems', sortedItems);
 
   return (
     <section className={classNames(style.posts)}>
@@ -299,8 +299,8 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
           href={
             automaticallyCalculatePath
               ? `${automaticallyDecidePathPrefixBasedOnPageType(
-                  item?.pageTypes?.[0]
-                )}/${item.slug}`
+                  item?.pageTypes?.[0]?.name
+                )}${item.slug}`
               : `/${pageTypePath || 'post'}/${item.slug}`
           }
         >
