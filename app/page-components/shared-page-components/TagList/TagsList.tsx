@@ -35,9 +35,7 @@ const TagsList = ({
     tagType,
     // Remove limit and offset from initial fetch to get all tags
   });
-
   // console.log('debug2->', { ...allTags });
-
   // If tagType is provided, use regular tags
   if (tagType) {
     // Sort all tags by popularity and then take the specified slice
@@ -68,9 +66,10 @@ const TagsList = ({
                   picture={tag.picture}
                   disableTooltip={disableTooltip}
                   disablePopularityHover={disablePopularityHover}
-                  tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                    tag.tagType
-                  )}${tag.slug || ''}`}
+                  // tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
+                  //   tag.tagType
+                  // )}${tag.slug || ''}`}
+                  tagPageLink={tag._id ? `/mentions/${tag._id}` : undefined} // Construct the mentions link
                   tagType={tag.tagType}
                   
                 />
@@ -109,8 +108,10 @@ const TagsList = ({
     .map(getTagsForInfoPage)
     .flat()
     .filter((tag) => tag?.name && tag?.picture)
-    .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+    .sort((a, b) => (b.mentions || 0) - (a.mentions || 0))
     .slice(offset, offset + limit);
+
+    console.log('debug3->', { ...topTags });
 
   return (
     <div>
