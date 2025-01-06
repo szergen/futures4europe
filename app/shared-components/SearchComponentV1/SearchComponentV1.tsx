@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import TagInput from './components/TagInput/TagInput';
 import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
 import Results from './components/Results/Results';
+import { useRouter } from 'next/navigation';
 import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
 import {
   removeSearchedItem,
@@ -193,6 +194,13 @@ const SearchComponentV1 = () => {
     console.log('deb1>.results', searchState.results);
   }, [results]);
 
+  const router = useRouter();
+  // useEffect(() => {
+  //   if (window && window.location.href !== 'search' && showResults) {
+  //     router.push('/search');
+  //   }
+  // }, [showResults]);
+
   return (
     <div className="searchBoxWrapper relative">
       <div className="searchBox flex">
@@ -229,7 +237,7 @@ const SearchComponentV1 = () => {
         />
       )}
       {/* Results */}
-      {showResults && (
+      {/* {showResults && (
         <Modal
           show={showResults}
           onClose={() =>
@@ -305,7 +313,7 @@ const SearchComponentV1 = () => {
             />
           </Modal.Body>
         </Modal>
-      )}
+      )} */}
     </div>
   );
 };

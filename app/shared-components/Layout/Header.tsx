@@ -547,9 +547,9 @@ const Header = () => {
         <div
           className={classNames('relative', style.headerWithSearchContainer)}
         >
-          <SearchProvider>
+          {/* <SearchProvider> */}
             <SearchComponentV1 />
-          </SearchProvider>
+          {/* </SearchProvider> */}
         </div>
         <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
           <Modal.Header className="opacity-0" />
