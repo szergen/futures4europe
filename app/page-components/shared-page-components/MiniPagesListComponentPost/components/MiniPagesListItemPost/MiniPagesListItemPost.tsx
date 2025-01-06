@@ -299,8 +299,8 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
           href={
             automaticallyCalculatePath
               ? `${automaticallyDecidePathPrefixBasedOnPageType(
-                  item?.pageTypes?.[0]
-                )}/${item.slug}`
+                  item?.pageTypes?.[0]?.name
+                )}${item.slug}`
               : `/${pageTypePath || 'post'}/${item.slug}`
           }
         >

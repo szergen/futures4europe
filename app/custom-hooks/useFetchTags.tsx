@@ -25,16 +25,16 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
     //         pt.role == projectTag.role
     //     )
     // );
-    console.log('allAffiliations', allAffiliations);
+    // console.log('allAffiliations', allAffiliations);
 
-    console.log(
-      'debug2222->',
-      allAffiliations.find(
-        (item: any) =>
-          item?.title ===
-          'Romanian Public Administration 2025 -to- Adrian Curaj'
-      )
-    );
+    // console.log(
+    //   'debug2222->',
+    //   allAffiliations.find(
+    //     (item: any) =>
+    //       item?.title ===
+    //       'Romanian Public Administration 2025 -to- Adrian Curaj'
+    //   )
+    // );
     // const allTags = await fetch('/api/tags');
     // console.log('allTags', allTags);
 
@@ -49,8 +49,8 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
     // console.log('tags->popularity calculated', tags);
     const sortedTags = tags.sort((a, b) => b.mentions - a.mentions);
     // console.log('tags->popularity calculated and sorted', sortedTags);
-    const findProjectInfoTag = tags.find((tag) => tag.name === 'Adrian Curaj');
-    console.log('tag->project info', findProjectInfoTag);
+    // const finEuFunded = tags.find((tag) => tag.name === 'EU funded');
+    // console.log('tag->finEuFunded', finEuFunded);
   } catch (error) {
     console.error('Error fetching tags:', error);
   }

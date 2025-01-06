@@ -53,13 +53,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   const inputRefs = useRef([]);
   const [isDisabledSorting, setIsDisabledSorting] = useState(false);
 
-  // #region Initialize Sortable Array
-  // const [sortableArray, setSortableArray] = useState(
-  //   currentAffiliations?.map((affiliation, index) => {
-  //     return { id: index, name: affiliation.name };
-  //   })
-  // );
-
   const shouldAddNewAffiliation = () => {
     if (afiliations?.length === 0) return true;
     const lastMember = afiliations?.[afiliations.length - 1];
@@ -67,7 +60,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   };
 
   useEffect(() => {
-    console.log('currentAffiliations', currentAffiliations);
+    // console.log('debug333->currentAffiliations', currentAffiliations);
     if (isEditModeOn) {
       if (shouldAddNewAffiliation() || !currentAffiliations?.length) {
         handleAddAffiliation(0);
@@ -75,10 +68,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
       setCurrentAffiliations(afiliations);
     }
   }, [afiliations, isEditModeOn]);
-
-  // useEffect(() => {
-  //   console.log('currentAffiliations', currentAffiliations);
-  // }, [currentAffiliations]);
 
   const handleAddAffiliation = (index: number) => {
     if (index === 0 && !currentAffiliations && !currentAffiliations?.length) {
@@ -90,11 +79,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
       return;
     }
     const newAffiliation = { id: '', name: '', arole: '' };
-    // const updatedAffiliations = [
-    //   ...currentAffiliations.slice(0, index + 1),
-    //   newAffiliation,
-    //   ...currentAffiliations.slice(index + 1),
-    // ];
+
     let newUpdatedAffuliations = currentAffiliations;
     newUpdatedAffuliations.push(newAffiliation);
     // const updatedAffiliations =
@@ -120,40 +105,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
   ) {
     return null;
   }
-
-  // const handleInputChange = (e: any, index: number) => {
-  //   const newAffiliations = [...currentAffiliations];
-  //   newAffiliations[index] = {
-  //     ...newAffiliations[index],
-  //     arole: e?.target?.value,
-  //   };
-  //   setCurrentAffiliations(newAffiliations);
-  //   updatePersonDataAffiliations &&
-  //     updatePersonDataAffiliations(newAffiliations);
-  //   console.log('debug12312312', inputRef);
-
-  //   // Adjust the width of the input based on its content
-  //   if (inputRef.current) {
-  //     console.log('inputRef.current', inputRef.current);
-  //     inputRef.current.style.width = `${inputRef.current.scrollWidth}px`;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setSortableArray(
-  //     currentAffiliations?.map((affiliation, index) => {
-  //       return { id: index, name: affiliation?.name };
-  //     })
-  //   );
-  // }, [currentAffiliations]);
-
-  // useEffect(() => {
-  //   if (shouldAddNewAffiliation()) {
-  //     handleAddAffiliation(0);
-  //   }
-  // }, [currentAffiliations]);
-
-  // Sortable.mount(new Swap());
 
   // Function to determine if tagline should be shown
   const shouldShowTagline = (type: string = '') => {
@@ -207,14 +158,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
           <div
             key={`affiliation-${affilitiation.name}-${index}`}
             className={classNames(style.tagListContainer, isEditModeOn && '')}
-            // onClick={(e: any) => {
-            //   setIsDisabledSorting(true);
-            // }}
-            // onMouseUp={(e: any) => {
-            //   console.log('eeeee onMouseUp', e);
-            //   e.preventDefault();
-            //   e.stopPropagation();
-            // }}
           >
             {isEditModeOn && (
               <div className="drag-handle p-1 cursor-move opacity-50 hover:opacity-100">
@@ -241,19 +184,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   placeholder={placeholderRole}
                   key={`affiliation-${affilitiation.name}-${index}`}
                   value={affilitiation.arole || ''}
-                  // onChange={(e) => {
-                  //   console.log(e?.target?.value);
-                  //   const newAffiliations = [...currentAffiliations];
-                  //   newAffiliations[index] = {
-                  //     ...newAffiliations[index],
-                  //     arole: e?.target?.value,
-                  //   };
-                  //   setCurrentAffiliations(newAffiliations);
-                  //   console.log('newAffiliations', newAffiliations);
-                  //   updatePersonDataAffiliations &&
-                  //     updatePersonDataAffiliations(newAffiliations);
-                  // }}
-                  // onChange={(e) => handleInputChange(e, index)}
                   onChange={(e) => {
                     const newAffiliations = [...currentAffiliations];
                     newAffiliations[index] = {
@@ -281,7 +211,12 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
               </div>
             )}
             {!isEditModeOn ? (
-              affilitiation.name && <Tag {...affilitiation} />
+              affilitiation.name && (
+                <Tag
+                  {...affilitiation}
+                  {...tags?.find((item) => item.name === affilitiation.name)}
+                />
+              )
             ) : (
               <>
                 <div
@@ -329,23 +264,6 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                 </div>
               </>
             )}
-            {/* {isEditModeOn && (
-            // <button
-            //   onClick={() => handleRemoveAffiliation(index)}
-            //   className={classNames(style.affiliationRemove, '')}
-            //   key={`affiliation-remove-${affilitiation.name}-${index}`}
-            // >
-            //   <SpriteSvg.EditCloseIcon
-            //     className="mb-0"
-            //     sizeW={16}
-            //     sizeH={16}
-            //     viewBox={'-3 -2 22 22'}
-            //     fill={'#fff'}
-            //     strokeWidth={0}
-            //     inline={true}
-            //   />
-            // </button>
-          )} */}
           </div>
         ))}
       </ReactSortable>

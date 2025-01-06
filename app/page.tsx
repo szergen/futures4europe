@@ -276,6 +276,7 @@ export const Home = () => {
                     offset={0}
                     disableTooltip={true}
                     disablePopularityHover={true}
+                    shouldLinkToMentions
                   />
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
@@ -285,6 +286,7 @@ export const Home = () => {
                     offset={25}
                     disableTooltip={true}
                     disablePopularityHover={true}
+                    shouldLinkToMentions
                   />
                 </div>
               </div>
@@ -300,6 +302,7 @@ export const Home = () => {
                     offset={0}
                     disableTooltip={true}
                     disablePopularityHover={true}
+                    shouldLinkToMentions
                   />
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
@@ -309,6 +312,7 @@ export const Home = () => {
                     offset={25}
                     disableTooltip={true}
                     disablePopularityHover={true}
+                    shouldLinkToMentions
                   />
                 </div>
               </div>

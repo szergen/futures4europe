@@ -14,6 +14,7 @@ interface TagsListProps {
   title?: string;
   disableTooltip?: boolean;
   disablePopularityHover?: boolean;
+  shouldLinkToMentions?: boolean;
 }
 
 const TagsList = ({
@@ -24,6 +25,7 @@ const TagsList = ({
   title,
   disableTooltip = false,
   disablePopularityHover = false,
+  shouldLinkToMentions,
 }: TagsListProps) => {
 
   // console.log('debug1->', { infoPageType, tagType, limit, offset, title, disableTooltip, disablePopularityHover });
@@ -66,10 +68,13 @@ const TagsList = ({
                   picture={tag.picture}
                   disableTooltip={disableTooltip}
                   disablePopularityHover={disablePopularityHover}
-                  // tagPageLink={`${automaticallyDecidePathPrefixBasedOnPageType(
-                  //   tag.tagType
-                  // )}${tag.slug || ''}`}
-                  tagPageLink={tag._id ? `/mentions/${tag._id}` : undefined} // Construct the mentions link
+                  tagPageLink={
+                    shouldLinkToMentions
+                      ? `/mentions/${tag._id}`
+                      : `${automaticallyDecidePathPrefixBasedOnPageType(
+                          tag.tagType
+                        )}${tag.slug || ''}`
+                  }
                   tagType={tag.tagType}
                   
                 />
