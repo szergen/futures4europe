@@ -1694,6 +1694,13 @@ const nextConfig = {
         destination: 'https://legacy.futures4europe.eu/so/tr/:path*',
         permanent: true,
       },
+      // stories to legacy
+      {
+        source: '/stories',
+        destination: 'https://legacy.futures4europe.eu/stories',
+        permanent: true,
+      },   
+         
     ];
   },
 };
