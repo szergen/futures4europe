@@ -30,14 +30,15 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
   updatePostDataBasedOnKeyValue,
 }) => {
   const [currentFiles, setCurrentFiles] = useState(mediaFiles);
-  const [deletingFileIndex, setDeletingFileIndex] = useState<number | null>(null);
+  const [deletingFileIndex, setDeletingFileIndex] = useState<number | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
-  
 
   // Local state - sincronizare
   useEffect(() => {
     setCurrentFiles(mediaFiles);
-  }, [mediaFiles]);  
+  }, [mediaFiles]);
 
   useEffect(() => {
     if (isEditModeOn) {
@@ -63,7 +64,6 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
     console.log('debug5->currentFiles', currentFiles);
   }, [isEditModeOn, currentFiles]);
 
-
   const handleDeleteFile = async (index: number) => {
     try {
       if (window.confirm('Are you sure you want to delete this file?')) {
@@ -76,7 +76,6 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
         // }
 
         const newMediaFiles = currentFiles.filter((_, i) => i !== index);
-        
         // If we're deleting the last file and we're in edit mode, add an empty file slot
         if (isEditModeOn && newMediaFiles.length === 0) {
           const emptyImage = {
@@ -89,20 +88,21 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
           };
           newMediaFiles.push(emptyImage);
         }
-        
         setCurrentFiles(newMediaFiles);
         updatePostDataBasedOnKeyValue &&
           updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete file. Please try again.');
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Failed to delete file. Please try again.'
+      );
       console.error('Error deleting file:', err);
     } finally {
       setDeletingFileIndex(null);
     }
   };
-
-
 
   return (
     <section>
@@ -118,20 +118,20 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
         </Typography>
       )}
 
-        {error && (
-          <div 
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flex justify-between items-center" 
-            role="alert"
+      {error && (
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flex justify-between items-center"
+          role="alert"
+        >
+          <span className="block sm:inline">{error}</span>
+          <button
+            onClick={() => setError(null)}
+            className="text-red-700 hover:text-red-900"
           >
-            <span className="block sm:inline">{error}</span>
-            <button
-              onClick={() => setError(null)}
-              className="text-red-700 hover:text-red-900"
-            >
-              <span className="text-xl">&times;</span>
-            </button>
-          </div>
-        )}
+            <span className="text-xl">&times;</span>
+          </button>
+        </div>
+      )}
 
       <div className="flex flex-col">
         {currentFiles?.map((media, index) => (
@@ -203,22 +203,25 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                 {media?.displayName}
               </Typography>
             ) : (
-            <>
-              <InputText
-                className={style.fileTitle}
-                placeholder="Enter display name"
-                value={media.displayName || ''}
-                onChange={(e) => {
-                  let newMediaFiles = [...currentFiles];
-                  newMediaFiles[index] = {
-                    ...newMediaFiles[index],
-                    displayName: e.target.value,
-                  };
-                  setCurrentFiles(newMediaFiles);
-                  updatePostDataBasedOnKeyValue &&
-                    updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);
-                }}
-              />
+              <>
+                <InputText
+                  className={style.fileTitle}
+                  placeholder="Enter display name"
+                  value={media.displayName || ''}
+                  onChange={(e) => {
+                    let newMediaFiles = [...currentFiles];
+                    newMediaFiles[index] = {
+                      ...newMediaFiles[index],
+                      displayName: e.target.value,
+                    };
+                    setCurrentFiles(newMediaFiles);
+                    updatePostDataBasedOnKeyValue &&
+                      updatePostDataBasedOnKeyValue(
+                        'mediaFiles',
+                        newMediaFiles
+                      );
+                  }}
+                />
                 {/* Only show delete button if there's actually a file (has a URL) */}
                 {media.url && (
                   <div className="flex items-start pt-4 pl-4">
@@ -246,7 +249,7 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
                     </ButtonFlow>
                   </div>
                 )}
-            </>              
+              </>
             )}
           </div>
         ))}

@@ -192,6 +192,11 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   const updateDataToServer = async () => {
     console.log('Updating Page from', postData.dataCollectionId, postData._id);
     setIsSaveInProgress(true);
+    const hasDifferentMedia = postData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultPostData?.mediaFiles?.[index]?.url ||
+        file.displayName !== defaultPostData?.mediaFiles?.[index]?.displayName
+    );
     // Update Subtitle
     if (
       postData.subtitle !== defaultPostData.subtitle ||
@@ -214,9 +219,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.mediaFiles,
         defaultPostData.mediaFiles
       ) ||
-      postData?.mediaFiles?.[0]?.url !==
-        defaultPostData?.mediaFiles?.[0]?.url ||
-      postData.mediaFiles?.[1]?.url !== defaultPostData?.mediaFiles?.[1]?.url ||
+      hasDifferentMedia ||
       postData.projectResultPublicationDate !==
         defaultPostData.projectResultPublicationDate ||
       postData.eventStartDate !== defaultPostData.eventStartDate ||
