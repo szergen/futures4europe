@@ -188,7 +188,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               // 'personNameTitle',
               style.genericTextArea,
               style.textPostTitleEdit,
-              validationFunctionForName(person?.title) && style.InputRequired
+              validationFunctionForName(person?.personTag?.name) &&
+                style.InputRequired
             )}
             onChange={(e) =>
               updatePersonData({
