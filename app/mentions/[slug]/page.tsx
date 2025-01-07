@@ -67,6 +67,16 @@ export default async function Pages({ params }: any) {
   let items = allPages.filter((page: any) => {
     return containsId(page, tagId);
   });
+  items = [...affiliationPages, ...items]?.filter(
+    (post, index, self) => index === self.findIndex((p) => p._id === post._id)
+  );
+
+  items = items?.sort((a, b) => {
+    const dateA = new Date(a._createdDate.$date).getTime();
+    const dateB = new Date(b._createdDate.$date).getTime();
+    return dateB - dateA;
+  });
+  console.log('items', items);
 
   // Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
@@ -99,6 +109,7 @@ export default async function Pages({ params }: any) {
           items={items}
           automaticallyCalculatePath
           hideTitle
+          manualSort
         />
       </div>
     </div>

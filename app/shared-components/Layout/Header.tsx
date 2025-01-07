@@ -288,9 +288,6 @@ const Header = () => {
   const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
   const [personInfoPageLink, setPersonInfoPageLink] = useState('');
 
-  {
-    /*TODO: @Alex de verificat implementarea*/
-  }
   useEffect(() => {
     if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
       setIsPersonInfoPageReady(true);
@@ -327,7 +324,6 @@ const Header = () => {
             </span>
             <span className="block text-sm">{userDetails?.email}</span>
 
-            {/*TODO: @Alex de verificat implementarea*/}
             {personInfoPageLink ? (
               <Link href={personInfoPageLink}>
                 <Dropdown.Item icon={HiUser}>My info page</Dropdown.Item>
