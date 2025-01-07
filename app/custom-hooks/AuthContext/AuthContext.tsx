@@ -57,6 +57,7 @@ interface AuthContextType {
   userTagFetched: boolean;
   allOwnedPages: any[];
   setIsUserTagAssociated: (value: boolean) => void;
+  handleUserTagRefresh: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -179,6 +180,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return userTag;
   };
 
+  const [refreshUserTag, setRefreshUserTag] = useState(false);
+
+  const handleUserTagRefresh = () => {
+    setRefreshUserTag((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+
   useEffect(() => {
     if (
       tagsFetched &&
@@ -186,7 +193,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       userDetails.userName &&
       isUserTagAssociated === false
     ) {
-      console.log('getting');
       const fetchUserTag = async () => {
         const userTag = await getUserTag(userDetails.userName);
         updateUserDetails((prev: any) => ({
@@ -198,8 +204,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       fetchUserTag();
       setIsUserTagAssociated(true);
       setUserTagFetched(true);
+    } else if (
+      tagsFetched &&
+      userDetails.userTag &&
+      userDetails.userName &&
+      !userDetails.userTag?.tagPageLink
+    ) {
+      const userTag = tags?.find((tag) => tag.name === userDetails.userName);
+      updateUserDetails((prev: any) => ({
+        ...prev,
+        userTag,
+      }));
+      setIsUserTagAssociated(true);
+      setUserTagFetched(true);
     }
-  }, [tagsFetched, userDetails.userName, userDetails.userTag?.name]);
+  }, [
+    tagsFetched,
+    userDetails.userName,
+    userDetails.userTag?.name,
+    userDetails.userTag?.tagPageLink,
+    refreshUserTag,
+    refreshTags,
+  ]);
   // #endregion
 
   useEffect(() => {
@@ -284,9 +310,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   // #endregion
 
-  useEffect(() => {
-    // console.log('debug1->userDetails', userDetails);
-  }, [userDetails]);
+  // useEffect(() => {
+  //   // console.log('debug1->userDetails', userDetails);
+  // }, [userDetails]);
 
   // #region extraOwnedPages
   const [allOwnedPages, setAllOwnedPages] = useState<any[]>([]);
@@ -364,6 +390,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsLoadingInProgress,
         userTagFetched,
         allOwnedPages,
+        handleUserTagRefresh,
       }}
     >
       {children}

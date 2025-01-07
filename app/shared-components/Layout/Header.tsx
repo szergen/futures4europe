@@ -278,7 +278,7 @@ const Header = () => {
           )?.length || 0,
       }));
     }
-  }, [infoPages, postPages]);
+  }, [infoPages, postPages, userDetails.userName, userDetails.userTag]);
 
   useEffect(() => {
     console.log('pageTypeCounts', pageTypeCounts);
@@ -296,7 +296,7 @@ const Header = () => {
       setIsPersonInfoPageReady(true);
       setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
     }
-  }, [isLoggedIn, router, userDetails]);
+  }, [isLoggedIn, router, userDetails?.userTag?.tagPageLink]);
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
@@ -401,7 +401,13 @@ const Header = () => {
         </div>
       </>
     );
-  }, [isLoggedIn, userDetails, isDropdownOpen]);
+  }, [
+    isLoggedIn,
+    userDetails,
+    isDropdownOpen,
+    isPersonInfoPageReady,
+    userDetails?.userTag?.tagPageLink,
+  ]);
 
   return (
     <>
