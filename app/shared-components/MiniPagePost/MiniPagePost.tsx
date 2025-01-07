@@ -239,14 +239,18 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
           ))}
         </div>
         {/* Post Text */}
-        <Typography
-          tag="div"
-          className={classNames(
-            'mt-2 textTruncate',
-            style.MiniPagePostDescription
-          )}
-          htmlText={text}
-        ></Typography>
+        {text ? (
+          <Typography
+            tag="div"
+            className={classNames(
+              'mt-2 textTruncate',
+              style.MiniPagePostDescription
+            )}
+            htmlText={text}
+          ></Typography>
+        ) : (
+          ''
+        )}
         {/* Domain Tags */}
         <div className={classNames('flex flex-wrap', style.postTags)}>
           {domains?.map((tag, index) => (

@@ -98,7 +98,7 @@ function OrganisationPageComponent({
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails?.userTag]);
   // #endregion
 
   // #region Handle affiliations
@@ -902,7 +902,7 @@ function OrganisationPageComponent({
     // #endregion
 
     // #region Update Organisation Tag
-    // Check if object projectTag has changed
+    // Check if object Organisation has changed
     if (
       !deepEqual(
         organisationData?.organisationTag,

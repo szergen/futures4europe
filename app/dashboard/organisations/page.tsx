@@ -216,7 +216,7 @@ export default function DashboardProjects() {
                 'flex flex-col text-base text-[#606b85]'
               )}
             >
-              {allOwnedPages.length || allOwnedPages.length ? (
+              {allOwnedPages.length ? (
                 <>
                   {allOwnedPages.length > 0 ? (
                     allOwnedPages

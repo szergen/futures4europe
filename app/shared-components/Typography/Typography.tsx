@@ -26,7 +26,7 @@ const Typography: React.FC<TypographyProps> = ({
       className={className}
       style={style}
       dangerouslySetInnerHTML={{
-        __html: htmlText || '',
+        __html: htmlText.replace('undefined', '') || '',
       }}
     ></Tag>
   );
