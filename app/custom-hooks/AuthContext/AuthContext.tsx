@@ -13,6 +13,8 @@ import fetchTagsWithPopularity from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
+import { items } from '@wix/data';
+import { refetchTags } from '@app/utils/refetch-utils';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -144,8 +146,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Toggle the refresh state to trigger re-fetch
   };
 
-  const getUserTag = (userName: string) => {
-    const userTag = tags.find((tag) => tag.name === userName);
+  const { insertDataItem } = useWixModules(items);
+
+  const uploadTag = async (tagName: string) => {
+    try {
+      const result = await insertDataItem({
+        dataCollectionId: 'Tags',
+        dataItem: {
+          data: {
+            name: tagName,
+            tagType: 'person',
+          },
+        },
+      });
+      return result;
+    } catch (error) {
+      console.error('Error uploading tag:', error);
+    }
+  };
+
+  const getUserTag = async (userName: string) => {
+    const userTag = tags?.find((tag) => tag.name === userName);
+    if (!userTag) {
+      console.log('User tag not found for', userName);
+      const tagResult = await uploadTag(userName);
+      const newTag = await tagResult?.dataItem?.data;
+      console.log('deb123->newTag', newTag);
+      await refetchTags();
+      handleTagCreated();
+      return newTag;
+    }
     return userTag;
   };
 
@@ -157,10 +187,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       isUserTagAssociated === false
     ) {
       console.log('getting');
-      updateUserDetails((prev: any) => ({
-        ...prev,
-        userTag: getUserTag(userDetails.userName),
-      }));
+      const fetchUserTag = async () => {
+        const userTag = await getUserTag(userDetails.userName);
+        updateUserDetails((prev: any) => ({
+          ...prev,
+          userTag,
+        }));
+      };
+
+      fetchUserTag();
       setIsUserTagAssociated(true);
       setUserTagFetched(true);
     }
