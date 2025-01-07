@@ -553,6 +553,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
@@ -892,6 +893,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     await refetchInfoPages();
     await refetchAffiliations();
     await revalidateDataItem(`/project/${newProjectInfoSlug}`);
+    handleTagCreated();
     handleUserDataRefresh();
 
     router.push(`/project/${newProjectInfoSlug}`);

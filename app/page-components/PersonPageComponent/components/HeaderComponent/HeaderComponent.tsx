@@ -80,8 +80,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
       return 'Title cannot contain special characters like < > { } [ ] \\ /';
     }
 
-    if (tempName.length < 5) {
-      return 'Title should be at least 5 characters long';
+    if (tempName.length < 2) {
+      return 'Title should be at least 2 characters long';
     }
     if (tempName.length > 100) {
       return 'Title should be at most 100 characters long';

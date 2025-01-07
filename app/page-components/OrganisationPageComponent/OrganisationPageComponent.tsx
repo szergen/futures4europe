@@ -98,7 +98,7 @@ function OrganisationPageComponent({
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails?.userTag]);
   // #endregion
 
   // #region Handle affiliations
@@ -583,6 +583,7 @@ function OrganisationPageComponent({
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
     setIsSaveInProgress(false);
@@ -901,7 +902,7 @@ function OrganisationPageComponent({
     // #endregion
 
     // #region Update Organisation Tag
-    // Check if object projectTag has changed
+    // Check if object Organisation has changed
     if (
       !deepEqual(
         organisationData?.organisationTag,
@@ -927,6 +928,7 @@ function OrganisationPageComponent({
     await refetchTags();
     await refetchAffiliations();
     await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
+    handleTagCreated();
     handleUserDataRefresh();
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);
