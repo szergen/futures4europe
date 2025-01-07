@@ -34,11 +34,11 @@ const ProjectResultHeaderImage: React.FC<ProjectResultHeaderImageProps> = ({
 
   return (
     <div key={'ProjectResultHeaderImage' + fileIdPrefix}>
-      <div className="flex">
+      <div className="flex mb-2">
         <div
           className={classNames(
             style.checkboxes__item,
-            'flex items-center justify-center'
+            'flex items-center justify-center mr-4'
           )}
         >
           <label

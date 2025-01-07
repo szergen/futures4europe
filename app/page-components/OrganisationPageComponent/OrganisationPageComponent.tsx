@@ -270,6 +270,13 @@ function OrganisationPageComponent({
     }
     // #endregion
 
+    const hasDifferentMedia = organisationData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultOrganisationData?.mediaFiles?.[index]?.url ||
+        file.displayName !==
+          defaultOrganisationData?.mediaFiles?.[index]?.displayName
+    );
+
     // #region Update page fields
     if (
       organisationData.description !== defaultOrganisationData.description ||
@@ -289,6 +296,7 @@ function OrganisationPageComponent({
         organisationData.contentImages,
         defaultOrganisationData.contentImages
       ) ||
+      hasDifferentMedia ||
       !arraysEqual(
         organisationData.organisationPeople,
         defaultOrganisationData.organisationPeople
