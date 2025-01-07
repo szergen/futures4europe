@@ -1239,8 +1239,8 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       {/* <FilesComponent files={person.files} /> */}
       {/* External Links */}
       {/* <ExternalLinksComponent links={person.links} /> */}
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...

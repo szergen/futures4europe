@@ -1014,8 +1014,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       {/* External Links */}
       {/* <ExternalLinksComponent links={postData.links} /> */}
       {/* Saving modal */}
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...

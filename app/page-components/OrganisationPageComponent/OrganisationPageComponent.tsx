@@ -1168,8 +1168,8 @@ function OrganisationPageComponent({
         mediaFiles={organisationData.mediaFiles}
         updatePostDataBasedOnKeyValue={updateOrganisationDataOnKeyValue}
       />
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...
