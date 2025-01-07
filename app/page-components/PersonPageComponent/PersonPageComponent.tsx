@@ -268,9 +268,16 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
     // #endregion
 
+    const hasDifferentMedia = personData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultPersonData?.mediaFiles?.[index]?.url ||
+        file.displayName !== defaultPersonData?.mediaFiles?.[index]?.displayName
+    );
+
     // Update page fields
     if (
       personData.description !== defaultPersonData.description ||
+      hasDifferentMedia ||
       !arraysEqual(
         personData.currentAfiliations,
         defaultPersonData.currentAfiliations

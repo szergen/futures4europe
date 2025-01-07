@@ -252,6 +252,13 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
     // #endregion
 
+    const hasDifferentMedia = projectData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultProjectData?.mediaFiles?.[index]?.url ||
+        file.displayName !==
+          defaultProjectData?.mediaFiles?.[index]?.displayName
+    );
+
     // Update page fields
     if (
       projectData.description !== defaultProjectData.description ||
@@ -271,10 +278,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.contentImages,
         defaultProjectData.contentImages
       ) ||
-      areArraysEqualForMediaFiles(
-        projectData.mediaFiles,
-        defaultProjectData.mediaFiles
-      ) ||
+      hasDifferentMedia ||
       projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
