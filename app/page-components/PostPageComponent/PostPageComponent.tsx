@@ -434,8 +434,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
-    // await refetchTags();
+    await refetchTags();
     await refetchPosts();
+    handleTagCreated();
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
 
@@ -638,8 +639,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
-    // await refetchTags();
+    await refetchTags();
     await refetchPosts();
+    handleTagCreated();
     await revalidateDataItem(`/post/${newPostSlug}`);
 
     handleUserDataRefresh();

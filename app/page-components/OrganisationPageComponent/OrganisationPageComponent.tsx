@@ -583,6 +583,7 @@ function OrganisationPageComponent({
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
     setIsSaveInProgress(false);
@@ -927,6 +928,7 @@ function OrganisationPageComponent({
     await refetchTags();
     await refetchAffiliations();
     await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
+    handleTagCreated();
     handleUserDataRefresh();
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);

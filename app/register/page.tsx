@@ -45,7 +45,7 @@ export default function RegisterPage() {
   const [submitState, setSubmitState] = useState('idle');
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
 
-  const { tags } = useAuth();
+  const { tags, handleTagCreated } = useAuth();
   const uploadTag = async (tagName: string) => {
     try {
       const result = await insertDataItem({
@@ -97,10 +97,11 @@ export default function RegisterPage() {
         console.log('Tag does not exist, uploading tag');
         tagResult = await uploadTag(firstName + ' ' + lastName);
         console.log('tagResult', tagResult);
-        if (tagResult) {
-          await refetchTags();
-          setIsTagCreated(true);
-        }
+        // if (tagResult) {
+        await refetchTags();
+        handleTagCreated();
+        setIsTagCreated(true);
+        // }
       }
       setIsTagCreated(true);
       // #endregion

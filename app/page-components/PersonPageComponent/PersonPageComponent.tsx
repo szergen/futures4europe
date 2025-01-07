@@ -611,6 +611,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
@@ -1014,6 +1015,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     handleUserDataRefresh();
     await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
