@@ -86,8 +86,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (specialCharsRegex.test(trimmedTitle)) {
       return 'Title cannot contain special characters like < > { } [ ] \\ /';
     }
-    if (tempTitle?.length < 2) {
-      return 'Title should be at least 2 characters long';
+    if (tempTitle?.length < 5) {
+      return 'Title should be at least 5 characters long';
     }
     if (tempTitle?.length > 100) {
       return 'Title should be at most 100 characters long';
@@ -383,8 +383,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               <TagPicker
                 placeholder={
                   post?.pageType?.[0]?.name !== 'event'
-                    ? 'Add one or more country tags relevant to your post'
-                    : 'Add country tag relevant to your post'
+                    ? // ? 'Add one or more country tags relevant to your post'
+                      'Add the country tag relevant to your post'
+                    : 'Add the country tag relevant to your post'
                 }
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}
                 className="mt-1"
