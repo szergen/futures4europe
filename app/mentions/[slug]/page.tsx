@@ -30,16 +30,53 @@ export default async function Pages({ params }: any) {
 
   const postCollection = await getCollection('PostPages');
   const infoPagesCollection = await getCollection('InfoPages');
+  const affiliationsCollection = await getCollection('Affiliations');
   const currentTagData = await getItemById('Tags', tagId);
 
   const postPages = postCollection.map((item) => item.data);
   const infoPages = infoPagesCollection.map((item) => item.data);
 
+  const allAffiliations = affiliationsCollection.map((item) => item.data);
+
+  const allAffilationMentiones = allAffiliations.filter(
+    (affiliation) =>
+      affiliation.personTag === tagId ||
+      affiliation.projectTag === tagId ||
+      affiliation.organisationTag === tagId
+  );
+  console.log('allAffilationMentiones', allAffilationMentiones);
+
   const allPages = [...postPages, ...infoPages];
+
+  const affiliationPages = infoPages.filter((page: any) => {
+    return allAffilationMentiones.find((affiliation) => {
+      if (
+        (affiliation.personTag &&
+          page?.person?.[0]?._id === affiliation.personTag) ||
+        (affiliation.organisationTag &&
+          page?.organisation?.[0]?._id === affiliation.organisationTag) ||
+        (affiliation.projectTag &&
+          page?.Project?.[0]?._id === affiliation.projectTag)
+      ) {
+        return true;
+      }
+    });
+  });
+  console.log('affiliationPages', affiliationPages);
 
   let items = allPages.filter((page: any) => {
     return containsId(page, tagId);
   });
+  items = [...affiliationPages, ...items]?.filter(
+    (post, index, self) => index === self.findIndex((p) => p._id === post._id)
+  );
+
+  items = items?.sort((a, b) => {
+    const dateA = new Date(a._createdDate.$date).getTime();
+    const dateB = new Date(b._createdDate.$date).getTime();
+    return dateB - dateA;
+  });
+  console.log('items', items);
 
   // Get specific Post by slug
   // const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
@@ -72,6 +109,7 @@ export default async function Pages({ params }: any) {
           items={items}
           automaticallyCalculatePath
           hideTitle
+          manualSort
         />
       </div>
     </div>

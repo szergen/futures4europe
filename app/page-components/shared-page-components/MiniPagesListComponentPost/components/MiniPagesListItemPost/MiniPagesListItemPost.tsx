@@ -271,6 +271,7 @@ export interface MiniPagesListItemPostProps {
   hideTitle?: boolean;
   pageTypePath?: 'post' | 'project' | 'person' | 'organisation';
   automaticallyCalculatePath?: boolean;
+  manualSort?: boolean;
 }
 
 const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
@@ -279,8 +280,9 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   hideTitle,
   pageTypePath,
   automaticallyCalculatePath,
+  manualSort,
 }) => {
-  const sortedItems = sortItemsByPageType(items);
+  const sortedItems = manualSort ? items : sortItemsByPageType(items);
   console.log('sortedItems', sortedItems);
 
   return (
