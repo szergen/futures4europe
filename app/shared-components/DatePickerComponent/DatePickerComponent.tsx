@@ -265,7 +265,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
         InputLabelProps: {
           shrink: true,
         },
-      },      
+      },
       popper: {
         sx: {
           '& .MuiPickersLayout-root': {
@@ -280,7 +280,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
             paddingBottom: 1,
           },
         },
-      },      
+      },
       layout: {
         sx: {
           display: 'flex',
@@ -289,7 +289,7 @@ export const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
             order: 1,
           },
         },
-      },     
+      },
     },
   };
 

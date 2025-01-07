@@ -27,7 +27,6 @@ const TagsList = ({
   disablePopularityHover = false,
   shouldLinkToMentions,
 }: TagsListProps) => {
-
   // console.log('debug1->', { infoPageType, tagType, limit, offset, title, disableTooltip, disablePopularityHover });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -76,7 +75,6 @@ const TagsList = ({
                         )}${tag.slug || ''}`
                   }
                   tagType={tag.tagType}
-                  
                 />
               ) : null
             )
@@ -116,7 +114,7 @@ const TagsList = ({
     .sort((a, b) => (b.mentions || 0) - (a.mentions || 0))
     .slice(offset, offset + limit);
 
-    console.log('debug3->', { ...topTags });
+  console.log('debug3->', { ...topTags });
 
   return (
     <div>

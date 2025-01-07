@@ -7,7 +7,7 @@ interface UseTagsProps {
   offset?: number;
 }
 
-const useTags = ({ tagType } : UseTagsProps = {}) => {
+const useTags = ({ tagType }: UseTagsProps = {}) => {
   const [tags, setTags] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,14 +16,16 @@ const useTags = ({ tagType } : UseTagsProps = {}) => {
       try {
         const allTags = await getCollectionItems('Tags');
         const matchedTags = allTags
-          .map(tag => tag.data)
-          .filter(tagData => {
+          .map((tag) => tag.data)
+          .filter((tagData) => {
             const normalizedTagType = tagData.tagType?.toLowerCase();
             const normalizedFilterType = tagType?.toLowerCase();
-            return !tagType ||
+            return (
+              !tagType ||
               normalizedTagType === normalizedFilterType ||
               normalizedTagType === normalizedFilterType?.replace(/s$/, '') ||
-              normalizedTagType + 's' === normalizedFilterType;
+              normalizedTagType + 's' === normalizedFilterType
+            );
           });
 
         setTags(matchedTags);
