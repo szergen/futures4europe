@@ -27,7 +27,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
     ? item.searchItem.split(':')[1]
     : item.searchItem;
   // const tagData = tags.find((tag) => tag.name === tagName);
-  const tagData = tags.find(
+  const tagData = tags?.find(
     (tag) => tag?.name?.toLowerCase() === tagName?.toLowerCase()
   );
   console.log('debug2->', { tags, itemIncludesField, tagName, tagData });

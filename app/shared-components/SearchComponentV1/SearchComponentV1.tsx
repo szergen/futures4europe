@@ -101,6 +101,8 @@ const SearchComponentV1 = () => {
     setSearchState((prevState) => ({
       ...prevState,
       clickedTag: e?.target?.innerText,
+      selectedSuggestionIndex: -1,
+      showResults: true,
     }));
   };
 
@@ -213,7 +215,178 @@ const SearchComponentV1 = () => {
   }, [showResults, pathname, searchedItems]);
 
   useEffect(() => {
-    if (pathname !== '/search') {
+    // switch (pathname) {
+    //   case '/pages/post':
+    //     setSearchState((prevState) => ({
+    //       ...prevState,
+    //       searchedItems: [
+    //         {
+    //           searchItem: 'Post',
+    //           searchItemType: 'tag',
+    //         },
+    //       ],
+    //       filteredData: {
+    //         ...initialData,
+    //         pages: initialData?.pages?.filter(
+    //           (page: any) => page.pageTypes?.[0]?.name === 'post'
+    //         ),
+    //       },
+    //     }));
+    //     break;
+    //   case '/pages/project':
+    //     setSearchState((prevState) => ({
+    //       ...prevState,
+    //       searchedItems: [
+    //         {
+    //           searchItem: 'Project Info',
+    //           searchItemType: 'tag',
+    //         },
+    //       ],
+    //       filteredData: {
+    //         ...initialData,
+    //         pages: initialData?.pages?.filter(
+    //           (page: any) => page.pageTypes?.[0]?.name === 'project info'
+    //         ),
+    //       },
+    //     }));
+    //     break;
+    //   case '/pages/project-result':
+    //     setSearchState((prevState) => ({
+    //       ...prevState,
+    //       searchedItems: [
+    //         {
+    //           searchItem: 'Project Result',
+    //           searchItemType: 'tag',
+    //         },
+    //       ],
+    //       filteredData: {
+    //         ...initialData,
+    //         pages: initialData?.pages?.filter(
+    //           (page: any) => page.pageTypes?.[0]?.name === 'project result'
+    //         ),
+    //       },
+    //     }));
+    //     break;
+    //   default:
+    //     setIsOnSearchPage(false);
+    //     setSearchState((prevState) => ({
+    //       ...prevState,
+    //       searchedItems: [],
+    //       filteredData: initialData,
+    //       showResults: false,
+    //     }));
+    //     break;
+    // }
+
+    if (pathname === '/pages/post') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [
+          {
+            searchItem: 'Post',
+            searchItemType: 'tag',
+          },
+        ],
+        filteredData: {
+          ...initialData,
+          pages: initialData?.pages?.filter(
+            (page: any) => page.pageTypes?.[0]?.name === 'post'
+          ),
+        },
+        showResults: false,
+      }));
+      setIsOnSearchPage(false);
+    } else if (pathname === '/pages/project') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [
+          {
+            searchItem: 'Project Info',
+            searchItemType: 'tag',
+          },
+        ],
+        filteredData: {
+          ...initialData,
+          pages: initialData?.pages?.filter(
+            (page: any) => page.pageTypes?.[0]?.name === 'project info'
+          ),
+        },
+        showResults: false,
+      }));
+      setIsOnSearchPage(false);
+    } else if (pathname === '/pages/project-result') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [
+          {
+            searchItem: 'Project Result',
+            searchItemType: 'tag',
+          },
+        ],
+        filteredData: {
+          ...initialData,
+          pages: initialData?.pages?.filter(
+            (page: any) => page.pageTypes?.[0]?.name === 'project result'
+          ),
+        },
+        showResults: false,
+      }));
+      setIsOnSearchPage(false);
+    } else if (pathname === '/pages/event') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [
+          {
+            searchItem: 'Event',
+            searchItemType: 'tag',
+          },
+        ],
+        filteredData: {
+          ...initialData,
+          pages: initialData?.pages?.filter(
+            (page: any) => page.pageTypes?.[0]?.name === 'event'
+          ),
+        },
+        showResults: false,
+      }));
+      setIsOnSearchPage(false);
+    } else if (pathname === '/pages/organisation') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [
+          {
+            searchItem: 'Organisation Info',
+            searchItemType: 'tag',
+          },
+        ],
+        filteredData: {
+          ...initialData,
+          pages: initialData?.pages?.filter(
+            (page: any) => page.pageTypes?.[0]?.name === 'organisation info'
+          ),
+        },
+        showResults: false,
+      }));
+      setIsOnSearchPage(false);
+    } else if (pathname === '/pages/person') {
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [
+          {
+            searchItem: 'Person Info',
+            searchItemType: 'tag',
+          },
+        ],
+        filteredData: {
+          ...initialData,
+          pages: initialData?.pages?.filter(
+            (page: any) => page.pageTypes?.[0]?.name === 'person info'
+          ),
+        },
+        showResults: false,
+      }));
+      setIsOnSearchPage(false);
+    } else if (pathname !== '/search') {
       setIsOnSearchPage(false);
       setSearchState((prevState) => ({
         ...prevState,
