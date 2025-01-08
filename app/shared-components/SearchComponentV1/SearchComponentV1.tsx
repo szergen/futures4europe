@@ -1,9 +1,9 @@
-import React, { use, useEffect } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import TagInput from './components/TagInput/TagInput';
 import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
 import Results from './components/Results/Results';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
 import {
   removeSearchedItem,
@@ -191,15 +191,38 @@ const SearchComponentV1 = () => {
   }, [results]);
 
   useEffect(() => {
-    console.log('deb1>.results', searchState.results);
-  }, [results]);
+    console.log('debugaaa showResults', showResults);
+  }, [showResults]);
 
   const router = useRouter();
-  // useEffect(() => {
-  //   if (window && window.location.href !== 'search' && showResults) {
-  //     router.push('/search');
-  //   }
-  // }, [showResults]);
+  const pathname = usePathname();
+
+  const [isOnSearchPage, setIsOnSearchPage] = useState(false);
+
+  useEffect(() => {
+    if (
+      pathname !== 'search' &&
+      showResults &&
+      searchedItems.length > 0 &&
+      !isOnSearchPage
+    ) {
+      console.log('debugaaa IFFF');
+      setIsOnSearchPage(true);
+      return router.push('/search');
+    }
+  }, [showResults, pathname, searchedItems]);
+
+  useEffect(() => {
+    if (pathname !== '/search') {
+      setIsOnSearchPage(false);
+      setSearchState((prevState) => ({
+        ...prevState,
+        searchedItems: [],
+        filteredData: initialData,
+        showResults: false,
+      }));
+    }
+  }, [pathname]);
 
   return (
     <div className="searchBoxWrapper relative">

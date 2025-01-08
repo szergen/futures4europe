@@ -74,7 +74,7 @@ export default function Pages({ params, searchParams }: any) {
               style.heroTitle
             )}
           >
-            X pages found
+            {filteredData?.pages?.length || 0} pages found
           </h1>
         </div>
       </Hero>

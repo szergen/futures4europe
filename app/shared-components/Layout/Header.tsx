@@ -3,7 +3,6 @@ import { NavBar } from '@app/shared-components/Layout/NavBar/NavBar';
 import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
 import SearchComponentV1 from '../SearchComponentV1/SearchComponentV1';
-import { SearchProvider } from '../../custom-hooks/SearchContext/SearchContext';
 import style from './Header.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
@@ -550,7 +549,7 @@ const Header = () => {
           className={classNames('relative', style.headerWithSearchContainer)}
         >
           {/* <SearchProvider> */}
-            <SearchComponentV1 />
+          <SearchComponentV1 />
           {/* </SearchProvider> */}
         </div>
         <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
