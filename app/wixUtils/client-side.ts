@@ -303,6 +303,27 @@ const updateMember = async (contactId: string, nickname: string) => {
   }
 };
 
+const getMember = async (memberId: string) => {
+  try {
+    const response = await fetch('/api/getMember', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ memberId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get item');
+    }
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    console.error(`Error getting memberId: ${memberId}`, error);
+  }
+};
+
 const triggerForgotPasswordMail = async (
   email: string,
   redirectUrl: string
@@ -405,4 +426,5 @@ export {
   bulkRemoveItems,
   triggerForgotPasswordMail,
   updateMember,
+  getMember,
 };
