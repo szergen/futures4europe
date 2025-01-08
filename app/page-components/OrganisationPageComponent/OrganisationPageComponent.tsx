@@ -98,7 +98,7 @@ function OrganisationPageComponent({
       setIsPageOwnedByUser(true);
       setIsEditModeOn(true);
     }
-  }, [isLoggedIn, tagsFetched]);
+  }, [isLoggedIn, tagsFetched, userDetails?.userTag]);
   // #endregion
 
   // #region Handle affiliations
@@ -270,6 +270,13 @@ function OrganisationPageComponent({
     }
     // #endregion
 
+    const hasDifferentMedia = organisationData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultOrganisationData?.mediaFiles?.[index]?.url ||
+        file.displayName !==
+          defaultOrganisationData?.mediaFiles?.[index]?.displayName
+    );
+
     // #region Update page fields
     if (
       organisationData.description !== defaultOrganisationData.description ||
@@ -289,6 +296,7 @@ function OrganisationPageComponent({
         organisationData.contentImages,
         defaultOrganisationData.contentImages
       ) ||
+      hasDifferentMedia ||
       !arraysEqual(
         organisationData.organisationPeople,
         defaultOrganisationData.organisationPeople
@@ -575,6 +583,7 @@ function OrganisationPageComponent({
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
     setIsSaveInProgress(false);
@@ -893,7 +902,7 @@ function OrganisationPageComponent({
     // #endregion
 
     // #region Update Organisation Tag
-    // Check if object projectTag has changed
+    // Check if object Organisation has changed
     if (
       !deepEqual(
         organisationData?.organisationTag,
@@ -919,6 +928,7 @@ function OrganisationPageComponent({
     await refetchTags();
     await refetchAffiliations();
     await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
+    handleTagCreated();
     handleUserDataRefresh();
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);
@@ -1158,8 +1168,8 @@ function OrganisationPageComponent({
         mediaFiles={organisationData.mediaFiles}
         updatePostDataBasedOnKeyValue={updateOrganisationDataOnKeyValue}
       />
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...

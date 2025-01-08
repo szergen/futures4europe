@@ -7,7 +7,7 @@ interface UseTagsProps {
   offset?: number;
 }
 
-const useTags = ({ tagType, limit = 25, offset = 0 }: UseTagsProps = {}) => {
+const useTags = ({ tagType }: UseTagsProps = {}) => {
   const [tags, setTags] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,38 +15,18 @@ const useTags = ({ tagType, limit = 25, offset = 0 }: UseTagsProps = {}) => {
     const fetchTags = async () => {
       try {
         const allTags = await getCollectionItems('Tags');
-        let matchedTags = [];
-        let count = 0;
-
-        // Iterate through tags only until we find what we need
-        for (const tag of allTags) {
-          const tagData = tag.data;
-
-          // Check if tag matches our filter
-          const normalizedTagType = tagData.tagType?.toLowerCase();
-          const normalizedFilterType = tagType?.toLowerCase();
-          const isMatch =
-            !tagType ||
-            normalizedTagType === normalizedFilterType ||
-            normalizedTagType === normalizedFilterType?.replace(/s$/, '') ||
-            normalizedTagType + 's' === normalizedFilterType;
-
-          if (isMatch) {
-            // Skip tags if there's an offset
-            if (count >= offset) {
-              matchedTags.push(tagData);
-            }
-            count++;
-
-            // Break once we have enough tags
-            if (matchedTags.length >= limit) {
-              break;
-            }
-          }
-        }
-
-        // Sort the matched tags
-        matchedTags.sort((a: any, b: any) => a.name.localeCompare(b.name));
+        const matchedTags = allTags
+          .map((tag) => tag.data)
+          .filter((tagData) => {
+            const normalizedTagType = tagData.tagType?.toLowerCase();
+            const normalizedFilterType = tagType?.toLowerCase();
+            return (
+              !tagType ||
+              normalizedTagType === normalizedFilterType ||
+              normalizedTagType === normalizedFilterType?.replace(/s$/, '') ||
+              normalizedTagType + 's' === normalizedFilterType
+            );
+          });
 
         setTags(matchedTags);
       } catch (error) {
@@ -57,7 +37,7 @@ const useTags = ({ tagType, limit = 25, offset = 0 }: UseTagsProps = {}) => {
     };
 
     fetchTags();
-  }, [tagType, limit, offset]);
+  }, [tagType]);
 
   return { tags, loading };
 };

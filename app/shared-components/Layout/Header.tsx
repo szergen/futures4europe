@@ -278,7 +278,7 @@ const Header = () => {
           )?.length || 0,
       }));
     }
-  }, [infoPages, postPages]);
+  }, [infoPages, postPages, userDetails.userName, userDetails.userTag]);
 
   useEffect(() => {
     console.log('pageTypeCounts', pageTypeCounts);
@@ -288,15 +288,12 @@ const Header = () => {
   const [isPersonInfoPageReady, setIsPersonInfoPageReady] = useState(false);
   const [personInfoPageLink, setPersonInfoPageLink] = useState('');
 
-  {
-    /*TODO: @Alex de verificat implementarea*/
-  }
   useEffect(() => {
     if (userDetails?.userTag?.name && !isPersonInfoPageReady) {
       setIsPersonInfoPageReady(true);
       setPersonInfoPageLink(userDetails?.userTag?.tagPageLink || '');
     }
-  }, [isLoggedIn, router, userDetails]);
+  }, [isLoggedIn, router, userDetails?.userTag?.tagPageLink]);
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
@@ -327,7 +324,6 @@ const Header = () => {
             </span>
             <span className="block text-sm">{userDetails?.email}</span>
 
-            {/*TODO: @Alex de verificat implementarea*/}
             {personInfoPageLink ? (
               <Link href={personInfoPageLink}>
                 <Dropdown.Item icon={HiUser}>My info page</Dropdown.Item>
@@ -401,7 +397,13 @@ const Header = () => {
         </div>
       </>
     );
-  }, [isLoggedIn, userDetails, isDropdownOpen]);
+  }, [
+    isLoggedIn,
+    userDetails,
+    isDropdownOpen,
+    isPersonInfoPageReady,
+    userDetails?.userTag?.tagPageLink,
+  ]);
 
   return (
     <>

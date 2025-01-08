@@ -192,6 +192,11 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   const updateDataToServer = async () => {
     console.log('Updating Page from', postData.dataCollectionId, postData._id);
     setIsSaveInProgress(true);
+    const hasDifferentMedia = postData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultPostData?.mediaFiles?.[index]?.url ||
+        file.displayName !== defaultPostData?.mediaFiles?.[index]?.displayName
+    );
     // Update Subtitle
     if (
       postData.subtitle !== defaultPostData.subtitle ||
@@ -214,9 +219,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         postData.mediaFiles,
         defaultPostData.mediaFiles
       ) ||
-      postData?.mediaFiles?.[0]?.url !==
-        defaultPostData?.mediaFiles?.[0]?.url ||
-      postData.mediaFiles?.[1]?.url !== defaultPostData?.mediaFiles?.[1]?.url ||
+      hasDifferentMedia ||
       postData.projectResultPublicationDate !==
         defaultPostData.projectResultPublicationDate ||
       postData.eventStartDate !== defaultPostData.eventStartDate ||
@@ -431,8 +434,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
-    // await refetchTags();
+    await refetchTags();
     await refetchPosts();
+    handleTagCreated();
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
 
@@ -635,8 +639,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
-    // await refetchTags();
+    await refetchTags();
     await refetchPosts();
+    handleTagCreated();
     await revalidateDataItem(`/post/${newPostSlug}`);
 
     handleUserDataRefresh();
@@ -1009,8 +1014,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       {/* External Links */}
       {/* <ExternalLinksComponent links={postData.links} /> */}
       {/* Saving modal */}
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...

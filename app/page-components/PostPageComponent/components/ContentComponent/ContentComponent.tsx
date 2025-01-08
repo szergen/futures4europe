@@ -154,8 +154,8 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
     const definedContentCount = contentText.filter(
       (item) => item !== undefined
     ).length;
-    console.log('TEXT -> definedImagesCount', definedImagesCount);
-    console.log('TEXT -> definedContentCount', definedContentCount);
+    // console.log('TEXT -> definedImagesCount', definedImagesCount);
+    // console.log('TEXT -> definedContentCount', definedContentCount);
 
     if (definedContentCount === 0) {
       return true;
@@ -214,7 +214,7 @@ const ContentComponent: React.FC<ContentComponentProps> = ({
 
   // Add empty content image if conditions are met
   useEffect(() => {
-    console.log('Text has changed', contentText);
+    // console.log('Text has changed', contentText);
     if (isEditModeOn && shouldAddEmptyContentImage()) {
       console.log('Adding new image');
       handleAddImage();

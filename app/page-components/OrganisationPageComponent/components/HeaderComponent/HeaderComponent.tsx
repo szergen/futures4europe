@@ -61,8 +61,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   isNewPage,
 }) => {
   const validationFunctionForName = (tempName: string) => {
-    if (tempName?.length < 5) {
-      return 'Title should be at least 5 characters long';
+    if (tempName?.length < 2) {
+      return 'Title should be at least 2 characters long';
     }
     if (tempName?.length > 100) {
       return 'Title should be at most 100 characters long';
@@ -342,7 +342,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         ) : (
           <TagPicker
             placeholder={
-              'Add one or more country tags (where the organisation is based in)'
+              // 'Add one or more country tags (where the organisation is based in)'
+              'Add the country tag (where the organisation is based in)'
             }
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
             className="relative"

@@ -81,7 +81,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain website addresses';
     }
-
     // Special characters check
     const specialCharsRegex = /[<>{}[\]\\\/]/;
     if (specialCharsRegex.test(trimmedTitle)) {
@@ -384,8 +383,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               <TagPicker
                 placeholder={
                   post?.pageType?.[0]?.name !== 'event'
-                    ? 'Add one or more country tags relevant to your post'
-                    : 'Add country tag relevant to your post'
+                    ? // ? 'Add one or more country tags relevant to your post'
+                      'Add the country tag relevant to your post'
+                    : 'Add the country tag relevant to your post'
                 }
                 tags={tags?.filter((tag) => tag?.tagType === 'country')}
                 className="mt-1"

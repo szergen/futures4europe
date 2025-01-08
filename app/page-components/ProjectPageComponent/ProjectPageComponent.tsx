@@ -252,6 +252,13 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
     // #endregion
 
+    const hasDifferentMedia = projectData?.mediaFiles?.some(
+      (file: any, index: number) =>
+        file.url !== defaultProjectData?.mediaFiles?.[index]?.url ||
+        file.displayName !==
+          defaultProjectData?.mediaFiles?.[index]?.displayName
+    );
+
     // Update page fields
     if (
       projectData.description !== defaultProjectData.description ||
@@ -271,10 +278,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         projectData.contentImages,
         defaultProjectData.contentImages
       ) ||
-      areArraysEqualForMediaFiles(
-        projectData.mediaFiles,
-        defaultProjectData.mediaFiles
-      ) ||
+      hasDifferentMedia ||
       projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
@@ -549,6 +553,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     await refetchTags();
     await refetchInfoPages();
     await refetchAffiliations();
+    handleTagCreated();
     await revalidateDataItem(`/project/${projectData.slug}`);
 
     setIsSaveInProgress(false);
@@ -888,6 +893,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     await refetchInfoPages();
     await refetchAffiliations();
     await revalidateDataItem(`/project/${newProjectInfoSlug}`);
+    handleTagCreated();
     handleUserDataRefresh();
 
     router.push(`/project/${newProjectInfoSlug}`);
@@ -1115,8 +1121,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       {/* External Links */}
       {/* <ExternalLinksComponent links={project.links} /> */}
       {/* Modal for Saving page */}
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...

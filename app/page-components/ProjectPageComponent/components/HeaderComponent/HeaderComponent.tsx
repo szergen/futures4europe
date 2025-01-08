@@ -70,8 +70,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (!tempName) {
       return 'Title is required';
     }
-    if (tempName.length < 5) {
-      return 'Title should be at least 5 characters long';
+    if (tempName.length < 2) {
+      return 'Title should be at least 2 characters long';
     }
     if (tempName.length > 100) {
       return 'Title should be at most 100 characters long';
@@ -94,7 +94,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     if (/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain website addresses';
     }
-
     // Check for excessive spaces
     if (/\s{2,}/.test(trimmedTitle)) {
       return 'Title cannot contain multiple consecutive spaces';
@@ -321,20 +320,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Tag {...project.projectFunded} className="mb-1" />
         ) : (
-          // <TagPicker
-          //   placeholder="Add a project type tag"
-          //   tags={tags?.filter((tag) => tag.tagType === 'project type')}
-          //   className="relative mt-2 mb-2"
-          //   selectedValue={project.projectFunded?.name || undefined}
-          //   updatePostData={(value) =>
-          //     updateProjectDataOnKeyValue('projectFunded', value)
-          //   }
-          //   tagType="project type"
-          //   onTagCreated={handleTagCreated}
-          //   newTagHeader="Create a new project type tag"
-          //   newTagType="Project type name"
-          //   newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
-          // />
           <div className="flex items-center">
             <CheckboxComponent
               onChangeHandler={(value) => {
@@ -368,7 +353,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <Tag {...project.countryTag} />
         ) : (
           <TagPicker
-            placeholder={'Add one or more country tags relevant to the project'}
+            // placeholder={'Add one or more country tags relevant to the project'}
+            placeholder={'Add the country tag relevant to the project'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
             className="relative mt-2 mb-2"
             selectedValue={project?.countryTag?.name || undefined}

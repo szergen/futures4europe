@@ -13,6 +13,8 @@ import fetchTagsWithPopularity from '../useFetchTags';
 import { TagProps } from '@app/shared-components/Tag/Tag';
 import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
+import { items } from '@wix/data';
+import { refetchTags } from '@app/utils/refetch-utils';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -55,6 +57,7 @@ interface AuthContextType {
   userTagFetched: boolean;
   allOwnedPages: any[];
   setIsUserTagAssociated: (value: boolean) => void;
+  handleUserTagRefresh: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -144,9 +147,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Toggle the refresh state to trigger re-fetch
   };
 
-  const getUserTag = (userName: string) => {
-    const userTag = tags.find((tag) => tag.name === userName);
+  const { insertDataItem } = useWixModules(items);
+
+  const uploadTag = async (tagName: string) => {
+    try {
+      const result = await insertDataItem({
+        dataCollectionId: 'Tags',
+        dataItem: {
+          data: {
+            name: tagName,
+            tagType: 'person',
+          },
+        },
+      });
+      return result;
+    } catch (error) {
+      console.error('Error uploading tag:', error);
+    }
+  };
+
+  const getUserTag = async (userName: string) => {
+    const userTag = tags?.find((tag) => tag.name === userName);
+    if (!userTag) {
+      console.log('User tag not found for', userName);
+      const tagResult = await uploadTag(userName);
+      const newTag = await tagResult?.dataItem?.data;
+      console.log('deb123->newTag', newTag);
+      await refetchTags();
+      handleTagCreated();
+      return newTag;
+    }
     return userTag;
+  };
+
+  const [refreshUserTag, setRefreshUserTag] = useState(false);
+
+  const handleUserTagRefresh = () => {
+    setRefreshUserTag((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
 
   useEffect(() => {
@@ -156,15 +193,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       userDetails.userName &&
       isUserTagAssociated === false
     ) {
-      console.log('getting');
+      const fetchUserTag = async () => {
+        const userTag = await getUserTag(userDetails.userName);
+        updateUserDetails((prev: any) => ({
+          ...prev,
+          userTag,
+        }));
+      };
+
+      fetchUserTag();
+      setIsUserTagAssociated(true);
+      setUserTagFetched(true);
+    } else if (
+      tagsFetched &&
+      userDetails.userTag &&
+      userDetails.userName &&
+      !userDetails.userTag?.tagPageLink
+    ) {
+      const userTag = tags?.find((tag) => tag.name === userDetails.userName);
       updateUserDetails((prev: any) => ({
         ...prev,
-        userTag: getUserTag(userDetails.userName),
+        userTag,
       }));
       setIsUserTagAssociated(true);
       setUserTagFetched(true);
     }
-  }, [tagsFetched, userDetails.userName, userDetails.userTag?.name]);
+  }, [
+    tagsFetched,
+    userDetails.userName,
+    userDetails.userTag?.name,
+    userDetails.userTag?.tagPageLink,
+    refreshUserTag,
+    refreshTags,
+  ]);
   // #endregion
 
   useEffect(() => {
@@ -249,36 +310,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   // #endregion
 
-  useEffect(() => {
-    // console.log('debug1->userDetails', userDetails);
-  }, [userDetails]);
+  // useEffect(() => {
+  //   // console.log('debug1->userDetails', userDetails);
+  // }, [userDetails]);
 
   // #region extraOwnedPages
   const [allOwnedPages, setAllOwnedPages] = useState<any[]>([]);
 
   useEffect(() => {
     let tempExtraOwnedPages = [] as any[];
-    // const tempExtraInfoPages = infoPages?.filter((infoPage) => {
-    //   // console.log('infoPages', infoPage);
-    //   if (
-    //     !!infoPage?.data?.pageOwner?.find(
-    //       (owner: any) => owner._id === userDetails.userTag?._id
-    //     )
-    //   ) {
-    //     tempExtraOwnedPages.push(infoPage);
-    //     return false;
-    //   }
-    // });
-    // const tempExtraPostPages = postPages?.filter((postPage) => {
-    //   if (
-    //     !!postPage?.data?.pageOwner?.find(
-    //       (owner: any) => owner._id === userDetails.userTag?._id
-    //     )
-    //   ) {
-    //     tempExtraOwnedPages.push(postPage);
-    //     return false;
-    //   }
-    // });
+    const tempExtraInfoPages = infoPages?.filter((infoPage) => {
+      // console.log('infoPages', infoPage);
+      if (
+        !!infoPage?.data?.pageOwner?.find(
+          (owner: any) => owner._id === userDetails.userTag?._id
+        )
+      ) {
+        tempExtraOwnedPages.push(infoPage);
+        return false;
+      }
+    });
+    const tempExtraPostPages = postPages?.filter((postPage) => {
+      if (
+        !!postPage?.data?.pageOwner?.find(
+          (owner: any) => owner._id === userDetails.userTag?._id
+        )
+      ) {
+        tempExtraOwnedPages.push(postPage);
+        return false;
+      }
+    });
 
     // console.log('debug1->tempExtraOwnedPages', tempExtraOwnedPages);
 
@@ -329,6 +390,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsLoadingInProgress,
         userTagFetched,
         allOwnedPages,
+        handleUserTagRefresh,
       }}
     >
       {children}
