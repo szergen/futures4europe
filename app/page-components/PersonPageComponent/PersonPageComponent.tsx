@@ -57,6 +57,8 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     handleTagCreated,
     handleUserDataRefresh,
     postPages,
+    handleUserTagRefresh,
+    updateUserDetails,
   } = useAuth();
   // console.log('debug1->tags', tags);
   const [isPageOwnedByUser, setIsPageOwnedByUser] = useState(false);
@@ -612,6 +614,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     await refetchInfoPages();
     await refetchAffiliations();
     handleTagCreated();
+    handleUserTagRefresh();
     await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
@@ -1017,6 +1020,14 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     await refetchAffiliations();
     handleTagCreated();
     handleUserDataRefresh();
+    handleUserTagRefresh();
+    updateUserDetails((prevData: any) => ({
+      ...prevData,
+      userTag: {
+        ...prevData.userTag,
+        tagPageLink: '/person/' + newPersonInfoSlug,
+      },
+    }));
     await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
 
@@ -1228,8 +1239,8 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       {/* <FilesComponent files={person.files} /> */}
       {/* External Links */}
       {/* <ExternalLinksComponent links={person.links} /> */}
-      <Modal show={isSaveInProgress} size="md" popup>
-        <Modal.Header />
+      <Modal show={isSaveInProgress} size="md" popup dismissible={false}>
+        <Modal.Header className="opacity-0" />
         <Modal.Body>
           <div className="text-center">
             Saving Page...

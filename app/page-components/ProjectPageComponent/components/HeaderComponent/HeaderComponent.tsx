@@ -320,20 +320,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Tag {...project.projectFunded} className="mb-1" />
         ) : (
-          // <TagPicker
-          //   placeholder="Add a project type tag"
-          //   tags={tags?.filter((tag) => tag.tagType === 'project type')}
-          //   className="relative mt-2 mb-2"
-          //   selectedValue={project.projectFunded?.name || undefined}
-          //   updatePostData={(value) =>
-          //     updateProjectDataOnKeyValue('projectFunded', value)
-          //   }
-          //   tagType="project type"
-          //   onTagCreated={handleTagCreated}
-          //   newTagHeader="Create a new project type tag"
-          //   newTagType="Project type name"
-          //   newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
-          // />
           <div className="flex items-center">
             <CheckboxComponent
               onChangeHandler={(value) => {
@@ -367,7 +353,8 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <Tag {...project.countryTag} />
         ) : (
           <TagPicker
-            placeholder={'Add one or more country tags relevant to the project'}
+            // placeholder={'Add one or more country tags relevant to the project'}
+            placeholder={'Add the country tag relevant to the project'}
             tags={tags?.filter((tag) => tag?.tagType === 'country')}
             className="relative mt-2 mb-2"
             selectedValue={project?.countryTag?.name || undefined}
