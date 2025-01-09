@@ -121,7 +121,7 @@ export default function LoginPage() {
         router.push('/dashboard');
       } else if (response?.loginState === 'FAILURE') {
         setError(
-          'Login failed. Please check your credentials. ' + response.errorCode
+          'Login failed. Please check your credentials. ' // + response.errorCode
         );
       }
     } catch (err) {
@@ -154,7 +154,8 @@ export default function LoginPage() {
                         color="failure"
                         icon={HiInformationCircle}
                       >
-                        <span className="font-medium">Info alert!</span> {error}
+                        {/* <span className="font-medium">Info alert!</span>  */}
+                        {error}
                       </Alert>
                     )}
                     <form
