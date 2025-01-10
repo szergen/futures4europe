@@ -175,7 +175,7 @@ const Footer = () => {
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-400">
                   <ul className="text-sm transition-all duration-500">
-                  <li className="mb-2">
+                    <li className="mb-2">
                       <Link
                         target="_blank"
                         href="https://shoutout.wix.com/so/0bPEwQixc"
@@ -183,7 +183,7 @@ const Footer = () => {
                       >
                         December 2024
                       </Link>
-                    </li>                    
+                    </li>
                     <li className="mb-2">
                       <Link
                         target="_blank"
