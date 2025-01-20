@@ -61,6 +61,9 @@ export default function DashboardProjects() {
     _owner: string;
   }
 
+  // Add check for admin status
+  const isWixAdmin = userDetails?.isAdmin || false;
+
   async function handleDeleteInfoPage(infoPageId: InfoPage['_id']) {
     setIsLoadingDeletePostPage(infoPageId);
 
@@ -76,9 +79,11 @@ export default function DashboardProjects() {
         'debug2->Proceeding with info page delete for ID:',
         infoPageId
       );
+
       await wixModules.removeDataItem(infoPageId, {
         dataCollectionId: 'InfoPages',
       });
+
       console.log('debug2->Delete info page successful');
     } catch (error) {
       console.error('debug2->Failed to delete info page:', error);
@@ -608,32 +613,46 @@ export default function DashboardProjects() {
                               />
                             </Link>
                             {/* Only show delete button for admins */}
-                            {(userDetails?.isAdmin === true ||
-                              infoPage?.data?._owner ===
-                                userDetails?.contactId) && (
-                              <Button
-                                size="sm"
-                                color="danger"
-                                onClick={() =>
-                                  handleDeleteInfoPage(infoPage?.data?._id)
-                                }
-                                disabled={
-                                  isLoadingDeletePostPage ===
-                                  infoPage?.data?._id
-                                }
-                              >
-                                Delete
-                              </Button>
+                            {/* Admin Delete Button */}
+                            {isWixAdmin && (
+                              <div className="">
+                                <Button
+                                  size="sm"
+                                  color="failure"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    if (
+                                      window.confirm(
+                                        'Are you sure you want to delete this post?'
+                                      )
+                                    ) {
+                                      handleDeleteInfoPage(infoPage?.data?._id);
+                                    }
+                                  }}
+                                  disabled={
+                                    isLoadingDeletePostPage ===
+                                    infoPage?.data?._id
+                                  }
+                                  className="rounded-full p-2 h-8 w-8 flex items-center justify-center"
+                                >
+                                  <SpriteSvg.AccountTrashIcon
+                                    sizeH={16}
+                                    sizeW={16}
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                    strokeWidth={0}
+                                  />
+                                </Button>
+                              </div>
                             )}
-
-                            {isLoadingDeletePostPage &&
-                              isLoadingDeletePostPage ===
-                                infoPage?.data?._id && (
-                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                                  <LoadingSpinner />
-                                </div>
-                              )}
                           </div>
+
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === infoPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
                         </div>
                       ))
                   ) : (

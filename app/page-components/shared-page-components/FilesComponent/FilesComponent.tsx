@@ -76,7 +76,6 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
         // }
 
         const newMediaFiles = currentFiles.filter((_, i) => i !== index);
-
         // If we're deleting the last file and we're in edit mode, add an empty file slot
         if (isEditModeOn && newMediaFiles.length === 0) {
           const emptyImage = {
@@ -89,7 +88,6 @@ const FilesComponent: React.FC<FilesComponentProps> = ({
           };
           newMediaFiles.push(emptyImage);
         }
-
         setCurrentFiles(newMediaFiles);
         updatePostDataBasedOnKeyValue &&
           updatePostDataBasedOnKeyValue('mediaFiles', newMediaFiles);

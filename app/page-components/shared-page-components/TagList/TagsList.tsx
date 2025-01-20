@@ -114,7 +114,7 @@ const TagsList = ({
     .sort((a, b) => (b.mentions || 0) - (a.mentions || 0))
     .slice(offset, offset + limit);
 
-  console.log('debug3->', { ...topTags });
+  // console.log('debug3->', { ...topTags });
 
   return (
     <div>

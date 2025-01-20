@@ -54,7 +54,7 @@ export const InternalLinksEditor: React.FC<InternalLinksEditorProps> = ({
   const extractedValidPaths = postPages?.map(
     (link) => '/post/' + link.data.slug
   );
-  console.log('extractedValidPaths', extractedValidPaths);
+  // console.log('extractedValidPaths', extractedValidPaths);
   //   #endregion
 
   //   #region add new link
