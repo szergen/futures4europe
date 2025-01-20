@@ -357,7 +357,7 @@ const Footer = () => {
         <div className="py-7 border-t border-gray-200">
           <div className="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
             <span className="text-sm text-gray-500 ">
-              ©<a href="https://futures4europe.eu">futures4europe</a> 2024, All
+              ©<a href="https://futures4europe.eu">futures4europe</a> 2025, All
               rights reserved. Designed by{' '}
               <a target="_blank" href="https://www.uefiscdi.ro">
                 UEFISCDI
