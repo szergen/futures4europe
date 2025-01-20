@@ -139,8 +139,8 @@ const Header = () => {
                 acceptNecessaryBtn: 'Reject all',
                 showPreferencesBtn: 'Manage preferences',
                 footer: `
-                    <a href="/" target="_blank">Privacy Policy</a>
-                    <a href="/" target="_blank">Terms of Service</a>
+                    <a href="/static-pages/privacy-policy" target="_blank">Privacy Policy</a>
+                    <a href="/static-pages/terms-of-use" target="_blank">Terms of Use</a>
                   `,
               },
               preferencesModal: {
