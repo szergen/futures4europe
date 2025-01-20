@@ -627,7 +627,7 @@ export default function DashboardProjects() {
                                         'Are you sure you want to delete this post?'
                                       )
                                     ) {
-                                      handleDeleteInfoPage(infoPage?.data?._id)
+                                      handleDeleteInfoPage(infoPage?.data?._id);
                                     }
                                   }}
                                   disabled={
@@ -648,14 +648,13 @@ export default function DashboardProjects() {
                             )}
                           </div>
 
-                            {isLoadingDeletePostPage &&
-                              isLoadingDeletePostPage ===
-                                infoPage?.data?._id && (
-                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                                  <LoadingSpinner />
-                                </div>
-                              )}
-                          </div>
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === infoPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
+                        </div>
                       ))
                   ) : (
                     <div>No Info Pages</div>
