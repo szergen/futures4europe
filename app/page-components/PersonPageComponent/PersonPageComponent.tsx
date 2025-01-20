@@ -288,7 +288,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         personData.formerAfiliations,
         defaultPersonData.formerAfiliations
       ) ||
-      personData.personTag.name !== defaultPersonData.personTag.name ||
+      personData.personTag?.name !== defaultPersonData.personTag?.name ||
       personData?.data?.linkedinLink !==
         defaultPersonData?.data?.linkedinLink ||
       personData?.data?.websiteLink !== defaultPersonData?.data?.websiteLink ||
@@ -302,7 +302,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         {
           _id: personData._id,
           ...personData.data,
-          title: personData.personTag.name,
+          title: personData.personTag?.name,
           description: personData?.description,
           // personOrganisationRoles: personData?.currentAfiliations?.map(
           //   (item: any) => {
@@ -373,7 +373,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 organisationTag: item,
                 role: item.arole,
                 extraIdentifier: 'current',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -428,7 +428,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 organisationTag: item,
                 role: item.arole,
                 extraIdentifier: 'former',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -538,7 +538,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 personTag: personData.personTag,
                 projectTag: item,
                 extraIdentifier: 'coordination',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -591,7 +591,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 personTag: personData.personTag,
                 projectTag: item,
                 extraIdentifier: 'participation',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -780,7 +780,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 organisationTag: item,
                 role: item.arole,
                 extraIdentifier: 'current',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -832,7 +832,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 organisationTag: item,
                 role: item.arole,
                 extraIdentifier: 'former',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -929,7 +929,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 personTag: personData.personTag,
                 projectTag: item,
                 extraIdentifier: 'coordination',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })
@@ -978,7 +978,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 personTag: personData.personTag,
                 projectTag: item,
                 extraIdentifier: 'participation',
-                title: `${personData.personTag.name} -to- ${item.name}`,
+                title: `${personData.personTag?.name} -to- ${item.name}`,
               },
             };
           })

@@ -810,7 +810,7 @@ function OrganisationPageComponent({
               },
             };
           })
-          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
         const updatedOrganisationsProjects = await bulkInsertItems(
           'Affiliations',
@@ -862,7 +862,7 @@ function OrganisationPageComponent({
               },
             };
           })
-          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
         const updatedOrganisationsPeople = await bulkInsertItems(
           'Affiliations',
