@@ -282,7 +282,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       projectData.contentText?.[0] ||
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
-      projectData.projectTag.name !== defaultProjectData.projectTag.name ||
+      projectData.projectTag?.name !== defaultProjectData.projectTag?.name ||
       projectData?.data?.linkedinLink !==
         defaultProjectData?.data?.linkedinLink ||
       projectData?.data?.websiteLink !== defaultProjectData?.data?.websiteLink
@@ -293,7 +293,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         {
           _id: projectData._id,
           ...projectData.data,
-          title: projectData.projectTag.name,
+          title: projectData.projectTag?.name,
           description: projectData?.description,
           postContentRIch1: projectData?.contentText[0],
           postContentRIch2: projectData?.contentText[1],
@@ -483,7 +483,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
               },
             };
           })
-          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
         const updatedProjectsCoordonation = await bulkInsertItems(
           'Affiliations',
@@ -531,11 +531,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
                 projectTag: projectData.projectTag,
                 personTag: item,
                 extraIdentifier: 'participation',
-                title: `${projectData.projectTag.name} -to- ${item.name}`,
+                title: `${projectData.projectTag?.name} -to- ${item.name}`,
               },
             };
           })
-          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
         const updatedProjectsParticipation = await bulkInsertItems(
           'Affiliations',
@@ -752,11 +752,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
                 projectTag: projectData.projectTag,
                 personTag: item,
                 extraIdentifier: 'coordination',
-                title: `${projectData.personTag.name} -to- ${item.name}`,
+                title: `${projectData.projectTag?.name} -to- ${item.name}`,
               },
             };
           })
-          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
         const updatedProjectsCoordonation = await bulkInsertItems(
           'Affiliations',
@@ -800,11 +800,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
                 projectTag: projectData.projectTag,
                 personTag: item,
                 extraIdentifier: 'participation',
-                title: `${projectData.projectTag.name} -to- ${item.name}`,
+                title: `${projectData.projectTag?.name} -to- ${item.name}`,
               },
             };
           })
-          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
         const updatedProjectsParticipation = await bulkInsertItems(
           'Affiliations',
