@@ -291,12 +291,20 @@ export default function RegisterPage() {
                         <div>
                           <strong className="font-medium text-black relative">
                             By registering, you agree to the
-                            <a href="/static-pages/terms-of-use" target="_blank" className="text-blue-600">
+                            <a
+                              href="/static-pages/terms-of-use"
+                              target="_blank"
+                              className="text-blue-600"
+                            >
                               {' '}
                               Terms of use{' '}
                             </a>
                             and
-                            <a href="/static-pages/privacy-policy" target="_blank" className="text-blue-600">
+                            <a
+                              href="/static-pages/privacy-policy"
+                              target="_blank"
+                              className="text-blue-600"
+                            >
                               {' '}
                               Privacy Policy
                             </a>
@@ -330,7 +338,11 @@ export default function RegisterPage() {
                       >
                         I agree my information will be processed in accordance
                         with the Future4Europe and Eye of Europe{' '}
-                        <a href="/static-pages/privacy-policy" target="_blank" className="text-blue-600">
+                        <a
+                          href="/static-pages/privacy-policy"
+                          target="_blank"
+                          className="text-blue-600"
+                        >
                           Privacy Policy
                         </a>
                         .

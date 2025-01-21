@@ -85,7 +85,6 @@ export default function DashboardProjects() {
       });
 
       console.log('debug2->Delete info page successful');
-      
     } catch (error) {
       console.error('debug2->Failed to delete info page:', error);
     } finally {
