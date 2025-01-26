@@ -212,10 +212,15 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             )}
             {!isEditModeOn ? (
               affilitiation.name && (
-                <Tag
-                  {...affilitiation}
-                  {...tags?.find((item) => item.name === affilitiation.name)}
-                />
+                <>
+                  <Tag
+                    {...affilitiation}
+                    {...tags?.find((item) => item.name === affilitiation.name)}
+                  />
+                  {/* {JSON.stringify(
+                    tags?.find((item) => item.name === affilitiation.name)
+                  )} */}
+                </>
               )
             ) : (
               <>

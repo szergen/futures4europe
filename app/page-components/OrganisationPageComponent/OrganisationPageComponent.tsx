@@ -408,15 +408,17 @@ function OrganisationPageComponent({
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsProjects = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsProjects = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsProjects',
-          updatedOrganisationsProjects
-        );
+          console.log(
+            'debug111->updatedOrganisationsProjects',
+            updatedOrganisationsProjects
+          );
+        }
       }
     }
 
@@ -464,15 +466,17 @@ function OrganisationPageComponent({
           })
           ?.filter((item: any) => item?.data?.personTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsPeople = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsPeople = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsPeople',
-          updatedOrganisationsPeople
-        );
+          console.log(
+            'debug111->updatedOrganisationsPeople',
+            updatedOrganisationsPeople
+          );
+        }
       }
     }
 
@@ -812,15 +816,17 @@ function OrganisationPageComponent({
           })
           ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsProjects = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsProjects = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsProjects',
-          updatedOrganisationsProjects
-        );
+          console.log(
+            'debug111->updatedOrganisationsProjects',
+            updatedOrganisationsProjects
+          );
+        }
       }
     }
     // #endregion
@@ -864,15 +870,17 @@ function OrganisationPageComponent({
           })
           ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsPeople = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsPeople = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsPeople',
-          updatedOrganisationsPeople
-        );
+          console.log(
+            'debug111->updatedOrganisationsPeople',
+            updatedOrganisationsPeople
+          );
+        }
       }
     }
     // #endregion

@@ -377,15 +377,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsCurrent = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsCurrent = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsCurrent',
-          updatedOrganisationsCurrent
-        );
+          console.log(
+            'debug111->updatedOrganisationsCurrent',
+            updatedOrganisationsCurrent
+          );
+        }
       }
     }
 
@@ -485,14 +487,16 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsCoordonation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
-        console.log(
-          'debug111->updatedProjectsCoordonation',
-          updatedProjectsCoordonation
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsCoordonation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
+          console.log(
+            'debug111->updatedProjectsCoordonation',
+            updatedProjectsCoordonation
+          );
+        }
       }
     }
 
@@ -537,15 +541,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsParticipation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsParticipation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedProjectsParticipation',
-          updatedProjectsParticipation
-        );
+          console.log(
+            'debug111->updatedProjectsParticipation',
+            updatedProjectsParticipation
+          );
+        }
       }
     }
 
@@ -758,15 +764,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsCoordonation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsCoordonation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedProjectsCoordonation',
-          updatedProjectsCoordonation
-        );
+          console.log(
+            'debug111->updatedProjectsCoordonation',
+            updatedProjectsCoordonation
+          );
+        }
       }
     }
     // #endregion
@@ -806,15 +814,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsParticipation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsParticipation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedProjectsParticipation',
-          updatedProjectsParticipation
-        );
+          console.log(
+            'debug111->updatedProjectsParticipation',
+            updatedProjectsParticipation
+          );
+        }
       }
     }
     // #endregion
@@ -858,15 +868,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsCurrent = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsCurrent = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsCurrent',
-          updatedOrganisationsCurrent
-        );
+          console.log(
+            'debug111->updatedOrganisationsCurrent',
+            updatedOrganisationsCurrent
+          );
+        }
       }
     }
     // #endregion
