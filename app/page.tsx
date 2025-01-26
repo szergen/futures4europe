@@ -226,7 +226,7 @@ export const Home = () => {
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    infoPageType="project info"
+                    infoPageType="project"
                     limit={25}
                     offset={0}
                     disableTooltip={true}
@@ -241,7 +241,7 @@ export const Home = () => {
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    infoPageType="organisation info"
+                    infoPageType="organisation"
                     limit={25}
                     offset={0}
                     disableTooltip={true}
@@ -256,7 +256,7 @@ export const Home = () => {
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    infoPageType="person info"
+                    infoPageType="person"
                     limit={25}
                     offset={0}
                     disableTooltip={true}
@@ -271,7 +271,7 @@ export const Home = () => {
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    tagType="domains"
+                    tagType="domain"
                     limit={25}
                     offset={0}
                     disableTooltip={true}
@@ -281,7 +281,7 @@ export const Home = () => {
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    tagType="domains"
+                    tagType="domain"
                     limit={25}
                     offset={25}
                     disableTooltip={true}
@@ -297,7 +297,7 @@ export const Home = () => {
               <div className="index_customerGroup">
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    tagType="foresight methods"
+                    tagType="foresight method"
                     limit={25}
                     offset={0}
                     disableTooltip={true}
@@ -307,7 +307,7 @@ export const Home = () => {
                 </div>
                 <div className="index_customerItem__rvamt my-1 Tag_tagContainer__to97L">
                   <TagsList
-                    tagType="foresight methods"
+                    tagType="foresight method"
                     limit={25}
                     offset={25}
                     disableTooltip={true}
