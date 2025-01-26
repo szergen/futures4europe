@@ -17,7 +17,7 @@ async function uploadFileToWix(
     );
 
     console.log('generatedFileUploadUrl', generatedFileUploadUrl);
-    console.log('File type:', file.type);
+    console.log('File type:', file?.type);
 
     const uploadResponse = await fetch(
       `${generatedFileUploadUrl.uploadUrl}?filename=${file?.name}`,

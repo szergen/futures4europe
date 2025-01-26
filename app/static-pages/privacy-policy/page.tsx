@@ -1,10 +1,6 @@
-'use client';
 import classNames from 'classnames';
-import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import Typography from '@app/shared-components/Typography/Typography';
-import Label from '@app/shared-components/Label/Label';
 import style from './privacy.module.css';
-import Image from 'next/image';
 
 export default function privacyPolicyPage() {
   return (
