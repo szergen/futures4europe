@@ -35,7 +35,6 @@ import {
 } from '../PageComponents.utils';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-import { members } from '@wix/members';
 import {
   refetchAffiliations,
   refetchInfoPages,

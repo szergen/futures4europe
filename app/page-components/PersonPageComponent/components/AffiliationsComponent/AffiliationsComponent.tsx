@@ -108,7 +108,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   // Function to determine if tagline should be shown
   const shouldShowTagline = (type: string = '') => {
-    const typeToCheck = type.toLowerCase();
+    const typeToCheck = type?.toLowerCase();
     return !(typeToCheck === 'person');
   };
   return (

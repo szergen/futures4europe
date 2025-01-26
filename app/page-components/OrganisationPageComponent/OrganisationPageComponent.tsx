@@ -5,7 +5,6 @@ import style from './OrganisationPageComponent.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
-import PersonDescriptionComponent from '../shared-page-components/DescriptionComponent/DescriptionComponent';
 import TagListComponent from '../shared-page-components/TagListComponent/TagListComponent';
 import AffiliationsComponent from '../PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';

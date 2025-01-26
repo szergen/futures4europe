@@ -47,7 +47,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
 
   // Determine if tagline should be shown based on tag type
   const shouldShowTagline = tagType
-    ? tagTypesWithTagline.includes(tagType.toLowerCase())
+    ? tagTypesWithTagline.includes(tagType?.toLowerCase())
     : true;
 
   return (
