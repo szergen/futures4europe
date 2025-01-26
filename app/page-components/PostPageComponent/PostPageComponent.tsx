@@ -521,7 +521,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     if (postData.projectAuthors?.length && newPostID) {
       const updatedAuthors = await replaceDataItemReferences(
         'PostPages',
-        postData.projectAuthors?.map((author: any) => author._id),
+        postData.projectAuthors
+          ?.map((author: any) => author?._id)
+          ?.filter(Boolean),
         'projectResultAuthor',
         newPostID
       );

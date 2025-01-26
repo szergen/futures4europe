@@ -1,11 +1,6 @@
-'use client';
 import classNames from 'classnames';
-import { WixMediaImage } from '@app/shared-components/WixMediaImage/WixMediaImage';
 import Typography from '@app/shared-components/Typography/Typography';
-import Label from '@app/shared-components/Label/Label';
 import style from './terms.module.css';
-import Image from 'next/image';
-import { ClassNames } from '@emotion/react';
 
 export default function termsOfUsePage() {
   return (

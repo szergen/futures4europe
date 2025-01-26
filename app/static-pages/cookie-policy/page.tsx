@@ -1,4 +1,3 @@
-'use client';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
 import CookieTable from '@app/static-pages/cookie-policy/cookie-table/cookie-table';
