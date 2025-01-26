@@ -94,7 +94,11 @@ const Footer = () => {
                       <strong className="font-medium text-white relative">
                         I agree my information will be processed in accordance
                         with the Future4Europe and Eye of Europe{' '}
-                        <a href="#" className="text-blue-600">
+                        <a
+                          href="/static-pages/privacy-policy"
+                          target="_blank"
+                          className="text-blue-600"
+                        >
                           Privacy Policy
                         </a>
                         .
@@ -175,24 +179,6 @@ const Footer = () => {
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-400">
                   <ul className="text-sm transition-all duration-500">
-                    <li className="mb-2">
-                      <Link
-                        target="_blank"
-                        href="https://shoutout.wix.com/so/0bPEwQixc"
-                        className="text-gray-400 hover:text-gray-500 underline"
-                      >
-                        December 2024
-                      </Link>
-                    </li>
-                    <li className="mb-2">
-                      <Link
-                        target="_blank"
-                        href="https://shoutout.wix.com/so/0bPEwQixc"
-                        className="text-gray-400 hover:text-gray-500 underline"
-                      >
-                        December 2024
-                      </Link>
-                    </li>
                     <li className="mb-2">
                       <Link
                         target="_blank"
@@ -326,6 +312,30 @@ const Footer = () => {
                   About us
                 </Link>
               </li>
+              <li className="mb-6">
+                <Link
+                  href="/static-pages/terms-of-use"
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  Terms of use
+                </Link>
+              </li>
+              <li className="mb-6">
+                <Link
+                  href="/static-pages/privacy-policy"
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li className="mb-6">
+                <Link
+                  href="/static-pages/cookie-policy"
+                  className="text-gray-400 hover:text-gray-500 underline"
+                >
+                  Cookie Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -351,7 +361,7 @@ const Footer = () => {
         <div className="py-7 border-t border-gray-200">
           <div className="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
             <span className="text-sm text-gray-500 ">
-              ©<a href="https://futures4europe.eu">futures4europe</a> 2024, All
+              ©<a href="https://futures4europe.eu">futures4europe</a> 2025, All
               rights reserved. Designed by{' '}
               <a target="_blank" href="https://www.uefiscdi.ro">
                 UEFISCDI
