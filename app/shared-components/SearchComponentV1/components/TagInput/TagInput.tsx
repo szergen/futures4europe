@@ -13,6 +13,7 @@ import {
 import style from './TagInput.module.css';
 import classNames from 'classnames';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 // import SearchedItems from '../SearchedItems/SearchedItems';
 
 export type TagInputProps = {
@@ -547,18 +548,25 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // }, [searchState.selectedSuggestionIndex]);
 
   return (
-    <div className={classNames(style.SearchInputContainer, 'flex rounded-md')}>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Search for tags, pages, or people..."
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-        disabled={!tagsFetched}
-      />
-      <button
-        className={classNames(style.SearchInputButton, 'rounded-md')}
+    <div className={classNames(style.SearchInputContainer)}>
+      {tagsFetched ? (
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Search for tags, pages, or people..."
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          disabled={!tagsFetched}
+        />
+      ) : (
+        <div className={classNames(style.loadingSpinner)}>
+          <LoadingSpinner />
+        </div>
+      )}
+
+      {/* <button
+        // className={classNames(style.SearchInputButton, 'rounded-md')}
         onMouseDown={handleSearchButton}
       >
         <svg
@@ -589,7 +597,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             </g>
           </g>
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 };

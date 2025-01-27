@@ -2,17 +2,14 @@ import React, { use, useEffect, useState } from 'react';
 import TagInput from './components/TagInput/TagInput';
 import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
-import Results from './components/Results/Results';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSearch } from '../../custom-hooks/SearchContext/SearchContext';
 import {
   removeSearchedItem,
-  sortResultBySortTags,
   updateFilteredDataBasedOnClickedTag,
 } from './SearchComponentV1.utils';
-import { Modal } from 'flowbite-react';
 import SearchedItems from './components/SearchedItems/SearchedItems';
-import Tag from '../Tag/Tag';
+import style from './SearchComponentV1.module.css';
 import classNames from 'classnames';
 
 const SearchComponentV1 = () => {
@@ -398,8 +395,8 @@ const SearchComponentV1 = () => {
   }, [pathname]);
 
   return (
-    <div className="searchBoxWrapper relative">
-      <div className="searchBox flex">
+    <div className={classNames('relative', style.searchBoxWrapper)}>
+      <div className={classNames(style.searchBox)}>
         <SearchedItems
           searchedItems={searchedItems}
           handleRemoveSearchedItem={handleRemoveSearchedItem}
@@ -410,28 +407,74 @@ const SearchComponentV1 = () => {
         <TagInput initialData={initialData} filteredData={filteredData} />
         {/* {selectedSortTag && <div>Sorted By: {selectedSortTag}</div>} */}
       </div>
+      {/* Keys Suggestions */}
+      {(showHelp || showSuggestions) && (
+        <div className={style.keySuggestionsContainer}>
+          <div className={style.keySuggestionsLeft}>
+            <span className={style.arrowKeys}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+                />
+              </svg>
+            </span>
+            <span className={style.arrowKeys}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"
+                />
+              </svg>
+            </span>
+            <span className={style.leftText}>To navigate</span>
+          </div>
+          <div className={style.keySuggestionsRight}>
+            <span className={style.enterIcon}>enter</span>
+            <span className={style.rightText}>To select</span>
+            <span className={style.escIcon}>esc</span>
+            <span className={style.rightText}>To dismiss selection</span>
+          </div>
+        </div>
+      )}
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
-      {showSuggestions && (
-        <Suggestions
-          fieldSuggestions={fieldSuggestions}
-          tagSuggestions={tagSuggestions}
-          pageSuggestions={pageSuggestions}
-          sortTagsSuggestions={sortTagsSuggestions}
-          // handleClickedSuggestion={handleClickedSuggestion}
-          handleTagSuggestion={handleTagSuggestion}
-          handleFieldSelection={handleFieldSelection}
-          clickedField={clickedField}
-          handleSelectedSuggestion={handleSelectedSuggestion}
-          selectedSuggestionIndex={selectedSuggestionIndex}
-          activeSelection={activeSelection}
-          searchedItems={searchedItems}
-          // sortTags={sortTags}
-          handleSelectedSortTag={handleSelectedSortTag}
-          // inputText={inputText}
-          handleScrollForSuggestions={handleScrollForSuggestions}
-        />
-      )}
+      {/* {showSuggestions && ( */}
+      <Suggestions
+        fieldSuggestions={fieldSuggestions}
+        tagSuggestions={tagSuggestions}
+        pageSuggestions={pageSuggestions}
+        sortTagsSuggestions={sortTagsSuggestions}
+        // handleClickedSuggestion={handleClickedSuggestion}
+        handleTagSuggestion={handleTagSuggestion}
+        handleFieldSelection={handleFieldSelection}
+        clickedField={clickedField}
+        handleSelectedSuggestion={handleSelectedSuggestion}
+        selectedSuggestionIndex={selectedSuggestionIndex}
+        activeSelection={activeSelection}
+        searchedItems={searchedItems}
+        // sortTags={sortTags}
+        handleSelectedSortTag={handleSelectedSortTag}
+        // inputText={inputText}
+        handleScrollForSuggestions={handleScrollForSuggestions}
+      />
+      {/* )} */}
       {/* Results */}
       {/* {showResults && (
         <Modal

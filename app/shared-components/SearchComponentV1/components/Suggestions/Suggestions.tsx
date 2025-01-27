@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import style from './Suggestions.module.css';
 import Link from 'next/link';
 import { highlightMatches } from '../../SearchComponentV1.utils';
-import { HiDocumentSearch } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
 import Tag from '@app/shared-components/Tag/Tag';
@@ -152,6 +151,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     // Switch between field and tag suggestions indexes
   }, [selectedSuggestionIndex, clickedField]);
 
+  console.log('pageSuggestions->', pageSuggestions);
+
   return (
     <motion.div
       className={classNames('relative z-10', style.suggestionsContainerWrap)}
@@ -172,10 +173,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         onWheel={handleScrollForSuggestions}
       >
         {/* Sort Tags */}
-        {availableSortTags.length > 0 && (
+        {availableSortTags?.length > 0 && (
           <div className={classNames(style.tagSuggestionsLabel)}>
-            Sort by:
-            <ul className="style.tags">
+            <span
+              className={classNames(
+                'ml-2 pb-4 block text-[14px]',
+                style.tagSuggestionsLabel
+              )}
+            >
+              Sort by
+            </span>
+            <ul className={style.lists}>
               {availableSortTags?.map((sortTag: any, index: number) => (
                 <li
                   key={index}
@@ -204,10 +212,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           </div>
         )}
         {/* Field Tags */}
-        {!clickedField && (
+        {!clickedField && uniqueFields?.length > 0 && (
           <div className={style.tagSuggestionsWrapper}>
-            <span className="text-purple-700">Field Suggestions:</span>
-            <ul className="style.tags">
+            <span
+              className={classNames(
+                'ml-2 pb-4 block text-[14px]',
+                style.tagSuggestionsLabel
+              )}
+            >
+              Field Suggestions
+            </span>
+            <ul className={style.lists}>
               {uniqueFields?.map(
                 (fieldSuggestion: any, index: number) =>
                   index < 10 && (
@@ -246,209 +261,236 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           </div>
         )}
         {/* Tags */}
-        <div className={style.tagSuggestionsWrapper}>
-          <span
-            className={classNames(
-              'ml-2 pb-4 block text-[14px]',
-              style.tagSuggestionsLabel
-            )}
-          >
-            Tag Suggestions
-          </span>
-          <ul className="style.tags">
-            {tagSuggestions
-              ?.slice(
-                selectedSuggestionIndex >= 5 ? selectedSuggestionIndex - 1 : 0,
-                selectedSuggestionIndex >= 5 ? selectedSuggestionIndex + 4 : 5
-              )
-              .map((tagSuggestion: any, index: number) => {
-                const actualIndex =
+        {tagSuggestions?.length > 0 ? (
+          <div className={style.tagSuggestionsWrapper}>
+            <span
+              className={classNames(
+                'ml-2 pb-4 block text-[14px]',
+                style.tagSuggestionsLabel
+              )}
+            >
+              Tag Suggestions
+            </span>
+            <ul className={style.lists}>
+              {tagSuggestions
+                ?.slice(
                   selectedSuggestionIndex >= 5
-                    ? selectedSuggestionIndex - 1 + index
-                    : index;
-                return (
-                  <li
-                    key={tagSuggestion.item?.name}
-                    className={classNames(
-                      'flex items-center',
-                      actualIndex === highlightedIndexWithType.index &&
-                        highlightedIndexWithType.type === 'tag' &&
-                        'bg-gray-200',
-                      actualIndex ===
-                        selectedSuggestionIndex -
-                          fieldSuggestions.length -
-                          availableSortTags.length &&
-                        activeSelection === 'tag' &&
-                        'bg-gray-100'
-                    )}
-                    onMouseOver={() =>
-                      setHighlightedIndexWithType({ index, type: 'tag' })
-                    }
-                  >
-                    <span
-                      className="w-32 shrink-0"
-                      // onMouseDown={handleClickedSuggestion}
+                    ? selectedSuggestionIndex - 1
+                    : 0,
+                  selectedSuggestionIndex >= 5 ? selectedSuggestionIndex + 4 : 5
+                )
+                .map((tagSuggestion: any, index: number) => {
+                  const actualIndex =
+                    selectedSuggestionIndex >= 5
+                      ? selectedSuggestionIndex - 1 + index
+                      : index;
+                  return (
+                    <li
+                      key={tagSuggestion.item?.name}
+                      className={classNames(
+                        'flex items-center',
+                        actualIndex === highlightedIndexWithType.index &&
+                          highlightedIndexWithType.type === 'tag' &&
+                          'bg-gray-200',
+                        actualIndex ===
+                          selectedSuggestionIndex -
+                            fieldSuggestions.length -
+                            availableSortTags.length &&
+                          activeSelection === 'tag' &&
+                          'bg-gray-100'
+                      )}
+                      onMouseOver={() =>
+                        setHighlightedIndexWithType({ index, type: 'tag' })
+                      }
                     >
-                      {tagSuggestion.item?.tagType}:
-                    </span>
-                    <div
-                      onMouseDown={handleTagSuggestion}
-                      className={style.tagContainerForSuggestions}
-                    >
-                      <Tag
-                        {...tagSuggestion.item}
-                        disableLink
-                        disablePopularityHover
-                        disableTooltip
-                      />
-                    </div>
-                    {/* #region Old tag suggestions */}
-                    {
-                      // <div className="flex searchTagImage items-start">
-                      //   <Image
-                      //     alt={'Tag Image'}
-                      //     src={
-                      //       tagSuggestion.item?.picture ||
-                      //       'https://placehold.co/600x400?text=placeholder'
-                      //     }
-                      //     width={40}
-                      //     height={40}
-                      //   />
-                      //   <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
-                      //     <div
-                      //       // dangerouslySetInnerHTML={{
-                      //       //   __html: tagSuggestion.name,
-                      //       // }}
-                      //       dangerouslySetInnerHTML={{
-                      //         __html:
-                      //           highlightMatches(
-                      //             tagSuggestion?.item?.name,
-                      //             tagSuggestion?.matches
-                      //           ) || tagSuggestion?.item?.name,
-                      //       }}
-                      //       onMouseDown={handleTagSuggestion}
-                      //       className={classNames(
-                      //         'cursor-pointer',
-                      //         tagSuggestion.item?.pageLink && 'font-bold'
-                      //       )}
-                      //     />
-                      //     <div
-                      //       data-after={tagSuggestion.item?.popularity}
-                      //       className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
-                      //     ></div>
-                      //     <div
-                      //       className="w-full text-12"
-                      //       dangerouslySetInnerHTML={{
-                      //         __html: highlightMatches(
-                      //           tagSuggestion?.item?.tagLine,
-                      //           tagSuggestion?.matches
-                      //         ),
-                      //       }}
-                      //       // dangerouslySetInnerHTML={{
-                      //       //   __html: tagSuggestion.tagLine,
-                      //       // }}
-                      //     />
-                      //     {/* {tagSuggestion.tagLine} */}
-                      //     {/* </span> */}
-                      //   </div>
-                      // </div>
-                    }
-                    {/* #endregion */}
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
-        {/* Pages */}
-        <div className={style.tagSuggestionsWrapper} />
-        <span className="text-pink-700">Quick Results(Page Suggestions:)</span>
-        <ul className="style.pages">
-          {pageSuggestions?.map(
-            (pageSuggestion: any, index: number) =>
-              index < 5 && (
-                <li
-                  key={index}
-                  className={classNames(
-                    index === highlightedIndexWithType.index &&
-                      highlightedIndexWithType.type === 'page' &&
-                      'bg-gray-200',
-                    'flex items-center',
-                    style.quickResults
-                  )}
-                  onMouseOver={() =>
-                    setHighlightedIndexWithType({ index, type: 'page' })
-                  }
-                  // Prevent exiting the input field on click
-                  onMouseDown={(e) => e.preventDefault()}
-                >
-                  <Link
-                    className={classNames(
-                      index === highlightedIndexWithType.index &&
-                        highlightedIndexWithType.type === 'page' &&
-                        'bg-gray-200',
-                      'flex items-center'
-                    )}
-                    href={`${automaticallyDecidePathPrefixBasedOnPageType(
-                      pageSuggestion.item?.pageTypes?.[0]
-                    )}${pageSuggestion.item?.slug}`}
-                    target="_blank"
-                  >
-                    <span className="w-32 shrink-0">
-                      {/* {resolvePageType(pageSuggestion)}: */}
-                      {pageSuggestion.item?.pageTypes?.[0]?.name}:
-                    </span>
-                    <div className="flex searchTagImage items-start">
-                      <Image
-                        alt={'Tag Image'}
-                        className={
-                          (classNames('inline-block mr-1 ml-4 w-10 h-10'),
-                          style.searchTagImage)
-                        }
-                        src={
-                          pageSuggestion.item?.pictures ||
-                          'https://placehold.co/600x400?text=placeholder'
-                        }
-                        width={40}
-                        height={40}
-                      />
-                      <div className="flex flex-wrap items-center ml-2 searchTagText">
-                        <div
-                          // dangerouslySetInnerHTML={{
-                          //   __html: pageSuggestion.title,
-                          // }}
-                          dangerouslySetInnerHTML={{
-                            __html: highlightMatches(
-                              pageSuggestion?.item?.title,
-                              pageSuggestion?.matches
-                            ),
-                          }}
-                        ></div>
-                        <div
-                          className={classNames(
-                            'w-full text-12 cursor-text',
-                            style.quickResultsContent
-                          )}
-                          // dangerouslySetInnerHTML={{
-                          //   __html: pageSuggestion.description,
-                          // }}
-                          dangerouslySetInnerHTML={{
-                            __html: highlightMatches(
-                              pageSuggestion?.item?.postContentRIch1 +
-                                pageSuggestion?.item?.postContentRIch2 ||
-                                pageSuggestion?.item?.description,
-                              pageSuggestion?.matches
-                            ),
-                          }}
-                        >
-                          {/* {pageSuggestion.description} */}
-                        </div>
+                      <span
+                        className="w-32 shrink-0"
+                        // onMouseDown={handleClickedSuggestion}
+                      >
+                        {tagSuggestion.item?.tagType}:
+                      </span>
+                      <div
+                        onMouseDown={handleTagSuggestion}
+                        className={style.tagContainerForSuggestions}
+                      >
+                        <Tag
+                          {...tagSuggestion.item}
+                          disableLink
+                          disablePopularityHover
+                          disableTooltip
+                        />
                       </div>
-                    </div>
-                  </Link>
-                </li>
-              )
-          )}
-        </ul>
+                      {/* #region Old tag suggestions */}
+                      {
+                        // <div className="flex searchTagImage items-start">
+                        //   <Image
+                        //     alt={'Tag Image'}
+                        //     src={
+                        //       tagSuggestion.item?.picture ||
+                        //       'https://placehold.co/600x400?text=placeholder'
+                        //     }
+                        //     width={40}
+                        //     height={40}
+                        //   />
+                        //   <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
+                        //     <div
+                        //       // dangerouslySetInnerHTML={{
+                        //       //   __html: tagSuggestion.name,
+                        //       // }}
+                        //       dangerouslySetInnerHTML={{
+                        //         __html:
+                        //           highlightMatches(
+                        //             tagSuggestion?.item?.name,
+                        //             tagSuggestion?.matches
+                        //           ) || tagSuggestion?.item?.name,
+                        //       }}
+                        //       onMouseDown={handleTagSuggestion}
+                        //       className={classNames(
+                        //         'cursor-pointer',
+                        //         tagSuggestion.item?.pageLink && 'font-bold'
+                        //       )}
+                        //     />
+                        //     <div
+                        //       data-after={tagSuggestion.item?.popularity}
+                        //       className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
+                        //     ></div>
+                        //     <div
+                        //       className="w-full text-12"
+                        //       dangerouslySetInnerHTML={{
+                        //         __html: highlightMatches(
+                        //           tagSuggestion?.item?.tagLine,
+                        //           tagSuggestion?.matches
+                        //         ),
+                        //       }}
+                        //       // dangerouslySetInnerHTML={{
+                        //       //   __html: tagSuggestion.tagLine,
+                        //       // }}
+                        //     />
+                        //     {/* {tagSuggestion.tagLine} */}
+                        //     {/* </span> */}
+                        //   </div>
+                        // </div>
+                      }
+                      {/* #endregion */}
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        ) : (
+          ''
+        )}
+
+        {/* Pages */}
+        {pageSuggestions?.length > 0 && (
+          <div className={style.quickResultsWrapper}>
+            <span
+              className={classNames(
+                'ml-2 pb-4 block text-[14px]',
+                style.tagSuggestionsLabel
+              )}
+            >
+              Quick Results
+            </span>
+            <ul className={style.lists}>
+              {pageSuggestions?.map(
+                (pageSuggestion: any, index: number) =>
+                  index < 5 && (
+                    <li
+                      key={index}
+                      className={classNames(
+                        index === highlightedIndexWithType.index &&
+                          highlightedIndexWithType.type === 'page' &&
+                          'bg-gray-200',
+                        'flex items-center',
+                        style.quickResults
+                      )}
+                      onMouseOver={() =>
+                        setHighlightedIndexWithType({ index, type: 'page' })
+                      }
+                      // Prevent exiting the input field on click
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      <Link
+                        className={classNames(
+                          index === highlightedIndexWithType.index &&
+                            highlightedIndexWithType.type === 'page' &&
+                            'bg-gray-200',
+                          'flex items-center w-full'
+                        )}
+                        href={`${automaticallyDecidePathPrefixBasedOnPageType(
+                          pageSuggestion.item?.pageTypes?.[0]
+                        )}${pageSuggestion.item?.slug}`}
+                        target="_blank"
+                      >
+                        <div className="flex items-start w-full">
+                          <div className={style.pageImageContainer}>
+                            <Image
+                              alt={'Tag Image'}
+                              className={
+                                (classNames('inline-block mr-1 ml-4 w-10 h-10'),
+                                style.searchTagImage)
+                              }
+                              src={
+                                pageSuggestion?.item?.organisation?.[0]
+                                  ?.picture ||
+                                pageSuggestion?.item?.Project?.[0]?.picture ||
+                                pageSuggestion?.item?.person?.[0]?.picture ||
+                                pageSuggestion?.item?.postImage1?.url ||
+                                'https://placehold.co/600x400?text=placeholder'
+                              }
+                              width={80}
+                              height={80}
+                              objectFit="cover"
+                            />
+                          </div>
+
+                          <div className="flex flex-wrap items-center ml-2 w-full">
+                            {/* Page Title */}
+                            <div className={style.titleAndTag}>
+                              <div
+                                // dangerouslySetInnerHTML={{
+                                //   __html: pageSuggestion.title,
+                                // }}
+                                dangerouslySetInnerHTML={{
+                                  __html: highlightMatches(
+                                    pageSuggestion?.item?.title,
+                                    pageSuggestion?.matches
+                                  ),
+                                }}
+                                className={style.pageTitle}
+                              ></div>
+                              <Tag {...pageSuggestion?.item?.pageTypes?.[0]} />
+                            </div>
+                            {/* Page Content */}
+                            <div
+                              className={classNames(
+                                'w-full text-12 cursor-text',
+                                style.quickResultsContent
+                              )}
+                              // dangerouslySetInnerHTML={{
+                              //   __html: pageSuggestion.description,
+                              // }}
+                              dangerouslySetInnerHTML={{
+                                __html: highlightMatches(
+                                  pageSuggestion?.item?.postContentRIch1 +
+                                    pageSuggestion?.item?.postContentRIch2 ||
+                                    pageSuggestion?.item?.description,
+                                  pageSuggestion?.matches
+                                ),
+                              }}
+                            >
+                              {/* {pageSuggestion.description} */}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </li>
+                  )
+              )}
+            </ul>
+          </div>
+        )}
       </div>
     </motion.div>
   );

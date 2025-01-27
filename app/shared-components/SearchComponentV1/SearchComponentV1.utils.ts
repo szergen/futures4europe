@@ -309,7 +309,7 @@ export const updateFilteredDataBasedOnClickedTag = (
   //   });
   const matchingTagIds = filteredData?.tags
     ?.filter((tag) => tag?.name?.toLowerCase() === clickedTag?.toLowerCase())
-    ?.map((tag) => tag._id);
+    ?.map((tag) => tag?._id);
 
   console.log('deb1->matchingTagIds', matchingTagIds);
 

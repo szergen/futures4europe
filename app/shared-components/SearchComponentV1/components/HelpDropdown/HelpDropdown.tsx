@@ -40,14 +40,9 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
 }) => {
   return (
     <motion.div
-      className={classNames('w-1/2 border-2', style.helpDropdownContainer)}
-      initial={{
-        opacity: 0,
-        scaleY: 0,
-        translateX: '-50%',
-        translateY: '-10px',
-      }}
-      animate={{ opacity: 1, scaleY: 1, translateX: '-50%', translateY: '0px' }}
+      className={classNames('relative z-10')}
+      initial={{ opacity: 0, scaleY: 0, translateY: '-10px' }}
+      animate={{ opacity: 1, scaleY: 1, translateY: '0px' }}
       transition={{
         duration: 0.5,
         ease: 'easeIn',
@@ -58,24 +53,29 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
         transformOrigin: 'top',
       }}
     >
-      <div className={classNames(style.iconSearchTips, 'flex items-center')}>
-        <HiDocumentSearch />
-        <span className="ml-2 text-[14px]">SEARCH TIPS</span>{' '}
-        {/* The text with margin for spacing */}
-      </div>
-
-      <br />
-      {FieldSuggestionTypes.map((field, index) => (
-        <div
-          key={field.description + index}
-          className={classNames(style.textSearchTips, 'flex items-center')}
-        >
-          <span key={`${field.description}`} onMouseDown={handleFieldSelection}>
-            {field.type}
-          </span>
-          : <span>{field.description}</span>
+      <div className={style.helpDropdownContainer}>
+        <div className={classNames(style.iconSearchTips, 'flex items-center')}>
+          <HiDocumentSearch />
+          <span className="ml-2 text-[14px]">SEARCH TIPS</span>{' '}
+          {/* The text with margin for spacing */}
         </div>
-      ))}
+
+        <br />
+        {FieldSuggestionTypes.map((field, index) => (
+          <div
+            key={field.description + index}
+            className={classNames(style.textSearchTips, 'flex items-center')}
+          >
+            <span
+              key={`${field.description}`}
+              onMouseDown={handleFieldSelection}
+            >
+              {field.type}
+            </span>
+            : <span>{field.description}</span>
+          </div>
+        ))}
+      </div>
     </motion.div>
   );
 };

@@ -1,0 +1,76 @@
+.searchBoxWrapper {
+  border: 1px solid rgba(47, 43, 67, 0.1);
+  border-radius: 12px;
+}
+
+.searchBox {
+  display: inline-flex;
+  align-items: center;
+  width: 933px;
+  flex-wrap: wrap;
+  padding: 8px 8px 0;
+  position: relative;
+  /* border: 1px solid rgba(47, 43, 67, 0.1);
+  border-radius: 12px;
+  padding: 8px; */
+}
+
+.keySuggestionsContainer {
+  display: flex;
+  width: 933px;
+  height: 40px;
+  margin-top: 4px;
+  background: #ecd9ff38;
+}
+
+.keySuggestionsLeft {
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  width: 50%;
+}
+
+.leftText,
+.rightText {
+  padding-left: 8px;
+}
+
+.keySuggestionsRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  width: 50%;
+}
+
+.enterIcon {
+  color: #222;
+  border-radius: 4px;
+  border: 1px solid darkgray;
+  padding: 4px;
+  box-shadow: 0 3px 6px 0px #80808024;
+  background: #ddd;
+}
+
+.arrowKeys {
+  color: #222;
+  border-radius: 4px;
+  border: 1px solid darkgray;
+  padding: 2px;
+  box-shadow: 0 3px 6px 0px #80808024;
+  background: #ddd;
+}
+
+.arrowKeys:first-child {
+  margin-right: 12px;
+}
+
+.escIcon {
+  color: #222;
+  border-radius: 4px;
+  border: 1px solid darkgray;
+  padding: 4px;
+  margin-left: 12px;
+  box-shadow: 0 3px 6px 0px #80808024;
+  background: #ddd;
+}
