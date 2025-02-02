@@ -418,9 +418,12 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         defaultProjectData.methods
       )
     ) {
+      const validMethods = projectData.methods?.filter(
+        (method: any) => method._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        projectData.methods?.map((method: any) => method._id),
+        validMethods?.map((method: any) => method._id),
         'methods',
         projectData._id
       );
@@ -433,9 +436,12 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         defaultProjectData.domains
       )
     ) {
+      const validDomains = projectData.domains?.filter(
+        (domain: any) => domain._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        projectData.domains?.map((domain: any) => domain._id),
+        validDomains?.map((domain: any) => domain._id),
         'domains',
         projectData._id
       );
@@ -702,9 +708,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // #region Update Foresight Methods
     if (projectData.methods && newProjectInfoId) {
+      const validMethods = projectData.methods?.filter((method: any) => method);
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        projectData.methods?.map((method: any) => method._id),
+        validMethods?.map((method: any) => method._id),
         'methods',
         newProjectInfoId
       );
@@ -714,9 +721,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // #region Update Domains
     if (projectData.domains && newProjectInfoId) {
+      const validDomains = projectData.domains?.filter((domain: any) => domain);
+
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        projectData.domains?.map((domain: any) => domain._id),
+        validDomains?.map((domain: any) => domain._id),
         'domains',
         newProjectInfoId
       );
