@@ -11,6 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import GA from './3rd-parties/GA/GA';
 
 // Initialize PostHog
 function CustomPostHogProvider({ children }) {
@@ -109,6 +110,7 @@ export default function RootLayout({
           )}
         </CustomPostHogProvider>
       </body>
+      <GA />
     </html>
   );
 }
