@@ -197,15 +197,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                   <span className="w-32 shrink-0">tag:</span>
                   <span
                     // dangerouslySetInnerHTML={{ __html: sortTag?.item.name }}
-                    dangerouslySetInnerHTML={{
-                      __html: highlightMatches(
-                        sortTag?.item?.name,
-                        sortTag?.matches
-                      ),
-                    }}
+                    // dangerouslySetInnerHTML={{
+                    //   __html: highlightMatches(
+                    //     sortTag?.item?.name,
+                    //     sortTag?.matches
+                    //   ),
+                    // }}
                     onMouseDown={handleSelectedSortTag}
                     className="ml-4"
-                  ></span>
+                  >
+                    {sortTag?.item?.name}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -245,15 +247,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       <span className="w-32 shrink-0">field:</span>
                       <span
                         // dangerouslySetInnerHTML={{ __html: fieldSuggestion.name }}
-                        dangerouslySetInnerHTML={{
-                          __html: highlightMatches(
-                            fieldSuggestion?.item?.name,
-                            fieldSuggestion?.matches
-                          ),
-                        }}
+                        // dangerouslySetInnerHTML={{
+                        //   __html: highlightMatches(
+                        //     fieldSuggestion?.item?.name,
+                        //     fieldSuggestion?.matches
+                        //   ),
+                        // }}
                         onMouseDown={handleFieldSelection}
                         className="ml-4"
-                      ></span>
+                      >
+                        {fieldSuggestion?.item?.name}
+                      </span>
                     </li>
                   )
               )}
@@ -452,14 +456,16 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                                 // dangerouslySetInnerHTML={{
                                 //   __html: pageSuggestion.title,
                                 // }}
-                                dangerouslySetInnerHTML={{
-                                  __html: highlightMatches(
-                                    pageSuggestion?.item?.title,
-                                    pageSuggestion?.matches
-                                  ),
-                                }}
+                                // dangerouslySetInnerHTML={{
+                                //   __html: highlightMatches(
+                                //     pageSuggestion?.item?.title,
+                                //     pageSuggestion?.matches
+                                //   ),
+                                // }}
                                 className={style.pageTitle}
-                              ></div>
+                              >
+                                {pageSuggestion?.item?.title}
+                              </div>
                               <Tag {...pageSuggestion?.item?.pageTypes?.[0]} />
                             </div>
                             {/* Page Content */}
@@ -471,13 +477,19 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                               // dangerouslySetInnerHTML={{
                               //   __html: pageSuggestion.description,
                               // }}
+                              // dangerouslySetInnerHTML={{
+                              //   __html: highlightMatches(
+                              //     pageSuggestion?.item?.postContentRIch1 +
+                              //       pageSuggestion?.item?.postContentRIch2 ||
+                              //       pageSuggestion?.item?.description,
+                              //     pageSuggestion?.matches
+                              //   ),
+                              // }}
                               dangerouslySetInnerHTML={{
-                                __html: highlightMatches(
+                                __html:
                                   pageSuggestion?.item?.postContentRIch1 +
                                     pageSuggestion?.item?.postContentRIch2 ||
-                                    pageSuggestion?.item?.description,
-                                  pageSuggestion?.matches
-                                ),
+                                  pageSuggestion?.item?.description,
                               }}
                             >
                               {/* {pageSuggestion.description} */}

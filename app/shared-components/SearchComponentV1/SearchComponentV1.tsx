@@ -408,7 +408,7 @@ const SearchComponentV1 = () => {
         {/* {selectedSortTag && <div>Sorted By: {selectedSortTag}</div>} */}
       </div>
       {/* Keys Suggestions */}
-      {(showHelp || showSuggestions) && (
+      {showSuggestions && (
         <div className={style.keySuggestionsContainer}>
           <div className={style.keySuggestionsLeft}>
             <span className={style.arrowKeys}>

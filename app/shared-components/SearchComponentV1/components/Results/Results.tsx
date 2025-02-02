@@ -29,7 +29,8 @@ const Results: React.FC<ResultsProps> = ({ results, searchedItems }) => {
         <ul className="style.pages my-4">
           {results?.map((resultItem: any, index: number) => (
             <>
-              {searchedItems?.map((searchedItem: any) => {
+              {/* #region FOUND IN items */}
+              {/* {searchedItems?.map((searchedItem: any) => {
                 let allFoundInItems = [];
                 // console.log('deb1->searchedItem', searchedItem);
                 if (searchedItem.searchItemType === 'tag') {
@@ -72,7 +73,8 @@ const Results: React.FC<ResultsProps> = ({ results, searchedItems }) => {
                   );
                 }
                 return allFoundInItems.map((item) => item);
-              })}
+              })} */}
+              {/* #endregion FOUND IN items */}
               <Link
                 key={`${resultItem?.title}-${resultItem?._id || index}`}
                 href={`${automaticallyDecidePathPrefixBasedOnPageType(
