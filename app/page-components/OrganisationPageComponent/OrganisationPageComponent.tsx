@@ -515,9 +515,12 @@ function OrganisationPageComponent({
     if (
       !arraysEqual(organisationData.domains, defaultOrganisationData.domains)
     ) {
+      const validatedDomains = organisationData.domains?.filter(
+        (domain: any) => domain?._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.domains?.map((domain: any) => domain._id),
+        validatedDomains?.map((domain: any) => domain._id),
         'domains',
         organisationData._id
       );
@@ -528,9 +531,12 @@ function OrganisationPageComponent({
     if (
       !arraysEqual(organisationData.methods, defaultOrganisationData.methods)
     ) {
+      const validatedMethods = organisationData.methods?.filter(
+        (method: any) => method?._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.methods?.map((method: any) => method._id),
+        validatedMethods?.map((method: any) => method._id),
         'methods',
         organisationData._id
       );
@@ -741,9 +747,12 @@ function OrganisationPageComponent({
 
     // #region Update Foresight Methods
     if (organisationData.methods && newOrganisationInfoId) {
+      const validatedMethods = organisationData.methods?.filter(
+        (method: any) => method?._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.methods?.map((method: any) => method._id),
+        validatedMethods?.map((method: any) => method._id),
         'methods',
         newOrganisationInfoId
       );
@@ -753,9 +762,12 @@ function OrganisationPageComponent({
 
     // #region Update Domains
     if (organisationData.domains && newOrganisationInfoId) {
+      const validatedDomains = organisationData.domains?.filter(
+        (domain: any) => domain?._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.domains?.map((domain: any) => domain._id),
+        validatedDomains?.map((domain: any) => domain._id),
         'domains',
         newOrganisationInfoId
       );
@@ -765,9 +777,12 @@ function OrganisationPageComponent({
 
     // #region Update activity
     if (organisationData.activity && newOrganisationInfoId) {
+      const validatedActivity = organisationData.activity?.filter(
+        (activity: any) => activity?._id
+      );
       const updatedActivity = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.activity?.map((activity: any) => activity._id),
+        validatedActivity?.map((activity: any) => activity._id),
         'activity',
         newOrganisationInfoId
       );

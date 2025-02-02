@@ -7,6 +7,7 @@ export const containsId = (obj: { [x: string]: any } | null, id: any) => {
         key === 'pageOwner' ||
         key === '_owner' ||
         key === 'Author' ||
+        // key === 'author' ||
         key === 'organisationPeople'
       )
         continue;
