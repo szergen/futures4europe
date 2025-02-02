@@ -467,9 +467,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         defaultPersonData.foreSightMethods
       )
     ) {
+      const validMethods = personData.foreSightMethods?.filter(
+        (method: any) => method._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        personData.foreSightMethods?.map((method: any) => method._id),
+        validMethods?.map((method: any) => method._id),
         'methods',
         personData._id
       );
@@ -482,9 +485,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         defaultPersonData.domains
       )
     ) {
+      const validDomains = personData.domains?.filter(
+        (domain: any) => domain._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        personData.domains?.map((domain: any) => domain._id),
+        validDomains?.map((domain: any) => domain._id),
         'domains',
         personData._id
       );
@@ -497,9 +503,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         defaultPersonData.activity
       )
     ) {
+      const validActivity = personData.activity?.filter(
+        (activity: any) => activity._id
+      );
       const updateAcvitiy = await replaceDataItemReferences(
         'InfoPages',
-        personData.activity?.map((activity: any) => activity._id),
+        validActivity?.map((activity: any) => activity._id),
         'activity',
         personData._id
       );
@@ -876,9 +885,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // #region Update Foresight Methods
     if (personData.methods && newPersonInfoId) {
+      const validMethods = personData.methods.filter(
+        (method: any) => method && method._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        personData.methods?.map((method: any) => method._id),
+        validMethods.map((method: any) => method._id),
         'methods',
         newPersonInfoId
       );
@@ -888,9 +900,13 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // #region Update Domains
     if (personData.domains && newPersonInfoId) {
+      const validDomains = personData.domains.filter(
+        (domain: any) => domain && domain._id
+      );
+
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        personData.domains?.map((domain: any) => domain._id),
+        validDomains.map((domain: any) => domain._id),
         'domains',
         newPersonInfoId
       );
@@ -900,9 +916,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
 
     // #region Update Activity
     if (personData.activity && newPersonInfoId) {
+      const validActivity = personData.activity.filter(
+        (activity: any) => activity && activity._id
+      );
       const updateAcvitiy = await replaceDataItemReferences(
         'InfoPages',
-        personData.activity?.map((activity: any) => activity._id),
+        validActivity.map((activity: any) => activity._id),
         'activity',
         newPersonInfoId
       );
