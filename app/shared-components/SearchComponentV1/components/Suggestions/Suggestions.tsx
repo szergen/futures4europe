@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import style from './Suggestions.module.css';
 import Link from 'next/link';
-import { highlightMatches } from '../../SearchComponentV1.utils';
+// import { highlightMatches } from '../../SearchComponentV1.utils';
 import { motion } from 'framer-motion';
 import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
 import Tag from '@app/shared-components/Tag/Tag';
@@ -22,7 +22,7 @@ export type SuggestionsProps = {
     selectedSuggestionType: 'tag' | 'field' | 'field-tag'
   ) => void;
   selectedSuggestionIndex: number;
-  activeSelection: 'field' | 'tag' | 'field-tag' | 'sortby';
+  activeSelection: 'field' | 'tag' | 'field-tag' | 'sortby' | '';
   searchedItems: any[];
   // sortTags: any[];
   handleSelectedSortTag: (e: any) => void;
@@ -186,12 +186,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({
             <ul className={style.lists}>
               {availableSortTags?.map((sortTag: any, index: number) => (
                 <li
-                  key={index}
+                  key={index + sortTag?.item?.name}
                   className={classNames(
                     'flex items-center',
                     index === selectedSuggestionIndex &&
                       activeSelection === 'sortby' &&
-                      'bg-gray-100'
+                      `bg-gray-100 ${style.selectedSuggestion}`
                   )}
                 >
                   <span className="w-32 shrink-0">tag:</span>
@@ -229,7 +229,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                 (fieldSuggestion: any, index: number) =>
                   index < 10 && (
                     <li
-                      key={index}
+                      key={index + fieldSuggestion?.item?.name}
                       className={classNames(
                         'flex items-center',
                         index === highlightedIndexWithType.index &&
@@ -238,7 +238,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         index ===
                           selectedSuggestionIndex - availableSortTags.length &&
                           activeSelection === 'field' &&
-                          'bg-gray-100'
+                          `bg-gray-100 ${style.selectedSuggestion}`
                       )}
                       onMouseOver={() =>
                         setHighlightedIndexWithType({ index, type: 'field' })
@@ -290,7 +290,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       : index;
                   return (
                     <li
-                      key={tagSuggestion.item?.name}
+                      key={index + tagSuggestion?.item?.name}
                       className={classNames(
                         'flex items-center',
                         actualIndex === highlightedIndexWithType.index &&
@@ -301,7 +301,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                             fieldSuggestions.length -
                             availableSortTags.length &&
                           activeSelection === 'tag' &&
-                          'bg-gray-100'
+                          `bg-gray-100 ${style.selectedSuggestion}`
                       )}
                       onMouseOver={() =>
                         setHighlightedIndexWithType({ index, type: 'tag' })

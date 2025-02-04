@@ -554,7 +554,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search pages by tags(domains, people, etc) or text"
+          placeholder="Search pages by tags (domains, people, etc) or text"
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
           disabled={!tagsFetched}

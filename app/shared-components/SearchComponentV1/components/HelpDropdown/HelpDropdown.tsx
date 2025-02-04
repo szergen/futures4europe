@@ -3,32 +3,38 @@ import React from 'react';
 import style from './HelpDropdown.module.css';
 import { HiDocumentSearch } from 'react-icons/hi';
 import { motion } from 'framer-motion';
+import Tag from '@app/shared-components/Tag/Tag';
 
 const FieldSuggestionTypes = [
   {
-    type: 'activity',
-    description: '[name] - to filter by domain',
+    type: <Tag name="Agriculture" />,
+    description: 'pages containing the tag Agriculture',
   },
   {
-    type: 'author',
-    description: '[name] - to filter by author',
+    type: <Tag name="Poland" />,
+    description: 'pages containing the tag Poland',
   },
   {
-    type: 'people',
-    description: '[name] - to filter by people',
+    type: (
+      <div className="flex">
+        <Tag name="Agriculture" />
+        <Tag name="Poland" />
+      </div>
+    ),
+    description: 'pages containing both tags Agriculture and Poland',
   },
   {
-    type: 'participant',
-    description: '[name] - to filter by participant',
+    type: <div className="text-black">future</div>,
+    description: 'pages containing the text "future"',
   },
   {
-    type: 'speaker',
-    description: '[name] - to filter by speaker',
+    type: <div>activity: [tag name]</div>,
+    description: 'to filter by activity',
   },
-  {
-    type: 'coordinator',
-    description: '[name] - to filter by coordinator',
-  },
+  // {
+  //   type: 'coordinator',
+  //   description: '[name] - to filter by coordinator',
+  // },
 ];
 
 export type HelpDropdownProps = {
@@ -56,7 +62,7 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
       <div className={style.helpDropdownContainer}>
         <div className={classNames(style.iconSearchTips, 'flex items-center')}>
           <HiDocumentSearch />
-          <span className="ml-2 text-[14px]">SEARCH TIPS</span>{' '}
+          <span className="ml-2 text-[14px]">EXAMPLES</span>{' '}
           {/* The text with margin for spacing */}
         </div>
 
@@ -72,7 +78,7 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
             >
               {field.type}
             </span>
-            : <span>{field.description}</span>
+            - <span>{field.description}</span>
           </div>
         ))}
       </div>

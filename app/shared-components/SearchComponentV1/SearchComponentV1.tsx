@@ -446,10 +446,21 @@ const SearchComponentV1 = () => {
             <span className={style.leftText}>To navigate</span>
           </div>
           <div className={style.keySuggestionsRight}>
-            <span className={style.enterIcon}>enter</span>
-            <span className={style.rightText}>To select</span>
-            <span className={style.escIcon}>esc</span>
-            <span className={style.rightText}>To dismiss selection</span>
+            {/* <span className={style.enterIcon}>enter</span>
+            <span className={style.rightText}>To select</span> */}
+            {selectedSuggestionIndex > -1 ? (
+              <>
+                <span className={style.escIcon}>esc</span>
+                <span className={style.rightText}>To dismiss selection</span>
+              </>
+            ) : (
+              <>
+                <span className={style.escIcon}>enter</span>
+                <span className={style.rightText}>
+                  To search by current text
+                </span>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -13,6 +13,7 @@
   background-color: var(--primary-white);
   padding-left: 12px;
 }
+
 .tagContainerForSuggestions:hover {
   cursor: pointer;
 }
@@ -69,4 +70,13 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.selectedSuggestion::after {
+  /* background-color: #3a1717; */
+  content: '[enter] to select';
+  font-size: 12px;
+  font-weight: 400;
+  position: absolute;
+  right: 20px;
 }
