@@ -272,18 +272,18 @@ export default function DashboardProjects() {
   //   // console.log('debug222->infoPages', infoPages);
   //   console.log('debug111->editing contact');
   //   const contactsDetails = await getContactsItemByEmail(
-  //     'a.cristina.plescan@gmail.com'
+  //     'flora.soyez@arctik.eu'
   //   );
 
   //   console.log('debug111->contactsDetails', contactsDetails);
   //   const userDetails = await getContactsItem(
-  //     '89c27159-d0d6-4d08-bdc0-ea92984d69a8'
+  //     '09dfce2e-3bd5-4ef0-9253-ef06c201214a'
   //   );
   //   console.log('debug111->userDetails', userDetails);
 
   //   const member = await updateMember(
-  //     '89c27159-d0d6-4d08-bdc0-ea92984d69a8',
-  //     'Angela Cristina Plescan'
+  //     '09dfce2e-3bd5-4ef0-9253-ef06c201214a',
+  //     'Flora Soyez'
   //   );
 
   //   console.log('debug111->member', member);
