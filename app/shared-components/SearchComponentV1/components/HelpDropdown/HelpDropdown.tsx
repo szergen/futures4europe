@@ -7,30 +7,66 @@ import Tag from '@app/shared-components/Tag/Tag';
 
 const FieldSuggestionTypes = [
   {
-    type: <Tag name="Agriculture" />,
+    type: (
+      <Tag
+        name="Agriculture"
+        disableLink
+        disablePopularityHover
+        disableTooltip
+      />
+    ),
     description: 'pages containing the tag Agriculture',
-  },
-  {
-    type: <Tag name="Poland" />,
-    description: 'pages containing the tag Poland',
   },
   {
     type: (
       <div className="flex">
-        <Tag name="Agriculture" />
-        <Tag name="Poland" />
+        <Tag name="Energy" disableLink disablePopularityHover disableTooltip />
+        <Tag name="Poland" disableLink disablePopularityHover disableTooltip />
       </div>
     ),
-    description: 'pages containing both tags Agriculture and Poland',
+    description: 'pages containing both tags Energy and Poland',
+  },
+  {
+    type: (
+      <div className="flex">
+        <Tag
+          name="Project Result"
+          disableLink
+          disablePopularityHover
+          disableTooltip
+        />
+        <Tag
+          name="Scenarios"
+          disableLink
+          disablePopularityHover
+          disableTooltip
+        />
+      </div>
+    ),
+    description: 'Project Result pages containing the tag Scenarios',
+  },
+  {
+    type: (
+      <Tag
+        name="Austrian Institute of Technology"
+        picture="https://static.wixstatic.com/media/471908_2b136e1495dd4326843fd89d2227ac75~mv2.jpg"
+        tagPageLink="/organisation/austrian-institute-of-technology-gdfy0"
+        tagType="organisation"
+        tagLine="AIT Center for Innovation Systems & Policy"
+        disablePopularityHover
+        disableTooltip
+      />
+    ),
+    description: 'pages containing the tag Austrian Institute of Technology',
   },
   {
     type: <div className="text-black">future</div>,
     description: 'pages containing the text "future"',
   },
-  {
-    type: <div>activity: [tag name]</div>,
-    description: 'to filter by activity',
-  },
+  // {
+  //   type: <div>activity: [tag name]</div>,
+  //   description: 'to filter by activity',
+  // },
   // {
   //   type: 'coordinator',
   //   description: '[name] - to filter by coordinator',

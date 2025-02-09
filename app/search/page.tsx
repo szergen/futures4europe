@@ -28,28 +28,8 @@ import {
 
 export default function Pages({ params, searchParams }: any) {
   const tagId = params.slug;
-  const { tags } = useAuth();
   const { searchState, setSearchState } = useSearch();
-  const {
-    initialData,
-    filteredData,
-    fieldSuggestions,
-    tagSuggestions,
-    pageSuggestions,
-    sortTagsSuggestions,
-    results,
-    showHelp,
-    showSuggestions,
-    showResults,
-    searchedItems,
-    clickedField,
-    selectedSuggestionIndex,
-    selectedSearchedItemIndex,
-    activeSelection,
-    inputText,
-    sortTags,
-    selectedSortTag,
-  } = searchState;
+  const { filteredData, results, showResults, searchedItems } = searchState;
 
   // if (tags.length === 0) {
   //   return <div>Loading...</div>; // You can also add a loading spinner here
@@ -74,8 +54,11 @@ export default function Pages({ params, searchParams }: any) {
               style.heroTitle
             )}
           >
-            {filteredData?.pages?.length || 0} page
-            {filteredData?.pages?.length > 1 ? 's' : ''} found
+            {!showResults
+              ? 'No Search Items'
+              : `${filteredData?.pages?.length || 0} ${
+                  filteredData?.pages?.length === 1 ? 'page' : 'pages'
+                } found`}
           </h1>
         </div>
       </Hero>

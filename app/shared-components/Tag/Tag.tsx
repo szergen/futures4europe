@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import style from './Tag.module.css';
 import { TagCategories } from './Tag.utils';
 import TagContainer from './components/TagContainer/TagContainer';
-import PopoverComponent from '../PopoverComponent/PopoverComponent';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
 export type TagProps = {
@@ -52,7 +51,9 @@ export const Tag: React.FC<TagProps> = ({
   if (!name) return null;
 
   const { tags, tagsFetched } = useAuth();
-  const [currentPopularity, setCurrentPopularity] = useState();
+  const [currentPopularity, setCurrentPopularity] = useState<
+    number | undefined
+  >(undefined);
   const tagPageLinkOrMentionsLink = tagPageLink
     ? tagPageLink
     : _id
@@ -64,9 +65,11 @@ export const Tag: React.FC<TagProps> = ({
 
   useEffect(() => {
     if (!tagsFetched || currentPopularity) return;
-    const tag = tags?.find((tag) => tag?.name === name);
+    const tag = tags?.find(
+      (tag) => tag?.name?.toLowerCase() === name?.toLowerCase()
+    );
     if (tag) {
-      setCurrentPopularity(tag.mentions);
+      setCurrentPopularity(tag?.mentions);
     }
     // console.log(`tag ${tag} has been referenced ${popularity} times`);
   }, [tags, tagsFetched]);

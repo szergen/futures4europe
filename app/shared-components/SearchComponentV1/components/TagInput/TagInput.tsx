@@ -43,14 +43,34 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     }));
   };
 
+  // const handleArrowDown = () => {
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     selectedSuggestionIndex: Math.min(
+  //       prevState.selectedSuggestionIndex + 1,
+  //       filteredData.tags.length - 1
+  //     ),
+  //   }));
+  // };
+
   const handleArrowDown = () => {
-    setSearchState((prevState) => ({
-      ...prevState,
-      selectedSuggestionIndex: Math.min(
-        prevState.selectedSuggestionIndex + 1,
-        filteredData.tags.length - 1
-      ),
-    }));
+    setSearchState((prevState) => {
+      const maxIndex = Math.max(
+        // (filteredData?.tags?.length || 0) - 1
+        (prevState.tagSuggestions?.length || 0) - 1
+        // (prevState.fieldSuggestions?.length || 0) - 1,
+        // (prevState.pageSuggestions?.length || 0) - 1,
+        // (prevState.sortTagsSuggestions?.length || 0) - 1
+      );
+
+      return {
+        ...prevState,
+        selectedSuggestionIndex: Math.min(
+          prevState.selectedSuggestionIndex + 1,
+          maxIndex
+        ),
+      };
+    });
   };
 
   const handleOnBlur = () => {
@@ -65,7 +85,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     setSearchState((prevState) => ({
       ...prevState,
       showSuggestions: !!input || !!clickedField || !!clickedTag,
-      showHelp: !input && !clickedField && !clickedTag,
+      showHelp:
+        !input &&
+        !clickedField &&
+        !clickedTag &&
+        searchState.searchedItems.length === 0,
     }));
     setTagWasFocused(true);
   };
@@ -120,8 +144,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         setSearchState((prevState) => ({
           ...prevState,
           showSuggestions: false,
-          showHelp: true,
-          // showResults: true,
+          showHelp: false,
+          showResults: true,
           clickedTag:
             searchState.activeSelection === 'tag'
               ? searchState.selectedSuggestionTag
@@ -190,53 +214,53 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   };
 
   // SearchButton handler function the same as Enter key
-  const handleSearchButton = () => {
-    if (searchState.selectedSuggestionIndex < 0) {
-      setSearchState((prevState) => ({
-        ...prevState,
-        showSuggestions: false,
-        showHelp: false,
-        showResults: true,
-        results: searchState.searchedItems.length ? resultsToShow : [],
-        searchedItems: input
-          ? [
-              ...searchState.searchedItems,
-              { searchItem: input, searchItemType: 'text' },
-            ]
-          : [...searchState.searchedItems],
-        filteredData: {
-          pages: resultsToShow,
-          tags: initialData.tags,
-          assignments: initialData.assignments,
-          sortTags: initialData.sortTags,
-        },
-        selectedSuggestionIndex: -1,
-        // selectedSuggestionTag: '',
-      }));
-      // input[input.length - 1] !== '"' && setInput(input + '"');
-      setInput('');
-    } else {
-      setSearchState((prevState) => ({
-        ...prevState,
-        showSuggestions: false,
-        showHelp: true,
-        // showResults: true,
-        clickedTag:
-          searchState.activeSelection === 'tag'
-            ? searchState.selectedSuggestionTag
-            : '',
-        selectedSuggestionIndex: 0,
-        selectedSuggestionTag: '',
-        clickedField:
-          searchState.activeSelection === 'field'
-            ? searchState.selectedSuggestionTag
-            : prevState.clickedField,
+  // const handleSearchButton = () => {
+  //   if (searchState.selectedSuggestionIndex < 0) {
+  //     setSearchState((prevState) => ({
+  //       ...prevState,
+  //       showSuggestions: false,
+  //       showHelp: false,
+  //       showResults: true,
+  //       results: searchState.searchedItems.length ? resultsToShow : [],
+  //       searchedItems: input
+  //         ? [
+  //             ...searchState.searchedItems,
+  //             { searchItem: input, searchItemType: 'text' },
+  //           ]
+  //         : [...searchState.searchedItems],
+  //       filteredData: {
+  //         pages: resultsToShow,
+  //         tags: initialData.tags,
+  //         assignments: initialData.assignments,
+  //         sortTags: initialData.sortTags,
+  //       },
+  //       selectedSuggestionIndex: -1,
+  //       // selectedSuggestionTag: '',
+  //     }));
+  //     // input[input.length - 1] !== '"' && setInput(input + '"');
+  //     setInput('');
+  //   } else {
+  //     setSearchState((prevState) => ({
+  //       ...prevState,
+  //       showSuggestions: false,
+  //       showHelp: true,
+  //       // showResults: true,
+  //       clickedTag:
+  //         searchState.activeSelection === 'tag'
+  //           ? searchState.selectedSuggestionTag
+  //           : '',
+  //       selectedSuggestionIndex: 0,
+  //       selectedSuggestionTag: '',
+  //       clickedField:
+  //         searchState.activeSelection === 'field'
+  //           ? searchState.selectedSuggestionTag
+  //           : prevState.clickedField,
 
-        activeSelection: 'tag',
-      }));
-      setInput('');
-    }
-  };
+  //       activeSelection: 'tag',
+  //     }));
+  //     setInput('');
+  //   }
+  // };
 
   // Input effect
   useEffect(() => {
@@ -269,7 +293,12 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       const tagSuggestionsSearch = wordByWordSearch(
         input,
         filteredData?.tags?.filter(
-          (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
+          (tag) =>
+            tag.tagType !== 'field' &&
+            tag.tagType !== 'sort' &&
+            !searchState.searchedItems.find(
+              (item) => item.searchItem === tag.name
+            )
         ),
         ['name', 'tagLine']
       );
@@ -321,7 +350,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         setSearchState((prevState) => ({
           ...prevState,
           showSuggestions: !!input || !!clickedField || !!clickedTag,
-          showHelp: !input && !clickedField && !clickedTag,
+          showHelp:
+            !input &&
+            !clickedField &&
+            !clickedTag &&
+            searchState.searchedItems.length === 0,
         }));
     }
   }, [input, filterByField]);
@@ -469,7 +502,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
 
       setSearchState((prevState) => ({
         ...prevState,
-        showHelp: true,
+        showHelp: false,
         showSuggestions: false,
         clickedTag: '',
         searchedItems: [
@@ -558,6 +591,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
           disabled={!tagsFetched}
+          autoFocus={searchState.showResults}
         />
       ) : (
         <div className={classNames(style.loadingSpinner)}>

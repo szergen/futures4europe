@@ -52,31 +52,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     type: '',
   });
   const [availableSortTags, setAvailableSortTags] = useState([]);
-  const [suggestedIndex, setSuggestedIndex] = useState({
-    type: '',
-    index: selectedSuggestionIndex,
-  });
+  // const [suggestedIndex, setSuggestedIndex] = useState({
+  //   type: '',
+  //   index: selectedSuggestionIndex,
+  // });
 
-  const allSugestionsArray = [
-    // ...availableSortTags,
-    // ...fieldSuggestions,
-    ...tagSuggestions,
-  ];
-  // console.log('debug1->allSugestionsArray', allSugestionsArray);
-  // console.log('debug1->pageSuggestions', pageSuggestions);
-
-  const uniqueFields = fieldSuggestions.filter(
-    (assignment: any, index: any, self: any) =>
-      index === self.findIndex((t: any) => t.field === assignment.field)
-  );
-
-  const handleTagSuggestion2 = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    console.log('deb1->Clicked on tag:', e.target.innerText);
-    // handleTagSuggestion(e);
-  };
+  /* #region start Field Tags */
+  // const uniqueFields = fieldSuggestions.filter(
+  //   (assignment: any, index: any, self: any) =>
+  //     index === self.findIndex((t: any) => t.field === assignment.field)
+  // );
+  // #endregion end Field Tags */
 
   // const resolvePageType = (pageSuggestion: { [key: string]: string }) =>
   //   Array.isArray(pageSuggestion?.item?.pageType)
@@ -122,18 +108,22 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         availableSortTags?.[selectedSuggestionIndex]?.item?.name,
         'sortby'
       );
-    } else if (
-      fieldSuggestions.length > 0 &&
-      !clickedField &&
-      selectedSuggestionIndex <
-        fieldSuggestions.length - availableSortTags.length
-      // highlightedIndexWithType.type === 'field'
-    ) {
-      handleSelectedSuggestion(
-        fieldSuggestions?.[selectedSuggestionIndex]?.item?.name,
-        'field'
-      );
-    } else if (clickedField) {
+    }
+    /* #region start Field Tags */
+    // else if (
+    //   fieldSuggestions.length > 0 &&
+    //   !clickedField &&
+    //   selectedSuggestionIndex <
+    //     fieldSuggestions.length - availableSortTags.length
+    //   // highlightedIndexWithType.type === 'field'
+    // ) {
+    //   handleSelectedSuggestion(
+    //     fieldSuggestions?.[selectedSuggestionIndex]?.item?.name,
+    //     'field'
+    //   );
+    // }
+    // #endregion end Field Tags */
+    else if (clickedField) {
       handleSelectedSuggestion(
         tagSuggestions?.[selectedSuggestionIndex]?.item?.name,
         'tag'
@@ -142,7 +132,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
       handleSelectedSuggestion(
         tagSuggestions?.[
           selectedSuggestionIndex -
-            fieldSuggestions.length -
+            /* #region start Field Tags */
+            // fieldSuggestions.length -
+            // #endregion end Field Tags */
             availableSortTags.length
         ]?.item?.name,
         'tag'
@@ -213,8 +205,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
             </ul>
           </div>
         )}
-        {/* Field Tags */}
-        {!clickedField && uniqueFields?.length > 0 && (
+        {/* #region start Field Tags */}
+        {/* {!clickedField && uniqueFields?.length > 0 && (
           <div className={style.tagSuggestionsWrapper}>
             <span
               className={classNames(
@@ -263,7 +255,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
               )}
             </ul>
           </div>
-        )}
+        )} */}
+        {/* #endregion end Field Tags */}
         {/* Tags */}
         {tagSuggestions?.length > 0 ? (
           <div className={style.tagSuggestionsWrapper}>
@@ -298,7 +291,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                           'bg-gray-200',
                         actualIndex ===
                           selectedSuggestionIndex -
-                            fieldSuggestions.length -
+                            // #region start Field Tags
+                            // fieldSuggestions.length -
+                            // #endregion end Field Tags
                             availableSortTags.length &&
                           activeSelection === 'tag' &&
                           `bg-gray-100 ${style.selectedSuggestion}`

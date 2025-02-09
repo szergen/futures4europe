@@ -35,7 +35,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
 
   return (
     <li
-      key={index}
+      key={`${index}-${item.searchItem}`}
       className={classNames(
         'flex mx-1 items-center',
         isSelected && 'searchTagSelected'

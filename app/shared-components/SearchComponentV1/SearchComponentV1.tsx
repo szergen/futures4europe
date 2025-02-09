@@ -63,6 +63,7 @@ const SearchComponentV1 = () => {
     selectedSuggestionTag: any,
     selectedSuggestionType: 'tag' | 'field' | 'field-tag' | 'sortby'
   ) => {
+    console.log('debug aaa -> selectedSuggestionTag', selectedSuggestionTag);
     if (selectedSuggestionType === 'tag') {
       const { matchedPages } = updateFilteredDataBasedOnClickedTag(
         selectedSuggestionTag,
@@ -94,7 +95,7 @@ const SearchComponentV1 = () => {
   const handleTagSuggestion = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Clicked on tag:', e.target.innerText);
+    console.log('debug aaa -> Clicked on tag:', e.target.innerText);
     setSearchState((prevState) => ({
       ...prevState,
       clickedTag: e?.target?.innerText,
@@ -116,6 +117,8 @@ const SearchComponentV1 = () => {
   const handleRemoveSearchedItem = (event: any) => {
     const target = event.currentTarget;
     const siblingSpan = target.previousSibling;
+    console.log('debug aaa-> target', target);
+    console.log('debug aaa->siblingSpan', siblingSpan);
     // console.log('siblingSpan', siblingSpan);
 
     if (
@@ -124,10 +127,12 @@ const SearchComponentV1 = () => {
       siblingSpan.tagName === 'SPAN'
     ) {
       const siblingSpanText = siblingSpan.textContent;
+      console.log('debug aaa -> siblingSpanText', siblingSpanText);
       // console.log('siblingSpanText', siblingSpanText);
 
       const filteredSearchItems = searchedItems.filter(
-        (item) => item.searchItem !== siblingSpanText
+        (item) =>
+          item?.searchItem?.toLowerCase() !== siblingSpanText?.toLowerCase()
       );
 
       const removedSearchItem = searchedItems.find(
@@ -179,7 +184,7 @@ const SearchComponentV1 = () => {
   };
 
   useEffect(() => {
-    console.log('searchedItems', searchedItems);
+    console.log('debug aaa ->searchedItems', searchedItems);
   }, [searchedItems]);
 
   useEffect(() => {
@@ -189,9 +194,9 @@ const SearchComponentV1 = () => {
     }));
   }, [results]);
 
-  useEffect(() => {
-    console.log('debugaaa showResults', showResults);
-  }, [showResults]);
+  // useEffect(() => {
+  //   console.log('debugaaa showResults', showResults);
+  // }, [showResults]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -199,82 +204,48 @@ const SearchComponentV1 = () => {
   const [isOnSearchPage, setIsOnSearchPage] = useState(false);
 
   useEffect(() => {
+    console.log('debug aaa -> vars', {
+      pathname,
+      showResults,
+      searchedItems,
+      isOnSearchPage,
+    });
     if (
       pathname !== 'search' &&
       showResults &&
       searchedItems.length > 0 &&
       !isOnSearchPage
     ) {
-      console.log('debugaaa IFFF');
+      console.log('debug aaa IFFF');
       setIsOnSearchPage(true);
       return router.push('/search');
     }
-  }, [showResults, pathname, searchedItems]);
+    if (searchedItems.length === 0 && isOnSearchPage) {
+      console.log('debug aaa -> searchedItems is empty');
+      setSearchState((prevState) => ({
+        ...prevState,
+        showResults: false,
+      }));
+      return router.push('/');
+    }
+    if (searchedItems.length > 0 && isOnSearchPage) {
+      console.log('debug aaa-> searchedItems is not empty');
+      setSearchState((prevState) => ({
+        ...prevState,
+        showHelp: false,
+      }));
+    }
+  }, [
+    showResults,
+    pathname,
+    searchedItems,
+    isOnSearchPage,
+    router,
+    setSearchState,
+  ]);
 
+  // #region useEffect for different pages
   useEffect(() => {
-    // switch (pathname) {
-    //   case '/pages/post':
-    //     setSearchState((prevState) => ({
-    //       ...prevState,
-    //       searchedItems: [
-    //         {
-    //           searchItem: 'Post',
-    //           searchItemType: 'tag',
-    //         },
-    //       ],
-    //       filteredData: {
-    //         ...initialData,
-    //         pages: initialData?.pages?.filter(
-    //           (page: any) => page.pageTypes?.[0]?.name === 'post'
-    //         ),
-    //       },
-    //     }));
-    //     break;
-    //   case '/pages/project':
-    //     setSearchState((prevState) => ({
-    //       ...prevState,
-    //       searchedItems: [
-    //         {
-    //           searchItem: 'Project Info',
-    //           searchItemType: 'tag',
-    //         },
-    //       ],
-    //       filteredData: {
-    //         ...initialData,
-    //         pages: initialData?.pages?.filter(
-    //           (page: any) => page.pageTypes?.[0]?.name === 'project info'
-    //         ),
-    //       },
-    //     }));
-    //     break;
-    //   case '/pages/project-result':
-    //     setSearchState((prevState) => ({
-    //       ...prevState,
-    //       searchedItems: [
-    //         {
-    //           searchItem: 'Project Result',
-    //           searchItemType: 'tag',
-    //         },
-    //       ],
-    //       filteredData: {
-    //         ...initialData,
-    //         pages: initialData?.pages?.filter(
-    //           (page: any) => page.pageTypes?.[0]?.name === 'project result'
-    //         ),
-    //       },
-    //     }));
-    //     break;
-    //   default:
-    //     setIsOnSearchPage(false);
-    //     setSearchState((prevState) => ({
-    //       ...prevState,
-    //       searchedItems: [],
-    //       filteredData: initialData,
-    //       showResults: false,
-    //     }));
-    //     break;
-    // }
-
     if (pathname === '/pages/post') {
       setSearchState((prevState) => ({
         ...prevState,
