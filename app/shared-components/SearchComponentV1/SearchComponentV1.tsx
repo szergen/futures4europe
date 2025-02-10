@@ -63,7 +63,6 @@ const SearchComponentV1 = () => {
     selectedSuggestionTag: any,
     selectedSuggestionType: 'tag' | 'field' | 'field-tag' | 'sortby'
   ) => {
-    console.log('debug aaa -> selectedSuggestionTag', selectedSuggestionTag);
     if (selectedSuggestionType === 'tag') {
       const { matchedPages } = updateFilteredDataBasedOnClickedTag(
         selectedSuggestionTag,
@@ -95,7 +94,6 @@ const SearchComponentV1 = () => {
   const handleTagSuggestion = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('debug aaa -> Clicked on tag:', e.target.innerText);
     setSearchState((prevState) => ({
       ...prevState,
       clickedTag: e?.target?.innerText,
@@ -117,9 +115,6 @@ const SearchComponentV1 = () => {
   const handleRemoveSearchedItem = (event: any) => {
     const target = event.currentTarget;
     const siblingSpan = target.previousSibling;
-    console.log('debug aaa-> target', target);
-    console.log('debug aaa->siblingSpan', siblingSpan);
-    // console.log('siblingSpan', siblingSpan);
 
     if (
       siblingSpan &&
@@ -127,7 +122,6 @@ const SearchComponentV1 = () => {
       siblingSpan.tagName === 'SPAN'
     ) {
       const siblingSpanText = siblingSpan.textContent;
-      console.log('debug aaa -> siblingSpanText', siblingSpanText);
       // console.log('siblingSpanText', siblingSpanText);
 
       const filteredSearchItems = searchedItems.filter(
@@ -183,9 +177,9 @@ const SearchComponentV1 = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('debug aaa ->searchedItems', searchedItems);
-  }, [searchedItems]);
+  // useEffect(() => {
+  //   console.log('debug aaa ->searchedItems', searchedItems);
+  // }, [searchedItems]);
 
   useEffect(() => {
     setSearchState((prevState) => ({
@@ -204,24 +198,23 @@ const SearchComponentV1 = () => {
   const [isOnSearchPage, setIsOnSearchPage] = useState(false);
 
   useEffect(() => {
-    console.log('debug aaa -> vars', {
-      pathname,
-      showResults,
-      searchedItems,
-      isOnSearchPage,
-    });
+    // console.log('debug aaa -> vars', {
+    //   pathname,
+    //   showResults,
+    //   searchedItems,
+    //   isOnSearchPage,
+    // });
     if (
       pathname !== 'search' &&
       showResults &&
       searchedItems.length > 0 &&
       !isOnSearchPage
     ) {
-      console.log('debug aaa IFFF');
+      // console.log('debug aaa IFFF');
       setIsOnSearchPage(true);
       return router.push('/search');
     }
     if (searchedItems.length === 0 && isOnSearchPage) {
-      console.log('debug aaa -> searchedItems is empty');
       setSearchState((prevState) => ({
         ...prevState,
         showResults: false,
@@ -229,7 +222,6 @@ const SearchComponentV1 = () => {
       return router.push('/');
     }
     if (searchedItems.length > 0 && isOnSearchPage) {
-      console.log('debug aaa-> searchedItems is not empty');
       setSearchState((prevState) => ({
         ...prevState,
         showHelp: false,

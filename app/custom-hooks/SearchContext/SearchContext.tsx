@@ -491,6 +491,7 @@ const SearchContext = createContext<{
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   const { tags, infoPages, postPages, tagsFetched } = useAuth();
+  const [affiliations, setAffiliations] = useState<any[]>([]);
   const [searchState, setSearchState] = useState({
     ...initialState,
     initialData: {},
@@ -501,23 +502,42 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
     filteredData: {},
   } as any);
 
+  // First useEffect to fetch affiliations
   useEffect(() => {
-    if (tagsFetched) {
+    const fetchAffiliations = async () => {
+      try {
+        const response = await fetch('/api/affiliations');
+        const data = await response.json();
+        const affiliationsData = data.map(
+          (affiliation: any) => affiliation.data
+        );
+        setAffiliations(affiliationsData);
+      } catch (error) {
+        console.error('Error fetching affiliations:', error);
+      }
+    };
+
+    fetchAffiliations();
+  }, []);
+
+  useEffect(() => {
+    if (tagsFetched && affiliations.length > 0) {
       const initialData = {
         ...searchState,
         tags: tags,
         pages: [...infoPages, ...postPages].map((page) => page.data),
         assignments: initialState.initialData.assignments,
         sortTags: sortTags,
+        affiliations: affiliations, // Add affiliations to the state
         filteredData: {},
         initialData: {},
       };
       initialData.filteredData = { ...initialData };
       initialData.initialData = { ...initialData };
-      console.log('deb1->', initialData);
+      console.log('deb1->initialData', initialData);
       setSearchState(initialData);
     }
-  }, [tagsFetched]);
+  }, [tagsFetched, affiliations]);
 
   return (
     <SearchContext.Provider value={{ searchState, setSearchState }}>

@@ -49,6 +49,14 @@ export type InitialData = {
     field: string;
     tagName: string;
   }[];
+  affiliations: {
+    title: string;
+    _id: string;
+    personTag?: string;
+    projectTag?: string;
+    organisationTag?: string;
+    extraIdentifier?: string;
+  };
 };
 
 export const sortResultBySortTags = (
@@ -336,6 +344,8 @@ export const updateFilteredDataBasedOnClickedTag = (
       : [];
 
   console.log('deb1->matchedPages', matchedPages);
+
+  // const matchedAffiliations =
   // .sort((a, b) => a.id - b.id);
 
   return {
