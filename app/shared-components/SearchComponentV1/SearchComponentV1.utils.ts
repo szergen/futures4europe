@@ -1,3 +1,4 @@
+import { match } from 'assert';
 import Fuse from 'fuse.js';
 
 export const FieldTypes = [
@@ -56,7 +57,7 @@ export type InitialData = {
     projectTag?: string;
     organisationTag?: string;
     extraIdentifier?: string;
-  };
+  }[];
 };
 
 export const sortResultBySortTags = (
@@ -319,7 +320,7 @@ export const updateFilteredDataBasedOnClickedTag = (
     ?.filter((tag) => tag?.name?.toLowerCase() === clickedTag?.toLowerCase())
     ?.map((tag) => tag?._id);
 
-  console.log('deb1->matchingTagIds', matchingTagIds);
+  console.log('deb1->matchingTagIds', matchingTagIds.length);
 
   // console.log('debug3->matchingTagIds', matchingTagIds);
 
@@ -345,14 +346,46 @@ export const updateFilteredDataBasedOnClickedTag = (
 
   console.log('deb1->matchedPages', matchedPages);
 
-  // const matchedAffiliations =
-  // .sort((a, b) => a.id - b.id);
+  const matchedAffiliations = filteredData?.affiliations?.filter(
+    (affiliation: any) =>
+      matchingTagIds.includes(affiliation.personTag) ||
+      matchingTagIds.includes(affiliation.projectTag) ||
+      matchingTagIds.includes(affiliation.organisationTag)
+  );
+
+  console.log('deb1111->matchedAffiliations', matchedAffiliations);
+
+  const affiliationPages = filteredData?.pages
+    ?.filter((page: any) => {
+      return matchedAffiliations?.find((affiliation: any) => {
+        if (
+          (affiliation.personTag &&
+            page?.person?.[0]?._id === affiliation.personTag) ||
+          (affiliation.organisationTag &&
+            page?.organisation?.[0]?._id === affiliation.organisationTag) ||
+          (affiliation.projectTag &&
+            page?.Project?.[0]?._id === affiliation.projectTag)
+        ) {
+          return true;
+        }
+      });
+    })
+    ?.filter(
+      (post, index, self) => index === self.findIndex((p) => p._id === post._id)
+    );
+
+  console.log('deb1111->affiliationPages', affiliationPages);
+  const allMatchedPages = [...matchedPages, ...affiliationPages]?.filter(
+    (post, index, self) => index === self.findIndex((p) => p._id === post._id)
+  );
+  console.log('deb1111->allMatchedPages', allMatchedPages);
 
   return {
     matchedPages:
-      matchedPages?.length > 0
-        ? matchedPages?.map((page: any) => ({ item: page }))
+      allMatchedPages?.length > 0
+        ? allMatchedPages?.map((page: any) => ({ item: page }))
         : [],
+    matchedAffiliations: matchedAffiliations,
     // matchedTagsBasedOnPages: matchedTagsBasedOnPages,
     // matchedAssignmentsBasedOnPages: matchedAssignmentsBasedOnPages,
   };

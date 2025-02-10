@@ -33,7 +33,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const { searchState, setSearchState } = useSearch();
   const { clickedField, clickedTag } = searchState;
 
-  const handleArrouwUp = () => {
+  const handleArrouwUp = (event: any) => {
+    event.preventDefault();
     setSearchState((prevState) => ({
       ...prevState,
       selectedSuggestionIndex: Math.max(
@@ -98,7 +99,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     if (event.key === 'ArrowDown') {
       handleArrowDown();
     } else if (event.key === 'ArrowUp') {
-      handleArrouwUp();
+      handleArrouwUp(event);
     } else if (event.key === 'Enter' && tagWasFocused) {
       if (searchState.selectedSuggestionIndex < 0) {
         const resultsBasedOnSortTag = searchState.selectedSortTag
@@ -181,6 +182,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         ...prevState,
         selectedSuggestionIndex: -1,
         selectedSuggestionTag: '',
+        selectedSearchedItemIndex: -1,
       }));
     } else if (
       (event.key === 'Delete' || event.key === 'Backspace') &&
@@ -496,10 +498,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       );
     } else if (clickedTag && !clickedField) {
       console.log('deb1->clickedTag', clickedTag);
-      const { matchedPages } = updateFilteredDataBasedOnClickedTag(
-        clickedTag,
-        filteredData
-      );
+      const { matchedPages, matchedAffiliations } =
+        updateFilteredDataBasedOnClickedTag(clickedTag, filteredData);
 
       setSearchState((prevState) => ({
         ...prevState,

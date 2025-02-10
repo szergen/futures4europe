@@ -145,6 +145,14 @@ const Suggestions: React.FC<SuggestionsProps> = ({
 
   console.log('pageSuggestions->', pageSuggestions);
 
+  const getValidImageUrl = (urls: (string | undefined)[]) => {
+    const PLACEHOLDER = '/images/placeholder.webp';
+    return (
+      urls.find((url) => url && url !== '_' && url.trim().length > 0) ||
+      PLACEHOLDER
+    );
+  };
+
   return (
     <motion.div
       className={classNames('relative z-10', style.suggestionsContainerWrap)}
@@ -260,14 +268,14 @@ const Suggestions: React.FC<SuggestionsProps> = ({
         {/* Tags */}
         {tagSuggestions?.length > 0 ? (
           <div className={style.tagSuggestionsWrapper}>
-            <span
+            {/* <span
               className={classNames(
                 'ml-2 pb-4 block text-[14px]',
                 style.tagSuggestionsLabel
               )}
             >
               Tag Suggestions
-            </span>
+            </span> */}
             <ul className={style.lists}>
               {tagSuggestions
                 ?.slice(
@@ -430,14 +438,13 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                                 (classNames('inline-block mr-1 ml-4 w-10 h-10'),
                                 style.searchTagImage)
                               }
-                              src={
+                              src={getValidImageUrl([
                                 pageSuggestion?.item?.organisation?.[0]
-                                  ?.picture ||
-                                pageSuggestion?.item?.Project?.[0]?.picture ||
-                                pageSuggestion?.item?.person?.[0]?.picture ||
-                                pageSuggestion?.item?.postImage1?.url ||
-                                'https://placehold.co/600x400?text=placeholder'
-                              }
+                                  ?.picture,
+                                pageSuggestion?.item?.Project?.[0]?.picture,
+                                pageSuggestion?.item?.person?.[0]?.picture,
+                                pageSuggestion?.item?.postImage1?.url,
+                              ])}
                               width={80}
                               height={80}
                               objectFit="cover"

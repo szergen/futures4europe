@@ -64,10 +64,11 @@ const SearchComponentV1 = () => {
     selectedSuggestionType: 'tag' | 'field' | 'field-tag' | 'sortby'
   ) => {
     if (selectedSuggestionType === 'tag') {
-      const { matchedPages } = updateFilteredDataBasedOnClickedTag(
-        selectedSuggestionTag,
-        filteredData
-      );
+      const { matchedPages, matchedAffiliations } =
+        updateFilteredDataBasedOnClickedTag(
+          selectedSuggestionTag,
+          filteredData
+        );
       console.log('matchedPages', matchedPages);
       setSearchState((prevState) => ({
         ...prevState,
@@ -370,9 +371,9 @@ const SearchComponentV1 = () => {
         <TagInput initialData={initialData} filteredData={filteredData} />
         {/* {selectedSortTag && <div>Sorted By: {selectedSortTag}</div>} */}
       </div>
-      {/* Keys Suggestions */}
-      {showSuggestions && (
-        <div className={style.keySuggestionsContainer}>
+      {/* #region Key suggestions */}
+      {/* {showSuggestions && ( */}
+      {/* <div className={style.keySuggestionsContainer}>
           <div className={style.keySuggestionsLeft}>
             <span className={style.arrowKeys}>
               <svg
@@ -411,7 +412,7 @@ const SearchComponentV1 = () => {
           <div className={style.keySuggestionsRight}>
             {/* <span className={style.enterIcon}>enter</span>
             <span className={style.rightText}>To select</span> */}
-            {selectedSuggestionIndex > -1 ? (
+      {/* {selectedSuggestionIndex > -1 ? (
               <>
                 <span className={style.escIcon}>esc</span>
                 <span className={style.rightText}>To dismiss selection</span>
@@ -423,10 +424,11 @@ const SearchComponentV1 = () => {
                   To search by current text
                 </span>
               </>
-            )}
-          </div>
-        </div>
-      )}
+            )} */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* )} */}
+      {/* #endregion Key suggestions */}
       {/* Help and Suggestions*/}
       {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
       {showSuggestions && (
