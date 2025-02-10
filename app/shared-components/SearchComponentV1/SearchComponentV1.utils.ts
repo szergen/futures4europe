@@ -201,7 +201,7 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
   clickedSuggestion: string,
   filteredData: InitialData
 ) => {
-  console.log('deb1-> INSIDE updateFilteredDataBasedOnClickedSuggestion');
+  // console.log('deb1-> INSIDE updateFilteredDataBasedOnClickedSuggestion');
   if (clickedSuggestion && clickedSuggestion.includes(':')) {
     const [field, tagName] = clickedSuggestion
       ?.split(':')
@@ -217,9 +217,9 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
     };
 
     const keysToCheck = fieldToKeysMapping[field] || [];
-    console.log('deb1->keysToCheck', keysToCheck);
-    console.log('deb1->tagName', tagName.toLowerCase());
-    console.log('deb1->filteredData.pages', filteredData.pages);
+    // console.log('deb1->keysToCheck', keysToCheck);
+    // console.log('deb1->tagName', tagName.toLowerCase());
+    // console.log('deb1->filteredData.pages', filteredData.pages);
 
     const matchedPages =
       keysToCheck.length > 0
@@ -234,7 +234,7 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
           )
         : [];
 
-    console.log('deb1->INSIDE matchedPages', matchedPages);
+    // console.log('deb1->INSIDE matchedPages', matchedPages);
 
     // const matchedPages = filteredData.assignments
     //   .filter(
@@ -320,7 +320,7 @@ export const updateFilteredDataBasedOnClickedTag = (
     ?.filter((tag) => tag?.name?.toLowerCase() === clickedTag?.toLowerCase())
     ?.map((tag) => tag?._id);
 
-  console.log('deb1->matchingTagIds', matchingTagIds.length);
+  // console.log('deb1->matchingTagIds', matchingTagIds.length);
 
   // console.log('debug3->matchingTagIds', matchingTagIds);
 
@@ -344,7 +344,7 @@ export const updateFilteredDataBasedOnClickedTag = (
         )
       : [];
 
-  console.log('deb1->matchedPages', matchedPages);
+  // console.log('deb1->matchedPages', matchedPages);
 
   const matchedAffiliations = filteredData?.affiliations?.filter(
     (affiliation: any) =>
@@ -353,7 +353,7 @@ export const updateFilteredDataBasedOnClickedTag = (
       matchingTagIds.includes(affiliation.organisationTag)
   );
 
-  console.log('deb1111->matchedAffiliations', matchedAffiliations);
+  // console.log('deb1111->matchedAffiliations', matchedAffiliations);
 
   const affiliationPages = filteredData?.pages
     ?.filter((page: any) => {
@@ -374,11 +374,11 @@ export const updateFilteredDataBasedOnClickedTag = (
       (post, index, self) => index === self.findIndex((p) => p._id === post._id)
     );
 
-  console.log('deb1111->affiliationPages', affiliationPages);
+  // console.log('deb1111->affiliationPages', affiliationPages);
   const allMatchedPages = [...matchedPages, ...affiliationPages]?.filter(
     (post, index, self) => index === self.findIndex((p) => p._id === post._id)
   );
-  console.log('deb1111->allMatchedPages', allMatchedPages);
+  // console.log('deb1111->allMatchedPages', allMatchedPages);
 
   return {
     matchedPages:

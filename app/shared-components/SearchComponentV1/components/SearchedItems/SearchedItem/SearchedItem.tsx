@@ -30,8 +30,8 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   const tagData = tags?.find(
     (tag) => tag?.name?.toLowerCase() === tagName?.toLowerCase()
   );
-  console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
-  console.log('debug3->', { item });
+  // console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
+  // console.log('debug3->', { item });
 
   return (
     <li

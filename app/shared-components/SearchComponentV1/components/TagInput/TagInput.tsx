@@ -137,8 +137,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           selectedSuggestionIndex: -1,
           // selectedSuggestionTag: '',
         }));
-        console.log('deb1>resultsBasedOnSortTag', resultsBasedOnSortTag);
-        console.log('deb1>resultsToShow', resultsToShow);
+        // console.log('deb1>resultsBasedOnSortTag', resultsBasedOnSortTag);
+        // console.log('deb1>resultsToShow', resultsToShow);
         // input[input.length - 1] !== '"' && setInput(input + '"');
         setInput('');
       } else {
@@ -326,8 +326,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         uniqueResults(pageSuggestionsSearch)?.map((result) => result?.item)
       );
 
-      console.log('debug2->tagSuggestions', tagSuggestionsSearch);
-      console.log('debug2->pageSuggestions', pageSuggestionsSearch);
+      // console.log('debug2->tagSuggestions', tagSuggestionsSearch);
+      // console.log('debug2->pageSuggestions', pageSuggestionsSearch);
 
       setSearchState((prevState) => ({
         ...prevState,
@@ -497,7 +497,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         )
       );
     } else if (clickedTag && !clickedField) {
-      console.log('deb1->clickedTag', clickedTag);
+      // console.log('deb1->clickedTag', clickedTag);
       const { matchedPages, matchedAffiliations } =
         updateFilteredDataBasedOnClickedTag(clickedTag, filteredData);
 

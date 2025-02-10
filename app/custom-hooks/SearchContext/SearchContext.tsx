@@ -534,7 +534,7 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
       };
       initialData.filteredData = { ...initialData };
       initialData.initialData = { ...initialData };
-      console.log('deb1->initialData', initialData);
+      // console.log('deb1->initialData', initialData);
       setSearchState(initialData);
     }
   }, [tagsFetched, affiliations]);
