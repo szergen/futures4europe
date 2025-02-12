@@ -44,7 +44,13 @@ export default function Pages({ params, searchParams }: any) {
   return (
     <div className={classNames('w-full')}>
       {/* <SearchProvider> */}
-      <Hero subtitle={`sorted by published dates`}>
+      <Hero
+        subtitle={
+          showResults && filteredData?.pages?.length > 0
+            ? `sorted by published dates`
+            : ' '
+        }
+      >
         <div className="flex justify-center">
           <h1
             className={classNames(

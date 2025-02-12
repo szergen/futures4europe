@@ -219,6 +219,13 @@ const SearchComponentV1 = () => {
       setSearchState((prevState) => ({
         ...prevState,
         showResults: false,
+        selectedSuggestionIndex: -1,
+        clickedField: '',
+        clickedTag: '',
+        selectedSuggestionTag: '',
+        activeSelection: '',
+        selectedSortTag: '',
+        showSuggestions: false,
       }));
       return router.push('/');
     }
@@ -430,27 +437,28 @@ const SearchComponentV1 = () => {
       {/* )} */}
       {/* #endregion Key suggestions */}
       {/* Help and Suggestions*/}
-      {showHelp && <HelpDropdown handleFieldSelection={handleFieldSelection} />}
-      {showSuggestions && (
-        <Suggestions
-          fieldSuggestions={fieldSuggestions}
-          tagSuggestions={tagSuggestions}
-          pageSuggestions={pageSuggestions}
-          sortTagsSuggestions={sortTagsSuggestions}
-          // handleClickedSuggestion={handleClickedSuggestion}
-          handleTagSuggestion={handleTagSuggestion}
-          handleFieldSelection={handleFieldSelection}
-          clickedField={clickedField}
-          handleSelectedSuggestion={handleSelectedSuggestion}
-          selectedSuggestionIndex={selectedSuggestionIndex}
-          activeSelection={activeSelection}
-          searchedItems={searchedItems}
-          // sortTags={sortTags}
-          handleSelectedSortTag={handleSelectedSortTag}
-          // inputText={inputText}
-          handleScrollForSuggestions={handleScrollForSuggestions}
-        />
-      )}
+      {showHelp && <HelpDropdown handleTagSuggestion={handleTagSuggestion} />}
+      {showSuggestions &&
+        (tagSuggestions?.length > 0 || pageSuggestions?.length > 0) && (
+          <Suggestions
+            fieldSuggestions={fieldSuggestions}
+            tagSuggestions={tagSuggestions}
+            pageSuggestions={pageSuggestions}
+            sortTagsSuggestions={sortTagsSuggestions}
+            // handleClickedSuggestion={handleClickedSuggestion}
+            handleTagSuggestion={handleTagSuggestion}
+            handleFieldSelection={handleFieldSelection}
+            clickedField={clickedField}
+            handleSelectedSuggestion={handleSelectedSuggestion}
+            selectedSuggestionIndex={selectedSuggestionIndex}
+            activeSelection={activeSelection}
+            searchedItems={searchedItems}
+            // sortTags={sortTags}
+            handleSelectedSortTag={handleSelectedSortTag}
+            // inputText={inputText}
+            handleScrollForSuggestions={handleScrollForSuggestions}
+          />
+        )}
       {/* Results */}
       {/* {showResults && (
         <Modal

@@ -468,7 +468,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                               >
                                 {pageSuggestion?.item?.title}
                               </div>
-                              <Tag {...pageSuggestion?.item?.pageTypes?.[0]} />
+                              <span className="capitalize">
+                                [{pageSuggestion?.item?.pageTypes?.[0]?.name}]
+                              </span>
                             </div>
                             {/* Page Content */}
                             <div

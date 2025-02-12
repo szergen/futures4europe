@@ -345,6 +345,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         pageSuggestions: pageSuggestionsSearch,
         sortTagsSuggestions: sortTagsSuggestionsSearch,
         showSuggestions: true,
+        selectedSuggestionIndex: -1,
         showHelp: false,
         inputText: input,
       }));
@@ -352,10 +353,14 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       tagWasFocused &&
         setSearchState((prevState) => ({
           ...prevState,
-          showSuggestions: !!input || !!clickedField || !!clickedTag,
+          showSuggestions:
+            !!input ||
+            // !!clickedField ||
+            !!clickedTag,
+          selectedSuggestionIndex: -1,
           showHelp:
             !input &&
-            !clickedField &&
+            // !clickedField &&
             !clickedTag &&
             searchState.searchedItems.length === 0,
         }));
@@ -560,6 +565,12 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     if (searchState.selectedSortTag) {
       setInput('');
     }
+    // if (searchState.searchedItems.length === 0) {
+    //   setSearchState((prevState) => ({
+    //     ...prevState,
+    //     showResults: false,
+    //   }));
+    // }
   }, [searchState.searchedItems]);
 
   // results to be triggered each time resultsToShow changes

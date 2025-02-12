@@ -60,7 +60,7 @@ const FieldSuggestionTypes = [
     description: 'pages containing the tag Austrian Institute of Technology',
   },
   {
-    type: <div className="text-black">future</div>,
+    type: <div className="text-black">future </div>,
     description: 'pages containing the text "future"',
   },
   // {
@@ -74,12 +74,10 @@ const FieldSuggestionTypes = [
 ];
 
 export type HelpDropdownProps = {
-  handleFieldSelection: (e: any) => void;
+  handleTagSuggestion: (e: any) => void;
 };
 
-const HelpDropdown: React.FC<HelpDropdownProps> = ({
-  handleFieldSelection,
-}) => {
+const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
   return (
     <motion.div
       className={classNames('relative z-10')}
@@ -97,7 +95,7 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
     >
       <div className={style.helpDropdownContainer}>
         <div className={classNames(style.iconSearchTips, 'flex items-center')}>
-          <HiDocumentSearch />
+          {/* <HiDocumentSearch /> */}
           <span className="ml-2 text-[14px]">EXAMPLES</span>{' '}
           {/* The text with margin for spacing */}
         </div>
@@ -110,11 +108,17 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
           >
             <span
               key={`${field.description}`}
-              onMouseDown={handleFieldSelection}
+              onMouseDown={(e) => {
+                if (index < FieldSuggestionTypes.length - 1) {
+                  handleTagSuggestion(e);
+                }
+              }}
+              className={style.fieldType}
             >
               {field.type}
             </span>
-            - <span>{field.description}</span>
+            -{' '}
+            <span className={style.fieldDescription}>{field.description}</span>
           </div>
         ))}
       </div>

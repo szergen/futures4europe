@@ -32,3 +32,13 @@
   width: 18px;
   height: 18px;
 }
+
+.fieldType {
+  font-size: 18px;
+}
+
+.fieldDescription {
+  font-size: 18px;
+  color: #555;
+  font-weight: 400;
+}
