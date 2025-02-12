@@ -278,6 +278,10 @@ const Suggestions: React.FC<SuggestionsProps> = ({
             </span> */}
             <ul className={style.lists}>
               {tagSuggestions
+                ?.filter(
+                  (tag) =>
+                    !searchedItems.find((item) => item.searchItem === tag.name)
+                )
                 ?.slice(
                   selectedSuggestionIndex >= 5
                     ? selectedSuggestionIndex - 1
