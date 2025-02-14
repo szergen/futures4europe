@@ -10,6 +10,7 @@
   text-transform: capitalize;
   letter-spacing: -0.01em;
   position: relative;
+  z-index: 0;
 
   .tagPicture {
     border-radius: 0.45em;
@@ -27,7 +28,7 @@
     cursor: pointer;
   }
   .tagCounterBody:hover .popularity {
-    background: #9c8af1!important;
+    background: #9c8af1 !important;
     color: var(--primary-white);
     text-decoration-color: var(--primary-white);
     border-radius: var(--p-border-radius-100);

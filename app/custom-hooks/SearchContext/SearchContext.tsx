@@ -1,20 +1,22 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 // import { mockedSearch } from './mockedSearch';
 import { mockedAssignments } from './mockedAssignments';
 import { mockedPages } from './mockedPages';
 // import { mockedTags } from './mockedTags';
 import { mockedTags, sortTags } from './SearchContext.utils';
+import { useAuth } from '../AuthContext/AuthContext';
+import { init } from 'next/dist/compiled/@vercel/og/satori';
 
 // Mocked Data
 const mockedInitialData = {
   tags: [
     // Field Tags
-    { tagType: 'field', name: 'author', filter: 'person' },
-    { tagType: 'field', name: 'people', filter: 'person' },
-    { tagType: 'field', name: 'participant', filter: 'person' },
-    { tagType: 'field', name: 'speaker', filter: 'person' },
-    { tagType: 'field', name: 'coordinator', filter: 'person' },
-    { tagType: 'field', name: 'activity', filter: 'domain' },
+    { tagType: 'field', name: 'author', filter: 'person' }, // done
+    { tagType: 'field', name: 'people', filter: 'person' }, // done
+    { tagType: 'field', name: 'participant', filter: 'person' }, // done
+    { tagType: 'field', name: 'speaker', filter: 'person' }, // done
+    { tagType: 'field', name: 'coordinator', filter: 'person' }, // done
+    { tagType: 'field', name: 'activity', filter: 'domain' }, // done
     // Sort Tags
     // Page Type Tags
     { tagId: 252524, tagType: 'page type', name: 'info', popularity: 184 },
@@ -450,11 +452,11 @@ export interface SearchState {
 }
 
 const initialState: SearchState = {
-  initialData: mockedInitialData,
+  initialData: {},
   fieldSuggestions: [],
   tagSuggestions: [],
   pageSuggestions: [],
-  filteredData: mockedInitialData,
+  filteredData: {},
   // highlightedData: [],
   results: [],
   showHelp: false,
@@ -488,7 +490,54 @@ const SearchContext = createContext<{
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
-  const [searchState, setSearchState] = useState(initialState);
+  const { tags, infoPages, postPages, tagsFetched } = useAuth();
+  const [affiliations, setAffiliations] = useState<any[]>([]);
+  const [searchState, setSearchState] = useState({
+    ...initialState,
+    initialData: {},
+    tags: [],
+    pages: [],
+    assignments: [],
+    sortTags: [],
+    filteredData: {},
+  } as any);
+
+  // First useEffect to fetch affiliations
+  useEffect(() => {
+    const fetchAffiliations = async () => {
+      try {
+        const response = await fetch('/api/affiliations');
+        const data = await response.json();
+        const affiliationsData = data.map(
+          (affiliation: any) => affiliation.data
+        );
+        setAffiliations(affiliationsData);
+      } catch (error) {
+        console.error('Error fetching affiliations:', error);
+      }
+    };
+
+    fetchAffiliations();
+  }, []);
+
+  useEffect(() => {
+    if (tagsFetched && affiliations.length > 0) {
+      const initialData = {
+        ...searchState,
+        tags: tags,
+        pages: [...infoPages, ...postPages].map((page) => page.data),
+        assignments: initialState.initialData.assignments,
+        sortTags: sortTags,
+        affiliations: affiliations, // Add affiliations to the state
+        filteredData: {},
+        initialData: {},
+      };
+      initialData.filteredData = { ...initialData };
+      initialData.initialData = { ...initialData };
+      // console.log('deb1->initialData', initialData);
+      setSearchState(initialData);
+    }
+  }, [tagsFetched, affiliations]);
 
   return (
     <SearchContext.Provider value={{ searchState, setSearchState }}>

@@ -11,6 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import { SearchProvider } from './custom-hooks/SearchContext/SearchContext';
 import GA from './3rd-parties/GA/GA';
 
 // Initialize PostHog
@@ -89,12 +90,14 @@ export default function RootLayout({
                 })}
               >
                 <AuthProvider>
-                  <Header />
-                  {/* <PostHogTest/> */}
-                  <main className="bg-white min-h-[600px]">{children}</main>
-                  <div className="mt-10 sm:mt-20">
-                    <Footer />
-                  </div>
+                  <SearchProvider>
+                    <Header />
+                    {/* <PostHogTest/> */}
+                    <main className="bg-white min-h-[600px]">{children}</main>
+                    <div className="mt-10 sm:mt-20">
+                      <Footer />
+                    </div>
+                  </SearchProvider>
                 </AuthProvider>
               </WixProvider>
 

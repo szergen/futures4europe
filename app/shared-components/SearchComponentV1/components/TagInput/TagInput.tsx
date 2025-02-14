@@ -12,6 +12,8 @@ import {
 } from '../../SearchComponentV1.utils';
 import style from './TagInput.module.css';
 import classNames from 'classnames';
+import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 // import SearchedItems from '../SearchedItems/SearchedItems';
 
 export type TagInputProps = {
@@ -20,6 +22,8 @@ export type TagInputProps = {
 };
 
 const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
+  const { tagsFetched } = useAuth();
+
   const [input, setInput] = useState('');
   // Needed for showing help dropdown
   const [tagWasFocused, setTagWasFocused] = useState(false);
@@ -29,7 +33,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   const { searchState, setSearchState } = useSearch();
   const { clickedField, clickedTag } = searchState;
 
-  const handleArrouwUp = () => {
+  const handleArrouwUp = (event: any) => {
+    event.preventDefault();
     setSearchState((prevState) => ({
       ...prevState,
       selectedSuggestionIndex: Math.max(
@@ -39,14 +44,34 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     }));
   };
 
+  // const handleArrowDown = () => {
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     selectedSuggestionIndex: Math.min(
+  //       prevState.selectedSuggestionIndex + 1,
+  //       filteredData.tags.length - 1
+  //     ),
+  //   }));
+  // };
+
   const handleArrowDown = () => {
-    setSearchState((prevState) => ({
-      ...prevState,
-      selectedSuggestionIndex: Math.min(
-        prevState.selectedSuggestionIndex + 1,
-        filteredData.tags.length - 1
-      ),
-    }));
+    setSearchState((prevState) => {
+      const maxIndex = Math.max(
+        // (filteredData?.tags?.length || 0) - 1
+        (prevState.tagSuggestions?.length || 0) - 1
+        // (prevState.fieldSuggestions?.length || 0) - 1,
+        // (prevState.pageSuggestions?.length || 0) - 1,
+        // (prevState.sortTagsSuggestions?.length || 0) - 1
+      );
+
+      return {
+        ...prevState,
+        selectedSuggestionIndex: Math.min(
+          prevState.selectedSuggestionIndex + 1,
+          maxIndex
+        ),
+      };
+    });
   };
 
   const handleOnBlur = () => {
@@ -61,7 +86,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     setSearchState((prevState) => ({
       ...prevState,
       showSuggestions: !!input || !!clickedField || !!clickedTag,
-      showHelp: !input && !clickedField && !clickedTag,
+      showHelp:
+        !input &&
+        !clickedField &&
+        !clickedTag &&
+        searchState.searchedItems.length === 0,
     }));
     setTagWasFocused(true);
   };
@@ -70,7 +99,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     if (event.key === 'ArrowDown') {
       handleArrowDown();
     } else if (event.key === 'ArrowUp') {
-      handleArrouwUp();
+      handleArrouwUp(event);
     } else if (event.key === 'Enter' && tagWasFocused) {
       if (searchState.selectedSuggestionIndex < 0) {
         const resultsBasedOnSortTag = searchState.selectedSortTag
@@ -108,14 +137,17 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           selectedSuggestionIndex: -1,
           // selectedSuggestionTag: '',
         }));
+        // console.log('deb1>resultsBasedOnSortTag', resultsBasedOnSortTag);
+        // console.log('deb1>resultsToShow', resultsToShow);
         // input[input.length - 1] !== '"' && setInput(input + '"');
         setInput('');
       } else {
+        console.log('debug aaa->', searchState.selectedSuggestionIndex);
         setSearchState((prevState) => ({
           ...prevState,
           showSuggestions: false,
-          showHelp: true,
-          // showResults: true,
+          showHelp: false,
+          showResults: true,
           clickedTag:
             searchState.activeSelection === 'tag'
               ? searchState.selectedSuggestionTag
@@ -150,10 +182,11 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         ...prevState,
         selectedSuggestionIndex: -1,
         selectedSuggestionTag: '',
+        selectedSearchedItemIndex: -1,
       }));
     } else if (
       (event.key === 'Delete' || event.key === 'Backspace') &&
-      searchState.searchedItems.length > 0 &&
+      searchState?.searchedItems?.length > 0 &&
       !input
     ) {
       if (searchState.selectedSearchedItemIndex === -1) {
@@ -184,53 +217,53 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   };
 
   // SearchButton handler function the same as Enter key
-  const handleSearchButton = () => {
-    if (searchState.selectedSuggestionIndex < 0) {
-      setSearchState((prevState) => ({
-        ...prevState,
-        showSuggestions: false,
-        showHelp: false,
-        showResults: true,
-        results: searchState.searchedItems.length ? resultsToShow : [],
-        searchedItems: input
-          ? [
-              ...searchState.searchedItems,
-              { searchItem: input, searchItemType: 'text' },
-            ]
-          : [...searchState.searchedItems],
-        filteredData: {
-          pages: resultsToShow,
-          tags: initialData.tags,
-          assignments: initialData.assignments,
-          sortTags: initialData.sortTags,
-        },
-        selectedSuggestionIndex: -1,
-        // selectedSuggestionTag: '',
-      }));
-      // input[input.length - 1] !== '"' && setInput(input + '"');
-      setInput('');
-    } else {
-      setSearchState((prevState) => ({
-        ...prevState,
-        showSuggestions: false,
-        showHelp: true,
-        // showResults: true,
-        clickedTag:
-          searchState.activeSelection === 'tag'
-            ? searchState.selectedSuggestionTag
-            : '',
-        selectedSuggestionIndex: 0,
-        selectedSuggestionTag: '',
-        clickedField:
-          searchState.activeSelection === 'field'
-            ? searchState.selectedSuggestionTag
-            : prevState.clickedField,
+  // const handleSearchButton = () => {
+  //   if (searchState.selectedSuggestionIndex < 0) {
+  //     setSearchState((prevState) => ({
+  //       ...prevState,
+  //       showSuggestions: false,
+  //       showHelp: false,
+  //       showResults: true,
+  //       results: searchState.searchedItems.length ? resultsToShow : [],
+  //       searchedItems: input
+  //         ? [
+  //             ...searchState.searchedItems,
+  //             { searchItem: input, searchItemType: 'text' },
+  //           ]
+  //         : [...searchState.searchedItems],
+  //       filteredData: {
+  //         pages: resultsToShow,
+  //         tags: initialData.tags,
+  //         assignments: initialData.assignments,
+  //         sortTags: initialData.sortTags,
+  //       },
+  //       selectedSuggestionIndex: -1,
+  //       // selectedSuggestionTag: '',
+  //     }));
+  //     // input[input.length - 1] !== '"' && setInput(input + '"');
+  //     setInput('');
+  //   } else {
+  //     setSearchState((prevState) => ({
+  //       ...prevState,
+  //       showSuggestions: false,
+  //       showHelp: true,
+  //       // showResults: true,
+  //       clickedTag:
+  //         searchState.activeSelection === 'tag'
+  //           ? searchState.selectedSuggestionTag
+  //           : '',
+  //       selectedSuggestionIndex: 0,
+  //       selectedSuggestionTag: '',
+  //       clickedField:
+  //         searchState.activeSelection === 'field'
+  //           ? searchState.selectedSuggestionTag
+  //           : prevState.clickedField,
 
-        activeSelection: 'tag',
-      }));
-      setInput('');
-    }
-  };
+  //       activeSelection: 'tag',
+  //     }));
+  //     setInput('');
+  //   }
+  // };
 
   // Input effect
   useEffect(() => {
@@ -244,20 +277,32 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       // Word by word search
       const pageSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.pages,
-        ['title', 'subtitle', 'description']
+        filteredData?.pages,
+        [
+          'title',
+          'postContentRIch1',
+          'postContentRIch2',
+          'postContentRIch3',
+          'subtitle',
+        ]
       );
 
       const fieldSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.tags.filter((tag) => tag.tagType === 'field'),
+        filteredData?.tags?.filter((tag) => tag.tagType === 'field'),
         ['name', 'tagLine']
       );
 
       const tagSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.tags.filter(
-          (tag) => tag.tagType !== 'field' && tag.tagType !== 'sort'
+        filteredData?.tags?.filter(
+          (tag) =>
+            tag.tagType !== 'field' &&
+            tag.tagType !== 'sort' &&
+            !searchState.searchedItems.find(
+              (item) =>
+                item?.searchItem?.toLowerCase() === tag?.name?.toLowerCase()
+            )
         ),
         ['name', 'tagLine']
       );
@@ -265,7 +310,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       // if (searchState.searchedItems.length) {
       sortTagsSuggestionsSearch = wordByWordSearch(
         input,
-        filteredData.sortTags,
+        filteredData?.sortTags,
         ['name']
       );
       console.log(
@@ -282,8 +327,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         uniqueResults(pageSuggestionsSearch)?.map((result) => result?.item)
       );
 
-      console.log('debug2->tagSuggestions', tagSuggestionsSearch);
-      console.log('debug2->pageSuggestions', pageSuggestionsSearch);
+      // console.log('debug2->tagSuggestions', tagSuggestionsSearch);
+      // console.log('debug2->pageSuggestions', pageSuggestionsSearch);
 
       setSearchState((prevState) => ({
         ...prevState,
@@ -301,6 +346,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         pageSuggestions: pageSuggestionsSearch,
         sortTagsSuggestions: sortTagsSuggestionsSearch,
         showSuggestions: true,
+        selectedSuggestionIndex: -1,
         showHelp: false,
         inputText: input,
       }));
@@ -308,8 +354,16 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       tagWasFocused &&
         setSearchState((prevState) => ({
           ...prevState,
-          showSuggestions: !!input || !!clickedField || !!clickedTag,
-          showHelp: !input && !clickedField && !clickedTag,
+          showSuggestions:
+            !!input ||
+            // !!clickedField ||
+            !!clickedTag,
+          selectedSuggestionIndex: -1,
+          showHelp:
+            !input &&
+            // !clickedField &&
+            !clickedTag &&
+            searchState.searchedItems.length === 0,
         }));
     }
   }, [input, filterByField]);
@@ -317,15 +371,38 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // Clicked Field effect
   useEffect(() => {
     if (clickedField) {
-      const filteredAssignments = filteredData.assignments.filter(
-        (item) => item.field === clickedField
-      );
+      // const filteredAssignments = filteredData.assignments.filter(
+      //   (item) => item.field === clickedField
+      // );
+      // console.log('deb1->filteredAssignments', filteredAssignments);
+      const fieldToKeysMapping: Record<string, string[]> = {
+        author: ['author'],
+        people: ['people'],
+        activity: ['activity'],
+        participant: ['projectParticipantTeam'],
+        coordinator: ['projectCoordinator'],
+        speaker: ['speaker'],
+      };
+      const keysToCheck = fieldToKeysMapping[clickedField] || [];
 
-      const filteredPages = filteredData.pages.filter((page) =>
-        filteredAssignments.some(
-          (assignment) => assignment.pageId === page.pageId
-        )
-      );
+      const matchedPages =
+        keysToCheck.length > 0
+          ? filteredData.pages.filter((page: { [key: string]: any }) =>
+              keysToCheck.some(
+                (key) => Array.isArray(page?.[key]) && page?.[key].length > 0
+              )
+            )
+          : [];
+
+      // console.log('deb1->clickedField', clickedField);
+      // console.log('deb1->filteredAssignments', filteredAssignments);
+
+      // const filteredPages = filteredData.pages.filter((page) =>
+      //   filteredAssignments.some(
+      //     (assignment) => assignment.pageId === page.pageId
+      //   )
+      // );
+      // console.log('deb1->filteredPages', filteredPages);
 
       const tagSuggestionsSearch = wordByWordSearch(
         ' ',
@@ -355,9 +432,9 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           },
         ],
         filteredData: {
-          pages: filteredPages,
+          pages: matchedPages,
           tags: initialData.tags,
-          assignments: filteredAssignments,
+          assignments: initialData.assignments,
           sortTags: initialData.sortTags,
         },
         fieldSuggestions: [],
@@ -365,7 +442,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         //   (tag) => tag.tagType === 'field'
         // ),
         tagSuggestions: tagSuggestionsSearch,
-        pageSuggestions: filteredPages,
+        pageSuggestions: matchedPages,
         // sortTagsSuggestions: initialData.sortTags,
         sortTagsSuggestions: [],
         inputText: '',
@@ -426,14 +503,13 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         )
       );
     } else if (clickedTag && !clickedField) {
-      const { matchedPages } = updateFilteredDataBasedOnClickedTag(
-        clickedTag,
-        filteredData
-      );
+      // console.log('deb1->clickedTag', clickedTag);
+      const { matchedPages, matchedAffiliations } =
+        updateFilteredDataBasedOnClickedTag(clickedTag, filteredData);
 
       setSearchState((prevState) => ({
         ...prevState,
-        showHelp: true,
+        showHelp: false,
         showSuggestions: false,
         clickedTag: '',
         searchedItems: [
@@ -483,14 +559,28 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     //   )
     // );
     setResultsToShow(
-      uniqueResults(filteredData.pages.map((page) => ({ item: page }))).map(
+      uniqueResults(filteredData?.pages?.map((page) => ({ item: page })))?.map(
         (result) => result.item
       )
     );
     if (searchState.selectedSortTag) {
       setInput('');
     }
+    // if (searchState.searchedItems.length === 0) {
+    //   setSearchState((prevState) => ({
+    //     ...prevState,
+    //     showResults: false,
+    //   }));
+    // }
   }, [searchState.searchedItems]);
+
+  // results to be triggered each time resultsToShow changes
+  // useEffect(() => {
+  //   setSearchState((prevState) => ({
+  //     ...prevState,
+  //     results: resultsToShow,
+  //   }));
+  // }, [resultsToShow]);
 
   // useEffect(() => {
   //   console.log(
@@ -504,17 +594,26 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // }, [searchState.selectedSuggestionIndex]);
 
   return (
-    <div className={classNames(style.SearchInputContainer, 'flex rounded-md')}>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Search for tags, pages, or people..."
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-      />
-      <button
-        className={classNames(style.SearchInputButton, 'rounded-md')}
+    <div className={classNames(style.SearchInputContainer)}>
+      {tagsFetched ? (
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Search pages by tags or text"
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          disabled={!tagsFetched}
+          autoFocus={searchState.showResults}
+        />
+      ) : (
+        <div className={classNames(style.loadingSpinner)}>
+          <LoadingSpinner />
+        </div>
+      )}
+
+      {/* <button
+        // className={classNames(style.SearchInputButton, 'rounded-md')}
         onMouseDown={handleSearchButton}
       >
         <svg
@@ -545,7 +644,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             </g>
           </g>
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 };

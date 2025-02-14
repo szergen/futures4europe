@@ -7,8 +7,8 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
   try {
     // const allTags = await getCollectionItems('Tags');
     const allTagsRespone = await fetch('/api/tags');
-    const allAffiliationsRespinse = await fetch('/api/affiliations');
     const allTags = await allTagsRespone.json();
+    const allAffiliationsRespinse = await fetch('/api/affiliations');
     const allAffiliationsData = await allAffiliationsRespinse.json();
     const allAffiliations = allAffiliationsData.map(
       (affiliation: any) => affiliation.data

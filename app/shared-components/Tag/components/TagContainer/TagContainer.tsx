@@ -53,7 +53,6 @@ export const TagContainer: React.FC<TagContainerProps> = ({
               picture={picture || undefined}
               pictureAlt={pictureAlt}
               tagCategory={tagCategory}
-              tagName={name}
             />
           )}
           <span className={style.tagNameBody}>{name}</span>
@@ -65,7 +64,6 @@ export const TagContainer: React.FC<TagContainerProps> = ({
               picture={picture || undefined}
               pictureAlt={pictureAlt}
               tagCategory={tagCategory}
-              tagName={name}
             />
           )}
           <span className={style.tagNameBody}>{name}</span>
