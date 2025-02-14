@@ -272,18 +272,18 @@ export default function DashboardProjects() {
   //   // console.log('debug222->infoPages', infoPages);
   //   console.log('debug111->editing contact');
   //   const contactsDetails = await getContactsItemByEmail(
-  //     'flora.soyez@arctik.eu'
+  //     'aaron.rosa@isi.fraunhofer.de'
   //   );
 
   //   console.log('debug111->contactsDetails', contactsDetails);
   //   const userDetails = await getContactsItem(
-  //     '09dfce2e-3bd5-4ef0-9253-ef06c201214a'
+  //     '109653a5-50a6-4adf-8a12-f2e027152a3b'
   //   );
   //   console.log('debug111->userDetails', userDetails);
 
   //   const member = await updateMember(
-  //     '09dfce2e-3bd5-4ef0-9253-ef06c201214a',
-  //     'Flora Soyez'
+  //     '109653a5-50a6-4adf-8a12-f2e027152a3b',
+  //     'Aaron B. Rosa'
   //   );
 
   //   console.log('debug111->member', member);

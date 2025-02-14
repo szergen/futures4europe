@@ -300,7 +300,8 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
             tag.tagType !== 'field' &&
             tag.tagType !== 'sort' &&
             !searchState.searchedItems.find(
-              (item) => item.searchItem === tag.name
+              (item) =>
+                item?.searchItem?.toLowerCase() === tag?.name?.toLowerCase()
             )
         ),
         ['name', 'tagLine']

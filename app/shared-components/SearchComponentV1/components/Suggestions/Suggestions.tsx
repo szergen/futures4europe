@@ -143,7 +143,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     // Switch between field and tag suggestions indexes
   }, [selectedSuggestionIndex, clickedField]);
 
-  console.log('pageSuggestions->', pageSuggestions);
+  console.log('debg111->pageSuggestions->', pageSuggestions);
+  console.log('debg111->tagSuggestions->', tagSuggestions);
+  console.log('debg111->searchedItems->', searchedItems);
 
   const getValidImageUrl = (urls: (string | undefined)[]) => {
     const PLACEHOLDER = '/images/placeholder.webp';
@@ -278,10 +280,14 @@ const Suggestions: React.FC<SuggestionsProps> = ({
             </span> */}
             <ul className={style.lists}>
               {tagSuggestions
-                ?.filter(
-                  (tag) =>
-                    !searchedItems.find((item) => item.searchItem === tag.name)
-                )
+                // ?.filter(
+                //   (tag) =>
+                //     !searchedItems.find(
+                //       (item) =>
+                //         item?.searchItem?.toLowerCase() ===
+                //         tag?.item?.name?.toLowerCase()
+                //     )
+                // )
                 ?.slice(
                   selectedSuggestionIndex >= 5
                     ? selectedSuggestionIndex - 1
@@ -295,7 +301,11 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       : index;
                   return (
                     <li
-                      key={index + tagSuggestion?.item?.name}
+                      key={
+                        index +
+                        tagSuggestion?.item?.name +
+                        tagSuggestion?.item?._id
+                      }
                       className={classNames(
                         'flex items-center',
                         actualIndex === highlightedIndexWithType.index &&
@@ -330,6 +340,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                           disablePopularityHover
                           disableTooltip
                         />
+                        <p className={style.tagLine}>
+                          {tagSuggestion?.item?.tagLine || ''}
+                        </p>
                       </div>
                       {/* #region Old tag suggestions */}
                       {
@@ -432,7 +445,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         href={`${automaticallyDecidePathPrefixBasedOnPageType(
                           pageSuggestion.item?.pageTypes?.[0]
                         )}${pageSuggestion.item?.slug}`}
-                        target="_blank"
+                        target="_self"
                       >
                         <div className="flex items-start w-full">
                           <div className={style.pageImageContainer}>

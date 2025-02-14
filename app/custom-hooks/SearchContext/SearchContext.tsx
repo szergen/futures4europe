@@ -452,11 +452,11 @@ export interface SearchState {
 }
 
 const initialState: SearchState = {
-  initialData: mockedInitialData,
+  initialData: {},
   fieldSuggestions: [],
   tagSuggestions: [],
   pageSuggestions: [],
-  filteredData: mockedInitialData,
+  filteredData: {},
   // highlightedData: [],
   results: [],
   showHelp: false,

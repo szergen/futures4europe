@@ -14,6 +14,21 @@
   padding-left: 12px;
 }
 
+.tagContainerForSuggestions {
+  display: flex;
+  align-items: center;
+}
+
+.tagLine {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  padding-right: 12px;
+  padding-left: 12px;
+  max-height: 32px;
+  overflow: hidden;
+}
+
 .tagContainerForSuggestions:hover {
   cursor: pointer;
 }
@@ -74,7 +89,7 @@
 
 .selectedSuggestion::after {
   /* background-color: #3a1717; */
-  content: '[enter] to select';
+  /* content: 'Press Enter to select'; */
   font-size: 12px;
   font-weight: 400;
   position: absolute;
