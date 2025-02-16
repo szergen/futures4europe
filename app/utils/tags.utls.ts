@@ -40,10 +40,16 @@ export function calculatePopularity(
       if (containsId(infoPage?.data, tag?._id)) {
         count += 1;
       }
+      if (tag?.masterTag && containsId(infoPage?.data, tag?.masterTag)) {
+        count += 1;
+      }
     });
 
     postPages.forEach((postPage: { [x: string]: any } | null) => {
       if (containsId(postPage?.data, tag?._id)) {
+        count += 1;
+      }
+      if (tag?.masterTag && containsId(postPage?.data, tag?.masterTag)) {
         count += 1;
       }
     });
@@ -52,7 +58,11 @@ export function calculatePopularity(
       (affiliation: any) =>
         affiliation.personTag === tag?._id ||
         affiliation.projectTag === tag?._id ||
-        affiliation.organisationTag === tag?._id
+        affiliation.organisationTag === tag?._id ||
+        (tag?.masterTag &&
+          (affiliation.personTag === tag?.masterTag ||
+            affiliation.projectTag === tag?.masterTag ||
+            affiliation.organisationTag === tag?.masterTag))
     );
     if (tag?._id === 'ce529656-bacd-4afb-b671-301d464ec908') {
       console.log('allAffilationMentiones', allAffilationMentiones);
@@ -63,22 +73,31 @@ export function calculatePopularity(
           if (
             (tag.tagType !== 'person' &&
               affiliation.personTag &&
-              page?.data?.person?.[0]?._id === affiliation.personTag) ||
+              (page?.data?.person?.[0]?._id === affiliation.personTag ||
+                (page?.data?.person?.[0]?.masterTag &&
+                  page?.data?.person?.[0]?.masterTag ===
+                    affiliation.personTag))) ||
             (tag.tagType !== 'organisation' &&
               affiliation.organisationTag &&
-              page?.data?.organisation?.[0]?._id ===
-                affiliation.organisationTag) ||
+              (page?.data?.organisation?.[0]?._id ===
+                affiliation.organisationTag ||
+                (page?.data?.organisation?.[0]?.masterTag &&
+                  page?.data?.organisation?.[0]?.masterTag ===
+                    affiliation.organisationTag))) ||
             (tag.tagType !== 'project' &&
               affiliation.projectTag &&
-              page?.data?.Project?.[0]?._id === affiliation.projectTag)
+              (page?.data?.Project?.[0]?._id === affiliation.projectTag ||
+                (page?.data?.Project?.[0]?.masterTag &&
+                  page?.data?.Project?.[0]?.masterTag ===
+                    affiliation.projectTag)))
           ) {
             return true;
           }
         });
       })
       ?.filter(
-        (post, index, self) =>
-          index === self.findIndex((p) => p._id === post._id)
+        (post: any, index: number, self: any) =>
+          index === self.findIndex((p: any) => p._id === post._id)
       )?.length;
 
     count += affiliationPages;
@@ -97,3 +116,9 @@ export function calculatePopularity(
 
   return popularityResults;
 }
+
+export const getTagById = (tags: Array<TagProps>, id: string) =>
+  tags.find((t) => t._id === id);
+
+export const getTagByName = (tags: Array<TagProps>, name: string) =>
+  tags.find((t) => t.name?.toLowerCase() === name?.toLowerCase());

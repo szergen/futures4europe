@@ -783,7 +783,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
             <TagPicker
               tags={tags?.filter(
                 (tag) =>
-                  tag?.tagType === 'page type' && !tag?.name?.includes('info')
+                  tag?.tagType === 'page type' &&
+                  !tag?.name?.includes('info') &&
+                  !tag?.masterTag
               )}
               className="relative"
               selectedValues={postData.pageType?.map(
