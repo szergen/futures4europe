@@ -273,18 +273,18 @@ export default function DashboardProjects() {
   //   // console.log('debug222->infoPages', infoPages);
   //   console.log('debug111->editing contact');
   //   const contactsDetails = await getContactsItemByEmail(
-  //     'a.cristina.plescan@gmail.com'
+  //     'aaron.rosa@isi.fraunhofer.de'
   //   );
 
   //   console.log('debug111->contactsDetails', contactsDetails);
   //   const userDetails = await getContactsItem(
-  //     '89c27159-d0d6-4d08-bdc0-ea92984d69a8'
+  //     '109653a5-50a6-4adf-8a12-f2e027152a3b'
   //   );
   //   console.log('debug111->userDetails', userDetails);
 
   //   const member = await updateMember(
-  //     '89c27159-d0d6-4d08-bdc0-ea92984d69a8',
-  //     'Angela Cristina Plescan'
+  //     '109653a5-50a6-4adf-8a12-f2e027152a3b',
+  //     'Aaron B. Rosa'
   //   );
 
   //   console.log('debug111->member', member);

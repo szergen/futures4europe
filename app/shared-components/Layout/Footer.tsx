@@ -94,7 +94,11 @@ const Footer = () => {
                       <strong className="font-medium text-white relative">
                         I agree my information will be processed in accordance
                         with the Future4Europe and Eye of Europe{' '}
-                        <a href="/static-pages/privacy-policy" target="_blank" className="text-blue-600">
+                        <a
+                          href="/static-pages/privacy-policy"
+                          target="_blank"
+                          className="text-blue-600"
+                        >
                           Privacy Policy
                         </a>
                         .
@@ -174,7 +178,7 @@ const Footer = () => {
                   Recent newsletters
                 </dt>
                 <dd className="mt-2 text-base/7 text-gray-400">
-                  <ul className="text-sm transition-all duration-500">                 
+                  <ul className="text-sm transition-all duration-500">
                     <li className="mb-2">
                       <Link
                         target="_blank"
@@ -323,7 +327,7 @@ const Footer = () => {
                 >
                   Privacy Policy
                 </Link>
-              </li>     
+              </li>
               <li className="mb-6">
                 <Link
                   href="/static-pages/cookie-policy"
@@ -331,7 +335,7 @@ const Footer = () => {
                 >
                   Cookie Policy
                 </Link>
-              </li>                          
+              </li>
             </ul>
           </div>
 

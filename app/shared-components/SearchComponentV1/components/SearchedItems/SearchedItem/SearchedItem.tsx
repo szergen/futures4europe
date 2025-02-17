@@ -26,16 +26,19 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   const tagName = itemIncludesField
     ? item.searchItem.split(':')[1]
     : item.searchItem;
-  const tagData = tags.find((tag) => tag.name === tagName);
-  console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
-  console.log('debug3->', { item });
+  // const tagData = tags.find((tag) => tag.name === tagName);
+  const tagData = tags?.find(
+    (tag) => tag?.name?.toLowerCase() === tagName?.toLowerCase()
+  );
+  // console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
+  // console.log('debug3->', { item });
 
   return (
     <li
-      key={index}
+      key={`${index}-${item.searchItem}`}
       className={classNames(
         'flex mx-1 items-center',
-        isSelected && 'searchTagSelected'
+        isSelected && style.searchTagSelected
       )}
     >
       {/* Field with Tag */}
@@ -46,26 +49,14 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
           </span>
           :
           <span className="" key={index}>
-            {tagData && (
-              <Tag
-                name={tagData.name}
-                popularity={tagData.popularity}
-                tagPageLink={tagData.pageLink}
-                picture={tagData.picture}
-              />
-            )}
+            {tagData && <Tag {...tagData} />}
           </span>
         </span>
       )}
       {/* Tag */}
       {item.searchItemType === 'tag' && (
         <span className="" key={index}>
-          <Tag
-            name={tagData.name}
-            popularity={tagData.popularity}
-            tagPageLink={tagData.pageLink}
-            picture={tagData.picture}
-          />
+          <Tag {...tagData} />
         </span>
       )}
       {/* Field without Tag */}

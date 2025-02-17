@@ -16,10 +16,10 @@ export function getImageUrlForMedia(
 
 const sanitizeTitleForSlug = (title: string): string => {
   return title
-    .toLowerCase() // Convert to lowercase
-    .replace(/ /g, '-') // Replace spaces with hyphens
-    .replace(/[^a-z0-9-]/g, '') // Remove non-alphanumeric characters except hyphens
-    .replace(/-+/g, '-'); // Replace multiple hyphens with a single hyphen
+    ?.toLowerCase() // Convert to lowercase
+    ?.replace(/ /g, '-') // Replace spaces with hyphens
+    ?.replace(/[^a-z0-9-]/g, '') // Remove non-alphanumeric characters except hyphens
+    ?.replace(/-+/g, '-'); // Replace multiple hyphens with a single hyphen
 };
 
 function deepEqual(obj1: any, obj2: any): boolean {

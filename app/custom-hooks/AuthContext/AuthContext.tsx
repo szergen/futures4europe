@@ -172,7 +172,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.log('User tag not found for', userName);
       const tagResult = await uploadTag(userName);
       const newTag = await tagResult?.dataItem?.data;
-      console.log('deb123->newTag', newTag);
+      // console.log('deb123->newTag', newTag);
       await refetchTags();
       handleTagCreated();
       return newTag;

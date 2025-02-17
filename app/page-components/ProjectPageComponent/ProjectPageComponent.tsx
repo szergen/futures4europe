@@ -2,16 +2,13 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import style from './ProjectPageComponent.module.css';
-import styleShared from '../PageComponents.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
-import DescriptionComponent from '../shared-page-components/DescriptionComponent/DescriptionComponent';
 import TagListComponent from '../shared-page-components/TagListComponent/TagListComponent';
 import AffiliationsComponent from '../PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
 import { mockProject } from '../../mocks/pagesMocks';
-// import MiniPagesListComponent from '../shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import {
@@ -27,7 +24,6 @@ import {
   updateDataItem,
 } from '@app/wixUtils/client-side';
 import {
-  areArraysEqualForMediaFiles,
   checkIfArrayNeedsUpdateForStrings,
   checkIfArrayNeedsUpdateForTags,
   generateUniqueHash,
@@ -377,15 +373,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsCurrent = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsCurrent = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsCurrent',
-          updatedOrganisationsCurrent
-        );
+          console.log(
+            'debug111->updatedOrganisationsCurrent',
+            updatedOrganisationsCurrent
+          );
+        }
       }
     }
 
@@ -420,9 +418,12 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         defaultProjectData.methods
       )
     ) {
+      const validMethods = projectData.methods?.filter(
+        (method: any) => method._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        projectData.methods?.map((method: any) => method._id),
+        validMethods?.map((method: any) => method._id),
         'methods',
         projectData._id
       );
@@ -435,9 +436,12 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         defaultProjectData.domains
       )
     ) {
+      const validDomains = projectData.domains?.filter(
+        (domain: any) => domain._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        projectData.domains?.map((domain: any) => domain._id),
+        validDomains?.map((domain: any) => domain._id),
         'domains',
         projectData._id
       );
@@ -485,14 +489,16 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsCoordonation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
-        console.log(
-          'debug111->updatedProjectsCoordonation',
-          updatedProjectsCoordonation
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsCoordonation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
+          console.log(
+            'debug111->updatedProjectsCoordonation',
+            updatedProjectsCoordonation
+          );
+        }
       }
     }
 
@@ -537,15 +543,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsParticipation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsParticipation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedProjectsParticipation',
-          updatedProjectsParticipation
-        );
+          console.log(
+            'debug111->updatedProjectsParticipation',
+            updatedProjectsParticipation
+          );
+        }
       }
     }
 
@@ -700,9 +708,10 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // #region Update Foresight Methods
     if (projectData.methods && newProjectInfoId) {
+      const validMethods = projectData.methods?.filter((method: any) => method);
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        projectData.methods?.map((method: any) => method._id),
+        validMethods?.map((method: any) => method._id),
         'methods',
         newProjectInfoId
       );
@@ -712,9 +721,11 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     // #region Update Domains
     if (projectData.domains && newProjectInfoId) {
+      const validDomains = projectData.domains?.filter((domain: any) => domain);
+
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        projectData.domains?.map((domain: any) => domain._id),
+        validDomains?.map((domain: any) => domain._id),
         'domains',
         newProjectInfoId
       );
@@ -758,15 +769,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsCoordonation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsCoordonation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedProjectsCoordonation',
-          updatedProjectsCoordonation
-        );
+          console.log(
+            'debug111->updatedProjectsCoordonation',
+            updatedProjectsCoordonation
+          );
+        }
       }
     }
     // #endregion
@@ -806,15 +819,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedProjectsParticipation = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedProjectsParticipation = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedProjectsParticipation',
-          updatedProjectsParticipation
-        );
+          console.log(
+            'debug111->updatedProjectsParticipation',
+            updatedProjectsParticipation
+          );
+        }
       }
     }
     // #endregion
@@ -858,15 +873,17 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           })
           ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsCurrent = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsCurrent = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsCurrent',
-          updatedOrganisationsCurrent
-        );
+          console.log(
+            'debug111->updatedOrganisationsCurrent',
+            updatedOrganisationsCurrent
+          );
+        }
       }
     }
     // #endregion

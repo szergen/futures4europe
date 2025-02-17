@@ -2,6 +2,8 @@
   margin: 0 auto;
   /* display: flex; */
   max-width: 1440px;
+  justify-content: space-between;
+  width: 100%;
 }
 .searchedItems {
   cursor: pointer;
@@ -174,4 +176,9 @@
     max-width: 100%;
     width: 100vw;
   }
+}
+
+.headerWithSearchContainer {
+  margin: 0 auto;
+  padding-left: 80px;
 }

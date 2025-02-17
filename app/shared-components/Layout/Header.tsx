@@ -3,7 +3,6 @@ import { NavBar } from '@app/shared-components/Layout/NavBar/NavBar';
 import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
 import SearchComponentV1 from '../SearchComponentV1/SearchComponentV1';
-import { SearchProvider } from '../../custom-hooks/SearchContext/SearchContext';
 import style from './Header.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
@@ -435,7 +434,7 @@ const Header = () => {
         </div>
       </div>
       <header
-        className={classNames('flex w-full my-6 px-2', style.header)}
+        className={classNames('flex w-full my-6 px-2 flex-col', style.header)}
         data-testid={testIds.LAYOUT.HEADER}
       >
         <div
@@ -454,13 +453,7 @@ const Header = () => {
           >
             <Logo />
           </Link>
-          {/* TODO: Temporary Removal */}
-          {/* Search */}
-          {/* <div>
-            <SearchProvider>
-              <SearchComponentV1 />
-            </SearchProvider>
-          </div> */}
+
           {/* TODO: Temporary Pages */}
           {/* Page Buttons */}
           <div
@@ -542,6 +535,7 @@ const Header = () => {
               />
             </div>
           </div>
+
           {/* Account */}
           {accountSection}
 
@@ -549,6 +543,14 @@ const Header = () => {
           {/* <div>
           <NavBar />
         </div> */}
+        </div>
+        {/* Search */}
+        <div
+          className={classNames('relative', style.headerWithSearchContainer)}
+        >
+          {/* <SearchProvider> */}
+          <SearchComponentV1 />
+          {/* </SearchProvider> */}
         </div>
         <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
           <Modal.Header className="opacity-0" />

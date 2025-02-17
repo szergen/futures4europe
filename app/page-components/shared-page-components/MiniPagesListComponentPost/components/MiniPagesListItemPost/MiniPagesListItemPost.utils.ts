@@ -6,6 +6,10 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
     case 'post':
       return {
         title: item?.title,
+        subtitle:
+          item?.subtitle?.length > 170
+            ? item.subtitle.substring(0, 170) + '...'
+            : item?.subtitle,
         date: item?.postPublicationDate || item?._createdDate?.['$date'],
         image:
           item?.projectResultMedia?.thumbnail ||
@@ -129,6 +133,7 @@ export const getPropsForMiniPagesListItemPost = (item: any) => {
     default:
       return {
         title: item?.title,
+        subtitle: item?.subtitle,
         date: item?.postPublicationDate || item?._createdDate?.['$date'],
         image:
           item?.projectResultMedia?.thumbnail ||

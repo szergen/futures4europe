@@ -3,51 +3,86 @@ import React from 'react';
 import style from './HelpDropdown.module.css';
 import { HiDocumentSearch } from 'react-icons/hi';
 import { motion } from 'framer-motion';
+import Tag from '@app/shared-components/Tag/Tag';
 
 const FieldSuggestionTypes = [
   {
-    type: 'activity',
-    description: '[name] - to filter by domain',
+    type: (
+      <Tag
+        name="Agriculture"
+        disableLink
+        disablePopularityHover
+        disableTooltip
+      />
+    ),
+    description: 'pages containing the tag Agriculture',
   },
   {
-    type: 'author',
-    description: '[name] - to filter by author',
+    type: (
+      <div className="flex">
+        <Tag name="Energy" disableLink disablePopularityHover disableTooltip />
+        <Tag name="Poland" disableLink disablePopularityHover disableTooltip />
+      </div>
+    ),
+    description: 'pages containing both tags Energy and Poland',
   },
   {
-    type: 'people',
-    description: '[name] - to filter by people',
+    type: (
+      <div className="flex">
+        <Tag
+          name="Project Result"
+          disableLink
+          disablePopularityHover
+          disableTooltip
+        />
+        <Tag
+          name="Scenarios"
+          disableLink
+          disablePopularityHover
+          disableTooltip
+        />
+      </div>
+    ),
+    description: 'Project Result pages containing the tag Scenarios',
   },
   {
-    type: 'participant',
-    description: '[name] - to filter by participant',
+    type: (
+      <Tag
+        name="Austrian Institute of Technology"
+        picture="https://static.wixstatic.com/media/471908_2b136e1495dd4326843fd89d2227ac75~mv2.jpg"
+        tagPageLink="/organisation/austrian-institute-of-technology-gdfy0"
+        tagType="organisation"
+        tagLine="AIT Center for Innovation Systems & Policy"
+        disablePopularityHover
+        disableTooltip
+      />
+    ),
+    description: 'pages containing the tag Austrian Institute of Technology',
   },
   {
-    type: 'speaker',
-    description: '[name] - to filter by speaker',
+    type: <div className="text-black">future </div>,
+    description: 'pages containing the text "future"',
   },
-  {
-    type: 'coordinator',
-    description: '[name] - to filter by coordinator',
-  },
+  // {
+  //   type: <div>activity: [tag name]</div>,
+  //   description: 'to filter by activity',
+  // },
+  // {
+  //   type: 'coordinator',
+  //   description: '[name] - to filter by coordinator',
+  // },
 ];
 
 export type HelpDropdownProps = {
-  handleFieldSelection: (e: any) => void;
+  handleTagSuggestion: (e: any) => void;
 };
 
-const HelpDropdown: React.FC<HelpDropdownProps> = ({
-  handleFieldSelection,
-}) => {
+const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
   return (
     <motion.div
-      className={classNames('w-1/2 border-2', style.helpDropdownContainer)}
-      initial={{
-        opacity: 0,
-        scaleY: 0,
-        translateX: '-50%',
-        translateY: '-10px',
-      }}
-      animate={{ opacity: 1, scaleY: 1, translateX: '-50%', translateY: '0px' }}
+      className={classNames('relative z-10')}
+      initial={{ opacity: 0, scaleY: 0, translateY: '-10px' }}
+      animate={{ opacity: 1, scaleY: 1, translateY: '0px' }}
       transition={{
         duration: 0.5,
         ease: 'easeIn',
@@ -58,24 +93,35 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({
         transformOrigin: 'top',
       }}
     >
-      <div className={classNames(style.iconSearchTips, 'flex items-center')}>
-        <HiDocumentSearch />
-        <span className="ml-2 text-[14px]">SEARCH TIPS</span>{' '}
-        {/* The text with margin for spacing */}
-      </div>
-
-      <br />
-      {FieldSuggestionTypes.map((field, index) => (
-        <div
-          key={field.description + index}
-          className={classNames(style.textSearchTips, 'flex items-center')}
-        >
-          <span key={`${field.description}`} onMouseDown={handleFieldSelection}>
-            {field.type}
-          </span>
-          : <span>{field.description}</span>
+      <div className={style.helpDropdownContainer}>
+        <div className={classNames(style.iconSearchTips, 'flex items-center')}>
+          {/* <HiDocumentSearch /> */}
+          <span className="ml-2 text-[14px]">EXAMPLES</span>{' '}
+          {/* The text with margin for spacing */}
         </div>
-      ))}
+
+        <br />
+        {FieldSuggestionTypes.map((field, index) => (
+          <div
+            key={field.description + index}
+            className={classNames(style.textSearchTips, 'flex items-center')}
+          >
+            <span
+              key={`${field.description}`}
+              onMouseDown={(e) => {
+                if (index < FieldSuggestionTypes.length - 1) {
+                  handleTagSuggestion(e);
+                }
+              }}
+              className={style.fieldType}
+            >
+              {field.type}
+            </span>
+            -{' '}
+            <span className={style.fieldDescription}>{field.description}</span>
+          </div>
+        ))}
+      </div>
     </motion.div>
   );
 };
