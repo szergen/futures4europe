@@ -350,7 +350,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   <Link
                     href={post?.eventRegistration}
                     target="_blank"
-                    className="underline text-lg font-bold"
+                    className="bg-blue-500 border-none text-white px-4 py-2 text-center font-semibold no-underline inline-block text-sm my-1 cursor-pointer rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out hover:shadow-md hover:textt-white-200"
                   >
                     Register Here
                   </Link>
