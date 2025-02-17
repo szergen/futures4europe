@@ -89,7 +89,7 @@ const nextConfig = {
     return [
       {
         source: '/ourfutures',
-        destination: '/project/OurFutures',
+        destination: 'https://legacy.futures4europe.eu/ourfutures',
         permanent: true,
       },
       {
