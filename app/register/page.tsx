@@ -337,7 +337,7 @@ export default function RegisterPage() {
                         className="font-normal text-gray-500 dark:text-gray-300"
                       >
                         I agree my information will be processed in accordance
-                        with the Future4Europe and Eye of Europe{' '}
+                        with the Future4Europe{' '}
                         <a
                           href="/static-pages/privacy-policy"
                           target="_blank"
