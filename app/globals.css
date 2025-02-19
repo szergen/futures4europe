@@ -752,9 +752,12 @@ textarea {
 
 .personDescriptionText * {
   font-size: var(--w-font-size-section-heading) !important;
-  margin-bottom: var(--w-space-xxl);
+  /* margin-bottom: var(--w-space-xxl); */
+  line-height: var(--w-line-height-body);
 }
-
+.personDescriptionText ul {
+  list-style: outside;
+}
 /* de mutat in import TagPicker  tsx*/
 .tagPickerPill {
   position: relative;
