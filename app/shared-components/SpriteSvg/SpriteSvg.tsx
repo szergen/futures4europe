@@ -417,27 +417,27 @@ const iconPaths: IconPathsType = {
   ),
   Bird: (
     <>
-      <path d="M18.54,17.5l-7.24-7.51,17.06,4.49,4.8-2.41,10.54,5.01-8.48.11-5.31,14.67-26.11,3.64,12.77-10.72s-11.82-7.29-11.28-7.29h13.25Z"/>
+      <path d="M18.54,17.5l-7.24-7.51,17.06,4.49,4.8-2.41,10.54,5.01-8.48.11-5.31,14.67-26.11,3.64,12.77-10.72s-11.82-7.29-11.28-7.29h13.25Z" />
     </>
-  ),  
+  ),
   AlertIcon: (
     <>
       <path
-      fillRule="evenodd"
-      d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-8 4a1 1 0 100-2 1 1 0 000 2zm-1-7a1 1 0 012 0v4a1 1 0 01-2 0V7z"
-      clipRule="evenodd"
-    />
+        fillRule="evenodd"
+        d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-8 4a1 1 0 100-2 1 1 0 000 2zm-1-7a1 1 0 012 0v4a1 1 0 01-2 0V7z"
+        clipRule="evenodd"
+      />
     </>
   ),
   CloseIcon: (
-      <>
+    <>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
       />
-      </>
-    )
+    </>
+  ),
 };
 
 const SpriteSvg: SpriteSvgType = {};

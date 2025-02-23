@@ -11,7 +11,7 @@ const cacheDir = path.join(process.cwd(), 'cache');
 //       })
 //     : Redis.fromEnv();
 const redis = Redis.fromEnv();
-const CHUNK_SIZE = 100;
+const CHUNK_SIZE = 90;
 
 // export async function saveToCache(filename, data) {
 //   const keyBase = filename.replace('.json', '');

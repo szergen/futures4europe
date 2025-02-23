@@ -7,7 +7,11 @@ import classNames from 'classnames';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import style from './InfoPagesImageFileUploader.module.css';
-import { Cropper, CircleStencil , ImageRestriction } from 'react-advanced-cropper';
+import {
+  Cropper,
+  CircleStencil,
+  ImageRestriction,
+} from 'react-advanced-cropper';
 import 'react-advanced-cropper/dist/style.css';
 
 export type FileUploaderProps = {
@@ -65,12 +69,12 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
-    
+
     if (!file) return;
 
     // Create a unique identifier for the file
     const fileIdentifier = `${file.name}-${file.size}-${file.lastModified}`;
-    
+
     // Check if this is the same file
     if (fileIdentifier === lastFileRef.current) {
       // Reset the input and update the lastFileRef
@@ -83,7 +87,7 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
 
     // Update lastFileRef with current file
     lastFileRef.current = fileIdentifier;
-  
+
     if (file.size > 5 * 1024 * 1024) {
       setIsValidState(false);
       setError('File size exceeds the limit of 5MB.');
@@ -93,10 +97,10 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
       lastFileRef.current = null;
       return;
     }
-  
+
     setIsValidState(true);
     setError(null);
-  
+
     const reader = new FileReader();
     reader.onload = () => {
       setCropperImage(reader.result as string);
@@ -128,9 +132,12 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
           });
 
           try {
-            const uploadedFileResponse = await uploadFileToWix(croppedFile, composeFilePath);
+            const uploadedFileResponse = await uploadFileToWix(
+              croppedFile,
+              composeFilePath
+            );
             const uploadedUrl = uploadedFileResponse?.url;
-            
+
             // Update the local state
             setImageURL(uploadedUrl);
             updatePostData && updatePostData(uploadedUrl);
@@ -141,8 +148,8 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
                 ...userDetails,
                 userTag: {
                   ...userDetails.userTag,
-                  picture: uploadedUrl
-                }
+                  picture: uploadedUrl,
+                },
               };
               updateUserDetails(updatedUserDetails);
             }
@@ -223,38 +230,38 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
             </div>
 
             <div className="h-[400px] rounded-xxl mb-4">
-            <Cropper
-              src={cropperImage}
-              className="h-full rounded-xl"
-              backgroundClassName=""
-              stencilComponent={CircleStencil}
-              imageRestriction={ImageRestriction.fillArea}
-              stencilProps={{
-                aspectRatio: 1,
-                grid: true,
-                movable: true,
-                resizable: true,
-                lines: {
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  width: 1,
-                  dashSegments: [5, 5]
-                }
-              }}
-              onUpdate={(cropper) => setCropperRef(cropper)}
-            />
+              <Cropper
+                src={cropperImage}
+                className="h-full rounded-xl"
+                backgroundClassName=""
+                stencilComponent={CircleStencil}
+                imageRestriction={ImageRestriction.fillArea}
+                stencilProps={{
+                  aspectRatio: 1,
+                  grid: true,
+                  movable: true,
+                  resizable: true,
+                  lines: {
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    width: 1,
+                    dashSegments: [5, 5],
+                  },
+                }}
+                onUpdate={(cropper) => setCropperRef(cropper)}
+              />
             </div>
 
-            <div className='my-4 border-b border-gray-200'> </div>
+            <div className="my-4 border-b border-gray-200"> </div>
             <div className="flex justify-between gap-2 mt-2 mb-4">
-              <button
-                onClick={handleCancel} 
-                className="btn btn-edit"
-              >
+              <button onClick={handleCancel} className="btn btn-edit">
                 Cancel
               </button>
               <button
                 onClick={handleCrop}
-                className={classNames("btn btn-save", isCropping &&  "hover:bg-purple-200")}
+                className={classNames(
+                  'btn btn-save',
+                  isCropping && 'hover:bg-purple-200'
+                )}
                 disabled={isCropping}
               >
                 Save image
@@ -305,11 +312,8 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
       )}
 
       {error && (
-        <Toast 
-          className={classNames(
-            "fixed top-4 right-4 z-50",
-            style.fadeInLeft
-          )}
+        <Toast
+          className={classNames('fixed top-4 right-4 z-50', style.fadeInLeft)}
         >
           <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500">
             <SpriteSvg.AlertIcon

@@ -5,14 +5,14 @@ type LoadingSpinnerProps = {
   size?: 'sm' | 'md' | 'lg';
 };
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   className = '',
-  size = 'md'
+  size = 'md',
 }) => {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-8 h-8',
-    lg: 'w-12 h-12'
+    lg: 'w-12 h-12',
   };
 
   return (
