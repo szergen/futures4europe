@@ -524,7 +524,7 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
     if (tagsFetched && affiliations.length > 0) {
       const initialData = {
         ...searchState,
-        tags: tags,
+        tags: tags.filter((tag) => !tag?.masterTag),
         pages: [...infoPages, ...postPages].map((page) => page.data),
         assignments: initialState.initialData.assignments,
         sortTags: sortTags,

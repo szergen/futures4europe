@@ -233,7 +233,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   <TagPicker
                     key={`affiliation-${affilitiation.name}-${index}`}
                     placeholder={placeholderTag}
-                    tags={tags}
+                    tags={tags?.filter((tag) => !tag?.masterTag)}
                     selectedValue={affilitiation?.name || undefined}
                     updatePostData={(value) => {
                       const newAffiliations = [...currentAffiliations];

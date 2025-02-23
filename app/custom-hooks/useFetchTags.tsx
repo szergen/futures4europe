@@ -1,5 +1,8 @@
-import { calculatePopularity } from '@app/utils/tags.utls';
-import { getCollectionItems } from '@app/wixUtils/client-side';
+import {
+  calculatePopularity,
+  getTagById,
+  getTagByName,
+} from '@app/utils/tags.utls';
 
 const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
   let tags = [] as any[];
@@ -49,8 +52,9 @@ const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
     // console.log('tags->popularity calculated', tags);
     const sortedTags = tags.sort((a, b) => b.mentions - a.mentions);
     // console.log('tags->popularity calculated and sorted', sortedTags);
-    // const finEuFunded = tags.find((tag) => tag.name === 'EU funded');
-    // console.log('tag->finEuFunded', finEuFunded);
+    // const tagCautat = getTagByName(tags, 'Sergiu Ciobanasu');
+    // console.log('tag->tagCautat', tagCautat);
+    // console.log('tagCautatMasterTag->', getTagById(tags, tagCautat?.masterTag));
   } catch (error) {
     console.error('Error fetching tags:', error);
   }
