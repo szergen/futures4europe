@@ -60,8 +60,36 @@
   z-index: 1;
   transition: 1.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 .avatarUpload svg:hover {
   cursor: pointer;
   background-color: var(--primary-brand);
   stroke: var(--primary-white);
+}
+
+@keyframes fade-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fadeInLeft {
+  animation: fade-in-left 0.6s ease-in-out;
+}
+
+.cropperWrapper {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+.cropperFade {
+  border-radius: var(--p-border-radius-300);
+}
+
+.cropperFadeVisible {
+  border-radius: var(--p-border-radius-300);
 }

@@ -367,7 +367,7 @@ const SearchComponentV1 = () => {
 
   return (
     <div className={classNames('relative', style.searchBoxWrapper)}>
-      <div className={classNames(style.searchBox)}>
+      <div tabIndex={0} className={classNames(style.searchBox)}>
         <SearchedItems
           searchedItems={searchedItems}
           handleRemoveSearchedItem={handleRemoveSearchedItem}

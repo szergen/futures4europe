@@ -2,6 +2,7 @@ import Tag from '@app/shared-components/Tag/Tag';
 import classNames from 'classnames';
 import React from 'react';
 import style from './SearchedItem.module.css';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 
 export type SearchedItemProps = {
   item: {
@@ -37,7 +38,7 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
     <li
       key={`${index}-${item.searchItem}`}
       className={classNames(
-        'flex mx-1 items-center',
+        'flex mx-1 items-center px-1',
         isSelected && style.searchTagSelected
       )}
     >
@@ -96,21 +97,12 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
         </span>
       )}
       {/* Remove Item */}
-      <span onClick={handleRemoveSearchedItem}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+      <span className="cursor-pointer ml-1" onClick={handleRemoveSearchedItem}>
+        <SpriteSvg.CloseIcon
+          viewBox={'0 0 24 24'}
           strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+          className="w-6 h-6 hover:fill-red-600 hover:stroke-white"
+        />
       </span>
     </li>
   );

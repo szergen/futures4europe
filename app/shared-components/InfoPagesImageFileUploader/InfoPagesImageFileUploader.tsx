@@ -1,14 +1,18 @@
 import Image from 'next/image';
 import { uploadFileToWix } from '@app/wixUtils/client.utils';
-import { Alert, FileInput, Label, Spinner } from 'flowbite-react';
-import { useState } from 'react';
-import { HiInformationCircle } from 'react-icons/hi';
+import { Alert, FileInput, Label, Spinner, Toast } from 'flowbite-react';
+import { useState, useRef, useEffect } from 'react';
 import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 import classNames from 'classnames';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import style from './InfoPagesImageFileUploader.module.css';
-// import WixMediaImage from '../WixMediaImage/WixMediaImage';
+import {
+  Cropper,
+  CircleStencil,
+  ImageRestriction,
+} from 'react-advanced-cropper';
+import 'react-advanced-cropper/dist/style.css';
 
 export type FileUploaderProps = {
   currentImage?: string;
@@ -19,35 +23,149 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
   currentImage,
   updatePostData,
 }) => {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isValidState, setIsValidState] = useState(true);
   const [imageURL, setImageURL] = useState(currentImage || '');
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [showCropper, setShowCropper] = useState(false);
+  const [cropperImage, setCropperImage] = useState<string | null>(null);
+  const [cropperRef, setCropperRef] = useState<any>(null);
+  const [isCropping, setIsCropping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const errorTimeoutRef = useRef<NodeJS.Timeout>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const lastFileRef = useRef<string | null>(null);
+  const { userDetails, updateUserDetails } = useAuth();
 
-  const { userDetails } = useAuth();
   const composeFilePath = `/InfoPages_Images/${
     userDetails?.contactId || 'visitors'
   }/`;
+
+  // Reset file input when cropper is closed
+  useEffect(() => {
+    if (!showCropper && fileInputRef.current) {
+      fileInputRef.current.value = '';
+      lastFileRef.current = null;
+    }
+  }, [showCropper]);
+
+  // Handle error auto-dismiss
+  useEffect(() => {
+    if (error) {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+      errorTimeoutRef.current = setTimeout(() => {
+        setError(null);
+      }, 4000);
+    }
+    return () => {
+      if (errorTimeoutRef.current) {
+        clearTimeout(errorTimeoutRef.current);
+      }
+    };
+  }, [error]);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
 
-    if (file && file.size > 5 * 1024 * 1024) {
-      setIsValidState(false);
-      event.target.value = ''; // clear the selected file
+    if (!file) return;
+
+    // Create a unique identifier for the file
+    const fileIdentifier = `${file.name}-${file.size}-${file.lastModified}`;
+
+    // Check if this is the same file
+    if (fileIdentifier === lastFileRef.current) {
+      // Reset the input and update the lastFileRef
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      lastFileRef.current = null;
       return;
-    } else {
-      setIsValidState(true);
-      setUploadedFile(file as File);
-      console.log('File selected:', file);
-      setIsImageLoading(true);
-      const uploadedFileResponse = await uploadFileToWix(file, composeFilePath);
-      setIsImageLoading(false);
-      console.log('uploadedFileResponse', uploadedFileResponse);
-      setImageURL(uploadedFileResponse?.url);
-      updatePostData && updatePostData(uploadedFileResponse?.url);
+    }
+
+    // Update lastFileRef with current file
+    lastFileRef.current = fileIdentifier;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setIsValidState(false);
+      setError('File size exceeds the limit of 5MB.');
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      lastFileRef.current = null;
+      return;
+    }
+
+    setIsValidState(true);
+    setError(null);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCropperImage(reader.result as string);
+      setShowCropper(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCancel = () => {
+    setShowCropper(false);
+    setCropperImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    lastFileRef.current = null;
+  };
+
+  const handleCrop = async () => {
+    if (cropperRef) {
+      const canvas = cropperRef.getCanvas();
+      if (canvas) {
+        setIsCropping(true);
+        setIsImageLoading(true);
+
+        canvas.toBlob(async (blob: Blob) => {
+          const fileName = `profile-image-${Date.now()}.jpg`;
+          const croppedFile = new File([blob], fileName, {
+            type: 'image/jpeg',
+          });
+
+          try {
+            const uploadedFileResponse = await uploadFileToWix(
+              croppedFile,
+              composeFilePath
+            );
+            const uploadedUrl = uploadedFileResponse?.url;
+
+            // Update the local state
+            setImageURL(uploadedUrl);
+            updatePostData && updatePostData(uploadedUrl);
+
+            // Update the user context with the new image URL
+            if (userDetails && updateUserDetails) {
+              const updatedUserDetails = {
+                ...userDetails,
+                userTag: {
+                  ...userDetails.userTag,
+                  picture: uploadedUrl,
+                },
+              };
+              updateUserDetails(updatedUserDetails);
+            }
+          } catch (error) {
+            console.error('Error uploading cropped image:', error);
+            setError('Failed to upload the cropped image.');
+            setIsValidState(false);
+          }
+
+          setIsImageLoading(false);
+          setShowCropper(false);
+          setCropperImage(null);
+          setIsCropping(false);
+          lastFileRef.current = null;
+        }, 'image/jpeg');
+      }
     }
   };
 
@@ -91,19 +209,68 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
           id="dropzone-file-avatar"
           className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
           onChange={handleFileChange}
+          ref={fileInputRef}
         />
       </Label>
-      {/* <p className="text-xs w-full text-gray-500 dark:text-gray-400">
-        {uploadedFile?.name || 'No file selected'}
-      </p> */}
 
-      {!isValidState && (
+      {/* {!isValidState && (
         <Alert color="failure" icon={HiInformationCircle} className="my-2">
           <span className="font-small">
             File is larger than 5MB. Please try again.
           </span>
         </Alert>
+      )} */}
+
+      {showCropper && cropperImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-[99] flex items-center justify-center p-4">
+          <div className="bg-white rounded-xxl px-8 py-4 w-full max-w-md">
+            <div className="mb-6 mt-2">
+              <h2 className="text-xl font-semibold">Crop profile image</h2>
+              <p>Upload a good quality image for best results</p>
+            </div>
+
+            <div className="h-[400px] rounded-xxl mb-4">
+              <Cropper
+                src={cropperImage}
+                className="h-full rounded-xl"
+                backgroundClassName=""
+                stencilComponent={CircleStencil}
+                imageRestriction={ImageRestriction.fillArea}
+                stencilProps={{
+                  aspectRatio: 1,
+                  grid: true,
+                  movable: true,
+                  resizable: true,
+                  lines: {
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    width: 1,
+                    dashSegments: [5, 5],
+                  },
+                }}
+                onUpdate={(cropper) => setCropperRef(cropper)}
+              />
+            </div>
+
+            <div className="my-4 border-b border-gray-200"> </div>
+            <div className="flex justify-between gap-2 mt-2 mb-4">
+              <button onClick={handleCancel} className="btn btn-edit">
+                Cancel
+              </button>
+              <button
+                onClick={handleCrop}
+                className={classNames(
+                  'btn btn-save',
+                  isCropping && 'hover:bg-purple-200'
+                )}
+                disabled={isCropping}
+              >
+                Save image
+              </button>
+            </div>
+          </div>
+        </div>
       )}
+
       {imageURL && imageURL !== ' ' && (
         <div
           className={classNames(
@@ -137,23 +304,33 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
           )}
         </div>
       )}
+
       {isImageLoading && (!imageURL || imageURL === ' ') && (
         <div className="flex items-center justify-center w-full h-32">
           <Spinner size="xl" />
         </div>
       )}
+
+      {error && (
+        <Toast
+          className={classNames('fixed top-4 right-4 z-50', style.fadeInLeft)}
+        >
+          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500">
+            <SpriteSvg.AlertIcon
+              viewBox="0 0 20 20"
+              className={classNames(style.website)}
+              sizeW={16}
+              sizeH={16}
+              fill={'red'}
+              strokeWidth={0}
+              inline={false}
+            />
+          </div>
+          <div className="ml-3 text-sm font-normal">{error}</div>
+          <Toast.Toggle onClick={() => setError(null)} />
+        </Toast>
+      )}
     </div>
-    // <div>
-    //   <div className="mb-2 block">
-    //     <Label htmlFor="file-upload" value="Upload file" />
-    //   </div>
-    //   <FileInput
-    //     id="file-upload"
-    //     onChange={handleFileChange}
-    //     helperText="PNG, JPG, GIF (MAX. 5MB)."
-    //   />
-    //   {/* <progress value="50" max="100" /> */}
-    // </div>
   );
 };
 
