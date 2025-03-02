@@ -322,6 +322,15 @@ export const Home = () => {
       </div>
 
       <div className="homeFeatured">
+        {featuredPages.featuredEvents.length > 0 && (
+          <MiniPagesListItemPost
+            items={featuredPages.featuredEvents.map(
+              (infoPage: any) => infoPage.data
+            )}
+            title="Featured Events"
+          />
+        )}
+
         {featuredPages.featuredProjects.length > 0 && (
           <MiniPagesListItemPost
             items={featuredPages.featuredProjects.map(
@@ -337,15 +346,6 @@ export const Home = () => {
               (infoPage: any) => infoPage.data
             )}
             title="Featured Project Results"
-          />
-        )}
-
-        {featuredPages.featuredEvents.length > 0 && (
-          <MiniPagesListItemPost
-            items={featuredPages.featuredEvents.map(
-              (infoPage: any) => infoPage.data
-            )}
-            title="Featured Events"
           />
         )}
 
