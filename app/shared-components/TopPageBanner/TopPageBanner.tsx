@@ -7,7 +7,9 @@ interface TopPageBannerProps {
   };
 }
 
-export const TopPageBanner: React.FC<TopPageBannerProps> = ({ style = { topbarlink: '' } }) => {
+export const TopPageBanner: React.FC<TopPageBannerProps> = ({
+  style = { topbarlink: '' },
+}) => {
   return (
     <div
       className={classNames(

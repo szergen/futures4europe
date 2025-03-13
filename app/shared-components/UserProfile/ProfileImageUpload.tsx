@@ -7,7 +7,10 @@ interface ProfileImageUploadProps {
   onImageUpdate: (file: File) => Promise<void>;
 }
 
-const ProfileImageUpload = ({ currentImageUrl, onImageUpdate }: ProfileImageUploadProps) => {
+const ProfileImageUpload = ({
+  currentImageUrl,
+  onImageUpdate,
+}: ProfileImageUploadProps) => {
   const [showCropper, setShowCropper] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +32,6 @@ const ProfileImageUpload = ({ currentImageUrl, onImageUpdate }: ProfileImageUplo
     const response = await fetch(croppedImage);
     const blob = await response.blob();
     const file = new File([blob], 'profile-image.jpg', { type: 'image/jpeg' });
-    
     await onImageUpdate(file);
     setShowCropper(false);
     setSelectedImage(null);

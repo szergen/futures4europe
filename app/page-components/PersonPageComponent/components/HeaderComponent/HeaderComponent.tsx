@@ -244,7 +244,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             ))
           ) : (
             <TagPicker
-              tags={tags?.filter((tag) => tag?.tagType === 'person type')}
+              tags={tags?.filter(
+                (tag) => tag?.tagType === 'person type' && !tag?.masterTag
+              )}
               className="w-full"
               isMulti
               selectedValues={person?.activity?.map(
@@ -270,7 +272,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           ) : (
             <TagPicker
               placeholder={'Add a country tag (your current residence)'}
-              tags={tags?.filter((tag) => tag?.tagType === 'country')}
+              tags={tags?.filter(
+                (tag) => tag?.tagType === 'country' && !tag?.masterTag
+              )}
               className="relative"
               selectedValue={person?.countryTag?.name || undefined}
               updatePostData={(value) =>

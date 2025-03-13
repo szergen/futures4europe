@@ -224,7 +224,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder="Enter the project name"
             tags={tags?.filter(
-              (tag) => tag.tagType === 'project' && !tag?.tagPageLink
+              (tag) =>
+                tag.tagType === 'project' &&
+                !tag?.tagPageLink &&
+                !tag?.masterTag
             )}
             className="relative"
             updatePostData={(value) =>
@@ -355,7 +358,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             // placeholder={'Add one or more country tags relevant to the project'}
             placeholder={'Add the country tag relevant to the project'}
-            tags={tags?.filter((tag) => tag?.tagType === 'country')}
+            tags={tags?.filter(
+              (tag) => tag?.tagType === 'country' && !tag?.masterTag
+            )}
             className="relative mt-2 mb-2"
             selectedValue={project?.countryTag?.name || undefined}
             updatePostData={(value) =>

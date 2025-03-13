@@ -29,9 +29,9 @@
   overflow: hidden;
 }
 
-.tagContainerForSuggestions:hover {
+/* .tagContainerForSuggestions:hover {
   cursor: pointer;
-}
+} */
 
 .tagSuggestionsLabel {
   font-weight: var(--w-font-weight-heading);

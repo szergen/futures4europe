@@ -387,7 +387,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                       'Add the country tag relevant to your post'
                     : 'Add the country tag relevant to your post'
                 }
-                tags={tags?.filter((tag) => tag?.tagType === 'country')}
+                tags={tags?.filter(
+                  (tag) => tag?.tagType === 'country' && !tag?.masterTag
+                )}
                 className="mt-1"
                 selectedValue={post.countryTag?.name || undefined}
                 updatePostData={(value) =>

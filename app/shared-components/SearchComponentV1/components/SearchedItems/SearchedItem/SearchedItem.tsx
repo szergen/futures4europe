@@ -97,14 +97,12 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
         </span>
       )}
       {/* Remove Item */}
-      <span 
-        className="cursor-pointer ml-1"
-        onClick={handleRemoveSearchedItem}>
-          <SpriteSvg.CloseIcon
-            viewBox={'0 0 24 24'}
-            strokeWidth={1.5}
-            className="w-6 h-6 hover:fill-red-600 hover:stroke-white"
-          />
+      <span className="cursor-pointer ml-1" onClick={handleRemoveSearchedItem}>
+        <SpriteSvg.CloseIcon
+          viewBox={'0 0 24 24'}
+          strokeWidth={1.5}
+          className="w-6 h-6 hover:fill-red-600 hover:stroke-white"
+        />
       </span>
     </li>
   );

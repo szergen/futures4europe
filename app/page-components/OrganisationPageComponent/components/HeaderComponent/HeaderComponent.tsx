@@ -209,7 +209,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <TagPicker
             placeholder="Enter the organisation name"
             tags={tags?.filter(
-              (tag) => tag.tagType === 'organisation' && !tag?.tagPageLink
+              (tag) =>
+                tag.tagType === 'organisation' &&
+                !tag?.tagPageLink &&
+                !tag?.masterTag
             )}
             className="relative"
             updatePostData={(value) =>
@@ -319,7 +322,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           ) : (
             <TagPicker
               placeholder="Add one or more organisation type tags"
-              tags={tags?.filter((tag) => tag?.tagType === 'organisation type')}
+              tags={tags?.filter(
+                (tag) => tag?.tagType === 'organisation type' && !tag?.masterTag
+              )}
               className="w-full mb-2"
               isMulti
               selectedValues={organisation?.organisationType?.map(
@@ -345,7 +350,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
               // 'Add one or more country tags (where the organisation is based in)'
               'Add the country tag (where the organisation is based in)'
             }
-            tags={tags?.filter((tag) => tag?.tagType === 'country')}
+            tags={tags?.filter(
+              (tag) => tag?.tagType === 'country' && !tag?.masterTag
+            )}
             className="relative"
             selectedValue={organisation?.countryTag?.name || undefined}
             updatePostData={(value) =>

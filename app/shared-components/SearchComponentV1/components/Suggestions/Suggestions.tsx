@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
 import Tag from '@app/shared-components/Tag/Tag';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type SuggestionsProps = {
   fieldSuggestions: any[];
@@ -330,72 +331,22 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       >
                         {tagSuggestion.item?.tagType}:
                       </span>
-                      <div
-                        onMouseDown={handleTagSuggestion}
-                        className={style.tagContainerForSuggestions}
-                      >
-                        <Tag
-                          {...tagSuggestion.item}
-                          disableLink
-                          disablePopularityHover
-                          disableTooltip
-                        />
+                      <div className={style.tagContainerForSuggestions}>
+                        <div
+                          className="!cursor-pointer"
+                          onMouseDown={handleTagSuggestion}
+                        >
+                          <Tag
+                            {...tagSuggestion.item}
+                            disableLink
+                            disablePopularityHover
+                            disableTooltip
+                          />
+                        </div>
                         <p className={style.tagLine}>
                           {tagSuggestion?.item?.tagLine || ''}
                         </p>
                       </div>
-                      {/* #region Old tag suggestions */}
-                      {
-                        // <div className="flex searchTagImage items-start">
-                        //   <Image
-                        //     alt={'Tag Image'}
-                        //     src={
-                        //       tagSuggestion.item?.picture ||
-                        //       'https://placehold.co/600x400?text=placeholder'
-                        //     }
-                        //     width={40}
-                        //     height={40}
-                        //   />
-                        //   <div className="flex flex-wrap items-center ml-2 mb-0 searchTagText">
-                        //     <div
-                        //       // dangerouslySetInnerHTML={{
-                        //       //   __html: tagSuggestion.name,
-                        //       // }}
-                        //       dangerouslySetInnerHTML={{
-                        //         __html:
-                        //           highlightMatches(
-                        //             tagSuggestion?.item?.name,
-                        //             tagSuggestion?.matches
-                        //           ) || tagSuggestion?.item?.name,
-                        //       }}
-                        //       onMouseDown={handleTagSuggestion}
-                        //       className={classNames(
-                        //         'cursor-pointer',
-                        //         tagSuggestion.item?.pageLink && 'font-bold'
-                        //       )}
-                        //     />
-                        //     <div
-                        //       data-after={tagSuggestion.item?.popularity}
-                        //       className="after:content-[attr(data-after)] text-12 relative top-[-16px] ml-1 text-gray-500 dark:text-gray-400"
-                        //     ></div>
-                        //     <div
-                        //       className="w-full text-12"
-                        //       dangerouslySetInnerHTML={{
-                        //         __html: highlightMatches(
-                        //           tagSuggestion?.item?.tagLine,
-                        //           tagSuggestion?.matches
-                        //         ),
-                        //       }}
-                        //       // dangerouslySetInnerHTML={{
-                        //       //   __html: tagSuggestion.tagLine,
-                        //       // }}
-                        //     />
-                        //     {/* {tagSuggestion.tagLine} */}
-                        //     {/* </span> */}
-                        //   </div>
-                        // </div>
-                      }
-                      {/* #endregion */}
                     </li>
                   );
                 })}
@@ -456,6 +407,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                                 style.searchTagImage)
                               }
                               src={getValidImageUrl([
+                                getImageUrlForMedia(
+                                  pageSuggestion?.item?.person?.[0]?.picture
+                                )?.url,
+                                getImageUrlForMedia(
+                                  pageSuggestion?.item?.Project?.[0]?.picture
+                                )?.url,
                                 pageSuggestion?.item?.organisation?.[0]
                                   ?.picture,
                                 pageSuggestion?.item?.Project?.[0]?.picture,

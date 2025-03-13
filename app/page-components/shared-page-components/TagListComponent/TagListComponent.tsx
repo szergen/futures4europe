@@ -62,7 +62,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
         tagList?.map((tag) => <Tag key={tag?.name} {...tag} />)
       ) : (
         <TagPicker
-          tags={tags}
+          tags={tags?.filter((tag) => !tag?.masterTag)}
           className="w-full"
           isMulti
           selectedValues={selectedValues}

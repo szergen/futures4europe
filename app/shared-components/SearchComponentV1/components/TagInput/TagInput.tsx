@@ -597,7 +597,7 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
     <div className={classNames('', style.SearchInputContainer)}>
       {tagsFetched ? (
         <input
-          className='w-full'
+          className="w-full"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -608,11 +608,13 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
           autoFocus={searchState.showResults}
         />
       ) : (
-        <div className={classNames('h-full ml-2 flex items-center justify-center', style.loadingSpinner)}>
-          <LoadingSpinner 
-            className='w-6 h-6'
-            size='sm'
-          />
+        <div
+          className={classNames(
+            'h-full ml-2 flex items-center justify-center',
+            style.loadingSpinner
+          )}
+        >
+          <LoadingSpinner className="w-6 h-6" size="sm" />
         </div>
       )}
 
