@@ -564,6 +564,33 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     handleTagCreated();
     await revalidateDataItem(`/project/${projectData.slug}`);
 
+    // After successful update, invalidate caches and revalidate paths
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags-with-popularity.json',
+        path: `/project/${projectData.slug}`,
+      }),
+    });
+
+    // Also invalidate the basic data caches
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags-all.json',
+      }),
+    });
+
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'affiliations-all.json',
+      }),
+    });
+
     setIsSaveInProgress(false);
   };
   // #endregion

@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientData } from '@app/hooks/useWixClientServer';
-import { saveToCache, getFromCache } from '../../utils/cache';
-import { referencedItemOptions } from '@app/wixUtils/server-side';
+import { JsonCacheService } from '@app/services/jsonCache';
+
+export const revalidate = 300; // 5 minutes
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'tags.json';
-  const cachedData = await getFromCache(cacheKey);
 
+  // Try to get from file cache
+  const cachedData = await JsonCacheService.getFromCache(cacheKey);
   if (cachedData) {
     return NextResponse.json(cachedData, { status: 200 });
   }
@@ -14,33 +16,47 @@ export const GET = async (req: NextRequest) => {
   try {
     const wixClient = await getWixClientData();
 
+    // Fetch all tags with pagination
     let allItems = [] as any[];
     let skip = 0;
-    const limit = 1000;
+    const limit = 1000; // Maximum allowed by Wix
     let totalCount = 0;
+    let hasMore = true;
 
-    do {
+    while (hasMore) {
+      console.log(`Fetching Tags: skip=${skip}, limit=${limit}`);
       const result = await wixClient.items
         .queryDataItems({
           dataCollectionId: 'Tags',
-          // referencedItemOptions: referencedItemOptions,
           returnTotalCount: true,
         })
         .skip(skip)
         .limit(limit)
         .find();
-      allItems = [...allItems, ...result?._items];
-      totalCount = result?._totalCount;
-      skip = limit + skip;
-    } while (skip < totalCount);
-    // // console.log('allItems', allItems);
 
-    await saveToCache(cacheKey, allItems);
+      const items = result?._items || [];
+      allItems = [...allItems, ...items];
+      totalCount = result?._totalCount || 0;
+
+      skip += items.length;
+      hasMore = skip < totalCount && items.length > 0;
+
+      console.log(
+        `Fetched ${items.length} Tags, total so far: ${allItems.length}/${totalCount}`
+      );
+    }
+
+    console.log(`Completed fetching all ${allItems.length} Tags`);
+
+    // Save to file cache with 5 minute expiry
+    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
+
+    // Return all items as an array (original format)
     return NextResponse.json(allItems, { status: 200 });
   } catch (error) {
     console.error('Error fetching Tags:', error);
     return NextResponse.json(
-      { message: 'Error fetching Tags' },
+      { message: 'Error fetching Tags', error: String(error) },
       { status: 500 }
     );
   }
@@ -73,7 +89,7 @@ export const POST = async (req: NextRequest) => {
     } while (skip < totalCount);
     // // console.log('allItems', allItems);
 
-    await saveToCache(cacheKey, allItems);
+    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
     return NextResponse.json(
       { message: 'Cache updated successfully.' },
       { status: 200 }

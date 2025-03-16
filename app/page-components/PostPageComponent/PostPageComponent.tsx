@@ -440,6 +440,33 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
     await revalidateDataItem(`/post/New_Post`);
 
+    // After successful update, invalidate caches and revalidate paths
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags-with-popularity.json',
+        path: `/post/${postData.slug}`,
+      }),
+    });
+
+    // Also invalidate the basic data caches
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags.json',
+      }),
+    });
+
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'affiliations.json',
+      }),
+    });
+
     setIsSaveInProgress(false);
   };
 

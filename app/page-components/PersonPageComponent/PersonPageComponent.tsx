@@ -633,6 +633,33 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     handleUserTagRefresh();
     await revalidateDataItem(`/person/${personData.slug}`);
 
+    // After successful update, invalidate caches and revalidate paths
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags-with-popularity.json',
+        path: `/person/${personData.slug}`,
+      }),
+    });
+
+    // Also invalidate the basic data caches
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags-all.json',
+      }),
+    });
+
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'affiliations-all.json',
+      }),
+    });
+
     setIsSaveInProgress(false);
   };
   // #endregion

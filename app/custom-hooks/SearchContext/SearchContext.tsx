@@ -490,8 +490,12 @@ const SearchContext = createContext<{
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
-  const { tags, infoPages, postPages, tagsFetched } = useAuth();
+  const { tagsFetched } = useAuth();
+  const [tags, setTags] = useState<any[]>([]);
+  const [infoPages, setInfoPages] = useState<any[]>([]);
+  const [postPages, setPostPages] = useState<any[]>([]);
   const [affiliations, setAffiliations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchState, setSearchState] = useState({
     ...initialState,
     initialData: {},
@@ -502,42 +506,108 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
     filteredData: {},
   } as any);
 
-  // First useEffect to fetch affiliations
+  // Fetch all data from cached APIs
   useEffect(() => {
-    const fetchAffiliations = async () => {
+    const fetchAllData = async () => {
       try {
-        const response = await fetch('/api/affiliations');
-        const data = await response.json();
-        const affiliationsData = data.map(
-          (affiliation: any) => affiliation.data
+        setLoading(true);
+
+        // Fetch tags with popularity
+        const tagsResponse = await fetch('/api/tags-with-popularity');
+        if (tagsResponse.ok) {
+          const tagsData = await tagsResponse.json();
+          setTags(tagsData.filter((tag: any) => !tag?.masterTag));
+        }
+
+        // Fetch info pages in chunks
+        let allInfoPages: any[] = [];
+        let infoPagesTotalPages = 1;
+        let infoPagesCurrent = 1;
+
+        do {
+          const response = await fetch(
+            `/api/infoPages?page=${infoPagesCurrent}&pageSize=100`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch info pages');
+          }
+          const data = await response.json();
+          allInfoPages = [...allInfoPages, ...data.items];
+          infoPagesTotalPages = data.totalPages;
+          infoPagesCurrent++;
+        } while (infoPagesCurrent <= infoPagesTotalPages);
+
+        setInfoPages(allInfoPages.map((page: any) => page.data));
+
+        // Fetch post pages in chunks
+        let allPostPages: any[] = [];
+        let postPagesTotalPages = 1;
+        let postPagesCurrent = 1;
+
+        do {
+          const response = await fetch(
+            `/api/postPages?page=${postPagesCurrent}&pageSize=100`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch post pages');
+          }
+          const data = await response.json();
+          allPostPages = [...allPostPages, ...data.items];
+          postPagesTotalPages = data.totalPages;
+          postPagesCurrent++;
+        } while (postPagesCurrent <= postPagesTotalPages);
+
+        setPostPages(allPostPages.map((page: any) => page.data));
+
+        // Fetch affiliations in chunks
+        let allAffiliations: any[] = [];
+        let affiliationsTotalPages = 1;
+        let affiliationsCurrent = 1;
+
+        do {
+          const response = await fetch(
+            `/api/affiliations?page=${affiliationsCurrent}&pageSize=100`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch affiliations');
+          }
+          const data = await response.json();
+          allAffiliations = [...allAffiliations, ...data.items];
+          affiliationsTotalPages = data.totalPages;
+          affiliationsCurrent++;
+        } while (affiliationsCurrent <= affiliationsTotalPages);
+
+        setAffiliations(
+          allAffiliations.map((affiliation: any) => affiliation.data)
         );
-        setAffiliations(affiliationsData);
       } catch (error) {
-        console.error('Error fetching affiliations:', error);
+        console.error('Error fetching data for search context:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchAffiliations();
+    fetchAllData();
   }, []);
 
+  // Update search state when data is loaded
   useEffect(() => {
-    if (tagsFetched && affiliations.length > 0) {
+    if (!loading) {
       const initialData = {
         ...searchState,
-        tags: tags.filter((tag) => !tag?.masterTag),
-        pages: [...infoPages, ...postPages].map((page) => page.data),
+        tags: tags,
+        pages: [...infoPages, ...postPages],
         assignments: initialState.initialData.assignments,
         sortTags: sortTags,
-        affiliations: affiliations, // Add affiliations to the state
+        affiliations: affiliations,
         filteredData: {},
         initialData: {},
       };
       initialData.filteredData = { ...initialData };
       initialData.initialData = { ...initialData };
-      // console.log('deb1->initialData', initialData);
       setSearchState(initialData);
     }
-  }, [tagsFetched, affiliations]);
+  }, [loading, tags, infoPages, postPages, affiliations]);
 
   return (
     <SearchContext.Provider value={{ searchState, setSearchState }}>

@@ -595,6 +595,33 @@ function OrganisationPageComponent({
     handleTagCreated();
     await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
+    // After successful update, invalidate caches and revalidate paths
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags-with-popularity.json',
+        path: `/organisation/${organisationData.slug}`,
+      }),
+    });
+
+    // Also invalidate the basic data caches
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'tags.json',
+      }),
+    });
+
+    await fetch('/api/invalidate-cache', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        key: 'affiliations.json',
+      }),
+    });
+
     setIsSaveInProgress(false);
   };
   // #endregion
