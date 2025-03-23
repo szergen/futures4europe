@@ -1,4 +1,4 @@
-const fetchTagsWithPopularity = async (infoPages: any[], postPages: any[]) => {
+const fetchTagsWithPopularity = async () => {
   let tags = [] as any[];
 
   try {

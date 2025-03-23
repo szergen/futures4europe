@@ -8,9 +8,9 @@ export async function warmCache() {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
 
     // Fetch and cache tags
-    const tagsResponse = await fetch(`${baseUrl}/api/tags?all=true`);
+    const tagsResponse = await fetch(`${baseUrl}/api/tags`);
     const tags = await tagsResponse.json();
-    await JsonCacheService.saveToCache('tags-all.json', tags, 5 * 60 * 1000);
+    await JsonCacheService.saveToCache('tags.json', tags, 5 * 60 * 1000);
 
     // Fetch and cache info pages in chunks
     let allInfoPages: any[] = [];

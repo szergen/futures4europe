@@ -33,7 +33,7 @@ const useFetchPostPages = (
         //   totalCount = result?._totalCount;
         //   skip += limit;
         // } while (skip < totalCount);
-        const allPostPagesResponse = await fetch('/api/posts');
+        const allPostPagesResponse = await fetch('/api/postPages');
         const allPostPages = await allPostPagesResponse.json();
 
         setPostPages(allPostPages);

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClientData } from '@app/hooks/useWixClientServer';
+import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 import { JsonCacheService } from '@app/services/jsonCache';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
@@ -15,7 +15,7 @@ export const GET = async (req: NextRequest) => {
   }
 
   try {
-    const wixClient = await getWixClientData();
+    const wixClient = await getWixClientServerData();
 
     // Fetch all pages with pagination
     let allItems = [] as any[];
@@ -68,7 +68,7 @@ export const POST = async (req: NextRequest) => {
   const cacheKey = 'infoPages.json';
 
   try {
-    const wixClient = await getWixClientData();
+    const wixClient = await getWixClientServerData();
 
     let allItems = [] as any[];
     let skip = 0;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClientData } from '@app/hooks/useWixClientServer';
+import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 import { JsonCacheService } from '@app/services/jsonCache';
 
 export const revalidate = 300; // 5 minutes
@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest) => {
   }
 
   try {
-    const wixClient = await getWixClientData();
+    const wixClient = await getWixClientServerData();
 
     // Fetch all affiliations with pagination
     let allItems = [] as any[];
@@ -66,7 +66,7 @@ export const POST = async (req: NextRequest) => {
   const cacheKey = 'affiliations.json';
 
   try {
-    const wixClient = await getWixClientData();
+    const wixClient = await getWixClientServerData();
 
     let allItems = [] as any[];
     let skip = 0;

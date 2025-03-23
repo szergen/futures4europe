@@ -484,9 +484,13 @@ export type SearchProviderProps = {
 const SearchContext = createContext<{
   searchState: SearchState;
   setSearchState: React.Dispatch<React.SetStateAction<SearchState>>;
+  loading: boolean;
+  error: Error | null;
 }>({
   searchState: initialState,
   setSearchState: () => {},
+  loading: true,
+  error: null,
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
@@ -496,6 +500,7 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   const [postPages, setPostPages] = useState<any[]>([]);
   const [affiliations, setAffiliations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const [searchState, setSearchState] = useState({
     ...initialState,
     initialData: {},
@@ -511,77 +516,64 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
     const fetchAllData = async () => {
       try {
         setLoading(true);
+        console.log('SearchContext: Fetching data...');
 
         // Fetch tags with popularity
         const tagsResponse = await fetch('/api/tags-with-popularity');
-        if (tagsResponse.ok) {
-          const tagsData = await tagsResponse.json();
-          setTags(tagsData.filter((tag: any) => !tag?.masterTag));
+        if (!tagsResponse.ok) {
+          throw new Error(`Failed to fetch tags: ${tagsResponse.status}`);
         }
-
-        // Fetch info pages in chunks
-        let allInfoPages: any[] = [];
-        let infoPagesTotalPages = 1;
-        let infoPagesCurrent = 1;
-
-        do {
-          const response = await fetch(
-            `/api/infoPages?page=${infoPagesCurrent}&pageSize=100`
-          );
-          if (!response.ok) {
-            throw new Error('Failed to fetch info pages');
-          }
-          const data = await response.json();
-          allInfoPages = [...allInfoPages, ...data.items];
-          infoPagesTotalPages = data.totalPages;
-          infoPagesCurrent++;
-        } while (infoPagesCurrent <= infoPagesTotalPages);
-
-        setInfoPages(allInfoPages.map((page: any) => page.data));
-
-        // Fetch post pages in chunks
-        let allPostPages: any[] = [];
-        let postPagesTotalPages = 1;
-        let postPagesCurrent = 1;
-
-        do {
-          const response = await fetch(
-            `/api/postPages?page=${postPagesCurrent}&pageSize=100`
-          );
-          if (!response.ok) {
-            throw new Error('Failed to fetch post pages');
-          }
-          const data = await response.json();
-          allPostPages = [...allPostPages, ...data.items];
-          postPagesTotalPages = data.totalPages;
-          postPagesCurrent++;
-        } while (postPagesCurrent <= postPagesTotalPages);
-
-        setPostPages(allPostPages.map((page: any) => page.data));
-
-        // Fetch affiliations in chunks
-        let allAffiliations: any[] = [];
-        let affiliationsTotalPages = 1;
-        let affiliationsCurrent = 1;
-
-        do {
-          const response = await fetch(
-            `/api/affiliations?page=${affiliationsCurrent}&pageSize=100`
-          );
-          if (!response.ok) {
-            throw new Error('Failed to fetch affiliations');
-          }
-          const data = await response.json();
-          allAffiliations = [...allAffiliations, ...data.items];
-          affiliationsTotalPages = data.totalPages;
-          affiliationsCurrent++;
-        } while (affiliationsCurrent <= affiliationsTotalPages);
-
-        setAffiliations(
-          allAffiliations.map((affiliation: any) => affiliation.data)
+        const tagsData = await tagsResponse.json();
+        console.log(
+          `SearchContext: Fetched ${tagsData.length} tags with popularity`
         );
+        setTags(tagsData.filter((tag: any) => !tag?.masterTag));
+
+        // Fetch info pages
+        const infoPagesResponse = await fetch('/api/infoPages');
+        if (!infoPagesResponse.ok) {
+          throw new Error(
+            `Failed to fetch info pages: ${infoPagesResponse.status}`
+          );
+        }
+        const infoPagesData = await infoPagesResponse.json();
+        console.log(
+          `SearchContext: Fetched ${infoPagesData.length} info pages`
+        );
+        setInfoPages(infoPagesData.map((page: any) => page.data));
+
+        // Fetch post pages
+        const postPagesResponse = await fetch('/api/postPages');
+        if (!postPagesResponse.ok) {
+          throw new Error(
+            `Failed to fetch post pages: ${postPagesResponse.status}`
+          );
+        }
+        const postPagesData = await postPagesResponse.json();
+        console.log(
+          `SearchContext: Fetched ${postPagesData.length} post pages`
+        );
+        setPostPages(postPagesData.map((page: any) => page.data));
+
+        // Fetch affiliations
+        const affiliationsResponse = await fetch('/api/affiliations');
+        if (!affiliationsResponse.ok) {
+          throw new Error(
+            `Failed to fetch affiliations: ${affiliationsResponse.status}`
+          );
+        }
+        const affiliationsData = await affiliationsResponse.json();
+        console.log(
+          `SearchContext: Fetched ${affiliationsData.length} affiliations`
+        );
+        setAffiliations(
+          affiliationsData.map((affiliation: any) => affiliation.data)
+        );
+
+        console.log('SearchContext: All data fetched successfully');
       } catch (error) {
         console.error('Error fetching data for search context:', error);
+        setError(error instanceof Error ? error : new Error(String(error)));
       } finally {
         setLoading(false);
       }
@@ -593,6 +585,11 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   // Update search state when data is loaded
   useEffect(() => {
     if (!loading) {
+      console.log('SearchContext: Updating search state with fetched data');
+      console.log(
+        `SearchContext: Using ${tags.length} tags, ${infoPages.length} info pages, ${postPages.length} post pages, and ${affiliations.length} affiliations`
+      );
+
       const initialData = {
         ...searchState,
         tags: tags,
@@ -606,11 +603,21 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
       initialData.filteredData = { ...initialData };
       initialData.initialData = { ...initialData };
       setSearchState(initialData);
+
+      console.log('SearchContext: Search state updated');
     }
   }, [loading, tags, infoPages, postPages, affiliations]);
 
+  // Provide loading and error state to consumers
+  const contextValue = {
+    searchState,
+    setSearchState,
+    loading,
+    error,
+  };
+
   return (
-    <SearchContext.Provider value={{ searchState, setSearchState }}>
+    <SearchContext.Provider value={contextValue}>
       {children}
     </SearchContext.Provider>
   );

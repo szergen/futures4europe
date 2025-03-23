@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getWixClientData } from '@app/hooks/useWixClientServer';
+import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 import { JsonCacheService } from '@app/services/jsonCache';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
@@ -16,7 +16,7 @@ export const GET = async (req: NextRequest) => {
   }
 
   try {
-    const wixClient = await getWixClientData();
+    const wixClient = await getWixClientServerData();
 
     // Fetch all pages with pagination
     let allItems = [] as any[];
@@ -60,6 +60,49 @@ export const GET = async (req: NextRequest) => {
     console.error('Error fetching Post Pages:', error);
     return NextResponse.json(
       { message: 'Error fetching Post Pages', error: String(error) },
+      { status: 500 }
+    );
+  }
+};
+
+export const POST = async (req: NextRequest) => {
+  const cacheKey = 'postPages.json';
+
+  try {
+    const wixClient = await getWixClientServerData();
+
+    let allItems = [] as any[];
+    let skip = 0;
+    const limit = 1000;
+    let totalCount = 0;
+    let hasMore = true;
+
+    do {
+      console.log(`Fetching PostPages: skip=${skip}, limit=${limit}`);
+      const result = await wixClient.items
+        .queryDataItems({
+          dataCollectionId: 'PostPages',
+          referencedItemOptions: referencedItemOptions,
+          returnTotalCount: true,
+        })
+        .skip(skip)
+        .limit(limit)
+        .find();
+
+      allItems = [...allItems, ...result?._items];
+      totalCount = result?._totalCount;
+      skip = limit + skip;
+    } while (skip < totalCount);
+
+    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
+    return NextResponse.json(
+      { message: 'Cache updated successfully.' },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error updating cache:', error);
+    return NextResponse.json(
+      { message: 'Failed to update cache' },
       { status: 500 }
     );
   }

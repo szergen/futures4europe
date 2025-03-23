@@ -50,7 +50,6 @@ export default async function PersonPage({ params }: any) {
     );
   }
 
-  console.log('Affiliations', affiliations);
   const infoPageItemWithAffiliations = {
     ...infoPageItem,
     affiliationsItems: affiliations?.map(

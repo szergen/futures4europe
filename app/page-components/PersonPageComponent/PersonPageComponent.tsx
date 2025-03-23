@@ -40,6 +40,7 @@ import {
   refetchInfoPages,
   refetchTags,
 } from '@app/utils/refetch-utils';
+import { invalidatePersonPageCache } from '@app/utils/cache-utils';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -259,11 +260,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       console.log('nickName', nickName);
       if (nickName !== userDetails.userName) {
         console.log('Updating Nickname');
-        const member = await updateMember(userDetails.contactId, {
-          profile: {
-            nickname: nickName,
-          },
-        });
+        const member = await updateMember(userDetails.contactId, nickName);
         console.log('gotMember', member);
       }
     }
@@ -626,39 +623,16 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    handleTagCreated();
-    handleUserTagRefresh();
-    await revalidateDataItem(`/person/${personData.slug}`);
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+
+    // await revalidateDataItem(`/person/${personData.slug}`);
 
     // After successful update, invalidate caches and revalidate paths
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'tags-with-popularity.json',
-        path: `/person/${personData.slug}`,
-      }),
-    });
-
-    // Also invalidate the basic data caches
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'tags-all.json',
-      }),
-    });
-
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'affiliations-all.json',
-      }),
-    });
+    await invalidatePersonPageCache(personData.slug);
+    handleTagCreated();
+    handleUserTagRefresh();
 
     setIsSaveInProgress(false);
   };
@@ -1076,12 +1050,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #endregion
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    handleTagCreated();
-    handleUserDataRefresh();
-    handleUserTagRefresh();
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // handleTagCreated();
+    // handleUserDataRefresh();
+    // handleUserTagRefresh();
     updateUserDetails((prevData: any) => ({
       ...prevData,
       userTag: {
@@ -1089,7 +1063,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagPageLink: '/person/' + newPersonInfoSlug,
       },
     }));
-    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
+    // await revalidateDataItem(`/person/${newPersonInfoSlug}`);
+
+    // Invalidate caches for the new person page
+    await invalidatePersonPageCache(newPersonInfoSlug);
+    handleTagCreated();
+    handleUserTagRefresh();
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);

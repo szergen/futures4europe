@@ -130,7 +130,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (infoPages.length > 0 && postPages.length > 0) {
       setIsLoadingInProgress(true);
-      fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
+      fetchTagsWithPopularity().then((allTags) => {
         setTags(allTags);
         setTagsFetched(true);
         setIsLoadingInProgress(false);

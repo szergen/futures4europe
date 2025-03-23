@@ -84,6 +84,7 @@ export class JsonCacheService {
   static async invalidateCache(key: string) {
     try {
       const filePath = path.join(CACHE_DIR, `${key}`);
+      console.log('Invalidating cache for key:', key);
       await fs.unlink(filePath);
       return true;
     } catch {
