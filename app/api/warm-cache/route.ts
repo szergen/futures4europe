@@ -3,14 +3,6 @@ import { warmCache } from '@app/services/cacheWarmer';
 
 export async function POST(req: NextRequest) {
   try {
-    // Optional: Add authentication check here
-    const { token } = await req.json();
-    const expectedToken = process.env.CACHE_WARMING_TOKEN;
-
-    if (expectedToken && token !== expectedToken) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    }
-
     const success = await warmCache();
 
     if (success) {

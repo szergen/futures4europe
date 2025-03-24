@@ -12,90 +12,30 @@ export async function warmCache() {
     const tags = await tagsResponse.json();
     await JsonCacheService.saveToCache('tags.json', tags, 5 * 60 * 1000);
 
-    // Fetch and cache info pages in chunks
-    let allInfoPages: any[] = [];
-    let infoPagesTotalPages = 1;
-    let infoPagesCurrent = 1;
-
-    do {
-      const response = await fetch(
-        `${baseUrl}/api/infoPages?page=${infoPagesCurrent}&pageSize=100`
-      );
-      const data = await response.json();
-      allInfoPages = [...allInfoPages, ...data.items];
-      infoPagesTotalPages = data.totalPages;
-      infoPagesCurrent++;
-
-      // Cache each page individually
-      await JsonCacheService.saveToCache(
-        `infoPages-page-${infoPagesCurrent - 1}-100.json`,
-        data,
-        5 * 60 * 1000
-      );
-    } while (infoPagesCurrent <= infoPagesTotalPages);
-
-    // Cache all info pages
+    // Fetch and cache all info pages
+    const infoPagesResponse = await fetch(`${baseUrl}/api/infoPages`);
+    const infoPages = await infoPagesResponse.json();
     await JsonCacheService.saveToCache(
-      'infoPages-all.json',
-      allInfoPages,
+      'infoPages.json',
+      infoPages,
       5 * 60 * 1000
     );
 
-    // Fetch and cache post pages in chunks
-    let allPostPages: any[] = [];
-    let postPagesTotalPages = 1;
-    let postPagesCurrent = 1;
-
-    do {
-      const response = await fetch(
-        `${baseUrl}/api/postPages?page=${postPagesCurrent}&pageSize=100`
-      );
-      const data = await response.json();
-      allPostPages = [...allPostPages, ...data.items];
-      postPagesTotalPages = data.totalPages;
-      postPagesCurrent++;
-
-      // Cache each page individually
-      await JsonCacheService.saveToCache(
-        `postPages-page-${postPagesCurrent - 1}-100.json`,
-        data,
-        5 * 60 * 1000
-      );
-    } while (postPagesCurrent <= postPagesTotalPages);
-
-    // Cache all post pages
+    // Fetch and cache all post pages
+    const postPagesResponse = await fetch(`${baseUrl}/api/postPages`);
+    const postPages = await postPagesResponse.json();
     await JsonCacheService.saveToCache(
-      'postPages-all.json',
-      allPostPages,
+      'postPages.json',
+      postPages,
       5 * 60 * 1000
     );
 
-    // Fetch and cache affiliations in chunks
-    let allAffiliations: any[] = [];
-    let affiliationsTotalPages = 1;
-    let affiliationsCurrent = 1;
-
-    do {
-      const response = await fetch(
-        `${baseUrl}/api/affiliations?page=${affiliationsCurrent}&pageSize=100`
-      );
-      const data = await response.json();
-      allAffiliations = [...allAffiliations, ...data.items];
-      affiliationsTotalPages = data.totalPages;
-      affiliationsCurrent++;
-
-      // Cache each page individually
-      await JsonCacheService.saveToCache(
-        `affiliations-page-${affiliationsCurrent - 1}-100.json`,
-        data,
-        5 * 60 * 1000
-      );
-    } while (affiliationsCurrent <= affiliationsTotalPages);
-
-    // Cache all affiliations
+    // Fetch and cache all affiliations
+    const affiliationsResponse = await fetch(`${baseUrl}/api/affiliations`);
+    const affiliations = await affiliationsResponse.json();
     await JsonCacheService.saveToCache(
-      'affiliations-all.json',
-      allAffiliations,
+      'affiliations.json',
+      affiliations,
       5 * 60 * 1000
     );
 

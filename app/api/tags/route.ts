@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 import { JsonCacheService } from '@app/services/jsonCache';
 
-export const revalidate = 300; // 5 minutes
+export const revalidate = 0; // Disable caching
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'tags.json';

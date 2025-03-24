@@ -32,7 +32,7 @@ export async function generateStaticParams() {
   //   (slug) => !excludedPaths.includes(slug.params.slug)
   // );
 
-  console.log('Generated static slugs for PersonInfo Pages ', slugs);
+  // console.log('Generated static slugs for PersonInfo Pages ', slugs);
   return slugs;
 }
 

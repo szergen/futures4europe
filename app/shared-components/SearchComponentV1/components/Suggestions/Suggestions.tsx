@@ -144,9 +144,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     // Switch between field and tag suggestions indexes
   }, [selectedSuggestionIndex, clickedField]);
 
-  console.log('debg111->pageSuggestions->', pageSuggestions);
-  console.log('debg111->tagSuggestions->', tagSuggestions);
-  console.log('debg111->searchedItems->', searchedItems);
+  // console.log('debg111->pageSuggestions->', pageSuggestions);
+  // console.log('debg111->tagSuggestions->', tagSuggestions);
+  // console.log('debg111->searchedItems->', searchedItems);
 
   const getValidImageUrl = (urls: (string | undefined)[]) => {
     const PLACEHOLDER = '/images/placeholder.webp';

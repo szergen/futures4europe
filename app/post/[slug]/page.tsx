@@ -29,7 +29,7 @@ export async function generateStaticParams() {
   //   (slug) => !excludedPaths.includes(slug.params.slug)
   // );
 
-  console.log('Generated static slugs for PostPages ', slugs);
+  // console.log('Generated static slugs for PostPages ', slugs);
   return slugs;
 }
 

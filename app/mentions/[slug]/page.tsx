@@ -44,7 +44,7 @@ export default async function Pages({ params }: any) {
       affiliation.projectTag === tagId ||
       affiliation.organisationTag === tagId
   );
-  console.log('allAffilationMentiones', allAffilationMentiones);
+  // console.log('allAffilationMentiones', allAffilationMentiones);
 
   const allPages = [...postPages, ...infoPages];
 

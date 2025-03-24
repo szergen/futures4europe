@@ -29,7 +29,7 @@ export async function generateStaticParams() {
       params: { slug: post?.data?.slug },
     }));
 
-  console.log('Generated static slugs for Organisation Info Pages ', slugs);
+  // console.log('Generated static slugs for Organisation Info Pages ', slugs);
   return slugs;
 }
 
@@ -44,7 +44,7 @@ export default async function OrganisationPage({ params }: any) {
     'organisationTag'
   );
 
-  console.log('Affiliations', affiliations);
+  // console.log('Affiliations', affiliations);
   const infoPageItemWithAffiliations = {
     ...infoPageItem,
     affiliationsItems: affiliations.map((affiliation: any) => affiliation.data),

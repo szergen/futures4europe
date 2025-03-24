@@ -101,7 +101,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // #endregion
 
   // #region Handle affiliations
-  console.log('debug111->person.affiliationsItems', person?.affiliationsItems);
+  // console.log('debug111->person.affiliationsItems', person?.affiliationsItems);
 
   const projectsCoordindation = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
@@ -118,7 +118,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       (projectTag: any, index: number, self: any[]) =>
         index === self.findIndex((pt) => pt.name === projectTag.name)
     );
-  console.log('debug111->projectsParticipation', projectsParticipation);
+  // console.log('debug111->projectsParticipation', projectsParticipation);
 
   const currentAfiliations = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'current')
@@ -246,7 +246,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Person Tag
     // Check if object personTag has changed
     if (!deepEqual(personData.personTag, defaultPersonData.personTag)) {
-      console.log('personTag has  changed');
+      console.log('personTag has changed');
       const updatedPersonTag = await updateDataItem(
         'Tags',
         personData.personTag._id,
@@ -256,11 +256,21 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         }
       );
       console.log('updatedPersonTag', updatedPersonTag);
-      const nickName = updatedPersonTag?.dataItem?.data?.name;
+      const nickName = personData?.personTag?.name;
       console.log('nickName', nickName);
-      if (nickName !== userDetails.userName) {
+      if (
+        nickName !== userDetails.userName &&
+        nickName !== 'Angela Cristina Plescan'
+      ) {
         console.log('Updating Nickname');
         const member = await updateMember(userDetails.contactId, nickName);
+        updateUserDetails((prevData: any) => ({
+          ...prevData,
+          userName: personData?.personTag?.name,
+          userTag: {
+            ...personData.personTag,
+          },
+        }));
         console.log('gotMember', member);
       }
     }
@@ -660,7 +670,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
     })
     ?.map((link) => link?.data);
-  console.log('internalLinks', internalLinks);
+  // console.log('internalLinks', internalLinks);
   // #endregion
 
   // #region for when the page is newly created
@@ -707,15 +717,24 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       },
     });
 
-    const newPersonInfoId = newPersonInfo?.dataItem?._id;
-    const newPersonInfoSlug = newPersonInfo?.dataItem?.data?.slug;
+    const newPersonInfoId = await newPersonInfo?.dataItem?._id;
+    const newPersonInfoSlug = await newPersonInfo?.dataItem?.data?.slug;
+    console.log('New page created: ', newPersonInfoId);
+    console.log('New page slug: ', newPersonInfoSlug);
 
+    console.log('Looking for personTag', personData.personTag);
+    console.log(
+      'Maybe better to look for default?',
+      defaultPersonData.personTag
+    );
     // #region Update Author Tag and Person Tag
     const personTag = tags.find(
-      (tag) => tag.name === personData?.personTag?.name
+      (tag) => tag._id === personData?.personTag?._id
     );
+    console.log('personTag', personTag);
 
     if (newPersonInfoId && personTag && personTag._id) {
+      console.log('Updating Author Tag');
       const updatedAuthor = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
@@ -724,6 +743,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
       console.log('updatedAuthor', updatedAuthor);
 
+      console.log('Updating Person Tag');
       const updatedPersonTag = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
@@ -732,6 +752,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
       console.log('updatedPersonTag', updatedPersonTag);
 
+      console.log('Updating Page Owner');
       const updatedPageOwner = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
@@ -740,14 +761,14 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
       console.log('updatedPageOwner', updatedPageOwner);
 
-      console.log('updatedPersonTag', updatedPersonTag);
-      const nickName = updatedPersonTag?.dataItem?.data?.name;
+      const nickName = personData?.personTag?.name;
       if (
         nickName !== userDetails.userName &&
         nickName !== 'Angela Cristina Plescan'
       ) {
+        console.log('Updating member nickname');
         const member = await updateMember(userDetails.contactId, nickName);
-        console.log('gotMember', member);
+        console.log('updatedMember ', member);
       }
     }
     // #endregion
@@ -1035,7 +1056,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Person Tag
     // Check if object personTag has changed
     if (!deepEqual(personData.personTag, defaultPersonData.personTag)) {
-      console.log('personTag has not changed');
+      console.log('personTag changed');
       const updatedPersonTag = await updateDataItem(
         'Tags',
         personData.personTag._id,
@@ -1058,8 +1079,9 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // handleUserTagRefresh();
     updateUserDetails((prevData: any) => ({
       ...prevData,
+      userName: personData?.personTag?.name,
       userTag: {
-        ...prevData.userTag,
+        ...personTag,
         tagPageLink: '/person/' + newPersonInfoSlug,
       },
     }));
@@ -1096,9 +1118,9 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
   }, [userDetails, tags]);
 
-  useEffect(() => {
-    isNewPage && handleTagCreated();
-  }, []);
+  // useEffect(() => {
+  //   isNewPage && handleTagCreated();
+  // }, []);
 
   return (
     <div className={classNames(style.personContainer)}>

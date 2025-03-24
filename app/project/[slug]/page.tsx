@@ -33,7 +33,7 @@ export async function generateStaticParams() {
   //   (slug) => !excludedPaths.includes(slug.params.slug)
   // );
 
-  console.log('Generated static slugs for Project Info Pages ', slugs);
+  // console.log('Generated static slugs for Project Info Pages ', slugs);
   return slugs;
 }
 
@@ -47,7 +47,7 @@ export default async function ProjectPage({ params }: any) {
     'projectTag'
   );
 
-  console.log('Affiliations', affiliations);
+  // console.log('Affiliations', affiliations);
   const infoPageItemWithAffiliations = {
     ...infoPageItem,
     affiliationsItems: affiliations.map((affiliation: any) => affiliation.data),

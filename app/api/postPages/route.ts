@@ -3,8 +3,7 @@ import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 import { JsonCacheService } from '@app/services/jsonCache';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-// Keep the revalidate setting
-// export const revalidate = 300; // 5 minutes
+export const revalidate = 0; // Disable caching
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'postPages.json';
