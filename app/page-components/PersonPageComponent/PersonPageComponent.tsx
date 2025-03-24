@@ -723,10 +723,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     console.log('New page slug: ', newPersonInfoSlug);
 
     console.log('Looking for personTag', personData.personTag);
-    console.log(
-      'Maybe better to look for default?',
-      defaultPersonData.personTag
-    );
+
     // #region Update Author Tag and Person Tag
     const personTag = tags.find(
       (tag) => tag._id === personData?.personTag?._id

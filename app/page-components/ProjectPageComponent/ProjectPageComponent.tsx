@@ -39,6 +39,7 @@ import {
   refetchInfoPages,
   refetchTags,
 } from '@app/utils/refetch-utils';
+import { invalidateProjectPageCache } from '@app/utils/cache-utils';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -558,38 +559,13 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    handleTagCreated();
-    await revalidateDataItem(`/project/${projectData.slug}`);
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // handleTagCreated();
+    // await revalidateDataItem(`/project/${projectData.slug}`);
 
-    // After successful update, invalidate caches and revalidate paths
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'tags-with-popularity.json',
-        path: `/project/${projectData.slug}`,
-      }),
-    });
-
-    // Also invalidate the basic data caches
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'tags-all.json',
-      }),
-    });
-
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'affiliations-all.json',
-      }),
-    });
+    await invalidateProjectPageCache(projectData.slug);
 
     setIsSaveInProgress(false);
   };
@@ -933,12 +909,13 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // #endregion
 
     // #region Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    await revalidateDataItem(`/project/${newProjectInfoSlug}`);
-    handleTagCreated();
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // await revalidateDataItem(`/project/${newProjectInfoSlug}`);
+    // handleTagCreated();
     handleUserDataRefresh();
+    await invalidateProjectPageCache(newProjectInfoSlug);
 
     router.push(`/project/${newProjectInfoSlug}`);
 

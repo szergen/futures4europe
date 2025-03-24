@@ -39,6 +39,7 @@ import {
   refetchTags,
 } from '@app/utils/refetch-utils';
 import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
+import { invalidateOrganisationPageCache } from '@app/utils/cache-utils';
 
 function OrganisationPageComponent({
   pageTitle,
@@ -589,38 +590,13 @@ function OrganisationPageComponent({
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    handleTagCreated();
-    await revalidateDataItem(`/organisation/${organisationData.slug}`);
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // handleTagCreated();
+    // await revalidateDataItem(`/organisation/${organisationData.slug}`);
 
-    // After successful update, invalidate caches and revalidate paths
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'tags-with-popularity.json',
-        path: `/organisation/${organisationData.slug}`,
-      }),
-    });
-
-    // Also invalidate the basic data caches
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'tags.json',
-      }),
-    });
-
-    await fetch('/api/invalidate-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        key: 'affiliations.json',
-      }),
-    });
+    await invalidateOrganisationPageCache(organisationData.slug);
 
     setIsSaveInProgress(false);
   };
@@ -973,12 +949,13 @@ function OrganisationPageComponent({
     // #endregion
 
     // #region Revalidate the cache for the page
-    await refetchInfoPages();
-    await refetchTags();
-    await refetchAffiliations();
-    await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
-    handleTagCreated();
+    // await refetchInfoPages();
+    // await refetchTags();
+    // await refetchAffiliations();
+    // await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
+    // handleTagCreated();
     handleUserDataRefresh();
+    await invalidateOrganisationPageCache(newOrganisationInfoSlug);
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);
     // #endregion
