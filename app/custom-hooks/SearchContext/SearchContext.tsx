@@ -494,7 +494,7 @@ const SearchContext = createContext<{
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
-  const { tagsFetched } = useAuth();
+  const { tagsFetched, tags: authTags } = useAuth();
   const [tags, setTags] = useState<any[]>([]);
   const [infoPages, setInfoPages] = useState<any[]>([]);
   const [postPages, setPostPages] = useState<any[]>([]);
@@ -580,9 +580,9 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
     };
 
     fetchAllData();
-  }, []);
+  }, [tagsFetched]);
 
-  // Update search state when data is loaded
+  // Update search state when data is loaded or tags change
   useEffect(() => {
     if (!loading) {
       console.log('SearchContext: Updating search state with fetched data');

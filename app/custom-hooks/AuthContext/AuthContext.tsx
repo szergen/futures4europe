@@ -132,6 +132,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoadingInProgress(true);
     const fetchTags = async () => {
       if (refreshTags) {
+        setTagsFetched(false);
         await invalidateAllCache();
       }
       fetchTagsWithPopularity().then((allTags) => {
