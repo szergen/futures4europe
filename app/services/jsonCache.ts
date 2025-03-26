@@ -1,8 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-// Define the cache directory - using Next.js's built-in cache directory
-const CACHE_DIR = path.join(process.cwd(), '.next/cache/data');
+// Use /tmp directory for Vercel environment
+const CACHE_DIR = process.env.VERCEL
+  ? '/tmp/cache/data'
+  : path.join(process.cwd(), '.next/cache/data');
 
 export class JsonCacheService {
   /**
