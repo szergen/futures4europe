@@ -1103,12 +1103,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   useEffect(() => {
     if (isLoggedIn && personData && isNewPage) {
       const personTag = tags.find((tag) => tag.name === userDetails?.userName);
-      console.log('debug1->personTag', personTag);
+      // console.log('debug1->personTag', personTag);
       if (personTag) {
         updatePersonDataOnKeyValue('personTag', personTag);
       }
       const personInfoTag = tags.find((tag) => tag.name === 'person info');
-      console.log('debug1->personInfoTag', personInfoTag);
+      // console.log('debug1->personInfoTag', personInfoTag);
       if (personInfoTag) {
         updatePersonDataOnKeyValue('pageType', personInfoTag);
       }
