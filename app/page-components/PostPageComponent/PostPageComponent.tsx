@@ -33,6 +33,7 @@ import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { sanitizeTitleForSlug } from '../PageComponents.utils';
 import { refetchPosts, refetchTags } from '@app/utils/refetch-utils';
+import { invalidatePostPageCache } from '@app/utils/cache-utils';
 // import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
@@ -434,11 +435,14 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       return;
     }
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchPosts();
-    handleTagCreated();
-    await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
-    await revalidateDataItem(`/post/New_Post`);
+    // await refetchTags();
+    // await refetchPosts();
+    // handleTagCreated();
+    // await revalidateDataItem(`/post/${postData.title.replace(/ /g, '_')}`);
+    // await revalidateDataItem(`/post/New_Post`);
+
+    // After successful update, invalidate caches and revalidate paths
+    await invalidatePostPageCache(postData.slug);
 
     setIsSaveInProgress(false);
   };
@@ -641,12 +645,13 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchPosts();
-    handleTagCreated();
-    await revalidateDataItem(`/post/${newPostSlug}`);
+    // await refetchTags();
+    // await refetchPosts();
+    // handleTagCreated();
+    // await revalidateDataItem(`/post/${newPostSlug}`);
 
     handleUserDataRefresh();
+    await invalidatePostPageCache(newPostSlug);
 
     setIsSaveInProgress(false);
     router.push(`/post/${newPostSlug}`);
