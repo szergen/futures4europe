@@ -1,26 +1,26 @@
 /** @type {import('next').NextConfig} */
-const scheduleCronJobs = require('./cron');
+// const scheduleCronJobs = require('./cron');
 
 const nextConfig = {
   env: {},
   webpack: (config, { dev, isServer }) => {
-    scheduleCronJobs();
+    // scheduleCronJobs();
 
-// REVIEW @ALEX
-// REVIEW @ALEX
+    // REVIEW @ALEX
+    // REVIEW @ALEX
     // Add cache configuration
- 
+
     if (dev) {
       // Optimize for faster development experience
       config.watchOptions = {
         poll: 500, // Reduced from 800 for faster checks
         aggregateTimeout: 200, // Reduced from 300 for faster updates
-        ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**'] // Ignore watching unnecessary files
+        ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**'], // Ignore watching unnecessary files
       };
 
       // Optimize webpack cache settings
       config.cache = {
-        type: 'memory' // Use memory instead of filesystem for faster hot reload
+        type: 'memory', // Use memory instead of filesystem for faster hot reload
       };
 
       // Optimize development build

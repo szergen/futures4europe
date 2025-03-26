@@ -10,7 +10,7 @@ import {
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
-export const revalidate = 0;
+export const revalidate = 300; // Revalidate every 5 minutes
 
 // We'll prerender only the params from `generateStaticParams` at build time.
 // If a request comes in for a path that hasn't been generated,
@@ -29,7 +29,7 @@ export async function generateStaticParams() {
   //   (slug) => !excludedPaths.includes(slug.params.slug)
   // );
 
-  console.log('Generated static slugs for PostPages ', slugs);
+  // console.log('Generated static slugs for PostPages ', slugs);
   return slugs;
 }
 

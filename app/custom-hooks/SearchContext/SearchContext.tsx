@@ -484,14 +484,23 @@ export type SearchProviderProps = {
 const SearchContext = createContext<{
   searchState: SearchState;
   setSearchState: React.Dispatch<React.SetStateAction<SearchState>>;
+  loading: boolean;
+  error: Error | null;
 }>({
   searchState: initialState,
   setSearchState: () => {},
+  loading: true,
+  error: null,
 });
 
 export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
-  const { tags, infoPages, postPages, tagsFetched } = useAuth();
+  const { tagsFetched, tags: authTags } = useAuth();
+  const [tags, setTags] = useState<any[]>([]);
+  const [infoPages, setInfoPages] = useState<any[]>([]);
+  const [postPages, setPostPages] = useState<any[]>([]);
   const [affiliations, setAffiliations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const [searchState, setSearchState] = useState({
     ...initialState,
     initialData: {},
@@ -502,45 +511,113 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
     filteredData: {},
   } as any);
 
-  // First useEffect to fetch affiliations
+  // Fetch all data from cached APIs
   useEffect(() => {
-    const fetchAffiliations = async () => {
+    const fetchAllData = async () => {
       try {
-        const response = await fetch('/api/affiliations');
-        const data = await response.json();
-        const affiliationsData = data.map(
-          (affiliation: any) => affiliation.data
+        setLoading(true);
+        console.log('SearchContext: Fetching data...');
+
+        // Fetch tags with popularity
+        const tagsResponse = await fetch('/api/tags-with-popularity');
+        if (!tagsResponse.ok) {
+          throw new Error(`Failed to fetch tags: ${tagsResponse.status}`);
+        }
+        const tagsData = await tagsResponse.json();
+        console.log(
+          `SearchContext: Fetched ${tagsData.length} tags with popularity`
         );
-        setAffiliations(affiliationsData);
+        setTags(tagsData.filter((tag: any) => !tag?.masterTag));
+
+        // Fetch info pages
+        const infoPagesResponse = await fetch('/api/infoPages');
+        if (!infoPagesResponse.ok) {
+          throw new Error(
+            `Failed to fetch info pages: ${infoPagesResponse.status}`
+          );
+        }
+        const infoPagesData = await infoPagesResponse.json();
+        console.log(
+          `SearchContext: Fetched ${infoPagesData.length} info pages`
+        );
+        setInfoPages(infoPagesData.map((page: any) => page.data));
+
+        // Fetch post pages
+        const postPagesResponse = await fetch('/api/postPages');
+        if (!postPagesResponse.ok) {
+          throw new Error(
+            `Failed to fetch post pages: ${postPagesResponse.status}`
+          );
+        }
+        const postPagesData = await postPagesResponse.json();
+        console.log(
+          `SearchContext: Fetched ${postPagesData.length} post pages`
+        );
+        setPostPages(postPagesData.map((page: any) => page.data));
+
+        // Fetch affiliations
+        const affiliationsResponse = await fetch('/api/affiliations');
+        if (!affiliationsResponse.ok) {
+          throw new Error(
+            `Failed to fetch affiliations: ${affiliationsResponse.status}`
+          );
+        }
+        const affiliationsData = await affiliationsResponse.json();
+        console.log(
+          `SearchContext: Fetched ${affiliationsData.length} affiliations`
+        );
+        setAffiliations(
+          affiliationsData.map((affiliation: any) => affiliation.data)
+        );
+
+        console.log('SearchContext: All data fetched successfully');
       } catch (error) {
-        console.error('Error fetching affiliations:', error);
+        console.error('Error fetching data for search context:', error);
+        setError(error instanceof Error ? error : new Error(String(error)));
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchAffiliations();
-  }, []);
+    fetchAllData();
+  }, [tagsFetched]);
 
+  // Update search state when data is loaded or tags change
   useEffect(() => {
-    if (tagsFetched && affiliations.length > 0) {
+    if (!loading) {
+      console.log('SearchContext: Updating search state with fetched data');
+      console.log(
+        `SearchContext: Using ${tags.length} tags, ${infoPages.length} info pages, ${postPages.length} post pages, and ${affiliations.length} affiliations`
+      );
+
       const initialData = {
         ...searchState,
-        tags: tags.filter((tag) => !tag?.masterTag),
-        pages: [...infoPages, ...postPages].map((page) => page.data),
+        tags: tags,
+        pages: [...infoPages, ...postPages],
         assignments: initialState.initialData.assignments,
         sortTags: sortTags,
-        affiliations: affiliations, // Add affiliations to the state
+        affiliations: affiliations,
         filteredData: {},
         initialData: {},
       };
       initialData.filteredData = { ...initialData };
       initialData.initialData = { ...initialData };
-      // console.log('deb1->initialData', initialData);
       setSearchState(initialData);
+
+      console.log('SearchContext: Search state updated');
     }
-  }, [tagsFetched, affiliations]);
+  }, [loading, tags, infoPages, postPages, affiliations]);
+
+  // Provide loading and error state to consumers
+  const contextValue = {
+    searchState,
+    setSearchState,
+    loading,
+    error,
+  };
 
   return (
-    <SearchContext.Provider value={{ searchState, setSearchState }}>
+    <SearchContext.Provider value={contextValue}>
       {children}
     </SearchContext.Provider>
   );
