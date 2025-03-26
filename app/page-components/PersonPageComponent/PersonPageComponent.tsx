@@ -40,7 +40,6 @@ import {
   refetchInfoPages,
   refetchTags,
 } from '@app/utils/refetch-utils';
-import { invalidatePersonPageCache } from '@app/utils/cache-utils';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -101,7 +100,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // #endregion
 
   // #region Handle affiliations
-  // console.log('debug111->person.affiliationsItems', person?.affiliationsItems);
+  console.log('debug111->person.affiliationsItems', person?.affiliationsItems);
 
   const projectsCoordindation = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
@@ -118,7 +117,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       (projectTag: any, index: number, self: any[]) =>
         index === self.findIndex((pt) => pt.name === projectTag.name)
     );
-  // console.log('debug111->projectsParticipation', projectsParticipation);
+  console.log('debug111->projectsParticipation', projectsParticipation);
 
   const currentAfiliations = person?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'current')
@@ -246,7 +245,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Person Tag
     // Check if object personTag has changed
     if (!deepEqual(personData.personTag, defaultPersonData.personTag)) {
-      console.log('personTag has changed');
+      console.log('personTag has  changed');
       const updatedPersonTag = await updateDataItem(
         'Tags',
         personData.personTag._id,
@@ -256,21 +255,15 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         }
       );
       console.log('updatedPersonTag', updatedPersonTag);
-      const nickName = personData?.personTag?.name;
+      const nickName = updatedPersonTag?.dataItem?.data?.name;
       console.log('nickName', nickName);
-      if (
-        nickName !== userDetails.userName &&
-        nickName !== 'Angela Cristina Plescan'
-      ) {
+      if (nickName !== userDetails.userName) {
         console.log('Updating Nickname');
-        const member = await updateMember(userDetails.contactId, nickName);
-        updateUserDetails((prevData: any) => ({
-          ...prevData,
-          userName: personData?.personTag?.name,
-          userTag: {
-            ...personData.personTag,
+        const member = await updateMember(userDetails.contactId, {
+          profile: {
+            nickname: nickName,
           },
-        }));
+        });
         console.log('gotMember', member);
       }
     }
@@ -633,16 +626,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    // await refetchTags();
-    // await refetchInfoPages();
-    // await refetchAffiliations();
-
-    // await revalidateDataItem(`/person/${personData.slug}`);
-
-    // After successful update, invalidate caches and revalidate paths
-    await invalidatePersonPageCache(personData.slug);
+    await refetchTags();
+    await refetchInfoPages();
+    await refetchAffiliations();
     handleTagCreated();
     handleUserTagRefresh();
+    await revalidateDataItem(`/person/${personData.slug}`);
 
     setIsSaveInProgress(false);
   };
@@ -670,7 +659,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
     })
     ?.map((link) => link?.data);
-  // console.log('internalLinks', internalLinks);
+  console.log('internalLinks', internalLinks);
   // #endregion
 
   // #region for when the page is newly created
@@ -717,21 +706,15 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       },
     });
 
-    const newPersonInfoId = await newPersonInfo?.dataItem?._id;
-    const newPersonInfoSlug = await newPersonInfo?.dataItem?.data?.slug;
-    console.log('New page created: ', newPersonInfoId);
-    console.log('New page slug: ', newPersonInfoSlug);
-
-    console.log('Looking for personTag', personData.personTag);
+    const newPersonInfoId = newPersonInfo?.dataItem?._id;
+    const newPersonInfoSlug = newPersonInfo?.dataItem?.data?.slug;
 
     // #region Update Author Tag and Person Tag
     const personTag = tags.find(
-      (tag) => tag._id === personData?.personTag?._id
+      (tag) => tag.name === personData?.personTag?.name
     );
-    console.log('personTag', personTag);
 
     if (newPersonInfoId && personTag && personTag._id) {
-      console.log('Updating Author Tag');
       const updatedAuthor = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
@@ -740,7 +723,6 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
       console.log('updatedAuthor', updatedAuthor);
 
-      console.log('Updating Person Tag');
       const updatedPersonTag = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
@@ -749,7 +731,6 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
       console.log('updatedPersonTag', updatedPersonTag);
 
-      console.log('Updating Page Owner');
       const updatedPageOwner = await replaceDataItemReferences(
         'InfoPages',
         [personTag?._id],
@@ -758,14 +739,14 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       );
       console.log('updatedPageOwner', updatedPageOwner);
 
-      const nickName = personData?.personTag?.name;
+      console.log('updatedPersonTag', updatedPersonTag);
+      const nickName = updatedPersonTag?.dataItem?.data?.name;
       if (
         nickName !== userDetails.userName &&
         nickName !== 'Angela Cristina Plescan'
       ) {
-        console.log('Updating member nickname');
         const member = await updateMember(userDetails.contactId, nickName);
-        console.log('updatedMember ', member);
+        console.log('gotMember', member);
       }
     }
     // #endregion
@@ -1053,7 +1034,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #region Update Person Tag
     // Check if object personTag has changed
     if (!deepEqual(personData.personTag, defaultPersonData.personTag)) {
-      console.log('personTag changed');
+      console.log('personTag has not changed');
       const updatedPersonTag = await updateDataItem(
         'Tags',
         personData.personTag._id,
@@ -1068,26 +1049,20 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
     // #endregion
 
     // Revalidate the cache for the page
-    // await refetchTags();
-    // await refetchInfoPages();
-    // await refetchAffiliations();
-    // handleTagCreated();
-    // handleUserDataRefresh();
-    // handleUserTagRefresh();
+    await refetchTags();
+    await refetchInfoPages();
+    await refetchAffiliations();
+    handleTagCreated();
+    handleUserDataRefresh();
+    handleUserTagRefresh();
     updateUserDetails((prevData: any) => ({
       ...prevData,
-      userName: personData?.personTag?.name,
       userTag: {
-        ...personTag,
+        ...prevData.userTag,
         tagPageLink: '/person/' + newPersonInfoSlug,
       },
     }));
-    // await revalidateDataItem(`/person/${newPersonInfoSlug}`);
-
-    // Invalidate caches for the new person page
-    await invalidatePersonPageCache(newPersonInfoSlug);
-    handleTagCreated();
-    handleUserTagRefresh();
+    await revalidateDataItem(`/person/${newPersonInfoSlug}`);
     router.push(`/person/${newPersonInfoSlug}`);
 
     setIsSaveInProgress(false);
@@ -1103,21 +1078,21 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   useEffect(() => {
     if (isLoggedIn && personData && isNewPage) {
       const personTag = tags.find((tag) => tag.name === userDetails?.userName);
-      // console.log('debug1->personTag', personTag);
+      console.log('debug1->personTag', personTag);
       if (personTag) {
         updatePersonDataOnKeyValue('personTag', personTag);
       }
       const personInfoTag = tags.find((tag) => tag.name === 'person info');
-      // console.log('debug1->personInfoTag', personInfoTag);
+      console.log('debug1->personInfoTag', personInfoTag);
       if (personInfoTag) {
         updatePersonDataOnKeyValue('pageType', personInfoTag);
       }
     }
   }, [userDetails, tags]);
 
-  // useEffect(() => {
-  //   isNewPage && handleTagCreated();
-  // }, []);
+  useEffect(() => {
+    isNewPage && handleTagCreated();
+  }, []);
 
   return (
     <div className={classNames(style.personContainer)}>

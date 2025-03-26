@@ -15,7 +15,6 @@ import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
 import { items } from '@wix/data';
 import { refetchTags } from '@app/utils/refetch-utils';
-import { invalidateAllCache } from '@app/utils/cache-utils';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -129,26 +128,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userTagFetched, setUserTagFetched] = useState(false);
 
   useEffect(() => {
-    setIsLoadingInProgress(true);
-    const fetchTags = async () => {
-      if (refreshTags) {
-        setTagsFetched(false);
-        await invalidateAllCache();
-      }
-      fetchTagsWithPopularity().then((allTags) => {
+    if (infoPages.length > 0 && postPages.length > 0) {
+      setIsLoadingInProgress(true);
+      fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
         setTags(allTags);
         setTagsFetched(true);
         setIsLoadingInProgress(false);
-        if (refreshTags) {
-          setRefreshTags(false); // Reset the refresh flag after successful fetch
-        }
       });
-    };
-    fetchTags();
-  }, [refreshTags]);
+    }
+  }, [infoPages, postPages, refreshTags]);
 
   const handleTagCreated = () => {
-    setRefreshTags(true); // Simply set to true instead of toggling
+    // const refetchNewTags = refetchTags().then(() => {
+    //   console.log('refetchNewTags');
+    //   setRefreshTags((prev) => !prev);
+    // });
+    setRefreshTags((prev) => !prev);
+    // Toggle the refresh state to trigger re-fetch
   };
 
   const { insertDataItem } = useWixModules(items);
@@ -177,7 +173,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const tagResult = await uploadTag(userName);
       const newTag = await tagResult?.dataItem?.data;
       // console.log('deb123->newTag', newTag);
-      // await refetchTags();
+      await refetchTags();
       handleTagCreated();
       return newTag;
     }
@@ -191,7 +187,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    // If the user is not associated with a tag, fetch the user tag
     if (
       tagsFetched &&
       tags.length > 0 &&
@@ -210,7 +205,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsUserTagAssociated(true);
       setUserTagFetched(true);
     } else if (
-      // If the user is associated with a tag, fetch the user tag to capture the link
       tagsFetched &&
       userDetails.userTag &&
       userDetails.userName &&
