@@ -16,6 +16,7 @@ import useFetchInfoPages from '../useFetchInfoPages';
 import { items } from '@wix/data';
 import { refetchTags } from '@app/utils/refetch-utils';
 import { invalidateAllCache } from '@app/utils/cache-utils';
+import useFetchAffiliations from '../useFetchAffiliations';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -52,6 +53,9 @@ interface AuthContextType {
   handlePostPageCreated: () => void;
   infoPages: any[];
   infoPagesFetched: boolean;
+  affiliations: any[];
+  affiliationsFetched: boolean;
+  handleAffiliationCreated: () => void;
   handleInfoPageCreated: () => void;
   isLoadingInProgress: boolean;
   setIsLoadingInProgress: (value: boolean) => void;
@@ -118,6 +122,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const handleInfoPageCreated = () => {
     setRefreshInfoPages((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  // #endregion
+
+  // #region Fetch affiliations
+  const [refreshAffiliations, setRefreshAffiliations] = useState(false);
+  const { affiliations, affiliationsFetched } = useFetchAffiliations(
+    refreshAffiliations
+    // setIsLoadingInProgress
+  );
+  const handleAffiliationCreated = () => {
+    setRefreshAffiliations((prev) => !prev); // Toggle the refresh state to trigger re-fetch
   };
   // #endregion
 
@@ -397,6 +412,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         userTagFetched,
         allOwnedPages,
         handleUserTagRefresh,
+        affiliations,
+        affiliationsFetched,
+        handleAffiliationCreated,
       }}
     >
       {children}

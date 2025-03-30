@@ -1,4 +1,4 @@
-import { JsonCacheService } from './jsonCache';
+import { RedisCacheService } from './redisCache';
 
 export async function warmCache() {
   try {
@@ -10,33 +10,33 @@ export async function warmCache() {
     // Fetch and cache tags
     const tagsResponse = await fetch(`${baseUrl}/api/tags`);
     const tags = await tagsResponse.json();
-    await JsonCacheService.saveToCache('tags.json', tags, 5 * 60 * 1000);
+    await RedisCacheService.saveToCache('tags.json', tags, 4 * 60 * 60 * 1000);
 
     // Fetch and cache all info pages
     const infoPagesResponse = await fetch(`${baseUrl}/api/infoPages`);
     const infoPages = await infoPagesResponse.json();
-    await JsonCacheService.saveToCache(
+    await RedisCacheService.saveToCache(
       'infoPages.json',
       infoPages,
-      5 * 60 * 1000
+      4 * 60 * 60 * 1000
     );
 
     // Fetch and cache all post pages
     const postPagesResponse = await fetch(`${baseUrl}/api/postPages`);
     const postPages = await postPagesResponse.json();
-    await JsonCacheService.saveToCache(
+    await RedisCacheService.saveToCache(
       'postPages.json',
       postPages,
-      5 * 60 * 1000
+      4 * 60 * 60 * 1000
     );
 
     // Fetch and cache all affiliations
     const affiliationsResponse = await fetch(`${baseUrl}/api/affiliations`);
     const affiliations = await affiliationsResponse.json();
-    await JsonCacheService.saveToCache(
+    await RedisCacheService.saveToCache(
       'affiliations.json',
       affiliations,
-      5 * 60 * 1000
+      4 * 60 * 60 * 1000
     );
 
     // Now fetch and cache the calculated data
@@ -44,10 +44,10 @@ export async function warmCache() {
       `${baseUrl}/api/tags-with-popularity`
     );
     const popularTags = await popularTagsResponse.json();
-    await JsonCacheService.saveToCache(
+    await RedisCacheService.saveToCache(
       'tags-with-popularity.json',
       popularTags,
-      5 * 60 * 1000
+      4 * 60 * 60 * 1000
     );
 
     console.log('Cache warming complete!');

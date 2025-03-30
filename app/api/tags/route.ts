@@ -1,62 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientServerData } from '@app/hooks/useWixClientServer';
-import { JsonCacheService } from '@app/services/jsonCache';
+import { RedisCacheService } from '@app/services/redisCache';
 
-export const revalidate = 0; // Disable caching
+export const revalidate = 300;
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'tags.json';
 
-  // Try to get from file cache
-  const cachedData = await JsonCacheService.getFromCache(cacheKey);
-  if (cachedData) {
-    return NextResponse.json(cachedData, { status: 200 });
-  }
-
   try {
+    const cachedData = await RedisCacheService.getFromCache(cacheKey);
+    if (cachedData) {
+      return NextResponse.json(cachedData);
+    }
+
     const wixClient = await getWixClientServerData();
 
-    // Fetch all tags with pagination
     let allItems = [] as any[];
     let skip = 0;
-    const limit = 1000; // Maximum allowed by Wix
+    const limit = 1000;
     let totalCount = 0;
-    let hasMore = true;
 
-    while (hasMore) {
-      console.log(`Fetching Tags: skip=${skip}, limit=${limit}`);
+    do {
       const result = await wixClient.items
         .queryDataItems({
           dataCollectionId: 'Tags',
+          // referencedItemOptions: referencedItemOptions,
           returnTotalCount: true,
         })
         .skip(skip)
         .limit(limit)
         .find();
+      allItems = [...allItems, ...result.items];
+      totalCount = result.totalCount || 0;
+      skip = limit + skip;
+    } while (skip < totalCount);
+    // // console.log('allItems', allItems);
 
-      const items = result?._items || [];
-      allItems = [...allItems, ...items];
-      totalCount = result?._totalCount || 0;
-
-      skip += items.length;
-      hasMore = skip < totalCount && items.length > 0;
-
-      console.log(
-        `Fetched ${items.length} Tags, total so far: ${allItems.length}/${totalCount}`
-      );
-    }
-
-    console.log(`Completed fetching all ${allItems.length} Tags`);
-
-    // Save to file cache with 5 minute expiry
-    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
-
-    // Return all items as an array (original format)
-    return NextResponse.json(allItems, { status: 200 });
+    await RedisCacheService.saveToCache(cacheKey, allItems, 4 * 60 * 60 * 1000);
+    return NextResponse.json(allItems);
   } catch (error) {
-    console.error('Error fetching Tags:', error);
+    console.error('Error fetching tags:', error);
     return NextResponse.json(
-      { message: 'Error fetching Tags', error: String(error) },
+      { message: 'Error fetching tags' },
       { status: 500 }
     );
   }
@@ -83,13 +68,13 @@ export const POST = async (req: NextRequest) => {
         .skip(skip)
         .limit(limit)
         .find();
-      allItems = [...allItems, ...result?._items];
-      totalCount = result?._totalCount;
+      allItems = [...allItems, ...result.items];
+      totalCount = result.totalCount || 0;
       skip = limit + skip;
     } while (skip < totalCount);
     // // console.log('allItems', allItems);
 
-    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
+    await RedisCacheService.saveToCache(cacheKey, allItems, 4 * 60 * 60 * 1000);
     return NextResponse.json(
       { message: 'Cache updated successfully.' },
       { status: 200 }

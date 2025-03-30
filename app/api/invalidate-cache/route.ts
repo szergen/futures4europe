@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { JsonCacheService } from '@app/services/jsonCache';
+import { RedisCacheService } from '@app/services/redisCache';
 
 export async function POST(req: NextRequest) {
   try {
@@ -8,12 +8,12 @@ export async function POST(req: NextRequest) {
 
     // Invalidate specific cache key
     if (key) {
-      await JsonCacheService.invalidateCache(key);
+      await RedisCacheService.invalidateCache(key);
     }
 
     // Invalidate all cache
     if (key === '*') {
-      await JsonCacheService.invalidateAllCache();
+      await RedisCacheService.invalidateAllCache();
     }
 
     // Revalidate path if provided

@@ -70,29 +70,23 @@ export const invalidateMultipleCache = async (
 export const invalidatePersonPageCache = async (
   slug: string
 ): Promise<Response[]> => {
-  return Promise.all([invalidateAllCache(), revalidatePath(`/person/${slug}`)]);
+  return Promise.all([revalidatePath(`/person/${slug}`)]);
 };
 
 export const invalidateProjectPageCache = async (
   slug: string
 ): Promise<Response[]> => {
-  return Promise.all([
-    invalidateAllCache(),
-    revalidatePath(`/project/${slug}`),
-  ]);
+  return Promise.all([revalidatePath(`/project/${slug}`)]);
 };
 
 export const invalidateOrganisationPageCache = async (
   slug: string
 ): Promise<Response[]> => {
-  return Promise.all([
-    invalidateAllCache(),
-    revalidatePath(`/organisation/${slug}`),
-  ]);
+  return Promise.all([revalidatePath(`/organisation/${slug}`)]);
 };
 
 export const invalidatePostPageCache = async (
   slug: string
 ): Promise<Response[]> => {
-  return Promise.all([invalidateAllCache(), revalidatePath(`/post/${slug}`)]);
+  return Promise.all([revalidatePath(`/post/${slug}`)]);
 };

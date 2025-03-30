@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientServerData } from '@app/hooks/useWixClientServer';
-import { JsonCacheService } from '@app/services/jsonCache';
+import { RedisCacheService } from '@app/services/redisCache';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
 export const revalidate = 0; // Disable caching
@@ -8,16 +8,15 @@ export const revalidate = 0; // Disable caching
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'infoPages.json';
 
-  // Try to get from file cache
-  const cachedData = await JsonCacheService.getFromCache(cacheKey);
-  if (cachedData) {
-    return NextResponse.json(cachedData, { status: 200 });
-  }
-
   try {
+    const cachedData = await RedisCacheService.getFromCache(cacheKey);
+    if (cachedData) {
+      console.log('Returning cached data for infoPages');
+      return NextResponse.json(cachedData);
+    }
+
     const wixClient = await getWixClientServerData();
 
-    // Fetch all pages with pagination
     let allItems = [] as any[];
     let skip = 0;
     const limit = 1000; // Maximum allowed by Wix
@@ -50,11 +49,10 @@ export const GET = async (req: NextRequest) => {
 
     console.log(`Completed fetching all ${allItems.length} InfoPages`);
 
-    // Save to file cache with 5 minute expiry
-    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
+    await RedisCacheService.saveToCache(cacheKey, allItems, 4 * 60 * 60 * 1000);
 
     // Return all items as an array (original format)
-    return NextResponse.json(allItems, { status: 200 });
+    return NextResponse.json(allItems);
   } catch (error) {
     console.error('Error fetching Info Pages:', error);
     return NextResponse.json(
@@ -85,13 +83,13 @@ export const POST = async (req: NextRequest) => {
         .skip(skip)
         .limit(limit)
         .find();
-      allItems = [...allItems, ...result?._items];
-      totalCount = result?._totalCount;
+      allItems = [...allItems, ...result.items];
+      totalCount = result.totalCount || 0;
       skip = limit + skip;
     } while (skip < totalCount);
     // console.log('allItems', allItems);
 
-    await JsonCacheService.saveToCache(cacheKey, allItems, 5 * 60 * 1000);
+    await RedisCacheService.saveToCache(cacheKey, allItems, 4 * 60 * 60 * 1000);
     return NextResponse.json(
       { message: 'Cache updated successfully.' },
       { status: 200 }

@@ -1,62 +1,66 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { calculatePopularity } from '@app/utils/tags.utls';
-import { JsonCacheService } from '@app/services/jsonCache';
+import { RedisCacheService } from '@app/services/redisCache';
 
 // Keep the revalidate setting
-export const revalidate = 0; // Disable caching
+export const revalidate = 300; // 5 minutes
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'tags-with-popularity.json';
 
-  // Try to get from file cache
-  const cachedData = await JsonCacheService.getFromCache(cacheKey);
-  if (cachedData) {
-    return NextResponse.json(cachedData, { status: 200 });
-  }
-
   try {
+    const cachedData = await RedisCacheService.getFromCache(cacheKey);
+    if (cachedData) {
+      return NextResponse.json(cachedData);
+    }
+
     // Determine the base URL for API calls
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
 
-    // Fetch all data using the simplified APIs
-    // console.log(
-    //   'tags-with-popularity->Fetching data for tags-with-popularity calculation'
-    // );
+    // Try to get data from cache first, if not found fetch from API
+    let tags = await RedisCacheService.getFromCache('tags.json');
+    let infoPages = await RedisCacheService.getFromCache('infoPages.json');
+    let postPages = await RedisCacheService.getFromCache('postPages.json');
+    let affiliations = await RedisCacheService.getFromCache(
+      'affiliations.json'
+    );
 
-    const tagsResponse = await fetch(`${baseUrl}/api/tags`);
-    if (!tagsResponse.ok) {
-      throw new Error(`Failed to fetch tags: ${tagsResponse.status}`);
+    // Fetch any missing data from API
+    if (!tags) {
+      const tagsResponse = await fetch(`${baseUrl}/api/tags`);
+      if (!tagsResponse.ok)
+        throw new Error(`Failed to fetch tags: ${tagsResponse.status}`);
+      tags = await tagsResponse.json();
     }
-    const tags = await tagsResponse.json();
-    // console.log(`tags-with-popularity->Fetched ${tags.length} tags`);
 
-    const infoPagesResponse = await fetch(`${baseUrl}/api/infoPages`);
-    if (!infoPagesResponse.ok) {
-      throw new Error(`Failed to fetch infoPages: ${infoPagesResponse.status}`);
+    if (!infoPages) {
+      const infoPagesResponse = await fetch(`${baseUrl}/api/infoPages`);
+      if (!infoPagesResponse.ok)
+        throw new Error(
+          `Failed to fetch infoPages: ${infoPagesResponse.status}`
+        );
+      infoPages = await infoPagesResponse.json();
     }
-    const infoPages = await infoPagesResponse.json();
-    // console.log(`tags-with-popularity->Fetched ${infoPages.length} infoPages`);
 
-    const postPagesResponse = await fetch(`${baseUrl}/api/postPages`);
-    if (!postPagesResponse.ok) {
-      throw new Error(`Failed to fetch postPages: ${postPagesResponse.status}`);
+    if (!postPages) {
+      const postPagesResponse = await fetch(`${baseUrl}/api/postPages`);
+      if (!postPagesResponse.ok)
+        throw new Error(
+          `Failed to fetch postPages: ${postPagesResponse.status}`
+        );
+      postPages = await postPagesResponse.json();
     }
-    const postPages = await postPagesResponse.json();
-    // console.log(`tags-with-popularity->Fetched ${postPages.length} postPages`);
 
-    const affiliationsResponse = await fetch(`${baseUrl}/api/affiliations`);
-    if (!affiliationsResponse.ok) {
-      throw new Error(
-        `Failed to fetch affiliations: ${affiliationsResponse.status}`
-      );
+    if (!affiliations) {
+      const affiliationsResponse = await fetch(`${baseUrl}/api/affiliations`);
+      if (!affiliationsResponse.ok)
+        throw new Error(
+          `Failed to fetch affiliations: ${affiliationsResponse.status}`
+        );
+      affiliations = await affiliationsResponse.json();
     }
-    const affiliations = await affiliationsResponse.json();
-    // console.log(
-    //   `tags-with-popularity->Fetched ${affiliations.length} affiliations`
-    // );
 
     // Calculate popularity
-    // console.log('tags-with-popularity->Calculating tag popularity...');
     const tagsWithMentions = await tags.map((tag: any) => tag.data);
     const affiliationsWithMentions = await affiliations.map(
       (affiliation: any) => affiliation.data
@@ -77,10 +81,13 @@ export const GET = async (req: NextRequest) => {
       `tags-with-popularity->Calculated popularity for ${sortedTags.length} tags`
     );
 
-    // Save to file cache with 5 minute expiry
-    await JsonCacheService.saveToCache(cacheKey, sortedTags, 5 * 60 * 1000);
+    await RedisCacheService.saveToCache(
+      cacheKey,
+      sortedTags,
+      4 * 60 * 60 * 1000
+    );
 
-    return NextResponse.json(sortedTags, { status: 200 });
+    return NextResponse.json(sortedTags);
   } catch (error) {
     console.error('Error calculating tag popularity:', error);
     return NextResponse.json(
