@@ -3,7 +3,7 @@ import { calculatePopularity } from '@app/utils/tags.utls';
 import { RedisCacheService } from '@app/services/redisCache';
 
 // Keep the revalidate setting
-export const revalidate = 300; // 5 minutes
+export const revalidate = 0; // 5 minutes
 
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'tags-with-popularity.json';
