@@ -146,12 +146,15 @@
     --color-border-brand-separator: rgb(195, 196, 194, 0.5);
     --primary-color: rgb(234, 233, 236);
     --primary-white: rgb(255, 255, 255);
+    --primary-white-50: rgba(255, 255, 255, 0.500);
+    --primary-white-20: rgba(255, 255, 255, 0.200);
     --primary-black: rgb(0, 0, 0);
     --primary-brand: rgb(119, 85, 204);
     --primary-green: rgb(47, 148, 97);
     --primary-blue: rgb(5, 0, 175);
     --primary-white: rgb(255, 255, 255);
-    --primary-secondary: rgb(205, 100, 200);    
+    --primary-secondary: rgb(205, 100, 200);
+    --primary-blue-80: rgba(21, 15, 213, 0.8);
 
     
 

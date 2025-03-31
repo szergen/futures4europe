@@ -7,7 +7,7 @@
 .heroTitle {
   font-size: 2.5rem; /* Large font size */
   font-weight: bold; /* Bold text */
-  margin-bottom: 1rem; /* Margin below the title */
+  margin-bottom: 0px; /* Margin below the title */
   color: var(--primary-white);
 }
 
