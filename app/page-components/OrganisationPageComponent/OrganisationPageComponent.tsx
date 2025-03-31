@@ -1110,7 +1110,7 @@ function OrganisationPageComponent({
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('people', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        tags={tags?.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
         tagType="person"
       />
@@ -1120,7 +1120,7 @@ function OrganisationPageComponent({
         tagList={organisationData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        tags={tags?.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={organisationData.methods?.map(
           (method: any) => method?.name
         )}
@@ -1136,7 +1136,7 @@ function OrganisationPageComponent({
         tagList={organisationData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        tags={tags?.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={organisationData.domains?.map(
           (domain: any) => domain?.name
         )}
@@ -1156,7 +1156,7 @@ function OrganisationPageComponent({
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('projects', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        tags={tags?.filter((tag) => tag?.tagType === 'project')}
         handleTagCreated={handleTagCreated}
         tagType="project"
       />
@@ -1166,7 +1166,7 @@ function OrganisationPageComponent({
         tagList={organisationData.memberOrganisations}
         tagListTitle="Members"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOrganisations?.map(
           (domain: any) => domain?.name
         )}
@@ -1182,7 +1182,7 @@ function OrganisationPageComponent({
         tagList={organisationData.memberOfOrganisations}
         tagListTitle="Member of"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOfOrganisations?.map(
           (domain: any) => domain?.name
         )}
