@@ -270,7 +270,7 @@ export const Home = () => {
       <a
         href="https://legacy.futures4europe.eu/ourfutures"
         target="_blank"
-        className="relative block bg-sky-500 isolate overflow-hidden py-16 sm:py-14 lg:py-8 hover:bg-sky-400 transition ease hover:underline text-white"
+        className="relative block mt-40 bg-sky-500 isolate overflow-hidden py-16 sm:py-14 lg:py-8 hover:bg-sky-400 transition ease hover:underline text-white"
       >
         <div className="flex flex-row items-end justify-start mx-auto max-w-7xl px-6 lg:px-8">
           <div className="w-24">
