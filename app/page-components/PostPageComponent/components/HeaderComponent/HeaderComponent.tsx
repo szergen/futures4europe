@@ -150,7 +150,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             )}
           </div>
           {!isEditModeOn ? (
-            <Typography tag="h3" className="text-gray-800 mt-2">
+            <Typography tag="h3" className="text-gray-800 text-sm mt-2">
               {post?.projectResultMedia?.displayName}
             </Typography>
           ) : (
