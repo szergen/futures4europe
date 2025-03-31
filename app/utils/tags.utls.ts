@@ -64,9 +64,7 @@ export function calculatePopularity(
             affiliation.projectTag === tag?.masterTag ||
             affiliation.organisationTag === tag?.masterTag))
     );
-    if (tag?._id === 'ce529656-bacd-4afb-b671-301d464ec908') {
-      console.log('allAffilationMentiones', allAffilationMentiones);
-    }
+
     const affiliationPages = infoPages
       .filter((page: any) => {
         return allAffilationMentiones.find((affiliation: any) => {
@@ -110,6 +108,11 @@ export function calculatePopularity(
     //     count += 1;
     //   }
     // });
+    if (tag?._id === 'ce529656-bacd-4afb-b671-301d464ec908') {
+      console.log('tag', tag);
+      console.log('count', count);
+      // console.log('allAffilationMentiones', allAffilationMentiones);
+    }
 
     popularityResults.push({ ...tag, mentions: count });
   });

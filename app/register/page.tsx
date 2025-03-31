@@ -25,9 +25,6 @@ import { subscribeToNewsletter } from '@app/wixUtils/client-side';
 import { refetchTags } from '@app/utils/refetch-utils';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
-// import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
-import { ClassNames } from '@emotion/react';
-
 export default function RegisterPage() {
   const [error, setError] = useState('');
   // const router = useRouter();
@@ -99,7 +96,7 @@ export default function RegisterPage() {
         tagResult = await uploadTag(firstName + ' ' + lastName);
         console.log('tagResult', tagResult);
         // if (tagResult) {
-        await refetchTags();
+        // await refetchTags();
         handleTagCreated();
         setIsTagCreated(true);
         // }

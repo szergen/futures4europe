@@ -15,6 +15,8 @@ import useFetchPostPages from '../useFetchPostPages';
 import useFetchInfoPages from '../useFetchInfoPages';
 import { items } from '@wix/data';
 import { refetchTags } from '@app/utils/refetch-utils';
+import { invalidateAllCache } from '@app/utils/cache-utils';
+import useFetchAffiliations from '../useFetchAffiliations';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -51,6 +53,9 @@ interface AuthContextType {
   handlePostPageCreated: () => void;
   infoPages: any[];
   infoPagesFetched: boolean;
+  affiliations: any[];
+  affiliationsFetched: boolean;
+  handleAffiliationCreated: () => void;
   handleInfoPageCreated: () => void;
   isLoadingInProgress: boolean;
   setIsLoadingInProgress: (value: boolean) => void;
@@ -120,6 +125,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   // #endregion
 
+  // #region Fetch affiliations
+  const [refreshAffiliations, setRefreshAffiliations] = useState(false);
+  const { affiliations, affiliationsFetched } = useFetchAffiliations(
+    refreshAffiliations
+    // setIsLoadingInProgress
+  );
+  const handleAffiliationCreated = () => {
+    setRefreshAffiliations((prev) => !prev); // Toggle the refresh state to trigger re-fetch
+  };
+  // #endregion
+
   // #region Fetch tags and refresh based on tag creation
   const [tags, setTags] = useState([] as any[]);
 
@@ -128,23 +144,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userTagFetched, setUserTagFetched] = useState(false);
 
   useEffect(() => {
-    if (infoPages.length > 0 && postPages.length > 0) {
-      setIsLoadingInProgress(true);
-      fetchTagsWithPopularity(infoPages, postPages).then((allTags) => {
+    setIsLoadingInProgress(true);
+    const fetchTags = async () => {
+      if (refreshTags) {
+        setTagsFetched(false);
+        await invalidateAllCache();
+      }
+      fetchTagsWithPopularity().then((allTags) => {
         setTags(allTags);
         setTagsFetched(true);
         setIsLoadingInProgress(false);
+        if (refreshTags) {
+          setRefreshTags(false); // Reset the refresh flag after successful fetch
+        }
       });
-    }
-  }, [infoPages, postPages, refreshTags]);
+    };
+    fetchTags();
+  }, [refreshTags]);
 
   const handleTagCreated = () => {
-    // const refetchNewTags = refetchTags().then(() => {
-    //   console.log('refetchNewTags');
-    //   setRefreshTags((prev) => !prev);
-    // });
-    setRefreshTags((prev) => !prev);
-    // Toggle the refresh state to trigger re-fetch
+    setRefreshTags(true); // Simply set to true instead of toggling
   };
 
   const { insertDataItem } = useWixModules(items);
@@ -173,7 +192,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const tagResult = await uploadTag(userName);
       const newTag = await tagResult?.dataItem?.data;
       // console.log('deb123->newTag', newTag);
-      await refetchTags();
+      // await refetchTags();
       handleTagCreated();
       return newTag;
     }
@@ -187,6 +206,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    // If the user is not associated with a tag, fetch the user tag
     if (
       tagsFetched &&
       tags.length > 0 &&
@@ -205,6 +225,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsUserTagAssociated(true);
       setUserTagFetched(true);
     } else if (
+      // If the user is associated with a tag, fetch the user tag to capture the link
       tagsFetched &&
       userDetails.userTag &&
       userDetails.userName &&
@@ -391,6 +412,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         userTagFetched,
         allOwnedPages,
         handleUserTagRefresh,
+        affiliations,
+        affiliationsFetched,
+        handleAffiliationCreated,
       }}
     >
       {children}
