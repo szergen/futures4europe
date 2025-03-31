@@ -728,7 +728,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   }, []);
 
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
-
+  console.log('postdatadata', postData);
+  
   return (
     <div className={classNames(style.postContainer)}>
       {/* Edit buttons */}
@@ -767,7 +768,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -810,7 +811,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           <section className="post-meta">
             <Typography tag="p" className="text-sm text-gray-400">
               Page creation date:{' '}
-              {formatDate(postData?.updatedDate?.toLocaleString())}
+              {formatDate(postData?.postDate?.toLocaleString())}
             </Typography>
           </section>
         )}

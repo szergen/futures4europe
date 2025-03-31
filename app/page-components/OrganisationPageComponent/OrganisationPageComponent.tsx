@@ -984,29 +984,41 @@ function OrganisationPageComponent({
     isNewPage && handleTagCreated();
   }, []);
 
+  // Save required fields
+
+  const checkRequiredFields = () => {
+    // Check if essential fields are filled
+    return !organisationData?.organisationTag?.name || 
+           organisationData?.organisationTag?.name.trim().length < 2 ||
+           !organisationData?.countryTag || 
+           !organisationData?.countryTag?._id;
+  };
+
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
-          <button
-            onClick={() => {
-              isEditModeOn && saveOrCreateHandler();
-              setIsEditModeOn(!isEditModeOn);
-              setDefaultOrganisationData(organisationData);
-            }}
-            disabled={isEditModeOn && checkValidationErrors()}
-            className={classNames(
-              'btn btn-save',
-              isEditModeOn && checkValidationErrors() && 'bg-gray-400'
-            )}
-          >
-            {!isEditModeOn
-              ? 'Edit Page'
-              : isNewPage
-              ? 'Publish Page'
-              : 'Save&Publish Changes'}
-          </button>
+
+{/* // Updated save button to be disabled when required fields aren't filled */}
+<button
+  onClick={() => {
+    isEditModeOn && saveOrCreateHandler();
+    setIsEditModeOn(!isEditModeOn);
+    setDefaultOrganisationData(organisationData);
+  }}
+  disabled={isEditModeOn && (checkValidationErrors() || checkRequiredFields())}
+  className={classNames(
+    'btn btn-save',
+    isEditModeOn && (checkValidationErrors() || checkRequiredFields()) && 'bg-gray-400'
+  )}
+>
+  {!isEditModeOn
+    ? 'Edit Page'
+    : isNewPage
+    ? 'Publish Page'
+    : 'Save&Publish Changes'}
+</button>
           {isEditModeOn && (
             <button
               onClick={() => {
@@ -1026,7 +1038,7 @@ function OrganisationPageComponent({
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -1054,6 +1066,7 @@ function OrganisationPageComponent({
         isNewPage={isNewPage}
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
+        requiredFields={['name', 'country']} // Add this new prop
       />
       {/* Organisation Description */}
       {/* <PersonDescriptionComponent

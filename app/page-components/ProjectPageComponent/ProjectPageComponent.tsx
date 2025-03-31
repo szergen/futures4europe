@@ -987,7 +987,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
