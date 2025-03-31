@@ -40,6 +40,8 @@ module.exports = {
         'white-site': 'rgb(255, 255, 255)',
         'black-site': 'rgb(0, 0, 0)',
         'purple-site': 'rgb(119, 85, 204)',
+        'primary-site': 'var(--primary-blue)',
+        'secondary-site': 'rgb(205, 100, 200)',
         'alertLight-site': 'rgb(217, 48, 37, .20)',
         'blue-site': '#2859B6',
         greyShade: '#2C2C2F',
