@@ -30,7 +30,7 @@ const Footer = () => {
 
 
     <footer className="w-full" data-testid={testIds.LAYOUT.FOOTER}>
-      <div className="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
+      <div className="relative isolate overflow-hidden bg-primary-site py-16 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
             <div className="max-w-xl lg:max-w-lg">
@@ -56,7 +56,7 @@ const Footer = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full mb-0 min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
+                      className="w-full mb-0 min-w-0 flex-auto rounded-full border-0 bg-white px-3.5 py-2 text-gray-800 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -64,10 +64,10 @@ const Footer = () => {
                     type="submit"
                     disabled={!isPrivacyChecked}
                     className={classNames(
-                      'flex-none rounded-md  px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500',
+                      'flex-none rounded-full px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500',
                       isPrivacyChecked
-                        ? 'hover:bg-indigo-400 bg-[#75c]'
-                        : 'bg-[#666c]'
+                        ? 'hover:bg-secondary-site bg-[#75c]'
+                        : 'bg-greyShade/50 text-white cursor-not-allowed',
                     )}
                   >
                     Subscribe
@@ -180,13 +180,13 @@ const Footer = () => {
                 <dt className="mt-4 text-base font-semibold text-white">
                   Recent newsletters
                 </dt>
-                <dd className="mt-2 text-base/7 text-gray-400">
+                <dd className="mt-2 text-base/7 text-white/80">
                   <ul className="text-sm transition-all duration-500">
                     <li className="mb-2">
                       <Link
                         target="_blank"
                         href="https://shoutout.wix.com/so/0bPEwQixc"
-                        className="text-gray-400 hover:text-gray-500 underline"
+                        className="text-white/80 hover:text-white underline"
                       >
                         December 2024
                       </Link>
@@ -195,7 +195,7 @@ const Footer = () => {
                       <Link
                         target="_blank"
                         href="https://shoutout.wix.com/so/09P91vhnQ?languageTag=en&cid=f677c1bb-4334-4039-a211-fdd89e013a3c"
-                        className="text-gray-400 hover:text-gray-500 underline"
+                        className="text-white/80 hover:text-white underline"
                       >
                         October 2024
                       </Link>
@@ -204,7 +204,7 @@ const Footer = () => {
                       <Link
                         target="_blank"
                         href="https://shoutout.wix.com/so/ffO-UPJK0?languageTag=en"
-                        className="text-gray-400 hover:text-gray-500 underline"
+                        className="text-white/80 hover:text-white underline"
                       >
                         June 2024
                       </Link>
@@ -215,7 +215,7 @@ const Footer = () => {
                         href={
                           'https://shoutout.wix.com/so/86OraMfaB?languageTag=en'
                         }
-                        className="text-gray-400 hover:text-gray-500 underline"
+                        className="text-white/80 hover:text-white underline"
                       >
                         March 2024
                       </Link>
@@ -224,7 +224,7 @@ const Footer = () => {
                       <Link
                         target="_blank"
                         href="https://shoutout.wix.com/so/c7OmbGwaG?languageTag=en"
-                        className="text-gray-400 hover:text-gray-500 underline"
+                        className="text-white/80 hover:text-white underline"
                       >
                         December 2023
                       </Link>
@@ -232,7 +232,49 @@ const Footer = () => {
                   </ul>
                 </dd>
               </div>
+
+              <div className="flex flex-col items-start">
+                <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                  <svg
+                    className="h-6 w-6 text-white"
+                    fill="#fff"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                    data-slot="icon"
+                  >
+                    <path d="M7.56 7.51a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm0-3.08a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/><path d="M7.06 7.01h1v8.42h-1zM5.12 9.09A4.38 4.38 0 0 1 4 3l.82.57A3.38 3.38 0 0 0 5.7 8.3zM10.31 8.87l-.63-.78a3.38 3.38 0 0 0 .65-4.55l.82-.54a4.38 4.38 0 0 1-.84 5.9z"/><path d="m11.8 10.56-.64-.77A5.63 5.63 0 0 0 12 2l.78-.62a6.63 6.63 0 0 1-.94 9.23zM3.33 10.56a6.63 6.63 0 0 1-.88-9.31l.77.64A5.63 5.63 0 0 0 4 9.79z"/>
+                  </svg>
+                </div>
+                <dt className="mt-4 text-base font-semibold text-white">
+                  Social Links
+                </dt>
+                <dd className="mt-2 text-base/7 text-white/80">
+                  <ul className="text-sm transition-all duration-500">
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://www.linkedin.com/company/futures4europe/"
+                        className="text-white/80 hover:text-white underline"
+                      >
+                        LinkedIn
+                      </Link>
+                    </li>
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://www.youtube.com/@futures4europe"
+                        className="text-white/80 hover:text-white underline"
+                      >
+                        Youtube
+                      </Link>
+                    </li>
+                  </ul>
+                </dd>
+              </div>
+
             </dl>
+
+
           </div>
         </div>
         <div
@@ -388,6 +430,21 @@ const Footer = () => {
                   />
                 </svg>
               </a>
+              <a
+                href="https://www.youtube.com/@futures4europe"
+                target="_blank"
+                className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-indigo-600"
+              >
+                <svg
+                  className="w-[1rem] h-[1rem] text-white"
+                  viewBox="0 0 48 48"
+                  fill="#fff"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M 23.857422 8.5 C 17.504717 8.5 11.602344 8.9526234 8.234375 9.65625 A 1.50015 1.50015 0 0 0 8.2128906 9.6621094 C 5.6754768 10.230693 3.2861897 12.048234 2.7832031 14.894531 A 1.50015 1.50015 0 0 0 2.78125 14.90625 C 2.394836 17.200265 2 20.190694 2 24.5 C 2 28.801151 2.3961903 31.712324 2.8847656 34.126953 C 3.4000756 36.889296 5.7342165 38.761817 8.3105469 39.337891 A 1.50015 1.50015 0 0 0 8.3476562 39.347656 C 11.86271 40.040284 17.598467 40.5 23.951172 40.5 C 30.303877 40.5 36.042686 40.04028 39.558594 39.347656 A 1.50015 1.50015 0 0 0 39.595703 39.337891 C 42.133117 38.769306 44.522404 36.951766 45.025391 34.105469 A 1.50015 1.50015 0 0 0 45.029297 34.083984 C 45.409789 31.743169 45.902812 28.755621 46 24.439453 A 1.50015 1.50015 0 0 0 46 24.40625 C 46 20.087697 45.50571 17.078675 45.023438 14.695312 C 44.512192 11.927074 42.175378 10.049478 39.595703 9.4726562 A 1.50015 1.50015 0 0 0 39.476562 9.4511719 C 36.0464 8.9689502 30.211115 8.5 23.857422 8.5 z M 20.15625 17.001953 C 20.526656 16.994297 20.909531 17.081906 21.269531 17.285156 L 29.873047 22.146484 C 31.324047 22.966484 31.324047 25.035469 29.873047 25.855469 L 21.269531 30.716797 C 19.830531 31.528797 18.037109 30.500328 18.037109 28.861328 L 18.037109 19.138672 C 18.037109 17.909422 19.045031 17.024922 20.15625 17.001953 z"></path>
+                </svg>
+              </a>
+
             </div>
           </div>
         </div>

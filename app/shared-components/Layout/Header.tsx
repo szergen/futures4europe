@@ -800,12 +800,14 @@ if (typeof useMotionValue().jump !== 'function') {
           {showSearchBar && <SearchComponentV1 />}
           {/* </SearchProvider> */}
         </div>
-        <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
+        <Modal show={isLoadingInProgress} size="md" popup dismissible={false} className='z-[999]'>
           <Modal.Header className="opacity-0" />
           <Modal.Body>
-            <div className="text-center">
-              Loading...
-              <LoadingSpinner />
+            <div className="flex justify-center items-center gap-2 text-center">
+               Loading...
+              <LoadingSpinner 
+               size='sm'
+              />
             </div>
           </Modal.Body>
         </Modal>
