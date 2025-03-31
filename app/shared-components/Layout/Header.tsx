@@ -1,11 +1,14 @@
 'use client';
 import { NavBar } from '@app/shared-components/Layout/NavBar/NavBar';
+import { motion, useMotionValue, animate } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
 import SearchComponentV1 from '../SearchComponentV1/SearchComponentV1';
 import style from './Header.module.css';
 import Link from 'next/link';
 import classNames from 'classnames';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import { useEffect, useState, useMemo, memo, useRef } from 'react';
 import { Avatar, Dropdown, Modal } from 'flowbite-react';
@@ -35,8 +38,9 @@ const Header = () => {
   } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
-  console.log(userDetails);
+  //console.log(userDetails);
   const router = useRouter();
   const handleLogOut = async () => {
     logout();
@@ -47,7 +51,35 @@ const Header = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev); // Toggle dropdown state
   };
-  console.log('debug2->userDetails', userDetails);
+  //console.log('debug2->userDetails', userDetails);
+
+  // 1. A function to determine if the search bar should be visible
+  function useSearchBarVisibility() {
+    const pathname = usePathname(); // Move this inside the hook
+    const [showSearchBar, setShowSearchBar] = useState(false);
+  
+    // Pages where search bar should be hidden
+    const hideSearchBarPaths = [
+      '/',
+      '/home',
+      // Add any other paths where you want to hide the search bar
+    ];
+  
+    // Update effect to run whenever pathname changes
+    useEffect(() => {
+      // Check if current path matches any of the paths where search bar should be hidden
+      const shouldHideSearchBar = hideSearchBarPaths.some(path => path === pathname);
+      setShowSearchBar(!shouldHideSearchBar);
+      
+      // For debugging
+      // console.log('Path changed:', pathname, 'Show search bar:', !shouldHideSearchBar);
+    }, [pathname]); // This dependency ensures the effect runs when pathname changes
+  
+    return showSearchBar;
+  }
+
+  // 2. Const
+  const showSearchBar = useSearchBarVisibility();
 
   // Initialize cookie consent
   useEffect(() => {
@@ -294,9 +326,95 @@ const Header = () => {
     }
   }, [isLoggedIn, router, userDetails?.userTag?.tagPageLink]);
 
+
+  // SCROLL MENU TAGS
+
+  // Replace your scroll position state with motion values
+const x = useMotionValue(0);
+const [containerWidth, setContainerWidth] = useState(0);
+const [contentWidth, setContentWidth] = useState(0);
+const [showLeftArrow, setShowLeftArrow] = useState(false);
+const [showRightArrow, setShowRightArrow] = useState(true);
+
+// Function to scroll with buttons
+const scrollTags = (direction) => {
+  const currentX = x.get();
+  const scrollAmount = 200; 
+  
+  // Calculate new position
+  const newPosition = direction === 'right' 
+    ? currentX - scrollAmount  // Scroll right
+    : currentX + scrollAmount; // Scroll left
+    
+  // Apply constraints but allow slight overscroll on left
+  const minX = -(contentWidth - containerWidth + 80); // Right limit
+  const maxX = 40; // Allow slight overscroll to left (40px)
+  
+  const constrainedX = Math.max(minX, Math.min(maxX, newPosition));
+  
+  // Animate to the new position
+  animate(x, constrainedX, {
+    type: 'spring',
+    stiffness: 300,
+    damping: 30,
+    duration: 0.3
+  });
+  
+  // Update arrow visibility
+  updateArrowVisibility(constrainedX);
+};
+
+// Function to update arrow visibility
+const updateArrowVisibility = (currentX) => {
+  setShowLeftArrow(currentX < -10);
+  setShowRightArrow(currentX > -(contentWidth - containerWidth + 40));
+};
+
+// Update container dimensions
+useEffect(() => {
+  const scrollContainer = scrollContainerRef.current;
+  
+  if (!scrollContainer) return;
+  
+  const updateDimensions = () => {
+    setContainerWidth(scrollContainer.clientWidth);
+    setContentWidth(scrollContainer.scrollWidth + 100);
+    
+    // Update arrow visibility after dimensions change
+    updateArrowVisibility(x.get());
+  };
+  
+  updateDimensions();
+  
+  const resizeObserver = new ResizeObserver(updateDimensions);
+  resizeObserver.observe(scrollContainer);
+  
+  return () => {
+    resizeObserver.disconnect();
+  };
+}, []);
+
+// Listen for x changes to update arrows
+useEffect(() => {
+  const unsubscribe = x.onChange(updateArrowVisibility);
+  return () => unsubscribe();
+}, [x, contentWidth, containerWidth]);
+
+if (typeof useMotionValue().jump !== 'function') {
+  Object.defineProperty(MotionValue.prototype, 'jump', {
+    value: function(to) {
+      animate(this, to, {
+        type: 'tween',
+        duration: 0.3,
+        ease: 'easeOut'
+      });
+    }
+  });
+}
+
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
-      <div className={classNames(style.avatarImageHeader)} ref={dropdownRef}>
+      <div className={classNames('z-90', style.avatarImageHeader)} ref={dropdownRef}>
         <Dropdown
           className="rounded-lg shadow-sm"
           label={
@@ -380,12 +498,12 @@ const Header = () => {
         </Dropdown>
       </div>
     ) : (
-      <>
+      <div className={classNames(style.buttonsContainer)}>
         <div
           className={classNames(style.topbarLogin, 'flex items-center gap-4')}
         >
           <Link href="/dashboard">
-            <p className="font-bold text-base">Login</p>
+            <p className="font-bold text-white text-base">Login</p>
           </Link>
 
           <Link href="/register">
@@ -394,7 +512,7 @@ const Header = () => {
             </div>
           </Link>
         </div>
-      </>
+      </div>
     );
   }, [
     isLoggedIn,
@@ -405,10 +523,15 @@ const Header = () => {
   ]);
 
   return (
-    <>
+    <div className={classNames('relative height-[4rem]', {[style.compactHeaderWrapper]: showSearchBar})}>
       <header
-        className={classNames('flex w-full my-6 px-2 flex-col', style.header)}
-        data-testid={testIds.LAYOUT.HEADER}
+        className={classNames(
+          showSearchBar ? 'relative' : 'absolute',
+          'absolute top-0 flex w-full py-6 px-2 flex-col', 
+          style.header,
+          {[style.homeHeaderWrapper]: !showSearchBar}
+          )}
+          data-testid={testIds.LAYOUT.HEADER}
       >
         <div
           className={classNames(
@@ -427,85 +550,237 @@ const Header = () => {
             <Logo />
           </Link>
 
-          {/* TODO: Temporary Pages */}
-          {/* Page Buttons */}
-          <div
-            className={classNames('relative', style.headerTagContainerOuter)}
-          >
+                    {/* Page Buttons */}
+                    <div className={classNames('relative', style.headerTagContainerOuter)}>
+            
+            {/* Right scroll button */}
+            {showRightArrow && (
+              <button 
+                onClick={() => scrollTags('right')}
+                className={classNames(style.scrollButton, style.scrollButtonRight)}
+                aria-label="Scroll tags right"
+              >
+                <SpriteSvg.ArrowIcon
+                  sizeH={20}
+                  sizeW={20}
+                  viewBox={'0 0 20 20'}
+                  fill={'#fff'}
+                  stroke={'10'}
+                  inline={false}
+                />
+              </button>
+            )}
+            
+            {/* Left scroll button */}
+            {showLeftArrow && (
+              <button 
+                onClick={() => scrollTags('left')}
+                className={classNames(style.scrollButton, style.scrollButtonLeft)}
+                aria-label="Scroll tags left"
+              >
+                <SpriteSvg.ArrowIcon
+                  sizeH={20}
+                  sizeW={20}
+                  viewBox={'0 0 20 20'}
+                  fill={'#fff'}
+                  stroke={'10'}
+                  inline={false}
+                  className={'rotate-180'}
+                />
+              </button>
+            )}
+              
+            {/* Container with overflow for horizontal scrolling */}
             <div
+              ref={scrollContainerRef}
               className={classNames(
                 'flex items-center gap-4',
-                style.headerTagContainer
+                style.headerTagContainer,
+                {[style.showTagContainer]: showSearchBar}
               )}
             >
-              <Tag
-                name="Posts"
-                hardcodedMentions={
-                  pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
-                }
-                tagLine="List of Post Pages"
-                tagPageLink="/pages/post"
-                disableTooltip
-                disableUnderline
-              />
-              <Tag
-                name="Projects"
-                hardcodedMentions={
-                  pageTypeCounts.project !== 0
-                    ? pageTypeCounts.project
-                    : undefined
-                }
-                tagLine="List of Project Info Pages"
-                tagPageLink="/pages/project"
-                disableTooltip
-                disableUnderline
-              />
-              <Tag
-                name="Project Results"
-                hardcodedMentions={
-                  pageTypeCounts.projectResult !== 0
-                    ? pageTypeCounts.projectResult
-                    : undefined
-                }
-                tagLine="List of Project Result Pages"
-                tagPageLink="/pages/project-result"
-                disableTooltip
-                disableUnderline
-              />
-              <Tag
-                name="Events"
-                hardcodedMentions={
-                  pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
-                }
-                tagLine="List of Event Pages"
-                tagPageLink="/pages/event"
-                disableTooltip
-                disableUnderline
-              />
-              <Tag
-                name="Organisations"
-                hardcodedMentions={
-                  pageTypeCounts.organisation !== 0
-                    ? pageTypeCounts.organisation
-                    : undefined
-                }
-                tagLine="List of Organisation Info Pages"
-                tagPageLink="/pages/organisation"
-                disableTooltip
-                disableUnderline
-              />
-              <Tag
-                name="People"
-                hardcodedMentions={
-                  pageTypeCounts.person !== 0
-                    ? pageTypeCounts.person
-                    : undefined
-                }
-                tagLine="List of Person Info Pages"
-                tagPageLink="/pages/person"
-                disableTooltip
-                disableUnderline
-              />
+                <motion.div 
+                  className="flex items-center gap-4"
+                  style={{ x }}
+                  drag="x"
+                  dragConstraints={{
+                    left: -(contentWidth - containerWidth + 80),
+                    right: 60
+                  }}
+                  dragElastic={0.05}
+                  dragMomentum={true}
+                  dragTransition={{
+                    power: 0.4,
+                    timeConstant: 200,
+                    modifyTarget: t => {
+                      // If we're past the right boundary, snap back
+                      if (t < -(contentWidth - containerWidth + 80)) {
+                        return -(contentWidth - containerWidth + 80);
+                      }
+                      // If we're past the left boundary, let it go a bit but not too far
+                      if (t > 60) {
+                        return 60;
+                      }
+                      // Otherwise snap to 50px increments for smooth scrolling
+                      return Math.round(t / 50) * 50;
+                    }
+                  }}
+                  onDragEnd={() => {
+                    updateArrowVisibility(x.get());
+                  }}
+                >
+                {/* Posts Tag with fade effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ 
+                    once: false, 
+                    margin: "-40px", // Trigger fade before fully in view
+                    amount: "some"   // Only need some of the element to be visible
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Tag
+                    name="Posts"
+                    hardcodedMentions={
+                      pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
+                    }
+                    tagLine="List of Post Pages"
+                    tagPageLink="/pages/post"
+                    disableTooltip
+                    disableUnderline
+                    className={classNames(style.headerTag)}
+                  />
+                </motion.div>
+                
+                {/* Projects Tag with fade effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ 
+                    once: false, 
+                    margin: "-40px",
+                    amount: "some" 
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Tag
+                    name="Projects"
+                    hardcodedMentions={
+                      pageTypeCounts.project !== 0
+                        ? pageTypeCounts.project
+                        : undefined
+                    }
+                    tagLine="List of Project Info Pages"
+                    tagPageLink="/pages/project"
+                    disableTooltip
+                    disableUnderline
+                    className={classNames(style.headerTag)}
+                  />
+                </motion.div>
+                
+                {/* Project Results Tag with fade effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ 
+                    once: false, 
+                    margin: "-40px",
+                    amount: "some" 
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Tag
+                    name="Project Results"
+                    hardcodedMentions={
+                      pageTypeCounts.projectResult !== 0
+                        ? pageTypeCounts.projectResult
+                        : undefined
+                    }
+                    tagLine="List of Project Result Pages"
+                    tagPageLink="/pages/project-result"
+                    disableTooltip
+                    disableUnderline
+                    className={classNames(style.headerTag)}
+                  />
+                </motion.div>
+                
+                {/* Events Tag with fade effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ 
+                    once: false, 
+                    margin: "-40px",
+                    amount: "some" 
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Tag
+                    name="Events"
+                    hardcodedMentions={
+                      pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
+                    }
+                    tagLine="List of Event Pages"
+                    tagPageLink="/pages/event"
+                    disableTooltip
+                    disableUnderline
+                    className={classNames(style.headerTag)}
+                  />
+                </motion.div>
+                
+                {/* Organisations Tag with fade effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ 
+                    once: false, 
+                    margin: "-40px",
+                    amount: "some" 
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Tag
+                    name="Organisations"
+                    hardcodedMentions={
+                      pageTypeCounts.organisation !== 0
+                        ? pageTypeCounts.organisation
+                        : undefined
+                    }
+                    tagLine="List of Organisation Info Pages"
+                    tagPageLink="/pages/organisation"
+                    disableTooltip
+                    disableUnderline
+                    className={classNames(style.headerTag)}
+                  />
+                </motion.div>
+                
+                {/* People Tag with fade effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ 
+                    once: false, 
+                    margin: "-40px",
+                    amount: "some" 
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Tag
+                    name="People"
+                    hardcodedMentions={
+                      pageTypeCounts.person !== 0
+                        ? pageTypeCounts.person
+                        : undefined
+                    }
+                    tagLine="List of Person Info Pages"
+                    tagPageLink="/pages/person"
+                    disableTooltip
+                    disableUnderline
+                    className={classNames(style.headerTag)}
+                  />
+                </motion.div>
+              </motion.div>
             </div>
           </div>
 
@@ -522,7 +797,7 @@ const Header = () => {
           className={classNames('relative', style.headerWithSearchContainer)}
         >
           {/* <SearchProvider> */}
-          <SearchComponentV1 />
+          {showSearchBar && <SearchComponentV1 />}
           {/* </SearchProvider> */}
         </div>
         <Modal show={isLoadingInProgress} size="md" popup dismissible={false}>
@@ -535,7 +810,7 @@ const Header = () => {
           </Modal.Body>
         </Modal>
       </header>
-    </>
+    </div>
   );
 };
 
