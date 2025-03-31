@@ -90,7 +90,7 @@ export default function RootLayout({
                     <main className="min-h-[600px]">
                       {children}
                     </main>
-                    <div className="mt-10 sm:mt-20">
+                    <div className={classNames('flex flex-col items-center justify-center', style.footer)}>
                       <Footer />
                     </div>
                   </SearchProvider>
