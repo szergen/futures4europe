@@ -39,6 +39,7 @@ import {
   refetchInfoPages,
   refetchTags,
 } from '@app/utils/refetch-utils';
+import { invalidateProjectPageCache } from '@app/utils/cache-utils';
 
 function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   project = { ...mockProject(pageTitle), ...project };
@@ -558,11 +559,13 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    handleTagCreated();
-    await revalidateDataItem(`/project/${projectData.slug}`);
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // handleTagCreated();
+    // await revalidateDataItem(`/project/${projectData.slug}`);
+
+    await invalidateProjectPageCache(projectData.slug);
 
     setIsSaveInProgress(false);
   };
@@ -906,12 +909,13 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     // #endregion
 
     // #region Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    await revalidateDataItem(`/project/${newProjectInfoSlug}`);
-    handleTagCreated();
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // await revalidateDataItem(`/project/${newProjectInfoSlug}`);
+    // handleTagCreated();
     handleUserDataRefresh();
+    await invalidateProjectPageCache(newProjectInfoSlug);
 
     router.push(`/project/${newProjectInfoSlug}`);
 

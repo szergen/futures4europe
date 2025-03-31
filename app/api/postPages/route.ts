@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getWixClientServerData } from '@app/hooks/useWixClientServer';
 import { RedisCacheService } from '@app/services/redisCache';
+import { referencedItemOptions } from '@app/wixUtils/server-side';
 
-export const revalidate = 0;
+export const revalidate = 0; // Disable caching
 
 export const GET = async (req: NextRequest) => {
-  const cacheKey = 'tags.json';
+  const cacheKey = 'postPages.json';
 
   try {
     const cachedData = await RedisCacheService.getFromCache(cacheKey);
@@ -17,38 +18,39 @@ export const GET = async (req: NextRequest) => {
 
     let allItems = [] as any[];
     let skip = 0;
-    const limit = 1000;
+    const limit = 1000; // Maximum allowed by Wix
     let totalCount = 0;
 
     do {
+      console.log(`Fetching PostPages: skip=${skip}, limit=${limit}`);
       const result = await wixClient.items
         .queryDataItems({
-          dataCollectionId: 'Tags',
-          // referencedItemOptions: referencedItemOptions,
+          dataCollectionId: 'PostPages',
+          referencedItemOptions: referencedItemOptions,
           returnTotalCount: true,
         })
         .skip(skip)
         .limit(limit)
         .find();
+
       allItems = [...allItems, ...result.items];
       totalCount = result.totalCount || 0;
       skip = limit + skip;
     } while (skip < totalCount);
-    // // console.log('allItems', allItems);
 
     await RedisCacheService.saveToCache(cacheKey, allItems, 4 * 60 * 60 * 1000);
     return NextResponse.json(allItems);
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error('Error fetching post pages:', error);
     return NextResponse.json(
-      { message: 'Error fetching tags' },
+      { message: 'Error fetching post pages' },
       { status: 500 }
     );
   }
 };
 
 export const POST = async (req: NextRequest) => {
-  const cacheKey = 'tags.json';
+  const cacheKey = 'postPages.json';
 
   try {
     const wixClient = await getWixClientServerData();
@@ -59,20 +61,21 @@ export const POST = async (req: NextRequest) => {
     let totalCount = 0;
 
     do {
+      console.log(`Fetching PostPages: skip=${skip}, limit=${limit}`);
       const result = await wixClient.items
         .queryDataItems({
-          dataCollectionId: 'Tags',
-          // referencedItemOptions: referencedItemOptions,
+          dataCollectionId: 'PostPages',
+          referencedItemOptions: referencedItemOptions,
           returnTotalCount: true,
         })
         .skip(skip)
         .limit(limit)
         .find();
+
       allItems = [...allItems, ...result.items];
       totalCount = result.totalCount || 0;
       skip = limit + skip;
     } while (skip < totalCount);
-    // // console.log('allItems', allItems);
 
     await RedisCacheService.saveToCache(cacheKey, allItems, 4 * 60 * 60 * 1000);
     return NextResponse.json(
@@ -83,9 +86,7 @@ export const POST = async (req: NextRequest) => {
     console.error('Error updating cache:', error);
     return NextResponse.json(
       { message: 'Failed to update cache' },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 };
