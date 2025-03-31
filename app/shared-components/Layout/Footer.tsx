@@ -30,38 +30,6 @@ const Footer = () => {
 
 
     <footer className="w-full" data-testid={testIds.LAYOUT.FOOTER}>
-      <a
-        href="https://legacy.futures4europe.eu/ourfutures"
-        target="_blank"
-        className="relative block bg-sky-500 isolate overflow-hidden py-16 sm:py-14 lg:py-8 hover:bg-sky-400 transition ease hover:underline text-white"
-      >
-        <div className="flex flex-row items-end justify-start mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="w-24">
-            <SpriteSvg.Bird
-              viewBox="0 0 47.5 47.5"
-              className={classNames('flex')}
-              sizeW={68}
-              sizeH={68}
-              fill={'#e9e9e9'}
-              strokeWidth={0}
-              inline={false}
-            />
-          </div>
-
-          <div className="relative">
-            <h2 className="text-4xl font-bold tracking-tight text-white">
-              Citizen engagement corner
-            </h2>
-            <p className="mt-8 text-2xl font-normal text-white">
-              Share your visions on{' '}
-              <span className="underline">#OurFutures </span>
-            </p>
-            <p className="text-xl text-white">
-              An initiative of the EU Policy Lab
-            </p>
-          </div>
-        </div>
-      </a>
       <div className="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
