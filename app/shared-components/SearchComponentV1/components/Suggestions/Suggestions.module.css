@@ -58,10 +58,6 @@
   font-weight: normal;
 }
 
-.lists {
-  padding-bottom: 32px;
-}
-
 .pageImageContainer {
   width: 80px;
   height: 80px;
@@ -94,4 +90,41 @@
   font-weight: 400;
   position: absolute;
   right: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .tagContainerForSuggestions{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  .suggestionsContainer {
+    width: 90vw!important;
+    flex-direction: column!important;
+    align-items: flex-start!important;
+    margin-top: 20px;
+    padding: 0px;
+  }
+  .suggestionsContainer li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tagLine {
+    padding-left: 0px;
+  }
+  .capitalize{
+    display: none!important;
+  }
+  .quickResultsItem {
+    display: flex;
+    flex-direction: column;
+  }
+  .lists li{
+    padding-bottom: 32px;
+    border-bottom: 1px solid #eee;
+  }
+
 }

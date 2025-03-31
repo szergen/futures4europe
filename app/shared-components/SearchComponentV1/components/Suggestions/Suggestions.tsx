@@ -29,6 +29,7 @@ export type SuggestionsProps = {
   handleSelectedSortTag: (e: any) => void;
   // inputText: string;
   handleScrollForSuggestions: (e: any) => void;
+  isHomePage?: boolean;
 };
 
 const Suggestions: React.FC<SuggestionsProps> = ({
@@ -47,11 +48,23 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   // inputText,
   handleScrollForSuggestions,
   sortTagsSuggestions,
+  isHomePage = false,
 }) => {
   const [highlightedIndexWithType, setHighlightedIndexWithType] = useState({
     index: -1,
     type: '',
   });
+
+  // Conditional styling classes for suggestion container
+  const suggestionsContainerClasses = classNames(
+    'relative z-100',
+    style.suggestionsContainerWrap,
+    {
+      [style.homePageSuggestions]: isHomePage,
+      [style.innerPageSuggestions]: !isHomePage,
+    }
+  );
+
   const [availableSortTags, setAvailableSortTags] = useState([]);
   // const [suggestedIndex, setSuggestedIndex] = useState({
   //   type: '',
@@ -144,9 +157,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
     // Switch between field and tag suggestions indexes
   }, [selectedSuggestionIndex, clickedField]);
 
-  console.log('debg111->pageSuggestions->', pageSuggestions);
-  console.log('debg111->tagSuggestions->', tagSuggestions);
-  console.log('debg111->searchedItems->', searchedItems);
+  // console.log('debg111->pageSuggestions->', pageSuggestions);
+  // console.log('debg111->tagSuggestions->', tagSuggestions);
+  // console.log('debg111->searchedItems->', searchedItems);
 
   const getValidImageUrl = (urls: (string | undefined)[]) => {
     const PLACEHOLDER = '/images/placeholder.webp';
@@ -158,7 +171,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
 
   return (
     <motion.div
-      className={classNames('relative z-10', style.suggestionsContainerWrap)}
+      className={suggestionsContainerClasses}
       initial={{ opacity: 0, scaleY: 0, translateY: '-10px' }}
       animate={{ opacity: 1, scaleY: 1, translateY: '0px' }}
       transition={{
@@ -391,14 +404,14 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                           index === highlightedIndexWithType.index &&
                             highlightedIndexWithType.type === 'page' &&
                             'bg-gray-200',
-                          'flex items-center w-full'
+                            'flex items-center w-full'
                         )}
                         href={`${automaticallyDecidePathPrefixBasedOnPageType(
                           pageSuggestion.item?.pageTypes?.[0]
                         )}${pageSuggestion.item?.slug}`}
                         target="_self"
                       >
-                        <div className="flex items-start w-full">
+                        <div className={classNames(style.quickResultsItem, "flex items-start w-full")}>
                           <div className={style.pageImageContainer}>
                             <Image
                               alt={'Tag Image'}
@@ -442,9 +455,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                               >
                                 {pageSuggestion?.item?.title}
                               </div>
-                              <span className="capitalize">
+                              {/* <span className="capitalize">
                                 [{pageSuggestion?.item?.pageTypes?.[0]?.name}]
-                              </span>
+                              </span> */}
                             </div>
                             {/* Page Content */}
                             <div
