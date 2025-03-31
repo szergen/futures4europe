@@ -4,7 +4,7 @@
   text-align: center; /* Center text */
   
     position: absolute;
-    top: 20%;
+    top: 11rem;
     margin: 0 auto;
     width: 100%;
     z-index: 0;
@@ -24,7 +24,7 @@
 
 @media only screen and (max-width: 960px) {
   .heroContainer {
-    top: 25%;
+   
   }
 }
 
