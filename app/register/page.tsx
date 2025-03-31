@@ -64,17 +64,70 @@ export default function RegisterPage() {
     }
   };
 
+  // TODO @Alex de verificat, am pus o verificare sa nu poti face cont daca pui whitespace 
+  // rezolvat un issue cu un cont care avea un saptiu simplu ca nume
+
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+
+  const validateName = (name, fieldName) => {
+    // Check if name is undefined, null, or not a string
+    if (!name || typeof name !== 'string') {
+      return `${fieldName} is required`;
+    }
+
+    // Check if name is at least 2 characters and not just whitespace
+    if (name.length < 2 || name.trim() === '') {
+      return `${fieldName} must be at least 2 characters and not just whitespace`;
+    }
+
+    // Check if name contains numbers
+    if (/\d/.test(name)) {
+      return `${fieldName} cannot contain numbers`;
+    }
+
+    return '';
+  };
+
   const handleRegister = async (event: SubmitEvent) => {
     event.preventDefault();
+
+    const form = event.currentTarget;
+    // Access form fields properly using HTMLFormElement methods
+    const email = (form.elements.namedItem('email') as HTMLInputElement)?.value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement)?.value;
+    const firstName = (form.elements.namedItem('firstName') as HTMLInputElement)?.value;
+    const lastName = (form.elements.namedItem('lastName') as HTMLInputElement)?.value;
+
+    // Reset previous errors
+    setError('');
+    setFirstNameError('');
+    setLastNameError('');
+
+    // Validate first name
+    const firstNameValidationError = validateName(firstName, 'First name');
+    if (firstNameValidationError) {
+      setFirstNameError(firstNameValidationError);
+      return;
+    }
+
+    // Validate last name
+    const lastNameValidationError = validateName(lastName, 'Last name');
+    if (lastNameValidationError) {
+      setLastNameError(lastNameValidationError);
+      return;
+    }
+
     try {
       setShowAccountCreatedModal(true);
       const email = event?.target?.email?.value;
       const password = event.target?.password?.value;
       const firstName = event.target?.firstName?.value;
       const lastName = event.target?.lastName?.value;
-      console.log('email', email);
-      console.log('password', password);
-      console.log('captchaToken', captchaToken);
+      // console.log('email', email);
+      // console.log('password', password);
+      // console.log('captchaToken', captchaToken);
+
       const response = await wixRegister(email, password, {
         profilePrivacyStatus: 'PUBLIC',
         contactInfo: {
@@ -82,11 +135,11 @@ export default function RegisterPage() {
           lastName: lastName,
         },
       });
-      console.log('response', response);
 
-      // TODO @alex adaugat consent newsletter
+      // console.log('response', response);
       const marketingConsent = await subscribeToNewsletter(email);
-      console.log('marketingConsent', marketingConsent);
+
+      //console.log('marketingConsent', marketingConsent);
       setSubmitState('success');
 
       // #region Wix upload logic
@@ -94,6 +147,7 @@ export default function RegisterPage() {
       const tagExists = tags.find(
         (tag) => tag.name === firstName + ' ' + lastName
       );
+
       if (response && !tagExists) {
         console.log('Tag does not exist, uploading tag');
         tagResult = await uploadTag(firstName + ' ' + lastName);
@@ -117,8 +171,23 @@ export default function RegisterPage() {
             'Email already exists. Please try again with a different mail.'
           );
           break;
+        case '-19988':
+          setError('Password is too short. Please use at least 8 characters.');
+          break;
+        case '-19989':
+          setError(
+            'Password is too weak. Please include a mix of letters, numbers, and special characters.'
+          );
+          break;
         default:
-          setError('Registration failed. Please try again.');
+          // If there's a description in the error, use that
+          if (err?.details?.applicationError?.description) {
+            setError(err.details.applicationError.description);
+          } else if (err?.message) {
+            setError(err.message);
+          } else {
+            setError('Registration failed. Please try again.');
+          }
           break;
       }
       console.error('Registration failed:', err);
@@ -130,7 +199,7 @@ export default function RegisterPage() {
     }
 
     // Add your submission logic here
-    console.log('Submitting email:', email);
+    // console.log('Submitting email:', email);
   };
 
   return (
@@ -151,7 +220,7 @@ export default function RegisterPage() {
                 )}
                 <form
                   onSubmit={handleRegister}
-                  className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl"
+                  className="flex flex-col w-full max-w-[335px] h-full pb-6 text-center bg-white rounded-3xl"
                 >
                   <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
                     Register Account
@@ -207,6 +276,11 @@ export default function RegisterPage() {
                     icon={HiMail}
                     required
                   />
+                  {firstNameError && (
+                    <p className="mb-10 text-red-500 text-sm mt-1 text-start">
+                      {firstNameError}
+                    </p>
+                  )}
                   {/* Last Name */}
                   <Label
                     className="mb-2 text-sm text-start text-grey-900"
@@ -224,8 +298,13 @@ export default function RegisterPage() {
                     icon={HiMail}
                     required
                   />
-                  {/* Password */}
+                  {lastNameError && (
+                    <p className="mb-10 text-red-500 text-sm mt-1 text-start">
+                      {lastNameError}
+                    </p>
+                  )}
 
+                  {/* Password */}
                   <Label
                     className="mb-2 text-sm text-start text-grey-900"
                     htmlFor="password"
@@ -399,15 +478,6 @@ export default function RegisterPage() {
                     </p>
 
                     <div className="flex flex-wrap justify-center">
-                      {/* <Link href="/">
-                        <Button
-                          color="primary"
-                          className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
-                          type="submit"
-                        >
-                          Back to Homepage
-                        </Button>
-                      </Link> */}
                       <Link href="/login">
                         <Button
                           color="primary"
