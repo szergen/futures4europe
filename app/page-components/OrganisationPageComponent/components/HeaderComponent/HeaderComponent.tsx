@@ -48,6 +48,7 @@ export type HeaderComponentProps = {
   handleTagCreated?: () => void;
   setValidationState: (data: any) => void;
   isNewPage?: boolean;
+  requiredFields?: string[]; // new prop
 };
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
@@ -59,6 +60,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   handleTagCreated,
   setValidationState,
   isNewPage,
+  requiredFields = [],
 }) => {
   const validationFunctionForName = (tempName: string) => {
     if (tempName?.length < 2) {
@@ -176,12 +178,12 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             ></span>
           </Typography>
         ) : !isNewPage ? (
+        <div>
           <InputText
             // label="Title"
             placeholder="Enter title"
             value={organisation?.organisationTag?.name}
             className={classNames(
-              // 'personNameTitle',
               style.genericTextArea,
               style.textPostTitleEdit,
               validationFunctionForName(organisation.organisationTag?.name) &&
@@ -205,7 +207,13 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             }
             shouldUpdateValueState={true}
           />
+{requiredFields?.includes('name') && 
+ (!organisation?.organisationTag?.name || organisation?.organisationTag?.name.trim().length < 2) && (
+  <span className="text-red-500 text-xs">* Required</span>
+)}
+        </div>
         ) : (
+        <div>
           <TagPicker
             placeholder="Enter the organisation name"
             tags={tags?.filter(
@@ -224,6 +232,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             newTagType="Organisation name"
             newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
           />
+{requiredFields?.includes('name') && 
+ (!organisation?.organisationTag?.name || organisation?.organisationTag?.name.trim().length < 2) && (
+  <span className="text-red-500 text-xs">* Required</span>
+)}
+        </div>
         )}
         {/* Tagline */}
         {!isEditModeOn ? (
@@ -345,6 +358,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Tag {...organisation.countryTag} />
         ) : (
+        <div>
           <TagPicker
             placeholder={
               // 'Add one or more country tags (where the organisation is based in)'
@@ -366,6 +380,11 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
             showTagTagline={false}
           />
+{requiredFields?.includes('country') && 
+ (!organisation?.countryTag || !organisation?.countryTag?._id) && (
+  <span className="text-red-500 text-xs">* Required</span>
+)}
+        </div>
         )}
       </div>
     </div>
