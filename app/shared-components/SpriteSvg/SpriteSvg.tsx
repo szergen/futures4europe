@@ -441,20 +441,30 @@ const iconPaths: IconPathsType = {
   SearchIcon: (
     <>
       <g>
-        <path d="M11.407,10.421,8.818,7.832a4.276,4.276,0,1,0-.985.985l2.589,2.589a.7.7,0,0,0,.985-.985ZM2.355,5.352a3,3,0,1,1,3,3,3,3,0,0,1-3-3Z"/>
+        <path d="M11.407,10.421,8.818,7.832a4.276,4.276,0,1,0-.985.985l2.589,2.589a.7.7,0,0,0,.985-.985ZM2.355,5.352a3,3,0,1,1,3,3,3,3,0,0,1-3-3Z" />
       </g>
     </>
   ),
-  LupaIcon: ( 
-    <> 
-      <path d="M16.436 15.085l3.94 4.01a1 1 0 01-1.425 1.402l-3.938-4.006a7.5 7.5 0 111.423-1.406zM10.5 16a5.5 5.5 0 100-11 5.5 5.5 0 000 11z" fill="currentColor" fill-rule="evenodd"/>
-    </> 
+  LupaIcon: (
+    <>
+      <path
+        d="M16.436 15.085l3.94 4.01a1 1 0 01-1.425 1.402l-3.938-4.006a7.5 7.5 0 111.423-1.406zM10.5 16a5.5 5.5 0 100-11 5.5 5.5 0 000 11z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </>
   ),
-  ArrowIcon: ( 
-    <> 
-      <path d="M4.5 10H15.5M15.5 10L10.5 5M15.5 10L10.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-    </> 
-  ),  
+  ArrowIcon: (
+    <>
+      <path
+        d="M4.5 10H15.5M15.5 10L10.5 5M15.5 10L10.5 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </>
+  ),
 };
 const SpriteSvg: SpriteSvgType = {};
 
