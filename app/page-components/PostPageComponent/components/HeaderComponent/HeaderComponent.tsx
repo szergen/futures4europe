@@ -150,7 +150,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             )}
           </div>
           {!isEditModeOn ? (
-            <Typography tag="h3" className="text-gray-800 mt-2">
+            <Typography tag="h3" className="text-gray-800 text-sm mt-2">
               {post?.projectResultMedia?.displayName}
             </Typography>
           ) : (
@@ -350,7 +350,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   <Link
                     href={post?.eventRegistration}
                     target="_blank"
-                    className="bg-blue-500 border-none text-white px-4 py-2 text-center font-semibold no-underline inline-block text-sm my-1 cursor-pointer rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out hover:shadow-md hover:textt-white-200"
+                    className="bg-secondary-site/80 border-none text-white px-4 py-2 text-center font-semibold no-underline inline-block text-sm my-1 cursor-pointer rounded-lg hover:bg-secondary-site transition-all duration-300 ease-in-out hover:shadow-md hover:text-white-200"
                   >
                     Register Here
                   </Link>

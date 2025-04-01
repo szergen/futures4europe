@@ -988,21 +988,38 @@ function OrganisationPageComponent({
     isNewPage && handleTagCreated();
   }, []);
 
+  // Save required fields
+
+  const checkRequiredFields = () => {
+    // Check if essential fields are filled
+    return (
+      !organisationData?.organisationTag?.name ||
+      organisationData?.organisationTag?.name.trim().length < 2 ||
+      !organisationData?.countryTag ||
+      !organisationData?.countryTag?._id
+    );
+  };
+
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
+          {/* // Updated save button to be disabled when required fields aren't filled */}
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultOrganisationData(organisationData);
             }}
-            disabled={isEditModeOn && checkValidationErrors()}
+            disabled={
+              isEditModeOn && (checkValidationErrors() || checkRequiredFields())
+            }
             className={classNames(
               'btn btn-save',
-              isEditModeOn && checkValidationErrors() && 'bg-gray-400'
+              isEditModeOn &&
+                (checkValidationErrors() || checkRequiredFields()) &&
+                'bg-gray-400'
             )}
           >
             {!isEditModeOn
@@ -1030,7 +1047,7 @@ function OrganisationPageComponent({
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -1058,6 +1075,7 @@ function OrganisationPageComponent({
         isNewPage={isNewPage}
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
+        requiredFields={['name', 'country']} // Add this new prop
       />
       {/* Organisation Description */}
       {/* <PersonDescriptionComponent
@@ -1097,7 +1115,7 @@ function OrganisationPageComponent({
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('people', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        tags={tags?.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
         tagType="person"
       />
@@ -1107,7 +1125,7 @@ function OrganisationPageComponent({
         tagList={organisationData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        tags={tags?.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={organisationData.methods?.map(
           (method: any) => method?.name
         )}
@@ -1123,7 +1141,7 @@ function OrganisationPageComponent({
         tagList={organisationData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        tags={tags?.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={organisationData.domains?.map(
           (domain: any) => domain?.name
         )}
@@ -1143,7 +1161,7 @@ function OrganisationPageComponent({
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('projects', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        tags={tags?.filter((tag) => tag?.tagType === 'project')}
         handleTagCreated={handleTagCreated}
         tagType="project"
       />
@@ -1153,7 +1171,7 @@ function OrganisationPageComponent({
         tagList={organisationData.memberOrganisations}
         tagListTitle="Members"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOrganisations?.map(
           (domain: any) => domain?.name
         )}
@@ -1169,7 +1187,7 @@ function OrganisationPageComponent({
         tagList={organisationData.memberOfOrganisations}
         tagListTitle="Member of"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOfOrganisations?.map(
           (domain: any) => domain?.name
         )}

@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
 import style from './HelpDropdown.module.css';
-import { HiDocumentSearch } from 'react-icons/hi';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Tag from '@app/shared-components/Tag/Tag';
+import { textAlign, width } from '@mui/system';
 
 const FieldSuggestionTypes = [
   {
@@ -61,7 +61,7 @@ const FieldSuggestionTypes = [
   },
   {
     type: <div className="text-black">future </div>,
-    description: 'pages containing the text "future"',
+    description: 'search by free text in pages containing the text "future"',
   },
   // {
   //   type: <div>activity: [tag name]</div>,
@@ -78,51 +78,121 @@ export type HelpDropdownProps = {
 };
 
 const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
-  return (
-    <motion.div
-      className={classNames('relative z-10')}
-      initial={{ opacity: 0, scaleY: 0, translateY: '-10px' }}
-      animate={{ opacity: 1, scaleY: 1, translateY: '0px' }}
-      transition={{
-        duration: 0.5,
-        ease: 'easeIn',
-        opacity: { delay: 0.3, duration: 0.5 },
-        translateY: { delay: 0.3, duration: 0.4 },
-      }}
-      style={{
-        transformOrigin: 'top',
-      }}
-    >
-      <div className={style.helpDropdownContainer}>
-        <div className={classNames(style.iconSearchTips, 'flex items-center')}>
-          {/* <HiDocumentSearch /> */}
-          <span className="ml-2 text-[14px]">EXAMPLES</span>{' '}
-          {/* The text with margin for spacing */}
-        </div>
+  // Container animation variants
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      scaleY: 0,
+    },
+    visible: {
+      opacity: 1,
+      scaleY: 1,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
+        when: 'beforeChildren',
+        staggerChildren: 0.1,
+      },
+    },
+  };
 
-        <br />
-        {FieldSuggestionTypes.map((field, index) => (
-          <div
-            key={field.description + index}
-            className={classNames(style.textSearchTips, 'flex items-center')}
+  // Item animation variants
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: -10,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  // Description text animation variants
+  const descriptionVariants = {
+    hidden: {
+      opacity: 0,
+      x: -10,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
+        delay: 0.2, // Delay to start after the main item appears
+      },
+    },
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className={classNames('relative z-10 display-block')}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        style={{
+          transformOrigin: 'top',
+          backgroundColor: 'white',
+          borderRadius: '4px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+          width: '45vw',
+          maxWidth: '100%',
+        }}
+      >
+        <div className={style.helpDropdownContainer}>
+          <motion.div
+            className={classNames(style.iconSearchTips, 'flex items-center')}
+            variants={itemVariants}
           >
-            <span
-              key={`${field.description}`}
-              onMouseDown={(e) => {
-                if (index < FieldSuggestionTypes.length - 1) {
-                  handleTagSuggestion(e);
-                }
-              }}
-              className={style.fieldType}
+            <span className="ml-2 text-[14px]"></span>
+            {/* <HiDocumentSearch /> */}
+            <span className="ml-2 text-[14px]"></span>{' '}
+            {/* The text with margin for spacing */}
+          </motion.div>
+
+          <br />
+          {FieldSuggestionTypes.map((field, index) => (
+            <motion.div
+              key={field.description + index}
+              className={classNames(style.textSearchTips, 'flex items-center')}
+              variants={itemVariants}
             >
-              {field.type}
-            </span>
-            -{' '}
-            <span className={style.fieldDescription}>{field.description}</span>
-          </div>
-        ))}
-      </div>
-    </motion.div>
+              <span
+                key={`${field.description}`}
+                onMouseDown={(e) => {
+                  if (index < FieldSuggestionTypes.length - 1) {
+                    handleTagSuggestion(e);
+                  }
+                }}
+                className={style.fieldType}
+              >
+                {field.type}
+              </span>{' '}
+              <motion.span
+                className={style.fieldDescription}
+                variants={descriptionVariants}
+                style={{
+                  color: '#8f8f8f',
+                  // width: '100%',
+                  // overflow: 'hidden',
+                  // textAlign: 'right',
+                  fontSize: '14px',
+                  marginLeft: '4px',
+                }}
+              >
+                {field.description}
+              </motion.span>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

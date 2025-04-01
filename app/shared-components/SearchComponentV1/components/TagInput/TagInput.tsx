@@ -14,14 +14,20 @@ import style from './TagInput.module.css';
 import classNames from 'classnames';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 // import SearchedItems from '../SearchedItems/SearchedItems';
 
 export type TagInputProps = {
   initialData: InitialData;
   filteredData: InitialData;
+  isHomePage: boolean;
 };
 
-const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
+const TagInput: React.FC<TagInputProps> = ({
+  initialData,
+  filteredData,
+  isHomePage = false,
+}) => {
   const { tagsFetched } = useAuth();
 
   const [input, setInput] = useState('');
@@ -43,6 +49,17 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
       ),
     }));
   };
+
+  // Apply different styles based on isHomePage
+  const searchInputContainerClasses = classNames(style.SearchInputContainer, {
+    [style.homePageSearchInput]: isHomePage,
+    [style.innerPageSearchInput]: !isHomePage,
+  });
+
+  const searchButtonClasses = classNames(style.SearchInputButton, {
+    [style.homePageSearchButton]: isHomePage, // Add home page specific styling for button
+    [style.innerPageSearchButton]: !isHomePage, // Add inner page specific styling for button
+  });
 
   // const handleArrowDown = () => {
   //   setSearchState((prevState) => ({
@@ -217,53 +234,53 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   };
 
   // SearchButton handler function the same as Enter key
-  // const handleSearchButton = () => {
-  //   if (searchState.selectedSuggestionIndex < 0) {
-  //     setSearchState((prevState) => ({
-  //       ...prevState,
-  //       showSuggestions: false,
-  //       showHelp: false,
-  //       showResults: true,
-  //       results: searchState.searchedItems.length ? resultsToShow : [],
-  //       searchedItems: input
-  //         ? [
-  //             ...searchState.searchedItems,
-  //             { searchItem: input, searchItemType: 'text' },
-  //           ]
-  //         : [...searchState.searchedItems],
-  //       filteredData: {
-  //         pages: resultsToShow,
-  //         tags: initialData.tags,
-  //         assignments: initialData.assignments,
-  //         sortTags: initialData.sortTags,
-  //       },
-  //       selectedSuggestionIndex: -1,
-  //       // selectedSuggestionTag: '',
-  //     }));
-  //     // input[input.length - 1] !== '"' && setInput(input + '"');
-  //     setInput('');
-  //   } else {
-  //     setSearchState((prevState) => ({
-  //       ...prevState,
-  //       showSuggestions: false,
-  //       showHelp: true,
-  //       // showResults: true,
-  //       clickedTag:
-  //         searchState.activeSelection === 'tag'
-  //           ? searchState.selectedSuggestionTag
-  //           : '',
-  //       selectedSuggestionIndex: 0,
-  //       selectedSuggestionTag: '',
-  //       clickedField:
-  //         searchState.activeSelection === 'field'
-  //           ? searchState.selectedSuggestionTag
-  //           : prevState.clickedField,
+  const handleSearchButton = () => {
+    if (searchState.selectedSuggestionIndex < 0) {
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: false,
+        showHelp: false,
+        showResults: true,
+        results: searchState.searchedItems.length ? resultsToShow : [],
+        searchedItems: input
+          ? [
+              ...searchState.searchedItems,
+              { searchItem: input, searchItemType: 'text' },
+            ]
+          : [...searchState.searchedItems],
+        filteredData: {
+          pages: resultsToShow,
+          tags: initialData.tags,
+          assignments: initialData.assignments,
+          sortTags: initialData.sortTags,
+        },
+        selectedSuggestionIndex: -1,
+        // selectedSuggestionTag: '',
+      }));
+      // input[input.length - 1] !== '"' && setInput(input + '"');
+      setInput('');
+    } else {
+      setSearchState((prevState) => ({
+        ...prevState,
+        showSuggestions: false,
+        showHelp: true,
+        // showResults: true,
+        clickedTag:
+          searchState.activeSelection === 'tag'
+            ? searchState.selectedSuggestionTag
+            : '',
+        selectedSuggestionIndex: 0,
+        selectedSuggestionTag: '',
+        clickedField:
+          searchState.activeSelection === 'field'
+            ? searchState.selectedSuggestionTag
+            : prevState.clickedField,
 
-  //       activeSelection: 'tag',
-  //     }));
-  //     setInput('');
-  //   }
-  // };
+        activeSelection: 'tag',
+      }));
+      setInput('');
+    }
+  };
 
   // Input effect
   useEffect(() => {
@@ -594,14 +611,21 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
   // }, [searchState.selectedSuggestionIndex]);
 
   return (
-    <div className={classNames('', style.SearchInputContainer)}>
+    <div className={searchInputContainerClasses}>
       {tagsFetched ? (
         <input
-          className="w-full"
+          className={classNames('w-full', {
+            'text-lg py-3 px-4': isHomePage,
+            'py-2 px-3': !isHomePage, // for other pages
+          })}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search pages by tags or text"
+          placeholder={
+            isHomePage
+              ? 'Search pages, tags, or topics...'
+              : 'Search pages by tags or text'
+          }
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
           disabled={!tagsFetched}
@@ -618,39 +642,19 @@ const TagInput: React.FC<TagInputProps> = ({ initialData, filteredData }) => {
         </div>
       )}
 
-      {/* <button
-        // className={classNames(style.SearchInputButton, 'rounded-md')}
+      <button
+        className={classNames(style.SearchInputButton, '')}
         onMouseDown={handleSearchButton}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={0}
-          stroke="currentColor"
-          className="w-7 h-7"
-        >
-          <g>
-            <path d="M 0 24 L 0 0 L 24 0 L 24 24 Z" fill="transparent"></path>
-            <g transform="translate(4.75 3.6)">
-              <g>
-                <path
-                  d="M 5.56 1.19 C 2.43 1.53 0 4.18 0 7.4 C 0 10.85 2.8 13.65 6.25 13.65 C 9.53 13.65 12.22 11.12 12.48 7.9 M 14.5 15.65 L 10.75 11.9"
-                  fill="transparent"
-                  strokeWidth="1.49996"
-                  stroke="rgb(64,112,244)"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>
-                <path
-                  d="M 12.39 4.74 C 12.294 5.124 11.946 5.4 11.55 5.4 C 11.154 5.4 10.806 5.124 10.71 4.74 L 10.602 4.308 C 10.518 3.984 10.266 3.732 9.942 3.648 L 9.51 3.54 C 9.126 3.444 8.85 3.096 8.85 2.7 C 8.85 2.304 9.126 1.956 9.51 1.86 L 9.942 1.752 C 10.266 1.668 10.518 1.416 10.602 1.092 L 10.71 0.66 C 10.806 0.276 11.154 0 11.55 0 C 11.946 0 12.294 0.276 12.39 0.66 L 12.498 1.092 C 12.582 1.416 12.834 1.668 13.158 1.752 L 13.59 1.86 C 13.974 1.956 14.25 2.304 14.25 2.7 C 14.25 3.096 13.974 3.444 13.59 3.54 L 13.158 3.648 C 12.834 3.732 12.582 3.984 12.498 4.308 Z"
-                  fill="rgb(64,112,244)"
-                ></path>
-              </g>
-            </g>
-          </g>
-        </svg>
-      </button> */}
+        <SpriteSvg.SearchIcon
+          sizeH={isHomePage ? 28 : 24}
+          sizeW={isHomePage ? 28 : 24}
+          viewBox={'0 -1 14 14'}
+          fill={'#fff'}
+          stroke={'0'}
+          inline={false}
+        />
+      </button>
     </div>
   );
 };

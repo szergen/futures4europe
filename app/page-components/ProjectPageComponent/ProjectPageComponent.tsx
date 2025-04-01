@@ -991,7 +991,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -1056,7 +1056,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         tagList={projectData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        tags={tags?.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={projectData.methods?.map((method: any) => method?.name)}
         updatePostData={(value) =>
           updateProjectDataOnKeyValue('methods', value)
@@ -1070,7 +1070,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         tagList={projectData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        tags={tags?.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={projectData.domains?.map((domain: any) => domain?.name)}
         updatePostData={(value) =>
           updateProjectDataOnKeyValue('domains', value)
@@ -1084,7 +1084,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         tagList={projectData.coordinators}
         tagListTitle="Coordinators"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        tags={tags?.filter((tag) => tag?.tagType === 'person')}
         selectedValues={projectData.coordinators?.map(
           (coordinator: any) => coordinator?.name
         )}
@@ -1100,7 +1100,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         tagList={projectData.participants}
         tagListTitle="Participants"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        tags={tags?.filter((tag) => tag?.tagType === 'person')}
         selectedValues={projectData.participants?.map(
           (participant: any) => participant?.name
         )}
@@ -1120,7 +1120,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
         updatePersonDataAffiliations={(value) =>
           updateProjectDataOnKeyValue('organisations', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         handleTagCreated={handleTagCreated}
         tagType="organisation"
       />

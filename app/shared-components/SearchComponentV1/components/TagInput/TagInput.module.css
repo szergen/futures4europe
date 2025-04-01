@@ -29,14 +29,52 @@
 
 .SearchInputButton {
   margin-left: var(--w-space-m);
-  background: var(--color-background-body);
-  box-shadow: 0 3px 6px 0px var(--color-background-brand-tag);
-  width: 40px;
-  height: 40px;
   text-align: center;
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
-  border-radius: var(--p-border-radius-400);
+
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  height: 44px;
+  width: 44px;
+  background: var(--primary-secondary);
+  border-radius: 0px 60px 60px 0px;
+}
+
+.homePageSearchInput {
+  width: 100%;
+}
+.innerPageSearchInput {
+
+}
+
+.multiRowSearchInput {
+  border-radius: 10px !important;
+}
+
+.multiRowSearchInput input {
+  border-radius: 10px 0 0 10px !important;
+}
+
+.multiRowSearchInput button {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+/* In SearchComponentV1.module.css */
+.multiRowContainer {
+  border-radius: 10px !important;
+}
+
+.multiRowContainer .searchedItemsContainer {
+  border-radius: 10px 10px 0 0 !important;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .SearchInputButton {
+    border-radius: var(--p-border-radius-tag);
+  }
 }

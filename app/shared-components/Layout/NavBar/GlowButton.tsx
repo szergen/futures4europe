@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, ReactNode } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import chroma from 'chroma-js';
 import style from '../Header.module.css';
@@ -34,8 +34,8 @@ const GlowButton = ({ children }) => {
         .trim();
 
       // Set fallback values if they are undefined or empty
-      glowStart = glowStart || '#B000E8';
-      glowEnd = glowEnd || '#009FFD';
+      glowStart = glowStart || '#cc64c8';
+      glowEnd = glowEnd || '#cc64c8';
 
       // Ensure the colors are valid before passing to chroma.mix
       if (chroma.valid(glowStart) && chroma.valid(glowEnd)) {

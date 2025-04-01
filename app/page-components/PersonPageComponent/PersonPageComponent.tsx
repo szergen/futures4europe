@@ -1161,7 +1161,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -1209,7 +1209,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         updatePersonDataAffiliations={(value) =>
           updatePersonDataOnKeyValue('currentAfiliations', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         handleTagCreated={handleTagCreated}
         tagType="organisation"
       />
@@ -1222,7 +1222,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
           updatePersonDataAffiliations={(value) =>
             updatePersonDataOnKeyValue('formerAfiliations', value)
           }
-          tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+          tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
           handleTagCreated={handleTagCreated}
           tagType="organisation"
         />
@@ -1233,7 +1233,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagListTitle="Foresight Methods"
         placeholder="Add one or more foresight method tags"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        tags={tags?.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={personData.methods?.map((method: any) => method?.name)}
         updatePostData={(value) => updatePersonDataOnKeyValue('methods', value)}
         tagType="foresight method"
@@ -1245,7 +1245,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagListTitle="Domains"
         placeholder="Add one or more domain tags relevant to you"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        tags={tags?.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={personData.domains?.map((domain: any) => domain?.name)}
         updatePostData={(value) => updatePersonDataOnKeyValue('domains', value)}
         tagType="domain"
@@ -1257,7 +1257,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagList={personData.projectsCoordindation}
         tagListTitle="Project Coordination"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        tags={tags?.filter((tag) => tag?.tagType === 'project')}
         selectedValues={personData.projectsCoordindation?.map(
           (project: any) => project?.name
         )}
@@ -1272,7 +1272,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagList={personData.projectsParticipation}
         tagListTitle="Project Participation"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        tags={tags?.filter((tag) => tag?.tagType === 'project')}
         selectedValues={personData.projectsParticipation?.map(
           (project: any) => project?.name
         )}

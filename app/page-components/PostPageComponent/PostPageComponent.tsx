@@ -733,6 +733,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   }, []);
 
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
+  console.log('postdatadata', postData);
 
   return (
     <div className={classNames(style.postContainer)}>
@@ -772,7 +773,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -815,7 +816,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           <section className="post-meta">
             <Typography tag="p" className="text-sm text-gray-400">
               Page creation date:{' '}
-              {formatDate(postData?.updatedDate?.toLocaleString())}
+              {formatDate(postData?.postDate?.toLocaleString())}
             </Typography>
           </section>
         )}
@@ -844,7 +845,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           tagList={postData.projectAuthors}
           tagListTitle="Authors"
           isEditModeOn={isEditModeOn}
-          tags={tags.filter((tag) => tag?.tagType === 'person')}
+          tags={tags?.filter((tag) => tag?.tagType === 'person')}
           selectedValues={postData.projectAuthors?.map(
             (author: any) => author?.name
           )}
@@ -888,7 +889,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
             tagListTitle="Moderators"
             placeholder="Add one or more person tags"
             isEditModeOn={isEditModeOn}
-            tags={tags.filter((tag) => tag?.tagType === 'person')}
+            tags={tags?.filter((tag) => tag?.tagType === 'person')}
             selectedValues={postData.eventModerators?.map(
               (speaker: any) => speaker?.name
             )}
@@ -904,7 +905,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
             tagListTitle="Speakers"
             placeholder="Add one or more person tags"
             isEditModeOn={isEditModeOn}
-            tags={tags.filter((tag) => tag?.tagType === 'person')}
+            tags={tags?.filter((tag) => tag?.tagType === 'person')}
             selectedValues={postData.eventSpeakers?.map(
               (speaker: any) => speaker?.name
             )}
@@ -927,7 +928,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           }
           placeholder="Add one or more person tags relevant to your post"
           isEditModeOn={isEditModeOn}
-          tags={tags.filter((tag) => tag?.tagType === 'person')}
+          tags={tags?.filter((tag) => tag?.tagType === 'person')}
           selectedValues={postData.people?.map((person: any) => person?.name)}
           updatePostData={(value) =>
             updatePostDataBasedOnKeyValue('people', value)
@@ -944,7 +945,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         tagListTitle="Foresight Methods"
         placeholder="Add one or more foresight method tags relevant to your post"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        tags={tags?.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={postData.foreSightMethods?.map(
           (method: any) => method?.name
         )}
@@ -960,7 +961,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         tagListTitle="Domains"
         placeholder="Add one or more domain tags relevant to your post"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        tags={tags?.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={postData.domains?.map((domain: any) => domain?.name)}
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('domains', value)
@@ -974,7 +975,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         tagListTitle="Project"
         placeholder="Add one or more project tags relevant to your post"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        tags={tags?.filter((tag) => tag?.tagType === 'project')}
         selectedValues={postData.project?.map((project: any) => project?.name)}
         updatePostData={(value) =>
           updatePostDataBasedOnKeyValue('project', value)
@@ -992,7 +993,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
         }
         placeholder="Add one or more organisation tags relevant to your post"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={postData.organisation?.map(
           (organisation: any) => organisation?.name
         )}

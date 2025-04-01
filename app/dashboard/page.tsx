@@ -80,6 +80,7 @@ export default function Dashboard() {
 
     if (!userDetails?.userTag) {
       setIsLoadingPersonInfo(true);
+      console.log('User details:', userDetails?.userTag);
     }
 
     if (userDetails) {
@@ -140,7 +141,7 @@ export default function Dashboard() {
               'mb-10',
               'p-8',
               'bg-alertLight-site',
-              personInfoPageLink && 'bg-gray-100'
+              personInfoPageLink && 'bg-gray-200'
             )}
           >
             {/* Admin Controls */}

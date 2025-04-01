@@ -12,7 +12,7 @@ import {
   Alert,
   Modal,
 } from 'flowbite-react';
-import { HiMail, HiKey, HiInformationCircle } from 'react-icons/hi';
+import { HiMail, HiInformationCircle } from 'react-icons/hi';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Link from 'next/link';
 import { triggerForgotPasswordMail } from '@app/wixUtils/client-side';
