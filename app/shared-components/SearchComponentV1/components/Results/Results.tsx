@@ -80,7 +80,6 @@ const Results: React.FC<ResultsProps> = ({ results, searchedItems }) => {
                 href={`${automaticallyDecidePathPrefixBasedOnPageType(
                   resultItem?.pageTypes?.[0]?.name
                 )}${resultItem.slug}`}
-                target="_blank"
               >
                 <MiniPagePost
                   {...getPropsForMiniPagesListItemPost(resultItem)}
