@@ -25,27 +25,34 @@ const TagsList = ({
   disablePopularityHover = false,
   shouldLinkToMentions,
 }: TagsListProps) => {
-  const { tags: allTags, tagsFetched: tagsLoading } = useAuth();
+  const { tags: allTags, tagsFetched } = useAuth();
+
+  // Fixed logic: tagsLoading is the opposite of tagsFetched
+  const tagsLoading = !tagsFetched;
 
   if (tagType) {
+    // Filter tags by tagType
+    const filteredTags =
+      allTags?.filter((tag) => tag.tagType === tagType) || [];
+
+    // Apply limit and offset
+    const limitedTags = filteredTags.slice(offset, offset + limit);
+
     return (
       <div>
         {title && (
           <h2 className="mb-4">
-            {title} ({!tagsLoading ? '...' : allTags.length})
+            {title} ({filteredTags.length || 0})
           </h2>
         )}
         <div className="flex flex-wrap gap-2">
-          {!tagsLoading ? (
-            <>
-              {Array.from({ length: limit }).map((_, idx) => (
+          {tagsLoading
+            ? // Show skeletons while loading
+              Array.from({ length: limit }).map((_, idx) => (
                 <TagSkeleton key={idx} />
-              ))}
-            </>
-          ) : (
-            allTags
-              ?.filter((tag) => tag.tagType === tagType)
-              ?.map((tag, idx) =>
+              ))
+            : // Show actual tags when loaded
+              limitedTags.map((tag, idx) =>
                 tag && tag.name ? (
                   <Tag
                     key={`${tag._id || tag.id || idx}`}
@@ -63,31 +70,34 @@ const TagsList = ({
                     tagType={tag.tagType}
                   />
                 ) : null
-              )
-          )}
+              )}
         </div>
       </div>
     );
   }
 
+  // For infoPageType filter
+  const filteredTags =
+    allTags?.filter((tag) => tag.tagType === infoPageType) || [];
+
+  // Apply limit and offset
+  const limitedTags = filteredTags.slice(offset, offset + limit);
+
   return (
     <div>
       {title && (
         <h2 className="mb-4">
-          {title} ({!tagsLoading ? '...' : allTags.length})
+          {title} ({filteredTags.length || 0})
         </h2>
       )}
       <div className="flex flex-wrap gap-2">
-        {!tagsLoading ? (
-          <>
-            {Array.from({ length: limit }).map((_, idx) => (
+        {tagsLoading
+          ? // Show skeletons while loading
+            Array.from({ length: limit }).map((_, idx) => (
               <TagSkeleton key={idx} />
-            ))}
-          </>
-        ) : (
-          allTags
-            ?.filter((tag) => tag.tagType === infoPageType)
-            ?.map((tag, idx) => (
+            ))
+          : // Show actual tags when loaded
+            limitedTags.map((tag, idx) => (
               <Tag
                 key={`${tag._id || idx}`}
                 name={tag.name}
@@ -98,8 +108,7 @@ const TagsList = ({
                 tagType={tag.tagType}
                 // mentions={tag.popularity}
               />
-            ))
-        )}
+            ))}
       </div>
     </div>
   );

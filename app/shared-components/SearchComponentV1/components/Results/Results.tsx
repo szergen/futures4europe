@@ -78,7 +78,7 @@ const Results: React.FC<ResultsProps> = ({ results, searchedItems }) => {
               <Link
                 key={`${resultItem?.title}-${resultItem?._id || index}`}
                 href={`${automaticallyDecidePathPrefixBasedOnPageType(
-                  resultItem?.pageTypes?.[0]
+                  resultItem?.pageTypes?.[0]?.name
                 )}${resultItem.slug}`}
                 target="_blank"
               >

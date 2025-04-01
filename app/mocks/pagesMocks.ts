@@ -7,8 +7,7 @@ const mockPost = (pageTitle: string) => {
       start: '2021-10-10',
       end: '2021-10-12',
     },
-    registrationLink:
-      'https://futures-garden-human-perception-identity.eventbrite.de',
+    registrationLink: ' ',
     postDate: '2021-10-09',
     subtitle:
       'Deep-Learning and HPC to Boost Biomedical Applications for Health',

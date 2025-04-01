@@ -28,7 +28,6 @@ const ImageCropper = ({ image, onCrop, onCancel }: ImageCropperProps) => {
         <div className="mb-4">
           <h2 className="text-xl font-semibold">Crop Profile Image</h2>
         </div>
-
         <div className="h-[400px] mb-4">
           <Cropper
             src={image}

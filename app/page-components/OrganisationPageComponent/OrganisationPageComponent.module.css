@@ -105,3 +105,16 @@
     align-items: center;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .personHeader { 
+    flex-direction: column;
+    padding: 0px var(--w-space-s);
+  }
+  .preHeader {
+    flex-direction: column;
+  }
+  .personContainer {
+    padding: 0 var(--w-space-l);
+  }
+}

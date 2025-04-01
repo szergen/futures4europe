@@ -48,6 +48,7 @@ export type HeaderComponentProps = {
   handleTagCreated?: () => void;
   setValidationState: (data: any) => void;
   isNewPage?: boolean;
+  requiredFields?: string[]; // new prop
 };
 
 const HeaderComponent: React.FC<HeaderComponentProps> = ({
@@ -59,6 +60,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
   handleTagCreated,
   setValidationState,
   isNewPage,
+  requiredFields = [],
 }) => {
   const validationFunctionForName = (tempName: string) => {
     if (tempName?.length < 2) {
@@ -176,54 +178,67 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             ></span>
           </Typography>
         ) : !isNewPage ? (
-          <InputText
-            // label="Title"
-            placeholder="Enter title"
-            value={organisation?.organisationTag?.name}
-            className={classNames(
-              // 'personNameTitle',
-              style.genericTextArea,
-              style.textPostTitleEdit,
-              validationFunctionForName(organisation.organisationTag?.name) &&
-                style.InputRequired
-            )}
-            onChange={(e) =>
-              updateOrganisationData({
-                ...organisation,
-                title: e?.target?.value,
-                organisationTag: {
-                  ...organisation?.organisationTag,
-                  name: e?.target?.value,
-                },
-              })
-            }
-            validate={validationFunctionForName}
-            setValidationState={
-              setValidationState
-                ? (value) => setValidationState({ title: value })
-                : undefined
-            }
-            shouldUpdateValueState={true}
-          />
+          <div>
+            <InputText
+              // label="Title"
+              placeholder="Enter title"
+              value={organisation?.organisationTag?.name}
+              className={classNames(
+                style.genericTextArea,
+                style.textPostTitleEdit,
+                validationFunctionForName(organisation.organisationTag?.name) &&
+                  style.InputRequired
+              )}
+              onChange={(e) =>
+                updateOrganisationData({
+                  ...organisation,
+                  title: e?.target?.value,
+                  organisationTag: {
+                    ...organisation?.organisationTag,
+                    name: e?.target?.value,
+                  },
+                })
+              }
+              validate={validationFunctionForName}
+              setValidationState={
+                setValidationState
+                  ? (value) => setValidationState({ title: value })
+                  : undefined
+              }
+              shouldUpdateValueState={true}
+            />
+            {requiredFields?.includes('name') &&
+              (!organisation?.organisationTag?.name ||
+                organisation?.organisationTag?.name.trim().length < 2) && (
+                <span className="text-red-500 text-xs">* Required</span>
+              )}
+          </div>
         ) : (
-          <TagPicker
-            placeholder="Enter the organisation name"
-            tags={tags?.filter(
-              (tag) =>
-                tag.tagType === 'organisation' &&
-                !tag?.tagPageLink &&
-                !tag?.masterTag
-            )}
-            className="relative"
-            updatePostData={(value) =>
-              updateOrganisationDataOnKeyValue('organisationTag', value)
-            }
-            tagType="organisation"
-            onTagCreated={handleTagCreated}
-            newTagHeader="Create a new organisation"
-            newTagType="Organisation name"
-            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
-          />
+          <div>
+            <TagPicker
+              placeholder="Enter the organisation name"
+              tags={tags?.filter(
+                (tag) =>
+                  tag.tagType === 'organisation' &&
+                  !tag?.tagPageLink &&
+                  !tag?.masterTag
+              )}
+              className="relative"
+              updatePostData={(value) =>
+                updateOrganisationDataOnKeyValue('organisationTag', value)
+              }
+              tagType="organisation"
+              onTagCreated={handleTagCreated}
+              newTagHeader="Create a new organisation"
+              newTagType="Organisation name"
+              newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+            />
+            {requiredFields?.includes('name') &&
+              (!organisation?.organisationTag?.name ||
+                organisation?.organisationTag?.name.trim().length < 2) && (
+                <span className="text-red-500 text-xs">* Required</span>
+              )}
+          </div>
         )}
         {/* Tagline */}
         {!isEditModeOn ? (
@@ -345,27 +360,33 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
         {!isEditModeOn ? (
           <Tag {...organisation.countryTag} />
         ) : (
-          <TagPicker
-            placeholder={
-              // 'Add one or more country tags (where the organisation is based in)'
-              'Add the country tag (where the organisation is based in)'
-            }
-            tags={tags?.filter(
-              (tag) => tag?.tagType === 'country' && !tag?.masterTag
-            )}
-            className="relative"
-            selectedValue={organisation?.countryTag?.name || undefined}
-            updatePostData={(value) =>
-              updateOrganisationDataOnKeyValue('countryTag', value)
-            }
-            tagType="country"
-            showCreateTagButton={false}
-            onTagCreated={handleTagCreated}
-            newTagHeader="Create a new country tag"
-            newTagType="Country name"
-            newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
-            showTagTagline={false}
-          />
+          <div>
+            <TagPicker
+              placeholder={
+                // 'Add one or more country tags (where the organisation is based in)'
+                'Add the country tag (where the organisation is based in)'
+              }
+              tags={tags?.filter(
+                (tag) => tag?.tagType === 'country' && !tag?.masterTag
+              )}
+              className="relative"
+              selectedValue={organisation?.countryTag?.name || undefined}
+              updatePostData={(value) =>
+                updateOrganisationDataOnKeyValue('countryTag', value)
+              }
+              tagType="country"
+              showCreateTagButton={false}
+              onTagCreated={handleTagCreated}
+              newTagHeader="Create a new country tag"
+              newTagType="Country name"
+              newTagTagline="Enter a tagline (slogan, acronym, English translation, ...)"
+              showTagTagline={false}
+            />
+            {requiredFields?.includes('country') &&
+              (!organisation?.countryTag || !organisation?.countryTag?._id) && (
+                <span className="text-red-500 text-xs">* Required</span>
+              )}
+          </div>
         )}
       </div>
     </div>

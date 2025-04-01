@@ -1,8 +1,19 @@
 .heroTitle {
-  color: black;
+  color: var(--primary-white);
 }
 
 .resultsContainer {
-  width: 800px;
+  width: 100%;
+  max-width: var(--p-breakpoints-base);
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .heroTitle { 
+      color: var(--primary-white);
+      font-size: var(--w-font-size-display-heading);
+      margin: 0px;
+  }
+
 }

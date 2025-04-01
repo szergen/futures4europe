@@ -139,3 +139,10 @@
 .socialIcons svg {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 768px) {
+  .personHeader { 
+    flex-direction: column;
+    padding: 0px var(--w-space-s);
+  }
+}

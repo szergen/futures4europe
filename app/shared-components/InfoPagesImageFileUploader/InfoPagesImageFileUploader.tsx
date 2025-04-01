@@ -72,6 +72,8 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
 
     if (!file) return;
 
+    if (!file) return;
+
     // Create a unique identifier for the file
     const fileIdentifier = `${file.name}-${file.size}-${file.lastModified}`;
 
@@ -87,7 +89,6 @@ const InfoPagesImageFileUploader: React.FC<FileUploaderProps> = ({
 
     // Update lastFileRef with current file
     lastFileRef.current = fileIdentifier;
-
     if (file.size > 5 * 1024 * 1024) {
       setIsValidState(false);
       setError('File size exceeds the limit of 5MB.');

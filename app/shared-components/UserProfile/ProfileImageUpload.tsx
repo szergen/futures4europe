@@ -32,7 +32,6 @@ const ProfileImageUpload = ({
     const response = await fetch(croppedImage);
     const blob = await response.blob();
     const file = new File([blob], 'profile-image.jpg', { type: 'image/jpeg' });
-
     await onImageUpdate(file);
     setShowCropper(false);
     setSelectedImage(null);

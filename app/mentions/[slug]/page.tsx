@@ -88,8 +88,8 @@ export default async function Pages({ params }: any) {
 
   return (
     <div className={classNames('w-full')}>
-      <Hero subtitle={`sorted by published dates`}>
-        <div className="flex justify-center">
+      <Hero subtitle={`sorted by publishing date`}>
+        <div className="flex justify-center items-center">
           <h1
             className={classNames(
               'text-4xl',

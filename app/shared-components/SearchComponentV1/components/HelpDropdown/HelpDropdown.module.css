@@ -8,9 +8,9 @@
   color: var(--color-background-stronger);
   border-top: none;
   z-index: 1;
-  /* max-width: 640px; */
+  top: 10px;
   margin: 0 auto;
-  width: 100%;
+  width: 45vw!important;
   border-radius: 14px;
   box-shadow: 0px 10px 14px 4px #80808024;
   border: 1px solid #e0e0e0b0;
@@ -38,7 +38,19 @@
 }
 
 .fieldDescription {
-  font-size: 18px;
-  color: #555;
+  font-size: 14px;
+  color: #000;
   font-weight: 400;
+}
+
+@media only screen and (max-width: 768px) {
+  .helpDropdownContainer {
+    width: 93vw!important;
+    z-index: 999;
+  }
+  .textSearchTips {
+    flex-flow: column;
+    align-items: start;
+  }
+
 }

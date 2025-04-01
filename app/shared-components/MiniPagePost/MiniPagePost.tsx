@@ -318,7 +318,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
               }))}
               isEditModeOn={false} // Assuming you don't want to edit this in MiniPagePost
               tagListTitle=""
-              tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+              tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
               tagType="organisation"
             />
           )}
