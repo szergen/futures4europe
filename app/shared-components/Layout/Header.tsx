@@ -57,24 +57,26 @@ const Header = () => {
   function useSearchBarVisibility() {
     const pathname = usePathname(); // Move this inside the hook
     const [showSearchBar, setShowSearchBar] = useState(false);
-  
+
     // Pages where search bar should be hidden
     const hideSearchBarPaths = [
       '/',
       '/home',
       // Add any other paths where you want to hide the search bar
     ];
-  
+
     // Update effect to run whenever pathname changes
     useEffect(() => {
       // Check if current path matches any of the paths where search bar should be hidden
-      const shouldHideSearchBar = hideSearchBarPaths.some(path => path === pathname);
+      const shouldHideSearchBar = hideSearchBarPaths.some(
+        (path) => path === pathname
+      );
       setShowSearchBar(!shouldHideSearchBar);
-      
+
       // For debugging
       // console.log('Path changed:', pathname, 'Show search bar:', !shouldHideSearchBar);
     }, [pathname]); // This dependency ensures the effect runs when pathname changes
-  
+
     return showSearchBar;
   }
 
@@ -326,95 +328,98 @@ const Header = () => {
     }
   }, [isLoggedIn, router, userDetails?.userTag?.tagPageLink]);
 
-
   // SCROLL MENU TAGS
 
   // Replace your scroll position state with motion values
-const x = useMotionValue(0);
-const [containerWidth, setContainerWidth] = useState(0);
-const [contentWidth, setContentWidth] = useState(0);
-const [showLeftArrow, setShowLeftArrow] = useState(false);
-const [showRightArrow, setShowRightArrow] = useState(true);
+  const x = useMotionValue(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [contentWidth, setContentWidth] = useState(0);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
 
-// Function to scroll with buttons
-const scrollTags = (direction) => {
-  const currentX = x.get();
-  const scrollAmount = 200; 
-  
-  // Calculate new position
-  const newPosition = direction === 'right' 
-    ? currentX - scrollAmount  // Scroll right
-    : currentX + scrollAmount; // Scroll left
-    
-  // Apply constraints but allow slight overscroll on left
-  const minX = -(contentWidth - containerWidth + 80); // Right limit
-  const maxX = 40; // Allow slight overscroll to left (40px)
-  
-  const constrainedX = Math.max(minX, Math.min(maxX, newPosition));
-  
-  // Animate to the new position
-  animate(x, constrainedX, {
-    type: 'spring',
-    stiffness: 300,
-    damping: 30,
-    duration: 0.3
-  });
-  
-  // Update arrow visibility
-  updateArrowVisibility(constrainedX);
-};
+  // Function to scroll with buttons
+  const scrollTags = (direction) => {
+    const currentX = x.get();
+    const scrollAmount = 200;
 
-// Function to update arrow visibility
-const updateArrowVisibility = (currentX) => {
-  setShowLeftArrow(currentX < -10);
-  setShowRightArrow(currentX > -(contentWidth - containerWidth + 40));
-};
+    // Calculate new position
+    const newPosition =
+      direction === 'right'
+        ? currentX - scrollAmount // Scroll right
+        : currentX + scrollAmount; // Scroll left
 
-// Update container dimensions
-useEffect(() => {
-  const scrollContainer = scrollContainerRef.current;
-  
-  if (!scrollContainer) return;
-  
-  const updateDimensions = () => {
-    setContainerWidth(scrollContainer.clientWidth);
-    setContentWidth(scrollContainer.scrollWidth + 100);
-    
-    // Update arrow visibility after dimensions change
-    updateArrowVisibility(x.get());
+    // Apply constraints but allow slight overscroll on left
+    const minX = -(contentWidth - containerWidth + 80); // Right limit
+    const maxX = 40; // Allow slight overscroll to left (40px)
+
+    const constrainedX = Math.max(minX, Math.min(maxX, newPosition));
+
+    // Animate to the new position
+    animate(x, constrainedX, {
+      type: 'spring',
+      stiffness: 300,
+      damping: 30,
+      duration: 0.3,
+    });
+
+    // Update arrow visibility
+    updateArrowVisibility(constrainedX);
   };
-  
-  updateDimensions();
-  
-  const resizeObserver = new ResizeObserver(updateDimensions);
-  resizeObserver.observe(scrollContainer);
-  
-  return () => {
-    resizeObserver.disconnect();
+
+  // Function to update arrow visibility
+  const updateArrowVisibility = (currentX) => {
+    setShowLeftArrow(currentX < -10);
+    setShowRightArrow(currentX > -(contentWidth - containerWidth + 40));
   };
-}, []);
 
-// Listen for x changes to update arrows
-useEffect(() => {
-  const unsubscribe = x.onChange(updateArrowVisibility);
-  return () => unsubscribe();
-}, [x, contentWidth, containerWidth]);
+  // Update container dimensions
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
 
-if (typeof useMotionValue().jump !== 'function') {
-  Object.defineProperty(MotionValue.prototype, 'jump', {
-    value: function(to) {
-      animate(this, to, {
-        type: 'tween',
-        duration: 0.3,
-        ease: 'easeOut'
-      });
-    }
-  });
-}
+    if (!scrollContainer) return;
+
+    const updateDimensions = () => {
+      setContainerWidth(scrollContainer.clientWidth);
+      setContentWidth(scrollContainer.scrollWidth + 100);
+
+      // Update arrow visibility after dimensions change
+      updateArrowVisibility(x.get());
+    };
+
+    updateDimensions();
+
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    resizeObserver.observe(scrollContainer);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  // Listen for x changes to update arrows
+  useEffect(() => {
+    const unsubscribe = x.onChange(updateArrowVisibility);
+    return () => unsubscribe();
+  }, [x, contentWidth, containerWidth]);
+
+  if (typeof useMotionValue().jump !== 'function') {
+    Object.defineProperty(MotionValue.prototype, 'jump', {
+      value: function (to) {
+        animate(this, to, {
+          type: 'tween',
+          duration: 0.3,
+          ease: 'easeOut',
+        });
+      },
+    });
+  }
 
   const accountSection = useMemo(() => {
     return isLoggedIn ? (
-      <div className={classNames('z-90', style.avatarImageHeader)} ref={dropdownRef}>
+      <div
+        className={classNames('z-90', style.avatarImageHeader)}
+        ref={dropdownRef}
+      >
         <Dropdown
           className="rounded-lg shadow-sm"
           label={
@@ -523,15 +528,19 @@ if (typeof useMotionValue().jump !== 'function') {
   ]);
 
   return (
-    <div className={classNames('relative height-[4rem]', {[style.compactHeaderWrapper]: showSearchBar})}>
+    <div
+      className={classNames('relative height-[4rem]', {
+        [style.compactHeaderWrapper]: showSearchBar,
+      })}
+    >
       <header
         className={classNames(
           showSearchBar ? 'relative' : 'absolute',
-          'absolute top-0 flex w-full py-6 px-2 flex-col', 
+          'absolute top-0 flex w-full py-6 px-2 flex-col',
           style.header,
-          {[style.homeHeaderWrapper]: !showSearchBar}
-          )}
-          data-testid={testIds.LAYOUT.HEADER}
+          { [style.homeHeaderWrapper]: !showSearchBar }
+        )}
+        data-testid={testIds.LAYOUT.HEADER}
       >
         <div
           className={classNames(
@@ -550,14 +559,18 @@ if (typeof useMotionValue().jump !== 'function') {
             <Logo />
           </Link>
 
-                    {/* Page Buttons */}
-                    <div className={classNames('relative', style.headerTagContainerOuter)}>
-            
+          {/* Page Buttons */}
+          <div
+            className={classNames('relative', style.headerTagContainerOuter)}
+          >
             {/* Right scroll button */}
             {showRightArrow && (
-              <button 
+              <button
                 onClick={() => scrollTags('right')}
-                className={classNames(style.scrollButton, style.scrollButtonRight)}
+                className={classNames(
+                  style.scrollButton,
+                  style.scrollButtonRight
+                )}
                 aria-label="Scroll tags right"
               >
                 <SpriteSvg.ArrowIcon
@@ -570,12 +583,15 @@ if (typeof useMotionValue().jump !== 'function') {
                 />
               </button>
             )}
-            
+
             {/* Left scroll button */}
             {showLeftArrow && (
-              <button 
+              <button
                 onClick={() => scrollTags('left')}
-                className={classNames(style.scrollButton, style.scrollButtonLeft)}
+                className={classNames(
+                  style.scrollButton,
+                  style.scrollButtonLeft
+                )}
                 aria-label="Scroll tags left"
               >
                 <SpriteSvg.ArrowIcon
@@ -589,61 +605,63 @@ if (typeof useMotionValue().jump !== 'function') {
                 />
               </button>
             )}
-              
+
             {/* Container with overflow for horizontal scrolling */}
             <div
               ref={scrollContainerRef}
               className={classNames(
                 'flex items-center gap-4',
                 style.headerTagContainer,
-                {[style.showTagContainer]: showSearchBar}
+                { [style.showTagContainer]: showSearchBar }
               )}
             >
-                <motion.div 
-                  className="flex items-center gap-4"
-                  style={{ x }}
-                  drag="x"
-                  dragConstraints={{
-                    left: -(contentWidth - containerWidth + 80),
-                    right: 60
-                  }}
-                  dragElastic={0.05}
-                  dragMomentum={true}
-                  dragTransition={{
-                    power: 0.4,
-                    timeConstant: 200,
-                    modifyTarget: t => {
-                      // If we're past the right boundary, snap back
-                      if (t < -(contentWidth - containerWidth + 80)) {
-                        return -(contentWidth - containerWidth + 80);
-                      }
-                      // If we're past the left boundary, let it go a bit but not too far
-                      if (t > 60) {
-                        return 60;
-                      }
-                      // Otherwise snap to 50px increments for smooth scrolling
-                      return Math.round(t / 50) * 50;
+              <motion.div
+                className="flex items-center gap-4"
+                style={{ x }}
+                drag="x"
+                dragConstraints={{
+                  left: -(contentWidth - containerWidth + 80),
+                  right: 60,
+                }}
+                dragElastic={0.05}
+                dragMomentum={true}
+                dragTransition={{
+                  power: 0.4,
+                  timeConstant: 200,
+                  modifyTarget: (t) => {
+                    // If we're past the right boundary, snap back
+                    if (t < -(contentWidth - containerWidth + 80)) {
+                      return -(contentWidth - containerWidth + 80);
                     }
-                  }}
-                  onDragEnd={() => {
-                    updateArrowVisibility(x.get());
-                  }}
-                >
+                    // If we're past the left boundary, let it go a bit but not too far
+                    if (t > 60) {
+                      return 60;
+                    }
+                    // Otherwise snap to 50px increments for smooth scrolling
+                    return Math.round(t / 50) * 50;
+                  },
+                }}
+                onDragEnd={() => {
+                  updateArrowVisibility(x.get());
+                }}
+              >
                 {/* Posts Tag with fade effect */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ 
-                    once: false, 
-                    margin: "-40px", // Trigger fade before fully in view
-                    amount: "some"   // Only need some of the element to be visible
+                  viewport={{
+                    once: false,
+                    margin: '-40px', // Trigger fade before fully in view
+                    amount: 'some', // Only need some of the element to be visible
                   }}
                   transition={{ duration: 0.3 }}
                 >
                   <Tag
                     name="Posts"
                     hardcodedMentions={
-                      pageTypeCounts.post !== 0 ? pageTypeCounts.post : undefined
+                      pageTypeCounts.post !== 0
+                        ? pageTypeCounts.post
+                        : undefined
                     }
                     tagLine="List of Post Pages"
                     tagPageLink="/pages/post"
@@ -652,15 +670,15 @@ if (typeof useMotionValue().jump !== 'function') {
                     className={classNames(style.headerTag)}
                   />
                 </motion.div>
-                
+
                 {/* Projects Tag with fade effect */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ 
-                    once: false, 
-                    margin: "-40px",
-                    amount: "some" 
+                  viewport={{
+                    once: false,
+                    margin: '-40px',
+                    amount: 'some',
                   }}
                   transition={{ duration: 0.3 }}
                 >
@@ -678,15 +696,15 @@ if (typeof useMotionValue().jump !== 'function') {
                     className={classNames(style.headerTag)}
                   />
                 </motion.div>
-                
+
                 {/* Project Results Tag with fade effect */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ 
-                    once: false, 
-                    margin: "-40px",
-                    amount: "some" 
+                  viewport={{
+                    once: false,
+                    margin: '-40px',
+                    amount: 'some',
                   }}
                   transition={{ duration: 0.3 }}
                 >
@@ -704,22 +722,24 @@ if (typeof useMotionValue().jump !== 'function') {
                     className={classNames(style.headerTag)}
                   />
                 </motion.div>
-                
+
                 {/* Events Tag with fade effect */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ 
-                    once: false, 
-                    margin: "-40px",
-                    amount: "some" 
+                  viewport={{
+                    once: false,
+                    margin: '-40px',
+                    amount: 'some',
                   }}
                   transition={{ duration: 0.3 }}
                 >
                   <Tag
                     name="Events"
                     hardcodedMentions={
-                      pageTypeCounts.event !== 0 ? pageTypeCounts.event : undefined
+                      pageTypeCounts.event !== 0
+                        ? pageTypeCounts.event
+                        : undefined
                     }
                     tagLine="List of Event Pages"
                     tagPageLink="/pages/event"
@@ -728,15 +748,15 @@ if (typeof useMotionValue().jump !== 'function') {
                     className={classNames(style.headerTag)}
                   />
                 </motion.div>
-                
+
                 {/* Organisations Tag with fade effect */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ 
-                    once: false, 
-                    margin: "-40px",
-                    amount: "some" 
+                  viewport={{
+                    once: false,
+                    margin: '-40px',
+                    amount: 'some',
                   }}
                   transition={{ duration: 0.3 }}
                 >
@@ -754,15 +774,15 @@ if (typeof useMotionValue().jump !== 'function') {
                     className={classNames(style.headerTag)}
                   />
                 </motion.div>
-                
+
                 {/* People Tag with fade effect */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ 
-                    once: false, 
-                    margin: "-40px",
-                    amount: "some" 
+                  viewport={{
+                    once: false,
+                    margin: '-40px',
+                    amount: 'some',
                   }}
                   transition={{ duration: 0.3 }}
                 >
@@ -800,14 +820,18 @@ if (typeof useMotionValue().jump !== 'function') {
           {showSearchBar && <SearchComponentV1 />}
           {/* </SearchProvider> */}
         </div>
-        <Modal show={isLoadingInProgress} size="md" popup dismissible={false} className='z-[999]'>
+        <Modal
+          show={isLoadingInProgress}
+          size="md"
+          popup
+          dismissible={false}
+          className="z-[999]"
+        >
           <Modal.Header className="opacity-0" />
           <Modal.Body>
             <div className="flex justify-center items-center gap-2 text-center">
-               Loading...
-              <LoadingSpinner 
-               size='sm'
-              />
+              Loading...
+              <LoadingSpinner size="sm" />
             </div>
           </Modal.Body>
         </Modal>

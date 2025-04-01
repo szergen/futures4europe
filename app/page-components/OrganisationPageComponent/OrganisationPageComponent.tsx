@@ -992,10 +992,12 @@ function OrganisationPageComponent({
 
   const checkRequiredFields = () => {
     // Check if essential fields are filled
-    return !organisationData?.organisationTag?.name || 
-           organisationData?.organisationTag?.name.trim().length < 2 ||
-           !organisationData?.countryTag || 
-           !organisationData?.countryTag?._id;
+    return (
+      !organisationData?.organisationTag?.name ||
+      organisationData?.organisationTag?.name.trim().length < 2 ||
+      !organisationData?.countryTag ||
+      !organisationData?.countryTag?._id
+    );
   };
 
   return (
@@ -1003,26 +1005,29 @@ function OrganisationPageComponent({
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
-
-{/* // Updated save button to be disabled when required fields aren't filled */}
-<button
-  onClick={() => {
-    isEditModeOn && saveOrCreateHandler();
-    setIsEditModeOn(!isEditModeOn);
-    setDefaultOrganisationData(organisationData);
-  }}
-  disabled={isEditModeOn && (checkValidationErrors() || checkRequiredFields())}
-  className={classNames(
-    'btn btn-save',
-    isEditModeOn && (checkValidationErrors() || checkRequiredFields()) && 'bg-gray-400'
-  )}
->
-  {!isEditModeOn
-    ? 'Edit Page'
-    : isNewPage
-    ? 'Publish Page'
-    : 'Save&Publish Changes'}
-</button>
+          {/* // Updated save button to be disabled when required fields aren't filled */}
+          <button
+            onClick={() => {
+              isEditModeOn && saveOrCreateHandler();
+              setIsEditModeOn(!isEditModeOn);
+              setDefaultOrganisationData(organisationData);
+            }}
+            disabled={
+              isEditModeOn && (checkValidationErrors() || checkRequiredFields())
+            }
+            className={classNames(
+              'btn btn-save',
+              isEditModeOn &&
+                (checkValidationErrors() || checkRequiredFields()) &&
+                'bg-gray-400'
+            )}
+          >
+            {!isEditModeOn
+              ? 'Edit Page'
+              : isNewPage
+              ? 'Publish Page'
+              : 'Save&Publish Changes'}
+          </button>
           {isEditModeOn && (
             <button
               onClick={() => {

@@ -734,7 +734,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
 
   const saveOrCreateHandler = isNewPost ? createNewPost : updateDataToServer;
   console.log('postdatadata', postData);
-  
+
   return (
     <div className={classNames(style.postContainer)}>
       {/* Edit buttons */}

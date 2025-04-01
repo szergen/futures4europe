@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import MiniPagesListItemPost from './page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import { getCollectionItemByTitle } from './wixUtils/client-side';
 import TagsList from './page-components/shared-page-components/TagList/TagsList';
-import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg'
-import style from './page.module.css'
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
+import style from './page.module.css';
 import TagsCarousel from './shared-components/Carousel/TagsCarousel';
 import SearchComponentV1 from '@app/shared-components/SearchComponentV1/SearchComponentV1';
 import classNames from 'classnames';
@@ -201,15 +201,25 @@ export const Home = () => {
 
   return (
     <>
-    <div className={classNames('', style.homeHeroContainer)}>
-      <div className={classNames('', style.homeHeroWrapper)}>
-          <div className={classNames('flex mx-auto justify-center relative sm:px-0 py-5 z-1', style.homeHero)}>
-            <div className={classNames('flex flex-col mt-10 max-w-[520px] flex-wrap items-start z-90', style.homeHeroTitle)}>
+      <div className={classNames('', style.homeHeroContainer)}>
+        <div className={classNames('', style.homeHeroWrapper)}>
+          <div
+            className={classNames(
+              'flex mx-auto justify-center relative sm:px-0 py-5 z-1',
+              style.homeHero
+            )}
+          >
+            <div
+              className={classNames(
+                'flex flex-col mt-10 max-w-[520px] flex-wrap items-start z-90',
+                style.homeHeroTitle
+              )}
+            >
               <h1 className="homeTitleh1">The online home of the European</h1>
               <h2 className="homeTitleh2">foresight community</h2>
               <p className="homeSubtitle text-xs">
-                Explore a rich collection of foresight projects, showcase your own
-                work, and participate in upcoming events.
+                Explore a rich collection of foresight projects, showcase your
+                own work, and participate in upcoming events.
               </p>
               {/* Search */}
               <div className={classNames('relative')}>
