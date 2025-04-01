@@ -143,6 +143,74 @@ export default function Dashboard() {
               personInfoPageLink && 'bg-gray-100'
             )}
           >
+            {/* Admin Controls */}
+            <div
+              className={classNames(style.dashboardBoxAlert, 'flex flex-col')}
+            >
+              <div className="flex items-center mb-4">
+                <SpriteSvg.AccountAiIcon
+                  className="text-site-black text-[var(--color-text-icon-error)]"
+                  sizeW={24}
+                  sizeH={24}
+                  viewBox={'0 0 32 32'}
+                  fill={'var(--p-border-radius-800)'}
+                  strokeWidth={0}
+                  inline={false}
+                />
+                <Typography
+                  tag="h2"
+                  className={classNames(style.headingDashboardh1, 'ml-2')}
+                >
+                  Admin Controls
+                </Typography>
+              </div>
+
+              <div className="flex flex-col justify-between">
+                <Typography
+                  tag="p"
+                  className={classNames(
+                    style.boxTextDashboard,
+                    'text-black-site mb-8'
+                  )}
+                >
+                  Admin controls for clearing the cache and warming up the data.
+                </Typography>
+              </div>
+
+              <div className={classNames(style.listDashboard, 'block')}>
+                <Button
+                  size={'md'}
+                  color={'light'}
+                  className={classNames(
+                    style.buttonAddDashboard,
+                    'block border-0 mr-4 hover:bg-gray-300 focus:ring-purple-300'
+                  )}
+                  pill
+                >
+                  <SpriteSvg.EditCloseIcon
+                    sizeH={24}
+                    sizeW={24}
+                    viewBox={'0 -1 32 32'}
+                    strokeWidth={1}
+                  />
+                  <span className="text-lg">Clear cache</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Admin Controls End*/}
+          <div
+            className={classNames(
+              style.dashboardBox,
+              style.dashboardBoxAddWrap,
+              'mt-14',
+              'mb-10',
+              'p-8',
+              'bg-alertLight-site',
+              personInfoPageLink && 'bg-gray-100'
+            )}
+          >
             <div
               className={classNames(style.dashboardBoxAlert, 'flex flex-col')}
             >
