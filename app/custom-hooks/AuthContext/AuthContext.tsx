@@ -148,17 +148,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   // When tags are fetched
   //   console.log('Tags fetched:', tags);
   //   console.log('Total tags count:', tags?.length);
-    
+
   //   // Log unique tag types
   //   const uniqueTagTypes = [...new Set(tags?.map(tag => tag.tagType))];
   //   console.log('Unique tag types:', uniqueTagTypes);
-    
+
   //   // Log project tags specifically
   //   const projectTags = tags?.filter(tag => tag.tagType === 'project');
   //   console.log('Project tags:', projectTags);
   //   console.log('Project tags count:', projectTags?.length);
   // }, [tags]);
-  
+
   useEffect(() => {
     setIsLoadingInProgress(true);
     const fetchTags = async () => {

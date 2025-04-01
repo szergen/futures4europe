@@ -18,33 +18,33 @@ const THEME_COLOR = '#2563EB'; // Projects blue color
 
 // Simplified slide variants without 3D effects
 const slideVariants: Variants = {
-  initial: { 
+  initial: {
     opacity: 0,
     scale: 0.95,
     filter: 'blur(8px)',
-    y: 10
+    y: 10,
   },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     scale: 1,
     filter: 'blur(0px)',
     y: 0,
-    transition: { 
+    transition: {
       duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
-      staggerChildren: 0.07
-    } 
+      staggerChildren: 0.07,
+    },
   },
-  exit: { 
+  exit: {
     opacity: 0,
     scale: 0.94,
     filter: 'blur(8px)',
     y: -10,
-    transition: { 
+    transition: {
       duration: 0.5,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 // Improved row entrance animations without 3D effect
@@ -56,98 +56,98 @@ const rowVariants: Variants = {
     transition: {
       delay: custom * 0.08,
       duration: 0.5,
-      ease: [0.215, 0.61, 0.355, 1] // Improved cubic bezier
-    }
-  })
+      ease: [0.215, 0.61, 0.355, 1], // Improved cubic bezier
+    },
+  }),
 };
 
 // Advanced button hover animations
 const buttonVariants: Variants = {
-  rest: { scale: 1, boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)" },
-  hover: { 
+  rest: { scale: 1, boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.1)' },
+  hover: {
     scale: 1.08,
-    boxShadow: "0px 5px 12px rgba(0, 0, 0, 0.15)",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    transition: { 
-      type: "spring", 
-      stiffness: 400, 
-      damping: 10 
-    }
+    boxShadow: '0px 5px 12px rgba(0, 0, 0, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    transition: {
+      type: 'spring',
+      stiffness: 400,
+      damping: 10,
+    },
   },
-  tap: { 
+  tap: {
     scale: 0.95,
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  }
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+  },
 };
 
 // Enhanced dot indicator variants
 const dotVariants: Variants = {
-  inactive: { 
-    scale: 1, 
-    backgroundColor: "#D1D5DB",
-    boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.05)"
+  inactive: {
+    scale: 1,
+    backgroundColor: '#D1D5DB',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)',
   },
-  active: { 
-    scale: 1.4, 
+  active: {
+    scale: 1.4,
     backgroundColor: THEME_COLOR,
     boxShadow: `0px 2px 4px rgba(37, 99, 235, 0.3)`,
-    transition: { 
-      type: "spring", 
-      stiffness: 400, 
-      damping: 12 
-    }
-  }
+    transition: {
+      type: 'spring',
+      stiffness: 400,
+      damping: 12,
+    },
+  },
 };
 
 // Simple animation for the title button
 const titleButtonVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { 
+    transition: {
       duration: 0.4,
-      ease: "easeOut"
-    }
+      ease: 'easeOut',
+    },
   },
   hover: {
     scale: 1.05,
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 400,
-      damping: 10
-    }
+      damping: 10,
+    },
   },
   tap: {
-    scale: 0.95
-  }
+    scale: 0.95,
+  },
 };
 
 // Modal animation variants - optimized for performance
 const modalVariants: Variants = {
-  hidden: { 
+  hidden: {
     opacity: 0,
     scale: 0.98,
-    y: 10
+    y: 10,
   },
-  visible: { 
+  visible: {
     opacity: 1,
     scale: 1,
     y: 0,
     transition: {
       duration: 0.25, // Faster animation
-      ease: [0.22, 1, 0.36, 1]
-    }
+      ease: [0.22, 1, 0.36, 1],
+    },
   },
-  exit: { 
+  exit: {
     opacity: 0,
     scale: 0.98,
     transition: {
       duration: 0.2, // Faster exit animation
-      ease: "easeOut" // Simpler easing function for better performance
-    }
-  }
+      ease: 'easeOut', // Simpler easing function for better performance
+    },
+  },
 };
 
 const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
@@ -171,11 +171,11 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
     organisations: false,
     persons: false,
     domains: false,
-    methods: false
+    methods: false,
   });
 
   // Refs to preserve tag marquee states
-  const tagRowsRef = useRef<{[key: string]: boolean}>({});
+  const tagRowsRef = useRef<{ [key: string]: boolean }>({});
 
   // Effect to set initial load complete after all loading states are false
   // and to detect any loading state changes
@@ -256,7 +256,11 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
   // Handle navigation to respective pages or open modal with improved animation
   const handleNavigateToPage = (page: string) => {
     // Check if it's any of the pages that should open modal
-    if (['domains', 'methods', 'organisations', 'projects', 'people'].includes(page)) {
+    if (
+      ['domains', 'methods', 'organisations', 'projects', 'people'].includes(
+        page
+      )
+    ) {
       // Use Framer Motion's optimized animation
       let typeToShow = page;
       if (page === 'organisations') typeToShow = 'organisation';
@@ -264,10 +268,10 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
       if (page === 'projects') typeToShow = 'project';
       if (page === 'domains') typeToShow = 'domain';
       if (page === 'methods') typeToShow = 'foresight method';
-      
+
       // Set the modal type first to ensure content is ready
       setModalType(typeToShow);
-      
+
       // Use requestAnimationFrame to ensure smooth animation
       requestAnimationFrame(() => {
         setOpenModal(true);
@@ -279,21 +283,24 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
   };
 
   // Memoized function to check if we need to animate TagRows inside a slide
-  const shouldAnimateTagRows = useCallback((slideType: keyof typeof initialAnimationCompletedRef.current) => {
-    // If we've already animated this slide once, don't animate the internal rows
-    if (initialAnimationCompletedRef.current[slideType]) {
+  const shouldAnimateTagRows = useCallback(
+    (slideType: keyof typeof initialAnimationCompletedRef.current) => {
+      // If we've already animated this slide once, don't animate the internal rows
+      if (initialAnimationCompletedRef.current[slideType]) {
+        return false;
+      }
+
+      // If the slide is not loading, mark it as animated and allow animation this time
+      if (!loadingStates[slideType]) {
+        initialAnimationCompletedRef.current[slideType] = true;
+        return true;
+      }
+
+      // Otherwise, don't animate
       return false;
-    }
-    
-    // If the slide is not loading, mark it as animated and allow animation this time
-    if (!loadingStates[slideType]) {
-      initialAnimationCompletedRef.current[slideType] = true;
-      return true;
-    }
-    
-    // Otherwise, don't animate
-    return false;
-  }, [loadingStates]);
+    },
+    [loadingStates]
+  );
 
   // Create a single tag row with proper height settings and animation
   const TagRow = ({
@@ -303,7 +310,7 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
     offset,
     shouldLinkToMentions = false,
     index = 0,
-    slideType
+    slideType,
   }: {
     direction: 'forward' | 'reverse';
     pageType?: string;
@@ -315,19 +322,19 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
   }) => {
     // Determine if this row should have its entrance animation
     const shouldAnimate = shouldAnimateTagRows(slideType);
-    
+
     // Create a unique key for this specific row
     const rowKey = `${slideType}-${direction}-${offset}`;
-    
+
     // Check if this row has already been rendered
     // If not in ref yet, add it and set to true (should animate entrance)
     if (tagRowsRef.current[rowKey] === undefined) {
       tagRowsRef.current[rowKey] = true;
     }
-    
+
     // Keep the TagsList stable by using a key
     const tagsKey = `tags-${rowKey}`;
-    
+
     return (
       <motion.div
         className="index_customerGroups"
@@ -336,7 +343,7 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
           position: 'relative',
         }}
         variants={rowVariants}
-        initial={shouldAnimate ? "hidden" : "visible"}
+        initial={shouldAnimate ? 'hidden' : 'visible'}
         animate="visible"
         custom={index}
         whileHover={{
@@ -375,7 +382,7 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
   const ModalTagsDisplay = ({ tagType }) => {
     const [tags, setTags] = useState([]);
     const containerRef = useRef(null);
-    
+
     // Load all tags at once
     useEffect(() => {
       // Simulate loading all tags inline
@@ -384,15 +391,15 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
           // For now, we'll just use the TagsList component with a very high limit
           setTags([tagType]); // Just a placeholder to trigger rendering
         } catch (error) {
-          console.error("Error loading tags:", error);
+          console.error('Error loading tags:', error);
         }
       };
-      
+
       if (openModal) {
         loadAllTags();
       }
     }, [tagType, openModal]);
-    
+
     return (
       <motion.div
         ref={containerRef}
@@ -404,7 +411,11 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         {/* Display all tags inline with a very high limit */}
         <TagsList
           tagType={tagType}
-          infoPageType={tagType === 'domain' || tagType === 'foresight method' ? undefined : tagType}
+          infoPageType={
+            tagType === 'domain' || tagType === 'foresight method'
+              ? undefined
+              : tagType
+          }
           limit={500} // Very high limit to get all tags
           offset={0}
           disableTooltip={true} // Better performance
@@ -417,7 +428,8 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
 
   // Memoize slides to prevent rebuilding them on every render
   // But allow for proper slide animations during slide changes
-  const slides = useMemo(() => [
+  const slides = useMemo(
+    () => [
       // Slide 1: Projects
       <motion.div
         key="slide-1"
@@ -427,15 +439,45 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         animate="animate"
         exit="exit"
       >
-        <TagRow direction="forward" pageType="project" offset={0} index={0} slideType="projects" />
-        <TagRow direction="reverse" pageType="project" offset={15} index={1} slideType="projects" />
-        <TagRow direction="forward" pageType="project" offset={30} index={2} slideType="projects" />
-        <TagRow direction="reverse" pageType="project" offset={45} index={3} slideType="projects" />
-        <TagRow direction="forward" pageType="project" offset={60} index={4} slideType="projects" />
+        <TagRow
+          direction="forward"
+          pageType="project"
+          offset={0}
+          index={0}
+          slideType="projects"
+        />
+        <TagRow
+          direction="reverse"
+          pageType="project"
+          offset={15}
+          index={1}
+          slideType="projects"
+        />
+        <TagRow
+          direction="forward"
+          pageType="project"
+          offset={30}
+          index={2}
+          slideType="projects"
+        />
+        <TagRow
+          direction="reverse"
+          pageType="project"
+          offset={45}
+          index={3}
+          slideType="projects"
+        />
+        <TagRow
+          direction="forward"
+          pageType="project"
+          offset={60}
+          index={4}
+          slideType="projects"
+        />
       </motion.div>,
 
       // Slide 2: Organizations
-      <motion.div 
+      <motion.div
         key="slide-2"
         className="flex flex-col h-full w-full p-2 space-y-2 sliderWrap"
         variants={slideVariants}
@@ -443,15 +485,45 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         animate="animate"
         exit="exit"
       >
-        <TagRow direction="forward" pageType="organisation" offset={0} index={0} slideType="organisations" />
-        <TagRow direction="reverse" pageType="organisation" offset={15} index={1} slideType="organisations" />
-        <TagRow direction="forward" pageType="organisation" offset={30} index={2} slideType="organisations" />
-        <TagRow direction="reverse" pageType="organisation" offset={45} index={3} slideType="organisations" />
-        <TagRow direction="forward" pageType="organisation" offset={60} index={4} slideType="organisations" />
+        <TagRow
+          direction="forward"
+          pageType="organisation"
+          offset={0}
+          index={0}
+          slideType="organisations"
+        />
+        <TagRow
+          direction="reverse"
+          pageType="organisation"
+          offset={15}
+          index={1}
+          slideType="organisations"
+        />
+        <TagRow
+          direction="forward"
+          pageType="organisation"
+          offset={30}
+          index={2}
+          slideType="organisations"
+        />
+        <TagRow
+          direction="reverse"
+          pageType="organisation"
+          offset={45}
+          index={3}
+          slideType="organisations"
+        />
+        <TagRow
+          direction="forward"
+          pageType="organisation"
+          offset={60}
+          index={4}
+          slideType="organisations"
+        />
       </motion.div>,
 
       // Slide 3: Persons
-      <motion.div 
+      <motion.div
         key="slide-3"
         className="flex flex-col h-full w-full p-2 space-y-2 sliderWrap"
         variants={slideVariants}
@@ -459,15 +531,45 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         animate="animate"
         exit="exit"
       >
-        <TagRow direction="forward" pageType="person" offset={0} index={0} slideType="persons" />
-        <TagRow direction="reverse" pageType="person" offset={15} index={1} slideType="persons" />
-        <TagRow direction="forward" pageType="person" offset={30} index={2} slideType="persons" />
-        <TagRow direction="reverse" pageType="person" offset={45} index={3} slideType="persons" />
-        <TagRow direction="forward" pageType="person" offset={60} index={4} slideType="persons" />
+        <TagRow
+          direction="forward"
+          pageType="person"
+          offset={0}
+          index={0}
+          slideType="persons"
+        />
+        <TagRow
+          direction="reverse"
+          pageType="person"
+          offset={15}
+          index={1}
+          slideType="persons"
+        />
+        <TagRow
+          direction="forward"
+          pageType="person"
+          offset={30}
+          index={2}
+          slideType="persons"
+        />
+        <TagRow
+          direction="reverse"
+          pageType="person"
+          offset={45}
+          index={3}
+          slideType="persons"
+        />
+        <TagRow
+          direction="forward"
+          pageType="person"
+          offset={60}
+          index={4}
+          slideType="persons"
+        />
       </motion.div>,
 
       // Slide 4: Domains
-      <motion.div 
+      <motion.div
         key="slide-4"
         className="flex flex-col h-full w-full p-2 space-y-2 sliderWrap"
         variants={slideVariants}
@@ -475,15 +577,50 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         animate="animate"
         exit="exit"
       >
-        <TagRow direction="forward" tagType="domain" offset={0} shouldLinkToMentions={true} index={0} slideType="domains" />
-        <TagRow direction="reverse" tagType="domain" offset={15} shouldLinkToMentions={true} index={1} slideType="domains" />
-        <TagRow direction="forward" tagType="domain" offset={30} shouldLinkToMentions={true} index={2} slideType="domains" />
-        <TagRow direction="reverse" tagType="domain" offset={45} shouldLinkToMentions={true} index={3} slideType="domains" />
-        <TagRow direction="forward" tagType="domain" offset={60} shouldLinkToMentions={true} index={4} slideType="domains" />
+        <TagRow
+          direction="forward"
+          tagType="domain"
+          offset={0}
+          shouldLinkToMentions={true}
+          index={0}
+          slideType="domains"
+        />
+        <TagRow
+          direction="reverse"
+          tagType="domain"
+          offset={15}
+          shouldLinkToMentions={true}
+          index={1}
+          slideType="domains"
+        />
+        <TagRow
+          direction="forward"
+          tagType="domain"
+          offset={30}
+          shouldLinkToMentions={true}
+          index={2}
+          slideType="domains"
+        />
+        <TagRow
+          direction="reverse"
+          tagType="domain"
+          offset={45}
+          shouldLinkToMentions={true}
+          index={3}
+          slideType="domains"
+        />
+        <TagRow
+          direction="forward"
+          tagType="domain"
+          offset={60}
+          shouldLinkToMentions={true}
+          index={4}
+          slideType="domains"
+        />
       </motion.div>,
 
       // Slide 5: Foresight Methods
-      <motion.div 
+      <motion.div
         key="slide-5"
         className="flex flex-col h-full w-full p-2 space-y-2 sliderWrap"
         variants={slideVariants}
@@ -491,13 +628,50 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         animate="animate"
         exit="exit"
       >
-        <TagRow direction="forward" tagType="foresight method" offset={0} shouldLinkToMentions={true} index={0} slideType="methods" />
-        <TagRow direction="reverse" tagType="foresight method" offset={15} shouldLinkToMentions={true} index={1} slideType="methods" />
-        <TagRow direction="forward" tagType="foresight method" offset={30} shouldLinkToMentions={true} index={2} slideType="methods" />
-        <TagRow direction="reverse" tagType="foresight method" offset={45} shouldLinkToMentions={true} index={3} slideType="methods" />
-        <TagRow direction="forward" tagType="foresight method" offset={60} shouldLinkToMentions={true} index={4} slideType="methods" />
-      </motion.div>
-    ], [shouldAnimateTagRows]);
+        <TagRow
+          direction="forward"
+          tagType="foresight method"
+          offset={0}
+          shouldLinkToMentions={true}
+          index={0}
+          slideType="methods"
+        />
+        <TagRow
+          direction="reverse"
+          tagType="foresight method"
+          offset={15}
+          shouldLinkToMentions={true}
+          index={1}
+          slideType="methods"
+        />
+        <TagRow
+          direction="forward"
+          tagType="foresight method"
+          offset={30}
+          shouldLinkToMentions={true}
+          index={2}
+          slideType="methods"
+        />
+        <TagRow
+          direction="reverse"
+          tagType="foresight method"
+          offset={45}
+          shouldLinkToMentions={true}
+          index={3}
+          slideType="methods"
+        />
+        <TagRow
+          direction="forward"
+          tagType="foresight method"
+          offset={60}
+          shouldLinkToMentions={true}
+          index={4}
+          slideType="methods"
+        />
+      </motion.div>,
+    ],
+    [shouldAnimateTagRows]
+  );
 
   // Slide titles and their corresponding page links
   const slideInfo = [
@@ -510,18 +684,24 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
 
   // Get the appropriate title for the modal based on modalType
   const getModalTitle = () => {
-    switch(modalType) {
-      case 'domain': return 'All Domains';
-      case 'foresight method': return 'All Foresight Methods';
-      case 'project': return 'All Projects';
-      case 'organisation': return 'All Organizations';
-      case 'person': return 'All People';
-      default: return 'All Items';
+    switch (modalType) {
+      case 'domain':
+        return 'All Domains';
+      case 'foresight method':
+        return 'All Foresight Methods';
+      case 'project':
+        return 'All Projects';
+      case 'organisation':
+        return 'All Organizations';
+      case 'person':
+        return 'All People';
+      default:
+        return 'All Items';
     }
   };
 
   return (
-    <div 
+    <div
       className="w-full Container_wrapper index_customers z-0"
       ref={containerRef}
       onTouchStart={handleTouchStart}
@@ -532,7 +712,7 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
         <motion.div
           className="absolute inset-0 z-0 opacity-0 blur-3"
           style={{
-            background: `radial-gradient(circle at 50% 50%, ${THEME_COLOR} 0%, transparent 0%)`
+            background: `radial-gradient(circle at 50% 50%, ${THEME_COLOR} 0%, transparent 0%)`,
           }}
           animate={{
             opacity: [0.05, 0.15, 0.05],
@@ -547,13 +727,11 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
 
         {/* Slide Content - Give it a bit more space at the bottom */}
         <div className="h-full pb-16" key="slides-container">
-          <AnimatePresence mode="wait">
-            {slides[currentSlide]}
-          </AnimatePresence>
+          <AnimatePresence mode="wait">{slides[currentSlide]}</AnimatePresence>
         </div>
 
         {/* Navigation Buttons with enhanced animations */}
-        <motion.button 
+        <motion.button
           onClick={prevSlide}
           className="absolute left-4 top-1/3 -translate-y-1/2 z-10 border-white/100 backdrop-blur-sm p-3 rounded-full shadow-md flex items-center justify-center border border-white/100"
           aria-label="Previous slide"
@@ -562,8 +740,15 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
           whileHover="hover"
           whileTap="tap"
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 16L6 10L12 4" 
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 16L6 10L12 4"
               stroke={THEME_COLOR}
               strokeWidth="2.5"
               strokeLinecap="round"
@@ -581,8 +766,15 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
           whileHover="hover"
           whileTap="tap"
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 16L14 10L8 4" 
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 16L14 10L8 4"
               stroke={THEME_COLOR}
               strokeWidth="2.5"
               strokeLinecap="round"
@@ -600,12 +792,13 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className="w-3 h-3 rounded-full border border-white/100"
-                style={{ 
-                  backgroundColor: currentSlide === index ? THEME_COLOR : '#D1D5DB'
+                style={{
+                  backgroundColor:
+                    currentSlide === index ? THEME_COLOR : '#D1D5DB',
                 }}
                 variants={dotVariants}
                 initial="inactive"
-                animate={currentSlide === index ? "active" : "inactive"}
+                animate={currentSlide === index ? 'active' : 'inactive'}
                 whileHover={{ scale: 1.2 }}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -614,7 +807,7 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
 
           {/* Title Button below dots */}
           <AnimatePresence mode="wait">
-            <motion.button 
+            <motion.button
               className="py-2 px-6 rounded-full bg-white/100 shadow-sm text-center border border-white/20 flex items-center"
               variants={titleButtonVariants}
               initial="hidden"
@@ -623,25 +816,28 @@ const TagsCarousel = ({ loadingStates }: { loadingStates: LoadingStates }) => {
               whileHover="hover"
               whileTap="tap"
               key={`title-${currentSlide}`}
-              onClick={() => handleNavigateToPage(slideInfo[currentSlide].pageLink)}
+              onClick={() =>
+                handleNavigateToPage(slideInfo[currentSlide].pageLink)
+              }
             >
-              <span 
+              <span
                 className="text-sm font-medium"
                 style={{ color: THEME_COLOR }}
               >
                 See all {slideInfo[currentSlide].title} tags
               </span>
-              <svg 
-                className="ml-1 w-4 h-4" 
-                viewBox="0 0 20 20" 
-                fill="none" 
+              <svg
+                className="ml-1 w-4 h-4"
+                viewBox="0 0 20 20"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 style={{ color: THEME_COLOR }}
               >
-                <path d="M4.5 10H15.5M15.5 10L10.5 5M15.5 10L10.5 15" 
-                  stroke="currentColor" 
-                  strokeWidth="1.5" 
-                  strokeLinecap="round" 
+                <path
+                  d="M4.5 10H15.5M15.5 10L10.5 5M15.5 10L10.5 15"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>

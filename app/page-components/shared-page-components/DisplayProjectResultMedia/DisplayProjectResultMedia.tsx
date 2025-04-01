@@ -95,20 +95,20 @@ const DisplayProjectResultMedia: React.FC<DisplayProjectResultMediaProps> = ({
               width={247}
               height={368}
               className={classNames(
-                style.projectResultImage, 
-                style.videoImage, 
-                "blur-[2px] transition-all duration-300 ease-in-out group-hover:blur-none group-hover:scale-110"
+                style.projectResultImage,
+                style.videoImage,
+                'blur-[2px] transition-all duration-300 ease-in-out group-hover:blur-none group-hover:scale-110'
               )}
               alt={`Project Result Preview - ${projectResultMedia.displayName}`}
             />
             {/* Dark overlay with 80% opacity that disappears on hover */}
             <div className="absolute inset-0 bg-black/80 z-10 transition-opacity duration-300 ease-in-out group-hover:opacity-0"></div>
-            
+
             {/* Play button with hover animation */}
             <div className="absolute inset-0 flex items-center justify-center z-20">
-              <FaPlay 
-                size={48} 
-                className="text-secondary-site/80 transform transition duration-300 ease-in-out group-hover:scale-110 group-hover:text-secondary-site" 
+              <FaPlay
+                size={48}
+                className="text-secondary-site/80 transform transition duration-300 ease-in-out group-hover:scale-110 group-hover:text-secondary-site"
               />
             </div>
           </div>

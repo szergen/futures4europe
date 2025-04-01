@@ -404,14 +404,19 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                           index === highlightedIndexWithType.index &&
                             highlightedIndexWithType.type === 'page' &&
                             'bg-gray-200',
-                            'flex items-center w-full'
+                          'flex items-center w-full'
                         )}
                         href={`${automaticallyDecidePathPrefixBasedOnPageType(
                           pageSuggestion.item?.pageTypes?.[0]
                         )}${pageSuggestion.item?.slug}`}
                         target="_self"
                       >
-                        <div className={classNames(style.quickResultsItem, "flex items-start w-full")}>
+                        <div
+                          className={classNames(
+                            style.quickResultsItem,
+                            'flex items-start w-full'
+                          )}
+                        >
                           <div className={style.pageImageContainer}>
                             <Image
                               alt={'Tag Image'}

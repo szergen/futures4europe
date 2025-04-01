@@ -32,7 +32,8 @@ const TagsList = ({
 
   if (tagType) {
     // Filter tags by tagType
-    const filteredTags = allTags?.filter((tag) => tag.tagType === tagType) || [];
+    const filteredTags =
+      allTags?.filter((tag) => tag.tagType === tagType) || [];
 
     // Apply limit and offset
     const limitedTags = filteredTags.slice(offset, offset + limit);
@@ -45,41 +46,40 @@ const TagsList = ({
           </h2>
         )}
         <div className="flex flex-wrap gap-2">
-          {tagsLoading ? (
-            // Show skeletons while loading
-            Array.from({ length: limit }).map((_, idx) => (
-              <TagSkeleton key={idx} />
-            ))
-          ) : (
-            // Show actual tags when loaded
-            limitedTags.map((tag, idx) =>
-              tag && tag.name ? (
-                <Tag
-                  key={`${tag._id || tag.id || idx}`}
-                  name={tag.name}
-                  picture={tag.picture}
-                  disableTooltip={disableTooltip}
-                  disablePopularityHover={disablePopularityHover}
-                  tagPageLink={
-                    shouldLinkToMentions
-                      ? `/mentions/${tag._id}`
-                      : `${automaticallyDecidePathPrefixBasedOnPageType(
-                          tag.tagType
-                        )}${tag.slug || ''}`
-                  }
-                  tagType={tag.tagType}
-                />
-              ) : null
-            )
-          )}
+          {tagsLoading
+            ? // Show skeletons while loading
+              Array.from({ length: limit }).map((_, idx) => (
+                <TagSkeleton key={idx} />
+              ))
+            : // Show actual tags when loaded
+              limitedTags.map((tag, idx) =>
+                tag && tag.name ? (
+                  <Tag
+                    key={`${tag._id || tag.id || idx}`}
+                    name={tag.name}
+                    picture={tag.picture}
+                    disableTooltip={disableTooltip}
+                    disablePopularityHover={disablePopularityHover}
+                    tagPageLink={
+                      shouldLinkToMentions
+                        ? `/mentions/${tag._id}`
+                        : `${automaticallyDecidePathPrefixBasedOnPageType(
+                            tag.tagType
+                          )}${tag.slug || ''}`
+                    }
+                    tagType={tag.tagType}
+                  />
+                ) : null
+              )}
         </div>
       </div>
     );
   }
 
   // For infoPageType filter
-  const filteredTags = allTags?.filter((tag) => tag.tagType === infoPageType) || [];
-  
+  const filteredTags =
+    allTags?.filter((tag) => tag.tagType === infoPageType) || [];
+
   // Apply limit and offset
   const limitedTags = filteredTags.slice(offset, offset + limit);
 
@@ -91,26 +91,24 @@ const TagsList = ({
         </h2>
       )}
       <div className="flex flex-wrap gap-2">
-        {tagsLoading ? (
-          // Show skeletons while loading
-          Array.from({ length: limit }).map((_, idx) => (
-            <TagSkeleton key={idx} />
-          ))
-        ) : (
-          // Show actual tags when loaded
-          limitedTags.map((tag, idx) => (
-            <Tag
-              key={`${tag._id || idx}`}
-              name={tag.name}
-              picture={tag.picture}
-              disableTooltip={disableTooltip}
-              disablePopularityHover={disablePopularityHover}
-              tagPageLink={tag.tagPageLink}
-              tagType={tag.tagType}
-              // mentions={tag.popularity}
-            />
-          ))
-        )}
+        {tagsLoading
+          ? // Show skeletons while loading
+            Array.from({ length: limit }).map((_, idx) => (
+              <TagSkeleton key={idx} />
+            ))
+          : // Show actual tags when loaded
+            limitedTags.map((tag, idx) => (
+              <Tag
+                key={`${tag._id || idx}`}
+                name={tag.name}
+                picture={tag.picture}
+                disableTooltip={disableTooltip}
+                disablePopularityHover={disablePopularityHover}
+                tagPageLink={tag.tagPageLink}
+                tagType={tag.tagType}
+                // mentions={tag.popularity}
+              />
+            ))}
       </div>
     </div>
   );

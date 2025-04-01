@@ -73,7 +73,10 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.ico" />
       </head>
       <body
-        className={classNames('antialiased bg-white body', { [style.homePage]: isHomePage })}>
+        className={classNames('antialiased bg-white body', {
+          [style.homePage]: isHomePage,
+        })}
+      >
         <CustomPostHogProvider>
           {process.env.NEXT_PUBLIC_WIX_CLIENT_ID ? (
             <>
@@ -83,19 +86,22 @@ export default function RootLayout({
                   tokens: tokens || undefined,
                 })}
               >
-              <div className={classNames(style.mainBody)} >
-                <AuthProvider>
-                  <SearchProvider>
-                    <Header />
-                    <main className="min-h-[600px]">
-                      {children}
-                    </main>
-                    <div className={classNames('flex flex-col items-center justify-center', style.footer)}>
-                      <Footer />
-                    </div>
-                  </SearchProvider>
-                </AuthProvider>
-              </div>
+                <div className={classNames(style.mainBody)}>
+                  <AuthProvider>
+                    <SearchProvider>
+                      <Header />
+                      <main className="min-h-[600px]">{children}</main>
+                      <div
+                        className={classNames(
+                          'flex flex-col items-center justify-center',
+                          style.footer
+                        )}
+                      >
+                        <Footer />
+                      </div>
+                    </SearchProvider>
+                  </AuthProvider>
+                </div>
               </WixProvider>
 
               <SpeedInsights />

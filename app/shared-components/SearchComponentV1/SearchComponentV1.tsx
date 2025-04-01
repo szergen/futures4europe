@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState, useLayoutEffect, useCallback } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useLayoutEffect,
+  useCallback,
+} from 'react';
 import TagInput from './components/TagInput/TagInput';
 import HelpDropdown from './components/HelpDropdown/HelpDropdown';
 import Suggestions from './components/Suggestions/Suggestions';
@@ -368,131 +374,153 @@ const SearchComponentV1 = () => {
     }
   }, [pathname]);
 
-// Inside your component, add or replace with these state variables and refs
-const wrapperRef = useRef(null);
-const [hasMultipleRows, setHasMultipleRows] = useState(false);
-const [singleRowHeight, setSingleRowHeight] = useState(0);
-const [currentHeight, setCurrentHeight] = useState(0);
+  // Inside your component, add or replace with these state variables and refs
+  const wrapperRef = useRef(null);
+  const [hasMultipleRows, setHasMultipleRows] = useState(false);
+  const [singleRowHeight, setSingleRowHeight] = useState(0);
+  const [currentHeight, setCurrentHeight] = useState(0);
 
-// Add this useEffect to initialize the single row height with one tag present
-useEffect(() => {
-  // This will run once after initial render
-  if (searchState.searchedItems.length === 1 && wrapperRef.current) {
-    // Store the height of a single row with one tag
-    setSingleRowHeight(wrapperRef.current.offsetHeight);
-    console.log("Initialized single row height:", wrapperRef.current.offsetHeight);
-  }
-}, []);
-
-// This function will be called to check the wrapper's height
-const checkWrapperHeight = () => {
-  if (!wrapperRef.current) return;
-  
-  // Get current height and update state
-  const height = wrapperRef.current.offsetHeight;
-  setCurrentHeight(height);
-  
-  // On first item, set the baseline height
-  if (singleRowHeight === 0 && searchState.searchedItems.length > 0) {
-    setSingleRowHeight(height);
-    console.log("Setting initial single row height:", height);
-    return;
-  }
-  
-  // Only proceed if we have a valid baseline
-  if (singleRowHeight > 0) {
-    // Determine if multiple rows (50% taller than single row)
-    const isMultiRows = height > (singleRowHeight * 1.5);
-    
-    // Only update state if changed
-    if (hasMultipleRows !== isMultiRows) {
-      console.log("Multiple rows changed:", isMultiRows, "Height:", height, "Threshold:", singleRowHeight * 1.5);
-      setHasMultipleRows(isMultiRows);
+  // Add this useEffect to initialize the single row height with one tag present
+  useEffect(() => {
+    // This will run once after initial render
+    if (searchState.searchedItems.length === 1 && wrapperRef.current) {
+      // Store the height of a single row with one tag
+      setSingleRowHeight(wrapperRef.current.offsetHeight);
+      console.log(
+        'Initialized single row height:',
+        wrapperRef.current.offsetHeight
+      );
     }
-  }
-};
+  }, []);
 
-useEffect(() => {
-  // Wait a small amount of time for the DOM to fully update
-  const timer = setTimeout(() => {
-    checkWrapperHeight();
-    
-    // Debug logging
-    if (wrapperRef.current) {
-      console.log("Checked after delay - Current height:", wrapperRef.current.offsetHeight);
-      console.log("Items count:", searchState.searchedItems.length);
+  // This function will be called to check the wrapper's height
+  const checkWrapperHeight = () => {
+    if (!wrapperRef.current) return;
+
+    // Get current height and update state
+    const height = wrapperRef.current.offsetHeight;
+    setCurrentHeight(height);
+
+    // On first item, set the baseline height
+    if (singleRowHeight === 0 && searchState.searchedItems.length > 0) {
+      setSingleRowHeight(height);
+      console.log('Setting initial single row height:', height);
+      return;
     }
-  }, 50); // Small delay to ensure DOM is updated
-  
-  return () => clearTimeout(timer);
-}, [searchState.searchedItems]); // Only depend on searchedItems changes
 
+    // Only proceed if we have a valid baseline
+    if (singleRowHeight > 0) {
+      // Determine if multiple rows (50% taller than single row)
+      const isMultiRows = height > singleRowHeight * 1.5;
 
-console.log("DOM fully updated, checking height...");
-
-
-useEffect(() => {
-  if (!wrapperRef.current) return;
-  
-  console.log("Setting up observers");
-  
-  // Create resize observer
-  const resizeObserver = new ResizeObserver(() => {
-    console.log("Resize detected");
-    checkWrapperHeight();
-  });
-  
-  // Create mutation observer
-  const mutationObserver = new MutationObserver(() => {
-    console.log("DOM mutation detected");
-    checkWrapperHeight();
-  });
-  
-  // Start observing
-  resizeObserver.observe(wrapperRef.current);
-  mutationObserver.observe(wrapperRef.current, {
-    childList: true,
-    subtree: true,
-    characterData: true,
-    attributes: false // Reduce noise by not watching all attributes
-  });
-  
-  return () => {
-    resizeObserver.disconnect();
-    mutationObserver.disconnect();
+      // Only update state if changed
+      if (hasMultipleRows !== isMultiRows) {
+        console.log(
+          'Multiple rows changed:',
+          isMultiRows,
+          'Height:',
+          height,
+          'Threshold:',
+          singleRowHeight * 1.5
+        );
+        setHasMultipleRows(isMultiRows);
+      }
+    }
   };
-}, []); // Empty dependency array - only run once on mount
 
+  useEffect(() => {
+    // Wait a small amount of time for the DOM to fully update
+    const timer = setTimeout(() => {
+      checkWrapperHeight();
 
-// Add this for visual debugging if needed
-useEffect(() => {
-  console.log("hasMultipleRows state changed to:", hasMultipleRows);
-  console.log("Current height:", currentHeight, "Single row height:", singleRowHeight);
-}, [hasMultipleRows]);
+      // Debug logging
+      if (wrapperRef.current) {
+        console.log(
+          'Checked after delay - Current height:',
+          wrapperRef.current.offsetHeight
+        );
+        console.log('Items count:', searchState.searchedItems.length);
+      }
+    }, 50); // Small delay to ensure DOM is updated
 
-// Add this component to your file
-const HeightDebugger = ({ enabled, currentHeight, singleRowHeight, hasMultipleRows }) => {
-  if (!enabled) return null;
-  
-  return (
-    <div style={{
-      position: 'fixed',
-      top: '10px',
-      right: '10px',
-      background: 'rgba(0,0,0,0.8)',
-      color: 'white',
-      padding: '10px',
-      borderRadius: '5px',
-      fontSize: '12px',
-      zIndex: 9999
-    }}>
-      <div>Current Height: {currentHeight}px</div>
-      <div>Single Row Height: {singleRowHeight}px</div>
-      <div>Multiple Rows: {hasMultipleRows ? 'Yes' : 'No'}</div>
-      <div>Threshold: {singleRowHeight * 1.5}px</div>
-    </div>
-  );
-};
+    return () => clearTimeout(timer);
+  }, [searchState.searchedItems]); // Only depend on searchedItems changes
+
+  console.log('DOM fully updated, checking height...');
+
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+
+    console.log('Setting up observers');
+
+    // Create resize observer
+    const resizeObserver = new ResizeObserver(() => {
+      console.log('Resize detected');
+      checkWrapperHeight();
+    });
+
+    // Create mutation observer
+    const mutationObserver = new MutationObserver(() => {
+      console.log('DOM mutation detected');
+      checkWrapperHeight();
+    });
+
+    // Start observing
+    resizeObserver.observe(wrapperRef.current);
+    mutationObserver.observe(wrapperRef.current, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: false, // Reduce noise by not watching all attributes
+    });
+
+    return () => {
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, []); // Empty dependency array - only run once on mount
+
+  // Add this for visual debugging if needed
+  useEffect(() => {
+    console.log('hasMultipleRows state changed to:', hasMultipleRows);
+    console.log(
+      'Current height:',
+      currentHeight,
+      'Single row height:',
+      singleRowHeight
+    );
+  }, [hasMultipleRows]);
+
+  // Add this component to your file
+  const HeightDebugger = ({
+    enabled,
+    currentHeight,
+    singleRowHeight,
+    hasMultipleRows,
+  }) => {
+    if (!enabled) return null;
+
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          top: '10px',
+          right: '10px',
+          background: 'rgba(0,0,0,0.8)',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '5px',
+          fontSize: '12px',
+          zIndex: 9999,
+        }}
+      >
+        <div>Current Height: {currentHeight}px</div>
+        <div>Single Row Height: {singleRowHeight}px</div>
+        <div>Multiple Rows: {hasMultipleRows ? 'Yes' : 'No'}</div>
+        <div>Threshold: {singleRowHeight * 1.5}px</div>
+      </div>
+    );
+  };
 
   // Apply classes based on current page and multi-row state
   const searchBoxWrapperClasses = classNames(
@@ -511,17 +539,14 @@ const HeightDebugger = ({ enabled, currentHeight, singleRowHeight, hasMultipleRo
     [style.multiRowSearchBox]: hasMultipleRows, // Add multi-row class
   });
 
-  const searchInputButtonClasses = classNames(
-    style.searchInputButton,
-    {
-      [style.multiRowSearchButton]: hasMultipleRows,
-    }
-  );
+  const searchInputButtonClasses = classNames(style.searchInputButton, {
+    [style.multiRowSearchButton]: hasMultipleRows,
+  });
 
   return (
     // <div className={classNames('relative bg-white max-w-[450px] realtive', style.searchBoxWrapper)}>
     //   <div tabIndex={0} className={classNames(style.searchBox)}>
-      <div className={searchBoxWrapperClasses} ref={wrapperRef}>
+    <div className={searchBoxWrapperClasses} ref={wrapperRef}>
       <div tabIndex={0} className={searchBoxClasses}>
         <SearchedItems
           searchedItems={searchedItems}

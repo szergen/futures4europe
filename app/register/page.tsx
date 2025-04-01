@@ -61,7 +61,7 @@ export default function RegisterPage() {
     }
   };
 
-  // TODO @Alex de verificat, am pus o verificare sa nu poti face cont daca pui whitespace 
+  // TODO @Alex de verificat, am pus o verificare sa nu poti face cont daca pui whitespace
   // rezolvat un issue cu un cont care avea un saptiu simplu ca nume
 
   const [firstNameError, setFirstNameError] = useState('');
@@ -92,9 +92,12 @@ export default function RegisterPage() {
     const form = event.currentTarget;
     // Access form fields properly using HTMLFormElement methods
     const email = (form.elements.namedItem('email') as HTMLInputElement)?.value;
-    const password = (form.elements.namedItem('password') as HTMLInputElement)?.value;
-    const firstName = (form.elements.namedItem('firstName') as HTMLInputElement)?.value;
-    const lastName = (form.elements.namedItem('lastName') as HTMLInputElement)?.value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement)
+      ?.value;
+    const firstName = (form.elements.namedItem('firstName') as HTMLInputElement)
+      ?.value;
+    const lastName = (form.elements.namedItem('lastName') as HTMLInputElement)
+      ?.value;
 
     // Reset previous errors
     setError('');

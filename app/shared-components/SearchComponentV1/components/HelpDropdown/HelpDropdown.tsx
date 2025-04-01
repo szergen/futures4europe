@@ -78,56 +78,55 @@ export type HelpDropdownProps = {
 };
 
 const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
-
   // Container animation variants
   const containerVariants = {
     hidden: {
       opacity: 0,
       scaleY: 0,
     },
-    visible: { 
+    visible: {
       opacity: 1,
       scaleY: 1,
       transition: {
         duration: 0.3,
-        ease: "easeOut",
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
+        ease: 'easeOut',
+        when: 'beforeChildren',
+        staggerChildren: 0.1,
+      },
+    },
   };
-  
+
   // Item animation variants
   const itemVariants = {
     hidden: {
       opacity: 0,
-      y: -10
+      y: -10,
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.3,
-        ease: "easeOut"
-      }
-    }
+        ease: 'easeOut',
+      },
+    },
   };
-  
+
   // Description text animation variants
   const descriptionVariants = {
     hidden: {
       opacity: 0,
-      x: -10
+      x: -10,
     },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
         duration: 0.3,
-        ease: "easeOut",
-        delay: 0.2 // Delay to start after the main item appears
-      }
-    }
+        ease: 'easeOut',
+        delay: 0.2, // Delay to start after the main item appears
+      },
+    },
   };
 
   return (
@@ -140,10 +139,10 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
         style={{
           transformOrigin: 'top',
           backgroundColor: 'white',
-          borderRadius: '4px', 
+          borderRadius: '4px',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
           width: '45vw',
-          maxWidth: '100%'
+          maxWidth: '100%',
         }}
       >
         <div className={style.helpDropdownContainer}>
@@ -152,15 +151,14 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
             variants={itemVariants}
           >
             <span className="ml-2 text-[14px]"></span>
-
-          {/* <HiDocumentSearch /> */}
-          <span className="ml-2 text-[14px]"></span>{' '}
-          {/* The text with margin for spacing */}
+            {/* <HiDocumentSearch /> */}
+            <span className="ml-2 text-[14px]"></span>{' '}
+            {/* The text with margin for spacing */}
           </motion.div>
 
           <br />
           {FieldSuggestionTypes.map((field, index) => (
-           <motion.div
+            <motion.div
               key={field.description + index}
               className={classNames(style.textSearchTips, 'flex items-center')}
               variants={itemVariants}
@@ -175,8 +173,7 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
                 className={style.fieldType}
               >
                 {field.type}
-              </span>
-              {' '}
+              </span>{' '}
               <motion.span
                 className={style.fieldDescription}
                 variants={descriptionVariants}
@@ -191,7 +188,7 @@ const HelpDropdown: React.FC<HelpDropdownProps> = ({ handleTagSuggestion }) => {
               >
                 {field.description}
               </motion.span>
-          </motion.div>
+            </motion.div>
           ))}
         </div>
       </motion.div>
