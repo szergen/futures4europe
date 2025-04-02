@@ -31,7 +31,8 @@ export type TagPickerProps = {
   newTagType?: string;
   newTagTagline?: string;
   showTagTagline?: boolean;
-  showCreateTagButton?: boolean; // Add this new prop catalin
+  showCreateTagButton?: boolean; // Added this new prop catalin
+  disableCreateOption?: boolean; // Added this new prop catalin
 };
 
 interface Option {
@@ -73,6 +74,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   newTagTagline,
   showTagTagline = true,
   showCreateTagButton = true, // Default to true catalin
+  disableCreateOption = false, // Default to false catalin
 }) => {
   // #region Tag creation form state
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -182,6 +184,7 @@ export const TagPicker: React.FC<TagPickerProps> = ({
   };
 
   const handleCreate = (inputValue: string) => {
+    if (disableCreateOption) return;
     setTagName(inputValue);
     setShowCreateForm(true);
   };
@@ -482,7 +485,8 @@ export const TagPicker: React.FC<TagPickerProps> = ({
             setIsDisabledSorting && setIsDisabledSorting(false);
           }}
           onChange={handleUpdateData}
-          onCreateOption={handleCreate}
+          onCreateOption={disableCreateOption ? undefined : handleCreate}
+          isValidNewOption={disableCreateOption ? () => false : undefined}
           options={options}
           value={value}
           isMulti={isMulti}
