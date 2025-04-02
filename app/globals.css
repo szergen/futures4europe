@@ -155,11 +155,15 @@
     --primary-white: rgb(255, 255, 255);
     --primary-secondary: rgb(205, 100, 200);
     --primary-blue-80: rgba(21, 15, 213, 0.8);
+    --action-site: rgb(205, 100, 200);
+    --action-hover: rgb(205, 100, 220);
 
     
 
     /* Background color social links. */
-    --color-background-researchgate: rgb(167, 207, 55);
+    --color-background-orcid: rgb(167, 207, 55);
+    --color-background-researchgate: rgb(34, 213, 175);
+    --color-background-website: rgb(5, 0, 175);
     /* Background color used for user avatars. */
     --color-background-user: rgb(200, 175, 240);
     /* Background color used for notifications. */
@@ -516,20 +520,20 @@
 
   .btn-edit {
     @apply text-black;
-    @apply hover:bg-red-400;
-    @apply hover:text-red-800;
+    @apply hover:bg-gray-200;
     @apply focus:outline-none;
     @apply focus:ring-2;
     @apply focus:ring-gray-300;
     @apply font-medium;
-    border-radius: var(--p-border-radius-tag);
+    border-radius: var(--p-border-radius-full);
     padding: var(--w-space-s) var(--w-space-m);
     font-size: var(--w-font-size-tag);
     line-height: var(--w-line-height-normal);
     letter-spacing: var(--p-font-letter-spacing-tag);
     height: var(--w-space-xxl);
-    background: var(--color-background-destructive-weak);
-    color: var(--color-text-warning-strong);
+    background: var(--primary-white);
+    border: 1px solid var(--color-background-brand-tag);
+    color: var(--color-text-black);
   }
 
   .btn-gray {
@@ -539,29 +543,30 @@
     @apply focus:ring-2;
     @apply focus:ring-gray-300;
     @apply font-medium;
-    border-radius: var(--p-border-radius-tag);
+    border-radius: var(--p-border-radius-full);
     padding: var(--w-space-s) var(--w-space-m);
     font-size: var(--w-font-size-tag);
     line-height: var(--w-line-height-normal);
     letter-spacing: var(--p-font-letter-spacing-tag);
     height: var(--w-space-xxl);
-    background: var(--color-background-brand-tag);
+    border: 1px solid var(--color-background-brand-tag);
+    background: var(--primary-white);
   }  
 
   .btn-save {
+    @apply bg-action-site;
     @apply text-white;
-    @apply hover:bg-purple-800;
+    @apply hover:bg-action-hover;
     @apply focus:outline-none;
     @apply focus:ring-2;
     @apply focus:ring-purple-300;
     @apply font-medium;
-    border-radius: var(--p-border-radius-tag);
+    border-radius: var(--p-border-radius-full);
     padding: var(--w-space-s) var(--w-space-m);
     font-size: var(--w-font-size-tag);
     line-height: var(--w-line-height-normal);
     letter-spacing: var(--p-font-letter-spacing-tag);
     height: var(--w-space-xxl);
-    background: var(--primary-brand);
   }
   
   .btn-save:disabled {
