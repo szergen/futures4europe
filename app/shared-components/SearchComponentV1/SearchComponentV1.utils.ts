@@ -453,7 +453,6 @@ export const updateFilteredDataBasedOnClickedTag = (
   //(2) before returning, prioritize results with the tag type information
   allMatchedPages = prioritizeTagInResults(allMatchedPages, clickedTag, tagType);
 
-  
   return {
     matchedPages: allMatchedPages?.length > 0
         ? allMatchedPages?.map((page: any) => ({ item: page }))
