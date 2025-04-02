@@ -304,10 +304,78 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
 //   };
 // };
 
+/* TODO: catalin @szergen chek if this function is good */
+export const prioritizeTagInResults = (results, targetTagName, tagType = '') => {
+  if (!targetTagName || !results?.length) return results;
+  
+  return [...results].sort((a, b) => {
+    // Define priority levels for different array fields based on tag type
+    const getPriority = (item) => {
+      // Skip checking these properties
+      const excludeKeys = ['pageOwner'];
+      
+      // Define high priority arrays based on tag type
+      let highPriorityArrays = [];
+      if (tagType === 'person') {
+        highPriorityArrays = ['person'];
+      } else if (tagType === 'organisation') {
+        highPriorityArrays = ['organisation'];
+      } else if (tagType === 'project') {
+        highPriorityArrays = ['Project'];
+      }
+      
+      // Check high priority arrays first
+      for (const key of highPriorityArrays) {
+        if (Array.isArray(item[key]) && item[key].some(tag => 
+          tag?.name?.toLowerCase() === targetTagName?.toLowerCase())) {
+          return 3; // Highest priority
+        }
+      }
+      
+      // Check other tag arrays next
+      const mediumPriorityArrays = ['domains', 'methods', 'countryTag', 'primaryTags'];
+      for (const key of mediumPriorityArrays) {
+        if (Array.isArray(item[key]) && item[key].some(tag => 
+          tag?.name?.toLowerCase() === targetTagName?.toLowerCase())) {
+          return 2; // Medium priority
+        }
+      }
+      
+      // Finally check all other arrays
+      for (const [key, value] of Object.entries(item)) {
+        if (!excludeKeys.includes(key) && 
+            !highPriorityArrays.includes(key) && 
+            !mediumPriorityArrays.includes(key) && 
+            Array.isArray(value) && 
+            value.some(tag => tag?.name?.toLowerCase() === targetTagName?.toLowerCase())) {
+          return 1; // Low priority
+        }
+      }
+      
+      return 0; // No match
+    };
+    
+    const aPriority = getPriority(a);
+    const bPriority = getPriority(b); // Fixed the double assignment here
+    
+    // Sort by priority (higher numbers first)
+    return bPriority - aPriority;
+  });
+};
+
 export const updateFilteredDataBasedOnClickedTag = (
   clickedTag: string,
   filteredData: InitialData
 ) => {
+
+  /* TODO: catalin @szergen chek if this function is good */
+  // (1) find the type of tag
+  const tagObj = filteredData?.tags?.find(
+    tag => tag?.name?.toLowerCase() === clickedTag?.toLowerCase()
+  );
+
+  const tagType = tagObj?.tagType || '';
+
   // const matchedPages = filteredData.assignments
   //   .filter((assignment) => assignment.tagName === clickedTag)
   //   .map((assignment) => {
@@ -375,14 +443,19 @@ export const updateFilteredDataBasedOnClickedTag = (
     );
 
   // console.log('deb1111->affiliationPages', affiliationPages);
-  const allMatchedPages = [...matchedPages, ...affiliationPages]?.filter(
+  /* TODO: catalin @szergen din const in let */
+  let allMatchedPages = [...matchedPages, ...affiliationPages]?.filter(
     (post, index, self) => index === self.findIndex((p) => p._id === post._id)
   );
   // console.log('deb1111->allMatchedPages', allMatchedPages);
 
+  /* TODO: catalin @szergen chek if this function is good */
+  //(2) before returning, prioritize results with the tag type information
+  allMatchedPages = prioritizeTagInResults(allMatchedPages, clickedTag, tagType);
+
+  
   return {
-    matchedPages:
-      allMatchedPages?.length > 0
+    matchedPages: allMatchedPages?.length > 0
         ? allMatchedPages?.map((page: any) => ({ item: page }))
         : [],
     matchedAffiliations: matchedAffiliations,
