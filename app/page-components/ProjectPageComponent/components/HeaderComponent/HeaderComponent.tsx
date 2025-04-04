@@ -87,7 +87,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     }
     // Check if title starts or ends with space
     if (trimmedTitle !== tempName) {
-      return 'Title cannot start or end with spaces';
+      return 'This field dose not accept leading and/or trailing whitespace (spaces). Please make sure that you do not have spaces at the start and end of the title.';
     }
 
     // URL pattern check

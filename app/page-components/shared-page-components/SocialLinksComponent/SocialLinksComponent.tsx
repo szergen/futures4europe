@@ -77,14 +77,14 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             style.socialIcon,
             isEditModeOn && style.editIcon,
             extended && style.extended,
-            isEditModeOn && !currentLinkedinLink && 'opacity-30 grayscale'
+            isEditModeOn && !currentLinkedinLink && 'opacity-50'
           )}
           onClick={() =>
             handleIconClick(currentLinkedinLink || '', 'linkedinLink')
           }
         >
           <SpriteSvg.AccountLinkLinkedin
-            viewBox="-4 -4 32 32"
+            viewBox="-4 -4 28 28"
             className={classNames(style.website)}
             sizeW={24}
             sizeH={24}
@@ -92,7 +92,9 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             strokeWidth={0}
             style={{
               padding: 'var(--w-space-xs)',
-              backgroundColor: 'var(--color-background-primary)',
+              backgroundColor: !currentLinkedinLink
+                ? 'var(--color-text-icon-offline)'
+                : 'var(--color-background-primary)',
             }}
             inline={false}
           />
@@ -105,17 +107,22 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             style.socialIcon,
             isEditModeOn && style.editIcon,
             extended && style.extended,
-            isEditModeOn && !currentOrcidLink && 'opacity-30 grayscale'
+            isEditModeOn && !currentOrcidLink && 'opacity-50'
           )}
           onClick={() => handleIconClick(currentOrcidLink || '', 'orcidLink')}
         >
           <SpriteSvg.AccountLinkOrcid
-            viewBox="0 0 32 32"
+            viewBox="-5 -2 32 32"
             className={classNames(style.website)}
             sizeW={24}
             sizeH={24}
-            fill={'var(--color-background-researchgate)'}
-            style={{ backgroundColor: 'var(--primary-white)' }}
+            fill={'var(--primary-white)'}
+            style={{
+              padding: 'var(--w-space-xs)',
+              backgroundColor: !currentOrcidLink
+                ? 'var(--color-text-icon-offline)'
+                : 'var(--color-background-orcid)',
+            }}
             strokeWidth={0}
             inline={false}
           />
@@ -128,7 +135,7 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             style.socialIcon,
             isEditModeOn && style.editIcon,
             extended && style.extended,
-            isEditModeOn && !currentWebsiteLink && 'opacity-10 grayscale'
+            isEditModeOn && !currentWebsiteLink && 'opacity-50'
           )}
           onClick={() =>
             handleIconClick(currentWebsiteLink || '', 'websiteLink')
@@ -139,6 +146,12 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             sizeW={24}
             sizeH={24}
             fill={'var(--primary-white)'}
+            style={{
+              padding: 'var(--w-space-xs)',
+              backgroundColor: !currentWebsiteLink
+                ? 'var(--color-text-icon-offline)'
+                : 'var(--color-background-website)',
+            }}
             viewBox={'-4 -4 32 32'}
             strokeWidth={0}
             inline={false}
@@ -152,7 +165,7 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             style.socialIcon,
             isEditModeOn && style.editIcon,
             extended && style.extended,
-            isEditModeOn && !currentResearchGateLink && 'opacity-30 grayscale'
+            isEditModeOn && !currentResearchGateLink && 'opacity-50'
           )}
           onClick={() =>
             handleIconClick(currentResearchGateLink || '', 'researchGateLink')
@@ -166,7 +179,9 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             fill={'var(--primary-white)'}
             style={{
               padding: 'var(--w-space-xs)',
-              backgroundColor: 'var(--color-background-brand-30)',
+              backgroundColor: !currentResearchGateLink
+                ? 'var(--color-text-icon-offline)'
+                : 'var(--color-background-researchgate)',
             }}
             strokeWidth={0}
             inline={false}

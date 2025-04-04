@@ -211,13 +211,13 @@ export const Home = () => {
           >
             <div
               className={classNames(
-                'flex flex-col mt-10 max-w-[520px] flex-wrap items-start z-90',
+                'flex flex-col mt-10 mr-0 max-w-[520px] flex-wrap items-start z-90 md:mr-10',
                 style.homeHeroTitle
               )}
             >
               <h1 className="homeTitleh1">The online home of the European</h1>
               <h2 className="homeTitleh2">foresight community</h2>
-              <p className="homeSubtitle text-xs">
+              <p className="homeSubtitle text-xs max-w-[420px]">
                 Explore a rich collection of foresight projects, showcase your
                 own work, and participate in upcoming events.
               </p>
