@@ -234,8 +234,9 @@ export default function DashboardProjects() {
                               className="pt-2 pb-2 flex flex-row items-center justify-between"
                             >
                               {/* <span>{infoPage.data.title}</span> */}
-                              <div className={'flex flex-row'}>
+                              <div className={'flex flex-row w-full justify-between'}>
                                 <Link
+                                  className='grow'
                                   href={`/${extractInfoPageTypeBasedOnTag(
                                     infoPage?.data?.pageTypes[0]
                                   )}/${infoPage.data.slug}`}
