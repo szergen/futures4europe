@@ -4,6 +4,7 @@ import style from './SocialLinksComponent.module.css';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
+import { validateUrl } from '@app/utils/validation-utils';
 
 type SocialLinksComponentProps = {
   isEditModeOn?: boolean;
@@ -28,11 +29,16 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
   const [modalKeyToUpdate, setModalKeyToUpdate] = useState('');
   const [currentLinkedinLink, setCurrentLinkedinLink] = useState(linkedinLink);
   const [currentWebsiteLink, setCurrentWebsiteLink] = useState(websiteLink);
-  const [currentResearchGateLink, setCurrentResearchGateLink] =
-    useState(researchGateLink);
+  const [currentResearchGateLink, setCurrentResearchGateLink] = useState(researchGateLink);
   const [currentOrcidLink, setCurrentOrcidLink] = useState(orcidLink);
   const [labelText, setLabelText] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [urlErrors, setUrlErrors] = useState({
+    linkedinLink: '',
+    websiteLink: '',
+    researchGateLink: '',
+    orcidLink: ''
+  });
 
   const handleIconClick = (url: string, modalKey: string) => {
     const label = {
@@ -46,18 +52,43 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
     isEditModeOn ? setShowCreateForm(true) : window.open(url, '_blank');
   };
 
-  const handleFormSubmit = () => {
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Get current URL and fieldName based on which modal is open
+    const currentUrl = 
+      modalKeyToUpdate === 'linkedinLink' ? currentLinkedinLink :
+      modalKeyToUpdate === 'websiteLink' ? currentWebsiteLink :
+      modalKeyToUpdate === 'researchGateLink' ? currentResearchGateLink :
+      currentOrcidLink;
+    
+    const fieldName = {
+      linkedinLink: 'LinkedIn URL',
+      websiteLink: 'Website URL',
+      researchGateLink: 'ResearchGate URL',
+      orcidLink: 'ORCID URL'
+    }[modalKeyToUpdate];
+    
+    // Validate URL - this uses the imported function which returns a string
+    const errorMessage = validateUrl(currentUrl || '', fieldName);
+    
+    if (errorMessage) { // If there's an error message
+      setUrlErrors(prev => ({
+        ...prev,
+        [modalKeyToUpdate]: errorMessage
+      }));
+      return;
+    }
+    
     handleUpdate &&
-      handleUpdate(
-        modalKeyToUpdate,
-        modalKeyToUpdate === 'linkedinLink'
-          ? currentLinkedinLink
-          : modalKeyToUpdate === 'websiteLink'
-          ? currentWebsiteLink
-          : modalKeyToUpdate === 'researchGateLink'
-          ? currentResearchGateLink
-          : currentOrcidLink
-      );
+      handleUpdate(modalKeyToUpdate, currentUrl);
+    
+    setUrlErrors(prev => ({
+      ...prev,
+      [modalKeyToUpdate]: ''
+    }));
+    
     setShowCreateForm(false);
   };
 
@@ -84,7 +115,7 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
           }
         >
           <SpriteSvg.AccountLinkLinkedin
-            viewBox="-4 -4 28 28"
+            viewBox="-4 -4 32 32"
             className={classNames(style.website)}
             sizeW={24}
             sizeH={24}
@@ -210,26 +241,43 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
                 }
                 id="tagName"
                 onChange={(e) => {
-                  modalKeyToUpdate === 'linkedinLink' &&
-                    setCurrentLinkedinLink(e.target.value);
-                  modalKeyToUpdate === 'websiteLink' &&
-                    setCurrentWebsiteLink(e.target.value);
-                  modalKeyToUpdate === 'researchGateLink' &&
-                    setCurrentResearchGateLink(e.target.value);
-                  modalKeyToUpdate === 'orcidLink' &&
-                    setCurrentOrcidLink(e.target.value);
+                  const value = e.target.value;
+                  
+                  // Update appropriate state based on which modal is open
+                  if (modalKeyToUpdate === 'linkedinLink') {
+                    setCurrentLinkedinLink(value);
+                  } else if (modalKeyToUpdate === 'websiteLink') {
+                    setCurrentWebsiteLink(value);
+                  } else if (modalKeyToUpdate === 'researchGateLink') {
+                    setCurrentResearchGateLink(value);
+                  } else if (modalKeyToUpdate === 'orcidLink') {
+                    setCurrentOrcidLink(value);
+                  }
+                  
+                  // Clear error for this field when user types
+                  if (urlErrors[modalKeyToUpdate]) {
+                    setUrlErrors(prev => ({
+                      ...prev,
+                      [modalKeyToUpdate]: ''
+                    }));
+                  }
                 }}
                 required
+                color={urlErrors[modalKeyToUpdate] ? "failure" : undefined}
                 helperText={
-                  !setShowCreateForm && (
-                    <span className="text-red-600 relative -top-3">
-                      Name already exists
+                  urlErrors[modalKeyToUpdate] && (
+                    <span className="text-red-600">
+                      {urlErrors[modalKeyToUpdate]}
                     </span>
                   )
                 }
               />
             </div>
+
             <Button
+              pill
+              color="purple"
+              className='bg-action-site hover:bg-action-hover'
               disabled={
                 (modalKeyToUpdate === 'linkedinLink' && !currentLinkedinLink) ||
                 (modalKeyToUpdate === 'websiteLink' && !currentWebsiteLink) ||
