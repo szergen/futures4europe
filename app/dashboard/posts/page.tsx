@@ -227,12 +227,12 @@ export default function DashboardProjects() {
                           key={postPage?.data?.title + index}
                           className={classNames('')}
                         >
-                          <div className="flex flex-wrap flex-start text-left">
+                          <div className="flex flex-wrap flex-start text-left w-full justify-between">
                             <Link
                               href={`/post/${postPage.data.slug}`}
                               className={classNames(
                                 style.miniPostWrapper,
-                                'w-full p-4 flex flex-col'
+                                'grow w-full p-4 flex flex-col'
                               )}
                             >
                               <MiniPagePost
