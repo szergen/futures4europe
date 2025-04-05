@@ -42,21 +42,40 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
-  const handleDeleteInfoPage = async (infoPageId: string) => {
-    setIsLoadingDeletePostPage(infoPageId);
-    try {
-      // Replace with your actual delete logic
-      await removeDataItem(infoPageId, {
-        dataCollectionId: 'InfoPages',
-      });
-      // TODO: Refresh Owned Pages
-    } catch (error) {
-      console.error('Failed to delete info page:', error);
-    } finally {
-      setIsLoadingDeletePostPage('');
-      handleUserDataRefresh();
-    }
-  };
+ // Add check for admin status
+ const isWixAdmin = userDetails?.isAdmin || false;
+
+ const handleDeletePostPage = async (infoPageId: string) => {
+   setIsLoadingDeletePostPage(infoPageId);
+   try {
+     // Replace with your actual delete logic
+     await removeDataItem(infoPageId, {
+       dataCollectionId: 'PostPages',
+     });
+     handleUserDataRefresh();
+   } catch (error) {
+     console.error('Failed to delete info page:', error);
+   } finally {
+     setIsLoadingDeletePostPage('');
+     handleUserDataRefresh();
+   }
+ };  
+
+  // const handleDeleteInfoPage = async (infoPageId: string) => {
+  //   setIsLoadingDeletePostPage(infoPageId);
+  //   try {
+  //     // Replace with your actual delete logic
+  //     await removeDataItem(infoPageId, {
+  //       dataCollectionId: 'InfoPages',
+  //     });
+  //     // TODO: Refresh Owned Pages
+  //   } catch (error) {
+  //     console.error('Failed to delete info page:', error);
+  //   } finally {
+  //     setIsLoadingDeletePostPage('');
+  //     handleUserDataRefresh();
+  //   }
+  // };
 
   useEffect(() => {
     // console.log('debug1 -> isLoggedIn:', isLoggedIn); // Debugging line
@@ -225,8 +244,8 @@ export default function DashboardProjects() {
                           key={postPage?.data?.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
-                          <div className="flex flex-wrap flex-start text-left">
-                            <Link href={`/post/${postPage.data.slug}`}>
+                          <div className="flex flex-wrap flex-start text-left w-full justify-between">
+                            <Link className='grow' href={`/post/${postPage.data.slug}`}>
                               <MiniPagePost
                                 pageTypeTag={postPage.data.pageTypes?.[0]}
                                 key={index}
@@ -258,6 +277,38 @@ export default function DashboardProjects() {
                                 ]?.slice(0, 3)}
                               />
                             </Link>
+                            {/* Admin Delete Button */}
+                            {isWixAdmin && (
+                              <div className="">
+                                <Button
+                                  size="sm"
+                                  color="failure"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    if (
+                                      window.confirm(
+                                        'Are you sure you want to delete this post?'
+                                      )
+                                    ) {
+                                      handleDeletePostPage(postPage?.data?._id);
+                                    }
+                                  }}
+                                  disabled={
+                                    isLoadingDeletePostPage ===
+                                    postPage?.data?._id
+                                  }
+                                  className="rounded-full p-2 h-8 w-8 flex items-center justify-center"
+                                >
+                                  <SpriteSvg.AccountTrashIcon
+                                    sizeH={16}
+                                    sizeW={16}
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                    strokeWidth={0}
+                                  />
+                                </Button>
+                              </div>
+                            )}                            
                           </div>
 
                           {isLoadingDeletePostPage &&
