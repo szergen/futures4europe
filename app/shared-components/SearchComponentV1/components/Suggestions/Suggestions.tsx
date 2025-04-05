@@ -374,13 +374,13 @@ const Suggestions: React.FC<SuggestionsProps> = ({
           <div className={style.quickResultsWrapper}>
             <span
               className={classNames(
-                'ml-2 pb-4 block text-[14px]',
+                'mt-6 ml-2 pb-4 block text-[14px]',
                 style.tagSuggestionsLabel
               )}
             >
               Quick Results
             </span>
-            <ul className={style.lists}>
+            <ul className={classNames('py-4', style.lists)}>
               {pageSuggestions?.map(
                 (pageSuggestion: any, index: number) =>
                   index < 5 && (
@@ -389,8 +389,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                       className={classNames(
                         index === highlightedIndexWithType.index &&
                           highlightedIndexWithType.type === 'page' &&
-                          'bg-gray-200',
-                        'flex items-center',
+                          'bg-gray-200 rounded-md',
+                          'flex items-center',
                         style.quickResults
                       )}
                       onMouseOver={() =>
@@ -403,11 +403,11 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         className={classNames(
                           index === highlightedIndexWithType.index &&
                             highlightedIndexWithType.type === 'page' &&
-                            'bg-gray-200',
-                          'flex items-center w-full'
+                            'bg-gray-200 rounded-sm',
+                            'flex items-center w-full'
                         )}
                         href={`${automaticallyDecidePathPrefixBasedOnPageType(
-                          pageSuggestion.item?.pageTypes?.[0]
+                          pageSuggestion.item?.pageTypes?.[0]?.name
                         )}${pageSuggestion.item?.slug}`}
                         target="_self"
                       >
@@ -467,7 +467,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                             {/* Page Content */}
                             <div
                               className={classNames(
-                                'w-full text-12 cursor-text',
+                                'w-full text-12',
                                 style.quickResultsContent
                               )}
                               // dangerouslySetInnerHTML={{
