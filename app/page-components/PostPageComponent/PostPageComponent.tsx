@@ -736,7 +736,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   console.log('postdatadata', postData);
 
   return (
-    <div className={classNames(style.postContainer)}>
+    <div className={classNames('m-auto mb-20', style.postContainer)}>
       {/* Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
