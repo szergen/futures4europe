@@ -2,7 +2,6 @@
   max-width: 860px!important;
 }
 .postContainer {
-  margin: 0 auto;
   max-width: 960px;
   display: flex;
   flex-direction: column;
