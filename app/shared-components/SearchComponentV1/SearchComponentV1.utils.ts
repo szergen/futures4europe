@@ -305,15 +305,18 @@ export const updateFilteredDataBasedOnClickedSuggestion = (
 // };
 
 /* TODO: catalin @szergen chek if this function is good */
-export const prioritizeTagInResults = (results, targetTagName, tagType = '') => {
+export const prioritizeTagInResults = (
+  results,
+  targetTagName,
+  tagType = ''
+) => {
   if (!targetTagName || !results?.length) return results;
-  
+
   return [...results].sort((a, b) => {
     // Define priority levels for different array fields based on tag type
     const getPriority = (item) => {
       // Skip checking these properties
       const excludeKeys = ['pageOwner'];
-      
       // Define high priority arrays based on tag type
       let highPriorityArrays = [];
       if (tagType === 'person') {
@@ -323,41 +326,58 @@ export const prioritizeTagInResults = (results, targetTagName, tagType = '') => 
       } else if (tagType === 'project') {
         highPriorityArrays = ['Project'];
       }
-      
+
       // Check high priority arrays first
       for (const key of highPriorityArrays) {
-        if (Array.isArray(item[key]) && item[key].some(tag => 
-          tag?.name?.toLowerCase() === targetTagName?.toLowerCase())) {
+        if (
+          Array.isArray(item[key]) &&
+          item[key].some(
+            (tag) => tag?.name?.toLowerCase() === targetTagName?.toLowerCase()
+          )
+        ) {
           return 3; // Highest priority
         }
       }
-      
+
       // Check other tag arrays next
-      const mediumPriorityArrays = ['domains', 'methods', 'countryTag', 'primaryTags'];
+      const mediumPriorityArrays = [
+        'domains',
+        'methods',
+        'countryTag',
+        'primaryTags',
+      ];
       for (const key of mediumPriorityArrays) {
-        if (Array.isArray(item[key]) && item[key].some(tag => 
-          tag?.name?.toLowerCase() === targetTagName?.toLowerCase())) {
+        if (
+          Array.isArray(item[key]) &&
+          item[key].some(
+            (tag) => tag?.name?.toLowerCase() === targetTagName?.toLowerCase()
+          )
+        ) {
           return 2; // Medium priority
         }
       }
-      
+
       // Finally check all other arrays
       for (const [key, value] of Object.entries(item)) {
-        if (!excludeKeys.includes(key) && 
-            !highPriorityArrays.includes(key) && 
-            !mediumPriorityArrays.includes(key) && 
-            Array.isArray(value) && 
-            value.some(tag => tag?.name?.toLowerCase() === targetTagName?.toLowerCase())) {
+        if (
+          !excludeKeys.includes(key) &&
+          !highPriorityArrays.includes(key) &&
+          !mediumPriorityArrays.includes(key) &&
+          Array.isArray(value) &&
+          value.some(
+            (tag) => tag?.name?.toLowerCase() === targetTagName?.toLowerCase()
+          )
+        ) {
           return 1; // Low priority
         }
       }
-      
+
       return 0; // No match
     };
-    
+
     const aPriority = getPriority(a);
     const bPriority = getPriority(b); // Fixed the double assignment here
-    
+
     // Sort by priority (higher numbers first)
     return bPriority - aPriority;
   });
@@ -367,11 +387,10 @@ export const updateFilteredDataBasedOnClickedTag = (
   clickedTag: string,
   filteredData: InitialData
 ) => {
-
   /* TODO: catalin @szergen chek if this function is good */
   // (1) find the type of tag
   const tagObj = filteredData?.tags?.find(
-    tag => tag?.name?.toLowerCase() === clickedTag?.toLowerCase()
+    (tag) => tag?.name?.toLowerCase() === clickedTag?.toLowerCase()
   );
 
   const tagType = tagObj?.tagType || '';
@@ -451,7 +470,11 @@ export const updateFilteredDataBasedOnClickedTag = (
 
   /* TODO: catalin @szergen chek if this function is good */
   //(2) before returning, prioritize results with the tag type information
-  allMatchedPages = prioritizeTagInResults(allMatchedPages, clickedTag, tagType);
+  allMatchedPages = prioritizeTagInResults(
+    allMatchedPages,
+    clickedTag,
+    tagType
+  );
 
   return {
     matchedPages: allMatchedPages?.length > 0

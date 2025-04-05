@@ -407,8 +407,8 @@ const iconPaths: IconPathsType = {
   ),
   AccountLinkOrcid: (
     <>
-      <rect x="3.7" y="7" width="2.5" height="13.8"/>
-      <path d="M14.4,7h-5.6v13.8h5.6c3.8,0,6.9-3.1,6.9-6.9s-3.1-6.9-6.9-6.9ZM14.4,18.3h-3.1v-8.8h3.1c2.4,0,4.4,2,4.4,4.4s-2,4.4-4.4,4.4Z"/>
+      <rect x="3.7" y="7" width="2.5" height="13.8" />
+      <path d="M14.4,7h-5.6v13.8h5.6c3.8,0,6.9-3.1,6.9-6.9s-3.1-6.9-6.9-6.9ZM14.4,18.3h-3.1v-8.8h3.1c2.4,0,4.4,2,4.4,4.4s-2,4.4-4.4,4.4Z" />
     </>
   ),
   AccountLinkResearchGate: (
