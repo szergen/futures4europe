@@ -1704,6 +1704,25 @@ const nextConfig = {
         permanent: true,
       },
       // End of Newsletters Dec 24
+      // Start of Newsletters April 2025
+      {
+        source: '/so/59PJm0OBB/c:path*',
+        destination: 'https://legacy.futures4europe.eu/so/59PJm0OBB/c:path*',
+        permanent: true,
+      },
+      {
+        source: '/so/59PJm0OBB',
+        has: [
+          {
+            type: 'query',
+            key: 'languageTag',
+            value: 'en',
+          },
+        ],
+        destination: 'https://shoutout.wix.com/so/59PJm0OBB?w=',
+        permanent: true,
+      },
+      // End of Newsletters April 2025
       {
         source: '/:path*',
         has: [
