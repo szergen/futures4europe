@@ -7,6 +7,16 @@
 .heroTitle {
   font-size: 2.5rem; /* Large font size */
   font-weight: bold; /* Bold text */
-  margin-bottom: 1rem; /* Margin below the title */
-  color: #4a5568;
+  margin-bottom: 0px; /* Margin below the title */
+  color: var(--primary-white);
+}
+
+@media only screen and (max-width: 768px) {
+
+  .heroTitle { 
+      color: var(--primary-white);
+      font-size: var(--w-font-size-display-heading);
+      margin: 0px;
+  }
+
 }

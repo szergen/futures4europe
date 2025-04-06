@@ -37,6 +37,7 @@ const Hero = ({ title, subtitle, pageType, children }: HeroProps) => {
         style.heroContainer,
         'bg-gray-100',
         'p-8',
+        'mb-8',
         'text-center'
       )}
     >
@@ -46,7 +47,7 @@ const Hero = ({ title, subtitle, pageType, children }: HeroProps) => {
         {title}
       </h1>
       {children}
-      <p className={classNames('text-lg', 'text-gray-700')}>{getSubtitle()}</p>
+      <p className={classNames('text-lg', 'text-white')}>{getSubtitle()}</p>
     </div>
   );
 };

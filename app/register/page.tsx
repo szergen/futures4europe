@@ -25,8 +25,6 @@ import { subscribeToNewsletter } from '@app/wixUtils/client-side';
 import { refetchTags } from '@app/utils/refetch-utils';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
 
-// import { IOAuthStrategy, useWixAuth } from '@wix/sdk-react';
-
 export default function RegisterPage() {
   const [error, setError] = useState('');
   // const router = useRouter();
@@ -63,17 +61,73 @@ export default function RegisterPage() {
     }
   };
 
+  // TODO @Alex de verificat, am pus o verificare sa nu poti face cont daca pui whitespace
+  // rezolvat un issue cu un cont care avea un saptiu simplu ca nume
+
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+
+  const validateName = (name, fieldName) => {
+    // Check if name is undefined, null, or not a string
+    if (!name || typeof name !== 'string') {
+      return `${fieldName} is required`;
+    }
+
+    // Check if name is at least 2 characters and not just whitespace
+    if (name.length < 2 || name.trim() === '') {
+      return `${fieldName} must be at least 2 characters and not just whitespace`;
+    }
+
+    // Check if name contains numbers
+    if (/\d/.test(name)) {
+      return `${fieldName} cannot contain numbers`;
+    }
+
+    return '';
+  };
+
   const handleRegister = async (event: SubmitEvent) => {
     event.preventDefault();
+
+    const form = event.currentTarget;
+    // Access form fields properly using HTMLFormElement methods
+    const email = (form.elements.namedItem('email') as HTMLInputElement)?.value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement)
+      ?.value;
+    const firstName = (form.elements.namedItem('firstName') as HTMLInputElement)
+      ?.value;
+    const lastName = (form.elements.namedItem('lastName') as HTMLInputElement)
+      ?.value;
+
+    // Reset previous errors
+    setError('');
+    setFirstNameError('');
+    setLastNameError('');
+
+    // Validate first name
+    const firstNameValidationError = validateName(firstName, 'First name');
+    if (firstNameValidationError) {
+      setFirstNameError(firstNameValidationError);
+      return;
+    }
+
+    // Validate last name
+    const lastNameValidationError = validateName(lastName, 'Last name');
+    if (lastNameValidationError) {
+      setLastNameError(lastNameValidationError);
+      return;
+    }
+
     try {
       setShowAccountCreatedModal(true);
       const email = event?.target?.email?.value;
       const password = event.target?.password?.value;
       const firstName = event.target?.firstName?.value;
       const lastName = event.target?.lastName?.value;
-      console.log('email', email);
-      console.log('password', password);
-      console.log('captchaToken', captchaToken);
+      // console.log('email', email);
+      // console.log('password', password);
+      // console.log('captchaToken', captchaToken);
+
       const response = await wixRegister(email, password, {
         profilePrivacyStatus: 'PUBLIC',
         contactInfo: {
@@ -81,11 +135,11 @@ export default function RegisterPage() {
           lastName: lastName,
         },
       });
-      console.log('response', response);
 
-      // TODO @alex adaugat consent newsletter
+      // console.log('response', response);
       const marketingConsent = await subscribeToNewsletter(email);
-      console.log('marketingConsent', marketingConsent);
+
+      //console.log('marketingConsent', marketingConsent);
       setSubmitState('success');
 
       // #region Wix upload logic
@@ -93,12 +147,13 @@ export default function RegisterPage() {
       const tagExists = tags.find(
         (tag) => tag.name === firstName + ' ' + lastName
       );
+
       if (response && !tagExists) {
         console.log('Tag does not exist, uploading tag');
         tagResult = await uploadTag(firstName + ' ' + lastName);
         console.log('tagResult', tagResult);
         // if (tagResult) {
-        await refetchTags();
+        // await refetchTags();
         handleTagCreated();
         setIsTagCreated(true);
         // }
@@ -116,8 +171,23 @@ export default function RegisterPage() {
             'Email already exists. Please try again with a different mail.'
           );
           break;
+        case '-19988':
+          setError('Password is too short. Please use at least 8 characters.');
+          break;
+        case '-19989':
+          setError(
+            'Password is too weak. Please include a mix of letters, numbers, and special characters.'
+          );
+          break;
         default:
-          setError('Registration failed. Please try again.');
+          // If there's a description in the error, use that
+          if (err?.details?.applicationError?.description) {
+            setError(err.details.applicationError.description);
+          } else if (err?.message) {
+            setError(err.message);
+          } else {
+            setError('Registration failed. Please try again.');
+          }
           break;
       }
       console.error('Registration failed:', err);
@@ -129,7 +199,7 @@ export default function RegisterPage() {
     }
 
     // Add your submission logic here
-    console.log('Submitting email:', email);
+    // console.log('Submitting email:', email);
   };
 
   return (
@@ -150,7 +220,7 @@ export default function RegisterPage() {
                 )}
                 <form
                   onSubmit={handleRegister}
-                  className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl"
+                  className="flex flex-col w-full max-w-[335px] h-full pb-6 text-center bg-white rounded-3xl"
                 >
                   <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
                     Register Account
@@ -206,6 +276,11 @@ export default function RegisterPage() {
                     icon={HiMail}
                     required
                   />
+                  {firstNameError && (
+                    <p className="mb-10 text-red-500 text-sm mt-1 text-start">
+                      {firstNameError}
+                    </p>
+                  )}
                   {/* Last Name */}
                   <Label
                     className="mb-2 text-sm text-start text-grey-900"
@@ -223,8 +298,13 @@ export default function RegisterPage() {
                     icon={HiMail}
                     required
                   />
-                  {/* Password */}
+                  {lastNameError && (
+                    <p className="mb-10 text-red-500 text-sm mt-1 text-start">
+                      {lastNameError}
+                    </p>
+                  )}
 
+                  {/* Password */}
                   <Label
                     className="mb-2 text-sm text-start text-grey-900"
                     htmlFor="password"
@@ -290,12 +370,20 @@ export default function RegisterPage() {
                         <div>
                           <strong className="font-medium text-black relative">
                             By registering, you agree to the
-                            <a href="#" className="text-blue-600">
+                            <a
+                              href="/static-pages/terms-of-use"
+                              target="_blank"
+                              className="text-blue-600"
+                            >
                               {' '}
-                              Terms of Service{' '}
+                              Terms of use{' '}
                             </a>
                             and
-                            <a href="#" className="text-blue-600">
+                            <a
+                              href="/static-pages/privacy-policy"
+                              target="_blank"
+                              className="text-blue-600"
+                            >
                               {' '}
                               Privacy Policy
                             </a>
@@ -328,8 +416,12 @@ export default function RegisterPage() {
                         className="font-normal text-gray-500 dark:text-gray-300"
                       >
                         I agree my information will be processed in accordance
-                        with the Future4Europe and Eye of Europe{' '}
-                        <a href="#" className="text-blue-600">
+                        with the Future4Europe{' '}
+                        <a
+                          href="/static-pages/privacy-policy"
+                          target="_blank"
+                          className="text-blue-600"
+                        >
                           Privacy Policy
                         </a>
                         .
@@ -345,60 +437,69 @@ export default function RegisterPage() {
 
       <Modal
         show={showAccountCreatedModal}
+        theme={{
+          header: {
+            close: {
+              base: 'hidden',
+            },
+            base: 'flex items-center justify-between rounded-t border-b p-5 dark:border-gray-600',
+            title: 'w-full text-center',
+          },
+        }}
         onClose={() => setShowAccountCreatedModal(false)}
       >
-        <Modal.Header>Registering Account</Modal.Header>
+        <Modal.Header>
+          <div className="md:text-2xl text-base text-gray-900 font-semibold text-center">
+            Account Registration
+          </div>
+        </Modal.Header>
         <Modal.Body>
           {isTagCreated ? (
             <div>
               <div className="text-center m-4">
-                <div>
+                <div className="bg-white p-6  md:mx-auto">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    strokeWidth={4}
-                    stroke="green"
-                    className="w-6 h-6 inline-block"
+                    className="text-green-600 w-16 h-16 mx-auto my-6"
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
+                      fill="currentColor"
+                      d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"
+                    ></path>
                   </svg>
+                  <div className="text-center">
+                    <h3 className="text-base text-gray-900 font-semibold text-center">
+                      The account has been successfully created
+                    </h3>
+                    <p className="text-gray-600 mb-10 my-2">
+                      Thank you for registering to Futures4europe
+                    </p>
+
+                    <div className="flex flex-wrap justify-center">
+                      <Link href="/login">
+                        <Button
+                          color="primary"
+                          type="submit"
+                          theme={{
+                            base: 'rounded-md px-12 bg-green-600 hover:bg-green-500 text-white font-semibold py-3',
+                          }}
+                        >
+                          Login
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                Account successfully created. <br />
-                <span className="font-bold">
-                  {/* An admin must approve your account before you can login. */}
-                  {/* Green checkmark */}
-                </span>
-              </div>
-              <div className="flex flex-wrap justify-center">
-                {/* <Link href="/">
-                  <Button
-                    color="primary"
-                    className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
-                    type="submit"
-                  >
-                    Back to Homepage
-                  </Button>
-                </Link> */}
-                <Link href="/login">
-                  <Button
-                    color="primary"
-                    className="w-full btn-main px-2 py-2 mb-6 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-blue-600 focus:ring-4 bg-blue-500"
-                    type="submit"
-                  >
-                    Login
-                  </Button>
-                </Link>
               </div>
             </div>
           ) : (
             <>
               <div className="text-center m-4">Creating Account</div>
-              <LoadingSpinner />
+              <div className="flex flex-wrap justify-center">
+                <LoadingSpinner />
+              </div>
             </>
           )}
         </Modal.Body>

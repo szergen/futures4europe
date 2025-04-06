@@ -87,7 +87,7 @@ const NavItem: React.FC<{
     className={classNames(
       className,
       style.navItem,
-      'text-purple-site flex justify-center items-center',
+      'text-white flex justify-center items-center',
       active && style.active
     )}
   >
@@ -132,7 +132,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
         />
       ))}
     </div>
-    {SubNav}
+    {/* {SubNav} */}
   </>
 );
 

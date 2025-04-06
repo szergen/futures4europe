@@ -70,7 +70,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     }
     // Check if title starts or ends with space
     if (trimmedTitle !== tempTitle) {
-      return 'Title cannot start or end with spaces';
+      return 'This field dose not accept leading and/or trailing whitespace (spaces). Please make sure that you do not have spaces at the start and end of the title.';
     }
     // Check for excessive spaces
     if (/\s{2,}/.test(trimmedTitle)) {
@@ -150,7 +150,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             )}
           </div>
           {!isEditModeOn ? (
-            <Typography tag="h3" className="text-gray-800 mt-2">
+            <Typography tag="h3" className="text-gray-800 text-sm mt-2">
               {post?.projectResultMedia?.displayName}
             </Typography>
           ) : (
@@ -350,7 +350,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   <Link
                     href={post?.eventRegistration}
                     target="_blank"
-                    className="underline text-lg font-bold"
+                    className="bg-secondary-site/80 border-none text-white px-4 py-2 text-center font-semibold no-underline inline-block text-sm my-1 cursor-pointer rounded-lg hover:bg-secondary-site transition-all duration-300 ease-in-out hover:shadow-md hover:text-white-200"
                   >
                     Register Here
                   </Link>
@@ -387,7 +387,9 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                       'Add the country tag relevant to your post'
                     : 'Add the country tag relevant to your post'
                 }
-                tags={tags?.filter((tag) => tag?.tagType === 'country')}
+                tags={tags?.filter(
+                  (tag) => tag?.tagType === 'country' && !tag?.masterTag
+                )}
                 className="mt-1"
                 selectedValue={post.countryTag?.name || undefined}
                 updatePostData={(value) =>

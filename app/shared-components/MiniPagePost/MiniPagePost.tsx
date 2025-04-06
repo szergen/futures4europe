@@ -10,6 +10,7 @@ import AffiliationsComponent from '@app/page-components/PersonPageComponent/comp
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTagPopularity } from '@app/hooks/useTagPopularity';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import { getImageUrlForMedia } from '@app/page-components/PageComponents.utils';
 
 export type MiniPagePostProps = {
   title: string;
@@ -150,7 +151,11 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
       >
         {pageTypeTag && <Tag {...pageTypeTag} className="ml-1 mb-1" />}
         <Image
-          src={image && image !== ' ' ? image : PLACEHOLDER_IMAGE}
+          src={
+            image && image !== ' '
+              ? getImageUrlForMedia(image)?.url || getImageUrlForMedia(image)
+              : PLACEHOLDER_IMAGE
+          }
           width={650}
           height={650}
           alt="Post Image"
@@ -313,7 +318,7 @@ export const MiniPagePost: React.FC<MiniPagePostProps> = (props) => {
               }))}
               isEditModeOn={false} // Assuming you don't want to edit this in MiniPagePost
               tagListTitle=""
-              tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+              tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
               tagType="organisation"
             />
           )}

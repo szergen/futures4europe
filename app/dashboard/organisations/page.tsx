@@ -140,7 +140,7 @@ export default function DashboardProjects() {
             'mt-14', // Global utility classes (e.g., Tailwind, or other global CSS)
             'mb-10',
             'p-8',
-            'bg-purple-site'
+            'bg-primary-site'
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>

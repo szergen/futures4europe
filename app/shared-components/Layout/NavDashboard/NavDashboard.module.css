@@ -1,14 +1,14 @@
 .UserDashboardWrapper {
-  max-width: var(--p-breakpoints-base);
+  width: 100%;
 }
 .UserDashboardNavItem {
   font-size: var(--w-font-size-sub-section-heading);
   text-align: center;
   padding: 0px var(--w-space-xl);
   padding: calc(var(--w-space-s) * 1.4);
-  border-radius: var(--p-border-radius-400);
-  height: 100px;
+  height: 85px;
   position: relative;
+  background: var(--primary-blue);
 }
 /* .UserDashboardNavItem::before {
   content: "";
@@ -25,7 +25,7 @@
   right: calc(var(--w-space-s) * -1);
   transform: translateY(-50%);
   height: 30px;
-  border-right: 1px solid var(--primary-color);
+  border-right: 1px solid var(--primary-white-20);
 }
 .UserDashboardNavItem a {
   font-size: var(--w-font-size-menu);
@@ -36,12 +36,12 @@
   margin-left: calc(var(--w-space-s) * 1);
   margin-right: calc(var(--w-space-s) * 1);
   border-radius: var(--p-border-radius-400);
-  height: 100px;
+  height: 68px;
   position: relative;
 }
 .UserDashboardNavItem a:hover,
 .UserDashboardNavItem a.active {
-  background: var(--primary-brand);
+  background: var(--primary-white-20);
   color: var(--primary-white);
   cursor: pointer;
 }
@@ -58,13 +58,13 @@
 }
 .subnavDashboard li a:hover {
   padding: var(--w-space-s);
-  border-bottom: 1px solid var(--primary-brand);
-  color: var(--primary-brand);
+  border-bottom: 1px solid var(--primary-secondary);
+  color: var(--primary-secondary);
 }
 .subnavDashboard .active {
-  color: var(--primary-brand);
+  color: var(--primary-secondary);
   font-weight: var(--w-font-weight-heading);
-  border-bottom: 1px solid var(--primary-brand);
+  border-bottom: 1px solid var(--primary-secondary);
 }
 
 /* media query */

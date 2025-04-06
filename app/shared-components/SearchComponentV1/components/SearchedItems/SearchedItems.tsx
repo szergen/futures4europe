@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import SearchedItem from './SearchedItem/SearchedItem';
+import style from './SearchedItems.module.css';
+import classNames from 'classnames';
 
 export type SearchedItemsProps = {
   searchedItems: any[];
@@ -21,7 +23,7 @@ const SearchedItems: React.FC<SearchedItemsProps> = ({
   }, [selectedSortTag]);
 
   return (
-    <ul className="style.searchedItems flex">
+    <ul className={classNames(style.searchedItems)}>
       {searchedItems?.map((item, index) => (
         <SearchedItem
           key={index}

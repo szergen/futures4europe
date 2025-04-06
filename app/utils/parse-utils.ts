@@ -45,14 +45,11 @@ export const decidePageTypeItems = (
   }
 };
 
-export const automaticallyDecidePathPrefixBasedOnPageType = (type: string) => {
-  switch (type) {
-    case 'post':
-      return '/post/';
-    case 'event':
-      return '/post/';
-    case 'project-result':
-      return '/post/';
+export const automaticallyDecidePathPrefixBasedOnPageType = (
+  typeName: string = ''
+) => {
+  //console.log('TYPE ' + typeName);
+  switch (typeName) {
     case 'project info':
       return '/project/';
     case 'person info':

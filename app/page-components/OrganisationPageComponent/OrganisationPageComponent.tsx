@@ -5,7 +5,6 @@ import style from './OrganisationPageComponent.module.css';
 import Tag, { TagProps } from '@app/shared-components/Tag/Tag';
 import Typography from '@app/shared-components/Typography/Typography';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
-import PersonDescriptionComponent from '../shared-page-components/DescriptionComponent/DescriptionComponent';
 import TagListComponent from '../shared-page-components/TagListComponent/TagListComponent';
 import AffiliationsComponent from '../PersonPageComponent/components/AffiliationsComponent/AffiliationsComponent';
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
@@ -40,6 +39,7 @@ import {
   refetchTags,
 } from '@app/utils/refetch-utils';
 import ContentComponent from '../PostPageComponent/components/ContentComponent/ContentComponent';
+import { invalidateOrganisationPageCache } from '@app/utils/cache-utils';
 
 function OrganisationPageComponent({
   pageTitle,
@@ -408,15 +408,17 @@ function OrganisationPageComponent({
           })
           ?.filter((item: any) => item?.data?.projectTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsProjects = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsProjects = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsProjects',
-          updatedOrganisationsProjects
-        );
+          console.log(
+            'debug111->updatedOrganisationsProjects',
+            updatedOrganisationsProjects
+          );
+        }
       }
     }
 
@@ -464,15 +466,17 @@ function OrganisationPageComponent({
           })
           ?.filter((item: any) => item?.data?.personTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsPeople = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsPeople = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsPeople',
-          updatedOrganisationsPeople
-        );
+          console.log(
+            'debug111->updatedOrganisationsPeople',
+            updatedOrganisationsPeople
+          );
+        }
       }
     }
 
@@ -512,9 +516,12 @@ function OrganisationPageComponent({
     if (
       !arraysEqual(organisationData.domains, defaultOrganisationData.domains)
     ) {
+      const validatedDomains = organisationData.domains?.filter(
+        (domain: any) => domain?._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.domains?.map((domain: any) => domain._id),
+        validatedDomains?.map((domain: any) => domain._id),
         'domains',
         organisationData._id
       );
@@ -525,9 +532,12 @@ function OrganisationPageComponent({
     if (
       !arraysEqual(organisationData.methods, defaultOrganisationData.methods)
     ) {
+      const validatedMethods = organisationData.methods?.filter(
+        (method: any) => method?._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.methods?.map((method: any) => method._id),
+        validatedMethods?.map((method: any) => method._id),
         'methods',
         organisationData._id
       );
@@ -580,11 +590,13 @@ function OrganisationPageComponent({
     }
 
     // Revalidate the cache for the page
-    await refetchTags();
-    await refetchInfoPages();
-    await refetchAffiliations();
-    handleTagCreated();
-    await revalidateDataItem(`/organisation/${organisationData.slug}`);
+    // await refetchTags();
+    // await refetchInfoPages();
+    // await refetchAffiliations();
+    // handleTagCreated();
+    // await revalidateDataItem(`/organisation/${organisationData.slug}`);
+
+    await invalidateOrganisationPageCache(organisationData.slug);
 
     setIsSaveInProgress(false);
   };
@@ -738,9 +750,12 @@ function OrganisationPageComponent({
 
     // #region Update Foresight Methods
     if (organisationData.methods && newOrganisationInfoId) {
+      const validatedMethods = organisationData.methods?.filter(
+        (method: any) => method?._id
+      );
       const updatedMethods = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.methods?.map((method: any) => method._id),
+        validatedMethods?.map((method: any) => method._id),
         'methods',
         newOrganisationInfoId
       );
@@ -750,9 +765,12 @@ function OrganisationPageComponent({
 
     // #region Update Domains
     if (organisationData.domains && newOrganisationInfoId) {
+      const validatedDomains = organisationData.domains?.filter(
+        (domain: any) => domain?._id
+      );
       const updatedDomains = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.domains?.map((domain: any) => domain._id),
+        validatedDomains?.map((domain: any) => domain._id),
         'domains',
         newOrganisationInfoId
       );
@@ -762,9 +780,12 @@ function OrganisationPageComponent({
 
     // #region Update activity
     if (organisationData.activity && newOrganisationInfoId) {
+      const validatedActivity = organisationData.activity?.filter(
+        (activity: any) => activity?._id
+      );
       const updatedActivity = await replaceDataItemReferences(
         'InfoPages',
-        organisationData.activity?.map((activity: any) => activity._id),
+        validatedActivity?.map((activity: any) => activity._id),
         'activity',
         newOrganisationInfoId
       );
@@ -810,17 +831,19 @@ function OrganisationPageComponent({
               },
             };
           })
-          ?.filter((item: any) => item?.data?.projectTag?.name !== '');
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsProjects = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsProjects = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsProjects',
-          updatedOrganisationsProjects
-        );
+          console.log(
+            'debug111->updatedOrganisationsProjects',
+            updatedOrganisationsProjects
+          );
+        }
       }
     }
     // #endregion
@@ -862,17 +885,19 @@ function OrganisationPageComponent({
               },
             };
           })
-          ?.filter((item: any) => item?.data?.personTag?.name !== '');
+          ?.filter((item: any) => item?.data?.organisationTag?.name !== '');
         console.log('debug111->newAffiliationsObject', newAffiliationsObject);
-        const updatedOrganisationsPeople = await bulkInsertItems(
-          'Affiliations',
-          newAffiliationsObject
-        );
+        if (newAffiliationsObject?.length > 0) {
+          const updatedOrganisationsPeople = await bulkInsertItems(
+            'Affiliations',
+            newAffiliationsObject
+          );
 
-        console.log(
-          'debug111->updatedOrganisationsPeople',
-          updatedOrganisationsPeople
-        );
+          console.log(
+            'debug111->updatedOrganisationsPeople',
+            updatedOrganisationsPeople
+          );
+        }
       }
     }
     // #endregion
@@ -924,12 +949,13 @@ function OrganisationPageComponent({
     // #endregion
 
     // #region Revalidate the cache for the page
-    await refetchInfoPages();
-    await refetchTags();
-    await refetchAffiliations();
-    await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
-    handleTagCreated();
+    // await refetchInfoPages();
+    // await refetchTags();
+    // await refetchAffiliations();
+    // await revalidateDataItem(`/organisation/${newOrganisationInfoSlug}`);
+    // handleTagCreated();
     handleUserDataRefresh();
+    await invalidateOrganisationPageCache(newOrganisationInfoSlug);
     router.push(`/organisation/${newOrganisationInfoSlug}`);
     setIsSaveInProgress(false);
     // #endregion
@@ -962,21 +988,38 @@ function OrganisationPageComponent({
     isNewPage && handleTagCreated();
   }, []);
 
+  // Save required fields
+
+  const checkRequiredFields = () => {
+    // Check if essential fields are filled
+    return (
+      !organisationData?.organisationTag?.name ||
+      organisationData?.organisationTag?.name.trim().length < 2 ||
+      !organisationData?.countryTag ||
+      !organisationData?.countryTag?._id
+    );
+  };
+
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
+          {/* // Updated save button to be disabled when required fields aren't filled */}
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
               setIsEditModeOn(!isEditModeOn);
               setDefaultOrganisationData(organisationData);
             }}
-            disabled={isEditModeOn && checkValidationErrors()}
+            disabled={
+              isEditModeOn && (checkValidationErrors() || checkRequiredFields())
+            }
             className={classNames(
               'btn btn-save',
-              isEditModeOn && checkValidationErrors() && 'bg-gray-400'
+              isEditModeOn &&
+                (checkValidationErrors() || checkRequiredFields()) &&
+                'bg-gray-400'
             )}
           >
             {!isEditModeOn
@@ -1004,7 +1047,7 @@ function OrganisationPageComponent({
                 setIsEditModeOn(!isEditModeOn);
                 router.push(`/dashboard/projects`);
               }}
-              className="btn btn-edit flex-end align-right"
+              className="btn btn-gray flex-end align-right"
             >
               Go back to dashboard
             </button>
@@ -1032,6 +1075,7 @@ function OrganisationPageComponent({
         isNewPage={isNewPage}
         handleTagCreated={handleTagCreated}
         setValidationState={updateValidationState}
+        requiredFields={['name', 'country']} // Add this new prop
       />
       {/* Organisation Description */}
       {/* <PersonDescriptionComponent
@@ -1071,7 +1115,7 @@ function OrganisationPageComponent({
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('people', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'person')}
+        tags={tags?.filter((tag) => tag?.tagType === 'person')}
         handleTagCreated={handleTagCreated}
         tagType="person"
       />
@@ -1081,7 +1125,7 @@ function OrganisationPageComponent({
         tagList={organisationData.methods}
         tagListTitle="Foresight Methods"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'foresight method')}
+        tags={tags?.filter((tag) => tag?.tagType === 'foresight method')}
         selectedValues={organisationData.methods?.map(
           (method: any) => method?.name
         )}
@@ -1097,7 +1141,7 @@ function OrganisationPageComponent({
         tagList={organisationData.domains}
         tagListTitle="Domains"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'domain')}
+        tags={tags?.filter((tag) => tag?.tagType === 'domain')}
         selectedValues={organisationData.domains?.map(
           (domain: any) => domain?.name
         )}
@@ -1117,7 +1161,7 @@ function OrganisationPageComponent({
         updatePersonDataAffiliations={(value) =>
           updateOrganisationDataOnKeyValue('projects', value)
         }
-        tags={tags.filter((tag) => tag?.tagType === 'project')}
+        tags={tags?.filter((tag) => tag?.tagType === 'project')}
         handleTagCreated={handleTagCreated}
         tagType="project"
       />
@@ -1127,7 +1171,7 @@ function OrganisationPageComponent({
         tagList={organisationData.memberOrganisations}
         tagListTitle="Members"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOrganisations?.map(
           (domain: any) => domain?.name
         )}
@@ -1143,7 +1187,7 @@ function OrganisationPageComponent({
         tagList={organisationData.memberOfOrganisations}
         tagListTitle="Member of"
         isEditModeOn={isEditModeOn}
-        tags={tags.filter((tag) => tag?.tagType === 'organisation')}
+        tags={tags?.filter((tag) => tag?.tagType === 'organisation')}
         selectedValues={organisationData.memberOfOrganisations?.map(
           (domain: any) => domain?.name
         )}

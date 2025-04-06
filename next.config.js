@@ -1,10 +1,37 @@
 /** @type {import('next').NextConfig} */
-const scheduleCronJobs = require('./cron');
+// const scheduleCronJobs = require('./cron');
 
 const nextConfig = {
   env: {},
-  webpack(config) {
-    scheduleCronJobs();
+  webpack: (config, { dev, isServer }) => {
+    // scheduleCronJobs();
+
+    // REVIEW @ALEX
+    // REVIEW @ALEX
+    // Add cache configuration
+
+    if (dev) {
+      // Optimize for faster development experience
+      config.watchOptions = {
+        poll: 500, // Reduced from 800 for faster checks
+        aggregateTimeout: 200, // Reduced from 300 for faster updates
+        ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**'], // Ignore watching unnecessary files
+      };
+
+      // Optimize webpack cache settings
+      config.cache = {
+        type: 'memory', // Use memory instead of filesystem for faster hot reload
+      };
+
+      // Optimize development build
+      config.optimization = {
+        ...config.optimization,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false,
+      };
+    }
+
     return config;
   },
   reactStrictMode: false,
@@ -62,7 +89,7 @@ const nextConfig = {
     return [
       {
         source: '/ourfutures',
-        destination: '/project/OurFutures',
+        destination: 'https://legacy.futures4europe.eu/ourfutures',
         permanent: true,
       },
       {
@@ -1677,6 +1704,25 @@ const nextConfig = {
         permanent: true,
       },
       // End of Newsletters Dec 24
+      // Start of Newsletters April 2025
+      {
+        source: '/so/59PJm0OBB/c:path*',
+        destination: 'https://legacy.futures4europe.eu/so/59PJm0OBB/c:path*',
+        permanent: true,
+      },
+      {
+        source: '/so/59PJm0OBB',
+        has: [
+          {
+            type: 'query',
+            key: 'languageTag',
+            value: 'en',
+          },
+        ],
+        destination: 'https://shoutout.wix.com/so/59PJm0OBB?w=',
+        permanent: true,
+      },
+      // End of Newsletters April 2025
       {
         source: '/:path*',
         has: [
@@ -1699,10 +1745,53 @@ const nextConfig = {
         source: '/stories',
         destination: 'https://legacy.futures4europe.eu/stories',
         permanent: true,
-      },   
-         
+      },
     ];
   },
 };
 
 module.exports = nextConfig;
+
+// Injected content via Sentry wizard below
+
+const { withSentryConfig } = require('@sentry/nextjs');
+
+module.exports = withSentryConfig(module.exports, {
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options
+
+  org: 'futures4europe',
+  project: 'javascript-nextjs',
+
+  // Only print logs for uploading source maps in CI
+  silent: !process.env.CI,
+
+  // For all available options, see:
+  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+  // Upload a larger set of source maps for prettier stack traces (increases build time)
+  widenClientFileUpload: true,
+
+  // Automatically annotate React components to show their full name in breadcrumbs and session replay
+  reactComponentAnnotation: {
+    enabled: true,
+  },
+
+  // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
+  // This can increase your server load as well as your hosting bill.
+  // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
+  // side errors will fail.
+  tunnelRoute: '/monitoring',
+
+  // Hides source maps from generated client bundles
+  hideSourceMaps: true,
+
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  disableLogger: true,
+
+  // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
+  // See the following for more information:
+  // https://docs.sentry.io/product/crons/
+  // https://vercel.com/docs/cron-jobs
+  automaticVercelMonitors: true,
+});

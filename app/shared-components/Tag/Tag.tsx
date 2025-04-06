@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import style from './Tag.module.css';
 import { TagCategories } from './Tag.utils';
 import TagContainer from './components/TagContainer/TagContainer';
-import PopoverComponent from '../PopoverComponent/PopoverComponent';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import { getTagById } from '@app/utils/tags.utls';
 
 export type TagProps = {
   name: string;
@@ -28,6 +28,7 @@ export type TagProps = {
   mentions?: number;
   hardcodedMentions?: number;
   disableUnderline?: boolean;
+  masterTag?: string;
 };
 
 export const Tag: React.FC<TagProps> = ({
@@ -48,11 +49,19 @@ export const Tag: React.FC<TagProps> = ({
   tagType,
   _id,
   disableUnderline,
+  masterTag,
 }) => {
   if (!name) return null;
 
   const { tags, tagsFetched } = useAuth();
-  const [currentPopularity, setCurrentPopularity] = useState();
+  const [masterTagState, setMasterTagState] = useState<TagProps | undefined>({
+    name,
+    tagLine,
+    picture,
+  });
+  const [currentPopularity, setCurrentPopularity] = useState<
+    number | undefined
+  >(undefined);
   const tagPageLinkOrMentionsLink = tagPageLink
     ? tagPageLink
     : _id
@@ -64,9 +73,20 @@ export const Tag: React.FC<TagProps> = ({
 
   useEffect(() => {
     if (!tagsFetched || currentPopularity) return;
-    const tag = tags?.find((tag) => tag?.name === name);
+    const tag = tags?.find(
+      (tag) => tag?.name?.toLowerCase() === name?.toLowerCase()
+    );
     if (tag) {
-      setCurrentPopularity(tag.mentions);
+      setCurrentPopularity(tag?.mentions);
+      if (masterTag) {
+        const foundMasterTag = getTagById(tags, masterTag);
+        foundMasterTag &&
+          setMasterTagState({
+            name: foundMasterTag.name,
+            tagLine: foundMasterTag.tagLine,
+            picture: foundMasterTag.picture,
+          });
+      }
     }
     // console.log(`tag ${tag} has been referenced ${popularity} times`);
   }, [tags, tagsFetched]);
@@ -87,25 +107,25 @@ export const Tag: React.FC<TagProps> = ({
             )}
           >
             <TagContainer
-              name={name}
+              name={masterTagState?.name || name}
               className={className}
               tagCategory={tagCategory}
               popularity={
                 hardcodedMentions ? hardcodedMentions : currentPopularity
               }
               tagTrend={tagTrend}
-              picture={picture}
+              picture={masterTagState?.picture || picture}
               pictureAlt={pictureAlt}
               disableTooltip={disableTooltip}
               disablePopularityHover={disablePopularityHover}
-              tagLine={tagLine}
+              tagLine={masterTagState?.tagLine || tagLine}
               _id={_id}
               tagType={tagType}
             />
           </Link>
         ) : (
           <TagContainer
-            name={name}
+            name={masterTagState?.name || name}
             className={classNames(
               disableLink && tagPageLink && style.tagLink,
               className
@@ -115,11 +135,11 @@ export const Tag: React.FC<TagProps> = ({
               hardcodedMentions ? hardcodedMentions : currentPopularity
             }
             tagTrend={tagTrend}
-            picture={picture}
+            picture={masterTagState?.picture || picture}
             pictureAlt={pictureAlt}
             disableTooltip={disableTooltip}
             disablePopularityHover={disablePopularityHover}
-            tagLine={tagLine}
+            tagLine={masterTagState?.tagLine || tagLine}
             _id={_id}
             tagType={tagType}
           />

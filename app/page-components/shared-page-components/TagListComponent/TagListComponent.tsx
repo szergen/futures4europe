@@ -47,7 +47,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
 
   // Determine if tagline should be shown based on tag type
   const shouldShowTagline = tagType
-    ? tagTypesWithTagline.includes(tagType.toLowerCase())
+    ? tagTypesWithTagline.includes(tagType?.toLowerCase())
     : true;
 
   return (
@@ -62,7 +62,7 @@ const TagListComponent: React.FC<TagListComponentProps> = ({
         tagList?.map((tag) => <Tag key={tag?.name} {...tag} />)
       ) : (
         <TagPicker
-          tags={tags}
+          tags={tags?.filter((tag) => !tag?.masterTag)}
           className="w-full"
           isMulti
           selectedValues={selectedValues}

@@ -10,6 +10,7 @@
   text-transform: capitalize;
   letter-spacing: -0.01em;
   position: relative;
+  z-index: 0;
 
   .tagPicture {
     border-radius: 0.45em;
@@ -27,7 +28,7 @@
     cursor: pointer;
   }
   .tagCounterBody:hover .popularity {
-    background: #9c8af1!important;
+    background: #9c8af1 !important;
     color: var(--primary-white);
     text-decoration-color: var(--primary-white);
     border-radius: var(--p-border-radius-100);
@@ -79,7 +80,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: var(--w-font-size-tag);
-    line-height: var(--w-space-xxl);
+    line-height: 2;
     letter-spacing: var(--p-font-letter-spacing-tag);
   }
   .tagBodyText img {
@@ -144,4 +145,7 @@
     line-height: var(--w-line-height-normal);
     height: var(--w-space-xxl);
   }
+}
+
+@media only screen and (max-width: 768px) {
 }

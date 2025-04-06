@@ -1,30 +1,80 @@
 .SearchInputContainer {
+  height: 40px;
   input {
-    width: 400px;
+    min-width: 250px;
     height: 40px;
     transition: width 0.2s;
     border-radius: 8px;
-    box-shadow: 0px 10px 14px 4px #80808024;
-    border: 1px solid #e0e0e0b0;
+    /* box-shadow: 0px 10px 14px 4px #80808024; */
+    border: 0;
     padding: var(--w-space-s);
     margin: var(--w-space-none);
     border-radius: var(--p-border-radius-400);
+    /* position: relative;
+    top: 2px; */
   }
-  input:focus {
+
+  /* .loadingSpinner {
+    position: relative;
+    top: 5px;
+  } */
+
+  input:disabled {
+    background: white;
+  }
+  /* input:focus {
     width: 700px;
-  }
+  } */
 }
 
 .SearchInputButton {
   margin-left: var(--w-space-m);
-  background: var(--color-background-body);
-  box-shadow: 0 3px 6px 0px var(--color-background-brand-tag);
-  width: 40px;
-  height: 40px;
   text-align: center;
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
-  border-radius: var(--p-border-radius-400);
+
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  height: 44px;
+  width: 44px;
+  background: var(--primary-secondary);
+  border-radius: 0px 60px 60px 0px;
+}
+
+.homePageSearchInput {
+  width: 100%;
+}
+.innerPageSearchInput {
+
+}
+
+.multiRowSearchInput {
+  border-radius: 10px !important;
+}
+
+.multiRowSearchInput input {
+  border-radius: 10px 0 0 10px !important;
+}
+
+.multiRowSearchInput button {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+/* In SearchComponentV1.module.css */
+.multiRowContainer {
+  border-radius: 10px !important;
+}
+
+.multiRowContainer .searchedItemsContainer {
+  border-radius: 10px 10px 0 0 !important;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .SearchInputButton {
+    border-radius: var(--p-border-radius-tag);
+  }
 }

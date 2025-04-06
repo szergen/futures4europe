@@ -108,7 +108,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
 
   // Function to determine if tagline should be shown
   const shouldShowTagline = (type: string = '') => {
-    const typeToCheck = type.toLowerCase();
+    const typeToCheck = type?.toLowerCase();
     return !(typeToCheck === 'person');
   };
   return (
@@ -146,7 +146,10 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
         delayOnTouchOnly={true}
         touchStartThreshold={5}
         disabled={!isEditModeOn || isDisabledSorting}
-        className={classNames('flex w-fit flex-wrap z-50')}
+        className={classNames(
+          'flex w-fit flex-wrap z-0',
+          isEditModeOn && 'z-50'
+        )}
         onStart={(evt) => {
           evt.item.classList.add(style.dragShadow);
         }}
@@ -212,10 +215,15 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
             )}
             {!isEditModeOn ? (
               affilitiation.name && (
-                <Tag
-                  {...affilitiation}
-                  {...tags?.find((item) => item.name === affilitiation.name)}
-                />
+                <>
+                  <Tag
+                    {...affilitiation}
+                    {...tags?.find((item) => item.name === affilitiation.name)}
+                  />
+                  {/* {JSON.stringify(
+                    tags?.find((item) => item.name === affilitiation.name)
+                  )} */}
+                </>
               )
             ) : (
               <>
@@ -225,7 +233,7 @@ const AffiliationsComponent: React.FC<AffiliationsComponentProps> = ({
                   <TagPicker
                     key={`affiliation-${affilitiation.name}-${index}`}
                     placeholder={placeholderTag}
-                    tags={tags}
+                    tags={tags?.filter((tag) => !tag?.masterTag)}
                     selectedValue={affilitiation?.name || undefined}
                     updatePostData={(value) => {
                       const newAffiliations = [...currentAffiliations];

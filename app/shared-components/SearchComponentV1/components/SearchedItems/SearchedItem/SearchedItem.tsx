@@ -2,6 +2,7 @@ import Tag from '@app/shared-components/Tag/Tag';
 import classNames from 'classnames';
 import React from 'react';
 import style from './SearchedItem.module.css';
+import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 
 export type SearchedItemProps = {
   item: {
@@ -26,16 +27,19 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
   const tagName = itemIncludesField
     ? item.searchItem.split(':')[1]
     : item.searchItem;
-  const tagData = tags.find((tag) => tag.name === tagName);
-  console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
-  console.log('debug3->', { item });
+  // const tagData = tags.find((tag) => tag.name === tagName);
+  const tagData = tags?.find(
+    (tag) => tag?.name?.toLowerCase() === tagName?.toLowerCase()
+  );
+  // console.log('debug2->', { tags, itemIncludesField, tagName, tagData });
+  // console.log('debug3->', { item });
 
   return (
     <li
-      key={index}
+      key={`${index}-${item.searchItem}`}
       className={classNames(
-        'flex mx-1 items-center',
-        isSelected && 'searchTagSelected'
+        'flex mx-1 items-center px-1',
+        isSelected && style.searchTagSelected
       )}
     >
       {/* Field with Tag */}
@@ -46,26 +50,14 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
           </span>
           :
           <span className="" key={index}>
-            {tagData && (
-              <Tag
-                name={tagData.name}
-                popularity={tagData.popularity}
-                tagPageLink={tagData.pageLink}
-                picture={tagData.picture}
-              />
-            )}
+            {tagData && <Tag {...tagData} />}
           </span>
         </span>
       )}
       {/* Tag */}
       {item.searchItemType === 'tag' && (
         <span className="" key={index}>
-          <Tag
-            name={tagData.name}
-            popularity={tagData.popularity}
-            tagPageLink={tagData.pageLink}
-            picture={tagData.picture}
-          />
+          <Tag {...tagData} />
         </span>
       )}
       {/* Field without Tag */}
@@ -105,21 +97,12 @@ const SearchedItem: React.FC<SearchedItemProps> = ({
         </span>
       )}
       {/* Remove Item */}
-      <span onClick={handleRemoveSearchedItem}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+      <span className="cursor-pointer ml-1" onClick={handleRemoveSearchedItem}>
+        <SpriteSvg.CloseIcon
+          viewBox={'0 0 24 24'}
           strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+          className="w-6 h-6 hover:fill-red-600 hover:stroke-white"
+        />
       </span>
     </li>
   );

@@ -62,6 +62,9 @@ export default function DashboardProjects() {
     _owner: string;
   }
 
+  // Add check for admin status
+  const isWixAdmin = userDetails?.isAdmin || false;
+
   async function handleDeleteInfoPage(infoPageId: InfoPage['_id']) {
     setIsLoadingDeletePostPage(infoPageId);
 
@@ -77,9 +80,11 @@ export default function DashboardProjects() {
         'debug2->Proceeding with info page delete for ID:',
         infoPageId
       );
+
       await wixModules.removeDataItem(infoPageId, {
         dataCollectionId: 'InfoPages',
       });
+
       console.log('debug2->Delete info page successful');
     } catch (error) {
       console.error('debug2->Failed to delete info page:', error);
@@ -267,31 +272,29 @@ export default function DashboardProjects() {
   const handleEditContact = async () => {
     // console.log('debug222->infoPages', infoPages);
     console.log('debug111->editing contact');
-    const contactsDetails = await getContactsItemByEmail(
-      'andreescul@gmail.com'
-    );
+    const contactsDetails = await getContactsItemByEmail('tolkar@utu.fi');
 
-    const cristinaDetails = await getContactsItemByEmail('aaa123@gmail.com');
+    // const cristinaDetails = await getContactsItemByEmail('tolkar@utu.fi');
 
     console.log('debug111->contactsDetails', contactsDetails);
-    console.log('debug111->cristinaDetails', cristinaDetails);
+    // console.log('debug111->cristinaDetails', cristinaDetails);
 
-    const tempMember = await getMember('fd925598-f6e6-4e3a-8e33-e646c880b557');
-    const tempMember2 = await getMember('9425100b-e945-475d-b554-db4e61825c1f');
+    // const tempMember = await getMember('fd925598-f6e6-4e3a-8e33-e646c880b557');
+    // const tempMember2 = await getMember('9425100b-e945-475d-b554-db4e61825c1f');
 
-    console.log('debug111->tempMember', tempMember);
-    console.log('debug111->tempMember2', tempMember2);
-    // const userDetails = await getContactsItem(
-    //   '89c27159-d0d6-4d08-bdc0-ea92984d69a8'
-    // );
-    // console.log('debug111->userDetails', userDetails);
+    // console.log('debug111->tempMember', tempMember);
+    // console.log('debug111->tempMember2', tempMember2);
+    const userDetails = await getContactsItem(
+      'd7516972-533b-4400-b884-3e5420679cfa'
+    );
+    console.log('debug111->userDetails', userDetails);
 
-    // const member = await updateMember(
-    //   '89c27159-d0d6-4d08-bdc0-ea92984d69a8',
-    //   'Angela Cristina Plescan'
-    // );
+    const member = await updateMember(
+      'd7516972-533b-4400-b884-3e5420679cfa',
+      'Tolga Karayel'
+    );
 
-    // console.log('debug111->member', member);
+    console.log('debug111->member', member);
 
     // const projectInfoPages = infoPages
     //   .filter(
@@ -474,7 +477,7 @@ export default function DashboardProjects() {
             'mt-14',
             'mb-10',
             'p-8',
-            'bg-purple-site'
+            'bg-primary-site'
           )}
         >
           <div className={classNames(style.dashboardBoxAdd, 'flex flex-col')}>
@@ -618,32 +621,46 @@ export default function DashboardProjects() {
                               />
                             </Link>
                             {/* Only show delete button for admins */}
-                            {(userDetails?.isAdmin === true ||
-                              infoPage?.data?._owner ===
-                                userDetails?.contactId) && (
-                              <Button
-                                size="sm"
-                                color="danger"
-                                onClick={() =>
-                                  handleDeleteInfoPage(infoPage?.data?._id)
-                                }
-                                disabled={
-                                  isLoadingDeletePostPage ===
-                                  infoPage?.data?._id
-                                }
-                              >
-                                Delete
-                              </Button>
+                            {/* Admin Delete Button */}
+                            {isWixAdmin && (
+                              <div className="">
+                                <Button
+                                  size="sm"
+                                  color="failure"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    if (
+                                      window.confirm(
+                                        'Are you sure you want to delete this post?'
+                                      )
+                                    ) {
+                                      handleDeleteInfoPage(infoPage?.data?._id);
+                                    }
+                                  }}
+                                  disabled={
+                                    isLoadingDeletePostPage ===
+                                    infoPage?.data?._id
+                                  }
+                                  className="rounded-full p-2 h-8 w-8 flex items-center justify-center"
+                                >
+                                  <SpriteSvg.AccountTrashIcon
+                                    sizeH={16}
+                                    sizeW={16}
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                    strokeWidth={0}
+                                  />
+                                </Button>
+                              </div>
                             )}
-
-                            {isLoadingDeletePostPage &&
-                              isLoadingDeletePostPage ===
-                                infoPage?.data?._id && (
-                                <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-                                  <LoadingSpinner />
-                                </div>
-                              )}
                           </div>
+
+                          {isLoadingDeletePostPage &&
+                            isLoadingDeletePostPage === infoPage?.data?._id && (
+                              <div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                <LoadingSpinner />
+                              </div>
+                            )}
                         </div>
                       ))
                   ) : (

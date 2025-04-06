@@ -3,6 +3,8 @@ import { getWixClientData } from '@app/hooks/useWixClientServer';
 import { saveToCache, getFromCache } from '../../utils/cache';
 import { referencedItemOptions } from '@app/wixUtils/server-side';
 
+export const revalidate = 0; // 5 minutes
+
 export const GET = async (req: NextRequest) => {
   const cacheKey = 'posts.json';
   const cachedData = await getFromCache(cacheKey);
