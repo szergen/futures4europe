@@ -1722,6 +1722,37 @@ const nextConfig = {
         destination: 'https://shoutout.wix.com/so/59PJm0OBB?w=',
         permanent: true,
       },
+      {
+        source: '/so/59PJm0OBB/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'dg486jUokect2aRslgEFcVep_B9opu1I6Hp4OGs_hXg.eyJ1IjoiaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2NvbXBhbnkvODA5OTU0MjkvYWRtaW4vZGFzaGJvYXJkLyIsInIiOiI3YjNiNzcxYi1mOTkxLTRhNDMtOTBlMC0yYTk3YjgwYmZhZTAiLCJtIjoibWFpbCIsImMiOiIwZWYxNzZkNi1kNzhlLTQwODgtYTQ5MS01ZjQ1ZmUyOGFkN2MifQ',
+          },
+        ],
+        destination: 'https://www.linkedin.com/company/futures4europe/',
+        permanent: true,
+      },
+      {
+        source: '/so/59PJm0OBB/c',
+        has: [
+          {
+            type: 'query',
+            key: 'w',
+            value:
+              'pN6JVBc6I0gi9CX-02VGic-z2LPbbt9XWex1Lv3OghY.eyJ1IjoiaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2NvbXBhbnkvODA5OTU0MjkvYWRtaW4vZGFzaGJvYXJkLyIsInIiOiI3YjNiNzcxYi1mOTkxLTRhNDMtOTBlMC0yYTk3YjgwYmZhZTAiLCJtIjoibWFpbF9scCIsImMiOiIwZWYxNzZkNi1kNzhlLTQwODgtYTQ5MS01ZjQ1ZmUyOGFkN2MifQ',
+          },
+        ],
+        destination: 'https://www.linkedin.com/company/futures4europe/',
+        permanent: true,
+      },
+      {
+        source: 'https://www.linkedin.com/company/80995429/admin/dashboard/',
+        destination: 'https://www.linkedin.com/company/futures4europe/',
+        permanent: true,
+      },
       // End of Newsletters April 2025
       {
         source: '/:path*',
