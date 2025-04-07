@@ -1748,11 +1748,6 @@ const nextConfig = {
         destination: 'https://www.linkedin.com/company/futures4europe/',
         permanent: true,
       },
-      {
-        source: 'https://www.linkedin.com/company/80995429/admin/dashboard/',
-        destination: 'https://www.linkedin.com/company/futures4europe/',
-        permanent: true,
-      },
       // End of Newsletters April 2025
       {
         source: '/:path*',
