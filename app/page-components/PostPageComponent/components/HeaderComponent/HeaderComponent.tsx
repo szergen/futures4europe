@@ -112,9 +112,16 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           <div>
             {!isEditModeOn ? (
               post?.projectResultMedia && (
-                <DisplayProjectResultMedia
-                  projectResultMedia={post?.projectResultMedia || {}}
-                />
+                <a
+                  href={post?.projectResultMedia.url}
+                  download={post?.projectResultMedia.displayName + '.pdf'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <DisplayProjectResultMedia
+                    projectResultMedia={post?.projectResultMedia || {}}
+                  />
+                </a>
               )
             ) : (
               <ProjectResultHeaderImage
