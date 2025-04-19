@@ -6284,6 +6284,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wix/contacts@npm:^1.0.27":
+  version: 1.0.27
+  resolution: "@wix/contacts@npm:1.0.27"
+  dependencies:
+    "@wix/metro-runtime": "npm:^1.0.0"
+    "@wix/motion-edm-autogen-query-wrapper": "npm:^1.0.0"
+    "@wix/sdk-types": "npm:^1.0.0"
+  checksum: 10c0/565f1057808fd0f2f94bd6633b3dd6d0b5e1489ec0614676db888555f092d419f1b52ebeeefb26eebfc76578c7927fa4ef04db2525254af0e32acf72692e21b2
+  languageName: node
+  linkType: hard
+
 "@wix/crm@npm:^1.0.126":
   version: 1.0.139
   resolution: "@wix/crm@npm:1.0.139"
@@ -6829,7 +6840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/metro-runtime@npm:^1.1792.0":
+"@wix/metro-runtime@npm:^1.0.0, @wix/metro-runtime@npm:^1.1792.0":
   version: 1.1849.0
   resolution: "@wix/metro-runtime@npm:1.1849.0"
   dependencies:
@@ -6868,7 +6879,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/motion-edm-autogen-query-wrapper@npm:^1.0.37":
+"@wix/motion-edm-autogen-query-wrapper@npm:^1.0.0, @wix/motion-edm-autogen-query-wrapper@npm:^1.0.37":
   version: 1.0.112
   resolution: "@wix/motion-edm-autogen-query-wrapper@npm:1.0.112"
   dependencies:
@@ -6993,7 +7004,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/sdk-types@npm:^1.12.4, @wix/sdk-types@npm:^1.5.11, @wix/sdk-types@npm:^1.7.0, @wix/sdk-types@npm:^1.9.2":
+"@wix/sdk-types@npm:^1.0.0, @wix/sdk-types@npm:^1.12.4, @wix/sdk-types@npm:^1.5.11, @wix/sdk-types@npm:^1.7.0, @wix/sdk-types@npm:^1.9.2":
   version: 1.12.4
   resolution: "@wix/sdk-types@npm:1.12.4"
   checksum: 10c0/20ec4649abc8e66270fa17430efd02a019668bd09f257e84196675d53b27ac56aea7883a0165535d7d4f22c78e3fe8d3a4900f8c85c80da5449f3bf8f20b4eaa
@@ -7088,9 +7099,9 @@ __metadata:
   linkType: hard
 
 "abbrev@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "abbrev@npm:3.0.0"
-  checksum: 10c0/049704186396f571650eb7b22ed3627b77a5aedf98bb83caf2eac81ca2a3e25e795394b0464cfb2d6076df3db6a5312139eac5b6a126ca296ac53c5008069c28
+  version: 3.0.1
+  resolution: "abbrev@npm:3.0.1"
+  checksum: 10c0/21ba8f574ea57a3106d6d35623f2c4a9111d9ee3e9a5be47baed46ec2457d2eac46e07a5c4a60186f88cb98abbe3e24f2d4cca70bc2b12f1692523e2209a9ccf
   languageName: node
   linkType: hard
 
@@ -11095,7 +11106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fdir@npm:^6.2.0, fdir@npm:^6.4.3":
+"fdir@npm:^6.2.0":
   version: 6.4.3
   resolution: "fdir@npm:6.4.3"
   peerDependencies:
@@ -11104,6 +11115,18 @@ __metadata:
     picomatch:
       optional: true
   checksum: 10c0/d13c10120e9625adf21d8d80481586200759928c19405a816b77dd28eaeb80e7c59c5def3e2941508045eb06d34eb47fad865ccc8bf98e6ab988bb0ed160fb6f
+  languageName: node
+  linkType: hard
+
+"fdir@npm:^6.4.4":
+  version: 6.4.4
+  resolution: "fdir@npm:6.4.4"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: 10c0/6ccc33be16945ee7bc841e1b4178c0b4cf18d3804894cb482aa514651c962a162f96da7ffc6ebfaf0df311689fb70091b04dd6caffe28d56b9ebdc0e7ccadfdd
   languageName: node
   linkType: hard
 
@@ -19362,12 +19385,12 @@ __metadata:
   linkType: hard
 
 "tinyglobby@npm:^0.2.12":
-  version: 0.2.12
-  resolution: "tinyglobby@npm:0.2.12"
+  version: 0.2.13
+  resolution: "tinyglobby@npm:0.2.13"
   dependencies:
-    fdir: "npm:^6.4.3"
+    fdir: "npm:^6.4.4"
     picomatch: "npm:^4.0.2"
-  checksum: 10c0/7c9be4fd3625630e262dcb19015302aad3b4ba7fc620f269313e688f2161ea8724d6cb4444baab5ef2826eb6bed72647b169a33ec8eea37501832a2526ff540f
+  checksum: 10c0/ef07dfaa7b26936601d3f6d999f7928a4d1c6234c5eb36896bb88681947c0d459b7ebe797022400e555fe4b894db06e922b95d0ce60cb05fd827a0a66326b18c
   languageName: node
   linkType: hard
 
@@ -20570,6 +20593,7 @@ __metadata:
     "@vercel/blob": "npm:^0.26.0"
     "@vercel/edge-config": "npm:^1.4.0"
     "@vercel/speed-insights": "npm:^1.0.14"
+    "@wix/contacts": "npm:^1.0.27"
     "@wix/crm": "npm:^1.0.126"
     "@wix/data": "npm:^1.0.148"
     "@wix/loyalty": "npm:^1.0.201"

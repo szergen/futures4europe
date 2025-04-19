@@ -317,7 +317,6 @@ export const prioritizeTagInResults = (
     const getPriority = (item) => {
       // Skip checking these properties
       const excludeKeys = ['pageOwner'];
-
       // Define high priority arrays based on tag type
       let highPriorityArrays = [];
       if (tagType === 'person') {

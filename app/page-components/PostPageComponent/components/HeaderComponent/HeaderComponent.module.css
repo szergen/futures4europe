@@ -24,6 +24,12 @@
     flex-direction: column;
   }
 }
+.displayName textarea {
+  height: 50px!important;
+  overflow: hidden;
+  resize: none;
+  border-radius: var(--p-border-radius-tag);
+}
 
 .recommandations {
   border-top: 1px solid #d9d9d9;

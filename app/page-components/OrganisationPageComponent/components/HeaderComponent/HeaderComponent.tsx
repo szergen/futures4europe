@@ -110,11 +110,6 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
     console.log('tagLine', tagLine);
   }, [tagLine]);
 
-  //TODO @ALEX de verificat currentTagPopularity
-  // const { getPopularity } = useTagPopularity();
-  // const currentTagPopularity = getPopularity(
-  //   organisation?.organisationTag?.name
-  // );
   const currentTagPopularity =
     tags?.find((item) => item.name === organisation?.organisationTag?.name)
       ?.mentions || 1;
