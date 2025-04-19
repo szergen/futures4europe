@@ -42,24 +42,24 @@ export default function DashboardProjects() {
   const { removeDataItem } = useWixModules(items);
   // const { updateMember } = useWixModules(members);
 
- // Add check for admin status
- const isWixAdmin = userDetails?.isAdmin || false;
+  // Add check for admin status
+  const isWixAdmin = userDetails?.isAdmin || false;
 
- const handleDeletePostPage = async (infoPageId: string) => {
-   setIsLoadingDeletePostPage(infoPageId);
-   try {
-     // Replace with your actual delete logic
-     await removeDataItem(infoPageId, {
-       dataCollectionId: 'PostPages',
-     });
-     handleUserDataRefresh();
-   } catch (error) {
-     console.error('Failed to delete info page:', error);
-   } finally {
-     setIsLoadingDeletePostPage('');
-     handleUserDataRefresh();
-   }
- };  
+  const handleDeletePostPage = async (infoPageId: string) => {
+    setIsLoadingDeletePostPage(infoPageId);
+    try {
+      // Replace with your actual delete logic
+      await removeDataItem(infoPageId, {
+        dataCollectionId: 'PostPages',
+      });
+      handleUserDataRefresh();
+    } catch (error) {
+      console.error('Failed to delete info page:', error);
+    } finally {
+      setIsLoadingDeletePostPage('');
+      handleUserDataRefresh();
+    }
+  };
 
   // const handleDeleteInfoPage = async (infoPageId: string) => {
   //   setIsLoadingDeletePostPage(infoPageId);
@@ -245,7 +245,10 @@ export default function DashboardProjects() {
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
                           <div className="flex flex-wrap flex-start text-left w-full justify-between">
-                            <Link className='grow' href={`/post/${postPage.data.slug}`}>
+                            <Link
+                              className="grow"
+                              href={`/post/${postPage.data.slug}`}
+                            >
                               <MiniPagePost
                                 pageTypeTag={postPage.data.pageTypes?.[0]}
                                 key={index}
@@ -308,7 +311,7 @@ export default function DashboardProjects() {
                                   />
                                 </Button>
                               </div>
-                            )}                            
+                            )}
                           </div>
 
                           {isLoadingDeletePostPage &&

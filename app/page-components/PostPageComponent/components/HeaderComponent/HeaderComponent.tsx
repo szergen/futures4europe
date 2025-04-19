@@ -150,7 +150,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             )}
           </div>
           {!isEditModeOn ? (
-            <Typography tag="h3" className="text-gray-800 text-sm mt-2 max-w-[250px] overflow-hidden p-2 h-full">
+            <Typography
+              tag="h3"
+              className="text-gray-800 text-sm mt-2 max-w-[250px] overflow-hidden p-2 h-full"
+            >
               {post?.projectResultMedia?.displayName}
             </Typography>
           ) : (
@@ -169,29 +172,33 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             //   }
             // />
             <InputText
-            placeholder="Enter display name"
-            value={post?.projectResultMedia?.displayName || ''}
-            onChange={(e) => {
-              // Limit input to 50 characters
-              const displayName = e.target.value.slice(0, 50);
-              updatePostData({
-                ...post,
-                projectResultMedia: {
-                  ...post.projectResultMedia,
-                  displayName: displayName,
-                },
-              });
-            }}
-            validate={(value) => {
-              if (!value) return 'Display name is required';
-              if (value.length > 50) return 'Display name must be 50 characters or less';
-              return ''; // No error
-            }}
-            helperText={`${(post?.projectResultMedia?.displayName || '').length}/50 characters`}
-            setValidationState={(error) => {
-              setValidationState && setValidationState({ projectResultMediaDisplayName: error });
-            }}
-          />            
+              placeholder="Enter display name"
+              value={post?.projectResultMedia?.displayName || ''}
+              onChange={(e) => {
+                // Limit input to 50 characters
+                const displayName = e.target.value.slice(0, 50);
+                updatePostData({
+                  ...post,
+                  projectResultMedia: {
+                    ...post.projectResultMedia,
+                    displayName: displayName,
+                  },
+                });
+              }}
+              validate={(value) => {
+                if (!value) return 'Display name is required';
+                if (value.length > 50)
+                  return 'Display name must be 50 characters or less';
+                return ''; // No error
+              }}
+              helperText={`${
+                (post?.projectResultMedia?.displayName || '').length
+              }/50 characters`}
+              setValidationState={(error) => {
+                setValidationState &&
+                  setValidationState({ projectResultMediaDisplayName: error });
+              }}
+            />
           )}
           {!isEditModeOn && post?.projectResultMedia?.type === 'document' && (
             <div className={style.downloadAndViews}>
@@ -219,127 +226,154 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           )}
         </div>
       )}
-    
-    {/* Add Event File Uploader Logic */}
-    {post.pageType?.[0]?.name?.toLowerCase() === 'event' && isEditModeOn && (
-      <div className={style.imageAndButtons}>
-        <div>
-          <ProjectResultHeaderImage
-            currentImage={post?.projectResultMedia?.thumbnail}
-            resultType={post?.projectResultMedia?.type}
-            updatePostData={(value) => {
-              updatePostData({
-                ...post,
-                projectResultMedia: {
-                  ...post.projectResultMedia,
-                  thumbnail: value.thumbnail,
-                  sizeInBytes: value.sizeInBytes,
-                  url: value.url,
-                  fileName: value.fileName,
-                  type: value.type,
-                },
-              });
-            }}
-            updatePostDataForVideoImage={(value) => {
-              updatePostData({
-                ...post,
-                projectResultMedia: {
-                  ...post.projectResultMedia,
-                  thumbnail: value.thumbnail,
-                  sizeInBytes: '',
-                  url: value.url,
-                  fileName: '',
-                  type: 'video',
-                },
-              });
-            }}
-          />
-        </div>
 
-      <div className={classNames('overflow-hidden p-4 w-full h-full', style.displayName)}>
-        <InputText
-          placeholder="Enter display name"
-          value={post?.projectResultMedia?.displayName || ''}
-          onChange={(e) => {
-            // Only update if we're under the character limit
-            const newValue = e.target.value;
-            
-            if (newValue.length <= 50) {
-              updatePostData({
-                ...post,
-                projectResultMedia: {
-                  ...post.projectResultMedia,
-                  displayName: newValue,
-                },
-              });
-            }
-          }}
-          validate={(value) => {
-            if (!value) return 'Display name is required';
-            return ''; // No error
-          }}
-          helperText={`${(post?.projectResultMedia?.displayName || '').length}/50 characters`}
-          setValidationState={(error) => {
-            setValidationState && setValidationState({ projectResultMediaDisplayName: error });
-          }}
-          className="overflow-hidden"
-          onKeyDown={(e) => {
-            // Get current length directly from the value that's being used
-            const currentLength = (post?.projectResultMedia?.displayName || '').length;
-            
-            // Allow delete, backspace, arrow keys, and modifier combinations regardless of length
-            const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
-            const hasModifier = e.ctrlKey || e.metaKey || e.altKey;
-            
-            // Block character input if at max length
-            if (currentLength >= 50 && 
-                !allowedKeys.includes(e.key) && 
-                !hasModifier && 
-                e.key.length === 1) {
-              e.preventDefault();
-            }
-          }}
-        />
-      </div>
-        
-      </div>
-    )}
+      {/* Add Event File Uploader Logic */}
+      {post.pageType?.[0]?.name?.toLowerCase() === 'event' && isEditModeOn && (
+        <div className={style.imageAndButtons}>
+          <div>
+            <ProjectResultHeaderImage
+              currentImage={post?.projectResultMedia?.thumbnail}
+              resultType={post?.projectResultMedia?.type}
+              updatePostData={(value) => {
+                updatePostData({
+                  ...post,
+                  projectResultMedia: {
+                    ...post.projectResultMedia,
+                    thumbnail: value.thumbnail,
+                    sizeInBytes: value.sizeInBytes,
+                    url: value.url,
+                    fileName: value.fileName,
+                    type: value.type,
+                  },
+                });
+              }}
+              updatePostDataForVideoImage={(value) => {
+                updatePostData({
+                  ...post,
+                  projectResultMedia: {
+                    ...post.projectResultMedia,
+                    thumbnail: value.thumbnail,
+                    sizeInBytes: '',
+                    url: value.url,
+                    fileName: '',
+                    type: 'video',
+                  },
+                });
+              }}
+            />
+          </div>
 
-    {/* Display uploaded file for events when not in edit mode */}
-    {post.pageType?.[0]?.name?.toLowerCase() === 'event' && !isEditModeOn && post?.projectResultMedia && (
-      <div className={style.imageAndButtons}>
-        <div>
-          <DisplayProjectResultMedia
-            projectResultMedia={post?.projectResultMedia || {}}
-          />
+          <div
+            className={classNames(
+              'overflow-hidden p-4 w-full h-full',
+              style.displayName
+            )}
+          >
+            <InputText
+              placeholder="Enter display name"
+              value={post?.projectResultMedia?.displayName || ''}
+              onChange={(e) => {
+                // Only update if we're under the character limit
+                const newValue = e.target.value;
+
+                if (newValue.length <= 50) {
+                  updatePostData({
+                    ...post,
+                    projectResultMedia: {
+                      ...post.projectResultMedia,
+                      displayName: newValue,
+                    },
+                  });
+                }
+              }}
+              validate={(value) => {
+                if (!value) return 'Display name is required';
+                return ''; // No error
+              }}
+              helperText={`${
+                (post?.projectResultMedia?.displayName || '').length
+              }/50 characters`}
+              setValidationState={(error) => {
+                setValidationState &&
+                  setValidationState({ projectResultMediaDisplayName: error });
+              }}
+              className="overflow-hidden"
+              onKeyDown={(e) => {
+                // Get current length directly from the value that's being used
+                const currentLength = (
+                  post?.projectResultMedia?.displayName || ''
+                ).length;
+
+                // Allow delete, backspace, arrow keys, and modifier combinations regardless of length
+                const allowedKeys = [
+                  'Backspace',
+                  'Delete',
+                  'ArrowLeft',
+                  'ArrowRight',
+                  'ArrowUp',
+                  'ArrowDown',
+                  'Home',
+                  'End',
+                ];
+                const hasModifier = e.ctrlKey || e.metaKey || e.altKey;
+
+                // Block character input if at max length
+                if (
+                  currentLength >= 50 &&
+                  !allowedKeys.includes(e.key) &&
+                  !hasModifier &&
+                  e.key.length === 1
+                ) {
+                  e.preventDefault();
+                }
+              }}
+            />
+          </div>
         </div>
-        <Typography tag="h3" className="text-gray-800 text-sm mt-2 max-w-[250px] overflow-hidden p-2 h-full">
-          {post?.projectResultMedia?.displayName}
-        </Typography>
-        {post?.projectResultMedia?.type === 'document' && (
-          <div className={style.downloadAndViews}>
-            <a
-              href={post?.projectResultMedia.url}
-              download={post?.projectResultMedia.displayName + '.pdf'}
-              target="_blank"
-              rel="noopener noreferrer"
+      )}
+
+      {/* Display uploaded file for events when not in edit mode */}
+      {post.pageType?.[0]?.name?.toLowerCase() === 'event' &&
+        !isEditModeOn &&
+        post?.projectResultMedia && (
+          <div className={style.imageAndButtons}>
+            <div>
+              <DisplayProjectResultMedia
+                projectResultMedia={post?.projectResultMedia || {}}
+              />
+            </div>
+            <Typography
+              tag="h3"
+              className="text-gray-800 text-sm mt-2 max-w-[250px] overflow-hidden p-2 h-full"
             >
-              <Button>
-                Download ({(Number(post.projectResultMedia.sizeInBytes) / 1024)
-                  ?.toString()
-                  ?.split('.')?.[0] + 'kb'}){' '}
-                <span className="rounded-lg bg-white text-blue-500 p-1 font-bold">
-                  {post.projectResultMedia?.url
-                    ?.split('.')
-                    ?.pop()
-                    ?.toUpperCase()}
-                </span>
-              </Button>
-            </a>
+              {post?.projectResultMedia?.displayName}
+            </Typography>
+            {post?.projectResultMedia?.type === 'document' && (
+              <div className={style.downloadAndViews}>
+                <a
+                  href={post?.projectResultMedia.url}
+                  download={post?.projectResultMedia.displayName + '.pdf'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button>
+                    Download (
+                    {(Number(post.projectResultMedia.sizeInBytes) / 1024)
+                      ?.toString()
+                      ?.split('.')?.[0] + 'kb'}
+                    ){' '}
+                    <span className="rounded-lg bg-white text-blue-500 p-1 font-bold">
+                      {post.projectResultMedia?.url
+                        ?.split('.')
+                        ?.pop()
+                        ?.toUpperCase()}
+                    </span>
+                  </Button>
+                </a>
+              </div>
+            )}
           </div>
         )}
-      </div>
-    )}
 
       <div className={style.detailsColumn}>
         {/* Post Info Name */}
