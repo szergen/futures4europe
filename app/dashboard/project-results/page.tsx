@@ -231,7 +231,10 @@ export default function DashboardProjects() {
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
                           <div className="flex flex-wrap flex-start text-left w-full justify-between">
-                            <Link className='grow' href={`/post/${postPage.data.slug}`}>
+                            <Link
+                              className="grow"
+                              href={`/post/${postPage.data.slug}`}
+                            >
                               <MiniPagePost
                                 pageTypeTag={postPage.data.pageTypes?.[0]}
                                 key={index}

@@ -390,7 +390,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                         index === highlightedIndexWithType.index &&
                           highlightedIndexWithType.type === 'page' &&
                           'bg-gray-200 rounded-md',
-                          'flex items-center',
+                        'flex items-center',
                         style.quickResults
                       )}
                       onMouseOver={() =>
@@ -404,7 +404,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
                           index === highlightedIndexWithType.index &&
                             highlightedIndexWithType.type === 'page' &&
                             'bg-gray-200 rounded-sm',
-                            'flex items-center w-full'
+                          'flex items-center w-full'
                         )}
                         href={`${automaticallyDecidePathPrefixBasedOnPageType(
                           pageSuggestion.item?.pageTypes?.[0]?.name

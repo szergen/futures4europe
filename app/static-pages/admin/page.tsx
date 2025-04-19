@@ -95,7 +95,7 @@ const AdminContactsPanel = () => {
       if (response.ok) {
         setStatusMessage('Label removed successfully');
         setMessageType('success');
-        setContacts(contacts.filter(contact => contact._id !== contactId));
+        setContacts(contacts.filter((contact) => contact._id !== contactId));
       } else {
         throw new Error('Failed to remove label');
       }
@@ -118,15 +118,15 @@ const AdminContactsPanel = () => {
         contact.info.labelKeys?.items?.includes('custom.hasnoinfopage');
     }
     if (filterIsMember) {
-      passes =
-        passes &&
-        contact.source?.sourceType === 'WIX_SITE_MEMBERS';
+      passes = passes && contact.source?.sourceType === 'WIX_SITE_MEMBERS';
     }
     if (filterEmailSubscribed) {
       const primaryStatus = contact.primaryEmail?.subscriptionStatus;
       const extendedStatus =
         contact.info.extendedFields?.items &&
-        contact.info.extendedFields?.items['emailSubscriptions.subscriptionStatus'];
+        contact.info.extendedFields?.items[
+          'emailSubscriptions.subscriptionStatus'
+        ];
       passes =
         passes &&
         ((primaryStatus && primaryStatus === 'SUBSCRIBED') ||
@@ -178,9 +178,7 @@ const AdminContactsPanel = () => {
             >
               <p
                 className={`text-sm font-medium ${
-                  messageType === 'success'
-                    ? 'text-green-800'
-                    : 'text-red-800'
+                  messageType === 'success' ? 'text-green-800' : 'text-red-800'
                 }`}
               >
                 {statusMessage}
@@ -234,9 +232,7 @@ const AdminContactsPanel = () => {
                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
                 </div>
               ) : filteredContacts.length === 0 ? (
-                <p className="text-gray-500 text-center">
-                  No contacts found
-                </p>
+                <p className="text-gray-500 text-center">No contacts found</p>
               ) : (
                 <ul className="divide-y divide-gray-200">
                   {filteredContacts.map((contact) => (
@@ -256,8 +252,7 @@ const AdminContactsPanel = () => {
                         )}
                         <div>
                           <p className="text-sm font-medium text-gray-900">
-                            {contact.info.name?.first}{' '}
-                            {contact.info.name?.last}
+                            {contact.info.name?.first} {contact.info.name?.last}
                           </p>
                           <p className="text-sm text-gray-500">
                             {contact.info.emails?.items?.[0]?.email ||
@@ -270,7 +265,7 @@ const AdminContactsPanel = () => {
                                 Labels:{' '}
                                 {contact.info.labelKeys.items.join(', ')}
                               </p>
-                          )}
+                            )}
                           {contact.primaryEmail && (
                             <p className="text-xs text-gray-600">
                               Subscription Status:{' '}
