@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import Link from 'next/link';
 
 const AdminCachePanel = () => {
   const router = useRouter();
@@ -119,6 +120,21 @@ const AdminCachePanel = () => {
                 <h1 className="text-lg font-semibold text-gray-900">Administration</h1>
               </div>
               <nav className="ml-6 flex space-x-4">
+                <Link href="/static-pages/admin/infopage">
+                    <button
+                    onClick={() => setActiveTab('infopage')}
+                    className={`${
+                        activeTab === 'infopage'
+                        ? 'px-4 py-2 bg-blue-600 text-white rounded-md'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    } px-1 pt-1 border-b-2 font-medium text-sm`}
+                    >
+                    Person Info Labeler
+                    </button>
+                </Link>
+
+                {/* Add more tabs here as needed */}
+                <Link href="/static-pages/admin/cache">
                 <button
                   onClick={() => setActiveTab('cache')}
                   className={`${
@@ -129,7 +145,22 @@ const AdminCachePanel = () => {
                 >
                   Cache Management
                 </button>
+                </Link>
+
                 {/* Add more tabs here as needed */}
+                <Link href="/static-pages/admin">
+                <button
+                  onClick={() => setActiveTab('admin')}
+                  className={`${
+                    activeTab === 'admin'
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  } px-1 pt-1 border-b-2 font-medium text-sm`}
+                >
+                  Dashboard
+                </button>
+                </Link>
+
               </nav>
             </div>
             <div className="flex items-center space-x-4">
