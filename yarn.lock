@@ -4153,6 +4153,149 @@
     "@webassemblyjs/ast" "1.12.1"
     "@xtuc/long" "4.2.2"
 
+"@wix/auto_sdk_automations_action-provider@1.0.15":
+  version "1.0.15"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_action-provider/-/auto_sdk_automations_action-provider-1.0.15.tgz"
+  integrity sha512-nNfPKAYcNwnCl6Bq8GgLx42P1PiDyKJs+Vn+wUPy+QDeA+5BBioVcaDcwgfWSpJeObtlJZ9CrVTEcSPr/X1c+g==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_activation-action-log@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_activation-action-log/-/auto_sdk_automations_activation-action-log-1.0.1.tgz"
+  integrity sha512-MSe0jWUXmH147gYheTvtSx8UG+AWNn6XtGuFufNaevMO2xH1zKFJXggvyKDOq/yDqO8f31N0cZWDc7nq/0HWVA==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_activation-log@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_activation-log/-/auto_sdk_automations_activation-log-1.0.1.tgz"
+  integrity sha512-L/Lnl+cxJBuR/wU6us3A+p2wAF90SriWw2lsSw+gbHfp2Uhlb4a2MvssJPS5VYpq8IO6tpLNVYOBaql/57sj+w==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_activations@1.0.19":
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_activations/-/auto_sdk_automations_activations-1.0.19.tgz"
+  integrity sha512-+ZyzMjzcFXv16Ru5oYEF7P3dLO7UDYFxXkV2sGqWuWwKspJ3IFSzW9VqxOBnoCFTzuPNpLD2IuU6DL/sfeo+7w==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_automations-service-v-2@1.0.24":
+  version "1.0.24"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_automations-service-v-2/-/auto_sdk_automations_automations-service-v-2-1.0.24.tgz"
+  integrity sha512-nYODnTDcZ4uETyhQMQ0bZc1b9TJ0fbvAnEIt3vvTVRe/SCe/zTobZqmpARRQTthfRNoZ5xm3/IIcsNP18ADp5w==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_automations-service@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_automations-service/-/auto_sdk_automations_automations-service-1.0.10.tgz"
+  integrity sha512-FAxXGiDO+R08hdXiQAz3Xppqw+8PvfW5DaPKgbM+n96dI/zrXYKeBL0gx5N4BB1k2My6u+UTyB+2W7jCnwWdbw==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_custom-trigger@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_custom-trigger/-/auto_sdk_automations_custom-trigger-1.0.5.tgz"
+  integrity sha512-w452CHSPXexpS7C5KxQmI4JPR0/Xtu/KEtP5rSn0j0xiCtKdTsZPIbsducNT6/tLoY+njKvvOWe0mcte+88MnQ==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_trigger-catalog@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_trigger-catalog/-/auto_sdk_automations_trigger-catalog-1.0.1.tgz"
+  integrity sha512-upUI1OMx9d94zb1uU9PscWIviLPZzoezxNKgsbBjmEyfoVC+n062q5C6FxiwmJ0IE7nID06AvZruDtGUuEN+Xg==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_automations_trigger-provider@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_automations_trigger-provider/-/auto_sdk_automations_trigger-provider-1.0.8.tgz"
+  integrity sha512-6Opck9DVlerDjw42b/8FynWCjkkl/QXBolByx9q30gc3FjPFLDeWH9rgb5fnBDObFDislRpfcf1kYD7HyWCupg==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_email-marketing_account-details@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_email-marketing_account-details/-/auto_sdk_email-marketing_account-details-1.0.3.tgz"
+  integrity sha512-Q0cpptYW36Qu6CBAYZX+fC3sLtsxWndU++hnSvlA5OZ84w9xLaGhIksQOwW3k7SFnE+Xa0fx5xJ84jnza/38Iw==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.35"
+    "@wix/sdk-types" "^1.12.4"
+
+"@wix/auto_sdk_email-marketing_campaigns@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_email-marketing_campaigns/-/auto_sdk_email-marketing_campaigns-1.0.9.tgz"
+  integrity sha512-HBh9G3ErDEyNlAadnc7EfJJD5QRviWKWUftdshzjeMHCHExceTBiMb5aJClfT2Do14mdutxeepZ2FcmD6d5AGg==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.35"
+    "@wix/sdk-types" "^1.12.4"
+
+"@wix/auto_sdk_email-marketing_sender-details@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_email-marketing_sender-details/-/auto_sdk_email-marketing_sender-details-1.0.3.tgz"
+  integrity sha512-uZcvrdehG90QWUIuZmSCTezGJvi4aQgsAK48eXWbQL6fPCkv3ybU9YDFK2VGrKs9WilvNiIB3Gz+tvGv03/mXQ==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.35"
+    "@wix/sdk-types" "^1.12.4"
+
+"@wix/auto_sdk_forms_form-spam-submission-reports@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_forms_form-spam-submission-reports/-/auto_sdk_forms_form-spam-submission-reports-1.0.5.tgz"
+  integrity sha512-OQkhq+ttCYSpKoJbumZVAcqM4G3vt+hvOfwDP+dwIA6csgSGf1DC4LOgdfq3RbulV5YmSHuRBkB94W4bjhr3nA==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_forms_form-submissions@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_forms_form-submissions/-/auto_sdk_forms_form-submissions-1.0.2.tgz"
+  integrity sha512-g5618Z/uqqCqwANIXuW9MyxyZQDCZqEhj6S6jidSH9MisPrun05Q2b/j/17MUAsIgTZLf/n2nYmyFa43jImgSQ==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_forms_forms@1.0.22":
+  version "1.0.22"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_forms_forms/-/auto_sdk_forms_forms-1.0.22.tgz"
+  integrity sha512-9tcMewMJ9Jt7R/mQKqXh+FFDf9RoMXuW/XcJBXPxQ6JyWdG59Vlv8HZi/wtEN2KZtbmQj/amy/iUcDkLoDYRYQ==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/auto_sdk_forms_submissions@1.0.24":
+  version "1.0.24"
+  resolved "https://registry.npmjs.org/@wix/auto_sdk_forms_submissions/-/auto_sdk_forms_submissions-1.0.24.tgz"
+  integrity sha512-O/fm7Uz76oNQzOQFCr1Sw0sWJfWoyiNLyFkY+6lox4FLBsv6jthHXq8WPFbtXmf8QaMWX1quCFJxc1qu42rrYQ==
+  dependencies:
+    "@wix/sdk-runtime" "^0.3.42"
+    "@wix/sdk-types" "^1.13.9"
+
+"@wix/automations@^1.0.170":
+  version "1.0.170"
+  resolved "https://registry.npmjs.org/@wix/automations/-/automations-1.0.170.tgz"
+  integrity sha512-BRrfrGZVwDkthi5h/GQ3Yc2wH/6gXxVE/q1VmovoKEYvYeH0nZsWig5rySsV1z5UeOm8Fsu+hX6jTD9BBstUNA==
+  dependencies:
+    "@wix/auto_sdk_automations_action-provider" "1.0.15"
+    "@wix/auto_sdk_automations_activation-action-log" "1.0.1"
+    "@wix/auto_sdk_automations_activation-log" "1.0.1"
+    "@wix/auto_sdk_automations_activations" "1.0.19"
+    "@wix/auto_sdk_automations_automations-service" "1.0.10"
+    "@wix/auto_sdk_automations_automations-service-v-2" "1.0.24"
+    "@wix/auto_sdk_automations_custom-trigger" "1.0.5"
+    "@wix/auto_sdk_automations_trigger-catalog" "1.0.1"
+    "@wix/auto_sdk_automations_trigger-provider" "1.0.8"
+
 "@wix/contacts@^1.0.27":
   version "1.0.27"
   resolved "https://registry.npmjs.org/@wix/contacts/-/contacts-1.0.27.tgz"
@@ -4273,6 +4416,15 @@
     "@wix/data_indexes" "1.0.40"
     "@wix/data_items" "1.0.57"
 
+"@wix/email-marketing@^1.0.138":
+  version "1.0.138"
+  resolved "https://registry.npmjs.org/@wix/email-marketing/-/email-marketing-1.0.138.tgz"
+  integrity sha512-HL1z9ewrEzAjYPmxHGiQS7FuhzC04wpCn6sfd/8Xj6xUnQBjXl1quWbetEvzWaXZzy1cUSCF0NpdyQ/Jh8QDaw==
+  dependencies:
+    "@wix/auto_sdk_email-marketing_account-details" "1.0.3"
+    "@wix/auto_sdk_email-marketing_campaigns" "1.0.9"
+    "@wix/auto_sdk_email-marketing_sender-details" "1.0.3"
+
 "@wix/filter-builder@^1.0.84":
   version "1.0.84"
   resolved "https://registry.npmjs.org/@wix/filter-builder/-/filter-builder-1.0.84.tgz"
@@ -4281,6 +4433,16 @@
     "@babel/runtime" "^7.26.0"
     kind-of "~5.1.0"
     tslib "^2.8.1"
+
+"@wix/forms@^1.0.252":
+  version "1.0.252"
+  resolved "https://registry.npmjs.org/@wix/forms/-/forms-1.0.252.tgz"
+  integrity sha512-FWm1070izxv2IRjg0Cg/Lg7+1IfjjzxQkN4939h9td2gp8LKkCs6PlwMjVhHUndX2zkKMFvhtDFb9YGajRuOTw==
+  dependencies:
+    "@wix/auto_sdk_forms_form-spam-submission-reports" "1.0.5"
+    "@wix/auto_sdk_forms_form-submissions" "1.0.2"
+    "@wix/auto_sdk_forms_forms" "1.0.22"
+    "@wix/auto_sdk_forms_submissions" "1.0.24"
 
 "@wix/identity_authentication@1.0.14":
   version "1.0.14"
@@ -4618,6 +4780,11 @@
     lodash "^4.17.21"
     querystring "^0.2.1"
 
+"@wix/monitoring-types@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/@wix/monitoring-types/-/monitoring-types-0.9.0.tgz"
+  integrity sha512-ce9McMEVzCUmal5HxdXVdZfVKHhXw3AIUOxquFy8A9zpQHt5FiHoGkSDR27PtoW9e77+muhBHgl81UcnQqfAsA==
+
 "@wix/motion-edm-autogen-common@1.51.0":
   version "1.51.0"
   resolved "https://registry.npmjs.org/@wix/motion-edm-autogen-common/-/motion-edm-autogen-common-1.51.0.tgz"
@@ -4704,7 +4871,7 @@
   dependencies:
     "@wix/redirects_redirects" "1.0.29"
 
-"@wix/sdk-context@^0.0.1":
+"@wix/sdk-context@^0.0.1", "@wix/sdk-context@0.0.1":
   version "0.0.1"
   resolved "https://registry.npmjs.org/@wix/sdk-context/-/sdk-context-0.0.1.tgz"
   integrity sha512-ziSzrceUC0KFn4IJIVBn1cXXKrZ49ZKG5tQ6fl+TpontyUw5p/Z4VofFUUsnqNl9JYCpYNTzIXpzwok93Vrl8A==
@@ -4723,13 +4890,13 @@
   dependencies:
     "@wix/sdk-types" "^1.7.0"
 
-"@wix/sdk-runtime@^0.3.11", "@wix/sdk-runtime@^0.3.14", "@wix/sdk-runtime@^0.3.22":
-  version "0.3.23"
-  resolved "https://registry.npmjs.org/@wix/sdk-runtime/-/sdk-runtime-0.3.23.tgz"
-  integrity sha512-1H7qJAymrCe6zxMFTqha8UD42eN8fLLn/oJd5KS9FLA3ZfFVMjkDq8yLrzLEtU8BlT6LOtkM0IZS78YlyrURiw==
+"@wix/sdk-runtime@^0.3.11", "@wix/sdk-runtime@^0.3.14", "@wix/sdk-runtime@^0.3.22", "@wix/sdk-runtime@^0.3.35", "@wix/sdk-runtime@^0.3.42":
+  version "0.3.42"
+  resolved "https://registry.npmjs.org/@wix/sdk-runtime/-/sdk-runtime-0.3.42.tgz"
+  integrity sha512-QTQV0x5CNGRXK4qfGEDYuqlEk2GlAWZyODHKpbJP/ISA9BQ6MI5U1P74PMybmKm/vq+fHvLjGUta89WNQOKASw==
   dependencies:
-    "@wix/sdk-context" "^0.0.1"
-    "@wix/sdk-types" "^1.12.4"
+    "@wix/sdk-context" "0.0.1"
+    "@wix/sdk-types" "^1.13.9"
 
 "@wix/sdk-runtime@0.3.22":
   version "0.3.22"
@@ -4739,10 +4906,13 @@
     "@wix/sdk-context" "^0.0.1"
     "@wix/sdk-types" "^1.12.4"
 
-"@wix/sdk-types@^1.0.0", "@wix/sdk-types@^1.12.4", "@wix/sdk-types@^1.5.11", "@wix/sdk-types@^1.7.0", "@wix/sdk-types@^1.9.2":
-  version "1.12.4"
-  resolved "https://registry.npmjs.org/@wix/sdk-types/-/sdk-types-1.12.4.tgz"
-  integrity sha512-Y7sV75riuQc67yqKi0msi7V++iU45d6eXHmiavBbmADDJsTilHqWAi0ulqpm4SF2BrrRgybDkgPpGRTHVy9E0g==
+"@wix/sdk-types@^1.0.0", "@wix/sdk-types@^1.12.4", "@wix/sdk-types@^1.13.9", "@wix/sdk-types@^1.5.11", "@wix/sdk-types@^1.7.0", "@wix/sdk-types@^1.9.2":
+  version "1.13.10"
+  resolved "https://registry.npmjs.org/@wix/sdk-types/-/sdk-types-1.13.10.tgz"
+  integrity sha512-7zhR7w7HfN5DUeeIlT6cVbJrQ0b3fgtkwh4deuk0fQBI0yteCvYPMF1LZgoVMEXA0PjY8rU+K+y3yLNHQpaofg==
+  dependencies:
+    "@wix/monitoring-types" "^0.9.0"
+    type-fest "^4.39.1"
 
 "@wix/sdk@^1.12.0", "@wix/sdk@^1.12.11":
   version "1.14.2"
@@ -5729,9 +5899,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001578, caniuse-lite@^1.0.30001669:
-  version "1.0.30001680"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001680.tgz"
-  integrity sha512-rPQy70G6AGUMnbwS1z6Xg+RkHYPAi18ihs47GH0jcxIG7wArmPgY3XbS2sRdBbxJljp3thdT8BIqv9ccCypiPA==
+  version "1.0.30001714"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001714.tgz"
+  integrity sha512-mtgapdwDLSSBnCI3JokHM7oEQBLxiJKVRtg10AxM1AyeiKcM96f0Mkbqeq+1AbiCtvMcHRulAAEMu693JrSWqg==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
@@ -13829,10 +13999,10 @@ type-fest@^2.19.0:
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-2.19.0.tgz"
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
-type-fest@^4.26.1, "type-fest@>=0.17.0 <5.0.0":
-  version "4.26.1"
-  resolved "https://registry.npmjs.org/type-fest/-/type-fest-4.26.1.tgz"
-  integrity sha512-yOGpmOAL7CkKe/91I5O3gPICmJNLJ1G4zFYVAsRHg7M64biSnPtRj0WNQt++bRkjYOqjWXrhnUw1utzmVErAdg==
+type-fest@^4.26.1, type-fest@^4.39.1, "type-fest@>=0.17.0 <5.0.0":
+  version "4.40.0"
+  resolved "https://registry.npmjs.org/type-fest/-/type-fest-4.40.0.tgz"
+  integrity sha512-ABHZ2/tS2JkvH1PEjxFDTUWC8dB5OsIGZP4IFLhR293GqT5Y5qB1WwL2kMPYhQW9DVgVD8Hd7I8gjwPIf5GFkw==
 
 type-fest@~2.19:
   version "2.19.0"
