@@ -11,6 +11,7 @@ import FilesComponent from '../shared-page-components/FilesComponent/FilesCompon
 import { mockOrganisation } from '../../mocks/pagesMocks';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import OgImage from '@app/shared-components/OgImage';
 import {
   arraysEqual,
   deepEqual,
@@ -1002,6 +1003,16 @@ function OrganisationPageComponent({
 
   return (
     <div className={classNames(style.personContainer)}>
+      {!isNewPage && (
+        <OgImage
+          primaryImage={organisationData.organisationTag?.picture}
+          secondaryImage={'/images/placeholder.webp'}
+          title={organisationData.title}
+          description={organisationData.description}
+          url={`https://futures4europe.eu/organisation/${organisationData.slug}`}
+        />
+      )}
+
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">

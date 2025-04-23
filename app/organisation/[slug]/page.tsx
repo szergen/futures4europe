@@ -7,6 +7,8 @@ import {
   getCollection,
   getAffiliationsCollectionItemsByTag,
 } from '@app/wixUtils/server-side';
+import { generateOgMetadata } from '@app/shared-components/OgImage';
+import { Metadata } from 'next';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
@@ -16,6 +18,34 @@ export const revalidate = 300;
 // If a request comes in for a path that hasn't been generated,
 // Next.js will server-render the page on-demand.
 export const dynamicParams = true; // or false, to 404 on unknown paths
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const organisationPageItem = await getCollectionItemBySlug(
+    'InfoPages',
+    params.slug
+  );
+
+  if (!organisationPageItem) {
+    return generateOgMetadata({});
+  }
+  let primaryImage = organisationPageItem.data?.organisation?.[0]?.picture;
+  let secondaryImage =
+    organisationPageItem.data?.contentImages?.[0]?.url !== ' '
+      ? organisationPageItem.data?.contentImages?.[0]?.url
+      : '/images/placeholder.webp';
+
+  return generateOgMetadata({
+    title: organisationPageItem.data?.title || 'Futures4Europe',
+    description: organisationPageItem.data?.subtitle || '',
+    primaryImage: primaryImage,
+    secondaryImage: secondaryImage,
+    url: `https://futures4europe.eu/organisation/${params.slug}`,
+  });
+}
 
 export async function generateStaticParams() {
   const postCollection = await getCollection('InfoPages');
