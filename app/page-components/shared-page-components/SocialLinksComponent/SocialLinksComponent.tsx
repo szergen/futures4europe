@@ -29,7 +29,8 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
   const [modalKeyToUpdate, setModalKeyToUpdate] = useState('');
   const [currentLinkedinLink, setCurrentLinkedinLink] = useState(linkedinLink);
   const [currentWebsiteLink, setCurrentWebsiteLink] = useState(websiteLink);
-  const [currentResearchGateLink, setCurrentResearchGateLink] = useState(researchGateLink);
+  const [currentResearchGateLink, setCurrentResearchGateLink] =
+    useState(researchGateLink);
   const [currentOrcidLink, setCurrentOrcidLink] = useState(orcidLink);
   const [labelText, setLabelText] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);

@@ -477,7 +477,8 @@ export const updateFilteredDataBasedOnClickedTag = (
   );
 
   return {
-    matchedPages: allMatchedPages?.length > 0
+    matchedPages:
+      allMatchedPages?.length > 0
         ? allMatchedPages?.map((page: any) => ({ item: page }))
         : [],
     matchedAffiliations: matchedAffiliations,
