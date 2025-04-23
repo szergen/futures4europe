@@ -34,7 +34,7 @@ export function generateOgMetadata({
   siteName?: string;
 }): Metadata {
   // Fallback image if no primary image is provided
-  const defaultImage = '/images/default-og-image.jpg';
+  const defaultImage = 'https://futures4europe.eu/images/placeholder.webp';
   const ogImage = primaryImage || defaultImage;
 
   return {

@@ -1006,7 +1006,7 @@ function OrganisationPageComponent({
       {!isNewPage && (
         <OgImage
           primaryImage={organisationData.organisationTag?.picture}
-          secondaryImage={'/images/placeholder.webp'}
+          secondaryImage={'https://futures4europe.eu/images/placeholder.webp'}
           title={organisationData.title}
           description={organisationData.description}
           url={`https://futures4europe.eu/organisation/${organisationData.slug}`}

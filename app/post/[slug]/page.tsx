@@ -30,15 +30,19 @@ export async function generateMetadata({
   if (!postPageItem) {
     return generateOgMetadata({});
   }
-  let primaryImage = postPageItem.data?.contentImages?.[0]?.url;
+  // console.log('postPageItem', postPageItem);
+  let primaryImage =
+    postPageItem.data?.postImage1?.url !== ' '
+      ? postPageItem.data?.postImage1?.url
+      : 'https://futures4europe.eu/images/placeholder.webp';
   let secondaryImage =
-    postPageItem.data?.contentImages?.[1]?.url !== ' '
-      ? postPageItem.data?.contentImages?.[1]?.url
-      : '/images/placeholder.webp';
+    postPageItem.data?.postImage2?.url !== ' '
+      ? postPageItem.data?.postImage2?.url
+      : 'https://futures4europe.eu/images/placeholder.webp';
 
-  if (postPageItem.data?.pageType?.[0].name === 'project result') {
+  if (postPageItem.data?.pageTypes?.[0].name === 'project result') {
     primaryImage = postPageItem.data?.projectResultMedia?.thumbnail;
-    secondaryImage = '/images/placeholder.webp';
+    secondaryImage = 'https://futures4europe.eu/images/placeholder.webp';
   }
 
   return generateOgMetadata({
@@ -67,11 +71,11 @@ export async function generateStaticParams() {
 }
 
 export default async function PostPage({ params }: any) {
-  console.log('Post Page Params', params.slug);
+  // console.log('Post Page Params', params.slug);
 
   //Get specific Post by slug
   const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
-  console.log('postItem Data', postPageItem?.data);
+  // console.log('postItem Data', postPageItem?.data);
 
   if (!postPageItem) {
     return <div>Loading...</div>; // You can also add a loading spinner here
