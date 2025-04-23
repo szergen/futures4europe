@@ -37,7 +37,7 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
     linkedinLink: '',
     websiteLink: '',
     researchGateLink: '',
-    orcidLink: ''
+    orcidLink: '',
   });
 
   const handleIconClick = (url: string, modalKey: string) => {
@@ -52,43 +52,45 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
     isEditModeOn ? setShowCreateForm(true) : window.open(url, '_blank');
   };
 
-
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Get current URL and fieldName based on which modal is open
-    const currentUrl = 
-      modalKeyToUpdate === 'linkedinLink' ? currentLinkedinLink :
-      modalKeyToUpdate === 'websiteLink' ? currentWebsiteLink :
-      modalKeyToUpdate === 'researchGateLink' ? currentResearchGateLink :
-      currentOrcidLink;
-    
+    const currentUrl =
+      modalKeyToUpdate === 'linkedinLink'
+        ? currentLinkedinLink
+        : modalKeyToUpdate === 'websiteLink'
+        ? currentWebsiteLink
+        : modalKeyToUpdate === 'researchGateLink'
+        ? currentResearchGateLink
+        : currentOrcidLink;
+
     const fieldName = {
       linkedinLink: 'LinkedIn URL',
       websiteLink: 'Website URL',
       researchGateLink: 'ResearchGate URL',
-      orcidLink: 'ORCID URL'
+      orcidLink: 'ORCID URL',
     }[modalKeyToUpdate];
-    
+
     // Validate URL - this uses the imported function which returns a string
     const errorMessage = validateUrl(currentUrl || '', fieldName);
-    
-    if (errorMessage) { // If there's an error message
-      setUrlErrors(prev => ({
+
+    if (errorMessage) {
+      // If there's an error message
+      setUrlErrors((prev) => ({
         ...prev,
-        [modalKeyToUpdate]: errorMessage
+        [modalKeyToUpdate]: errorMessage,
       }));
       return;
     }
-    
-    handleUpdate &&
-      handleUpdate(modalKeyToUpdate, currentUrl);
-    
-    setUrlErrors(prev => ({
+
+    handleUpdate && handleUpdate(modalKeyToUpdate, currentUrl);
+
+    setUrlErrors((prev) => ({
       ...prev,
-      [modalKeyToUpdate]: ''
+      [modalKeyToUpdate]: '',
     }));
-    
+
     setShowCreateForm(false);
   };
 
@@ -242,7 +244,6 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
                 id="tagName"
                 onChange={(e) => {
                   const value = e.target.value;
-                  
                   // Update appropriate state based on which modal is open
                   if (modalKeyToUpdate === 'linkedinLink') {
                     setCurrentLinkedinLink(value);
@@ -253,17 +254,17 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
                   } else if (modalKeyToUpdate === 'orcidLink') {
                     setCurrentOrcidLink(value);
                   }
-                  
+
                   // Clear error for this field when user types
                   if (urlErrors[modalKeyToUpdate]) {
-                    setUrlErrors(prev => ({
+                    setUrlErrors((prev) => ({
                       ...prev,
-                      [modalKeyToUpdate]: ''
+                      [modalKeyToUpdate]: '',
                     }));
                   }
                 }}
                 required
-                color={urlErrors[modalKeyToUpdate] ? "failure" : undefined}
+                color={urlErrors[modalKeyToUpdate] ? 'failure' : undefined}
                 helperText={
                   urlErrors[modalKeyToUpdate] && (
                     <span className="text-red-600">
@@ -277,7 +278,7 @@ const SocialLinksComponent: React.FC<SocialLinksComponentProps> = ({
             <Button
               pill
               color="purple"
-              className='bg-action-site hover:bg-action-hover'
+              className="bg-action-site hover:bg-action-hover"
               disabled={
                 (modalKeyToUpdate === 'linkedinLink' && !currentLinkedinLink) ||
                 (modalKeyToUpdate === 'websiteLink' && !currentWebsiteLink) ||

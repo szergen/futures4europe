@@ -572,7 +572,7 @@
   .btn-save:disabled {
     @apply cursor-not-allowed;
     @apply opacity-60;
-    background: var(--gray-400, #9ca3af);
+    background: var(--action-site, #9ca3af);
     @apply hover:bg-gray-400;
   }
 

@@ -571,7 +571,11 @@ export default function DashboardProjects() {
                           key={infoPage.data.title + index}
                           className="pt-2 pb-2 flex flex-row items-center justify-between"
                         >
-                          <div className={'w-full flex flex-row w-full justify-between'}>
+                          <div
+                            className={
+                              'w-full flex flex-row w-full justify-between'
+                            }
+                          >
                             <Link
                               className={'w-full grow'}
                               href={`/${extractInfoPageTypeBasedOnTag(

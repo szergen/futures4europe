@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { subscribeToNewsletter } from '@app/wixUtils/client-side';
 import SpriteSvg from '../SpriteSvg/SpriteSvg';
+import { Button, Tooltip } from 'flowbite-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -36,9 +37,8 @@ const Footer = () => {
                 Subscribe to our newsletter
               </h2>
               <p className="mt-4 text-lg text-gray-300">
-                Want the latest updates from futures4europe in your inbox? Join
-                our mailing list by confirming your subscription and receive all
-                the latest updates in Foresight.
+                Want the latest updates from futures4europe.eu in your inbox?
+                Subscribe and receive the latest updates in Foresight.
               </p>
               <div className="mt-6 flex max-w-md gap-x-4">
                 <form onSubmit={handleSubmit} className="flex gap-x-4">
@@ -54,22 +54,25 @@ const Footer = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full mb-0 min-w-0 flex-auto rounded-full border-0 bg-white px-3.5 py-2 text-gray-800 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
+                      className="w-full mb-0 min-w-0 flex-auto rounded-full border-0 bg-white px-3.5 py-2 text-gray-800 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:min-w-[300px] xs:min-w-[200px] sm:text-sm/6"
                       placeholder="Enter your email"
                     />
                   </div>
-                  <button
-                    type="submit"
-                    disabled={!isPrivacyChecked}
-                    className={classNames(
-                      'flex-none rounded-full px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500',
-                      isPrivacyChecked
-                        ? 'hover:bg-secondary-site bg-[#75c]'
-                        : 'bg-greyShade/50 text-white cursor-not-allowed'
-                    )}
-                  >
-                    Subscribe
-                  </button>
+                  <Tooltip content="Email field and privacy policy checkbox are required to subscribe">
+                    <button
+                      type="submit"
+                      title="The email and privacy policy checkbox are required to subscribe"
+                      disabled={!isPrivacyChecked}
+                      className={classNames(
+                        'btn-save flex-none rounded-full px-3.5 py-2.5 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500',
+                        isPrivacyChecked
+                          ? 'hover:bg-action-site/90'
+                          : 'bg-greyShade/50 text-white cursor-not-allowed'
+                      )}
+                    >
+                      Subscribe
+                    </button>
+                  </Tooltip>
                 </form>
               </div>
 
@@ -93,12 +96,12 @@ const Footer = () => {
 
                     <div>
                       <strong className="font-medium text-white relative">
-                        I agree my information will be processed in accordance
-                        with the Future4Europe{' '}
+                        I agree that my information will be processed in
+                        accordance with the Future4Europe{' '}
                         <a
                           href="/static-pages/privacy-policy"
                           target="_blank"
-                          className="text-blue-600"
+                          className="text-white underline hover:text-action-site"
                         >
                           Privacy Policy
                         </a>
@@ -180,6 +183,15 @@ const Footer = () => {
                 </dt>
                 <dd className="mt-2 text-base/7 text-white/80">
                   <ul className="text-sm transition-all duration-500">
+                    <li className="mb-2">
+                      <Link
+                        target="_blank"
+                        href="https://shoutout.wix.com/so/59PJm0OBB"
+                        className="text-white/80 hover:text-white underline"
+                      >
+                        April 2025
+                      </Link>
+                    </li>
                     <li className="mb-2">
                       <Link
                         target="_blank"
@@ -346,34 +358,34 @@ const Footer = () => {
           <div className="lg:mx-auto text-left">
             <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
             <ul className="text-sm transition-all duration-500">
-              <li className="mb-6">
+              <li className="mb-4">
                 <Link
                   href="/about"
-                  className="text-gray-400 hover:text-gray-500 underline"
+                  className="text-gray-600 hover:text-gray-500 hover:underline"
                 >
                   About us
                 </Link>
               </li>
-              <li className="mb-6">
+              <li className="mb-4">
                 <Link
                   href="/static-pages/terms-of-use"
-                  className="text-gray-400 hover:text-gray-500 underline"
+                  className="text-gray-600 hover:text-gray-500 hover:underline"
                 >
                   Terms of use
                 </Link>
               </li>
-              <li className="mb-6">
+              <li className="mb-4">
                 <Link
                   href="/static-pages/privacy-policy"
-                  className="text-gray-400 hover:text-gray-500 underline"
+                  className="text-gray-600 hover:text-gray-500 hover:underline"
                 >
                   Privacy Policy
                 </Link>
               </li>
-              <li className="mb-6">
+              <li className="mb-4">
                 <Link
                   href="/static-pages/cookie-policy"
-                  className="text-gray-400 hover:text-gray-500 underline"
+                  className="text-gray-600 hover:text-gray-500 hover:underline"
                 >
                   Cookie Policy
                 </Link>
@@ -386,10 +398,10 @@ const Footer = () => {
               Contact Us
             </h4>
             <ul className="text-sm  transition-all duration-500">
-              <li className="mb-6">
+              <li className="mb-4">
                 <a
                   href="mailto:info@futures4europe.eu"
-                  className="text-gray-400 hover:text-gray-500 underline"
+                  className="text-gray-600 hover:text-gray-500 hover:underline"
                 >
                   info@futures4europe.eu
                 </a>

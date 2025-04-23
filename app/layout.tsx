@@ -20,10 +20,21 @@ import GA from './3rd-parties/GA/GA';
 function CustomPostHogProvider({ children }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-        api_host: 'https://eu.i.posthog.com',
-        debug: process.env.NODE_ENV === 'development', // Debug only in development
-      });
+      // Check if we're on localhost
+      const isLocalhost =
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1';
+
+      // Only initialize PostHog if we're not on localhost
+      if (!isLocalhost) {
+        posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+          api_host: 'https://eu.i.posthog.com',
+          debug: process.env.NODE_ENV === 'development', // Debug only in development
+        });
+      } else {
+        // Optional: For development visibility
+        console.log('PostHog tracking disabled on localhost');
+      }
     }
   }, []);
 
