@@ -35,12 +35,8 @@ import {
 } from '../PageComponents.utils';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
-import {
-  refetchAffiliations,
-  refetchInfoPages,
-  refetchTags,
-} from '@app/utils/refetch-utils';
 import { invalidatePersonPageCache } from '@app/utils/cache-utils';
+import OgImage from '@app/shared-components/OgImage';
 
 function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   // person = person || mockPerson(pageTitle);
@@ -1122,6 +1118,15 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
   return (
     <div className={classNames(style.personContainer)}>
       {/*  Edit buttons */}
+      {!isNewPage && (
+        <OgImage
+          primaryImage={personData.personTag?.picture}
+          secondaryImage={'/images/placeholder.webp'}
+          title={personData.title}
+          description={personData.description}
+          url={`https://futures4europe.eu/person/${personData.slug}`}
+        />
+      )}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
           <button

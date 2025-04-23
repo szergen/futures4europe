@@ -11,6 +11,7 @@ import FilesComponent from '../shared-page-components/FilesComponent/FilesCompon
 import { mockProject } from '../../mocks/pagesMocks';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import OgImage from '@app/shared-components/OgImage';
 import {
   arraysEqual,
   deepEqual,
@@ -96,7 +97,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
   // #endregion
 
   // #region Handle affiliations
-  console.log('debug111->person.affiliationsItems', project?.affiliationsItems);
+  // console.log('debug111->project', project?.data);
 
   const projectsCoordindation = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'coordination')
@@ -950,13 +951,25 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
   return (
     <div className={classNames(style.personContainer)}>
+      {!isNewPage && (
+        <OgImage
+          primaryImage={projectData.projectTag?.picture}
+          secondaryImage={
+            projectData.contentImages?.[0]?.url !== ' '
+              ? projectData.contentImages?.[0]?.url
+              : '/images/placeholder.webp'
+          }
+          title={projectData.title}
+          description={projectData.subtitle}
+          url={`https://futures4europe.eu/project/${projectData.slug}`}
+        />
+      )}
       {/*  Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">
           <button
             onClick={() => {
               isEditModeOn && saveOrCreateHandler();
-              console.log('projectData', projectData);
               setIsEditModeOn(!isEditModeOn);
               setDefaultProjectData(projectData);
             }}
