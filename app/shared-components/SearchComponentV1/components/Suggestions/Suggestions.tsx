@@ -162,7 +162,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({
   // console.log('debg111->searchedItems->', searchedItems);
 
   const getValidImageUrl = (urls: (string | undefined)[]) => {
-    const PLACEHOLDER = '/images/placeholder.webp';
+    const PLACEHOLDER = 'https://futures4europe.eu/images/placeholder.webp';
     return (
       urls.find((url) => url && url !== '_' && url.trim().length > 0) ||
       PLACEHOLDER

@@ -27,7 +27,7 @@ const OgImage: React.FC<OgImageProps> = ({
   siteName = 'Futures4Europe',
 }) => {
   // Fallback image if no primary image is provided
-  const defaultImage = '/images/default-og-image.jpg';
+  const defaultImage = 'https://futures4europe.eu/images/placeholder.webp';
   const ogImage = primaryImage || defaultImage;
 
   // Use effect to update meta tags in the document head

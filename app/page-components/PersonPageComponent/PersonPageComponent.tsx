@@ -1121,7 +1121,7 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
       {!isNewPage && (
         <OgImage
           primaryImage={personData.personTag?.picture}
-          secondaryImage={'/images/placeholder.webp'}
+          secondaryImage={'https://futures4europe.eu/images/placeholder.webp'}
           title={personData.title}
           description={personData.description}
           url={`https://futures4europe.eu/person/${personData.slug}`}

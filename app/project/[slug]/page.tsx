@@ -36,7 +36,7 @@ export async function generateMetadata({
   let secondaryImage =
     projectPageItem.data?.contentImages?.[0]?.url !== ' '
       ? projectPageItem.data?.contentImages?.[0]?.url
-      : '/images/placeholder.webp';
+      : 'https://futures4europe.eu/images/placeholder.webp';
 
   return generateOgMetadata({
     title: projectPageItem.data?.title || 'Futures4Europe',

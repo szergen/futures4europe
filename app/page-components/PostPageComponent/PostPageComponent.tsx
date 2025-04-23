@@ -752,7 +752,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
           secondaryImage={
             postData.contentImages?.[1]?.url !== ' '
               ? postData.contentImages?.[1]?.url
-              : '/images/placeholder.webp'
+              : 'https://futures4europe.eu/images/placeholder.webp'
           }
           title={postData.title}
           description={postData.subtitle}
@@ -762,7 +762,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
       {!isNewPost && postData?.pageType?.[0].name === 'project result' && (
         <OgImage
           primaryImage={postData.projectResultMedia?.thumbnail}
-          secondaryImage={'/images/placeholder.webp'}
+          secondaryImage={'https://futures4europe.eu/images/placeholder.webp'}
           title={postData.title}
           description={postData.subtitle}
           url={currentUrl}

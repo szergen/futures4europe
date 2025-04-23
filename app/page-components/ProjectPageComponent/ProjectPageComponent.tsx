@@ -957,7 +957,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           secondaryImage={
             projectData.contentImages?.[0]?.url !== ' '
               ? projectData.contentImages?.[0]?.url
-              : '/images/placeholder.webp'
+              : 'https://futures4europe.eu/images/placeholder.webp'
           }
           title={projectData.title}
           description={projectData.subtitle}
