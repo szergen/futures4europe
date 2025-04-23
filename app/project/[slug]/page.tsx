@@ -27,6 +27,7 @@ export async function generateStaticParams() {
     ?.map((post: any) => ({
       params: { slug: post?.data?.slug },
     }));
+
   // const excludedPaths = ['New_Post'];
 
   // const filteredSlugs = slugs.filter(
