@@ -37,7 +37,7 @@ const Footer = () => {
                 Subscribe to our newsletter
               </h2>
               <p className="mt-4 text-lg text-gray-300">
-                Want the latest updates from futures4europe.eu in your inbox? 
+                Want the latest updates from futures4europe.eu in your inbox?
                 Subscribe and receive the latest updates in Foresight.
               </p>
               <div className="mt-6 flex max-w-md gap-x-4">
@@ -96,8 +96,8 @@ const Footer = () => {
 
                     <div>
                       <strong className="font-medium text-white relative">
-                        I agree that my information will be processed in accordance
-                        with the Future4Europe{' '}
+                        I agree that my information will be processed in
+                        accordance with the Future4Europe{' '}
                         <a
                           href="/static-pages/privacy-policy"
                           target="_blank"
