@@ -6,6 +6,8 @@ import {
   getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
 import PersonPageComponent from '@app/page-components/PersonPageComponent/PersonPageComponent';
+import { generateOgMetadata } from '@app/shared-components/OgImage';
+import { Metadata } from 'next';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
@@ -15,6 +17,34 @@ export const revalidate = 300; // Revalidate every 5 minutes
 // If a request comes in for a path that hasn't been generated,
 // Next.js will server-render the page on-demand.
 export const dynamicParams = true; // or false, to 404 on unknown paths
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const personPageItem = await getCollectionItemBySlug(
+    'InfoPages',
+    params.slug
+  );
+
+  if (!personPageItem) {
+    return generateOgMetadata({});
+  }
+  let primaryImage = personPageItem.data?.person?.[0]?.picture;
+  let secondaryImage =
+    personPageItem.data?.contentImages?.[0]?.url !== ' '
+      ? personPageItem.data?.contentImages?.[0]?.url
+      : '/images/placeholder.webp';
+
+  return generateOgMetadata({
+    title: personPageItem.data?.title || 'Futures4Europe',
+    description: personPageItem.data?.subtitle || '',
+    primaryImage: primaryImage,
+    secondaryImage: secondaryImage,
+    url: `https://futures4europe.eu/person/${params.slug}`,
+  });
+}
 
 export async function generateStaticParams() {
   const postCollection = await getCollection('InfoPages');
