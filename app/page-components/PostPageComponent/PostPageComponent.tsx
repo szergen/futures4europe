@@ -12,6 +12,7 @@ import TagListComponent from '../shared-page-components/TagListComponent/TagList
 import FilesComponent from '../shared-page-components/FilesComponent/FilesComponent';
 import { mockPost } from '../../mocks/pagesMocks';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
+import OgImage from '@app/shared-components/OgImage';
 import {
   updateDataItem,
   replaceDataItemReferences,
@@ -47,6 +48,9 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
   // Initial mock data
   post = { ...mockPost(pageTitle), ...post };
   const router = useRouter();
+
+  // Get the current URL for OG metadata
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   // #region useAuth hook for grabbing user details and tags needed for editing
   // state for if the page is owned by the user
@@ -503,10 +507,14 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     const userTag = tags.find(
       (tag) => tag?.tagType === 'person' && tag?.name === userDetails.userName
     );
-    if (newPostID && userTag) {
+
+    // Check if both newPostID and userTag._id exist and are strings
+    if (newPostID && userTag && typeof userTag._id === 'string') {
+      const userTagId = userTag._id; // This ensures TS treats it as a string
+
       const updatedAuthor = await replaceDataItemReferences(
         'PostPages',
-        [userTag?._id],
+        [userTagId],
         'author',
         newPostID
       );
@@ -514,7 +522,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
 
       const updatedPageOwner = await replaceDataItemReferences(
         'PostPages',
-        [userTag?._id],
+        [userTagId],
         'pageOwner',
         newPostID
       );
@@ -737,6 +745,30 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
 
   return (
     <div className={classNames('m-auto mb-20', style.postContainer)}>
+      {/* Add OG Image component for client-side fallback */}
+      {!isNewPost && postData?.pageType?.[0].name !== 'project result' && (
+        <OgImage
+          primaryImage={postData.contentImages?.[0]?.url}
+          secondaryImage={
+            postData.contentImages?.[1]?.url !== ' '
+              ? postData.contentImages?.[1]?.url
+              : '/images/placeholder.webp'
+          }
+          title={postData.title}
+          description={postData.subtitle}
+          url={currentUrl}
+        />
+      )}
+      {!isNewPost && postData?.pageType?.[0].name === 'project result' && (
+        <OgImage
+          primaryImage={postData.projectResultMedia?.thumbnail}
+          secondaryImage={'/images/placeholder.webp'}
+          title={postData.title}
+          description={postData.subtitle}
+          url={currentUrl}
+        />
+      )}
+
       {/* Edit buttons */}
       {isPageOwnedByUser && (
         <div className="flex justify-between">

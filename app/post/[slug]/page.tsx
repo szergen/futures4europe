@@ -6,6 +6,8 @@ import {
   // getCollectionItemByTitle,
   getCollectionItemBySlug,
 } from '@app/wixUtils/server-side';
+import { generateOgMetadata } from '@app/shared-components/OgImage';
+import { Metadata } from 'next';
 // import { getCollection } from '@app/wixUtils/client-side';
 
 // Next.js will invalidate the cache when a
@@ -16,6 +18,37 @@ export const revalidate = 300; // Revalidate every 5 minutes
 // If a request comes in for a path that hasn't been generated,
 // Next.js will server-render the page on-demand.
 export const dynamicParams = true; // or false, to 404 on unknown paths
+
+// Generate metadata for the page
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const postPageItem = await getCollectionItemBySlug('PostPages', params.slug);
+
+  if (!postPageItem) {
+    return generateOgMetadata({});
+  }
+  let primaryImage = postPageItem.data?.contentImages?.[0]?.url;
+  let secondaryImage =
+    postPageItem.data?.contentImages?.[1]?.url !== ' '
+      ? postPageItem.data?.contentImages?.[1]?.url
+      : '/images/placeholder.webp';
+
+  if (postPageItem.data?.pageType?.[0].name === 'project result') {
+    primaryImage = postPageItem.data?.projectResultMedia?.thumbnail;
+    secondaryImage = '/images/placeholder.webp';
+  }
+
+  return generateOgMetadata({
+    title: postPageItem.data?.title || 'Futures4Europe',
+    description: postPageItem.data?.subtitle || '',
+    primaryImage: primaryImage,
+    secondaryImage: secondaryImage,
+    url: `https://futures4europe.eu/post/${params.slug}`,
+  });
+}
 
 // Function to generate static paths
 export async function generateStaticParams() {
