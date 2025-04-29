@@ -39,6 +39,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const scrollContainerRef = useRef(null);
+  const [isClientRendered, setIsClientRendered] = useState(false);
 
   //console.log(userDetails);
   const router = useRouter();
@@ -527,18 +528,71 @@ const Header = () => {
     userDetails?.userTag?.tagPageLink,
   ]);
 
+  // Initialize client rendering state
+  useEffect(() => {
+    setIsClientRendered(true);
+  }, []);
+
   return (
     <div
-      className={classNames('relative height-[4rem]', {
+      className={classNames('relative', {
         [style.compactHeaderWrapper]: showSearchBar,
+        'min-h-[300px]': true, // Increased to 300px to match header height
       })}
     >
+      {/* Skeleton placeholder - only shows during SSR */}
+      {!isClientRendered && (
+        <div
+          className="absolute top-0 w-full py-6 px-2 flex-col h-[300px]"
+          style={{
+            backgroundColor: '#1111C9', // Specific color as requested
+          }}
+        >
+          <div className="flex justify-between sm:px-6 sm:px-14 h-header sm:items-center">
+            {/* Logo placeholder */}
+            <div className="w-32 h-10 bg-white/20 rounded animate-pulse"></div>
+
+            {/* Tags placeholder */}
+            <div className="hidden sm:flex space-x-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="w-24 h-8 bg-white/20 rounded animate-pulse"
+                ></div>
+              ))}
+            </div>
+
+            {/* User/login placeholder */}
+            <div className="w-24 h-10 bg-white/20 rounded animate-pulse"></div>
+          </div>
+
+          {/* Search bar placeholder for taller header */}
+          {showSearchBar && (
+            <div className="mt-8 mx-auto w-3/4 h-12 bg-white/20 rounded animate-pulse"></div>
+          )}
+
+          {/* Optional subtle pattern overlay */}
+          <div
+            className="absolute inset-0 overflow-hidden z-[-1] opacity-30"
+            style={{
+              background:
+                'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+              backgroundSize: '20px 20px',
+            }}
+          ></div>
+        </div>
+      )}
+
       <header
         className={classNames(
           showSearchBar ? 'relative' : 'absolute',
           'absolute top-0 flex w-full py-6 px-2 flex-col',
           style.header,
-          { [style.homeHeaderWrapper]: !showSearchBar }
+          {
+            [style.homeHeaderWrapper]: !showSearchBar,
+            'opacity-0': !isClientRendered, // Hide until client rendered
+            'opacity-100 transition-opacity duration-300': isClientRendered,
+          }
         )}
         data-testid={testIds.LAYOUT.HEADER}
       >
