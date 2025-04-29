@@ -1,5 +1,4 @@
 'use client';
-import { NavBar } from '@app/shared-components/Layout/NavBar/NavBar';
 import { motion, useMotionValue, animate } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@app/shared-components/Logo/Logo';
