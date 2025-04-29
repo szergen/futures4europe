@@ -1,23 +1,21 @@
 'use client';
 import './globals.css';
-import { WixProvider, OAuthStrategy, ApiKeyStrategy } from '@wix/sdk-react';
+import { WixProvider, OAuthStrategy } from '@wix/sdk-react';
 import Footer from '@app/shared-components/Layout/Footer';
 import Header from '@app/shared-components/Layout/Header';
 import classNames from 'classnames';
 import style from './layout.module.css';
 import { AuthProvider } from './custom-hooks/AuthContext/AuthContext';
-// import { channel } from 'diagnostics_channel';
 import { useEffect, useState } from 'react';
-import { inter } from '@app/ui/fonts';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { SearchProvider } from './custom-hooks/SearchContext/SearchContext';
 import GA from './3rd-parties/GA/GA';
-
+import Linkedin from './3rd-parties/Linkedin/Linkedin';
 // Initialize PostHog
-function CustomPostHogProvider({ children }) {
+function CustomPostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Check if we're on localhost
@@ -128,6 +126,7 @@ export default function RootLayout({
         </CustomPostHogProvider>
       </body>
       <GA />
+      <Linkedin />
     </html>
   );
 }
