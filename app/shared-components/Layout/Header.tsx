@@ -1,5 +1,4 @@
 'use client';
-import { NavBar } from '@app/shared-components/Layout/NavBar/NavBar';
 import { motion, useMotionValue, animate } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@app/shared-components/Logo/Logo';
@@ -55,29 +54,16 @@ const Header = () => {
   };
   //console.log('debug2->userDetails', userDetails);
 
-  // 1. A function to determine if the search bar should be visible
+  // Simplified search bar visibility logic
   function useSearchBarVisibility() {
-    const pathname = usePathname(); // Move this inside the hook
-    const [showSearchBar, setShowSearchBar] = useState(false);
+    const pathname = usePathname();
 
-    // Pages where search bar should be hidden
-    const hideSearchBarPaths = [
-      '/',
-      '/home',
-      // Add any other paths where you want to hide the search bar
-    ];
+    // Directly compute value without state or effects
+    const hideSearchBarPaths = ['/', '/home'];
+    const showSearchBar = !hideSearchBarPaths.includes(pathname);
 
-    // Update effect to run whenever pathname changes
-    useEffect(() => {
-      // Check if current path matches any of the paths where search bar should be hidden
-      const shouldHideSearchBar = hideSearchBarPaths.some(
-        (path) => path === pathname
-      );
-      setShowSearchBar(!shouldHideSearchBar);
-
-      // For debugging
-      // console.log('Path changed:', pathname, 'Show search bar:', !shouldHideSearchBar);
-    }, [pathname]); // This dependency ensures the effect runs when pathname changes
+    // For debugging
+    // console.log('Path:', pathname, 'Show search bar:', showSearchBar);
 
     return showSearchBar;
   }
