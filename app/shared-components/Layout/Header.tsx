@@ -548,9 +548,10 @@ const Header = () => {
 
   return (
     <div
-      className={classNames('relative', {
+      className={classNames({
+        relative: showSearchBar,
         [style.compactHeaderWrapper]: showSearchBar,
-        'min-h-[300px]': true, // Increased to 300px to match header height
+        'min-h-[300px]': showSearchBar, // Increased to 300px to match header height
       })}
     >
       {/* Skeleton placeholder - only shows during SSR */}
