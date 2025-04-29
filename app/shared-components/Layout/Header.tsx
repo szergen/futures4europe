@@ -10,7 +10,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import SpriteSvg from '@app/shared-components/SpriteSvg/SpriteSvg';
 import { useAuth } from '@app/custom-hooks/AuthContext/AuthContext';
-import { useEffect, useState, useMemo, memo, useRef } from 'react';
+import { useEffect, useState, useMemo, memo, useRef, useCallback } from 'react';
 import { Avatar, Dropdown, Modal } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import {
@@ -26,6 +26,7 @@ import GlowButton from './NavBar/GlowButton';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import * as CookieConsent from 'vanilla-cookieconsent';
 import posthog from 'posthog-js';
+import { debounce } from 'lodash';
 
 const Header = () => {
   const {
@@ -242,16 +243,16 @@ const Header = () => {
   );
 
   const handleClickOutside = (event) => {
-    console.log('handleClickOutside', event, dropdownRef);
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      console.log('handleClickOutside -> inside the if', event);
       setIsDropdownOpen(false);
     }
   };
 
   useEffect(() => {
     if (isDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside, {
+        passive: true,
+      });
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
@@ -312,7 +313,7 @@ const Header = () => {
           )?.length || 0,
       }));
     }
-  }, [infoPages, postPages, userDetails.userName, userDetails.userTag]);
+  }, [infoPages, postPages]);
 
   useEffect(() => {
     console.log('pageTypeCounts', pageTypeCounts);
@@ -339,33 +340,36 @@ const Header = () => {
   const [showRightArrow, setShowRightArrow] = useState(true);
 
   // Function to scroll with buttons
-  const scrollTags = (direction) => {
-    const currentX = x.get();
-    const scrollAmount = 200;
+  const scrollTags = useCallback(
+    (direction) => {
+      const currentX = x.get();
+      const scrollAmount = 200;
 
-    // Calculate new position
-    const newPosition =
-      direction === 'right'
-        ? currentX - scrollAmount // Scroll right
-        : currentX + scrollAmount; // Scroll left
+      // Calculate new position
+      const newPosition =
+        direction === 'right'
+          ? currentX - scrollAmount // Scroll right
+          : currentX + scrollAmount; // Scroll left
 
-    // Apply constraints but allow slight overscroll on left
-    const minX = -(contentWidth - containerWidth + 80); // Right limit
-    const maxX = 40; // Allow slight overscroll to left (40px)
+      // Apply constraints but allow slight overscroll on left
+      const minX = -(contentWidth - containerWidth + 80); // Right limit
+      const maxX = 40; // Allow slight overscroll to left (40px)
 
-    const constrainedX = Math.max(minX, Math.min(maxX, newPosition));
+      const constrainedX = Math.max(minX, Math.min(maxX, newPosition));
 
-    // Animate to the new position
-    animate(x, constrainedX, {
-      type: 'spring',
-      stiffness: 300,
-      damping: 30,
-      duration: 0.3,
-    });
+      // Animate to the new position
+      animate(x, constrainedX, {
+        type: 'spring',
+        stiffness: 300,
+        damping: 30,
+        duration: 0.3,
+      });
 
-    // Update arrow visibility
-    updateArrowVisibility(constrainedX);
-  };
+      // Update arrow visibility
+      updateArrowVisibility(constrainedX);
+    },
+    [x, contentWidth, containerWidth]
+  );
 
   // Function to update arrow visibility
   const updateArrowVisibility = (currentX) => {
@@ -376,16 +380,13 @@ const Header = () => {
   // Update container dimensions
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
-
     if (!scrollContainer) return;
 
-    const updateDimensions = () => {
+    const updateDimensions = debounce(() => {
       setContainerWidth(scrollContainer.clientWidth);
       setContentWidth(scrollContainer.scrollWidth + 100);
-
-      // Update arrow visibility after dimensions change
       updateArrowVisibility(x.get());
-    };
+    }, 100);
 
     updateDimensions();
 
@@ -394,6 +395,7 @@ const Header = () => {
 
     return () => {
       resizeObserver.disconnect();
+      updateDimensions.cancel();
     };
   }, []);
 
@@ -533,11 +535,23 @@ const Header = () => {
     setIsClientRendered(true);
   }, []);
 
+  // 4. Add will-change hints for GPU acceleration
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.style.willChange = 'transform';
+      return () => {
+        scrollContainer.style.willChange = 'auto';
+      };
+    }
+  }, []);
+
   return (
     <div
-      className={classNames('relative', {
+      className={classNames({
+        relative: showSearchBar,
         [style.compactHeaderWrapper]: showSearchBar,
-        'min-h-[300px]': true, // Increased to 300px to match header height
+        'min-h-[300px]': showSearchBar, // Increased to 300px to match header height
       })}
     >
       {/* Skeleton placeholder - only shows during SSR */}
