@@ -48,6 +48,9 @@ const Header = () => {
     router.push('/login');
   };
 
+  // Add check for admin status
+  const isWixAdmin = userDetails?.isAdmin || false;
+
   // Handle dropdown open/close state
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev); // Toggle dropdown state
@@ -469,6 +472,13 @@ const Header = () => {
           <Link href="/post/New_Post?pageType=event">
             <Dropdown.Item icon={HiPlusSm}>Add Event</Dropdown.Item>
           </Link>
+
+          {/* Admin Delete Button */}
+          {isWixAdmin && (
+            <Link href="/static-pages/admin">
+              <Dropdown.Item icon={HiPlusSm}>Admin dashboard</Dropdown.Item>
+            </Link>
+          )}
 
           {/* <Dropdown.Item
             icon={HiPlusSm}
