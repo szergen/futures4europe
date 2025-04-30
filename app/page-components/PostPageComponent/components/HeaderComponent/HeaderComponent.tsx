@@ -113,7 +113,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             {!isEditModeOn ? (
               post?.projectResultMedia && (
                 <a
-                  href={post?.projectResultMedia.url}
+                  href={post?.projectResultMedia.url || '#'}
                   download={post?.projectResultMedia.displayName + '.pdf'}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -193,7 +193,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                 });
               }}
               validate={(value) => {
-                if (!value) return 'Display name is required';
+                // if (!value) return 'Display name is required';
                 if (value.length > 50)
                   return 'Display name must be 50 characters or less';
                 return ''; // No error
@@ -210,7 +210,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
           {!isEditModeOn && post?.projectResultMedia?.type === 'document' && (
             <div className={style.downloadAndViews}>
               <a
-                href={post?.projectResultMedia.url}
+                href={post?.projectResultMedia.url || '#'}
                 download={post?.projectResultMedia.displayName + '.pdf'}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -293,10 +293,10 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
                   });
                 }
               }}
-              validate={(value) => {
-                if (!value) return 'Display name is required';
-                return ''; // No error
-              }}
+              // validate={(value) => {
+              //   if (!value) return 'Display name is required';
+              //   return ''; // No error
+              // }}
               helperText={`${
                 (post?.projectResultMedia?.displayName || '').length
               }/50 characters`}
@@ -358,7 +358,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({
             {post?.projectResultMedia?.type === 'document' && (
               <div className={style.downloadAndViews}>
                 <a
-                  href={post?.projectResultMedia.url}
+                  href={post?.projectResultMedia.url || '#'}
                   download={post?.projectResultMedia.displayName + '.pdf'}
                   target="_blank"
                   rel="noopener noreferrer"
