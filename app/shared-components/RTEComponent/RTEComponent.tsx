@@ -246,7 +246,6 @@ export const RTEComponent: React.FC<RTEComponentProps> = ({
               '👉',
               '👉',
               '👆',
-              '🖕',
               '👇',
               '🖖',
               '🤘',
