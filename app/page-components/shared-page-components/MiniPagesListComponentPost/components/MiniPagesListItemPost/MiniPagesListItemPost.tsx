@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import React from 'react';
 import style from './MiniPagesListItemPost.module.css';
 import classNames from 'classnames';
 import Typography from '@app/shared-components/Typography/Typography';
@@ -7,7 +7,6 @@ import MiniPagePost from '@app/shared-components/MiniPagePost/MiniPagePost';
 import Link from 'next/link';
 import { getPropsForMiniPagesListItemPost } from './MiniPagesListItemPost.utils';
 import { automaticallyDecidePathPrefixBasedOnPageType } from '@app/utils/parse-utils';
-import { sortResultBySortTags } from '../../../../../shared-components/SearchComponentV1/SearchComponentV1.utils';
 
 enum PageType {
   ProjectInfo = 'project info',
@@ -283,7 +282,6 @@ const MiniPagesListItemPost: React.FC<MiniPagesListItemPostProps> = ({
   manualSort,
 }) => {
   const sortedItems = manualSort ? items : sortItemsByPageType(items);
-  console.log('sortedItems', sortedItems);
 
   return (
     <section className={classNames(style.posts)}>

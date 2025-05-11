@@ -33,9 +33,7 @@ import { useRouter } from 'next/navigation';
 import { Modal } from 'flowbite-react';
 import LoadingSpinner from '@app/shared-components/LoadingSpinner/LoadingSpinner';
 import { sanitizeTitleForSlug } from '../PageComponents.utils';
-import { refetchPosts, refetchTags } from '@app/utils/refetch-utils';
 import { invalidatePostPageCache } from '@app/utils/cache-utils';
-// import { extactOwnedPagesIds } from '@app/utils/parse-utils';
 
 export type PostPageComponentProps = {
   pageTitle: string;
@@ -108,6 +106,8 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     subtitle: post?.data?.subtitle,
     updatedDate:
       post?.data?.postPublicationDate || post?.data?._updatedDate?.['$date'],
+    postDate:
+      post?.data?.postPublicationDate || post?.data?._createdDate?.['$date'],
     countryTag: post?.data?.countryTag[0],
     recommendations: {
       number: post?.data?.recomendations,
@@ -155,6 +155,7 @@ function PostPageComponent({ pageTitle, post, isNewPost, pageType }: any) {
     mediaFiles: post?.data?.mediaFiles,
     projectResultPublicationDate: post?.data?.projectResultPublicationDate,
     pageOwner: post?.data?.pageOwner,
+    slug: post?.data?.slug,
   };
   console.log('debug1-post', post);
   // set default post data and data for editing
