@@ -291,12 +291,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         defaultPersonData.formerAfiliations
       ) ||
       personData.personTag?.name !== defaultPersonData.personTag?.name ||
-      personData?.data?.linkedinLink !==
-        defaultPersonData?.data?.linkedinLink ||
-      personData?.data?.websiteLink !== defaultPersonData?.data?.websiteLink ||
-      personData?.data?.researchGateLink !==
-        defaultPersonData?.data?.researchGateLink ||
-      personData?.data?.orcidLink !== defaultPersonData?.data?.orcidLink
+      personData?.data?.linkedinLink !== defaultPersonData?.linkedinLink ||
+      personData?.websiteLink !== defaultPersonData?.websiteLink ||
+      personData?.researchGateLink !== defaultPersonData?.researchGateLink ||
+      personData?.orcidLink !== defaultPersonData?.orcidLink
     ) {
       const updatedItem = await updateDataItem(
         personData.dataCollectionId,
@@ -323,10 +321,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
           //   }
           // ),
           mediaFiles: personData.mediaFiles,
-          linkedinLink: personData?.data?.linkedinLink,
-          websiteLink: personData?.data?.websiteLink,
-          researchGateLink: personData?.data?.researchGateLink,
-          orcidLink: personData?.data?.orcidLink,
+          linkedinLink: personData?.linkedinLink,
+          websiteLink: personData?.websiteLink,
+          researchGateLink: personData?.researchGateLink,
+          orcidLink: personData?.orcidLink,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -700,10 +698,10 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
           //   }
           // ),
           mediaFiles: personData?.mediaFiles,
-          linkedinLink: personData?.data?.linkedinLink,
-          websiteLink: personData?.data?.websiteLink,
-          researchGateLink: personData?.data?.researchGateLink,
-          orcidLink: personData?.data?.orcidLink,
+          linkedinLink: personData?.linkedinLink,
+          websiteLink: personData?.websiteLink,
+          researchGateLink: personData?.researchGateLink,
+          orcidLink: personData?.orcidLink,
           slug:
             sanitizeTitleForSlug(personData?.personTag?.name) +
             '-' +

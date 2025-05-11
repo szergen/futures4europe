@@ -306,10 +306,9 @@ function OrganisationPageComponent({
         defaultOrganisationData?.organisationTag?.name ||
       organisationData?.organisationEstablishedDate !==
         defaultOrganisationData?.organisationEstablishedDate ||
-      organisationData?.data?.linkedinLink !==
-        defaultOrganisationData?.data?.linkedinLink ||
-      organisationData?.data?.websiteLink !==
-        defaultOrganisationData?.data?.websiteLink
+      organisationData?.linkedinLink !==
+        defaultOrganisationData?.linkedinLink ||
+      organisationData?.websiteLink !== defaultOrganisationData?.websiteLink
     ) {
       const updatedItem = await updateDataItem(
         organisationData.dataCollectionId,
@@ -358,8 +357,8 @@ function OrganisationPageComponent({
           //   }
           // ),
           mediaFiles: organisationData.mediaFiles,
-          linkedinLink: organisationData?.data?.linkedinLink,
-          websiteLink: organisationData?.data?.websiteLink,
+          linkedinLink: organisationData?.linkedinLink,
+          websiteLink: organisationData?.websiteLink,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -669,8 +668,8 @@ function OrganisationPageComponent({
           postImage9: organisationData?.contentImages[8],
           postImage10: organisationData?.contentImages[9],
           mediaFiles: organisationData.mediaFiles,
-          linkedinLink: organisationData?.data?.linkedinLink,
-          websiteLink: organisationData?.data?.websiteLink,
+          linkedinLink: organisationData?.linkedinLink,
+          websiteLink: organisationData?.websiteLink,
           slug:
             sanitizeTitleForSlug(organisationData?.organisationTag?.name) +
             '-' +

@@ -281,9 +281,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       projectData.projectStartDate !== defaultProjectData.projectStartDate ||
       projectData.projectEndDate !== defaultProjectData.projectEndDate ||
       projectData.projectTag?.name !== defaultProjectData.projectTag?.name ||
-      projectData?.data?.linkedinLink !==
-        defaultProjectData?.data?.linkedinLink ||
-      projectData?.data?.websiteLink !== defaultProjectData?.data?.websiteLink
+      projectData?.linkedinLink !== defaultProjectData?.linkedinLink ||
+      projectData?.websiteLink !== defaultProjectData?.websiteLink
     ) {
       const updatedItem = await updateDataItem(
         projectData.dataCollectionId,
@@ -324,8 +323,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           //   }
           // ),
           mediaFiles: projectData?.mediaFiles,
-          linkedinLink: projectData?.data?.linkedinLink,
-          websiteLink: projectData?.data?.websiteLink,
+          linkedinLink: projectData?.linkedinLink,
+          websiteLink: projectData?.websiteLink,
         }
       );
       console.log('updatedItem', updatedItem);
@@ -629,8 +628,8 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
           //   }
           // ),
           mediaFiles: projectData?.mediaFiles,
-          linkedinLink: projectData?.data?.linkedinLink,
-          websiteLink: projectData?.data?.websiteLink,
+          linkedinLink: projectData?.linkedinLink,
+          websiteLink: projectData?.websiteLink,
           slug:
             sanitizeTitleForSlug(projectData?.projectTag?.name) +
             '-' +
@@ -647,7 +646,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
 
     const userTag = tags.find((tag) => tag.name === userDetails?.userName);
 
-    if (newProjectInfoId && projectTag && userTag) {
+    if (newProjectInfoId && projectTag && userTag && userTag?._id) {
       const updatedAuthor = await replaceDataItemReferences(
         'InfoPages',
         [userTag._id],
