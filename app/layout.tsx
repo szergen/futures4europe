@@ -78,6 +78,10 @@ export default function RootLayout({
           name="description"
           content="Explore a rich collection of foresight projects, showcase your own work, and participate in upcoming events."
         />
+        <meta
+          name="keywords"
+          content="futures, foresight, strategic foresight, Europe, European foresight, futures research, policy foresight, foresight methods, scenario planning, horizon scanning, futures studies, anticipatory governance, European Union, research and innovation, sustainable futures, future-oriented policy"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/favicon.ico" />
       </head>
