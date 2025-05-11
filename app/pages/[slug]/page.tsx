@@ -1,21 +1,14 @@
 import classNames from 'classnames';
 import React from 'react';
-// import PostPageComponent from '@app/page-components/PostPageComponent/PostPageComponent';
-import {
-  getCollection,
-  // getCollectionItemByTitle,
-  // getCollectionItemBySlug,
-} from '@app/wixUtils/server-side';
-// import MiniPagesListComponent from '@app/page-components/shared-page-components/MiniPagesListComponent/MiniPagesListComponent';
+import { getCollection } from '@app/wixUtils/server-side';
 import MiniPagesListItemPost from '@app/page-components/shared-page-components/MiniPagesListComponentPost/components/MiniPagesListItemPost/MiniPagesListItemPost';
 import Hero from '@app/shared-components/Hero/Hero';
 import style from './page.module.css';
 import { decidePageTypeItems } from '@app/utils/parse-utils';
-// import { getCollection } from '@app/wixUtils/client-side';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 60 seconds.
-export const revalidate = 0;
+export const revalidate = 60;
 
 // We'll prerender only the params from `generateStaticParams` at build time.
 // If a request comes in for a path that hasn't been generated,
