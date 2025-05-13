@@ -27,9 +27,9 @@
 }
 .avatarImageHeader {
   width: 100%;
-    max-width: 120px;
-    display: flex;
-    justify-content: flex-end;
+  max-width: 120px;
+  display: flex;
+  justify-content: flex-end;
 }
 .buttonsContainer {
   order: 0;
@@ -39,25 +39,25 @@
   justify-content: flex-end;
 }
 
-.homeHeaderWrapper, 
-.showTagContainer{
-  [class*="tagBody"]  {
-      background-color: transparent!important;
-    }
-  [class*="tagBodyText"]  {
-    background: transparent!important;
-    border: 1px solid var(--primary-white)!important;
+.homeHeaderWrapper,
+.showTagContainer {
+  [class*='tagBody'] {
+    background-color: transparent !important;
   }
-  [class*="tagNameBody"]  {
-    color: var(--primary-white)!important;
-  }  
-  [class*="popularity"]  {
-    background: transparent!important;
+  [class*='tagBodyText'] {
+    background: transparent !important;
+    border: 1px solid var(--primary-white) !important;
   }
-  [class*="popularity"]  {
-    background: var(--primary-blue)!important;
-    color: var(--primary-white)!important;
-  }  
+  [class*='tagNameBody'] {
+    color: var(--primary-white) !important;
+  }
+  [class*='popularity'] {
+    background: transparent !important;
+  }
+  [class*='popularity'] {
+    background: var(--primary-blue) !important;
+    color: var(--primary-white) !important;
+  }
 }
 
 .compactHeaderWrapper {
@@ -168,14 +168,14 @@
   }
 }
 
-.scrollButtonRight, .scrollButtonLeft {
+.scrollButtonRight,
+.scrollButtonLeft {
   display: none;
 }
 
 /* media query */
 
 @media (max-width: 860px) {
-
   .headerContainer {
     display: flex;
     flex-wrap: wrap;
@@ -184,6 +184,7 @@
     justify-content: space-evenly;
     padding: 0px;
     z-index: 999;
+    overflow: hidden;
   }
 
   /* Improve touch target areas for better dragging */
@@ -217,7 +218,7 @@
     transform: translateY(-50%);
     border-radius: 50%;
     /* Increase tap target size */
-    width: 36px;  
+    width: 36px;
     height: 36px;
     display: flex;
     align-items: center;
@@ -303,7 +304,7 @@
     margin-right: 0px;
     padding-right: var(--w-space-m);
   }
-  .buttonsContainer{
+  .buttonsContainer {
     order: -1;
     max-width: 45%;
   }
@@ -330,7 +331,7 @@
     max-width: 100%;
     width: 100vw;
   }
-  .compactHeaderWrapper { 
+  .compactHeaderWrapper {
     height: 400px;
   }
 }

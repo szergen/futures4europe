@@ -114,6 +114,7 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
       (projectTag: any, index: number, self: any[]) =>
         index === self.findIndex((pt) => pt.name === projectTag.name)
     );
+  console.log('debug111->projectsParticipation', projectsParticipation);
 
   const organisations = project?.affiliationsItems
     ?.filter((item: any) => item?.extraIdentifier === 'projectOrganisationRole')
@@ -171,9 +172,15 @@ function ProjectPageComponent({ pageTitle, project, isNewPage }: any) {
     methods: project?.data?.methods, //done
     domains: project?.data?.domains, //done
     // coordinators: project?.data?.projectCoordinator, //done
-    coordinators: projectsCoordindation, //done
+    coordinators:
+      projectsCoordindation?.length > 0
+        ? projectsCoordindation
+        : project?.data?.projectCoordinator || [], //done
     // participants: project?.data?.projectParticipantTeam, //done
-    participants: projectsParticipation, //done
+    participants:
+      projectsParticipation?.length > 0
+        ? projectsParticipation
+        : project?.data?.projectParticipantTeam || [], //done
     // organisations: project?.data?.projectOrganisationRoles?.map((item: any) => {
     //   return {
     //     ...project?.data?.projectOrganisation?.find(

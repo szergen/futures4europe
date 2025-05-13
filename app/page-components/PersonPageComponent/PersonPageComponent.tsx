@@ -1285,12 +1285,12 @@ function PersonPageComponent({ pageTitle, person, isNewPage }: any) {
         tagType="project"
       />
       {/* Content related to this Info Page */}
-      {/* <MiniPagesListComponentPost
+      <MiniPagesListComponentPost
         internalLinks={internalLinks}
         title="Content related to this Person"
         // projectResults={projectResults}
         // events={events}
-      /> */}
+      />
       <FilesComponent
         // files={postData.files}
         isEditModeOn={isEditModeOn}
