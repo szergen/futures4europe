@@ -12,7 +12,7 @@ const referencedItemOptions = [
   { fieldName: 'projects' },
   { fieldName: 'organisations' },
   { fieldName: 'projectResultAuthor' },
-  { fieldName: 'speakers' },
+  { fieldName: 'speakers', limit: 100 },
   { fieldName: 'moderators' },
   { fieldName: 'pageTypes' },
   { fieldName: 'author' },
