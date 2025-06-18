@@ -3,10 +3,10 @@ import { Logo } from '@app/shared-components/Logo/Logo';
 import testIds from '@app/utils/test-ids';
 import classNames from 'classnames';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { subscribeToNewsletter } from '@app/wixUtils/client-side';
-import SpriteSvg from '../SpriteSvg/SpriteSvg';
-import { Button, Tooltip } from 'flowbite-react';
+import { Tooltip } from 'flowbite-react';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -296,7 +296,8 @@ const Footer = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-8 py-10 max-sm:max-w-sm max-sm:mx-auto gap-y-8">
           <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0">
             <a
-              href="https://pagedone.io/"
+              href="https://commission.europa.eu/index_en"
+              target='_blank'
               className="flex justify-center lg:justify-start w-64"
             >
               <svg
@@ -353,8 +354,27 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="flex w-full"></div>
-          <div className="lg:mx-auto text-left"></div>
+          <div className="col-span-full sm:col-span-2 lg:col-span-2 flex w-full">
+            <div className="flex flex-col items-center lg:items-start">
+                <Link
+                  href="https://european-research-area.ec.europa.eu/"
+                  className="text-gray-600 hover:text-gray-500 hover:underline"
+                >
+                    <Image
+                      src={'/images/ERA_logo.jpg'}
+                      height={144}
+                      width={735}
+                      alt="ERA"
+                      className={classNames('w-full h-auto object-contain rounded-md')}
+                    />
+                </Link>
+              <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">
+              We support the European Research Area aimed at creating a single, borderless market
+              for research, innovation and technology in the EU.
+              </p>
+            </div>            
+          </div>
+          <div className="hidden lg:block col-span-2"></div>
           <div className="lg:mx-auto text-left">
             <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
             <ul className="text-sm transition-all duration-500">
