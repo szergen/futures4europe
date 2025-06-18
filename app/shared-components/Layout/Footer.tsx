@@ -346,7 +346,7 @@ const Footer = () => {
                 </g>
               </svg>
             </a>
-            <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">
+            <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center sm:text-left lg:text-left">
               The European Commission support does not constitute endorsement of
               the contents which reflects the views only of the authors, and the
               Commission cannot be held responsible for any use which may be
@@ -354,7 +354,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="col-span-full sm:col-span-2 lg:col-span-2 flex w-full">
+          <div className="col-span-full sm:col-span-2 lg:col-span-2 sm:max-w-[320px] flex w-full">
             <div className="flex flex-col items-center lg:items-start">
                 <Link
                   href="https://european-research-area.ec.europa.eu/"
@@ -374,7 +374,7 @@ const Footer = () => {
               </p>
             </div>            
           </div>
-          <div className="hidden lg:block col-span-2"></div>
+          <div className="hidden lg:mx-auto col-span-2"></div>
           <div className="lg:mx-auto text-left">
             <h4 className="text-lg text-gray-900 font-medium mb-7">Info</h4>
             <ul className="text-sm transition-all duration-500">
