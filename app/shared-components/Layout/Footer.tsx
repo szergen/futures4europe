@@ -297,7 +297,7 @@ const Footer = () => {
           <div className="col-span-full mb-10 lg:col-span-2 lg:mb-0">
             <a
               href="https://commission.europa.eu/index_en"
-              target='_blank'
+              target="_blank"
               className="flex justify-center lg:justify-start w-64"
             >
               <svg
@@ -356,23 +356,26 @@ const Footer = () => {
 
           <div className="col-span-full sm:col-span-2 lg:col-span-2 sm:max-w-[320px] flex w-full">
             <div className="flex flex-col items-center lg:items-start">
-                <Link
-                  href="https://european-research-area.ec.europa.eu/"
-                  className="text-gray-600 hover:text-gray-500 hover:underline"
-                >
-                    <Image
-                      src={'/images/ERA_logo.jpg'}
-                      height={144}
-                      width={735}
-                      alt="ERA"
-                      className={classNames('w-full h-auto object-contain rounded-md')}
-                    />
-                </Link>
+              <Link
+                href="https://european-research-area.ec.europa.eu/"
+                className="text-gray-600 hover:text-gray-500 hover:underline"
+              >
+                <Image
+                  src={'/images/ERA_logo.jpg'}
+                  height={144}
+                  width={735}
+                  alt="ERA"
+                  className={classNames(
+                    'w-full h-auto object-contain rounded-md'
+                  )}
+                />
+              </Link>
               <p className="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">
-              We support the European Research Area aimed at creating a single, borderless market
-              for research, innovation and technology in the EU.
+                We support the European Research Area aimed at creating a
+                single, borderless market for research, innovation and
+                technology in the EU.
               </p>
-            </div>            
+            </div>
           </div>
           <div className="hidden lg:mx-auto col-span-2"></div>
           <div className="lg:mx-auto text-left">
