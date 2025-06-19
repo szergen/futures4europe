@@ -272,21 +272,21 @@ export default function DashboardProjects() {
   //   // console.log('debug222->infoPages', infoPages);
   //   console.log('debug111->editing contact');
   //   const contactsDetails = await getContactsItemByEmail(
-  //     'aaron.rosa@isi.fraunhofer.de'
+  //     'lourdes@teachthefuture.org'
   //   );
 
   //   console.log('debug111->contactsDetails', contactsDetails);
-  //   const userDetails = await getContactsItem(
-  //     '109653a5-50a6-4adf-8a12-f2e027152a3b'
-  //   );
-  //   console.log('debug111->userDetails', userDetails);
+  //   // const userDetails = await getContactsItem(
+  //   //   '109653a5-50a6-4adf-8a12-f2e027152a3b'
+  //   // );
+  //   // console.log('debug111->userDetails', userDetails);
 
-  //   const member = await updateMember(
-  //     '109653a5-50a6-4adf-8a12-f2e027152a3b',
-  //     'Aaron B. Rosa'
-  //   );
+  //   // const member = await updateMember(
+  //   //   '109653a5-50a6-4adf-8a12-f2e027152a3b',
+  //   //   'Aaron B. Rosa'
+  //   // );
 
-  //   console.log('debug111->member', member);
+  //   // console.log('debug111->member', member);
 
   //   // const projectInfoPages = infoPages
   //   //   .filter(
