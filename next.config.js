@@ -1749,6 +1749,51 @@ const nextConfig = {
         permanent: true,
       },
       // End of Newsletters April 2025
+      // Start of Newsletters July 2025
+      {
+        source: '/so/cdPV0tqSW/c:path*',
+        destination: 'https://legacy.futures4europe.eu/so/cdPV0tqSW/c:path*',
+        permanent: true,
+      },
+      {
+        source: '/so/cdPV0tqSW',
+        has: [
+          {
+            type: 'query',
+            key: 'languageTag',
+            value: 'en',
+          },
+        ],
+        destination: 'https://shoutout.wix.com/so/cdPV0tqSW?w=',
+        permanent: true,
+      },
+      // {
+      //   source: '/so/cdPV0tqSW/c',
+      //   has: [
+      //     {
+      //       type: 'query',
+      //       key: 'w',
+      //       value:
+      //         'N82YWj6qoVe_yEuR0O0j1spUXDCYEHH6GYvDhZFs3U4.eyJ1IjoiaHR0cHM6Ly9mdXR1cmVzNGV1cm9wZS5ldS9zby9jZFBWMHRxU1c_bGFuZ3VhZ2VUYWc9ZW4mc3RhdHVzPURyYWZ0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+      //     },
+      //   ],
+      //   destination: 'https://www.linkedin.com/company/futures4europe/',
+      //   permanent: true,
+      // },
+      // {
+      //   source: '/so/cdPV0tqSW/c',
+      //   has: [
+      //     {
+      //       type: 'query',
+      //       key: 'w',
+      //       value:
+      //         'N82YWj6qoVe_yEuR0O0j1spUXDCYEHH6GYvDhZFs3U4.eyJ1IjoiaHR0cHM6Ly9mdXR1cmVzNGV1cm9wZS5ldS9zby9jZFBWMHRxU1c_bGFuZ3VhZ2VUYWc9ZW4mc3RhdHVzPURyYWZ0IiwibSI6Im1haWwiLCJjIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIn0',
+      //     },
+      //   ],
+      //   destination: 'https://www.linkedin.com/company/futures4europe/',
+      //   permanent: true,
+      // },
+      // End of Newsletters July 2025
       {
         source: '/:path*',
         has: [
