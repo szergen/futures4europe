@@ -1767,6 +1767,24 @@ const nextConfig = {
         destination: 'https://shoutout.wix.com/so/cdPV0tqSW?w=',
         permanent: true,
       },
+      // Start of Newsletters September 2025
+      {
+        source: '/so/dbPc0ZTvy/c:path*',
+        destination: 'https://legacy.futures4europe.eu/so/cdPV0tqSW/c:path*',
+        permanent: true,
+      },
+      {
+        source: '/so/dbPc0ZTvy',
+        has: [
+          {
+            type: 'query',
+            key: 'languageTag',
+            value: 'en',
+          },
+        ],
+        destination: 'https://shoutout.wix.com/so/dbPc0ZTvy?w=',
+        permanent: true,
+      },
       // {
       //   source: '/so/cdPV0tqSW/c',
       //   has: [
