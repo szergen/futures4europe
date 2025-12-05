@@ -191,6 +191,8 @@ const Footer = () => {
                       >
                         December 2025
                       </Link>
+                    </li>
+                    <li className="mb-2">
                       <Link
                         target="_blank"
                         href="https://shoutout.wix.com/so/dbPc0ZTvy"
